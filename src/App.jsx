@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import MealForm from './components/MealForm.jsx';
 import MealPlan from './components/MealPlan.jsx';
 import ShoppingList from './components/ShoppingList.jsx';
@@ -71,6 +72,7 @@ export default function App() {
       {plan?.shopping_list && lastValues?.shoppingList && (
         <ShoppingList list={plan.shopping_list} price={plan.price_estimate} />
       )}
+      <Analytics />
     </div>
   );
 }
