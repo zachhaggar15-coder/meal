@@ -1,0 +1,36 @@
+/* Global styles. Designed to be clean, large-text, and easy to read. */
+:root {
+  --bg: #f7f7f5;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --accent: #2f855a;     /* calm green */
+  --accent-dark: #276749;
+  --border: #e5e7eb;
+  --danger: #b91c1c;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 18px;        /* large default for older audience */
+  line-height: 1.5;
+}
+
+button {
+  font: inherit;
+}
+
+input, select {
+  font: inherit;
+}
+
+a { color: var(--accent-dark); }
