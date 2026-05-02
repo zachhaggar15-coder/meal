@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-const DOMAIN = 'https://YOUR_DOMAIN_HERE.com';
+const DOMAIN = 'https://www.mealprep.org.uk';
 
 export default function SEO({ title, description, canonical, jsonLd }) {
   return (

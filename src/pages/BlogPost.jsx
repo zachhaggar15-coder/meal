@@ -17,7 +17,7 @@ export default function BlogPost() {
     datePublished: '2025-01-01',
     dateModified: '2025-05-01',
     publisher: { '@type': 'Organization', name: 'UK Meal Plan Generator' },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://YOUR_DOMAIN_HERE.com/blog/${slug}` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.mealprep.org.uk/blog/${slug}` },
   };
 
   return (

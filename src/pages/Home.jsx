@@ -11,7 +11,7 @@ const homeJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'UK Low-Calorie Meal Plan Generator',
-    url: 'https://YOUR_DOMAIN_HERE.com/',
+    url: 'https://www.mealprep.org.uk/',
     applicationCategory: 'HealthApplication',
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },

@@ -3,66 +3,66 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/</loc>
+    <loc>https://www.mealprep.org.uk/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Meal plan pages -->
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/meal-plan/1500-calorie-meal-plan</loc>
+    <loc>https://www.mealprep.org.uk/meal-plan/1500-calorie-meal-plan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/meal-plan/1800-calorie-meal-plan</loc>
+    <loc>https://www.mealprep.org.uk/meal-plan/1800-calorie-meal-plan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/meal-plan/2000-calorie-meal-plan</loc>
+    <loc>https://www.mealprep.org.uk/meal-plan/2000-calorie-meal-plan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/meal-plan/high-protein-low-calorie-meal-plan</loc>
+    <loc>https://www.mealprep.org.uk/meal-plan/high-protein-low-calorie-meal-plan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/meal-plan/tesco-low-calorie-meal-plan</loc>
+    <loc>https://www.mealprep.org.uk/meal-plan/tesco-low-calorie-meal-plan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/meal-plan/vegetarian-low-calorie-meal-plan</loc>
+    <loc>https://www.mealprep.org.uk/meal-plan/vegetarian-low-calorie-meal-plan</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Blog pages -->
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/blog/how-to-build-a-calorie-deficit</loc>
+    <loc>https://www.mealprep.org.uk/blog/how-to-build-a-calorie-deficit</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/blog/best-low-calorie-foods-uk</loc>
+    <loc>https://www.mealprep.org.uk/blog/best-low-calorie-foods-uk</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/blog/high-protein-low-calorie-meals</loc>
+    <loc>https://www.mealprep.org.uk/blog/high-protein-low-calorie-meals</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/blog/tesco-low-calorie-shopping-list</loc>
+    <loc>https://www.mealprep.org.uk/blog/tesco-low-calorie-shopping-list</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN_HERE.com/blog/how-to-meal-plan-for-weight-loss</loc>
+    <loc>https://www.mealprep.org.uk/blog/how-to-meal-plan-for-weight-loss</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
