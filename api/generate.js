@@ -126,11 +126,14 @@ function buildPrompt({
   const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const planDays = dayNames.slice(0, days);
 
+  // Calculate suggested calorie split across meals so the LLM has explicit targets
+  const mealCalories = buildMealCalorieSplit(Number(calories), Number(meals), snacks);
+
   return `You are a professional nutritionist creating a structured meal plan.
 
 Constraints:
 - Plan length: ${days} day${days > 1 ? 's' : ''} (${planDays.join(', ')})
-- Target daily calories: ${calories}
+- DAILY CALORIE TARGET: ${calories} kcal — this is a hard requirement, not a suggestion
 - Meals per day: ${meals}
 - Include snacks: ${snacks ? 'yes' : 'no'}
 - Diet type: ${diet}
@@ -139,12 +142,21 @@ Constraints:
 - Foods to avoid: ${avoid || 'none specified'}
 - Max cooking time per meal: ${cookTimeLabel}
 
-Rules:
+Calorie distribution per meal (you MUST hit these targets for every day):
+${mealCalories.map(m => `  ${m.type}: ~${m.target} kcal`).join('\n')}
+  Daily total: ${calories} kcal
+
+CRITICAL CALORIE RULES — failure to follow these will make the output unusable:
+1. Every individual meal's "calories" field must reflect its ACTUAL calorie content for the portion described.
+2. "daily_totals.calories" MUST equal the SUM of all meal calories for that day.
+3. Each day's total must be within 50 kcal of ${calories}. Do not round to a convenient number.
+4. Do not write placeholder zeros. Every calories field must be a realistic non-zero number.
+
+Other rules:
 - Meals must be realistic, simple, and use common UK supermarket ingredients (${supermarket}).
 - Avoid niche or expensive foods.
-- Prioritise high-protein, low-calorie meals.
+- Prioritise high-protein meals.
 - Strictly respect the cooking time constraint for every meal.
-- Ensure daily calories are within +/- 100 kcal of target.
 - Ensure good variety across all ${days} day${days > 1 ? 's' : ''}.
 ${shoppingList ? '- Provide a consolidated shopping list grouped by category and an estimated total price in GBP.' : '- shopping_list and price_estimate may be empty objects/arrays.'}
 
@@ -177,4 +189,45 @@ Output format MUST be valid JSON matching exactly:
 }
 
 Return ONLY valid JSON. No markdown, no commentary.`;
+}
+
+function buildMealCalorieSplit(calories, meals, snacks) {
+  // Distribute calories proportionally across meal types
+  const splits = {
+    3: [
+      { type: 'Breakfast', share: 0.28 },
+      { type: 'Lunch',     share: 0.32 },
+      { type: 'Dinner',    share: 0.40 },
+    ],
+    4: [
+      { type: 'Breakfast', share: 0.25 },
+      { type: 'Lunch',     share: 0.30 },
+      { type: 'Dinner',    share: 0.35 },
+      { type: 'Snack',     share: 0.10 },
+    ],
+    5: [
+      { type: 'Breakfast', share: 0.22 },
+      { type: 'Snack 1',   share: 0.08 },
+      { type: 'Lunch',     share: 0.28 },
+      { type: 'Dinner',    share: 0.34 },
+      { type: 'Snack 2',   share: 0.08 },
+    ],
+  };
+
+  const base = splits[meals] || splits[3];
+
+  // If snacks toggled on but not yet in the split, add one
+  const hasMealsWithSnack = base.some(m => m.type.toLowerCase().includes('snack'));
+  let list = base;
+  if (snacks && !hasMealsWithSnack) {
+    const snackCals = Math.round(calories * 0.10);
+    const remaining = calories - snackCals;
+    const scale = remaining / calories;
+    list = [
+      ...base.map(m => ({ ...m, share: m.share * scale })),
+      { type: 'Snack', share: 0.10 },
+    ];
+  }
+
+  return list.map(m => ({ type: m.type, target: Math.round(calories * m.share) }));
 }

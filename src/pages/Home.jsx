@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import MealForm from '../components/MealForm.jsx';
 import MealPlan from '../components/MealPlan.jsx';
@@ -58,11 +58,58 @@ const homeJsonLd = [
   },
 ];
 
+const LOADING_MESSAGES = [
+  'Analysing your preferences…',
+  'Building your meal schedule…',
+  'Calculating calories and protein…',
+  'Selecting recipes from your supermarket…',
+  'Compiling your shopping list…',
+  'Almost there…',
+];
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [plan, setPlan] = useState(null);
   const [lastValues, setLastValues] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [msgIndex, setMsgIndex] = useState(0);
+  const progressRef = useRef(0);
+  const progressInterval = useRef(null);
+  const msgInterval = useRef(null);
+
+  useEffect(() => {
+    if (loading) {
+      progressRef.current = 0;
+      setProgress(0);
+      setMsgIndex(0);
+
+      // Easing: each tick moves (target - current) * factor — fast then slows
+      progressInterval.current = setInterval(() => {
+        const next = progressRef.current + (90 - progressRef.current) * 0.045;
+        progressRef.current = next;
+        setProgress(next);
+      }, 300);
+
+      msgInterval.current = setInterval(() => {
+        setMsgIndex(i => (i + 1) % LOADING_MESSAGES.length);
+      }, 4500);
+    } else {
+      clearInterval(progressInterval.current);
+      clearInterval(msgInterval.current);
+      if (progressRef.current > 0) {
+        setProgress(100);
+        setTimeout(() => {
+          setProgress(0);
+          progressRef.current = 0;
+        }, 500);
+      }
+    }
+    return () => {
+      clearInterval(progressInterval.current);
+      clearInterval(msgInterval.current);
+    };
+  }, [loading]);
 
   async function handleGenerate(values) {
     setLoading(true);
@@ -111,10 +158,20 @@ export default function Home() {
           <MealForm onSubmit={handleGenerate} disabled={loading} />
         </section>
 
+        {/* Fixed top progress bar */}
+        {progress > 0 && (
+          <div className="progress-bar-track">
+            <div
+              className="progress-bar-fill"
+              style={{ width: `${progress}%`, transition: progress === 100 ? 'width 0.2s ease-in' : 'width 0.3s ease-out' }}
+            />
+          </div>
+        )}
+
         {loading && (
           <div className="loading">
-            <strong>Generating your personalised meal plan…</strong>
-            <p style={{ margin: '6px 0 0' }}>This usually takes 10–30 seconds.</p>
+            <div className="loading-message">{LOADING_MESSAGES[msgIndex]}</div>
+            <p className="loading-sub">This usually takes 10–30 seconds.</p>
           </div>
         )}
 
