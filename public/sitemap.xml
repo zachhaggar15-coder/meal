@@ -4,6 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.mealprep.org.uk/</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,31 +12,37 @@
   <!-- Meal plan pages -->
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/1500-calorie-meal-plan</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/2000-calorie-meal-plan</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/high-protein-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/tesco-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/vegetarian-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -43,26 +50,31 @@
   <!-- Blog pages -->
   <url>
     <loc>https://www.mealprep.org.uk/blog/how-to-build-a-calorie-deficit</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/best-low-calorie-foods-uk</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/high-protein-low-calorie-meals</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/tesco-low-calorie-shopping-list</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/how-to-meal-plan-for-weight-loss</loc>
+    <lastmod>2026-05-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
