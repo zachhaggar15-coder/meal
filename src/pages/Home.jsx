@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import MealForm from '../components/MealForm.jsx';
 import MealPlan from '../components/MealPlan.jsx';
 import ShoppingList from '../components/ShoppingList.jsx';
+import EditPlanBox from '../components/EditPlanBox.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 
@@ -81,6 +82,8 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [plan, setPlan] = useState(null);
   const [lastValues, setLastValues] = useState(null);
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState(null);
   const [progress, setProgress] = useState(0);
   const [msgIndex, setMsgIndex] = useState(0);
   const progressRef = useRef(0);
@@ -119,6 +122,29 @@ export default function Home() {
       clearInterval(msgInterval.current);
     };
   }, [loading]);
+
+  async function handleEdit(instruction) {
+    setEditLoading(true);
+    setEditError(null);
+    try {
+      const res = await fetch('/api/edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, instruction }),
+      });
+      if (!res.ok) {
+        const data = await safeJson(res);
+        throw new Error(data?.error || `Server error (${res.status}).`);
+      }
+      const updated = await res.json();
+      setPlan(updated);
+    } catch (err) {
+      console.error(err);
+      setEditError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setEditLoading(false);
+    }
+  }
 
   async function handleGenerate(values) {
     setLoading(true);
@@ -188,6 +214,14 @@ export default function Home() {
               <button onClick={() => handleGenerate(lastValues)}>Try again</button>
             )}
           </div>
+        )}
+
+        {plan?.weekly_plan && (
+          <EditPlanBox
+            onEdit={handleEdit}
+            loading={editLoading}
+            error={editError}
+          />
         )}
 
         {plan?.weekly_plan && <MealPlan weeklyPlan={plan.weekly_plan} />}

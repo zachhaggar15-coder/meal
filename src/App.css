@@ -143,6 +143,53 @@ input:focus, select:focus {
   font-size: 0.9rem;
 }
 
+/* ---------- Edit plan box ---------- */
+
+.edit-plan-box {
+  margin-top: 24px;
+}
+
+.edit-plan-heading {
+  font-size: 1.15rem;
+  margin: 0 0 4px;
+}
+
+.edit-plan-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 14px;
+}
+
+.edit-plan-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.edit-plan-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+
+.edit-plan-input:disabled {
+  background: #f9fafb;
+  color: var(--muted);
+}
+
+.edit-plan-error {
+  color: var(--danger);
+  font-size: 0.9rem;
+  margin: 0 0 10px;
+}
+
 .error {
   background: #fef2f2;
   border: 1px solid #fecaca;
