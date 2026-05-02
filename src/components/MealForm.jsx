@@ -3,24 +3,39 @@ import { useState } from 'react';
 const SUPERMARKETS = ['Tesco', 'Aldi', "Sainsbury's", 'Asda'];
 const DIETS = ['standard', 'vegetarian', 'vegan'];
 const MEALS_PER_DAY = [3, 4, 5];
+const PLAN_LENGTHS = [
+  { value: 1, label: '1 day' },
+  { value: 3, label: '3 days' },
+  { value: 7, label: '7 days' },
+];
+const COOK_TIMES = [
+  { value: '15', label: 'Quick (under 15 min)' },
+  { value: '30', label: 'Medium (under 30 min)' },
+  { value: '45', label: 'Standard (under 45 min)' },
+  { value: 'any', label: 'No limit' },
+];
 
 export default function MealForm({ onSubmit, disabled }) {
+  const [days, setDays] = useState(7);
   const [calories, setCalories] = useState(1800);
   const [meals, setMeals] = useState(3);
   const [diet, setDiet] = useState('standard');
   const [supermarket, setSupermarket] = useState('Tesco');
   const [include, setInclude] = useState('');
   const [avoid, setAvoid] = useState('');
+  const [cookTime, setCookTime] = useState('30');
   const [snacks, setSnacks] = useState(false);
   const [shoppingList, setShoppingList] = useState(true);
 
   function handleSubmit(e) {
     e.preventDefault();
     onSubmit({
+      days: Number(days),
       calories: Number(calories) || 1800,
       meals: Number(meals),
       diet,
       supermarket,
+      cookTime,
       include: include.trim(),
       avoid: avoid.trim(),
       snacks,
@@ -31,6 +46,15 @@ export default function MealForm({ onSubmit, disabled }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-grid">
+        <div>
+          <label htmlFor="days">Plan length</label>
+          <select id="days" value={days} onChange={(e) => setDays(e.target.value)}>
+            {PLAN_LENGTHS.map((p) => (
+              <option key={p.value} value={p.value}>{p.label}</option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label htmlFor="calories">Daily calorie target</label>
           <input
@@ -68,6 +92,15 @@ export default function MealForm({ onSubmit, disabled }) {
           <select id="supermarket" value={supermarket} onChange={(e) => setSupermarket(e.target.value)}>
             {SUPERMARKETS.map((s) => (
               <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="cookTime">Max cooking time</label>
+          <select id="cookTime" value={cookTime} onChange={(e) => setCookTime(e.target.value)}>
+            {COOK_TIMES.map((t) => (
+              <option key={t.value} value={t.value}>{t.label}</option>
             ))}
           </select>
         </div>

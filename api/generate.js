@@ -18,10 +18,12 @@ export default async function handler(req, res) {
 
   // Pull form values from the request body, with sensible defaults.
   const {
+    days = 7,
     calories = 1800,
     meals = 3,
     diet = 'standard',
     supermarket = 'Tesco',
+    cookTime = '30',
     include = '',
     avoid = '',
     snacks = false,
@@ -29,10 +31,12 @@ export default async function handler(req, res) {
   } = req.body || {};
 
   const prompt = buildPrompt({
+    days: Number(days),
     calories,
     meals,
     diet,
     supermarket,
+    cookTime,
     include,
     avoid,
     snacks,
@@ -106,18 +110,26 @@ export default async function handler(req, res) {
 }
 
 function buildPrompt({
+  days,
   calories,
   meals,
   diet,
   supermarket,
+  cookTime,
   include,
   avoid,
   snacks,
   shoppingList
 }) {
-  return `You are a professional nutritionist creating a structured weekly meal plan for weight loss.
+  const cookTimeLabel =
+    cookTime === 'any' ? 'no limit on prep time' : `prep time under ${cookTime} minutes`;
+  const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const planDays = dayNames.slice(0, days);
+
+  return `You are a professional nutritionist creating a structured meal plan.
 
 Constraints:
+- Plan length: ${days} day${days > 1 ? 's' : ''} (${planDays.join(', ')})
 - Target daily calories: ${calories}
 - Meals per day: ${meals}
 - Include snacks: ${snacks ? 'yes' : 'no'}
@@ -125,15 +137,16 @@ Constraints:
 - Supermarket: ${supermarket}
 - Foods to include: ${include || 'none specified'}
 - Foods to avoid: ${avoid || 'none specified'}
+- Max cooking time per meal: ${cookTimeLabel}
 
 Rules:
 - Meals must be realistic, simple, and use common UK supermarket ingredients (${supermarket}).
 - Avoid niche or expensive foods.
 - Prioritise high-protein, low-calorie meals.
-- Keep prep time under 30 minutes where possible.
+- Strictly respect the cooking time constraint for every meal.
 - Ensure daily calories are within +/- 100 kcal of target.
-- Ensure good variety across all 7 days (Monday to Sunday).
-${shoppingList ? '- Provide a consolidated shopping list grouped by category and an estimated total weekly price in GBP.' : '- shopping_list and price_estimate may be empty objects/arrays.'}
+- Ensure good variety across all ${days} day${days > 1 ? 's' : ''}.
+${shoppingList ? '- Provide a consolidated shopping list grouped by category and an estimated total price in GBP.' : '- shopping_list and price_estimate may be empty objects/arrays.'}
 
 Output format MUST be valid JSON matching exactly:
 {
