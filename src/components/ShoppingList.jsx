@@ -14,9 +14,17 @@ export default function ShoppingList({ list, price }) {
           <div key={group} className="shop-group">
             <h4>{group}</h4>
             <ul>
-              {items.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
+              {items.map((item, i) =>
+                typeof item === 'object' && item !== null ? (
+                  <li key={i}>
+                    <span className="shop-item-name">{item.name}</span>
+                    {item.amount && <span className="shop-item-amount"> — {item.amount}</span>}
+                    {item.packs && <span className="shop-item-packs"> ({item.packs})</span>}
+                  </li>
+                ) : (
+                  <li key={i}>{item}</li>
+                )
+              )}
             </ul>
           </div>
         ))}

@@ -22,6 +22,9 @@ export default function MealPlan({ weeklyPlan }) {
                   </div>
                 </div>
                 {meal.description && <p className="meal-desc">{meal.description}</p>}
+                {meal.portion_size && (
+                  <p className="meal-portion"><strong>Portion:</strong> {meal.portion_size}</p>
+                )}
               </div>
             ))}
           {day.daily_totals && (

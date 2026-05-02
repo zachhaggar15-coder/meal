@@ -254,6 +254,12 @@ input:focus, select:focus {
   margin: 6px 0 0;
 }
 
+.meal-portion {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 4px 0 0;
+}
+
 .daily-totals {
   margin-top: 12px;
   padding-top: 12px;
@@ -279,6 +285,10 @@ input:focus, select:focus {
   margin: 0;
   padding-left: 20px;
 }
+
+.shop-item-name { font-weight: 500; }
+.shop-item-amount { color: var(--muted); }
+.shop-item-packs { font-size: 0.85rem; color: var(--muted); }
 
 .price {
   margin-top: 16px;

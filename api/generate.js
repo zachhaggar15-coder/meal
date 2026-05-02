@@ -172,21 +172,31 @@ Output format MUST be valid JSON matching exactly:
           "calories": 0,
           "protein": 0,
           "prep_time": "",
-          "description": ""
+          "description": "",
+          "portion_size": "e.g. 50g oats, 200ml skimmed milk, 1 banana"
         }
       ],
       "daily_totals": { "calories": 0, "protein": 0 }
     }
   ],
   "shopping_list": {
-    "protein": [],
-    "carbs": [],
+    "protein": [
+      { "name": "Chicken breast", "amount": "1 kg", "packs": "2 × 500g packs" }
+    ],
+    "carbs": [
+      { "name": "Rolled oats", "amount": "500g", "packs": "1 × 500g bag" }
+    ],
     "fats": [],
-    "vegetables": [],
+    "vegetables": [
+      { "name": "Broccoli", "amount": "600g", "packs": "2 × 300g heads" }
+    ],
     "extras": []
   },
   "price_estimate": { "total": "", "notes": "" }
 }
+
+Rules for portion_size: list every ingredient with its exact weight or quantity for one serving (e.g. "150g chicken breast, 80g cooked brown rice, 100g broccoli"). Be specific and realistic.
+Rules for shopping_list items: each item must be an object with "name" (ingredient), "amount" (total needed for the whole plan), and "packs" (how many standard supermarket packs to buy, e.g. "2 × 500g packs" or "1 × 1kg bag").
 
 Return ONLY valid JSON. No markdown, no commentary.`;
 }
