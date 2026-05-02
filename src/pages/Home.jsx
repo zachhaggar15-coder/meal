@@ -64,6 +64,15 @@ const LOADING_MESSAGES = [
   'Calculating calories and protein…',
   'Selecting recipes from your supermarket…',
   'Compiling your shopping list…',
+  'Asking the AI very nicely…',
+  'Convincing the AI that broccoli is delicious…',
+  'Hiding the chocolate from your plan…',
+  'Negotiating with the algorithm…',
+  'Pretending kale is exciting…',
+  'Cross-referencing with 47 nutritional databases…',
+  'Removing the fourth cheese option…',
+  'Making sure there\'s enough protein…',
+  'Adding a cheeky treat then removing it again…',
   'Almost there…',
 ];
 
@@ -93,7 +102,7 @@ export default function Home() {
 
       msgInterval.current = setInterval(() => {
         setMsgIndex(i => (i + 1) % LOADING_MESSAGES.length);
-      }, 4500);
+      }, 2800);
     } else {
       clearInterval(progressInterval.current);
       clearInterval(msgInterval.current);
@@ -158,19 +167,15 @@ export default function Home() {
           <MealForm onSubmit={handleGenerate} disabled={loading} />
         </section>
 
-        {/* Fixed top progress bar */}
-        {progress > 0 && (
-          <div className="progress-bar-track">
-            <div
-              className="progress-bar-fill"
-              style={{ width: `${progress}%`, transition: progress === 100 ? 'width 0.2s ease-in' : 'width 0.3s ease-out' }}
-            />
-          </div>
-        )}
-
-        {loading && (
+        {(loading || progress > 0) && (
           <div className="loading">
             <div className="loading-message">{LOADING_MESSAGES[msgIndex]}</div>
+            <div className="loading-bar-track">
+              <div
+                className="loading-bar-fill"
+                style={{ width: `${progress}%`, transition: progress === 100 ? 'width 0.2s ease-in' : 'width 0.3s ease-out' }}
+              />
+            </div>
             <p className="loading-sub">This usually takes 10–30 seconds.</p>
           </div>
         )}
