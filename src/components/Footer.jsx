@@ -34,8 +34,11 @@ export default function Footer() {
           </ul>
         </div>
       </div>
+      <p className="footer-copy footer-disclaimer">
+        Meal plans are generated for general information only. Calories and protein are estimates. For medical conditions, pregnancy, eating disorders, or clinical dietary needs, speak to a qualified healthcare professional.
+      </p>
       <p className="footer-copy">
-        © {new Date().getFullYear()} UK Meal Plan Generator. For informational purposes only — always consult a qualified nutritionist for personalised dietary advice.
+        © {new Date().getFullYear()} MealPrep.org.uk — Free UK Meal Plan Generator.
       </p>
     </footer>
   );

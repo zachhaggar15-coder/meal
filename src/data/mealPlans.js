@@ -211,9 +211,10 @@ const PLAN_VEGETARIAN = [
 
 export const mealPlansData = {
   '1500-calorie-meal-plan': {
-    title: '1500 Calorie Meal Plan UK | Free 7-Day High-Protein Guide',
-    description: 'A free UK 1500 calorie meal plan with 7 days of high-protein meals from Tesco, Aldi, Sainsbury\'s or Asda. Includes shopping list and weekly cost estimate.',
-    h1: '1500 Calorie Meal Plan — Free UK 7-Day Guide',
+    title: '1500 Calorie Meal Plan UK | Free 7-Day Weight Loss Plan',
+    description: 'Browse a free 1500 calorie UK meal plan with simple high-protein meals, calories, prep times, and supermarket-friendly ingredients.',
+    h1: '1500 Calorie Meal Plan UK — Free 7-Day Weight Loss Guide',
+    planLabel: '1500 Calorie',
     targetCalories: 1500,
     intro: 'A 1,500 calorie meal plan is one of the most popular choices for weight loss in the UK. For most women and smaller-framed men, eating 1,500 calories per day creates a meaningful calorie deficit that supports steady fat loss of around 0.5–1 kg per week — without the hunger and fatigue that come with more extreme restriction. This guide gives you a complete, ready-to-use 7-day plan built around everyday UK supermarket ingredients.',
     whyThisPlan: 'A 1,500 calorie target works well for people whose Total Daily Energy Expenditure (TDEE) sits between 1,800 and 2,200 calories — common for women aged 25–55 with moderate activity levels and lighter men. At 1,500 calories you create a deficit of 300–700 calories per day, which over a week amounts to 2,100–4,900 calories — enough to lose 0.3–0.7 kg of body fat. This plan prioritises protein (90–120 g per day) to keep you feeling full, preserve muscle mass, and support an active lifestyle.',
@@ -233,6 +234,11 @@ export const mealPlansData = {
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Low Calorie Plan' },
       { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Meal Plan' },
+      { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Meal Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
     ],
     plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['1500-calorie-meal-plan'],
@@ -240,9 +246,10 @@ export const mealPlansData = {
   },
 
   '1800-calorie-meal-plan': {
-    title: '1800 Calorie Meal Plan UK | Free Weekly Planner for Weight Loss',
-    description: 'A free 1800 calorie meal plan for UK shoppers. 7 days of balanced, high-protein meals tailored to Tesco, Aldi, Sainsbury\'s or Asda, with a shopping list included.',
-    h1: '1800 Calorie Meal Plan — UK Weekly Guide',
+    title: '1800 Calorie Meal Plan UK | Free 7-Day High Protein Plan',
+    description: 'A free 1800 calorie UK meal plan for weight loss, with filling meals, protein estimates, and practical supermarket ingredients.',
+    h1: '1800 Calorie Meal Plan UK — Free 7-Day High Protein Guide',
+    planLabel: '1800 Calorie',
     targetCalories: 1800,
     intro: 'An 1,800 calorie meal plan is one of the most widely recommended targets for sustainable weight loss in the UK. It is particularly effective for women who are moderately to very active, and for men who are sedentary or lightly active. Eating 1,800 calories per day typically creates a 300–600 calorie deficit — enough to lose 0.3–0.6 kg of fat per week without the energy crashes associated with more aggressive cuts. This plan is built around familiar UK supermarket ingredients to keep both the cooking and the shopping straightforward.',
     whyThisPlan: 'At 1,800 calories, you have enough room to eat satisfying, varied meals — three proper meals a day with room for a snack. This makes the plan far more sustainable than 1,200 or 1,500 calorie approaches. The meals in this plan are built around a protein target of 100–130 g per day, with the remaining calories split between complex carbohydrates and healthy fats. High protein keeps hunger at bay, while the carb allowance gives you enough energy for exercise and daily life.',
@@ -263,15 +270,20 @@ export const mealPlansData = {
       { slug: '2000-calorie-meal-plan', label: '2000 Calorie Meal Plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
     ],
+    blogLinks: [
+      { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
+    ],
     plan: PLAN_1800,
     shoppingList: BASE_SHOPPING['1800-calorie-meal-plan'],
     priceEstimate: '£45–55 per week',
   },
 
   '2000-calorie-meal-plan': {
-    title: '2000 Calorie Meal Plan UK | Balanced Weekly Healthy Eating Guide',
-    description: 'A free 2000 calorie meal plan for UK shoppers. 7 days of balanced, nutritious meals for weight maintenance or a gentle deficit. Shopping list included.',
-    h1: '2000 Calorie Meal Plan — UK Balanced Weekly Guide',
+    title: '2000 Calorie Meal Plan UK | Free 7-Day Meal Plan',
+    description: 'A simple 2000 calorie UK meal plan for active people wanting structure, high-protein meals, and a practical shopping list.',
+    h1: '2000 Calorie Meal Plan UK — Free 7-Day Balanced Guide',
+    planLabel: '2000 Calorie',
     targetCalories: 2000,
     intro: 'A 2,000 calorie meal plan is ideal for people looking to maintain their weight, create only a very gentle deficit, or fuel an active lifestyle while eating cleanly. It is widely used by active men as a weight-loss target and by active women as a maintenance target. At 2,000 calories per day, there is plenty of room for nutritious, satisfying meals that include healthy fats, complex carbohydrates, and lean protein. This plan uses everyday UK supermarket ingredients and is designed to be enjoyed — not endured.',
     whyThisPlan: 'The UK government recommends 2,000 calories per day as a reference intake for the average adult. In practice, how much you need depends on your size and how active you are. For very active individuals, 2,000 calories may still represent a moderate deficit. For sedentary adults, it may be at or above maintenance. This plan maximises the nutritional quality of those 2,000 calories — prioritising whole grains, lean proteins, and a wide range of vegetables to give you energy, support recovery from exercise, and keep you feeling great.',
@@ -292,6 +304,10 @@ export const mealPlansData = {
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
       { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Plan' },
     ],
+    blogLinks: [
+      { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
+    ],
     plan: PLAN_2000,
     shoppingList: BASE_SHOPPING['2000-calorie-meal-plan'],
     priceEstimate: '£50–60 per week',
@@ -299,8 +315,9 @@ export const mealPlansData = {
 
   'high-protein-low-calorie-meal-plan': {
     title: 'High Protein Low Calorie Meal Plan UK | Free 7-Day Guide',
-    description: 'A free high protein low calorie meal plan for UK shoppers. 140g+ protein per day, under 1600 calories. Ideal for fat loss while preserving muscle mass.',
-    h1: 'High Protein Low Calorie Meal Plan — UK 7-Day Guide',
+    description: 'A free high protein low calorie meal plan for UK weight loss, designed around simple meals, supermarket ingredients, and practical prep times.',
+    h1: 'High Protein Low Calorie Meal Plan UK — Free 7-Day Guide',
+    planLabel: 'High Protein Low Calorie',
     targetCalories: 1550,
     intro: 'A high protein low calorie meal plan is the gold standard approach for losing fat while preserving — or even building — lean muscle mass. By keeping calories in a deficit while eating 140–170 g of protein per day, you force your body to burn fat for energy rather than breaking down muscle. This 7-day UK plan delivers 150+ g of protein daily from lean, widely available sources such as chicken breast, tinned tuna, eggs, Greek yogurt, and cottage cheese — all affordable and easy to find in any major UK supermarket.',
     whyThisPlan: 'Protein has the highest thermic effect of any macronutrient — your body burns roughly 25–30% of protein calories just by digesting it. It is also the most satiating macronutrient, meaning gram for gram it keeps you fuller than carbohydrate or fat. Research from the British Journal of Nutrition shows that increasing protein to 25–30% of total calories significantly reduces appetite and late-night snacking. This plan targets approximately 1.8–2.2 g of protein per kg of body weight — at the high end of the recommended range for people losing weight while exercising.',
@@ -321,15 +338,20 @@ export const mealPlansData = {
       { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Plan' },
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Plan' },
     ],
+    blogLinks: [
+      { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals Guide' },
+      { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
+    ],
     plan: PLAN_HIGH_PROTEIN,
     shoppingList: BASE_SHOPPING['high-protein-low-calorie-meal-plan'],
     priceEstimate: '£45–55 per week',
   },
 
   'tesco-low-calorie-meal-plan': {
-    title: 'Tesco Low Calorie Meal Plan UK | Budget 7-Day Weekly Planner',
-    description: 'A free Tesco low calorie meal plan for weight loss. Uses Tesco own-brand products for maximum value. 7 days of high-protein meals with a Tesco shopping list.',
-    h1: 'Tesco Low Calorie Meal Plan — Budget UK 7-Day Guide',
+    title: 'Tesco Low Calorie Meal Plan UK | 7-Day Budget Guide',
+    description: 'A Tesco-focused low calorie meal plan using affordable UK supermarket ingredients, with meal ideas, calories, protein, and shopping list guidance.',
+    h1: 'Tesco Low Calorie Meal Plan UK — Budget 7-Day Guide',
+    planLabel: 'Tesco Low Calorie',
     targetCalories: 1500,
     intro: 'Tesco is the UK\'s largest supermarket and one of the best places to find affordable, high-quality ingredients for a calorie-controlled diet. From Tesco Rolled Oats at under £1 a bag to Tesco Lean Chicken Breast Fillets at a competitive price per kilogram, the own-brand range makes healthy eating genuinely accessible on any budget. This 7-day plan is built exclusively around products available at Tesco — including Tesco Finest and Tesco own-brand items — and comes in at an estimated £40–50 per week for one person.',
     whyThisPlan: 'Shopping at a single supermarket simplifies the weekly shop, reduces decision fatigue, and makes it easier to build consistent habits. Tesco\'s Clubcard scheme adds an extra layer of savings — many of the products used in this plan are regularly discounted for Clubcard holders. The plan targets 1,500 calories per day with a strong focus on protein (90–120 g daily) using readily available Tesco products including Tesco Low Fat Greek Style Yogurt, Tesco Tinned Tuna in Spring Water, and Tesco Free Range Eggs.',
@@ -347,8 +369,13 @@ export const mealPlansData = {
     ],
     related: [
       { slug: '1500-calorie-meal-plan', label: '1500 Calorie Plan' },
+      { slug: '1800-calorie-meal-plan', label: '1800 Calorie Plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
       { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List' },
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
     ],
     plan: PLAN_TESCO,
     shoppingList: BASE_SHOPPING['tesco-low-calorie-meal-plan'],
@@ -356,9 +383,10 @@ export const mealPlansData = {
   },
 
   'vegetarian-low-calorie-meal-plan': {
-    title: 'Vegetarian Low Calorie Meal Plan UK | Free 7-Day Plant-Based Guide',
-    description: 'A free vegetarian low calorie meal plan for UK shoppers. 7 days of plant-based, high-protein meals for weight loss. Includes shopping list and tips.',
-    h1: 'Vegetarian Low Calorie Meal Plan — UK 7-Day Guide',
+    title: 'Vegetarian Low Calorie Meal Plan UK | Free 7-Day Guide',
+    description: 'A vegetarian low calorie meal plan for UK shoppers, with high-protein meals using eggs, dairy, tofu, legumes, and simple supermarket ingredients.',
+    h1: 'Vegetarian Low Calorie Meal Plan UK — Free 7-Day Guide',
+    planLabel: 'Vegetarian Low Calorie',
     targetCalories: 1500,
     intro: 'Losing weight on a vegetarian diet is entirely achievable — and often easier than people expect. Plant-based proteins like eggs, Greek yogurt, tofu, legumes, and cottage cheese are filling, nutritious, and widely available at UK supermarkets. This 7-day vegetarian low calorie meal plan is designed for UK shoppers, targeting 1,500 calories per day with a strong emphasis on protein to keep you satisfied and support a healthy metabolism. Every meal uses ingredients you can pick up at Tesco, Aldi, Sainsbury\'s, or Asda.',
     whyThisPlan: 'A well-planned vegetarian diet is associated with lower body weight, reduced risk of type 2 diabetes, and better heart health, according to the British Dietetic Association. The key to losing weight as a vegetarian is ensuring adequate protein — without meat, it is easy to fill up on carbohydrate-heavy foods that push you over your calorie target. This plan solves that by building every meal around a protein anchor — eggs, tofu, lentils, chickpeas, or dairy — before adding vegetables and complex carbs. You will hit 75–90 g of protein per day, which is appropriate for weight loss in most adults.',
@@ -378,6 +406,10 @@ export const mealPlansData = {
       { slug: '1500-calorie-meal-plan', label: '1500 Calorie Plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
+      { path: '/blog/best-low-calorie-foods-uk', label: 'Best Low Calorie Foods in UK Supermarkets' },
     ],
     plan: PLAN_VEGETARIAN,
     shoppingList: BASE_SHOPPING['vegetarian-low-calorie-meal-plan'],

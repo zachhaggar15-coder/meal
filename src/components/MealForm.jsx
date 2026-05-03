@@ -164,7 +164,7 @@ export default function MealForm({ onSubmit, disabled }) {
       )}
 
       <button className="submit" type="submit" disabled={disabled}>
-        {disabled ? 'Generating…' : 'Generate Plan'}
+        {disabled ? 'Generating…' : 'Get My 7-Day Meal Plan'}
       </button>
     </form>
   );

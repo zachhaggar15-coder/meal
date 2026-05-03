@@ -10,8 +10,15 @@ import Footer from '../components/Footer.jsx';
 const homeJsonLd = [
   {
     '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'MealPrep.org.uk — Free UK Meal Plan Generator',
+    url: 'https://www.mealprep.org.uk',
+    description: 'Free UK meal plan generator for weight loss. Create personalised 7-day meal plans by calorie target, diet type, and supermarket.',
+  },
+  {
+    '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'UK Low-Calorie Meal Plan Generator',
+    name: 'UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk/',
     applicationCategory: 'HealthApplication',
     operatingSystem: 'Web',
@@ -22,10 +29,10 @@ const homeJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: 'How to Generate a UK Low-Calorie Meal Plan',
+    name: 'How to Create a Free UK Weight Loss Meal Plan',
     description:
-      'Use the free AI-powered meal plan generator to create a personalised weekly meal plan in under 30 seconds.',
-    tool: [{ '@type': 'HowToTool', name: 'UK Low-Calorie Meal Plan Generator' }],
+      'Use the free AI-powered meal plan generator to create a personalised 7-day weight loss meal plan in under 30 seconds.',
+    tool: [{ '@type': 'HowToTool', name: 'UK Meal Plan Generator' }],
     step: [
       {
         '@type': 'HowToStep',
@@ -54,7 +61,7 @@ const homeJsonLd = [
       {
         '@type': 'HowToStep',
         position: '5',
-        name: 'Click Generate Plan',
+        name: 'Click Get My 7-Day Meal Plan',
         text: 'Your personalised meal plan with a full shopping list appears in under 30 seconds.',
       },
     ],
@@ -120,33 +127,171 @@ const LOADING_MESSAGES = [
 const PLAN_CARDS = [
   {
     slug: '1500-calorie-meal-plan',
-    title: '1500 Calorie Meal Plan',
-    desc: 'Moderate deficit — ideal for smaller frames or lower activity levels.',
+    title: '1500 Calorie Meal Plan UK',
+    desc: 'A simple 7-day weight loss plan for a moderate calorie deficit.',
   },
   {
     slug: '1800-calorie-meal-plan',
-    title: '1800 Calorie Meal Plan',
-    desc: 'Popular for women aiming to lose 0.5 kg/week on satisfying meals.',
+    title: '1800 Calorie Meal Plan UK',
+    desc: 'A higher-calorie fat loss plan with filling, high-protein meals.',
   },
   {
     slug: '2000-calorie-meal-plan',
-    title: '2000 Calorie Meal Plan',
-    desc: 'Suited to active individuals or those wanting a gentle deficit.',
-  },
-  {
-    slug: 'high-protein-low-calorie-meal-plan',
-    title: 'High Protein Plan',
-    desc: 'Maximises protein to retain muscle mass while losing fat.',
+    title: '2000 Calorie Meal Plan UK',
+    desc: 'For active people who want structure without an aggressive deficit.',
   },
   {
     slug: 'tesco-low-calorie-meal-plan',
-    title: 'Tesco Meal Plan',
-    desc: 'Budget-friendly Tesco ingredients — typically under £35/week.',
+    title: 'Tesco Low Calorie Meal Plan',
+    desc: 'A budget-friendly Tesco meal plan using easy UK supermarket ingredients.',
+  },
+  {
+    slug: 'high-protein-low-calorie-meal-plan',
+    title: 'High Protein Low Calorie Plan',
+    desc: 'Designed to preserve muscle while losing body fat.',
   },
   {
     slug: 'vegetarian-low-calorie-meal-plan',
-    title: 'Vegetarian Plan',
-    desc: 'Plant-based and protein-rich using legumes, eggs, and dairy.',
+    title: 'Vegetarian Low Calorie Plan',
+    desc: 'A plant-forward 7-day plan with protein from eggs, dairy, tofu, and legumes.',
+  },
+];
+
+const EXAMPLE_7_DAY_PLAN = [
+  {
+    day: 'Monday',
+    meals: [
+      { type: 'Breakfast', name: 'Oat Porridge with Berries & Greek Yogurt', kcal: 390, protein: 18, prep: '8 min' },
+      { type: 'Lunch', name: 'Grilled Chicken, Brown Rice & Roasted Peppers', kcal: 520, protein: 45, prep: '20 min' },
+      { type: 'Dinner', name: 'Baked Salmon, Sweet Potato Wedges & Steamed Broccoli', kcal: 580, protein: 40, prep: '25 min' },
+      { type: 'Snack', name: 'Low-Fat Greek Yogurt with Mixed Berries', kcal: 230, protein: 16, prep: '2 min' },
+    ],
+    totals: { kcal: 1720, protein: 119 },
+  },
+  {
+    day: 'Tuesday',
+    meals: [
+      { type: 'Breakfast', name: 'Scrambled Eggs on Wholemeal Toast with Spinach', kcal: 370, protein: 24, prep: '10 min' },
+      { type: 'Lunch', name: 'Tuna & Sweetcorn Jacket Potato', kcal: 460, protein: 36, prep: '12 min' },
+      { type: 'Dinner', name: 'Turkey Mince Bolognese with Wholemeal Pasta', kcal: 640, protein: 46, prep: '25 min' },
+      { type: 'Snack', name: 'Apple & 20g Almonds', kcal: 260, protein: 7, prep: '1 min' },
+    ],
+    totals: { kcal: 1730, protein: 113 },
+  },
+  {
+    day: 'Wednesday',
+    meals: [
+      { type: 'Breakfast', name: 'Overnight Oats with Chia Seeds, Peanut Butter & Banana', kcal: 430, protein: 16, prep: '5 min' },
+      { type: 'Lunch', name: 'Grilled Chicken Caesar Salad Wrap (wholemeal)', kcal: 480, protein: 38, prep: '10 min' },
+      { type: 'Dinner', name: 'Lean Beef Stir-Fry with Brown Rice & Frozen Veg', kcal: 590, protein: 44, prep: '20 min' },
+      { type: 'Snack', name: 'Cottage Cheese with Cucumber (150g)', kcal: 230, protein: 22, prep: '2 min' },
+    ],
+    totals: { kcal: 1730, protein: 120 },
+  },
+  {
+    day: 'Thursday',
+    meals: [
+      { type: 'Breakfast', name: 'Scrambled Eggs with Smoked Salmon on Wholemeal Toast', kcal: 420, protein: 34, prep: '10 min' },
+      { type: 'Lunch', name: 'Red Lentil & Vegetable Soup with Wholemeal Roll', kcal: 400, protein: 18, prep: '10 min' },
+      { type: 'Dinner', name: 'Chicken Tikka with Cauliflower Rice & Raita', kcal: 610, protein: 52, prep: '25 min' },
+      { type: 'Snack', name: 'Banana & 1 tbsp Peanut Butter', kcal: 310, protein: 9, prep: '2 min' },
+    ],
+    totals: { kcal: 1740, protein: 113 },
+  },
+  {
+    day: 'Friday',
+    meals: [
+      { type: 'Breakfast', name: 'Porridge with Walnuts, Cinnamon & Skimmed Milk', kcal: 390, protein: 14, prep: '5 min' },
+      { type: 'Lunch', name: 'King Prawn & Avocado Salad with Lemon Dressing', kcal: 420, protein: 28, prep: '10 min' },
+      { type: 'Dinner', name: 'Baked Cod with New Potatoes & Green Beans', kcal: 620, protein: 48, prep: '25 min' },
+      { type: 'Snack', name: 'High-Protein Yogurt Pot with Berries', kcal: 280, protein: 22, prep: '2 min' },
+    ],
+    totals: { kcal: 1710, protein: 112 },
+  },
+  {
+    day: 'Saturday',
+    meals: [
+      { type: 'Breakfast', name: 'Wholemeal Pancakes with Berries & Low-Fat Yogurt', kcal: 420, protein: 20, prep: '15 min' },
+      { type: 'Lunch', name: 'Turkey & Avocado Wholemeal Wrap with Spinach', kcal: 440, protein: 34, prep: '5 min' },
+      { type: 'Dinner', name: 'Grilled Lean Sirloin Steak, Roasted Veg & Brown Rice', kcal: 620, protein: 48, prep: '20 min' },
+      { type: 'Snack', name: 'Carrot Sticks with 40g Reduced-Fat Hummus', kcal: 200, protein: 6, prep: '2 min' },
+    ],
+    totals: { kcal: 1680, protein: 108 },
+  },
+  {
+    day: 'Sunday',
+    meals: [
+      { type: 'Breakfast', name: 'Poached Eggs & Smoked Salmon on Wholemeal Toast', kcal: 420, protein: 32, prep: '10 min' },
+      { type: 'Lunch', name: 'Lentil & Roasted Vegetable Soup with Wholemeal Roll', kcal: 390, protein: 18, prep: '10 min' },
+      { type: 'Dinner', name: 'Roast Chicken Breast with Potatoes, Carrots & Greens', kcal: 660, protein: 52, prep: '50 min' },
+      { type: 'Snack', name: 'Oat Biscuits with Low-Fat Cottage Cheese (100g)', kcal: 280, protein: 14, prep: '3 min' },
+    ],
+    totals: { kcal: 1750, protein: 116 },
+  },
+];
+
+const EXAMPLE_SHOPPING_LIST = [
+  {
+    group: 'Protein',
+    items: [
+      'Chicken breast (1 kg)',
+      'Tinned tuna in spring water (4 × 145g cans)',
+      'Eggs (12)',
+      'Low-fat Greek yogurt (2 × 500g)',
+      'Salmon fillets (2)',
+      'Turkey mince, lean (500g)',
+      'Smoked salmon slices (100g)',
+      'Low-fat cottage cheese (300g)',
+    ],
+  },
+  {
+    group: 'Carbohydrates',
+    items: [
+      'Rolled oats (1 kg)',
+      'Wholemeal bread (800g loaf)',
+      'Brown rice (500g)',
+      'Wholemeal pasta (500g)',
+      'Sweet potatoes (1 kg)',
+      'New potatoes (500g)',
+      'Wholemeal tortilla wraps (8-pack)',
+    ],
+  },
+  {
+    group: 'Fruit & vegetables',
+    items: [
+      'Frozen mixed vegetables (1 kg)',
+      'Frozen mixed berries (500g)',
+      'Broccoli (500g)',
+      'Baby spinach (200g bag)',
+      'Mixed peppers (3)',
+      'Carrots (750g)',
+      'Cucumber (2)',
+      'Cherry tomatoes (400g)',
+      'Bananas (5–6)',
+      'Apples (6)',
+      'Avocado (1)',
+    ],
+  },
+  {
+    group: 'Dairy & fridge',
+    items: [
+      'Semi-skimmed or skimmed milk (2L)',
+      'Reduced-fat hummus (200g)',
+    ],
+  },
+  {
+    group: 'Store cupboard',
+    items: [
+      'Olive oil (500ml)',
+      'Natural peanut butter (340g)',
+      'Low-sodium soy sauce',
+      'Mixed herbs & spices',
+      'Garlic (1 bulb)',
+      'Lemons (2)',
+      'Honey (small jar)',
+      'Red lentils (500g)',
+      'Tinned chickpeas or kidney beans (2 cans)',
+    ],
   },
 ];
 
@@ -249,22 +394,25 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Free Low-Calorie Meal Plan Generator UK | AI-Powered Weekly Planner"
-        description="Generate a personalised low-calorie meal plan in seconds. UK-focused, tailored to Tesco, Aldi, Sainsbury's or Asda. Free 7-day high protein meal plan generator."
+        title="Free UK Meal Plan Generator | Weight Loss Meal Plans by Calories & Supermarket"
+        description="Create a free 7-day UK meal plan for weight loss. Choose your calorie target, diet type, cooking time, and supermarket. Includes high-protein meals and a shopping list."
         canonical="/"
         jsonLd={homeJsonLd}
       />
 
       <div className="page">
         <header className="header">
-          <h1>Free Low-Calorie Meal Plan Generator — UK Edition</h1>
-          <p>Enter your details and get a personalised, high-protein meal plan in under 30 seconds.</p>
+          <h1>Free UK Meal Plans for Weight Loss — By Calories, Budget &amp; Supermarket</h1>
+          <p>Create a simple 7-day meal plan for your calorie target, dietary preference, cooking time, and favourite UK supermarket. Includes high-protein meals, prep times, and a grouped shopping list.</p>
           <div className="trust-row">
-            <span className="trust-badge">UK supermarket focused</span>
-            <span className="trust-badge">High-protein by default</span>
-            <span className="trust-badge">Shopping list included</span>
-            <span className="trust-badge">No sign-up required</span>
+            <span className="trust-badge">1500–2000 kcal plans</span>
+            <span className="trust-badge">Tesco, Aldi, Sainsbury&apos;s &amp; Asda</span>
+            <span className="trust-badge">High-protein options</span>
+            <span className="trust-badge">Free, no sign-up</span>
           </div>
+          <p className="hero-secondary-cta">
+            Already know what you want? <a href="#popular-plans">Browse ready-made plans ↓</a>
+          </p>
         </header>
 
         <div className="form-preview-layout">
@@ -311,12 +459,30 @@ export default function Home() {
               <img src="/meal-stickers-ad.png" alt="Meal prep starter kit sticker set" className="ad-card-img" />
               <div className="ad-card-body">
                 <strong className="ad-card-title">Meal Prep Starter Kit</strong>
-                <p>Labels, portion trackers, and weekly planner stickers to keep your meal prep organised and stress-free. Need help with meal prep organisation? Buy these stickers.</p>
+                <p>Labels, portion trackers, and weekly planner stickers to keep your meal prep organised and stress-free.</p>
                 <span className="ad-card-cta">Shop on eBay &rarr;</span>
               </div>
             </a>
           </aside>
         </div>
+
+        <p className="disclaimer">
+          Meal plans are generated for general information only. Calories and protein are estimates. For medical conditions, pregnancy, eating disorders, or clinical dietary needs, speak to a qualified healthcare professional.
+        </p>
+
+        {/* ── Popular Plans Hub ── */}
+        <section className="plans-hub" id="popular-plans">
+          <h2>Explore Ready-Made UK Meal Plans</h2>
+          <p>Not sure where to start? Browse our pre-built plans by calorie target, budget, or dietary preference — all free, no generator needed.</p>
+          <div className="plan-cards">
+            {PLAN_CARDS.map(p => (
+              <Link key={p.slug} to={`/meal-plan/${p.slug}`} className="plan-card">
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         {(loading || progress > 0) && (
           <div className="loading">
@@ -358,11 +524,11 @@ export default function Home() {
         <section className="seo-content">
 
           <div className="seo-section">
-            <h2>What is a Low-Calorie Meal Plan Generator?</h2>
+            <h2>What is a UK Meal Plan Generator?</h2>
             <p>
-              A low-calorie meal plan generator takes your personal preferences — daily calorie target, dietary requirements,
+              A UK meal plan generator takes your personal preferences — daily calorie target, dietary requirements,
               preferred supermarket, and foods you love or want to avoid — and produces a complete weekly meal plan in seconds.
-              Our UK meal plan generator is powered by AI and designed specifically for shoppers at Tesco, Aldi,
+              Our free meal plan generator is powered by AI and designed specifically for UK shoppers at Tesco, Aldi,
               Sainsbury&apos;s, and Asda, so every ingredient on your plan is easy to find and affordable.
             </p>
             <p>
@@ -373,14 +539,14 @@ export default function Home() {
           </div>
 
           <div className="seo-section">
-            <h2>How to Use This UK Meal Plan Generator</h2>
+            <h2>How to Create Your Free UK Weight Loss Meal Plan</h2>
             <p>Getting started takes less than a minute:</p>
             <ol>
               <li><strong>Set your plan length.</strong> Choose a 1-day, 3-day, or 7-day plan.</li>
               <li><strong>Enter your daily calorie target.</strong> Not sure? A common starting point for weight loss is 1,500–1,800 calories. Use our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> to calculate yours.</li>
               <li><strong>Choose your meals per day</strong> and dietary preference — standard, vegetarian, or vegan.</li>
               <li><strong>Use Advanced options</strong> to pick your supermarket, max cooking time, and any foods to include or avoid.</li>
-              <li>Click <em>Generate Plan</em> — your personalised meal plan and shopping list appear in under 30 seconds.</li>
+              <li>Click <em>Get My 7-Day Meal Plan</em> — your personalised plan and shopping list appear in under 30 seconds.</li>
             </ol>
           </div>
 
@@ -404,53 +570,66 @@ export default function Home() {
             </p>
           </div>
 
+          {/* ── Full 7-Day Example Plan ── */}
           <div className="seo-section seo-example">
-            <h2>Example 1800 Calorie Meal Plan UK</h2>
-            <p>Here is a typical day from an AI-generated 1,800 kcal plan using Tesco ingredients:</p>
-            <div className="plan-day-card">
-              <h3>Sample Day — 1,800 kcal target</h3>
-              <div className="plan-meal">
-                <div className="plan-meal-header">
-                  <span className="meal-type">Breakfast</span>
-                  <span className="plan-meal-name">Greek Yogurt Oat Bowl with Berries</span>
-                  <span className="plan-meal-meta">380 kcal &middot; 24g protein &middot; 8 min</span>
+            <h2>Example 7-Day 1800 Calorie Meal Plan UK</h2>
+            <p>
+              Below is a full 7-day example of an 1,800 calorie meal plan using common UK supermarket ingredients —
+              oats, chicken breast, eggs, salmon, tuna, lentils, sweet potatoes, and frozen vegetables.
+              Calorie and protein figures are estimates; weigh ingredients for precision.
+            </p>
+            <div className="example-plan">
+              {EXAMPLE_7_DAY_PLAN.map((day, i) => (
+                <div key={i} className="plan-day-card">
+                  <h3>{day.day}</h3>
+                  {day.meals.map((meal, j) => (
+                    <div key={j} className="plan-meal">
+                      <div className="plan-meal-header">
+                        <span className="meal-type">{meal.type}</span>
+                        <span className="plan-meal-name">{meal.name}</span>
+                        <span className="plan-meal-meta">{meal.kcal} kcal &middot; {meal.protein}g protein &middot; {meal.prep}</span>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="plan-day-total">
+                    ~{day.totals.kcal} kcal &nbsp;&middot;&nbsp; ~{day.totals.protein}g protein
+                  </div>
                 </div>
-                <p className="plan-meal-desc">Rolled oats, Tesco Greek yogurt, frozen mixed berries, drizzle of honey — filling, high-protein, and ready in under 10 minutes.</p>
-              </div>
-              <div className="plan-meal">
-                <div className="plan-meal-header">
-                  <span className="meal-type">Lunch</span>
-                  <span className="plan-meal-name">Chicken, Rice &amp; Roasted Veg Bowl</span>
-                  <span className="plan-meal-meta">520 kcal &middot; 42g protein &middot; 20 min</span>
-                </div>
-                <p className="plan-meal-desc">Grilled chicken breast over brown rice with oven-roasted courgette, pepper, and onion. Simple and macro-balanced.</p>
-              </div>
-              <div className="plan-meal">
-                <div className="plan-meal-header">
-                  <span className="meal-type">Dinner</span>
-                  <span className="plan-meal-name">Grilled Salmon, Sweet Potato &amp; Broccoli</span>
-                  <span className="plan-meal-meta">580 kcal &middot; 38g protein &middot; 25 min</span>
-                </div>
-                <p className="plan-meal-desc">Salmon fillet with roasted sweet potato wedges and steamed broccoli. Rich in omega-3s and extremely filling.</p>
-              </div>
-              <div className="plan-meal">
-                <div className="plan-meal-header">
-                  <span className="meal-type">Snack</span>
-                  <span className="plan-meal-name">Apple &amp; Peanut Butter</span>
-                  <span className="plan-meal-meta">280 kcal &middot; 8g protein &middot; 2 min</span>
-                </div>
-                <p className="plan-meal-desc">Sliced apple with two tablespoons of peanut butter. A satisfying afternoon snack that keeps hunger at bay.</p>
-              </div>
-              <div className="plan-day-total">Total: ~1,760 kcal &nbsp;&middot;&nbsp; ~112g protein</div>
+              ))}
             </div>
-            <p style={{ marginTop: '12px', fontSize: '0.875rem', color: 'var(--muted)' }}>
-              Each generated plan is unique — click <em>Generate Plan</em> above for a different, randomised meal schedule.
+            <p className="example-cta">
+              Want a plan that matches your diet and supermarket?{' '}
+              <a href="#top" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                Generate your personalised version above.
+              </a>
+            </p>
+          </div>
+
+          {/* ── Example Shopping List ── */}
+          <div className="seo-section">
+            <h2>Example UK Shopping List for a Low-Calorie Meal Plan</h2>
+            <p>
+              A well-organised shopping list makes the biggest difference to sticking to a meal plan.
+              Here is an example weekly shop based on the 1,800 calorie plan above, grouped by category.
+            </p>
+            <div className="home-shopping-grid">
+              {EXAMPLE_SHOPPING_LIST.map(section => (
+                <div key={section.group} className="home-shopping-group">
+                  <h4>{section.group}</h4>
+                  <ul>
+                    {section.items.map((item, i) => <li key={i}>{item}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: '0.875rem', color: 'var(--muted)', marginTop: '8px' }}>
+              Estimated cost: around £35–£50 for one person depending on supermarket, brands, and portion sizes.
             </p>
           </div>
 
           <div className="seo-section">
             <h2>Popular UK Meal Plan Types</h2>
-            <p>Browse our ready-made example plans for the most popular calorie targets:</p>
+            <p>Browse our ready-made example plans for the most popular calorie targets and dietary goals:</p>
             <div className="plan-cards">
               {PLAN_CARDS.map(p => (
                 <Link key={p.slug} to={`/meal-plan/${p.slug}`} className="plan-card">

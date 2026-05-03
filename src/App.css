@@ -983,3 +983,93 @@ input:focus, select:focus {
   font-weight: 600;
   color: var(--accent-dark);
 }
+
+/* ---------- Hero secondary CTA ---------- */
+
+.hero-secondary-cta {
+  margin: 10px 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.hero-secondary-cta a {
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+/* ---------- Disclaimer ---------- */
+
+.disclaimer {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.55;
+  padding: 10px 14px;
+  background: #f9fafb;
+  border-left: 3px solid var(--border);
+  border-radius: 0 6px 6px 0;
+  margin: 0 0 28px;
+}
+
+.footer-disclaimer {
+  margin-bottom: 6px;
+}
+
+/* ---------- Popular plans hub (top of page) ---------- */
+
+.plans-hub {
+  margin-bottom: 36px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.plans-hub h2 {
+  font-size: 1.15rem;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+.plans-hub > p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+/* ---------- Home example plan & shopping list ---------- */
+
+.home-shopping-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 12px 0 16px;
+}
+
+.home-shopping-group h4 {
+  margin: 0 0 6px;
+  font-size: 0.9rem;
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.home-shopping-group ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.example-cta {
+  margin-top: 18px;
+  font-size: 0.925rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.example-cta a {
+  color: var(--accent-dark);
+  font-weight: 600;
+  font-style: normal;
+}
