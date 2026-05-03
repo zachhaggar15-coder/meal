@@ -272,6 +272,20 @@ export default function Home() {
             <MealForm onSubmit={handleGenerate} disabled={loading} />
           </section>
           <aside className="preview-col">
+            <a
+              href="https://ebay.us/m/w68ZOg"
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="ad-card"
+            >
+              <span className="ad-label">Sponsored</span>
+              <img src="/meal-stickers-ad.png" alt="Meal prep starter kit sticker set" className="ad-card-img" />
+              <div className="ad-card-body">
+                <strong className="ad-card-title">Meal Prep Starter Kit</strong>
+                <p>Labels, portion trackers, and weekly planner stickers to keep your meal prep organised and stress-free. Need help with meal prep organisation? Buy these stickers.</p>
+                <span className="ad-card-cta">Shop on eBay &rarr;</span>
+              </div>
+            </a>
             <div className="preview-card">
               <div className="preview-header">
                 <span className="preview-tag">Example output</span>
@@ -463,21 +477,6 @@ export default function Home() {
               If you shop at Tesco, see our dedicated <Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco low-calorie meal plan</Link> and
               our <Link to="/blog/tesco-low-calorie-shopping-list">Tesco low-calorie shopping list</Link> for product recommendations.
             </p>
-          </div>
-
-          <div className="ad-banner">
-            <a
-              href="https://ebay.us/m/w68ZOg"
-              target="_blank"
-              rel="noopener noreferrer nofollow sponsored"
-              className="ad-img-link"
-            >
-              <img src="/meal-stickers-ad.png" alt="Meal prep organisation sticker set" className="ad-img" />
-            </a>
-            <div className="ad-text">
-              <span className="ad-label">Sponsored</span>
-              <p>Need help with meal prep organisation? Buy these stickers and keep your week on track.</p>
-            </div>
           </div>
 
           <div className="seo-section">
