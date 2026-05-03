@@ -17,7 +17,47 @@ const homeJsonLd = [
     operatingSystem: 'Web',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
     description:
-      'Free AI-powered meal plan generator for UK users. Creates personalised low-calorie, high-protein weekly meal plans tailored to Tesco, Aldi, Sainsbury\'s or Asda.',
+      "Free AI-powered meal plan generator for UK users. Creates personalised low-calorie, high-protein weekly meal plans tailored to Tesco, Aldi, Sainsbury's or Asda.",
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Generate a UK Low-Calorie Meal Plan',
+    description:
+      'Use the free AI-powered meal plan generator to create a personalised weekly meal plan in under 30 seconds.',
+    tool: [{ '@type': 'HowToTool', name: 'UK Low-Calorie Meal Plan Generator' }],
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: '1',
+        name: 'Set your plan length',
+        text: 'Choose a 1-day, 3-day, or 7-day meal plan.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: '2',
+        name: 'Enter your daily calorie target',
+        text: 'A common starting point for weight loss is 1,500–1,800 calories per day.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: '3',
+        name: 'Choose meals per day and dietary preference',
+        text: 'Select 3, 4, or 5 meals and choose standard, vegetarian, or vegan.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: '4',
+        name: 'Pick your UK supermarket',
+        text: "Choose from Tesco, Aldi, Sainsbury's, or Asda.",
+      },
+      {
+        '@type': 'HowToStep',
+        position: '5',
+        name: 'Click Generate Plan',
+        text: 'Your personalised meal plan with a full shopping list appears in under 30 seconds.',
+      },
+    ],
   },
   {
     '@context': 'https://schema.org',
@@ -36,7 +76,7 @@ const homeJsonLd = [
         name: 'Which UK supermarkets does the generator support?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'The generator supports Tesco, Aldi, Sainsbury\'s and Asda. Meal plans are tailored to use ingredients readily available at your chosen store.',
+          text: "The generator supports Tesco, Aldi, Sainsbury's and Asda. Meal plans are tailored to use ingredients readily available at your chosen store.",
         },
       },
       {
@@ -77,6 +117,39 @@ const LOADING_MESSAGES = [
   'Almost there…',
 ];
 
+const PLAN_CARDS = [
+  {
+    slug: '1500-calorie-meal-plan',
+    title: '1500 Calorie Meal Plan',
+    desc: 'Moderate deficit — ideal for smaller frames or lower activity levels.',
+  },
+  {
+    slug: '1800-calorie-meal-plan',
+    title: '1800 Calorie Meal Plan',
+    desc: 'Popular for women aiming to lose 0.5 kg/week on satisfying meals.',
+  },
+  {
+    slug: '2000-calorie-meal-plan',
+    title: '2000 Calorie Meal Plan',
+    desc: 'Suited to active individuals or those wanting a gentle deficit.',
+  },
+  {
+    slug: 'high-protein-low-calorie-meal-plan',
+    title: 'High Protein Plan',
+    desc: 'Maximises protein to retain muscle mass while losing fat.',
+  },
+  {
+    slug: 'tesco-low-calorie-meal-plan',
+    title: 'Tesco Meal Plan',
+    desc: 'Budget-friendly Tesco ingredients — typically under £35/week.',
+  },
+  {
+    slug: 'vegetarian-low-calorie-meal-plan',
+    title: 'Vegetarian Plan',
+    desc: 'Plant-based and protein-rich using legumes, eggs, and dairy.',
+  },
+];
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -96,7 +169,6 @@ export default function Home() {
       setProgress(0);
       setMsgIndex(0);
 
-      // Easing: each tick moves (target - current) * factor — fast then slows
       progressInterval.current = setInterval(() => {
         const next = progressRef.current + (90 - progressRef.current) * 0.045;
         progressRef.current = next;
@@ -186,12 +258,51 @@ export default function Home() {
       <div className="page">
         <header className="header">
           <h1>Free Low-Calorie Meal Plan Generator — UK Edition</h1>
-          <p>Enter your details below and get a personalised, high-protein meal plan in under 30 seconds.</p>
+          <p>Enter your details and get a personalised, high-protein meal plan in under 30 seconds.</p>
+          <div className="trust-row">
+            <span className="trust-badge">UK supermarket focused</span>
+            <span className="trust-badge">High-protein by default</span>
+            <span className="trust-badge">Shopping list included</span>
+            <span className="trust-badge">No sign-up required</span>
+          </div>
         </header>
 
-        <section className="card">
-          <MealForm onSubmit={handleGenerate} disabled={loading} />
-        </section>
+        <div className="form-preview-layout">
+          <section className="card form-col">
+            <MealForm onSubmit={handleGenerate} disabled={loading} />
+          </section>
+          <aside className="preview-col">
+            <div className="preview-card">
+              <div className="preview-header">
+                <span className="preview-tag">Example output</span>
+                <span className="preview-title">Sample 1,800 kcal day</span>
+              </div>
+              <div className="preview-meals">
+                <div className="preview-meal">
+                  <span className="preview-meal-type">Breakfast</span>
+                  <span className="preview-meal-name">Greek Yogurt Oat Bowl with Berries</span>
+                  <span className="preview-meal-meta">380 kcal &middot; 24g protein &middot; 8 min</span>
+                </div>
+                <div className="preview-meal">
+                  <span className="preview-meal-type">Lunch</span>
+                  <span className="preview-meal-name">Chicken, Rice &amp; Roasted Veg Bowl</span>
+                  <span className="preview-meal-meta">520 kcal &middot; 42g protein &middot; 20 min</span>
+                </div>
+                <div className="preview-meal">
+                  <span className="preview-meal-type">Dinner</span>
+                  <span className="preview-meal-name">Grilled Salmon, Sweet Potato &amp; Broccoli</span>
+                  <span className="preview-meal-meta">580 kcal &middot; 38g protein &middot; 25 min</span>
+                </div>
+                <div className="preview-meal">
+                  <span className="preview-meal-type">Snack</span>
+                  <span className="preview-meal-name">Apple &amp; Peanut Butter</span>
+                  <span className="preview-meal-meta">280 kcal &middot; 8g protein &middot; 2 min</span>
+                </div>
+              </div>
+              <div className="preview-total">~1,760 kcal &nbsp;&middot;&nbsp; ~112g protein</div>
+            </div>
+          </aside>
+        </div>
 
         {(loading || progress > 0) && (
           <div className="loading">
@@ -231,111 +342,178 @@ export default function Home() {
 
         {/* ── SEO Content ── */}
         <section className="seo-content">
-          <h2>What is a Low-Calorie Meal Plan Generator?</h2>
-          <p>
-            A low-calorie meal plan generator takes your personal preferences — daily calorie target, dietary requirements,
-            preferred supermarket, and foods you love or want to avoid — and produces a complete weekly meal plan in seconds.
-            Our UK meal plan generator is powered by AI and is designed specifically for shoppers at Tesco, Aldi,
-            Sainsbury&apos;s, and Asda, so every ingredient on your plan is easy to find and affordable.
-          </p>
-          <p>
-            Unlike generic calorie calculators, our tool creates a structured day-by-day plan with named meals,
-            calorie counts, protein targets, and prep times. It also generates a categorised shopping list with an
-            estimated weekly cost in GBP, making it easier than ever to stick to a budget while eating healthily.
-          </p>
 
-          <h2>How to Use This UK Meal Plan Generator</h2>
-          <p>Getting started takes less than a minute. Here is what to do:</p>
-          <ol>
-            <li><strong>Set your plan length.</strong> Choose a 1-day, 3-day, or 7-day plan depending on how far ahead you want to plan.</li>
-            <li><strong>Enter your daily calorie target.</strong> Not sure what yours is? A common starting point for weight loss is 1,500–1,800 calories per day. Use our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> to calculate yours.</li>
-            <li><strong>Choose your meals per day</strong> and whether you want snacks included.</li>
-            <li><strong>Select your dietary preference</strong> — standard, vegetarian, or vegan.</li>
-            <li><strong>Pick your UK supermarket.</strong> The plan will use ingredients available at Tesco, Aldi, Sainsbury&apos;s, or Asda.</li>
-            <li><strong>Set your max cooking time</strong> so every meal fits your lifestyle — from quick 15-minute dinners to more involved weekend cooking.</li>
-            <li>Optionally add foods you want to include or avoid, then click <em>Generate Plan</em>.</li>
-          </ol>
-          <p>
-            Your personalised meal plan appears within 30 seconds, complete with a shopping list and estimated weekly cost.
-          </p>
+          <div className="seo-section">
+            <h2>What is a Low-Calorie Meal Plan Generator?</h2>
+            <p>
+              A low-calorie meal plan generator takes your personal preferences — daily calorie target, dietary requirements,
+              preferred supermarket, and foods you love or want to avoid — and produces a complete weekly meal plan in seconds.
+              Our UK meal plan generator is powered by AI and designed specifically for shoppers at Tesco, Aldi,
+              Sainsbury&apos;s, and Asda, so every ingredient on your plan is easy to find and affordable.
+            </p>
+            <p>
+              Unlike generic calorie calculators, our tool creates a structured day-by-day plan with named meals,
+              calorie counts, protein targets, and prep times. It also generates a categorised shopping list with an
+              estimated weekly cost in GBP, making it easier than ever to stick to a budget while eating healthily.
+            </p>
+          </div>
 
-          <h2>Why Choose a Calorie-Controlled Meal Plan?</h2>
-          <p>
-            Research consistently shows that meal planning is one of the most effective strategies for sustained weight loss.
-            A 2017 study published in the <em>International Journal of Behavioral Nutrition and Physical Activity</em> found
-            that meal planners had significantly higher diet quality and were less likely to be overweight than those who did not plan.
-          </p>
-          <p>
-            Calorie control remains the most reliable way to lose body fat. By targeting a specific daily calorie intake —
-            typically 300–500 below your Total Daily Energy Expenditure — you create the deficit needed for steady, sustainable
-            fat loss of around 0.5 kg per week. Our generator keeps every day within ±100 kcal of your target,
-            takes the maths out of the equation, and ensures you get enough protein to preserve muscle while you lose fat.
-          </p>
-          <p>
-            High protein intake is especially important during weight loss. Protein is the most satiating macronutrient,
-            meaning it keeps you fuller for longer and reduces cravings. Our meal plans prioritise lean protein sources —
-            chicken breast, eggs, Greek yogurt, tuna, and tofu — to help you hit at least 1.6 g of protein per kg of body weight each day.
-          </p>
+          <div className="seo-section">
+            <h2>How to Use This UK Meal Plan Generator</h2>
+            <p>Getting started takes less than a minute:</p>
+            <ol>
+              <li><strong>Set your plan length.</strong> Choose a 1-day, 3-day, or 7-day plan.</li>
+              <li><strong>Enter your daily calorie target.</strong> Not sure? A common starting point for weight loss is 1,500–1,800 calories. Use our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> to calculate yours.</li>
+              <li><strong>Choose your meals per day</strong> and dietary preference — standard, vegetarian, or vegan.</li>
+              <li><strong>Use Advanced options</strong> to pick your supermarket, max cooking time, and any foods to include or avoid.</li>
+              <li>Click <em>Generate Plan</em> — your personalised meal plan and shopping list appear in under 30 seconds.</li>
+            </ol>
+          </div>
 
-          <h2>Popular UK Meal Plan Types</h2>
-          <p>Not sure where to start? Browse our ready-made example plans for the most popular calorie targets:</p>
-          <ul className="plan-links">
-            <li><Link to="/meal-plan/1500-calorie-meal-plan">1500 Calorie Meal Plan</Link> — ideal for a moderate weight-loss deficit</li>
-            <li><Link to="/meal-plan/1800-calorie-meal-plan">1800 Calorie Meal Plan</Link> — popular for women aiming to lose 0.5 kg/week</li>
-            <li><Link to="/meal-plan/2000-calorie-meal-plan">2000 Calorie Meal Plan</Link> — suited to active individuals or a gentle deficit</li>
-            <li><Link to="/meal-plan/high-protein-low-calorie-meal-plan">High Protein Low Calorie Plan</Link> — maximises protein for muscle retention</li>
-            <li><Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco Low Calorie Meal Plan</Link> — budget-friendly, uses Tesco products</li>
-            <li><Link to="/meal-plan/vegetarian-low-calorie-meal-plan">Vegetarian Low Calorie Plan</Link> — plant-based and protein-rich</li>
-          </ul>
+          <div className="seo-section">
+            <h2>Why Choose a Calorie-Controlled Meal Plan?</h2>
+            <p>
+              Research consistently shows that meal planning is one of the most effective strategies for sustained weight loss.
+              A 2017 study published in the <em>International Journal of Behavioral Nutrition and Physical Activity</em> found
+              that meal planners had significantly higher diet quality and were less likely to be overweight.
+            </p>
+            <p>
+              Calorie control remains the most reliable way to lose body fat. By targeting 300–500 calories below your
+              Total Daily Energy Expenditure, you create the deficit needed for steady fat loss of around 0.5 kg per week.
+              Our generator keeps every day within ±100 kcal of your target and ensures you get enough protein to preserve
+              muscle while you lose fat.
+            </p>
+            <p>
+              High protein intake is especially important during weight loss — it is the most satiating macronutrient,
+              keeping you fuller for longer. Our plans prioritise lean protein sources: chicken breast, eggs, Greek yogurt,
+              tuna, and tofu.
+            </p>
+          </div>
 
-          <h2>Supported UK Supermarkets</h2>
-          <p>
-            Our generator is tailored to the four largest UK supermarkets, making it easy to pick up everything you need in a
-            single weekly shop:
-          </p>
-          <ul>
-            <li><strong>Tesco</strong> — the UK&apos;s largest supermarket, with a huge range of own-brand and Finest products perfect for calorie-controlled eating.</li>
-            <li><strong>Aldi</strong> — outstanding value for staples like chicken, eggs, oats, and frozen vegetables.</li>
-            <li><strong>Sainsbury&apos;s</strong> — a strong range of fresh produce, free-from options, and high-protein ready meals.</li>
-            <li><strong>Asda</strong> — budget-friendly and widely stocked, particularly good for bulk buys on proteins and carbs.</li>
-          </ul>
-          <p>
-            If you shop at Tesco, check out our dedicated <Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco low-calorie meal plan</Link> and
-            our <Link to="/blog/tesco-low-calorie-shopping-list">Tesco low-calorie shopping list</Link> for budget tips and product recommendations.
-          </p>
-
-          <h2>Frequently Asked Questions</h2>
-          <div className="faq">
-            <div className="faq-item">
-              <h3>How many calories should I eat to lose weight?</h3>
-              <p>
-                Most adults lose weight sustainably on 1,500–1,800 calories per day, depending on height, weight, age, and
-                activity level. The safest approach is to calculate your TDEE and subtract 300–500 calories.
-                Our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> walks you through this step by step.
-              </p>
+          <div className="seo-section seo-example">
+            <h2>Example 1800 Calorie Meal Plan UK</h2>
+            <p>Here is a typical day from an AI-generated 1,800 kcal plan using Tesco ingredients:</p>
+            <div className="plan-day-card">
+              <h3>Sample Day — 1,800 kcal target</h3>
+              <div className="plan-meal">
+                <div className="plan-meal-header">
+                  <span className="meal-type">Breakfast</span>
+                  <span className="plan-meal-name">Greek Yogurt Oat Bowl with Berries</span>
+                  <span className="plan-meal-meta">380 kcal &middot; 24g protein &middot; 8 min</span>
+                </div>
+                <p className="plan-meal-desc">Rolled oats, Tesco Greek yogurt, frozen mixed berries, drizzle of honey — filling, high-protein, and ready in under 10 minutes.</p>
+              </div>
+              <div className="plan-meal">
+                <div className="plan-meal-header">
+                  <span className="meal-type">Lunch</span>
+                  <span className="plan-meal-name">Chicken, Rice &amp; Roasted Veg Bowl</span>
+                  <span className="plan-meal-meta">520 kcal &middot; 42g protein &middot; 20 min</span>
+                </div>
+                <p className="plan-meal-desc">Grilled chicken breast over brown rice with oven-roasted courgette, pepper, and onion. Simple and macro-balanced.</p>
+              </div>
+              <div className="plan-meal">
+                <div className="plan-meal-header">
+                  <span className="meal-type">Dinner</span>
+                  <span className="plan-meal-name">Grilled Salmon, Sweet Potato &amp; Broccoli</span>
+                  <span className="plan-meal-meta">580 kcal &middot; 38g protein &middot; 25 min</span>
+                </div>
+                <p className="plan-meal-desc">Salmon fillet with roasted sweet potato wedges and steamed broccoli. Rich in omega-3s and extremely filling.</p>
+              </div>
+              <div className="plan-meal">
+                <div className="plan-meal-header">
+                  <span className="meal-type">Snack</span>
+                  <span className="plan-meal-name">Apple &amp; Peanut Butter</span>
+                  <span className="plan-meal-meta">280 kcal &middot; 8g protein &middot; 2 min</span>
+                </div>
+                <p className="plan-meal-desc">Sliced apple with two tablespoons of peanut butter. A satisfying afternoon snack that keeps hunger at bay.</p>
+              </div>
+              <div className="plan-day-total">Total: ~1,760 kcal &nbsp;&middot;&nbsp; ~112g protein</div>
             </div>
-            <div className="faq-item">
-              <h3>Is this meal plan generator really free?</h3>
-              <p>Yes — completely free, with no sign-up, no email required, and no paywalled features. Generate as many plans as you like.</p>
+            <p style={{ marginTop: '12px', fontSize: '0.875rem', color: 'var(--muted)' }}>
+              Each generated plan is unique — click <em>Generate Plan</em> above for a different, randomised meal schedule.
+            </p>
+          </div>
+
+          <div className="seo-section">
+            <h2>Popular UK Meal Plan Types</h2>
+            <p>Browse our ready-made example plans for the most popular calorie targets:</p>
+            <div className="plan-cards">
+              {PLAN_CARDS.map(p => (
+                <Link key={p.slug} to={`/meal-plan/${p.slug}`} className="plan-card">
+                  <h3>{p.title}</h3>
+                  <p>{p.desc}</p>
+                </Link>
+              ))}
             </div>
-            <div className="faq-item">
-              <h3>Can I use this if I am vegetarian or vegan?</h3>
-              <p>
-                Absolutely. Select &quot;Vegetarian&quot; or &quot;Vegan&quot; from the dietary preference dropdown and the generator will
-                produce a fully plant-based plan. You can also browse our <Link to="/meal-plan/vegetarian-low-calorie-meal-plan">vegetarian low-calorie meal plan</Link> for
-                a ready-made example.
-              </p>
+          </div>
+
+          <div className="seo-section">
+            <h2>Supported UK Supermarkets</h2>
+            <p>
+              Our generator is tailored to the four largest UK supermarkets, making it easy to pick up everything in a
+              single weekly shop:
+            </p>
+            <ul>
+              <li><strong>Tesco</strong> — the UK&apos;s largest supermarket, with a huge range of own-brand products perfect for calorie-controlled eating.</li>
+              <li><strong>Aldi</strong> — outstanding value for staples like chicken, eggs, oats, and frozen vegetables.</li>
+              <li><strong>Sainsbury&apos;s</strong> — a strong range of fresh produce, free-from options, and high-protein choices.</li>
+              <li><strong>Asda</strong> — budget-friendly and widely stocked, particularly good for bulk buys on proteins and carbs.</li>
+            </ul>
+            <p>
+              If you shop at Tesco, see our dedicated <Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco low-calorie meal plan</Link> and
+              our <Link to="/blog/tesco-low-calorie-shopping-list">Tesco low-calorie shopping list</Link> for product recommendations.
+            </p>
+          </div>
+
+          <div className="ad-banner">
+            <a
+              href="https://ebay.us/m/w68ZOg"
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="ad-img-link"
+            >
+              <img src="/meal-stickers-ad.png" alt="Meal prep organisation sticker set" className="ad-img" />
+            </a>
+            <div className="ad-text">
+              <span className="ad-label">Sponsored</span>
+              <p>Need help with meal prep organisation? Buy these stickers and keep your week on track.</p>
             </div>
-            <div className="faq-item">
-              <h3>How do I know the calorie counts are accurate?</h3>
-              <p>
-                The AI generates calorie and protein estimates based on standard nutritional data. They are a useful guide rather than exact figures.
-                For precise tracking, weigh your ingredients and use a calorie tracking app such as MyFitnessPal or Cronometer.
-              </p>
-            </div>
-            <div className="faq-item">
-              <h3>Can I regenerate the plan if I do not like it?</h3>
-              <p>Yes — simply adjust your settings and click Generate Plan again. Each generation produces a different, randomised plan.</p>
+          </div>
+
+          <div className="seo-section">
+            <h2>Frequently Asked Questions</h2>
+            <div className="faq">
+              <div className="faq-item">
+                <h3>How many calories should I eat to lose weight?</h3>
+                <p>
+                  Most adults lose weight sustainably on 1,500–1,800 calories per day, depending on height, weight, age, and
+                  activity level. The safest approach is to calculate your TDEE and subtract 300–500 calories.
+                  Our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> walks you through this step by step.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>Is this meal plan generator really free?</h3>
+                <p>Yes — completely free, with no sign-up, no email required, and no paywalled features. Generate as many plans as you like.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Can I use this if I am vegetarian or vegan?</h3>
+                <p>
+                  Absolutely. Select &quot;Vegetarian&quot; or &quot;Vegan&quot; from the dietary preference dropdown and the generator will
+                  produce a fully plant-based plan. Browse our <Link to="/meal-plan/vegetarian-low-calorie-meal-plan">vegetarian low-calorie meal plan</Link> for
+                  a ready-made example.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>How do I know the calorie counts are accurate?</h3>
+                <p>
+                  The AI generates calorie and protein estimates based on standard nutritional data. They are a useful guide rather than exact figures.
+                  For precise tracking, weigh your ingredients and use a calorie tracking app such as MyFitnessPal or Cronometer.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>Can I regenerate the plan if I do not like it?</h3>
+                <p>Yes — simply adjust your settings and click Generate Plan again. Each generation produces a different, randomised plan.</p>
+              </div>
             </div>
           </div>
 

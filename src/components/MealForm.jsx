@@ -24,8 +24,9 @@ export default function MealForm({ onSubmit, disabled }) {
   const [include, setInclude] = useState('');
   const [avoid, setAvoid] = useState('');
   const [cookTime, setCookTime] = useState('30');
-  const [snacks, setSnacks] = useState(false);
+  const [snacks, setSnacks] = useState(true);
   const [shoppingList, setShoppingList] = useState(true);
+  const [advanced, setAdvanced] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -39,7 +40,7 @@ export default function MealForm({ onSubmit, disabled }) {
       include: include.trim(),
       avoid: avoid.trim(),
       snacks,
-      shoppingList
+      shoppingList,
     });
   }
 
@@ -86,68 +87,81 @@ export default function MealForm({ onSubmit, disabled }) {
             ))}
           </select>
         </div>
+      </div>
 
-        <div>
-          <label htmlFor="supermarket">Supermarket</label>
-          <select id="supermarket" value={supermarket} onChange={(e) => setSupermarket(e.target.value)}>
-            {SUPERMARKETS.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-        </div>
+      <button
+        type="button"
+        className="advanced-toggle"
+        onClick={() => setAdvanced(a => !a)}
+        aria-expanded={advanced}
+      >
+        {advanced ? '▴ Fewer options' : '▾ Advanced options'}
+      </button>
 
-        <div>
-          <label htmlFor="cookTime">Max cooking time</label>
-          <select id="cookTime" value={cookTime} onChange={(e) => setCookTime(e.target.value)}>
-            {COOK_TIMES.map((t) => (
-              <option key={t.value} value={t.value}>{t.label}</option>
-            ))}
-          </select>
-        </div>
+      {advanced && (
+        <div className="form-grid advanced-grid">
+          <div>
+            <label htmlFor="supermarket">Supermarket</label>
+            <select id="supermarket" value={supermarket} onChange={(e) => setSupermarket(e.target.value)}>
+              {SUPERMARKETS.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
 
-        <div className="full">
-          <label htmlFor="include">Foods to include (optional)</label>
-          <input
-            id="include"
-            type="text"
-            placeholder="e.g. chicken, eggs, oats"
-            value={include}
-            onChange={(e) => setInclude(e.target.value)}
-          />
-        </div>
+          <div>
+            <label htmlFor="cookTime">Max cooking time</label>
+            <select id="cookTime" value={cookTime} onChange={(e) => setCookTime(e.target.value)}>
+              {COOK_TIMES.map((t) => (
+                <option key={t.value} value={t.value}>{t.label}</option>
+              ))}
+            </select>
+          </div>
 
-        <div className="full">
-          <label htmlFor="avoid">Foods to avoid (optional)</label>
-          <input
-            id="avoid"
-            type="text"
-            placeholder="e.g. mushrooms, peanuts"
-            value={avoid}
-            onChange={(e) => setAvoid(e.target.value)}
-          />
-        </div>
+          <div className="full">
+            <label htmlFor="include">Foods to include (optional)</label>
+            <input
+              id="include"
+              type="text"
+              placeholder="e.g. chicken, eggs, oats"
+              value={include}
+              onChange={(e) => setInclude(e.target.value)}
+            />
+          </div>
 
-        <div className="full">
-          <div className="toggles">
-            <label className="toggle">
-              <input
-                type="checkbox"
-                checked={snacks}
-                onChange={(e) => setSnacks(e.target.checked)}
-              />
-              Include snacks
-            </label>
-            <label className="toggle">
-              <input
-                type="checkbox"
-                checked={shoppingList}
-                onChange={(e) => setShoppingList(e.target.checked)}
-              />
-              Generate shopping list
-            </label>
+          <div className="full">
+            <label htmlFor="avoid">Foods to avoid (optional)</label>
+            <input
+              id="avoid"
+              type="text"
+              placeholder="e.g. mushrooms, peanuts"
+              value={avoid}
+              onChange={(e) => setAvoid(e.target.value)}
+            />
+          </div>
+
+          <div className="full">
+            <div className="toggles">
+              <label className="toggle">
+                <input
+                  type="checkbox"
+                  checked={snacks}
+                  onChange={(e) => setSnacks(e.target.checked)}
+                />
+                Include snacks
+              </label>
+              <label className="toggle">
+                <input
+                  type="checkbox"
+                  checked={shoppingList}
+                  onChange={(e) => setShoppingList(e.target.checked)}
+                />
+                Generate shopping list
+              </label>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <button className="submit" type="submit" disabled={disabled}>
         {disabled ? 'Generating…' : 'Generate Plan'}
