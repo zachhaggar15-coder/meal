@@ -272,20 +272,6 @@ export default function Home() {
             <MealForm onSubmit={handleGenerate} disabled={loading} />
           </section>
           <aside className="preview-col">
-            <a
-              href="https://ebay.us/m/w68ZOg"
-              target="_blank"
-              rel="noopener noreferrer nofollow sponsored"
-              className="ad-card"
-            >
-              <span className="ad-label">Sponsored</span>
-              <img src="/meal-stickers-ad.png" alt="Meal prep starter kit sticker set" className="ad-card-img" />
-              <div className="ad-card-body">
-                <strong className="ad-card-title">Meal Prep Starter Kit</strong>
-                <p>Labels, portion trackers, and weekly planner stickers to keep your meal prep organised and stress-free. Need help with meal prep organisation? Buy these stickers.</p>
-                <span className="ad-card-cta">Shop on eBay &rarr;</span>
-              </div>
-            </a>
             <div className="preview-card">
               <div className="preview-header">
                 <span className="preview-tag">Example output</span>
@@ -315,6 +301,20 @@ export default function Home() {
               </div>
               <div className="preview-total">~1,760 kcal &nbsp;&middot;&nbsp; ~112g protein</div>
             </div>
+            <a
+              href="https://ebay.us/m/w68ZOg"
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="ad-card"
+            >
+              <span className="ad-label">Sponsored</span>
+              <img src="/meal-stickers-ad.png" alt="Meal prep starter kit sticker set" className="ad-card-img" />
+              <div className="ad-card-body">
+                <strong className="ad-card-title">Meal Prep Starter Kit</strong>
+                <p>Labels, portion trackers, and weekly planner stickers to keep your meal prep organised and stress-free. Need help with meal prep organisation? Buy these stickers.</p>
+                <span className="ad-card-cta">Shop on eBay &rarr;</span>
+              </div>
+            </a>
           </aside>
         </div>
 
