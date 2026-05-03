@@ -19,7 +19,9 @@ export default function Footer() {
             <li><Link to="/meal-plan/2000-calorie-meal-plan">2000 Calorie Meal Plan</Link></li>
             <li><Link to="/meal-plan/high-protein-low-calorie-meal-plan">High Protein Plan</Link></li>
             <li><Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco Meal Plan</Link></li>
+            <li><Link to="/meal-plan/aldi-low-calorie-meal-plan">Aldi Meal Plan</Link></li>
             <li><Link to="/meal-plan/vegetarian-low-calorie-meal-plan">Vegetarian Plan</Link></li>
+            <li><Link to="/meal-plan/vegan-low-calorie-meal-plan">Vegan Plan</Link></li>
           </ul>
         </div>
 
@@ -31,6 +33,7 @@ export default function Footer() {
             <li><Link to="/blog/high-protein-low-calorie-meals">High Protein Meals</Link></li>
             <li><Link to="/blog/tesco-low-calorie-shopping-list">Tesco Shopping List</Link></li>
             <li><Link to="/blog/how-to-meal-plan-for-weight-loss">How to Meal Plan</Link></li>
+            <li><Link to="/blog/how-many-calories-to-lose-weight">How Many Calories to Lose Weight</Link></li>
           </ul>
         </div>
       </div>

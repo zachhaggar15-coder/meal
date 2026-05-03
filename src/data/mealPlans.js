@@ -44,6 +44,20 @@ const BASE_SHOPPING = {
     dairy: ['Skimmed milk (2 L)', 'Low-fat cheese (200 g)'],
     extras: ['Olive oil', 'Tinned tomatoes (4 cans)', 'Soy sauce', 'Tahini (jar)', 'Lemon (4)', 'Garlic bulb', 'Nutritional yeast (100 g)'],
   },
+  'aldi-low-calorie-meal-plan': {
+    protein: ['Aldi Lean Chicken Breast Fillets (1 kg)', 'Aldi Tinned Tuna in Spring Water (4 × 145 g)', 'Aldi Free Range Eggs (12)', 'Aldi Low Fat Greek Style Yogurt (500 g)', 'Aldi Turkey Breast Steak (400 g)'],
+    carbs: ['Aldi Rolled Oats (1 kg)', 'Aldi Wholemeal Sliced Bread (800 g)', 'Aldi Easy Cook Brown Rice (1 kg)', 'Aldi Sweet Potatoes (1 kg)', 'Aldi Wholewheat Pasta (500 g)'],
+    vegetables: ['Aldi Broccoli (500 g)', 'Aldi Baby Spinach (200 g)', 'Aldi Salad Bag (200 g)', 'Aldi Cherry Tomatoes (400 g)', 'Aldi Frozen Mixed Veg (1 kg)'],
+    dairy: ['Aldi Skimmed Milk (2 L)', 'Aldi Lighter Cheddar (250 g)'],
+    extras: ['Aldi Olive Oil (500 ml)', 'Aldi Reduced Fat Hummus (200 g)', 'Aldi Frozen Mixed Berries (750 g)', 'Aldi Wholemeal Pitta Breads (6 pack)'],
+  },
+  'vegan-low-calorie-meal-plan': {
+    protein: ['Firm tofu (2 × 400 g)', 'Silken tofu (400 g)', 'Tinned chickpeas (6 cans)', 'Tinned black beans (4 cans)', 'Red lentils (500 g)', 'Green lentils (500 g)', 'Peanut butter natural (340 g)', 'Hemp seeds (200 g)'],
+    carbs: ['Rolled oats (1 kg)', 'Wholemeal bread (800 g)', 'Brown rice (500 g)', 'Sweet potatoes (1 kg)', 'Quinoa (500 g)', 'Wholemeal pasta (500 g)'],
+    vegetables: ['Broccoli (500 g)', 'Spinach (400 g)', 'Mixed peppers (500 g)', 'Courgette (3)', 'Cherry tomatoes (400 g)', 'Mushrooms (500 g)', 'Butternut squash (1)'],
+    plantbased: ['Soy milk (1 L)', 'Oat milk (1 L)', 'Coconut milk tinned (2 cans)', 'Dairy-free yogurt (500 g)'],
+    extras: ['Olive oil', 'Tinned tomatoes (4 cans)', 'Soy sauce low-sodium', 'Tahini (jar)', 'Almond butter (jar)', 'Lemon (4)', 'Garlic bulb', 'Nutritional yeast (100 g)'],
+  },
 };
 
 const PLAN_1500 = [
@@ -163,6 +177,59 @@ const PLAN_TESCO = PLAN_1500.map(day => ({
     desc: m.desc.replace('brown rice', 'Tesco Easy Cook Brown Rice').replace('wholemeal toast', "Tesco Wholemeal Sliced Bread").replace('Greek yogurt', 'Tesco Low Fat Greek Style Yogurt').replace('oats', 'Tesco Rolled Oats').replace('skimmed milk', 'Tesco Skimmed Milk'),
   })),
 }));
+
+const PLAN_ALDI = PLAN_1500.map(day => ({
+  ...day,
+  meals: day.meals.map(m => ({
+    ...m,
+    desc: m.desc.replace('brown rice', 'Aldi Easy Cook Brown Rice').replace('wholemeal toast', "Aldi Wholemeal Sliced Bread").replace('Greek yogurt', 'Aldi Low Fat Greek Style Yogurt').replace('oats', 'Aldi Rolled Oats').replace('skimmed milk', 'Aldi Skimmed Milk'),
+  })),
+}));
+
+const PLAN_VEGAN = [
+  { day: 'Monday', meals: [
+    { type: 'Breakfast', name: 'Oat & Banana Smoothie Bowl', kcal: 360, protein: 14, prep: '5 min', desc: '50 g oats, banana, soy milk, 1 tbsp almond butter, topped with berries and granola.' },
+    { type: 'Lunch', name: 'Chickpea & Spinach Salad', kcal: 420, protein: 18, prep: '10 min', desc: 'Tinned chickpeas, baby spinach, cherry tomatoes, cucumber, red onion, and tahini-lemon dressing.' },
+    { type: 'Dinner', name: 'Tofu Stir-Fry with Brown Rice', kcal: 520, protein: 26, prep: '20 min', desc: 'Firm tofu cubes stir-fried with broccoli, peppers, and low-sodium soy sauce, served on brown rice.' },
+    { type: 'Snack', name: 'Coconut Yogurt & Berries', kcal: 200, protein: 4, prep: '2 min', desc: '200 g dairy-free coconut or oat yogurt with a handful of mixed berries.' },
+  ], totals: { kcal: 1500, protein: 62 } },
+  { day: 'Tuesday', meals: [
+    { type: 'Breakfast', name: 'Tofu Scramble on Wholemeal Toast', kcal: 350, protein: 18, prep: '10 min', desc: 'Crumbled firm tofu sautéed with turmeric, spinach, and cherry tomatoes, on wholemeal toast.' },
+    { type: 'Lunch', name: 'Red Lentil & Vegetable Soup', kcal: 370, protein: 16, prep: '30 min', desc: 'Thick red lentil soup with cumin, turmeric, carrot, and onion, with wholemeal bread.' },
+    { type: 'Dinner', name: 'Mushroom & Lentil Bolognese', kcal: 530, protein: 22, prep: '25 min', desc: 'Finely chopped mushrooms and green lentils in a rich tomato sauce, served over wholemeal spaghetti.' },
+    { type: 'Snack', name: 'Apple & Almond Butter', kcal: 250, protein: 8, prep: '2 min', desc: 'One apple sliced and served with one tablespoon of natural almond butter.' },
+  ], totals: { kcal: 1500, protein: 64 } },
+  { day: 'Wednesday', meals: [
+    { type: 'Breakfast', name: 'Overnight Oats with Nut Butter', kcal: 380, protein: 14, prep: '5 min', desc: '50 g oats soaked in oat milk with a tablespoon of tahini and banana slices.' },
+    { type: 'Lunch', name: 'Tofu & Quinoa Buddha Bowl', kcal: 450, protein: 20, prep: '15 min', desc: 'Baked marinated tofu over 80 g quinoa with roasted peppers, cucumber, avocado, and tahini dressing.' },
+    { type: 'Dinner', name: 'Black Bean & Sweet Potato Curry', kcal: 480, protein: 18, prep: '25 min', desc: 'Black beans and diced sweet potato in a coconut milk curry sauce with spinach and brown rice.' },
+    { type: 'Snack', name: 'Hummus & Veggie Sticks', kcal: 190, protein: 8, prep: '2 min', desc: '40 g hummus with 100 g carrot and cucumber sticks.' },
+  ], totals: { kcal: 1500, protein: 60 } },
+  { day: 'Thursday', meals: [
+    { type: 'Breakfast', name: 'Smoothie with Hemp Seeds', kcal: 340, protein: 16, prep: '5 min', desc: 'Blended banana, oat milk, 1 scoop plant-based protein powder, 2 tbsp hemp seeds, and berries.' },
+    { type: 'Lunch', name: 'Black Bean Tacos', kcal: 430, protein: 16, prep: '15 min', desc: 'Spiced black beans in two small wholemeal tortillas with shredded cabbage, salsa, avocado, and dairy-free sour cream.' },
+    { type: 'Dinner', name: 'Tofu & Lentil Curry', kcal: 530, protein: 28, prep: '25 min', desc: 'Silken tofu with green lentils in a tomato-based curry sauce, served with a small portion of brown rice.' },
+    { type: 'Snack', name: 'Mixed Nuts & Berries', kcal: 200, protein: 7, prep: '1 min', desc: '30 g mixed unsalted nuts with a small handful of dried berries.' },
+  ], totals: { kcal: 1500, protein: 67 } },
+  { day: 'Friday', meals: [
+    { type: 'Breakfast', name: 'Avocado Toast with Nutritional Yeast', kcal: 400, protein: 12, prep: '10 min', desc: 'Two slices wholemeal toast topped with half an avocado, tomato, and nutritional yeast.' },
+    { type: 'Lunch', name: 'Tofu Caesar Salad', kcal: 390, protein: 22, prep: '10 min', desc: 'Crispy baked tofu cubes over romaine lettuce with plant-based Caesar dressing and nutritional yeast.' },
+    { type: 'Dinner', name: 'Vegetarian Chilli (Vegan)', kcal: 510, protein: 24, prep: '25 min', desc: 'Kidney beans, black beans, and lentils in a smoky tomato chilli, served with brown rice.' },
+    { type: 'Snack', name: 'Tahini & Carrot Sticks', kcal: 200, protein: 8, prep: '2 min', desc: '40 g tahini with 150 g carrot sticks for dipping.' },
+  ], totals: { kcal: 1500, protein: 66 } },
+  { day: 'Saturday', meals: [
+    { type: 'Breakfast', name: 'Tofu Scramble with Mushrooms', kcal: 360, protein: 20, prep: '10 min', desc: 'Crumbled tofu sautéed with mushrooms, spinach, and nutritional yeast for a cheesy flavour.' },
+    { type: 'Lunch', name: 'Lentil & Roasted Veg Bowl', kcal: 420, protein: 18, prep: '30 min', desc: 'Roasted butternut squash, courgette, and peppers over green lentils with tahini dressing.' },
+    { type: 'Dinner', name: 'Chickpea & Vegetable Curry', kcal: 530, protein: 20, prep: '25 min', desc: 'Tinned chickpeas with spinach, tomato, and coconut milk in a fragrant curry, with brown rice.' },
+    { type: 'Snack', name: 'Energy Balls (homemade)', kcal: 190, protein: 8, prep: '15 min', desc: 'Dates, walnuts, and cacao blended and rolled into balls (~3 balls, 30 g).' },
+  ], totals: { kcal: 1500, protein: 66 } },
+  { day: 'Sunday', meals: [
+    { type: 'Breakfast', name: 'Banana Oat Pancakes', kcal: 380, protein: 12, prep: '15 min', desc: 'Two pancakes made with mashed banana, 50 g oats, soy milk, and a sprinkle of cinnamon.' },
+    { type: 'Lunch', name: 'Tomato & Chickpea Salad', kcal: 400, protein: 16, prep: '10 min', desc: 'Cherry tomatoes, basil, chickpeas, rocket, and olive oil-balsamic dressing.' },
+    { type: 'Dinner', name: 'Lentil Bolognese with Wholemeal Pasta', kcal: 520, protein: 24, prep: '30 min', desc: 'Brown lentils in a rich tomato sauce with mushrooms and herbs, served over wholemeal pasta.' },
+    { type: 'Snack', name: 'Peanut Butter & Banana', kcal: 200, protein: 8, prep: '2 min', desc: 'Banana with two tablespoons of natural peanut butter.' },
+  ], totals: { kcal: 1500, protein: 60 } },
+];
 
 const PLAN_VEGETARIAN = [
   { day: 'Monday', meals: [
@@ -414,5 +481,74 @@ export const mealPlansData = {
     plan: PLAN_VEGETARIAN,
     shoppingList: BASE_SHOPPING['vegetarian-low-calorie-meal-plan'],
     priceEstimate: '£35–45 per week',
+  },
+
+  'aldi-low-calorie-meal-plan': {
+    title: 'Aldi Low Calorie Meal Plan UK | Budget 7-Day Guide',
+    description: 'A budget-friendly Aldi low calorie meal plan using affordable own-brand ingredients, with meal ideas, calories, protein, and shopping list for weight loss.',
+    h1: 'Aldi Low Calorie Meal Plan UK — Budget 7-Day Guide',
+    planLabel: 'Aldi Low Calorie',
+    targetCalories: 1500,
+    intro: 'Aldi is renowned for offering some of the lowest prices on healthy, calorie-controlled ingredients in the UK. From Aldi Rolled Oats at 85p per kg to Aldi Lean Chicken Breast Fillets at highly competitive prices, the own-brand range makes healthy eating genuinely accessible on almost any budget. This 7-day plan is built exclusively around products available at Aldi — and comes in at an estimated £35–45 per week for one person, making it one of the most affordable calorie-controlled meal plans available.',
+    whyThisPlan: 'Shopping at Aldi means consistently low prices without frequent special offers or loyalty schemes required. Their own-brand lean proteins, frozen vegetables, and whole grains form the backbone of affordable weight loss. This plan targets 1,500 calories per day with a strong focus on protein (90–120 g daily) using readily available Aldi products including Aldi Low Fat Greek Style Yogurt, Aldi Tinned Tuna in Spring Water, and Aldi Free Range Eggs — all significantly cheaper than many competitors.',
+    tips: [
+      'Aldi\'s frozen vegetable range is consistently excellent value and just as nutritious as fresh. Frozen broccoli, peas, and mixed veg are perfect for batch cooking.',
+      'Buy own-brand staples: Aldi Rolled Oats, Brown Rice, and Wholemeal Bread are some of the cheapest available while maintaining quality.',
+      'Aldi\'s Specially Selected range offers premium options at reasonable prices — use for special meals without blowing your budget.',
+      'Aldi egg prices are consistently among the lowest in the UK. Buying larger packs (18 or 30 packs) provides excellent value.',
+      'Check the Aldi app or in-store for upcoming Specialbuys — many include kitchen equipment useful for meal prep.',
+    ],
+    faq: [
+      { q: 'How much does this Aldi meal plan cost per week?', a: 'Approximately £35–45 per week for one person, using Aldi own-brand products. Aldi\'s consistently low prices mean no need for loyalty schemes or special offers.' },
+      { q: 'Can I use this plan at other supermarkets?', a: 'Yes. While Aldi has the lowest prices overall, the ingredients are available at Tesco, Sainsbury\'s, Asda, and Morrisons. Use our generator to tailor a plan to your preferred store.' },
+      { q: 'Does Aldi have everything I need?', a: 'Yes. All ingredients are stocked in standard Aldi stores. Smaller Aldi Smaller Stores may have a reduced range, so a larger superstore or online order is recommended for the full plan.' },
+    ],
+    related: [
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Plan' },
+      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Plan' },
+      { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
+      { slug: 'vegan-low-calorie-meal-plan', label: 'Vegan Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK' },
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
+    ],
+    plan: PLAN_ALDI,
+    shoppingList: BASE_SHOPPING['aldi-low-calorie-meal-plan'],
+    priceEstimate: '£35–45 per week (Aldi own-brand)',
+  },
+
+  'vegan-low-calorie-meal-plan': {
+    title: 'Vegan Low Calorie Meal Plan UK | Free 7-Day Guide',
+    description: 'A vegan low calorie meal plan for UK shoppers, with high-protein plant-based meals using tofu, legumes, nuts, and simple supermarket ingredients.',
+    h1: 'Vegan Low Calorie Meal Plan UK — Free 7-Day Guide',
+    planLabel: 'Vegan Low Calorie',
+    targetCalories: 1500,
+    intro: 'Losing weight on a vegan diet is entirely achievable and often easier than people expect. Plant-based proteins like tofu, legumes, nuts, seeds, and plant-based alternatives are filling, nutritious, and widely available at all UK supermarkets. This 7-day vegan low calorie meal plan is designed for UK shoppers, targeting 1,500 calories per day with a strong emphasis on protein and fibre to keep you satisfied and support a healthy metabolism. Every meal uses ingredients you can pick up at Tesco, Aldi, Sainsbury\'s, or Asda.',
+    whyThisPlan: 'A well-planned vegan diet is associated with lower body weight, reduced risk of type 2 diabetes, and better heart health. The key to losing weight on a vegan diet is ensuring adequate protein and fibre — without animal products, it is easy to fill up on carbohydrate-heavy foods that push you over your calorie target. This plan solves that by building every meal around a protein anchor — tofu, lentils, chickpeas, or nuts — before adding vegetables and complex carbs. You will hit 60–70 g of protein per day, which is appropriate for weight loss in most adults.',
+    tips: [
+      'Firm tofu is your best friend — press it to remove moisture, then pan-fry or bake for better texture and flavour absorption.',
+      'Tinned chickpeas, lentils, and beans are nutritional powerhouses. Buy several tins a week — they store for years and cost around 60–80p each.',
+      'Plant-based yogurt (oat, soy, or coconut) provides protein and probiotics. Use instead of dairy yogurt for breakfast and snacks.',
+      'Nutritional yeast adds a cheesy, umami flavour and is high in B vitamins. Find it in most UK supermarkets.',
+      'Hemp seeds and pumpkin seeds are excellent plant-based protein sources. Add to smoothies, salads, and porridge for a protein boost.',
+    ],
+    faq: [
+      { q: 'Can I get enough protein on a vegan diet?', a: 'Yes. Tofu, legumes, nuts, seeds, and plant-based protein powder are all excellent vegan protein sources. This plan delivers 60–70 g of protein per day, which is sufficient for most adults losing weight.' },
+      { q: 'What is the difference between vegan and vegetarian plans?', a: 'The vegetarian plan includes eggs, dairy, and sometimes cheese. The vegan plan excludes all animal products, using tofu, legumes, nuts, and plant-based milk instead.' },
+      { q: 'Will I be hungry on 1500 calories as a vegan?', a: 'Hunger depends on food choices more than total calories. This plan is built around high-protein, high-fibre meals that keep you full. If regularly hungry, add more non-starchy vegetables and ensure each meal includes at least 15 g of plant-based protein.' },
+    ],
+    related: [
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Plan' },
+      { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Plan' },
+      { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/best-low-calorie-foods-uk', label: 'Best Low Calorie Foods in UK Supermarkets' },
+      { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
+    ],
+    plan: PLAN_VEGAN,
+    shoppingList: BASE_SHOPPING['vegan-low-calorie-meal-plan'],
+    priceEstimate: '£40–50 per week',
   },
 };

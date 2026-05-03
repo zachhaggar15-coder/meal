@@ -7,7 +7,9 @@ const PLANS = [
   { slug: '2000-calorie-meal-plan', label: '2000 Calorie Meal Plan', tag: '' },
   { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan', tag: '' },
   { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Meal Plan', tag: '' },
+  { slug: 'aldi-low-calorie-meal-plan', label: 'Aldi Meal Plan', tag: '' },
   { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Plan', tag: '' },
+  { slug: 'vegan-low-calorie-meal-plan', label: 'Vegan Plan', tag: '' },
 ];
 
 export default function Navbar() {
