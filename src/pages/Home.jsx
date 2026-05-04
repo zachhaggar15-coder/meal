@@ -107,21 +107,56 @@ const homeJsonLd = [
 ];
 
 const LOADING_MESSAGES = [
-  'Analysing your preferences…',
-  'Building your meal schedule…',
-  'Calculating calories and protein…',
-  'Selecting recipes from your supermarket…',
-  'Compiling your shopping list…',
+  'Convincing the AI that kale is exciting…',
+  'Hiding the chocolate from your meal plan…',
+  'Negotiating with broccoli on your behalf…',
+  'Removing the fourth cheese option (reluctantly)…',
   'Asking the AI very nicely…',
-  'Convincing the AI that broccoli is delicious…',
-  'Hiding the chocolate from your plan…',
-  'Negotiating with the algorithm…',
-  'Pretending kale is exciting…',
-  'Cross-referencing with 47 nutritional databases…',
-  'Removing the fourth cheese option…',
-  'Making sure there\'s enough protein…',
+  'Pretending cauliflower rice is just as good…',
+  'Telling the algorithm you actually like vegetables…',
   'Adding a cheeky treat then removing it again…',
-  'Almost there…',
+  'Explaining to the AI what a jacket potato is…',
+  'Cross-referencing with 47 nutritional databases…',
+  'Convincing protein that it tastes nice in yogurt…',
+  'Hiding the fact that we almost included a kebab…',
+  'Overruling the AI\'s obsession with quinoa…',
+  'Teaching the algorithm what "budget-friendly" means…',
+  'Calculating exactly how many oats is too many oats…',
+  'Pretending overnight oats are a treat, not a punishment…',
+  'Adding salmon, removing salmon, adding it back…',
+  'Convincing the AI that meal prep is fun…',
+  'Removing the fifth egg of the day…',
+  'Arguing with the algorithm about portion sizes…',
+  'Sneaking in an extra snack just for you…',
+  'Asking the AI to stop suggesting avocado toast for every meal…',
+  'Teaching the robot the difference between Tesco and Waitrose…',
+  'Removing the suggestion of "just have a salad"…',
+  'Making sure your shopping list doesn\'t cost more than rent…',
+  'Apologising to the AI for rejecting its kale smoothie idea…',
+  'Convincing the system that cottage cheese is acceptable…',
+  'Double-checking the AI hasn\'t snuck in a Michelin-star recipe…',
+  'Removing "truffle oil" from the shopping list again…',
+  'Making the AI acknowledge that frozen veg counts…',
+  'Telling the algorithm that "a handful" is not a unit of measurement…',
+  'Stopping the AI from writing a 12-step recipe for beans on toast…',
+  'Quietly ignoring the AI\'s suggestion of a spiraliser…',
+  'Making sure Sunday doesn\'t involve a 3-hour roast…',
+  'Filtering out anything that requires a bain-marie…',
+  'Convincing the AI that Aldi is just as good as Waitrose…',
+  'Removing the suggestion that you learn to ferment your own kimchi…',
+  'Adding some actual flavour to the Wednesday dinner…',
+  'Stopping the AI from making every lunch a sad desk salad…',
+  'Quietly removing "bone broth" from the breakfast options…',
+  'Telling the robot you don\'t own a mandoline slicer…',
+  'Making sure at least one meal doesn\'t require 14 ingredients…',
+  'Convincing the AI that "meal prep" doesn\'t mean "cook for 6 hours on Sunday"…',
+  'Removing the AI\'s inexplicable love of edamame…',
+  'Making sure there are no turmeric lattes on this plan…',
+  'Persuading the algorithm that fish fingers are a valid protein source…',
+  'Telling the AI that "superfood" isn\'t a food group…',
+  'Removing the suggestion to buy a Nutribullet…',
+  'Convincing the system that beans are, in fact, a meal…',
+  'Almost done — just negotiating over the biscuit situation…',
 ];
 
 const PLAN_CARDS = [
@@ -307,12 +342,18 @@ export default function Home() {
   const progressRef = useRef(0);
   const progressInterval = useRef(null);
   const msgInterval = useRef(null);
+  const loadingRef = useRef(null);
+  const planRef = useRef(null);
 
   useEffect(() => {
     if (loading) {
       progressRef.current = 0;
       setProgress(0);
-      setMsgIndex(0);
+      setMsgIndex(Math.floor(Math.random() * LOADING_MESSAGES.length));
+
+      setTimeout(() => {
+        loadingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 50);
 
       progressInterval.current = setInterval(() => {
         const next = progressRef.current + (90 - progressRef.current) * 0.045;
@@ -321,7 +362,7 @@ export default function Home() {
       }, 300);
 
       msgInterval.current = setInterval(() => {
-        setMsgIndex(i => (i + 1) % LOADING_MESSAGES.length);
+        setMsgIndex(() => Math.floor(Math.random() * LOADING_MESSAGES.length));
       }, 2800);
     } else {
       clearInterval(progressInterval.current);
@@ -339,6 +380,14 @@ export default function Home() {
       clearInterval(msgInterval.current);
     };
   }, [loading]);
+
+  useEffect(() => {
+    if (plan?.weekly_plan && planRef.current) {
+      setTimeout(() => {
+        planRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }, [plan]);
 
   async function handleEdit(instruction) {
     setEditLoading(true);
@@ -466,26 +515,8 @@ export default function Home() {
           </aside>
         </div>
 
-        <p className="disclaimer">
-          Meal plans are generated for general information only. Calories and protein are estimates. For medical conditions, pregnancy, eating disorders, or clinical dietary needs, speak to a qualified healthcare professional.
-        </p>
-
-        {/* ── Popular Plans Hub ── */}
-        <section className="plans-hub" id="popular-plans">
-          <h2>Explore Ready-Made UK Meal Plans</h2>
-          <p>Not sure where to start? Browse our pre-built plans by calorie target, budget, or dietary preference — all free, no generator needed.</p>
-          <div className="plan-cards">
-            {PLAN_CARDS.map(p => (
-              <Link key={p.slug} to={`/meal-plan/${p.slug}`} className="plan-card">
-                <h3>{p.title}</h3>
-                <p>{p.desc}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-
         {(loading || progress > 0) && (
-          <div className="loading">
+          <div className="loading" ref={loadingRef}>
             <div className="loading-message">{LOADING_MESSAGES[msgIndex]}</div>
             <div className="loading-bar-track">
               <div
@@ -507,18 +538,38 @@ export default function Home() {
           </div>
         )}
 
-        {plan?.weekly_plan && (
-          <EditPlanBox
-            onEdit={handleEdit}
-            loading={editLoading}
-            error={editError}
-          />
-        )}
+        <p className="disclaimer">
+          Meal plans are generated for general information only. Calories and protein are estimates. For medical conditions, pregnancy, eating disorders, or clinical dietary needs, speak to a qualified healthcare professional.
+        </p>
 
-        {plan?.weekly_plan && <MealPlan weeklyPlan={plan.weekly_plan} />}
-        {plan?.shopping_list && lastValues?.shoppingList && (
-          <ShoppingList list={plan.shopping_list} price={plan.price_estimate} />
-        )}
+        {/* ── Popular Plans Hub ── */}
+        <section className="plans-hub" id="popular-plans">
+          <h2>Explore Ready-Made UK Meal Plans</h2>
+          <p>Not sure where to start? Browse our pre-built plans by calorie target, budget, or dietary preference — all free, no generator needed.</p>
+          <div className="plan-cards">
+            {PLAN_CARDS.map(p => (
+              <Link key={p.slug} to={`/meal-plan/${p.slug}`} className="plan-card">
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <div ref={planRef}>
+          {plan?.weekly_plan && (
+            <EditPlanBox
+              onEdit={handleEdit}
+              loading={editLoading}
+              error={editError}
+            />
+          )}
+
+          {plan?.weekly_plan && <MealPlan weeklyPlan={plan.weekly_plan} />}
+          {plan?.shopping_list && lastValues?.shoppingList && (
+            <ShoppingList list={plan.shopping_list} price={plan.price_estimate} />
+          )}
+        </div>
 
         {/* ── SEO Content ── */}
         <section className="seo-content">

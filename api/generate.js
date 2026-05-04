@@ -55,6 +55,7 @@ export default async function handler(req, res) {
         // Force JSON output so we don't have to scrape it from prose.
         response_format: { type: 'json_object' },
         temperature: 0.7,
+        max_tokens: Math.min(4096, Number(days) * Number(meals) * 150 + 900),
         messages: [
           {
             role: 'system',
@@ -195,7 +196,8 @@ Output format MUST be valid JSON matching exactly:
   "price_estimate": { "total": "", "notes": "" }
 }
 
-Rules for portion_size: list every ingredient with its exact weight or quantity for one serving (e.g. "150g chicken breast, 80g cooked brown rice, 100g broccoli"). Be specific and realistic.
+Rules for description: max 12 words, e.g. "Creamy and filling, great cold or warm."
+Rules for portion_size: weights only, no explanation, e.g. "150g chicken, 80g rice, 100g broccoli".
 Rules for shopping_list items: each item must be an object with "name" (ingredient), "amount" (total needed for the whole plan), and "packs" (how many standard supermarket packs to buy, e.g. "2 × 500g packs" or "1 × 1kg bag").
 
 Return ONLY valid JSON. No markdown, no commentary.`;
