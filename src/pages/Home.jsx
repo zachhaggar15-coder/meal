@@ -363,7 +363,7 @@ export default function Home() {
 
       msgInterval.current = setInterval(() => {
         setMsgIndex(() => Math.floor(Math.random() * LOADING_MESSAGES.length));
-      }, 2800);
+      }, 5000);
     } else {
       clearInterval(progressInterval.current);
       clearInterval(msgInterval.current);
