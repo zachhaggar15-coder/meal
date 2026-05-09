@@ -4,77 +4,257 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.mealprep.org.uk/</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Meal plan pages -->
+  <!-- Meal plan pages — calorie targets -->
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/1500-calorie-meal-plan</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/1800-calorie-meal-plan</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/2000-calorie-meal-plan</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.mealprep.org.uk/meal-plan/high-protein-low-calorie-meal-plan</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.mealprep.org.uk/meal-plan/tesco-low-calorie-meal-plan</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.mealprep.org.uk/meal-plan/vegetarian-low-calorie-meal-plan</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.mealprep.org.uk/meal-plan/2500-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Blog pages -->
+  <!-- Meal plan pages — goal/identity -->
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/high-protein-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/high-protein-vegetarian-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/cheap-student-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/budget-bodybuilding-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/gym-beginner-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/budget-fat-loss-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/muscle-gain-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/cheap-high-protein-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/low-effort-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/busy-professional-meal-plan-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Meal plan pages — supermarket -->
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/tesco-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/tesco-1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/tesco-high-protein-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/aldi-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/aldi-1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/aldi-high-protein-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/asda-1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/asda-1500-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/sainsburys-1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/lidl-1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/morrisons-1800-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/iceland-budget-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Meal plan pages — diet type -->
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/vegetarian-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/vegan-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog posts -->
   <url>
     <loc>https://www.mealprep.org.uk/blog/how-to-build-a-calorie-deficit</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/best-low-calorie-foods-uk</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/high-protein-low-calorie-meals</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/tesco-low-calorie-shopping-list</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.mealprep.org.uk/blog/how-to-meal-plan-for-weight-loss</loc>
-    <lastmod>2026-05-02</lastmod>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/how-many-calories-to-lose-weight</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/best-cheap-high-protein-foods-uk</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/aldi-vs-tesco-meal-prep</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/cheapest-uk-supermarket-meal-prep</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/1500-vs-1800-vs-2000-calories</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/how-much-protein-when-dieting</loc>
+    <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/cheap-meal-prep-shopping-list-uk</loc>
+    <lastmod>2026-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

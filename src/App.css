@@ -269,6 +269,44 @@ input:focus, select:focus {
   font-weight: 600;
 }
 
+/* ---------- Plan / list action buttons ---------- */
+
+.plan-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 12px;
+}
+
+.plan-action-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface, #fff);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.action-btn:hover {
+  background: var(--accent-light, #f0f7ff);
+  border-color: var(--accent, #2563eb);
+}
+
+@media print {
+  .plan-actions, .plan-action-btns { display: none; }
+}
+
 /* ---------- Shopping list ---------- */
 
 .shop-grid {

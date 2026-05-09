@@ -160,35 +160,89 @@ const LOADING_MESSAGES = [
 ];
 
 const PLAN_CARDS = [
+  // Calorie targets
   {
     slug: '1500-calorie-meal-plan',
-    title: '1500 Calorie Meal Plan UK',
-    desc: 'A simple 7-day weight loss plan for a moderate calorie deficit.',
+    title: '1500 Calorie Meal Plan',
+    desc: 'A 7-day fat loss plan for a moderate calorie deficit. Good starting point for lighter adults.',
   },
   {
     slug: '1800-calorie-meal-plan',
-    title: '1800 Calorie Meal Plan UK',
-    desc: 'A higher-calorie fat loss plan with filling, high-protein meals.',
+    title: '1800 Calorie Meal Plan',
+    desc: 'The most popular target — high-protein, filling meals with a sustainable deficit.',
   },
   {
     slug: '2000-calorie-meal-plan',
-    title: '2000 Calorie Meal Plan UK',
-    desc: 'For active people who want structure without an aggressive deficit.',
+    title: '2000 Calorie Meal Plan',
+    desc: 'For active people who want structure without an aggressive cut.',
+  },
+  {
+    slug: '2500-calorie-meal-plan',
+    title: '2500 Calorie Meal Plan',
+    desc: 'For muscle gain or very active individuals needing more fuel.',
+  },
+  // Goal / identity
+  {
+    slug: 'high-protein-low-calorie-meal-plan',
+    title: 'High Protein Low Calorie Plan',
+    desc: 'Maximum protein within a calorie deficit — ideal for fat loss while keeping muscle.',
+  },
+  {
+    slug: 'cheap-student-meal-plan-uk',
+    title: 'Cheap Student Meal Plan UK',
+    desc: 'Under £30 a week at Aldi or Lidl. High-protein and genuinely simple to cook.',
+  },
+  {
+    slug: 'budget-bodybuilding-meal-plan-uk',
+    title: 'Budget Bodybuilding Meal Plan',
+    desc: '2,000 kcal and 160g protein without premium-brand prices.',
+  },
+  {
+    slug: 'gym-beginner-meal-plan-uk',
+    title: 'Gym Beginner Meal Plan UK',
+    desc: 'Simple, balanced 1,800 kcal meals for beginners starting a training routine.',
+  },
+  {
+    slug: 'busy-professional-meal-plan-uk',
+    title: 'Busy Professional Meal Plan',
+    desc: 'Under 20 minutes per meal. Calorie-controlled, batch-cook friendly.',
+  },
+  {
+    slug: 'cheap-high-protein-meal-plan-uk',
+    title: 'Cheap High Protein Meal Plan',
+    desc: 'Maximum protein per pound — built around the cheapest UK protein sources.',
+  },
+  // Supermarket
+  {
+    slug: 'aldi-1800-calorie-meal-plan',
+    title: 'Aldi 1800 Calorie Meal Plan',
+    desc: 'A full 7-day plan using Aldi own-brand staples — typically £35–45 for the week.',
   },
   {
     slug: 'tesco-low-calorie-meal-plan',
     title: 'Tesco Low Calorie Meal Plan',
-    desc: 'A budget-friendly Tesco meal plan using easy UK supermarket ingredients.',
+    desc: 'Tesco-friendly ingredients with Clubcard-price staples and a full shopping list.',
   },
   {
-    slug: 'high-protein-low-calorie-meal-plan',
-    title: 'High Protein Low Calorie Plan',
-    desc: 'Designed to preserve muscle while losing body fat.',
+    slug: 'lidl-1800-calorie-meal-plan',
+    title: 'Lidl 1800 Calorie Meal Plan',
+    desc: 'Lidl\'s own-brand range is among the cheapest for high-protein eating in the UK.',
   },
+  {
+    slug: 'iceland-budget-meal-plan',
+    title: 'Iceland Budget Meal Plan',
+    desc: 'Frozen protein staples from Iceland — a full week under £30.',
+  },
+  // Diet type
   {
     slug: 'vegetarian-low-calorie-meal-plan',
     title: 'Vegetarian Low Calorie Plan',
-    desc: 'A plant-forward 7-day plan with protein from eggs, dairy, tofu, and legumes.',
+    desc: 'Plant-forward meals with protein from eggs, dairy, tofu, and legumes.',
+  },
+  {
+    slug: 'high-protein-vegetarian-meal-plan-uk',
+    title: 'High Protein Vegetarian Plan',
+    desc: 'Vegetarian meals hitting 130g+ protein daily — no meat required.',
   },
 ];
 
@@ -452,12 +506,12 @@ export default function Home() {
       <div className="page">
         <header className="header">
           <h1>Free UK Meal Plans for Weight Loss — By Calories, Budget &amp; Supermarket</h1>
-          <p>Create a simple 7-day meal plan for your calorie target, dietary preference, cooking time, and favourite UK supermarket. Includes high-protein meals, prep times, and a grouped shopping list.</p>
+          <p>Tell us your calorie target, cooking time, and favourite UK supermarket. Get a complete 7-day meal plan with high-protein meals, prep times, and a grouped shopping list — in under 30 seconds. Free, no sign-up.</p>
           <div className="trust-row">
-            <span className="trust-badge">1500–2000 kcal plans</span>
-            <span className="trust-badge">Tesco, Aldi, Sainsbury&apos;s &amp; Asda</span>
-            <span className="trust-badge">High-protein options</span>
-            <span className="trust-badge">Free, no sign-up</span>
+            <span className="trust-badge">1500–2500 kcal plans</span>
+            <span className="trust-badge">Tesco · Aldi · Lidl · Asda · Morrisons</span>
+            <span className="trust-badge">High-protein &amp; budget options</span>
+            <span className="trust-badge">Free forever, no sign-up</span>
           </div>
           <p className="hero-secondary-cta">
             Already know what you want? <a href="#popular-plans">Browse ready-made plans ↓</a>
@@ -694,18 +748,20 @@ export default function Home() {
           <div className="seo-section">
             <h2>Supported UK Supermarkets</h2>
             <p>
-              Our generator is tailored to the four largest UK supermarkets, making it easy to pick up everything in a
-              single weekly shop:
+              Our generator supports all major UK supermarkets. Select yours and every ingredient will be tailored to
+              products you can actually find in a single weekly shop:
             </p>
             <ul>
-              <li><strong>Tesco</strong> — the UK&apos;s largest supermarket, with a huge range of own-brand products perfect for calorie-controlled eating.</li>
-              <li><strong>Aldi</strong> — outstanding value for staples like chicken, eggs, oats, and frozen vegetables.</li>
-              <li><strong>Sainsbury&apos;s</strong> — a strong range of fresh produce, free-from options, and high-protein choices.</li>
-              <li><strong>Asda</strong> — budget-friendly and widely stocked, particularly good for bulk buys on proteins and carbs.</li>
+              <li><strong>Tesco</strong> — UK&apos;s largest supermarket. Huge own-brand range; Clubcard Prices regularly cut chicken, fish, and dairy. See our <Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco low-calorie plan</Link> and <Link to="/blog/tesco-low-calorie-shopping-list">Tesco shopping list</Link>.</li>
+              <li><strong>Aldi</strong> — consistently cheapest for staples like chicken, eggs, oats, and frozen veg. See our <Link to="/meal-plan/aldi-1800-calorie-meal-plan">Aldi 1800 calorie plan</Link>.</li>
+              <li><strong>Lidl</strong> — similar value to Aldi with slightly better fresh fish availability. See our <Link to="/meal-plan/lidl-1800-calorie-meal-plan">Lidl 1800 calorie plan</Link>.</li>
+              <li><strong>Asda</strong> — budget-friendly and widely stocked, particularly good for bulk protein and carbs. See our <Link to="/meal-plan/asda-1800-calorie-meal-plan">Asda 1800 calorie plan</Link>.</li>
+              <li><strong>Sainsbury&apos;s</strong> — strong fresh produce and free-from range. See our <Link to="/meal-plan/sainsburys-1800-calorie-meal-plan">Sainsbury&apos;s 1800 calorie plan</Link>.</li>
+              <li><strong>Morrisons</strong> — Market Street butcher counter and good own-brand staples. See our <Link to="/meal-plan/morrisons-1800-calorie-meal-plan">Morrisons 1800 calorie plan</Link>.</li>
+              <li><strong>Iceland</strong> — best frozen protein range in the UK. A full week under £30 is achievable. See our <Link to="/meal-plan/iceland-budget-meal-plan">Iceland budget meal plan</Link>.</li>
             </ul>
             <p>
-              If you shop at Tesco, see our dedicated <Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco low-calorie meal plan</Link> and
-              our <Link to="/blog/tesco-low-calorie-shopping-list">Tesco low-calorie shopping list</Link> for product recommendations.
+              Not sure which supermarket wins on price? Read our <Link to="/blog/aldi-vs-tesco-meal-prep">Aldi vs Tesco comparison</Link> or the full <Link to="/blog/cheapest-uk-supermarket-meal-prep">cheapest UK supermarket for meal prep</Link> guide.
             </p>
           </div>
 
@@ -749,9 +805,16 @@ export default function Home() {
           <h2>Further Reading</h2>
           <ul className="plan-links">
             <li><Link to="/blog/how-to-build-a-calorie-deficit">How to Build a Calorie Deficit for Sustainable Weight Loss</Link></li>
+            <li><Link to="/blog/how-many-calories-to-lose-weight">How Many Calories Do You Need to Lose Weight?</Link></li>
+            <li><Link to="/blog/1500-vs-1800-vs-2000-calories">1500 vs 1800 vs 2000 Calories: Which Meal Plan Should You Choose?</Link></li>
+            <li><Link to="/blog/how-much-protein-when-dieting">How Much Protein Do You Need When Dieting?</Link></li>
             <li><Link to="/blog/best-low-calorie-foods-uk">The Best Low Calorie Foods Available in UK Supermarkets</Link></li>
+            <li><Link to="/blog/best-cheap-high-protein-foods-uk">Best Cheap High-Protein Foods in UK Supermarkets</Link></li>
             <li><Link to="/blog/high-protein-low-calorie-meals">High Protein Low Calorie Meals for UK Weight Loss</Link></li>
             <li><Link to="/blog/tesco-low-calorie-shopping-list">The Ultimate Tesco Low Calorie Shopping List</Link></li>
+            <li><Link to="/blog/cheap-meal-prep-shopping-list-uk">Cheap Meal Prep Shopping List UK — Under £30 for a Full Week</Link></li>
+            <li><Link to="/blog/aldi-vs-tesco-meal-prep">Aldi vs Tesco for Meal Prep: Which Supermarket Is Better?</Link></li>
+            <li><Link to="/blog/cheapest-uk-supermarket-meal-prep">Cheapest UK Supermarket for Meal Prep: Full 2025 Comparison</Link></li>
             <li><Link to="/blog/how-to-meal-plan-for-weight-loss">How to Meal Plan for Weight Loss — A UK Beginner&apos;s Guide</Link></li>
           </ul>
         </section>
