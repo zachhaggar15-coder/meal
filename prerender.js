@@ -39,6 +39,8 @@ const ROUTES = [
   // Meal plan pages — diet type
   '/meal-plan/vegetarian-low-calorie-meal-plan',
   '/meal-plan/vegan-low-calorie-meal-plan',
+  // Product page
+  '/stickers',
   // Blog posts
   '/blog/how-to-build-a-calorie-deficit',
   '/blog/best-low-calorie-foods-uk',

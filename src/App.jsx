@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import Home from './pages/Home.jsx';
 import MealPlanPage from './pages/MealPlanPage.jsx';
 import BlogPost from './pages/BlogPost.jsx';
+import Stickers from './pages/Stickers.jsx';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/stickers" element={<Stickers />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </>

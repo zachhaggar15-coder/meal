@@ -497,8 +497,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Free UK Meal Plan Generator | Weight Loss Meal Plans by Calories & Supermarket"
-        description="Create a free 7-day UK meal plan for weight loss. Choose your calorie target, diet type, cooking time, and supermarket. Includes high-protein meals and a shopping list."
+        title="Free UK Meal Plan Generator | Personalised by Calories, Supermarket & Diet"
+        description="Generate a free 7-day UK meal plan in 30 seconds. Set your calorie target, preferred supermarket (Tesco, Aldi, Lidl, Asda), protein goal, and dietary preference. High-protein plans, shopping list included."
         canonical="/"
         jsonLd={homeJsonLd}
       />
@@ -595,6 +595,70 @@ export default function Home() {
         <p className="disclaimer">
           Meal plans are generated for general information only. Calories and protein are estimates. For medical conditions, pregnancy, eating disorders, or clinical dietary needs, speak to a qualified healthcare professional.
         </p>
+
+        {/* ── Generator feature sections ── */}
+        <section className="generator-features">
+          <h2>How it works</h2>
+          <div className="how-it-works-steps">
+            <div className="hiw-step">
+              <div className="hiw-step-num">1</div>
+              <h3>Set your targets</h3>
+              <p>Enter your calorie goal, meals per day, and dietary preference.</p>
+            </div>
+            <div className="hiw-step">
+              <div className="hiw-step-num">2</div>
+              <h3>Pick your supermarket</h3>
+              <p>Choose Tesco, Aldi, Lidl, Asda, Sainsbury's, Morrisons, or Iceland.</p>
+            </div>
+            <div className="hiw-step">
+              <div className="hiw-step-num">3</div>
+              <h3>Get your plan</h3>
+              <p>Your complete 7-day plan with meals, macros, and a shopping list appears in under 30 seconds.</p>
+            </div>
+          </div>
+
+          <h2>What you can personalise</h2>
+          <div className="personalise-grid">
+            <div className="personalise-item">
+              <span className="personalise-item-icon">🔥</span> Calorie target (800–4,000 kcal)
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">🛒</span> UK supermarket preference
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">🥩</span> Protein focus (standard or high)
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">🥦</span> Vegetarian or vegan diet
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">⏱️</span> Max cooking time per meal
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">🚫</span> Foods to avoid or include
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">📅</span> Plan length (1, 3, or 7 days)
+            </div>
+            <div className="personalise-item">
+              <span className="personalise-item-icon">🛍️</span> Grouped shopping list with cost estimate
+            </div>
+          </div>
+
+          <div className="popular-starts">
+            <h3>Popular starting points</h3>
+            <div className="popular-start-links">
+              <Link to="/meal-plan/high-protein-low-calorie-meal-plan" className="popular-start-link">High protein fat loss plan</Link>
+              <Link to="/meal-plan/tesco-low-calorie-meal-plan" className="popular-start-link">Tesco low calorie plan</Link>
+              <Link to="/meal-plan/1800-calorie-meal-plan" className="popular-start-link">1800 calorie plan</Link>
+              <Link to="/meal-plan/2000-calorie-meal-plan" className="popular-start-link">2000 calorie plan</Link>
+              <Link to="/meal-plan/cheap-student-meal-plan-uk" className="popular-start-link">Budget meal prep plan</Link>
+              <Link to="/meal-plan/high-protein-vegetarian-meal-plan-uk" className="popular-start-link">Vegetarian high protein plan</Link>
+              <Link to="/meal-plan/aldi-1800-calorie-meal-plan" className="popular-start-link">Aldi 1800 cal plan</Link>
+              <Link to="/meal-plan/budget-bodybuilding-meal-plan-uk" className="popular-start-link">Budget bodybuilding plan</Link>
+            </div>
+          </div>
+        </section>
 
         {/* ── Popular Plans Hub ── */}
         <section className="plans-hub" id="popular-plans">
@@ -800,6 +864,13 @@ export default function Home() {
                 <p>Yes — simply adjust your settings and click Generate Plan again. Each generation produces a different, randomised plan.</p>
               </div>
             </div>
+          </div>
+
+          <div className="cta-box" style={{ marginTop: '32px' }}>
+            <strong>Batch cooking this week?</strong>{' '}
+            <Link to="/stickers" data-event="sticker_promo_click" data-source-page="home">
+              Keep portions organised with freezer-safe meal prep labels &rarr;
+            </Link>
           </div>
 
           <h2>Further Reading</h2>
