@@ -12,7 +12,7 @@ const PLANS = [
   { slug: 'vegan-low-calorie-meal-plan', label: 'Vegan Plan', tag: '' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onMenuToggle }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -29,6 +29,9 @@ export default function Navbar() {
   return (
     <nav className="site-nav" aria-label="Main navigation">
       <div className="nav-inner">
+        <button className="nav-menu-toggle" onClick={onMenuToggle} aria-label="Toggle navigation menu" type="button">
+          ☰
+        </button>
         <Link to="/" className="nav-brand">MealPrep.org.uk</Link>
         <div className="nav-right" ref={menuRef}>
           <button

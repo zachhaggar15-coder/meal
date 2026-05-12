@@ -171,6 +171,19 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/sainsburys-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/meal-plan/morrisons-low-calorie-meal-plan</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Meal plan pages — diet type -->
   <url>
     <loc>https://www.mealprep.org.uk/meal-plan/vegetarian-low-calorie-meal-plan</loc>
@@ -255,6 +268,24 @@
   <url>
     <loc>https://www.mealprep.org.uk/blog/cheap-meal-prep-shopping-list-uk</loc>
     <lastmod>2026-05-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/how-to-lose-weight-fast-uk</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/meal-prep-for-beginners-uk</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mealprep.org.uk/blog/high-protein-breakfast-uk</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

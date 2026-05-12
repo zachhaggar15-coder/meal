@@ -233,6 +233,16 @@ const PLAN_CARDS = [
     title: 'Iceland Budget Meal Plan',
     desc: 'Frozen protein staples from Iceland — a full week under £30.',
   },
+  {
+    slug: 'sainsburys-low-calorie-meal-plan',
+    title: "Sainsbury's Low Calorie Plan",
+    desc: "1,500 kcal using Sainsbury's own-brand staples — with Nectar Price tips.",
+  },
+  {
+    slug: 'morrisons-low-calorie-meal-plan',
+    title: 'Morrisons Low Calorie Plan',
+    desc: '1,500 kcal using Morrisons own-brand products and Market Street tips.',
+  },
   // Diet type
   {
     slug: 'vegetarian-low-calorie-meal-plan',

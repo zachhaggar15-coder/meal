@@ -121,6 +121,20 @@ const BASE_SHOPPING = {
     dairy: ["Morrisons Skimmed Milk (2 L)", "Morrisons Low Fat Greek Style Yogurt (500 g)"],
     extras: ["Morrisons Olive Oil (500 ml)", "Morrisons Reduced Fat Hummus (200 g)", "Morrisons Frozen Mixed Berries (500 g)", "Morrisons Peanut Butter (340 g)", 'Bananas (5–6)'],
   },
+  'sainsburys-low-calorie-meal-plan': {
+    protein: ["Sainsbury's Lean Chicken Breast Fillets (1 kg)", "Sainsbury's Tinned Tuna in Spring Water (4 × 145 g)", "Sainsbury's Free Range Eggs (12)", "Sainsbury's Low Fat Greek Style Yogurt (500 g)", "Sainsbury's Smoked Salmon (100 g)"],
+    carbs: ["Sainsbury's Rolled Oats (1 kg)", "Sainsbury's Wholemeal Sliced Bread (800 g)", "Sainsbury's Easy Cook Brown Rice (500 g)", "Sainsbury's Sweet Potatoes (1 kg)", "Sainsbury's New Potatoes (750 g)"],
+    vegetables: ["Sainsbury's Broccoli (500 g)", "Sainsbury's Baby Spinach (200 g bag)", "Sainsbury's Mixed Salad Leaves (200 g)", "Sainsbury's Cherry Tomatoes (400 g)", "Sainsbury's Courgette (2)", "Sainsbury's Carrots (750 g)"],
+    dairy: ["Sainsbury's Skimmed Milk (2 L)", "Sainsbury's Low Fat Cottage Cheese (300 g)"],
+    extras: ["Sainsbury's Olive Oil (500 ml)", "Sainsbury's Reduced Fat Hummus (200 g)", "Sainsbury's Frozen Mixed Berries (500 g)", "Sainsbury's Flaked Almonds (100 g)", 'Honey (jar)'],
+  },
+  'morrisons-low-calorie-meal-plan': {
+    protein: ["Morrisons Lean Chicken Breast Fillets (1 kg)", "Morrisons Tinned Tuna in Spring Water (4 × 145 g)", "Morrisons Free Range Eggs (12)", "Morrisons Low Fat Greek Style Yogurt (500 g)", "Morrisons Smoked Salmon (100 g)"],
+    carbs: ["Morrisons Rolled Oats (1 kg)", "Morrisons Wholemeal Sliced Bread (800 g)", "Morrisons Easy Cook Brown Rice (500 g)", "Morrisons Sweet Potatoes (1 kg)", "Morrisons New Potatoes (750 g)"],
+    vegetables: ["Morrisons Broccoli (500 g)", "Morrisons Baby Spinach (200 g)", "Morrisons Mixed Salad Leaves (200 g)", "Morrisons Cherry Tomatoes (400 g)", "Morrisons Courgette (2)", "Morrisons Carrots (750 g)"],
+    dairy: ["Morrisons Skimmed Milk (2 L)", "Morrisons Low Fat Cottage Cheese (300 g)"],
+    extras: ["Morrisons Olive Oil (500 ml)", "Morrisons Reduced Fat Hummus (200 g)", "Morrisons Frozen Mixed Berries (500 g)", "Morrisons Almonds (100 g)", 'Honey (jar)'],
+  },
   'iceland-budget-meal-plan': {
     protein: ['Iceland Chicken Breast Fillets (1 kg)', 'Iceland Tinned Tuna in Spring Water (4 × 145 g)', 'Iceland Free Range Eggs (12)', 'Iceland Greek Style Yogurt (500 g)', 'Iceland Turkey Mince (500 g)'],
     frozen: ['Iceland Broccoli Florets (1 kg)', 'Iceland Mixed Vegetables (1 kg)', 'Iceland Sliced Green Beans (750 g)', 'Iceland Baby Peas (1 kg)', 'Iceland Mixed Berries (1 kg)'],
@@ -436,9 +450,11 @@ const PLAN_TESCO_1800  = mkSupermarketPlan(PLAN_1800, 'Tesco');
 const PLAN_TESCO_HP    = mkSupermarketPlan(PLAN_HIGH_PROTEIN, 'Tesco');
 const PLAN_ASDA        = mkSupermarketPlan(PLAN_1800, 'Asda');
 const PLAN_ASDA_1500   = mkSupermarketPlan(PLAN_1500, 'Asda');
-const PLAN_SAINSBURYS  = mkSupermarketPlan(PLAN_1800, "Sainsbury's");
-const PLAN_LIDL        = mkSupermarketPlan(PLAN_1800, 'Lidl');
-const PLAN_MORRISONS   = mkSupermarketPlan(PLAN_1800, 'Morrisons');
+const PLAN_SAINSBURYS      = mkSupermarketPlan(PLAN_1800, "Sainsbury's");
+const PLAN_SAINSBURYS_1500 = mkSupermarketPlan(PLAN_1500, "Sainsbury's");
+const PLAN_LIDL            = mkSupermarketPlan(PLAN_1800, 'Lidl');
+const PLAN_MORRISONS       = mkSupermarketPlan(PLAN_1800, 'Morrisons');
+const PLAN_MORRISONS_1500  = mkSupermarketPlan(PLAN_1500, 'Morrisons');
 const PLAN_ICELAND     = mkSupermarketPlan(PLAN_1500, 'Iceland');
 
 const PLAN_2500 = PLAN_2000.map(day => ({
@@ -1013,6 +1029,88 @@ export const mealPlansData = {
     plan: PLAN_SAINSBURYS,
     shoppingList: BASE_SHOPPING['sainsburys-1800-calorie-meal-plan'],
     priceEstimate: "£42–52 per week (Sainsbury's own-brand, or £38–48 with Nectar Prices)",
+  },
+
+  'sainsburys-low-calorie-meal-plan': {
+    title: "Sainsbury's Low Calorie Meal Plan UK | 7-Day 1500 Calorie Weight Loss Guide",
+    description: "A Sainsbury's 1500 calorie meal plan for UK weight loss. Simple high-protein meals using Sainsbury's own-brand products, ~£40/week, with full shopping list and Nectar card tips.",
+    h1: "Sainsbury's Low Calorie Meal Plan UK — 7-Day 1500 Calorie Guide",
+    planLabel: "Sainsbury's 1500 Calorie",
+    targetCalories: 1500,
+    summary: {
+      supermarket: "Sainsbury's",
+      supermarkets: "Sainsbury's",
+      bestFor: 'Fat loss, women, lighter adults',
+      prepDifficulty: 'Easy (15–25 min)',
+    },
+    intro: "Sainsbury's is one of the UK's most popular supermarkets for healthy eating — its own-brand range covers every staple you need for a calorie-controlled diet at competitive prices, with Nectar Prices reducing the weekly cost further. This 7-day plan targets 1,500 calories and 85–105 g of protein per day using Sainsbury's own-brand products. Estimated weekly cost is £38–48, reducing to around £35–42 when Nectar Prices apply to chicken, eggs, and Greek yogurt.",
+    whyThisPlan: "A 1,500 calorie target is well-suited to most women and lighter adults seeking to lose 0.5–1 kg per week. Sainsbury's own-brand Lean Chicken Breast, Low Fat Greek Style Yogurt, and Tinned Tuna provide excellent value protein sources. The Nectar card gives you access to Sainsbury's best prices on key staples — if you do not already have one, it is free to sign up online and immediately unlocks savings on this plan's core ingredients.",
+    tips: [
+      "Sign up for a free Sainsbury's Nectar card to unlock Nectar Prices on chicken, eggs, Greek yogurt, and other core ingredients — this can reduce the weekly cost by £5–8.",
+      "Sainsbury's frozen vegetables are high quality and very affordable. Frozen spinach, broccoli florets, and mixed vegetables are all excellent substitutes for fresh at a fraction of the price.",
+      "Sainsbury's own-brand Low Fat Cottage Cheese is an underrated protein source at around £1.20 for 300 g — 23 g of protein for under 130 kcal per serving.",
+      "Batch-cook Sainsbury's chicken breast at the weekend. Poach 1 kg in lightly salted water, refrigerate, and use across three days of lunches.",
+      "Use the Sainsbury's SmartShop app to scan items as you shop — it helps you stay on budget and avoid unplanned purchases that inflate the weekly cost.",
+    ],
+    faq: [
+      { q: "How much does a Sainsbury's 1500 calorie meal plan cost?", a: "Approximately £38–48 per week using Sainsbury's own-brand products, or £35–42 with Nectar Prices applied to key protein sources." },
+      { q: "Is Sainsbury's good for calorie-controlled dieting?", a: "Yes — the own-brand range covers every staple needed for a structured low-calorie diet, from lean chicken and eggs to low-fat dairy and wholegrain carbs. Nectar Prices regularly discount these items." },
+      { q: "Can I adapt this plan to 1800 calories?", a: "Yes — increase portion sizes of your carbohydrate-heavy meals (oats, rice, potatoes) by around 20%, and add a larger afternoon snack such as a banana and peanut butter. Our free generator can also build you a personalised 1,800 calorie Sainsbury's plan." },
+    ],
+    related: [
+      { slug: 'sainsburys-1800-calorie-meal-plan', label: "Sainsbury's 1800 Calorie Plan" },
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan' },
+      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Plan' },
+      { slug: 'morrisons-low-calorie-meal-plan', label: 'Morrisons Low Calorie Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
+      { path: '/blog/best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK' },
+    ],
+    plan: PLAN_SAINSBURYS_1500,
+    shoppingList: BASE_SHOPPING['sainsburys-low-calorie-meal-plan'],
+    priceEstimate: "£38–48 per week (Sainsbury's own-brand, or £35–42 with Nectar Prices)",
+  },
+
+  'morrisons-low-calorie-meal-plan': {
+    title: "Morrisons Low Calorie Meal Plan UK | 7-Day 1500 Calorie Weight Loss Guide",
+    description: "A Morrisons 1500 calorie meal plan for UK weight loss. High-protein meals using Morrisons own-brand products, ~£40/week, with Market Street tips and full shopping list.",
+    h1: "Morrisons Low Calorie Meal Plan UK — 7-Day 1500 Calorie Guide",
+    planLabel: 'Morrisons 1500 Calorie',
+    targetCalories: 1500,
+    summary: {
+      supermarket: 'Morrisons',
+      supermarkets: 'Morrisons',
+      bestFor: 'Fat loss, women, lighter adults',
+      prepDifficulty: 'Easy (15–25 min)',
+    },
+    intro: "Morrisons combines a competitive own-brand range with the unique advantage of its Market Street fresh counters — letting you buy exactly the quantity of chicken, fish, or meat you need for a 7-day plan without over-purchasing. This makes Morrisons a particularly practical choice for solo calorie-controlled eating. This plan targets 1,500 calories and 85–105 g of protein per day, with an estimated weekly cost of £38–48.",
+    whyThisPlan: "Morrisons' 1,500 calorie plan suits most women and smaller-framed men who want to lose 0.5–1 kg per week without extreme restriction. At 1,500 calories, you create a meaningful daily deficit compared to a typical adult TDEE of 1,800–2,200 calories. Morrisons' wide range of frozen vegetables, affordable own-brand oats and bread, and accessible protein options make it straightforward to hit this target consistently across seven days.",
+    tips: [
+      "Use the Morrisons Market Street fish and meat counter to buy exactly 1 kg of chicken breast rather than a pre-packaged 1.2 kg — avoids waste and keeps the cost down.",
+      "Morrisons own-brand 0% Fat Greek Style Yogurt is a flagship value product — 130 kcal and 19 g protein per 200 g serving. It is the same product as supermarket alternatives at a lower price.",
+      "Sign up for the Morrisons More loyalty card for free. Regular Money Off vouchers and point accumulation reduce the weekly shop cost over time.",
+      "Morrisons frozen broccoli, mixed vegetables, and green beans are stocked year-round and cook from frozen in under five minutes — ideal for fast weeknight meals.",
+      "Morrisons own-brand rolled oats cost around £1/kg — use them as your breakfast staple throughout the week to keep morning calories consistent and filling.",
+    ],
+    faq: [
+      { q: 'How much does a Morrisons 1500 calorie meal plan cost?', a: 'Approximately £38–48 per week using Morrisons own-brand products. The Morrisons More loyalty card provides additional savings through vouchers and points.' },
+      { q: 'Is Morrisons a good supermarket for weight loss?', a: "Yes — Morrisons' Market Street fresh counters, own-brand staples, and frozen vegetable range provide everything needed for a structured low-calorie diet. Prices are broadly comparable to Tesco and Sainsbury's for own-brand products." },
+      { q: 'How does this compare to the Morrisons 1800 calorie plan?', a: 'The 1,500 calorie plan uses slightly smaller portions of carbohydrates and a lower-calorie snack. The ingredients are largely the same, so you can easily combine both plans in a single weekly shop.' },
+    ],
+    related: [
+      { slug: 'morrisons-1800-calorie-meal-plan', label: 'Morrisons 1800 Calorie Plan' },
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan' },
+      { slug: 'sainsburys-low-calorie-meal-plan', label: "Sainsbury's Low Calorie Plan" },
+      { slug: 'asda-1500-calorie-meal-plan', label: 'Asda 1500 Calorie Plan' },
+    ],
+    blogLinks: [
+      { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
+      { path: '/blog/best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK' },
+    ],
+    plan: PLAN_MORRISONS_1500,
+    shoppingList: BASE_SHOPPING['morrisons-low-calorie-meal-plan'],
+    priceEstimate: '£38–48 per week (Morrisons own-brand)',
   },
 
   'lidl-1800-calorie-meal-plan': {

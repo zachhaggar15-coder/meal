@@ -39,6 +39,9 @@ const ROUTES = [
   // Meal plan pages — diet type
   '/meal-plan/vegetarian-low-calorie-meal-plan',
   '/meal-plan/vegan-low-calorie-meal-plan',
+  // Meal plan pages — new supermarket low-calorie
+  '/meal-plan/sainsburys-low-calorie-meal-plan',
+  '/meal-plan/morrisons-low-calorie-meal-plan',
   // Product page
   '/stickers',
   // Blog posts
@@ -54,6 +57,10 @@ const ROUTES = [
   '/blog/1500-vs-1800-vs-2000-calories',
   '/blog/how-much-protein-when-dieting',
   '/blog/cheap-meal-prep-shopping-list-uk',
+  // New blog posts
+  '/blog/how-to-lose-weight-fast-uk',
+  '/blog/meal-prep-for-beginners-uk',
+  '/blog/high-protein-breakfast-uk',
 ];
 
 async function prerender() {
