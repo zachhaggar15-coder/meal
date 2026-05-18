@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         // Force JSON output so we don't have to scrape it from prose.
         response_format: { type: 'json_object' },
         temperature: 0.7,
-        max_tokens: Math.min(4096, Number(days) * Number(meals) * 150 + 900),
+        max_tokens: Math.min(8000, Number(days) * Number(meals) * 500 + 2000),
         messages: [
           {
             role: 'system',
@@ -153,8 +153,17 @@ CRITICAL CALORIE RULES — failure to follow these will make the output unusable
 3. Each day's total must be within 50 kcal of ${calories}. Do not round to a convenient number.
 4. Do not write placeholder zeros. Every calories field must be a realistic non-zero number.
 
+CRITICAL RECIPE QUALITY RULES — failure to follow these will make the output unusable:
+5. Every named dish must include ALL of its authentic cooking components in the "ingredients" list.
+   - A CURRY must include: curry paste or spice blend, aromatics (onion, garlic, ginger), a liquid base (coconut milk, tinned tomatoes, or stock), oil — not just protein and carb.
+   - A STIR-FRY must include: soy sauce or stir-fry sauce, sesame oil, garlic, ginger, and the vegetables that define it.
+   - A PASTA DISH must include: the sauce (passata, pesto, cream, etc.), garlic, herbs — not just pasta and protein.
+   - Apply the same logic to every named dish: include what actually makes it taste like that dish.
+6. Do NOT name a dish after a sauce, paste, or spice blend and then omit that sauce, paste, or spice blend from the ingredients.
+7. The shopping list must consolidate EVERY ingredient from every meal across all days — including all oils, spices, pastes, sauces, stock, and condiments. These belong in the "pantry" category and must never be omitted.
+
 Other rules:
-- Meals must be realistic, simple, and use common UK supermarket ingredients (${supermarket}).
+- Meals must be practical, well-flavoured, and use common UK supermarket ingredients (${supermarket}).
 - Avoid niche or expensive foods.
 - Prioritise high-protein meals.
 - Strictly respect the cooking time constraint for every meal.
@@ -173,8 +182,13 @@ Output format MUST be valid JSON matching exactly:
           "calories": 0,
           "protein": 0,
           "prep_time": "",
-          "description": "",
-          "portion_size": "e.g. 50g oats, 200ml skimmed milk, 1 banana"
+          "description": "up to 20 words describing taste and texture, e.g. 'Rich and warming with a gentle heat, great for batch cooking.'",
+          "portion_size": "e.g. 50g oats, 200ml skimmed milk, 1 banana",
+          "ingredients": [
+            { "item": "rolled oats", "amount": "50g" },
+            { "item": "skimmed milk", "amount": "200ml" },
+            { "item": "banana", "amount": "1 medium" }
+          ]
         }
       ],
       "daily_totals": { "calories": 0, "protein": 0 }
@@ -191,14 +205,19 @@ Output format MUST be valid JSON matching exactly:
     "vegetables": [
       { "name": "Broccoli", "amount": "600g", "packs": "2 × 300g heads" }
     ],
+    "pantry": [
+      { "name": "Curry paste", "amount": "1 jar", "packs": "1 × 283g jar" },
+      { "name": "Soy sauce", "amount": "50ml", "packs": "1 × 150ml bottle" },
+      { "name": "Olive oil", "amount": "100ml", "packs": "1 × 500ml bottle" }
+    ],
     "extras": []
   },
   "price_estimate": { "total": "", "notes": "" }
 }
 
-Rules for description: max 12 words, e.g. "Creamy and filling, great cold or warm."
-Rules for portion_size: weights only, no explanation, e.g. "150g chicken, 80g rice, 100g broccoli".
-Rules for shopping_list items: each item must be an object with "name" (ingredient), "amount" (total needed for the whole plan), and "packs" (how many standard supermarket packs to buy, e.g. "2 × 500g packs" or "1 × 1kg bag").
+CRITICAL — ingredients array is REQUIRED on every meal. List EVERY ingredient used to cook the dish (protein, carbs, vegetables, oil, spices, sauces, aromatics, condiments), each with a precise quantity. Do not omit any flavouring or cooking ingredient — this list drives the shopping list.
+CRITICAL — portion_size is REQUIRED on every meal. Comma-separated list of main ingredients with exact gram/ml weights. Format: "150g chicken breast, 40g brown rice (dry), 200g broccoli".
+Rules for shopping_list items: each item must have "name", "amount" (total needed for the whole plan), and "packs" (e.g. "2 × 500g packs"). The "pantry" category covers ALL spices, pastes, sauces, oils, stock, and condiments — these must never be omitted or left empty when meals require them.
 
 Return ONLY valid JSON. No markdown, no commentary.`;
 }

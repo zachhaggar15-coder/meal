@@ -90,6 +90,13 @@ export default function MealPlan({ weeklyPlan }) {
                 {meal.portion_size && (
                   <p className="meal-portion"><strong>Portion:</strong> {meal.portion_size}</p>
                 )}
+                {Array.isArray(meal.ingredients) && meal.ingredients.length > 0 && (
+                  <ul className="meal-ingredients">
+                    {meal.ingredients.map((ing, iIdx) => (
+                      <li key={iIdx}>{ing.item}{ing.amount ? ` — ${ing.amount}` : ''}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           {day.daily_totals && (

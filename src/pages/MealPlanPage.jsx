@@ -145,6 +145,9 @@ export default function MealPlanPage() {
                     </span>
                   </div>
                   <p className="plan-meal-desc">{meal.desc}</p>
+                  {meal.portion_size && (
+                    <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
+                  )}
                   <MealPromptBox meal={meal} />
                 </div>
               ))}

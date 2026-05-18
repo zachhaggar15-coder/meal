@@ -262,6 +262,21 @@ input:focus, select:focus {
   margin: 4px 0 0;
 }
 
+.meal-ingredients {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.meal-ingredients li::before {
+  content: '· ';
+}
+
 .daily-totals {
   margin-top: 12px;
   padding-top: 12px;
@@ -1666,6 +1681,12 @@ input:focus, select:focus {
   font-size: 0.82rem;
   color: var(--muted);
   margin: 0 0 6px;
+}
+
+.plan-meal-portion {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 2px 0 6px;
 }
 
 .meal-prompt-result-desc {
