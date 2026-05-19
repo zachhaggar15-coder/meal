@@ -451,6 +451,12 @@ input:focus, select:focus {
 
 .breadcrumb a:hover { text-decoration: underline; }
 
+.article-meta {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: -0.5rem 0 1.5rem;
+}
+
 .content-intro {
   font-size: 1.05rem;
   line-height: 1.75;

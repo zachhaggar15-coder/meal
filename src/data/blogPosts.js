@@ -6,6 +6,14 @@ export const blogPostsData = {
     title: 'How to Build a Calorie Deficit UK: Calculate Your TDEE & Start Losing Weight',
     description: 'How to build a calorie deficit for sustainable weight loss in the UK. Calculate your TDEE, choose the right deficit size, avoid common mistakes, and get a free personalised meal plan.',
     h1: 'How to Build a Calorie Deficit for Sustainable Weight Loss',
+    datePublished: '2025-09-15',
+    dateModified: '2026-05-01',
+    readingTime: 8,
+    faq: [
+      { q: 'How big should my calorie deficit be to lose weight?', a: 'A deficit of 300–500 calories per day is the recommended sweet spot. This produces roughly 0.3–0.5 kg of fat loss per week without risking muscle loss or unsustainable hunger. The NHS advises cutting no more than 600 calories per day.' },
+      { q: 'How do I calculate my calorie deficit?', a: 'Calculate your TDEE using the Mifflin-St Jeor equation, then subtract 300–500 calories for your daily target. For example, a TDEE of 2,100 calories minus 500 gives a 1,600-calorie daily target — enough to lose roughly 0.5 kg per week.' },
+      { q: 'How quickly will I lose weight on a calorie deficit?', a: 'A consistent 500-calorie daily deficit leads to approximately 0.5 kg of fat loss per week, as one kilogram of fat contains around 7,700 calories. Real results vary by starting weight, hormones, and activity level.' },
+    ],
     intro: 'Understanding a calorie deficit is the single most important concept in weight loss. Whether you are following a 1,500, 1,800, or 2,000 calorie plan, this guide explains everything you need to know about creating and maintaining a calorie deficit in a safe, sustainable way — with specific advice for UK shoppers and lifestyles.',
     sections: [
       {
@@ -78,6 +86,14 @@ export const blogPostsData = {
     title: 'Best Low Calorie Foods UK: Cheap Supermarket Foods for Fat Loss',
     description: 'The best low calorie foods in UK supermarkets — Tesco, Aldi, Asda, and Lidl. High-protein, filling options under 200 kcal. Includes a free personalised meal plan generator.',
     h1: 'The Best Low Calorie Foods Available in UK Supermarkets',
+    datePublished: '2025-10-01',
+    dateModified: '2026-05-01',
+    readingTime: 7,
+    faq: [
+      { q: 'What are the lowest calorie filling foods in UK supermarkets?', a: 'The most filling low-calorie foods are high in protein or fibre: chicken breast (~165 kcal/100 g), tinned tuna (~100 kcal/100 g), eggs (~78 kcal each), 0% Greek yogurt (~57 kcal/100 g), and non-starchy vegetables like broccoli, spinach, and courgette (20–35 kcal/100 g).' },
+      { q: 'What is the best low-calorie food to buy at Aldi or Tesco?', a: 'Chicken breast, tinned tuna, eggs, and 0% fat Greek yogurt are excellent low-calorie high-protein choices at both Aldi and Tesco. All are under £2 per portion and widely available year-round.' },
+      { q: 'Can I lose weight eating only low-calorie foods?', a: 'Yes — focusing on low-calorie, high-protein foods naturally reduces your intake while keeping you full. Combine lean proteins with non-starchy vegetables and moderate portions of complex carbs for best results.' },
+    ],
     intro: 'Choosing the right low-calorie foods is the foundation of any successful weight loss diet. The best choices are not just low in calories — they are also filling, nutritious, and genuinely enjoyable to eat. This guide covers the highest-value low-calorie foods available at UK supermarkets including Tesco, Aldi, Sainsbury\'s, and Asda, organised by food group.',
     sections: [
       {
@@ -165,6 +181,14 @@ export const blogPostsData = {
     title: 'High Protein Low Calorie Meals UK: 30 Easy Ideas Under 500 Calories',
     description: 'The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Simple Tesco, Aldi, and Asda ingredients.',
     h1: 'High Protein Low Calorie Meals for UK Weight Loss',
+    datePublished: '2025-10-15',
+    dateModified: '2026-05-01',
+    readingTime: 7,
+    faq: [
+      { q: 'How much protein should I eat on a low-calorie diet?', a: 'Aim for at least 1.6 g of protein per kg of body weight when in a calorie deficit. This helps preserve muscle mass while losing fat. For a 75 kg person, that is around 120 g of protein per day.' },
+      { q: 'What are the best high-protein low-calorie meals in the UK?', a: 'Top choices include grilled chicken with roasted veg (around 400 kcal, 40 g protein), tinned tuna salad (around 300 kcal, 30 g protein), and Greek yogurt with berries (around 150 kcal, 15 g protein).' },
+      { q: 'Can I get enough protein without eating meat?', a: 'Yes — eggs, Greek yogurt, cottage cheese, tofu, tinned legumes, and Quorn products are all high in protein and widely available in UK supermarkets. Combining multiple plant sources ensures you get all essential amino acids.' },
+    ],
     intro: 'Eating high-protein, low-calorie meals is the most effective dietary strategy for losing fat while keeping hunger at bay and preserving muscle mass. The challenge is finding meals that actually taste good, can be prepared quickly, and use affordable UK supermarket ingredients. This guide provides practical meal ideas for breakfast, lunch, dinner, and snacks — all high in protein, all under 500 calories per serving.',
     sections: [
       {
@@ -248,6 +272,14 @@ export const blogPostsData = {
     title: 'Tesco Low Calorie Shopping List UK: What to Buy for Weight Loss',
     description: 'The ultimate Tesco low calorie shopping list for UK weight loss. Best Tesco own-brand protein foods, vegetables, and snacks with prices and calorie counts. Clubcard-friendly picks.',
     h1: 'The Ultimate Tesco Low Calorie Shopping List',
+    datePublished: '2025-11-01',
+    dateModified: '2026-05-01',
+    readingTime: 6,
+    faq: [
+      { q: 'How much does a low-calorie weekly shop cost at Tesco?', a: 'A typical low-calorie week of groceries from Tesco costs £35–50, depending on how much fresh produce and lean protein you choose. Buying Tesco own-brand products keeps costs at the lower end.' },
+      { q: 'What are the best low-calorie ready meals at Tesco?', a: "Tesco's Healthy Living and Light Choices ranges include meals under 400 kcal. Good options include the Tesco Light Chicken Tikka Masala (~350 kcal) and Tesco Healthy Living Spaghetti Bolognese (~370 kcal)." },
+      { q: 'Does Tesco have good options for high-protein diets?', a: 'Yes — Tesco stocks chicken breast (~£5.50/kg), tinned tuna (~65p/tin), eggs (~£1.80/12), and 0% Greek yogurt (~£1.60/500 g), making it easy to build a high-protein, low-calorie diet affordably.' },
+    ],
     intro: 'Tesco is the UK\'s largest supermarket and one of the easiest places to build an affordable, calorie-controlled diet. This shopping list covers everything you need for a full week of low-calorie, high-protein eating — with Tesco product names, approximate prices, and calorie counts for each item. It is designed to pair with our free Tesco low-calorie meal plan generator, which creates a personalised weekly plan using Tesco ingredients.',
     sections: [
       {
@@ -345,6 +377,14 @@ export const blogPostsData = {
     title: 'How to Meal Plan for Weight Loss UK: Step-by-Step Beginner\'s Guide',
     description: 'How to meal plan for weight loss in the UK — set your calories, choose meals, batch cook, and shop smarter. Includes a free AI generator for your personalised 7-day plan.',
     h1: 'How to Meal Plan for Weight Loss — A UK Beginner\'s Guide',
+    datePublished: '2025-11-15',
+    dateModified: '2026-05-01',
+    readingTime: 8,
+    faq: [
+      { q: 'How do I start meal planning for weight loss?', a: 'Start by setting a daily calorie target (typically 1,500–1,800 for weight loss), then plan 3–5 meals per day that hit that target. Prep ingredients in batches at the weekend, and use a shopping list to avoid buying extras.' },
+      { q: 'How many calories should I eat when meal planning for weight loss?', a: 'Most people lose weight on 1,500–1,800 calories per day. Calculate your TDEE and subtract 300–500 calories for a sustainable deficit. Use the free generator on this site to create a plan at your specific calorie target.' },
+      { q: 'How long does meal planning take each week?', a: 'Planning takes 15–20 minutes once a week. Batch cooking proteins and veg on Sunday adds 60–90 minutes, but saves significant time and money throughout the week.' },
+    ],
     intro: 'Meal planning is one of the most powerful tools for weight loss. Studies show that people who plan their meals in advance eat fewer calories, make healthier choices, and are significantly less likely to give up on their diet compared to those who decide what to eat in the moment. This step-by-step guide explains exactly how to start meal planning for weight loss in the UK — from calculating your calorie target to building your first shopping list.',
     sections: [
       {
@@ -415,6 +455,14 @@ export const blogPostsData = {
     title: 'Best Cheap High-Protein Foods UK: Ranked by Protein Per Penny',
     description: 'The cheapest high-protein foods in UK supermarkets — ranked by protein per penny. Tesco, Aldi, Lidl, and Asda picks with prices, protein counts, and meal prep tips.',
     h1: 'Best Cheap High-Protein Foods in UK Supermarkets',
+    datePublished: '2025-12-01',
+    dateModified: '2026-05-01',
+    readingTime: 6,
+    faq: [
+      { q: 'What is the cheapest high-protein food in UK supermarkets?', a: 'Eggs are consistently the cheapest — around 15p per egg with 6.3 g protein. Tinned tuna (~65p per tin, 24 g protein/100 g) and chicken thighs (£3–5/kg, ~26 g protein/100 g) are also excellent value.' },
+      { q: 'How can I hit my protein target on a tight budget?', a: 'Focus on eggs, tinned tuna, chicken thighs, Greek yogurt, cottage cheese, and tinned legumes like chickpeas and lentils. These are all under £2 per high-protein serving at every major UK supermarket.' },
+      { q: 'Is protein powder worth buying for weight loss?', a: 'Protein powder can be useful if you struggle to hit your protein target through food alone, but it is not essential. A 1 kg bag of whey protein (~£20) provides 30–40 servings of 25 g protein, making it cost-competitive with food sources.' },
+    ],
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets you can hit a daily target of 150 g of protein for well under £3 if you choose the right foods. This guide ranks the cheapest high-protein foods available at Tesco, Aldi, Lidl, and Asda by protein per penny — so you can build an affordable, muscle-preserving diet without overspending.',
     sections: [
       {
@@ -476,6 +524,14 @@ export const blogPostsData = {
     title: 'Aldi vs Tesco for Meal Prep UK: Which is Cheaper for High-Protein Eating?',
     description: 'Aldi vs Tesco for meal prep — head-to-head price comparison on chicken, eggs, oats, yogurt, and frozen veg. Which UK supermarket wins for high-protein weight loss?',
     h1: 'Aldi vs Tesco for Meal Prep: Which Supermarket Is Better?',
+    datePublished: '2025-12-15',
+    dateModified: '2026-05-01',
+    readingTime: 7,
+    faq: [
+      { q: 'Is Aldi or Tesco cheaper for weekly meal prep?', a: 'Aldi is typically 15–25% cheaper than Tesco for core meal prep staples like chicken, eggs, oats, and frozen veg. A typical week of high-protein groceries costs £30–38 at Aldi versus £40–50 at Tesco.' },
+      { q: 'Does Aldi stock everything I need for meal prep?', a: "Aldi stocks all the essentials: chicken breast, tinned tuna, eggs, Greek yogurt, oats, brown rice, and frozen vegetables. It has a smaller range than Tesco but for standard meal prep it covers everything." },
+      { q: 'Is Aldi food quality comparable to Tesco?', a: 'For core meal prep foods — chicken breast, eggs, oats, and frozen veg — Aldi quality is comparable to Tesco. In blind taste tests and consumer surveys, Aldi own-brand products regularly match or beat Tesco equivalents.' },
+    ],
     intro: 'Two supermarkets dominate the conversation for budget-conscious meal preppers in the UK: Aldi and Tesco. Aldi wins on price almost every week, but Tesco fights back with Clubcard Prices, a wider product range, and better availability. This guide compares them head-to-head on the staples that matter most for high-protein, calorie-controlled eating — so you can decide which to use, or how to combine both.',
     sections: [
       {
@@ -536,6 +592,14 @@ export const blogPostsData = {
     title: 'Cheapest UK Supermarket for Meal Prep: Aldi, Lidl, Tesco & Asda Compared',
     description: 'Which UK supermarket is cheapest for meal prep? Full 2025 comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland on a high-protein weekly shop.',
     h1: 'Cheapest UK Supermarket for Meal Prep: Full 2025 Comparison',
+    datePublished: '2026-01-10',
+    dateModified: '2026-05-01',
+    readingTime: 8,
+    faq: [
+      { q: 'Which UK supermarket is cheapest for meal prep in 2026?', a: "Aldi and Lidl are consistently the cheapest for meal prep staples. A typical high-protein weekly shop averages £30–38 at Aldi or Lidl, versus £40–50 at Tesco or Sainsbury's. Iceland is competitive for frozen proteins and veg." },
+      { q: 'What is the cheapest UK supermarket for chicken breast?', a: "Aldi and Lidl typically offer the cheapest chicken breast at £4–5/kg. Tesco and Asda usually price theirs at £5–7/kg, and Sainsbury's at £6–9/kg." },
+      { q: 'Can I do a full week of healthy meal prep for under £35?', a: 'Yes — shopping at Aldi or Lidl, a full week of high-protein, low-calorie meals for one person costs £28–38. This covers chicken breast, eggs, oats, frozen veg, Greek yogurt, and basic carbs like rice.' },
+    ],
     intro: 'With food prices higher than they have been in years, choosing the right supermarket can save a meal prepper £500 or more annually. This guide compares seven major UK supermarkets — Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland — on a standard high-protein meal prep shop, so you know exactly where your money goes furthest.',
     sections: [
       {
@@ -590,6 +654,14 @@ export const blogPostsData = {
     title: '1500 vs 1800 vs 2000 Calories UK: Which Meal Plan Is Right for You?',
     description: '1500, 1800, or 2000 calories — which is right for your weight loss? This guide explains who each target suits, expected fat loss per week, and how to choose. Generate your plan free.',
     h1: '1500 vs 1800 vs 2000 Calorie Meal Plans: Which Is Right for You?',
+    datePublished: '2026-01-20',
+    dateModified: '2026-05-01',
+    readingTime: 7,
+    faq: [
+      { q: 'Should I eat 1500 or 1800 calories to lose weight?', a: '1500 calories works best for smaller or less active people who want to lose weight faster. 1800 calories suits those who are more active or find 1500 too restrictive. Both create a meaningful calorie deficit for most adults — choose the one you can sustain.' },
+      { q: 'Is 1200 calories too low for a diet?', a: 'For most adults, 1200 calories is too low. Very low-calorie diets increase the risk of muscle loss, nutrient deficiencies, and metabolic adaptation. The NHS recommends women eat no fewer than 1400 calories and men no fewer than 1600 calories per day.' },
+      { q: 'Can I switch between 1500 and 1800 calorie days?', a: 'Yes — many people use a flexible approach, eating 1500 calories on rest days and 1800 on active days. This averages out to a meaningful deficit while providing extra energy when needed.' },
+    ],
     intro: 'The three most popular calorie targets in UK weight loss are 1,500, 1,800, and 2,000 calories per day. Each suits a different body size, activity level, and rate of weight loss. Choosing the wrong target either makes the diet unsustainably restrictive or too gentle to produce meaningful results. This guide explains exactly who each target is designed for and how to choose the right one.',
     sections: [
       {
@@ -658,6 +730,14 @@ export const blogPostsData = {
     title: 'How Much Protein Do You Need When Dieting UK? (With Food Examples)',
     description: 'How much protein do you need when dieting in the UK? Exact targets for men and women, why protein matters for fat loss, and the best UK supermarket sources to hit your goal.',
     h1: 'How Much Protein Do You Need When Dieting?',
+    datePublished: '2026-02-01',
+    dateModified: '2026-05-01',
+    readingTime: 8,
+    faq: [
+      { q: 'How much protein do I need to lose fat and keep muscle?', a: 'Most research supports eating 1.6–2.2 g of protein per kg of body weight when in a calorie deficit. For a 75 kg person, that is 120–165 g of protein per day. Higher intakes are recommended for those doing resistance training.' },
+      { q: 'What are the best protein sources for dieting?', a: 'The best sources when dieting are low in fat: chicken breast (~31 g protein/100 g), tinned tuna (~24 g/100 g), eggs (~6 g/egg), 0% Greek yogurt (~10 g/100 g), and cottage cheese (~12 g/100 g). All are affordable at UK supermarkets.' },
+      { q: 'Can I get too much protein?', a: 'For healthy adults, eating 2–3 g of protein per kg of body weight is safe. Excess protein is used for energy or excreted. The main downside is cost — very high protein intakes from food alone can become expensive.' },
+    ],
     intro: 'Protein intake is arguably the single most important dietary variable during a fat loss diet. Get it right and you preserve muscle, stay fuller for longer, and lose predominantly fat. Get it wrong and the weight you lose is a mix of fat and muscle — leaving you lighter but softer, with a slower metabolism. This guide explains exactly how much protein to eat when dieting, with practical UK food examples to hit your daily target.',
     sections: [
       {
@@ -721,6 +801,14 @@ export const blogPostsData = {
     title: 'Cheap Meal Prep Shopping List UK: Full Week Under £30 at Aldi or Tesco',
     description: 'A complete cheap meal prep shopping list for the UK — high-protein, calorie-controlled meals under £30/week at Aldi, Lidl, or Tesco. Estimated prices, batch cook tips, and free plan generator.',
     h1: 'Cheap Meal Prep Shopping List UK: Under £30 for a Full Week',
+    datePublished: '2026-02-15',
+    dateModified: '2026-05-01',
+    readingTime: 6,
+    faq: [
+      { q: 'What should I buy for a cheap healthy week of meal prep?', a: 'Core items: chicken breast or thighs (£4–7/kg), eggs (£1.50–2/12), rolled oats (£1/kg), brown rice (£1.50/kg), frozen mixed veg (£1/kg), tinned tuna (65p/tin), and 0% Greek yogurt (£1.60/500 g). Total: around £25–35 at Aldi or Lidl.' },
+      { q: 'How do I meal prep on a budget in the UK?', a: 'Buy protein in bulk (1–2 kg chicken breast), cook a large batch of rice or oats at the start of the week, and rely on frozen veg for convenience and cost. Batch cooking 4–5 meals at once cuts prep time to around 90 minutes per week.' },
+      { q: 'What cheap foods have the most protein?', a: 'The best value protein foods are eggs (~15p per egg, 6 g protein), tinned tuna (~65p per tin, 30 g protein), chicken thighs (~£4/kg, 26 g protein/100 g), and Greek yogurt (~£1.60/500 g, 10 g protein/100 g).' },
+    ],
     intro: 'Eating healthily on a budget is entirely achievable in the UK if you shop smart. This meal prep shopping list is designed around the cheapest high-protein staples from Aldi, Lidl, and Tesco own-brand ranges — providing a full week of calorie-controlled, high-protein meals for one person for approximately £25–30. All prices are approximate 2025 own-brand figures.',
     sections: [
       {
@@ -790,6 +878,14 @@ export const blogPostsData = {
     title: 'How Many Calories to Lose Weight UK? TDEE Calculator & Safe Deficit Guide',
     description: 'How many calories do you need to lose weight in the UK? Calculate your TDEE, choose a safe deficit, and see expected weekly fat loss. Includes a free UK meal plan generator.',
     h1: 'How Many Calories Do You Need to Lose Weight?',
+    datePublished: '2026-03-01',
+    dateModified: '2026-05-01',
+    readingTime: 9,
+    faq: [
+      { q: 'How many calories should I eat to lose 1 kg per week?', a: 'To lose 1 kg per week you need a deficit of approximately 7,700 calories over seven days — around 1,100 calories per day. This is aggressive and not recommended for most people. A more sustainable approach is a 500-calorie deficit (0.5 kg/week).' },
+      { q: 'How many calories do I need per day to maintain weight?', a: 'The average adult needs 1,800–2,500 calories per day to maintain weight, depending on size, age, sex, and activity level. Use the Mifflin-St Jeor equation to calculate your personal TDEE (Total Daily Energy Expenditure).' },
+      { q: 'Is 1500 calories enough to lose weight?', a: 'For most women and smaller or less active men, 1500 calories creates a meaningful calorie deficit. Most women have a TDEE of 1,800–2,200 calories, so 1,500 creates a 300–700 calorie deficit — enough for steady fat loss.' },
+    ],
     intro: 'The single most important number in weight loss is your calorie target. But knowing your target requires understanding three concepts: your Basal Metabolic Rate (BMR), your Total Daily Energy Expenditure (TDEE), and your ideal calorie deficit. This guide explains exactly how to calculate all three, how to choose a safe deficit range, and how to convert that into a realistic weight loss timeline — with worked examples for UK adults across different body sizes and activity levels.',
     sections: [
       {
@@ -893,6 +989,14 @@ export const blogPostsData = {
     title: 'How to Lose Weight Fast UK: Safe Methods That Actually Work in 2025',
     description: 'How to lose weight fast in the UK safely — calorie deficits, high-protein eating, and realistic timelines. Avoid crash diets and get a free personalised meal plan.',
     h1: 'How to Lose Weight Fast in the UK — Safe, Evidence-Based Methods',
+    datePublished: '2026-03-15',
+    dateModified: '2026-05-01',
+    readingTime: 10,
+    faq: [
+      { q: 'How quickly can I safely lose weight in the UK?', a: 'Safe weight loss is typically 0.5–1 kg per week for most adults. Faster rates increase the risk of muscle loss, nutrient deficiencies, and rebound weight gain. Very low-calorie diets under medical supervision can produce faster results safely.' },
+      { q: 'What is the fastest way to lose weight without starving?', a: 'The most effective approach combines a moderate calorie deficit (400–600 calories below TDEE), high protein intake (1.6–2 g/kg body weight), and resistance training to preserve muscle. This maximises fat loss while keeping hunger manageable.' },
+      { q: 'Do crash diets work for fast weight loss?', a: 'Crash diets produce rapid initial weight loss, mostly from water and glycogen. However, they cause muscle loss, metabolic adaptation, and almost always result in weight regain. Sustainable methods consistently outperform crash diets for long-term results.' },
+    ],
     intro: 'Everyone wants to lose weight quickly — but most fast weight loss methods lead to muscle loss, nutrient deficiencies, and rapid rebound weight gain. This guide covers how to lose weight as fast as is safely possible using evidence-based methods: aggressive but sustainable calorie deficits, high-protein eating, and strategic food choices available at UK supermarkets. You will also see realistic timelines for different starting weights and calorie targets.',
     sections: [
       {
@@ -987,6 +1091,14 @@ export const blogPostsData = {
     title: 'Meal Prep for Beginners UK: How to Start, What to Cook & Save £100/Month',
     description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Free meal plan generator.',
     h1: 'Meal Prep for Beginners UK — How to Start and Save Money on Food',
+    datePublished: '2026-04-01',
+    dateModified: '2026-05-01',
+    readingTime: 8,
+    faq: [
+      { q: 'How do I start meal prepping for beginners in the UK?', a: 'Start small: prep just two or three meals on Sunday (e.g., a batch of chicken, cooked rice, and chopped veg). Store in airtight containers in the fridge. As you build the habit, gradually expand to a full week of lunches and dinners.' },
+      { q: 'How long does meal prep last in the fridge?', a: 'Cooked chicken, rice, and roasted veg last 3–4 days in the fridge. Fish should be eaten within 2 days. For longer storage, freeze portions in labelled containers — most cooked meals last up to 3 months in the freezer.' },
+      { q: 'What containers should I use for meal prep?', a: 'Glass containers are best for reheating in the microwave and do not stain or absorb smells. BPA-free plastic boxes are lighter and cheaper — useful for taking meals to work. Aim for stackable, airtight containers in 500–1000 ml sizes.' },
+    ],
     intro: "Meal prep is the single most effective habit for eating healthily and saving money in the UK. Spending two to three hours cooking on a Sunday gives you a full week of ready-to-eat meals, eliminating the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
     sections: [
       {
@@ -1073,6 +1185,14 @@ export const blogPostsData = {
     title: 'High Protein Breakfast UK: 12 Quick Ideas (30g+ Protein, Under 400 kcal)',
     description: '12 high-protein breakfast ideas for UK adults — 30g+ protein, under 400 kcal, using everyday Tesco, Aldi, and Asda ingredients. With prep times and calorie counts.',
     h1: 'High Protein Breakfast UK — 12 Quick Ideas with 30g+ Protein',
+    datePublished: '2026-04-15',
+    dateModified: '2026-05-01',
+    readingTime: 7,
+    faq: [
+      { q: 'What is the highest protein breakfast in UK supermarkets?', a: 'Greek yogurt with protein powder mixed in can hit 40–50 g protein per serving. Without supplements, scrambled eggs (4 eggs = ~28 g protein) with smoked salmon (~10 g/50 g) is one of the highest-protein breakfasts available from UK supermarkets.' },
+      { q: 'How do I get 30g of protein at breakfast?', a: 'Options for 30 g protein at breakfast: 4 large eggs (28 g) with a slice of smoked salmon, a large bowl of Greek yogurt (500 g = 20 g) with cottage cheese mixed in, or a high-protein smoothie with 2 scoops protein powder and milk.' },
+      { q: 'Is eating a high-protein breakfast important for weight loss?', a: 'Yes — a high-protein breakfast reduces hunger hormones and increases feelings of fullness, leading to lower calorie intake throughout the day. Studies consistently show people who eat a protein-rich breakfast consume fewer calories at lunch and dinner.' },
+    ],
     intro: 'A high-protein breakfast is one of the most powerful tools for controlling hunger, preserving muscle mass, and supporting weight loss throughout the day. Research consistently shows that eating 25–40 g of protein at breakfast reduces appetite for 4–6 hours, lowers daily calorie intake, and reduces evening snacking compared to low-protein alternatives. These 12 ideas use everyday UK supermarket ingredients and each provides at least 30 g of protein in under 400 calories.',
     sections: [
       {

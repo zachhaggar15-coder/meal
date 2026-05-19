@@ -11,19 +11,38 @@ export default function BlogPost() {
 
   if (!data) return <Navigate to="/" replace />;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: data.h1,
-    description: data.description,
-    datePublished: '2025-01-01',
-    dateModified: '2026-05-01',
-    publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://www.mealprep.org.uk/blog/${slug}`,
+  const wordCount = data.sections.reduce((total, s) => {
+    const pWords = s.paragraphs?.join(' ').split(/\s+/).length ?? 0;
+    const bWords = s.bullets?.join(' ').split(/\s+/).length ?? 0;
+    return total + pWords + bWords;
+  }, 0);
+  const readingTime = data.readingTime ?? Math.max(4, Math.round(wordCount / 220));
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: data.h1,
+      description: data.description,
+      datePublished: data.datePublished ?? '2025-09-01',
+      dateModified: data.dateModified ?? '2026-05-01',
+      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `https://www.mealprep.org.uk/blog/${slug}`,
+      },
     },
-  };
+    ...(data.faq?.length ? [{
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.faq.map(item => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    }] : []),
+  ];
 
   return (
     <>
@@ -43,6 +62,12 @@ export default function BlogPost() {
 
         <article>
           <h1>{data.h1}</h1>
+          <p className="article-meta">
+            <time dateTime={data.datePublished ?? '2025-09-01'}>
+              {new Date(data.datePublished ?? '2025-09-01').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </time>
+            {' · '}{readingTime} min read
+          </p>
           <p className="content-intro">{data.intro}</p>
 
           {/* Early CTA — after the intro, before the main body */}
@@ -90,6 +115,18 @@ export default function BlogPost() {
               )}
             </section>
           ))}
+
+          {data.faq?.length > 0 && (
+            <div className="faq">
+              <h2>Frequently Asked Questions</h2>
+              {data.faq.map((item, i) => (
+                <div key={i} className="faq-item">
+                  <h3>{item.q}</h3>
+                  <p>{item.a}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Sticker promo — before final CTA */}
           <StickerPromo />
