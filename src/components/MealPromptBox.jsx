@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function MealPromptBox({ meal }) {
+export default function MealPromptBox({ meal, onSwap }) {
   const [open, setOpen] = useState(false);
   const [instruction, setInstruction] = useState('');
   const [loading, setLoading] = useState(false);
@@ -78,7 +78,18 @@ export default function MealPromptBox({ meal }) {
                 </p>
               )}
               {result.description && <p className="meal-prompt-result-desc">{result.description}</p>}
-              <button className="action-btn" onClick={reset} type="button">Try another swap</button>
+              <div className="meal-prompt-result-actions">
+                {onSwap && (
+                  <button
+                    className="submit meal-prompt-apply"
+                    type="button"
+                    onClick={() => { onSwap(result); reset(); setOpen(false); }}
+                  >
+                    Apply swap
+                  </button>
+                )}
+                <button className="action-btn" onClick={reset} type="button">Try another</button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="meal-prompt-form">

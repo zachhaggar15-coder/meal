@@ -693,7 +693,41 @@ export default function Home() {
             />
           )}
 
-          {plan?.weekly_plan && <MealPlan weeklyPlan={plan.weekly_plan} />}
+          {plan?.weekly_plan && (() => {
+            const days = plan.weekly_plan;
+            const avgKcal = Math.round(days.reduce((s, d) => s + (d.daily_totals?.calories || 0), 0) / days.length);
+            const avgProtein = Math.round(days.reduce((s, d) => s + (d.daily_totals?.protein || 0), 0) / days.length);
+            return (
+              <div className="plan-summary-strip">
+                <div className="plan-summary-stat">
+                  <span className="plan-summary-value">{avgKcal.toLocaleString()}</span>
+                  <span className="plan-summary-label">avg kcal / day</span>
+                </div>
+                <div className="plan-summary-stat">
+                  <span className="plan-summary-value">{avgProtein}g</span>
+                  <span className="plan-summary-label">avg protein / day</span>
+                </div>
+                <div className="plan-summary-stat">
+                  <span className="plan-summary-value">{days.length}</span>
+                  <span className="plan-summary-label">{days.length === 1 ? 'day' : 'days'}</span>
+                </div>
+                {plan.price_estimate?.total && (
+                  <div className="plan-summary-stat">
+                    <span className="plan-summary-value">{plan.price_estimate.total}</span>
+                    <span className="plan-summary-label">est. cost</span>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
+          {plan?.weekly_plan && (
+            <MealPlan
+              weeklyPlan={plan.weekly_plan}
+              shoppingList={lastValues?.shoppingList ? plan.shopping_list : null}
+              price={plan.price_estimate}
+            />
+          )}
           {plan?.shopping_list && lastValues?.shoppingList && (
             <ShoppingList list={plan.shopping_list} price={plan.price_estimate} />
           )}

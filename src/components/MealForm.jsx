@@ -28,8 +28,11 @@ export default function MealForm({ onSubmit, disabled }) {
   const [shoppingList, setShoppingList] = useState(true);
   const [advanced, setAdvanced] = useState(false);
 
+  const calError = calories !== '' && (Number(calories) < 800 || Number(calories) > 4000);
+
   function handleSubmit(e) {
     e.preventDefault();
+    if (calError) return;
     onSubmit({
       days: Number(days),
       calories: Number(calories) || 1800,
@@ -68,6 +71,9 @@ export default function MealForm({ onSubmit, disabled }) {
             onChange={(e) => setCalories(e.target.value)}
             required
           />
+          {calError && (
+            <p className="field-hint field-hint--error">Enter a value between 800–4,000 kcal</p>
+          )}
         </div>
 
         <div>
@@ -163,8 +169,8 @@ export default function MealForm({ onSubmit, disabled }) {
         </div>
       )}
 
-      <button className="submit" type="submit" disabled={disabled}>
-        {disabled ? 'Generating…' : 'Get My 7-Day Meal Plan'}
+      <button className="submit" type="submit" disabled={disabled || calError}>
+        {disabled ? 'Generating…' : `Get My ${Number(days) === 1 ? '1-Day' : `${Number(days)}-Day`} Meal Plan`}
       </button>
     </form>
   );

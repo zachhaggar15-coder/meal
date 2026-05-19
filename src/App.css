@@ -527,6 +527,100 @@ input:focus, select:focus {
 
 .btn-primary:hover { background: var(--accent-dark); color: #fff; }
 
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--accent-dark);
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  border: 2px solid var(--accent);
+}
+.btn-secondary:hover { background: var(--accent); color: #fff; }
+
+/* ---------- Field hints (validation) ---------- */
+
+.field-hint {
+  font-size: 0.8rem;
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+.field-hint--error { color: var(--danger); }
+
+/* ---------- Plan summary strip (generated plan) ---------- */
+
+.plan-summary-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px 24px;
+  margin-bottom: 16px;
+  justify-content: space-around;
+}
+.plan-summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 80px;
+}
+.plan-summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.plan-summary-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  text-align: center;
+}
+
+/* ---------- 404 Not Found ---------- */
+
+.not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+.not-found-content {
+  text-align: center;
+  max-width: 480px;
+}
+.not-found-heading {
+  font-size: 2rem;
+  margin: 0 0 12px;
+}
+.not-found-sub {
+  color: var(--muted);
+  margin: 0 0 28px;
+  font-size: 1.05rem;
+}
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ---------- Meal prompt result actions ---------- */
+
+.meal-prompt-result-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.meal-prompt-apply {
+  font-size: 0.85rem;
+  padding: 8px 16px;
+}
+
 /* ---------- Example plan cards ---------- */
 
 .example-plan {

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
@@ -10,10 +11,33 @@ export default function MealPlanPage() {
   const { slug } = useParams();
   const data = mealPlansData[slug];
 
+  const [plan, setPlan] = useState(data?.plan ?? []);
+
   if (!data) return <Navigate to="/" replace />;
 
-  const avgProtein = data.plan.length
-    ? Math.round(data.plan.reduce((s, d) => s + d.totals.protein, 0) / data.plan.length)
+  function handleSwap(dayIdx, mealIdx, newMeal) {
+    setPlan(prev => prev.map((day, di) => {
+      if (di !== dayIdx) return day;
+      const meals = day.meals.map((m, mi) => mi !== mealIdx ? m : {
+        ...m,
+        name: newMeal.name ?? m.name,
+        kcal: newMeal.calories ?? newMeal.kcal ?? m.kcal,
+        protein: newMeal.protein ?? m.protein,
+        desc: newMeal.description ?? newMeal.desc ?? m.desc,
+      });
+      return {
+        ...day,
+        meals,
+        totals: {
+          kcal: meals.reduce((s, m) => s + (m.kcal || 0), 0),
+          protein: meals.reduce((s, m) => s + (m.protein || 0), 0),
+        },
+      };
+    }));
+  }
+
+  const avgProtein = plan.length
+    ? Math.round(plan.reduce((s, d) => s + d.totals.protein, 0) / plan.length)
     : null;
 
   const jsonLd = [
@@ -132,7 +156,7 @@ export default function MealPlanPage() {
         </p>
 
         <div className="example-plan">
-          {data.plan.map((day, i) => (
+          {plan.map((day, i) => (
             <div key={i} className="plan-day-card">
               <h3>{day.day}</h3>
               {day.meals.map((meal, j) => (
@@ -148,7 +172,7 @@ export default function MealPlanPage() {
                   {meal.portion_size && (
                     <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
                   )}
-                  <MealPromptBox meal={meal} />
+                  <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(i, j, newMeal)} />
                 </div>
               ))}
               <div className="plan-day-total">
