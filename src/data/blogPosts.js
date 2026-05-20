@@ -3,8 +3,8 @@
 
 export const blogPostsData = {
   'how-to-build-a-calorie-deficit': {
-    title: 'How to Build a Calorie Deficit UK: Calculate Your TDEE & Start Losing Weight',
-    description: 'How to build a calorie deficit for sustainable weight loss in the UK. Calculate your TDEE, choose the right deficit size, avoid common mistakes, and get a free personalised meal plan.',
+    title: 'How to Build a Calorie Deficit UK — TDEE Calculator & Weight Loss Guide',
+    description: 'Calculate your TDEE and build a calorie deficit for sustainable weight loss. UK supermarket tips, free meal plan generator. No more guessing.',
     h1: 'How to Build a Calorie Deficit for Sustainable Weight Loss',
     intro: 'Understanding a calorie deficit is the single most important concept in weight loss. Whether you are following a 1,500, 1,800, or 2,000 calorie plan, this guide explains everything you need to know about creating and maintaining a calorie deficit in a safe, sustainable way — with specific advice for UK shoppers and lifestyles.',
     sections: [
@@ -75,8 +75,8 @@ export const blogPostsData = {
   },
 
   'best-low-calorie-foods-uk': {
-    title: 'Best Low Calorie Foods UK: Cheap Supermarket Foods for Fat Loss',
-    description: 'The best low calorie foods in UK supermarkets — Tesco, Aldi, Asda, and Lidl. High-protein, filling options under 200 kcal. Includes a free personalised meal plan generator.',
+    title: 'Best Low Calorie Foods UK — 25+ Budget Supermarket Staples (Free Guide)',
+    description: 'Best low calorie foods at Tesco, Aldi, Asda, Sainsbury\'s. High protein, filling, under 200 kcal. Budget-friendly fat loss foods.',
     h1: 'The Best Low Calorie Foods Available in UK Supermarkets',
     intro: 'Choosing the right low-calorie foods is the foundation of any successful weight loss diet. The best choices are not just low in calories — they are also filling, nutritious, and genuinely enjoyable to eat. This guide covers the highest-value low-calorie foods available at UK supermarkets including Tesco, Aldi, Sainsbury\'s, and Asda, organised by food group.',
     sections: [
@@ -342,8 +342,8 @@ export const blogPostsData = {
   },
 
   'how-to-meal-plan-for-weight-loss': {
-    title: 'How to Meal Plan for Weight Loss UK: Step-by-Step Beginner\'s Guide',
-    description: 'How to meal plan for weight loss in the UK — set your calories, choose meals, batch cook, and shop smarter. Includes a free AI generator for your personalised 7-day plan.',
+    title: 'How to Meal Plan for Weight Loss UK — Free 5-Step Beginner Guide',
+    description: 'Learn how to meal plan for weight loss in the UK. Calculate calories, build a shopping list, batch cook, and track results. Free AI meal plan generator.',
     h1: 'How to Meal Plan for Weight Loss — A UK Beginner\'s Guide',
     intro: 'Meal planning is one of the most powerful tools for weight loss. Studies show that people who plan their meals in advance eat fewer calories, make healthier choices, and are significantly less likely to give up on their diet compared to those who decide what to eat in the moment. This step-by-step guide explains exactly how to start meal planning for weight loss in the UK — from calculating your calorie target to building your first shopping list.',
     sections: [
@@ -412,8 +412,8 @@ export const blogPostsData = {
   },
 
   'best-cheap-high-protein-foods-uk': {
-    title: 'Best Cheap High-Protein Foods UK: Ranked by Protein Per Penny',
-    description: 'The cheapest high-protein foods in UK supermarkets — ranked by protein per penny. Tesco, Aldi, Lidl, and Asda picks with prices, protein counts, and meal prep tips.',
+    title: 'Cheapest High Protein Foods UK — 2p-4p Per Gram (Ranked)',
+    description: 'Best cheap protein UK. Tinned tuna, eggs, lentils ranked by protein per penny. Under £3/day for 150g protein. Tesco, Aldi, Asda picks.',
     h1: 'Best Cheap High-Protein Foods in UK Supermarkets',
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets you can hit a daily target of 150 g of protein for well under £3 if you choose the right foods. This guide ranks the cheapest high-protein foods available at Tesco, Aldi, Lidl, and Asda by protein per penny — so you can build an affordable, muscle-preserving diet without overspending.',
     sections: [
