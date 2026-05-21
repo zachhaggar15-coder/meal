@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
+import { generateBlogImageUrl } from '../utils/imageGenerator.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -11,19 +12,33 @@ export default function BlogPost() {
 
   if (!data) return <Navigate to="/" replace />;
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: data.h1,
-    description: data.description,
-    datePublished: '2025-01-01',
-    dateModified: '2026-05-01',
-    publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://www.mealprep.org.uk/blog/${slug}`,
+  const ogImageUrl = generateBlogImageUrl(slug, data.title);
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: data.h1,
+      description: data.description,
+      datePublished: '2025-01-01',
+      dateModified: '2026-05-01',
+      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': `https://www.mealprep.org.uk/blog/${slug}`,
+      },
+      image: ogImageUrl,
     },
-  };
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.mealprep.org.uk/#popular-plans' },
+        { '@type': 'ListItem', position: 3, name: data.h1, item: `https://www.mealprep.org.uk/blog/${slug}` },
+      ],
+    },
+  ];
 
   return (
     <>
@@ -32,6 +47,7 @@ export default function BlogPost() {
         description={data.description}
         canonical={`/blog/${slug}`}
         ogType="article"
+        ogImage={ogImageUrl}
         jsonLd={jsonLd}
       />
       <div className="page content-page">

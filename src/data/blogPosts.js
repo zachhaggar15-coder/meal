@@ -3,8 +3,8 @@
 
 export const blogPostsData = {
   'how-to-build-a-calorie-deficit': {
-    title: 'How to Build a Calorie Deficit UK — TDEE Calculator & Weight Loss Guide',
-    description: 'Calculate your TDEE and build a calorie deficit for sustainable weight loss. UK supermarket tips, free meal plan generator. No more guessing.',
+    title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',
+    description: 'Calculate your TDEE and build a calorie deficit for sustainable weight loss. UK supermarket tips, free meal plan generator. Generate your plan free.',
     h1: 'How to Build a Calorie Deficit for Sustainable Weight Loss',
     intro: 'Understanding a calorie deficit is the single most important concept in weight loss. Whether you are following a 1,500, 1,800, or 2,000 calorie plan, this guide explains everything you need to know about creating and maintaining a calorie deficit in a safe, sustainable way — with specific advice for UK shoppers and lifestyles.',
     sections: [
@@ -75,8 +75,8 @@ export const blogPostsData = {
   },
 
   'best-low-calorie-foods-uk': {
-    title: 'Best Low Calorie Foods UK — 25+ Budget Supermarket Staples (Free Guide)',
-    description: 'Best low calorie foods at Tesco, Aldi, Asda, Sainsbury\'s. High protein, filling, under 200 kcal. Budget-friendly fat loss foods.',
+    title: 'Best Low Calorie Foods UK: 25+ Budget Supermarket Picks',
+    description: 'Best low calorie foods at Tesco, Aldi, Asda, Sainsbury\'s. High protein, filling, under 200 kcal. Budget-friendly fat loss foods. Generate a free meal plan.',
     h1: 'The Best Low Calorie Foods Available in UK Supermarkets',
     intro: 'Choosing the right low-calorie foods is the foundation of any successful weight loss diet. The best choices are not just low in calories — they are also filling, nutritious, and genuinely enjoyable to eat. This guide covers the highest-value low-calorie foods available at UK supermarkets including Tesco, Aldi, Sainsbury\'s, and Asda, organised by food group.',
     sections: [
@@ -162,8 +162,8 @@ export const blogPostsData = {
   },
 
   'high-protein-low-calorie-meals': {
-    title: 'High Protein Low Calorie Meals UK: 30 Easy Ideas Under 500 Calories',
-    description: 'The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Simple Tesco, Aldi, and Asda ingredients.',
+    title: 'High Protein Low Calorie Meals UK: 30 Easy Ideas',
+    description: 'The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Generate a free personalised plan.',
     h1: 'High Protein Low Calorie Meals for UK Weight Loss',
     intro: 'Eating high-protein, low-calorie meals is the most effective dietary strategy for losing fat while keeping hunger at bay and preserving muscle mass. The challenge is finding meals that actually taste good, can be prepared quickly, and use affordable UK supermarket ingredients. This guide provides practical meal ideas for breakfast, lunch, dinner, and snacks — all high in protein, all under 500 calories per serving.',
     sections: [
@@ -245,8 +245,8 @@ export const blogPostsData = {
   },
 
   'tesco-low-calorie-shopping-list': {
-    title: 'Tesco Low Calorie Shopping List UK: What to Buy for Weight Loss',
-    description: 'The ultimate Tesco low calorie shopping list for UK weight loss. Best Tesco own-brand protein foods, vegetables, and snacks with prices and calorie counts. Clubcard-friendly picks.',
+    title: 'Tesco Low Calorie Shopping List UK: What to Buy',
+    description: 'The ultimate Tesco low calorie shopping list for UK weight loss. Best Tesco own-brand protein foods, vegetables, and snacks with prices and calorie counts. Generate your free plan.',
     h1: 'The Ultimate Tesco Low Calorie Shopping List',
     intro: 'Tesco is the UK\'s largest supermarket and one of the easiest places to build an affordable, calorie-controlled diet. This shopping list covers everything you need for a full week of low-calorie, high-protein eating — with Tesco product names, approximate prices, and calorie counts for each item. It is designed to pair with our free Tesco low-calorie meal plan generator, which creates a personalised weekly plan using Tesco ingredients.',
     sections: [
@@ -342,8 +342,8 @@ export const blogPostsData = {
   },
 
   'how-to-meal-plan-for-weight-loss': {
-    title: 'How to Meal Plan for Weight Loss UK — Free 5-Step Beginner Guide',
-    description: 'Learn how to meal plan for weight loss in the UK. Calculate calories, build a shopping list, batch cook, and track results. Free AI meal plan generator.',
+    title: 'How to Meal Plan for Weight Loss UK — 5-Step Guide',
+    description: 'Learn how to meal plan for weight loss in the UK. Calculate calories, build a shopping list, batch cook, and track results. Generate your free AI meal plan.',
     h1: 'How to Meal Plan for Weight Loss — A UK Beginner\'s Guide',
     intro: 'Meal planning is one of the most powerful tools for weight loss. Studies show that people who plan their meals in advance eat fewer calories, make healthier choices, and are significantly less likely to give up on their diet compared to those who decide what to eat in the moment. This step-by-step guide explains exactly how to start meal planning for weight loss in the UK — from calculating your calorie target to building your first shopping list.',
     sections: [
@@ -473,8 +473,8 @@ export const blogPostsData = {
   },
 
   'aldi-vs-tesco-meal-prep': {
-    title: 'Aldi vs Tesco for Meal Prep UK: Which is Cheaper for High-Protein Eating?',
-    description: 'Aldi vs Tesco for meal prep — head-to-head price comparison on chicken, eggs, oats, yogurt, and frozen veg. Which UK supermarket wins for high-protein weight loss?',
+    title: 'Aldi vs Tesco for Meal Prep UK: Which Is Cheaper?',
+    description: 'Aldi vs Tesco for meal prep — head-to-head price comparison on chicken, eggs, oats, yogurt, and frozen veg. Which UK supermarket wins for high-protein weight loss? Generate a free plan.',
     h1: 'Aldi vs Tesco for Meal Prep: Which Supermarket Is Better?',
     intro: 'Two supermarkets dominate the conversation for budget-conscious meal preppers in the UK: Aldi and Tesco. Aldi wins on price almost every week, but Tesco fights back with Clubcard Prices, a wider product range, and better availability. This guide compares them head-to-head on the staples that matter most for high-protein, calorie-controlled eating — so you can decide which to use, or how to combine both.',
     sections: [
@@ -533,8 +533,8 @@ export const blogPostsData = {
   },
 
   'cheapest-uk-supermarket-meal-prep': {
-    title: 'Cheapest UK Supermarket for Meal Prep: Aldi, Lidl, Tesco & Asda Compared',
-    description: 'Which UK supermarket is cheapest for meal prep? Full 2025 comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland on a high-protein weekly shop.',
+    title: 'Cheapest UK Supermarket for Meal Prep (2025 Comparison)',
+    description: 'Which UK supermarket is cheapest for meal prep? Full 2025 comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland on a high-protein weekly shop. Generate your plan.',
     h1: 'Cheapest UK Supermarket for Meal Prep: Full 2025 Comparison',
     intro: 'With food prices higher than they have been in years, choosing the right supermarket can save a meal prepper £500 or more annually. This guide compares seven major UK supermarkets — Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland — on a standard high-protein meal prep shop, so you know exactly where your money goes furthest.',
     sections: [
@@ -587,7 +587,7 @@ export const blogPostsData = {
   },
 
   '1500-vs-1800-vs-2000-calories': {
-    title: '1500 vs 1800 vs 2000 Calories UK: Which Meal Plan Is Right for You?',
+    title: '1500 vs 1800 vs 2000 Calories UK: Which Is Right?',
     description: '1500, 1800, or 2000 calories — which is right for your weight loss? This guide explains who each target suits, expected fat loss per week, and how to choose. Generate your plan free.',
     h1: '1500 vs 1800 vs 2000 Calorie Meal Plans: Which Is Right for You?',
     intro: 'The three most popular calorie targets in UK weight loss are 1,500, 1,800, and 2,000 calories per day. Each suits a different body size, activity level, and rate of weight loss. Choosing the wrong target either makes the diet unsustainably restrictive or too gentle to produce meaningful results. This guide explains exactly who each target is designed for and how to choose the right one.',
@@ -655,8 +655,8 @@ export const blogPostsData = {
   },
 
   'how-much-protein-when-dieting': {
-    title: 'How Much Protein Do You Need When Dieting UK? (With Food Examples)',
-    description: 'How much protein do you need when dieting in the UK? Exact targets for men and women, why protein matters for fat loss, and the best UK supermarket sources to hit your goal.',
+    title: 'How Much Protein When Dieting UK? (With Examples)',
+    description: 'How much protein do you need when dieting in the UK? Exact targets for men and women, why protein matters for fat loss, and the best UK supermarket sources to hit your goal. Generate a free plan.',
     h1: 'How Much Protein Do You Need When Dieting?',
     intro: 'Protein intake is arguably the single most important dietary variable during a fat loss diet. Get it right and you preserve muscle, stay fuller for longer, and lose predominantly fat. Get it wrong and the weight you lose is a mix of fat and muscle — leaving you lighter but softer, with a slower metabolism. This guide explains exactly how much protein to eat when dieting, with practical UK food examples to hit your daily target.',
     sections: [
@@ -718,8 +718,8 @@ export const blogPostsData = {
   },
 
   'cheap-meal-prep-shopping-list-uk': {
-    title: 'Cheap Meal Prep Shopping List UK: Full Week Under £30 at Aldi or Tesco',
-    description: 'A complete cheap meal prep shopping list for the UK — high-protein, calorie-controlled meals under £30/week at Aldi, Lidl, or Tesco. Estimated prices, batch cook tips, and free plan generator.',
+    title: 'Cheap Meal Prep Shopping List UK: Full Week Under £30',
+    description: 'A complete cheap meal prep shopping list for the UK — high-protein, calorie-controlled meals under £30/week at Aldi, Lidl, or Tesco. Estimated prices, batch cook tips. Generate your free plan.',
     h1: 'Cheap Meal Prep Shopping List UK: Under £30 for a Full Week',
     intro: 'Eating healthily on a budget is entirely achievable in the UK if you shop smart. This meal prep shopping list is designed around the cheapest high-protein staples from Aldi, Lidl, and Tesco own-brand ranges — providing a full week of calorie-controlled, high-protein meals for one person for approximately £25–30. All prices are approximate 2025 own-brand figures.',
     sections: [
@@ -787,8 +787,8 @@ export const blogPostsData = {
   },
 
   'how-many-calories-to-lose-weight': {
-    title: 'How Many Calories to Lose Weight UK? TDEE Calculator & Safe Deficit Guide',
-    description: 'How many calories do you need to lose weight in the UK? Calculate your TDEE, choose a safe deficit, and see expected weekly fat loss. Includes a free UK meal plan generator.',
+    title: 'How Many Calories to Lose Weight UK? (2025 Guide)',
+    description: 'How many calories do you need to lose weight in the UK? Calculate your TDEE, choose a safe deficit, and see expected weekly fat loss. Generate a free UK meal plan.',
     h1: 'How Many Calories Do You Need to Lose Weight?',
     intro: 'The single most important number in weight loss is your calorie target. But knowing your target requires understanding three concepts: your Basal Metabolic Rate (BMR), your Total Daily Energy Expenditure (TDEE), and your ideal calorie deficit. This guide explains exactly how to calculate all three, how to choose a safe deficit range, and how to convert that into a realistic weight loss timeline — with worked examples for UK adults across different body sizes and activity levels.',
     sections: [
@@ -890,8 +890,8 @@ export const blogPostsData = {
   },
 
   'how-to-lose-weight-fast-uk': {
-    title: 'How to Lose Weight Fast UK: Safe Methods That Actually Work in 2025',
-    description: 'How to lose weight fast in the UK safely — calorie deficits, high-protein eating, and realistic timelines. Avoid crash diets and get a free personalised meal plan.',
+    title: 'How to Lose Weight Fast UK: Safe Methods (2025)',
+    description: 'How to lose weight fast in the UK safely — calorie deficits, high-protein eating, and realistic timelines. Avoid crash diets. Generate a free personalised meal plan.',
     h1: 'How to Lose Weight Fast in the UK — Safe, Evidence-Based Methods',
     intro: 'Everyone wants to lose weight quickly — but most fast weight loss methods lead to muscle loss, nutrient deficiencies, and rapid rebound weight gain. This guide covers how to lose weight as fast as is safely possible using evidence-based methods: aggressive but sustainable calorie deficits, high-protein eating, and strategic food choices available at UK supermarkets. You will also see realistic timelines for different starting weights and calorie targets.',
     sections: [
@@ -984,8 +984,8 @@ export const blogPostsData = {
   },
 
   'meal-prep-for-beginners-uk': {
-    title: 'Meal Prep for Beginners UK: How to Start, What to Cook & Save £100/Month',
-    description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Free meal plan generator.',
+    title: 'Meal Prep for Beginners UK: How to Start & Save £100',
+    description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Generate a free meal plan.',
     h1: 'Meal Prep for Beginners UK — How to Start and Save Money on Food',
     intro: "Meal prep is the single most effective habit for eating healthily and saving money in the UK. Spending two to three hours cooking on a Sunday gives you a full week of ready-to-eat meals, eliminating the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
     sections: [
@@ -1070,8 +1070,8 @@ export const blogPostsData = {
   },
 
   'high-protein-breakfast-uk': {
-    title: 'High Protein Breakfast UK: 12 Quick Ideas (30g+ Protein, Under 400 kcal)',
-    description: '12 high-protein breakfast ideas for UK adults — 30g+ protein, under 400 kcal, using everyday Tesco, Aldi, and Asda ingredients. With prep times and calorie counts.',
+    title: 'High Protein Breakfast UK: 12 Ideas (30g+, Under 400 kcal)',
+    description: '12 high-protein breakfast ideas for UK adults — 30g+ protein, under 400 kcal, using everyday Tesco, Aldi, and Asda ingredients. With prep times and calorie counts. Generate a free plan.',
     h1: 'High Protein Breakfast UK — 12 Quick Ideas with 30g+ Protein',
     intro: 'A high-protein breakfast is one of the most powerful tools for controlling hunger, preserving muscle mass, and supporting weight loss throughout the day. Research consistently shows that eating 25–40 g of protein at breakfast reduces appetite for 4–6 hours, lowers daily calorie intake, and reduces evening snacking compared to low-protein alternatives. These 12 ideas use everyday UK supermarket ingredients and each provides at least 30 g of protein in under 400 calories.',
     sections: [

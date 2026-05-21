@@ -6,6 +6,7 @@ import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
+import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 
 export default function MealPlanPage() {
   const { slug } = useParams();
@@ -40,6 +41,8 @@ export default function MealPlanPage() {
     ? Math.round(plan.reduce((s, d) => s + d.totals.protein, 0) / plan.length)
     : null;
 
+  const ogImageUrl = generateMealPlanImageUrl(slug, data.title, data.targetCalories);
+
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -53,6 +56,7 @@ export default function MealPlanPage() {
         '@type': 'WebPage',
         '@id': `https://www.mealprep.org.uk/meal-plan/${slug}`,
       },
+      image: ogImageUrl,
     },
     {
       '@context': 'https://schema.org',
@@ -63,6 +67,15 @@ export default function MealPlanPage() {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk' },
+        { '@type': 'ListItem', position: 2, name: 'Meal Plans', item: 'https://www.mealprep.org.uk/#popular-plans' },
+        { '@type': 'ListItem', position: 3, name: data.h1, item: `https://www.mealprep.org.uk/meal-plan/${slug}` },
+      ],
+    },
   ];
 
   return (
@@ -72,6 +85,7 @@ export default function MealPlanPage() {
         description={data.description}
         canonical={`/meal-plan/${slug}`}
         ogType="article"
+        ogImage={ogImageUrl}
         jsonLd={jsonLd}
       />
       <div className="page content-page">
