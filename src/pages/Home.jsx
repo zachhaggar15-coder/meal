@@ -419,17 +419,10 @@ export default function Home() {
         loadingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }, 50);
 
-      progressInterval.current = setInterval(() => {
-        const next = progressRef.current + (90 - progressRef.current) * 0.045;
-        progressRef.current = next;
-        setProgress(next);
-      }, 300);
-
       msgInterval.current = setInterval(() => {
         setMsgIndex(() => Math.floor(Math.random() * LOADING_MESSAGES.length));
       }, 5000);
     } else {
-      clearInterval(progressInterval.current);
       clearInterval(msgInterval.current);
       if (progressRef.current > 0) {
         setProgress(100);
@@ -440,7 +433,6 @@ export default function Home() {
       }
     }
     return () => {
-      clearInterval(progressInterval.current);
       clearInterval(msgInterval.current);
     };
   }, [loading]);
@@ -482,6 +474,9 @@ export default function Home() {
     setPlan(null);
     setLastValues(values);
 
+    // Estimate total output size for progress bar (chars, not tokens)
+    const estimatedChars = Number(values.days || 7) * Number(values.meals || 3) * 800 + 2000;
+
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
@@ -494,8 +489,35 @@ export default function Home() {
         throw new Error(data?.error || `Server error (${res.status}).`);
       }
 
-      const data = await res.json();
-      setPlan(data);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+
+      outer: while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split('\n');
+        buf = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          let event;
+          try { event = JSON.parse(line.slice(6)); } catch { continue; }
+
+          if (event.type === 'progress') {
+            const pct = Math.min(95, (event.chars / estimatedChars) * 100);
+            progressRef.current = pct;
+            setProgress(pct);
+          } else if (event.type === 'done') {
+            setPlan(event.plan);
+            break outer;
+          } else if (event.type === 'error') {
+            throw new Error(event.error);
+          }
+        }
+      }
     } catch (err) {
       console.error(err);
       setError(err.message || 'Something went wrong. Please try again.');
@@ -507,8 +529,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Free UK Meal Plan Generator | Personalised by Calories, Supermarket & Diet"
-        description="Generate a free 7-day UK meal plan in 30 seconds. Set your calorie target, preferred supermarket (Tesco, Aldi, Lidl, Asda), protein goal, and dietary preference. High-protein plans, shopping list included."
+        title="Free UK Meal Plan Generator 2025 | By Calories & Supermarket"
+        description="Generate a free 7-day UK meal plan in 30 seconds. Set your calorie target, preferred supermarket, and diet type. High-protein meals and full shopping list included. No sign-up needed."
         canonical="/"
         jsonLd={homeJsonLd}
       />
@@ -737,6 +759,43 @@ export default function Home() {
         <section className="seo-content">
 
           <div className="seo-section">
+            <h2>Frequently Asked Questions</h2>
+            <div className="faq">
+              <div className="faq-item">
+                <h3>How many calories should I eat to lose weight?</h3>
+                <p>
+                  Most adults lose weight sustainably on 1,500–1,800 calories per day, depending on height, weight, age, and
+                  activity level. The safest approach is to calculate your TDEE and subtract 300–500 calories.
+                  Our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> walks you through this step by step.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>Is this meal plan generator really free?</h3>
+                <p>Yes — completely free, with no sign-up, no email required, and no paywalled features. Generate as many plans as you like.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Can I use this if I am vegetarian or vegan?</h3>
+                <p>
+                  Absolutely. Select &quot;Vegetarian&quot; or &quot;Vegan&quot; from the dietary preference dropdown and the generator will
+                  produce a fully plant-based plan. Browse our <Link to="/meal-plan/vegetarian-low-calorie-meal-plan">vegetarian low-calorie meal plan</Link> for
+                  a ready-made example.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>How do I know the calorie counts are accurate?</h3>
+                <p>
+                  The AI generates calorie and protein estimates based on standard nutritional data. They are a useful guide rather than exact figures.
+                  For precise tracking, weigh your ingredients and use a calorie tracking app such as MyFitnessPal or Cronometer.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>Can I regenerate the plan if I do not like it?</h3>
+                <p>Yes — simply adjust your settings and click Generate Plan again. Each generation produces a different, randomised plan.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="seo-section">
             <h2>What is a UK Meal Plan Generator?</h2>
             <p>
               A UK meal plan generator takes your personal preferences — daily calorie target, dietary requirements,
@@ -871,43 +930,6 @@ export default function Home() {
             <p>
               Not sure which supermarket wins on price? Read our <Link to="/blog/aldi-vs-tesco-meal-prep">Aldi vs Tesco comparison</Link> or the full <Link to="/blog/cheapest-uk-supermarket-meal-prep">cheapest UK supermarket for meal prep</Link> guide.
             </p>
-          </div>
-
-          <div className="seo-section">
-            <h2>Frequently Asked Questions</h2>
-            <div className="faq">
-              <div className="faq-item">
-                <h3>How many calories should I eat to lose weight?</h3>
-                <p>
-                  Most adults lose weight sustainably on 1,500–1,800 calories per day, depending on height, weight, age, and
-                  activity level. The safest approach is to calculate your TDEE and subtract 300–500 calories.
-                  Our <Link to="/blog/how-to-build-a-calorie-deficit">calorie deficit guide</Link> walks you through this step by step.
-                </p>
-              </div>
-              <div className="faq-item">
-                <h3>Is this meal plan generator really free?</h3>
-                <p>Yes — completely free, with no sign-up, no email required, and no paywalled features. Generate as many plans as you like.</p>
-              </div>
-              <div className="faq-item">
-                <h3>Can I use this if I am vegetarian or vegan?</h3>
-                <p>
-                  Absolutely. Select &quot;Vegetarian&quot; or &quot;Vegan&quot; from the dietary preference dropdown and the generator will
-                  produce a fully plant-based plan. Browse our <Link to="/meal-plan/vegetarian-low-calorie-meal-plan">vegetarian low-calorie meal plan</Link> for
-                  a ready-made example.
-                </p>
-              </div>
-              <div className="faq-item">
-                <h3>How do I know the calorie counts are accurate?</h3>
-                <p>
-                  The AI generates calorie and protein estimates based on standard nutritional data. They are a useful guide rather than exact figures.
-                  For precise tracking, weigh your ingredients and use a calorie tracking app such as MyFitnessPal or Cronometer.
-                </p>
-              </div>
-              <div className="faq-item">
-                <h3>Can I regenerate the plan if I do not like it?</h3>
-                <p>Yes — simply adjust your settings and click Generate Plan again. Each generation produces a different, randomised plan.</p>
-              </div>
-            </div>
           </div>
 
           <div className="cta-box" style={{ marginTop: '32px' }}>

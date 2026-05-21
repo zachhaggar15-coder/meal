@@ -1,5 +1,5 @@
 // Vercel serverless function: POST /api/generate
-// Receives form data, calls OpenAI, returns parsed JSON meal plan.
+// Streams the OpenAI response as SSE events so the frontend can show real progress.
 // The OpenAI API key NEVER leaves the server.
 
 export default async function handler(req, res) {
@@ -16,7 +16,6 @@ export default async function handler(req, res) {
 
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
-  // Pull form values from the request body, with sensible defaults.
   const {
     days = 7,
     calories = 1800,
@@ -43,6 +42,14 @@ export default async function handler(req, res) {
     shoppingList
   });
 
+  // SSE headers — keep the connection open and disable proxy buffering
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no');
+
+  const sendEvent = (obj) => res.write(`data: ${JSON.stringify(obj)}\n\n`);
+
   try {
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -52,10 +59,10 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model,
-        // Force JSON output so we don't have to scrape it from prose.
         response_format: { type: 'json_object' },
         temperature: 0.7,
         max_tokens: Math.min(8000, Number(days) * Number(meals) * 500 + 2000),
+        stream: true,
         messages: [
           {
             role: 'system',
@@ -70,43 +77,65 @@ export default async function handler(req, res) {
     if (!openaiRes.ok) {
       const errText = await openaiRes.text();
       console.error('OpenAI error:', openaiRes.status, errText);
-      return res.status(502).json({
-        error: `OpenAI API returned ${openaiRes.status}. Please try again in a moment.`
-      });
+      sendEvent({ type: 'error', error: `OpenAI API returned ${openaiRes.status}. Please try again in a moment.` });
+      return res.end();
     }
 
-    const data = await openaiRes.json();
-    const content = data?.choices?.[0]?.message?.content;
-    if (!content) {
-      return res.status(502).json({ error: 'OpenAI response was empty.' });
-    }
+    const reader = openaiRes.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+    let fullContent = '';
 
-    // Parse JSON. If it fails, do one cleanup attempt then give up gracefully.
-    let parsed;
-    try {
-      parsed = JSON.parse(content);
-    } catch (e) {
-      const cleaned = content
-        .replace(/^```json\s*/i, '')
-        .replace(/^```\s*/i, '')
-        .replace(/```\s*$/i, '')
-        .trim();
-      try {
-        parsed = JSON.parse(cleaned);
-      } catch (e2) {
-        return res.status(502).json({
-          error: 'Could not parse the meal plan. Please try generating again.',
-          raw: content
-        });
+    outer: while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data: ')) continue;
+
+        const raw = trimmed.slice(6);
+        if (raw === '[DONE]') {
+          let parsed;
+          try {
+            parsed = JSON.parse(fullContent);
+          } catch {
+            const cleaned = fullContent
+              .replace(/^```json\s*/i, '')
+              .replace(/^```\s*/i, '')
+              .replace(/```\s*$/i, '')
+              .trim();
+            try {
+              parsed = JSON.parse(cleaned);
+            } catch {
+              sendEvent({ type: 'error', error: 'Could not parse the meal plan. Please try generating again.' });
+              return res.end();
+            }
+          }
+          sendEvent({ type: 'done', plan: parsed });
+          return res.end();
+        }
+
+        try {
+          const chunk = JSON.parse(raw);
+          const token = chunk.choices?.[0]?.delta?.content || '';
+          if (token) {
+            fullContent += token;
+            sendEvent({ type: 'progress', chars: fullContent.length });
+          }
+        } catch {
+          // skip malformed SSE chunks
+        }
       }
     }
-
-    return res.status(200).json(parsed);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({
-      error: 'Something went wrong contacting OpenAI. Please try again.'
-    });
+    sendEvent({ type: 'error', error: 'Something went wrong contacting OpenAI. Please try again.' });
+    res.end();
   }
 }
 
@@ -127,7 +156,6 @@ function buildPrompt({
   const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const planDays = dayNames.slice(0, days);
 
-  // Calculate suggested calorie split across meals so the LLM has explicit targets
   const mealCalories = buildMealCalorieSplit(Number(calories), Number(meals), snacks);
 
   return `You are a professional nutritionist creating a structured meal plan.
@@ -223,7 +251,6 @@ Return ONLY valid JSON. No markdown, no commentary.`;
 }
 
 function buildMealCalorieSplit(calories, meals, snacks) {
-  // Distribute calories proportionally across meal types
   const splits = {
     3: [
       { type: 'Breakfast', share: 0.28 },
@@ -247,7 +274,6 @@ function buildMealCalorieSplit(calories, meals, snacks) {
 
   const base = splits[meals] || splits[3];
 
-  // If snacks toggled on but not yet in the split, add one
   const hasMealsWithSnack = base.some(m => m.type.toLowerCase().includes('snack'));
   let list = base;
   if (snacks && !hasMealsWithSnack) {
