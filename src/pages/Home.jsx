@@ -190,6 +190,11 @@ const PLAN_CARDS = [
     desc: 'Maximum protein within a calorie deficit — ideal for fat loss while keeping muscle.',
   },
   {
+    slug: 'budget-fat-loss-meal-plan-uk',
+    title: 'Budget Fat Loss Meal Plan',
+    desc: 'A cheap 1,500 kcal plan built around Aldi/Lidl staples for under GBP30 a week.',
+  },
+  {
     slug: 'cheap-student-meal-plan-uk',
     title: 'Cheap Student Meal Plan UK',
     desc: 'Under £30 a week at Aldi or Lidl. High-protein and genuinely simple to cook.',

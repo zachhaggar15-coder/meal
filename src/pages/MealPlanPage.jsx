@@ -50,7 +50,7 @@ export default function MealPlanPage() {
       headline: data.h1,
       description: data.description,
       datePublished: '2025-01-01',
-      dateModified: '2026-05-01',
+      dateModified: '2026-05-26',
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
       mainEntityOfPage: {
         '@type': 'WebPage',
@@ -139,9 +139,10 @@ export default function MealPlanPage() {
           <p className="plan-summary-personalise">
             Not quite right?{' '}
             <Link
-              to={`/?from=${slug}&kcal=${data.targetCalories}`}
+              to="/"
               data-event="generator_cta_click"
               data-source-page={slug}
+              data-target-calories={data.targetCalories}
             >
               Generate a personalised version in 30 seconds &rarr;
             </Link>
@@ -166,7 +167,7 @@ export default function MealPlanPage() {
           <strong>{data.targetCalories.toLocaleString()} calories</strong> with a strong protein
           focus. Calorie and protein figures are estimates — weigh ingredients if you need
           precision. Use the{' '}
-          <Link to={`/?from=${slug}`}>free generator</Link> to get a freshly personalised version.
+          <Link to="/" data-event="generator_cta_click" data-source-page={slug}>free generator</Link> to get a freshly personalised version.
         </p>
 
         <div className="example-plan">
@@ -230,10 +231,11 @@ export default function MealPlanPage() {
             preferred UK supermarket, dietary requirements, and cooking time. Free, no sign-up needed.
           </p>
           <Link
-            to={`/?from=${slug}&kcal=${data.targetCalories}`}
+            to="/"
             className="btn-primary"
             data-event="generator_cta_click"
             data-source-page={slug}
+            data-target-calories={data.targetCalories}
           >
             Generate My {data.planLabel} Plan &rarr;
           </Link>
@@ -269,7 +271,7 @@ export default function MealPlanPage() {
           ))}
           <li>
             <Link
-              to={`/?from=${slug}`}
+              to="/"
               data-event="generator_cta_click"
               data-source-page={slug}
             >

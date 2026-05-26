@@ -21,7 +21,7 @@ export default function BlogPost() {
       headline: data.h1,
       description: data.description,
       datePublished: '2025-01-01',
-      dateModified: '2026-05-01',
+      dateModified: '2026-05-26',
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
       mainEntityOfPage: {
         '@type': 'WebPage',
@@ -39,6 +39,18 @@ export default function BlogPost() {
       ],
     },
   ];
+
+  if (data.faq?.length) {
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: data.faq.map(item => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    });
+  }
 
   return (
     <>
@@ -108,6 +120,20 @@ export default function BlogPost() {
           ))}
 
           {/* Sticker promo — before final CTA */}
+          {data.faq?.length && (
+            <>
+              <h2>Frequently Asked Questions</h2>
+              <div className="faq">
+                {data.faq.map((item, i) => (
+                  <div key={i} className="faq-item">
+                    <h3>{item.q}</h3>
+                    <p>{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
           <StickerPromo sourcePage={`blog-${slug}-body`} />
 
           <div className="cta-box cta-box--large">
@@ -117,7 +143,7 @@ export default function BlogPost() {
               meal plan for your preferred UK supermarket, calorie target, and dietary preferences.
             </p>
             <Link
-              to={`/?from=blog-${slug}`}
+              to="/"
               className="btn-primary"
               data-event="generator_cta_click"
               data-source-page={`blog-${slug}`}
@@ -137,7 +163,7 @@ export default function BlogPost() {
             ))}
             <li>
               <Link
-                to={`/?from=blog-${slug}`}
+                to="/"
                 data-event="generator_cta_click"
                 data-source-page={`blog-${slug}`}
               >

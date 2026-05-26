@@ -1399,6 +1399,12 @@ export const mealPlansData = {
     h1: 'Budget Fat Loss Meal Plan UK — Cheap 7-Day Weight Loss Guide',
     planLabel: 'Budget Fat Loss',
     targetCalories: 1500,
+    summary: {
+      supermarket: 'Aldi/Lidl',
+      supermarkets: 'Aldi, Lidl, Asda, Iceland',
+      bestFor: 'Low-cost fat loss, students, tight weekly food budgets',
+      prepDifficulty: 'Easy batch cooking (20-35 min)',
+    },
     intro: 'Losing fat does not require expensive supplements, branded diet foods, or a personal chef. The most effective fat loss foods are consistently among the cheapest available in UK supermarkets: chicken thighs, tinned tuna, eggs, lentils, oats, frozen vegetables, and low-fat Greek yogurt. This 7-day plan delivers 1,500 calories and 90–120 g of protein per day using these staples, with an estimated weekly cost of £20–30 from Aldi, Lidl, or a budget supermarket.',
     whyThisPlan: 'The foods that work best for fat loss — high in protein, high in fibre, low in calories — happen to be among the cheapest in any UK supermarket. Chicken thighs cost less per kilogram than breast; frozen broccoli costs less than fresh; tinned chickpeas and lentils are under £1 per can and pack extraordinary nutritional value. This plan maximises your nutrition-to-spend ratio for the best fat loss results on the smallest budget.',
     tips: [

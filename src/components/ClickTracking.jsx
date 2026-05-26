@@ -13,6 +13,8 @@ export default function ClickTracking() {
       trackEvent(target.dataset.event, {
         source_page: target.dataset.sourcePage,
         offer: target.dataset.offer,
+        target_calories: target.dataset.targetCalories,
+        supermarket: target.dataset.supermarket,
         destination: target.href,
       });
     }

@@ -840,6 +840,21 @@ export const blogPostsData = {
         ],
       },
       {
+        h2: 'Quick Reference: Common UK Weight Loss Targets',
+        paragraphs: [
+          'These examples are not prescriptions, but they help you sanity-check a calorie target before building a meal plan. The right number depends on your TDEE, current weight, activity level, and how aggressive you want the deficit to feel.',
+        ],
+        table: {
+          headers: ['Daily calories', 'Best suited to', 'Typical use case'],
+          rows: [
+            ['1,500 kcal', 'Smaller or less active adults', 'A structured fat loss target when TDEE is around 1,900-2,100 kcal'],
+            ['1,800 kcal', 'Many active adults', 'A moderate deficit with more room for filling meals and snacks'],
+            ['2,000 kcal', 'Taller or more active adults', 'A gentler deficit or maintenance target for some people'],
+            ['2,500 kcal', 'Very active adults', 'Often closer to maintenance or muscle gain than fat loss'],
+          ],
+        },
+      },
+      {
         h2: 'How Long Will It Take to Lose Weight?',
         paragraphs: [
           'Weight loss is not linear. You will not lose exactly the same amount every week — water retention, menstrual cycle (for women), food volume in your stomach, and hormonal fluctuations cause normal weekly variations of ±1–2 kg.',
@@ -886,6 +901,20 @@ export const blogPostsData = {
       { slug: 'how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss', type: 'blog' },
       { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', type: 'meal-plan' },
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan', type: 'meal-plan' },
+    ],
+    faq: [
+      {
+        q: 'What is the best calorie target for weight loss?',
+        a: 'The best target is usually 300-500 calories below your TDEE. For many UK adults this lands around 1,500-1,900 calories per day, but your height, weight, sex, and activity level matter.',
+      },
+      {
+        q: 'Is 1,200 calories enough to lose weight?',
+        a: 'It may create weight loss, but it is too low for many adults and can be hard to sustain. A moderate deficit with enough protein, fibre, and micronutrients is usually safer and easier to maintain.',
+      },
+      {
+        q: 'How often should I recalculate my calories?',
+        a: 'Recalculate after every 4-6 kg lost, or when weight has not moved for three to four weeks despite consistent tracking. As body weight drops, TDEE usually drops too.',
+      },
     ],
   },
 

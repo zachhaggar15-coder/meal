@@ -18,6 +18,7 @@ export default function Footer() {
             <li><Link to="/meal-plan/1800-calorie-meal-plan">1800 Calorie Meal Plan</Link></li>
             <li><Link to="/meal-plan/2000-calorie-meal-plan">2000 Calorie Meal Plan</Link></li>
             <li><Link to="/meal-plan/high-protein-low-calorie-meal-plan">High Protein Plan</Link></li>
+            <li><Link to="/meal-plan/budget-fat-loss-meal-plan-uk">Budget Fat Loss Plan</Link></li>
             <li><Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco Meal Plan</Link></li>
             <li><Link to="/meal-plan/aldi-low-calorie-meal-plan">Aldi Meal Plan</Link></li>
             <li><Link to="/meal-plan/vegetarian-low-calorie-meal-plan">Vegetarian Plan</Link></li>
