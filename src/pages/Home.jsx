@@ -552,8 +552,6 @@ export default function Home() {
           </p>
         </header>
 
-        <StickerPromo sourcePage="home-above-generator" compact />
-
         <div className="form-preview-layout">
           <section className="card form-col">
             <MealForm onSubmit={handleGenerate} disabled={loading} />
@@ -602,7 +600,7 @@ export default function Home() {
               <div className="ad-card-body">
                 <strong className="ad-card-title">{MEAL_PREP_STICKERS.name}</strong>
                 <p>Stick a date, calories, protein, and reheating note on every batch-cooked portion.</p>
-                <span className="ad-card-cta">View sticker kit &rarr;</span>
+                <span className="ad-card-cta">View labels &rarr;</span>
               </div>
             </a>
           </aside>

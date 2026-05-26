@@ -156,7 +156,6 @@ export default function MealPlanPage() {
           calories={data.targetCalories}
           supermarket={data.summary?.supermarket}
         />
-        <StickerPromo sourcePage={`${slug}-above-plan`} compact />
 
         <h2>Why Choose a {data.planLabel} Meal Plan?</h2>
         <p>{data.whyThisPlan}</p>

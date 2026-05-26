@@ -63,7 +63,6 @@ export default function BlogPost() {
 
           {/* Early CTA — after the intro, before the main body */}
           <GeneratorCTA sourcePage={`blog-${slug}`} />
-          <StickerPromo sourcePage={`blog-${slug}-intro`} compact />
 
           {data.sections.map((section, i) => (
             <section key={i}>

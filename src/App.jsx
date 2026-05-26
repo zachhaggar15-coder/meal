@@ -4,7 +4,6 @@ import './App.css';
 import ClickTracking from './components/ClickTracking.jsx';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
-import SitewideOfferBar from './components/SitewideOfferBar.jsx';
 import Home from './pages/Home.jsx';
 import MealPlanPage from './pages/MealPlanPage.jsx';
 import BlogPost from './pages/BlogPost.jsx';
@@ -37,7 +36,6 @@ export default function App() {
           </Routes>
         </div>
       </div>
-      <SitewideOfferBar />
     </>
   );
 }

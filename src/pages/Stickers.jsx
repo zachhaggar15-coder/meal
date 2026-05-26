@@ -40,7 +40,7 @@ export default function Stickers() {
 
         <section className="sticker-hero">
           <div className="sticker-hero-copy">
-            <span className="offer-kicker">Sponsored prep add-on</span>
+            <span className="offer-kicker">Sponsored</span>
             <h1>Meal Prep Labels for Batch Cooking</h1>
             <p className="content-intro">
               Mark the date, meal name, calories, protein, portion, and reheating note on every
@@ -51,12 +51,12 @@ export default function Stickers() {
                 href={MEAL_PREP_STICKERS.href}
                 target="_blank"
                 rel="noopener noreferrer nofollow sponsored"
-                className="btn-primary btn-primary--hot"
+                className="btn-primary"
                 data-event={MEAL_PREP_STICKERS.eventName}
                 data-source-page="stickers-hero"
                 data-offer={MEAL_PREP_STICKERS.name}
               >
-                View sticker kit &rarr;
+                View labels &rarr;
               </a>
               <a href="#why-labels" className="btn-secondary">
                 Why labels help
@@ -79,7 +79,7 @@ export default function Stickers() {
 
         <section className="conversion-panel" aria-label="Meal prep label benefits">
           <div>
-            <strong>Use them for</strong>
+            <strong>Useful for</strong>
             <span>Batch cooked lunches, freezer meals, calorie notes, leftovers, and family portions.</span>
           </div>
           <a
@@ -91,7 +91,7 @@ export default function Stickers() {
             data-source-page="stickers-benefit-strip"
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            Check the kit
+            View labels
           </a>
         </section>
 
@@ -116,12 +116,12 @@ export default function Stickers() {
               href={MEAL_PREP_STICKERS.href}
               target="_blank"
               rel="noopener noreferrer nofollow sponsored"
-              className="btn-primary btn-primary--hot"
+              className="btn-primary"
               data-event={MEAL_PREP_STICKERS.eventName}
               data-source-page="stickers-product-card"
               data-offer={MEAL_PREP_STICKERS.name}
             >
-              View sticker kit &rarr;
+              View labels &rarr;
             </a>
             <p className="sponsored-note">Sponsored listing.</p>
           </div>

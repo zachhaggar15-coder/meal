@@ -16,11 +16,11 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
         <img src={MEAL_PREP_STICKERS.image} alt="Meal prep labels and marker pens" />
       </a>
       <div className="sticker-promo-text">
-        <span className="offer-kicker">Sponsored prep add-on</span>
-        <h3 className="sticker-promo-headline">Batch cooking this week? Label every portion.</h3>
+        <span className="offer-kicker">Sponsored</span>
+        <h3 className="sticker-promo-headline">Meal prep labels for organised portions</h3>
         <p className="sticker-promo-body">
-          Freezer-safe meal prep labels make it easier to mark dates, calories, protein,
-          portions, and reheating notes before the containers stack up.
+          Optional freezer-safe labels for marking dates, calories, protein, portions,
+          and reheating notes on batch-cooked meals.
         </p>
         <div className="sticker-promo-actions">
           <a
@@ -32,7 +32,7 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
             data-source-page={sourcePage}
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            View sticker kit
+            View labels
           </a>
           <Link
             to={MEAL_PREP_STICKERS.internalPath}
@@ -41,7 +41,7 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
             data-source-page={sourcePage}
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            See why labels help
+            Learn more
           </Link>
         </div>
         <div className="offer-proof-row" aria-label="Product highlights">
