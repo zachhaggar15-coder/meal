@@ -96,6 +96,22 @@ const homeJsonLd = [
       },
       {
         '@type': 'Question',
+        name: 'Is 1500 calories enough to lose weight?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'For some adults, 1,500 calories can create a safe weight loss deficit, but the right target depends on height, weight, age, sex, and activity level. Use the generator to choose a realistic daily target.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Does the meal plan include a shopping list?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes. The generator can create a grouped UK supermarket shopping list with an estimated weekly cost.',
+        },
+      },
+      {
+        '@type': 'Question',
         name: 'How long does it take to generate a meal plan?',
         acceptedAnswer: {
           '@type': 'Answer',
@@ -507,19 +523,22 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Free UK Meal Plan Generator | Personalised by Calories, Supermarket & Diet"
-        description="Generate a free 7-day UK meal plan in 30 seconds. Set your calorie target, preferred supermarket (Tesco, Aldi, Lidl, Asda), protein goal, and dietary preference. High-protein plans, shopping list included."
+        title="Free UK Meal Plan Generator 2026 — Tesco, Aldi, Asda + Shopping List"
+        description="Build a free 7-day UK meal plan in 30 seconds. Set your calories, supermarket, protein goal, and diet. Printable meal plan and shopping list included."
         canonical="/"
+        ogImage="/og-preview.png"
         jsonLd={homeJsonLd}
       />
 
       <div className="page">
         <header className="header">
-          <h1>Free UK Meal Plans for Weight Loss — By Calories, Budget &amp; Supermarket</h1>
-          <p>Tell us your calorie target, cooking time, and favourite UK supermarket. Get a complete 7-day meal plan with high-protein meals, prep times, and a grouped shopping list — in under 30 seconds. Free, no sign-up.</p>
+          <h1>Free UK Meal Plan Generator — 7 Days, Calories &amp; Shopping List</h1>
+          <p>Tell us your calorie target, cooking time, and favourite UK supermarket. Get a printable 7-day plan with high-protein meals, prep times, and a grouped shopping list — in under 30 seconds. Free, no sign-up.</p>
           <div className="trust-row">
             <span className="trust-badge">1500–2500 kcal plans</span>
             <span className="trust-badge">Tesco · Aldi · Lidl · Asda · Morrisons</span>
+            <span className="trust-badge">Shopping list included</span>
+            <span className="trust-badge">Updated May 2026</span>
             <span className="trust-badge">High-protein &amp; budget options</span>
             <span className="trust-badge">Free forever, no sign-up</span>
           </div>
@@ -667,6 +686,17 @@ export default function Home() {
               <Link to="/meal-plan/aldi-1800-calorie-meal-plan" className="popular-start-link">Aldi 1800 cal plan</Link>
               <Link to="/meal-plan/budget-bodybuilding-meal-plan-uk" className="popular-start-link">Budget bodybuilding plan</Link>
             </div>
+          </div>
+        </section>
+
+        <section className="decision-hub" aria-labelledby="decision-hub-title">
+          <h2 id="decision-hub-title">Compare Meal Prep Options</h2>
+          <p>Choosing between supermarkets, calorie targets, or budgets? Start with the decision guide that matches your next shop.</p>
+          <div className="decision-links">
+            <Link to="/blog/aldi-vs-tesco-meal-prep">Aldi vs Tesco meal prep</Link>
+            <Link to="/blog/cheapest-uk-supermarket-meal-prep">Cheapest UK supermarket</Link>
+            <Link to="/blog/1500-vs-1800-vs-2000-calories">1500 vs 1800 vs 2000 calories</Link>
+            <Link to="/blog/cheap-meal-prep-shopping-list-uk">7 days under £30</Link>
           </div>
         </section>
 
@@ -860,6 +890,20 @@ export default function Home() {
                   Absolutely. Select &quot;Vegetarian&quot; or &quot;Vegan&quot; from the dietary preference dropdown and the generator will
                   produce a fully plant-based plan. Browse our <Link to="/meal-plan/vegetarian-low-calorie-meal-plan">vegetarian low-calorie meal plan</Link> for
                   a ready-made example.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>Is 1500 calories enough to lose weight?</h3>
+                <p>
+                  It can be for some adults, but the right target depends on your height, weight, age, sex, and activity level.
+                  A safer starting point is to calculate your TDEE and choose a moderate deficit.
+                </p>
+              </div>
+              <div className="faq-item">
+                <h3>Does the meal plan include a shopping list?</h3>
+                <p>
+                  Yes. You can generate a grouped UK supermarket shopping list with protein, carbs, fruit and vegetables,
+                  dairy, and store cupboard items, plus an estimated weekly cost.
                 </p>
               </div>
               <div className="faq-item">

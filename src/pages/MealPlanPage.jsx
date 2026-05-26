@@ -15,6 +15,13 @@ export default function MealPlanPage() {
   const avgProtein = data.plan.length
     ? Math.round(data.plan.reduce((s, d) => s + d.totals.protein, 0) / data.plan.length)
     : null;
+  const supermarketSlugPattern = /tesco|aldi|asda|sainsburys|lidl|morrisons|iceland/;
+  const isSupermarketPlan = supermarketSlugPattern.test(slug);
+  const updatedDate = data.dateModified ?? '2026-05-01';
+  const formattedUpdatedDate = new Date(updatedDate).toLocaleDateString('en-GB', {
+    month: 'long',
+    year: 'numeric',
+  });
 
   const jsonLd = [
     {
@@ -57,6 +64,7 @@ export default function MealPlanPage() {
         description={data.description}
         canonical={`/meal-plan/${slug}`}
         ogType="article"
+        ogImage={isSupermarketPlan ? '/og-supermarket-plan.png' : '/og-meal-plan.png'}
         jsonLd={jsonLd}
       />
       <div className="page content-page">
@@ -67,6 +75,7 @@ export default function MealPlanPage() {
         </nav>
 
         <h1>{data.h1}</h1>
+        <p className="article-meta">Updated {formattedUpdatedDate} · Printable 7-day plan · Shopping list included</p>
 
         {/* Quick-stats summary card */}
         <div className="plan-summary-card">
@@ -114,9 +123,25 @@ export default function MealPlanPage() {
               data-event="generator_cta_click"
               data-source-page={slug}
             >
-              Generate a personalised version in 30 seconds &rarr;
+              Build my free personalised plan in 30 seconds &rarr;
             </Link>
           </p>
+        </div>
+
+        <div className="plan-includes">
+          <div className="plan-includes-header">
+            <strong>What you get:</strong>
+            <button className="action-btn" type="button" onClick={() => window.print()}>
+              Print this plan
+            </button>
+          </div>
+          <ul>
+            <li>7 days of meals</li>
+            <li>Daily calories and protein</li>
+            <li>UK supermarket shopping list</li>
+            <li>Weekly budget estimate</li>
+            <li>Printable layout</li>
+          </ul>
         </div>
 
         <p className="content-intro">{data.intro}</p>
@@ -206,7 +231,7 @@ export default function MealPlanPage() {
             data-event="generator_cta_click"
             data-source-page={slug}
           >
-            Generate My {data.planLabel} Plan &rarr;
+            Build My Free {data.planLabel} Plan &rarr;
           </Link>
         </div>
 

@@ -457,6 +457,20 @@ input:focus, select:focus {
   margin: -0.5rem 0 1.5rem;
 }
 
+.inline-cta {
+  margin: 20px 0 8px;
+  padding: 14px 16px;
+  background: #f9fafb;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.925rem;
+}
+
+.inline-cta a {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
 .content-intro {
   font-size: 1.05rem;
   line-height: 1.75;
@@ -1096,6 +1110,43 @@ input:focus, select:focus {
   margin: 0 0 14px;
 }
 
+.decision-hub {
+  margin: 0 0 28px;
+  padding: 22px 24px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.decision-hub h2 {
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+}
+
+.decision-hub p {
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-size: 0.9rem;
+}
+
+.decision-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 8px;
+}
+
+.decision-links a {
+  display: block;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent-dark);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
 /* ---------- Home example plan & shopping list ---------- */
 
 .home-shopping-grid {
@@ -1376,6 +1427,35 @@ input:focus, select:focus {
 .plan-summary-personalise a {
   font-weight: 600;
   color: var(--accent-dark);
+}
+
+.plan-includes {
+  margin: -12px 0 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f9fafb;
+  font-size: 0.92rem;
+}
+
+.plan-includes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.plan-includes-header strong {
+  display: block;
+}
+
+.plan-includes ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px 18px;
+  margin: 0;
+  padding-left: 18px;
 }
 
 /* ---------- Sticker product card ---------- */

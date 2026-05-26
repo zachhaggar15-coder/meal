@@ -469,7 +469,7 @@ const PLAN_2500 = PLAN_2000.map(day => ({
 
 export const mealPlansData = {
   '1500-calorie-meal-plan': {
-    title: '7-Day 1500 Calorie Meal Plan UK — High Protein, Simple Meals',
+    title: "Free 1500 Calorie Meal Plan UK - 7 Days + Shopping List",
     description: 'A free 7-day 1500 calorie meal plan for UK weight loss. High-protein meals using everyday Tesco, Aldi, and Asda ingredients, with prep times and a full shopping list.',
     h1: '1500 Calorie Meal Plan UK — Free 7-Day Weight Loss Guide',
     planLabel: '1500 Calorie',
@@ -509,7 +509,7 @@ export const mealPlansData = {
   },
 
   '1800-calorie-meal-plan': {
-    title: '7-Day 1800 Calorie Meal Plan UK — 120g+ Protein, Any Supermarket',
+    title: "Free 1800 Calorie Meal Plan UK - 7 Days + Shopping List",
     description: 'A free 7-day 1800 calorie meal plan for UK weight loss. Filling high-protein meals hitting 120g+ protein daily, built around Tesco, Aldi, and Asda ingredients with a full shopping list.',
     h1: '1800 Calorie Meal Plan UK — Free 7-Day High Protein Guide',
     planLabel: '1800 Calorie',
@@ -548,7 +548,7 @@ export const mealPlansData = {
   },
 
   '2000-calorie-meal-plan': {
-    title: '7-Day 2000 Calorie Meal Plan UK — High Protein for Active Adults',
+    title: "Free 2000 Calorie Meal Plan UK - High Protein + Shopping List",
     description: 'A free 7-day 2000 calorie meal plan for active UK adults. High-protein balanced meals with simple supermarket ingredients, prep times, and a weekly shopping list.',
     h1: '2000 Calorie Meal Plan UK — Free 7-Day Balanced Guide',
     planLabel: '2000 Calorie',
@@ -587,7 +587,7 @@ export const mealPlansData = {
   },
 
   'high-protein-low-calorie-meal-plan': {
-    title: '7-Day High Protein Low Calorie Meal Plan UK (150g+ Protein Daily)',
+    title: "High Protein Low Calorie Meal Plan UK - 150g+ Protein Daily",
     description: 'A free 7-day high protein low calorie meal plan UK — 150g+ protein per day within a calorie deficit. Simple lean meals from Tesco, Aldi, and Asda. Fat loss while keeping muscle.',
     h1: 'High Protein Low Calorie Meal Plan UK — Free 7-Day Guide',
     summary: {
@@ -626,7 +626,7 @@ export const mealPlansData = {
   },
 
   'tesco-low-calorie-meal-plan': {
-    title: 'Tesco Low Calorie Meal Plan UK: 7 Days, ~£40–50/week, High Protein',
+    title: "Tesco Low Calorie Meal Plan UK - 7 Days Around £40-50",
     description: 'A free 7-day Tesco low calorie meal plan using Tesco own-brand ingredients. ~1,500 kcal/day, 90–120g protein, full Tesco shopping list included. Clubcard-friendly.',
     h1: 'Tesco Low Calorie Meal Plan UK — Budget 7-Day Guide',
     summary: {
@@ -667,7 +667,7 @@ export const mealPlansData = {
   },
 
   'vegetarian-low-calorie-meal-plan': {
-    title: '7-Day Vegetarian Low Calorie Meal Plan UK — High Protein, Easy Meals',
+    title: "Vegetarian Low Calorie Meal Plan UK - 7 Days + Shopping List",
     description: 'A free 7-day vegetarian low calorie meal plan for UK shoppers. 1,500 kcal/day with 75–90g protein from eggs, Greek yogurt, tofu, and legumes. Simple supermarket ingredients.',
     h1: 'Vegetarian Low Calorie Meal Plan UK — Free 7-Day Guide',
     summary: {
@@ -706,7 +706,7 @@ export const mealPlansData = {
   },
 
   'aldi-low-calorie-meal-plan': {
-    title: 'Aldi Low Calorie Meal Plan UK: 7 Days, ~£35–45/week',
+    title: "Aldi Low Calorie Meal Plan UK - 7 Days Around £35-45",
     description: 'A free 7-day Aldi low calorie meal plan for UK weight loss. ~£35–45/week using Aldi own-brand staples. 1,500 kcal/day, 90–120g protein, full Aldi shopping list.',
     h1: 'Aldi Low Calorie Meal Plan UK — Budget 7-Day Guide',
     summary: {
@@ -747,7 +747,7 @@ export const mealPlansData = {
   },
 
   'vegan-low-calorie-meal-plan': {
-    title: '7-Day Vegan Low Calorie Meal Plan UK — Plant-Based Fat Loss',
+    title: "Vegan Low Calorie Meal Plan UK - 7 Days + Shopping List",
     description: 'A free 7-day vegan low calorie meal plan for UK shoppers. 1,500 kcal/day with 60–70g plant-based protein from tofu, lentils, chickpeas, and nuts. Simple supermarket ingredients.',
     h1: 'Vegan Low Calorie Meal Plan UK — Free 7-Day Guide',
     planLabel: 'Vegan Low Calorie',
@@ -781,7 +781,7 @@ export const mealPlansData = {
   },
 
   'aldi-1800-calorie-meal-plan': {
-    title: 'Aldi 1800 Calorie Meal Plan UK: 7 Days Under £45, High Protein',
+    title: "Aldi 1800 Calorie Meal Plan UK - 7 Days Under £45",
     description: 'A free 7-day Aldi 1800 calorie meal plan for UK weight loss. ~£35–45/week using Aldi own-brand staples. 100–130g protein/day with full Aldi shopping list.',
     h1: 'Aldi 1800 Calorie Meal Plan UK — Budget 7-Day High-Protein Guide',
     summary: {
@@ -822,7 +822,7 @@ export const mealPlansData = {
   },
 
   'aldi-high-protein-meal-plan': {
-    title: 'Aldi High Protein Meal Plan UK | Budget Gym Meal Plan 7-Day Guide',
+    title: "Aldi High Protein Meal Plan UK - Budget Gym Plan",
     description: 'A high-protein Aldi meal plan for gym-goers and fat loss. Budget-friendly UK meals using Aldi own-brand proteins, with 140–170g protein per day.',
     h1: 'Aldi High Protein Meal Plan UK — Budget 7-Day Gym Guide',
     planLabel: 'Aldi High Protein',
@@ -857,7 +857,7 @@ export const mealPlansData = {
   },
 
   'tesco-1800-calorie-meal-plan': {
-    title: 'Tesco 1800 Calorie Meal Plan UK | 7-Day Budget Weight Loss Guide',
+    title: "Tesco 1800 Calorie Meal Plan UK - 7 Days + Shopping List",
     description: 'A Tesco 1800 calorie meal plan for UK weight loss. Simple high-protein meals using Tesco own-brand ingredients with a shopping list and Clubcard price tips.',
     h1: 'Tesco 1800 Calorie Meal Plan UK — 7-Day Budget Weight Loss Guide',
     planLabel: 'Tesco 1800 Calorie',
@@ -892,7 +892,7 @@ export const mealPlansData = {
   },
 
   'tesco-high-protein-meal-plan': {
-    title: 'Tesco High Protein Meal Plan UK | 7-Day Gym & Fat Loss Guide',
+    title: "Tesco High Protein Meal Plan UK - 7-Day Gym + Fat Loss Plan",
     description: 'A Tesco high protein meal plan for UK gym-goers and fat loss. 140–170g protein per day using Tesco own-brand ingredients, with Clubcard tips and shopping list.',
     h1: 'Tesco High Protein Meal Plan UK — 7-Day Gym & Fat Loss Guide',
     planLabel: 'Tesco High Protein',
@@ -927,7 +927,7 @@ export const mealPlansData = {
   },
 
   'asda-1800-calorie-meal-plan': {
-    title: 'Asda 1800 Calorie Meal Plan UK | Budget 7-Day Weight Loss Guide',
+    title: "Asda 1800 Calorie Meal Plan UK - Budget 7-Day Plan",
     description: 'A budget Asda 1800 calorie meal plan for UK weight loss. Simple high-protein meals using Asda own-brand ingredients, with a weekly shopping list and cost estimate.',
     h1: 'Asda 1800 Calorie Meal Plan UK — Budget 7-Day Weight Loss Guide',
     planLabel: 'Asda 1800 Calorie',
@@ -962,7 +962,7 @@ export const mealPlansData = {
   },
 
   'asda-1500-calorie-meal-plan': {
-    title: 'Asda 1500 Calorie Meal Plan UK | Budget 7-Day Weight Loss Guide',
+    title: "Asda 1500 Calorie Meal Plan UK - Budget 7-Day Plan",
     description: 'A budget Asda 1500 calorie meal plan for UK weight loss. Simple high-protein meals using Asda own-brand ingredients, with a weekly shopping list and cost estimate.',
     h1: 'Asda 1500 Calorie Meal Plan UK — Budget 7-Day Weight Loss Guide',
     planLabel: 'Asda 1500 Calorie',
@@ -997,7 +997,7 @@ export const mealPlansData = {
   },
 
   'sainsburys-1800-calorie-meal-plan': {
-    title: "Sainsbury's 1800 Calorie Meal Plan UK | 7-Day Weight Loss Guide",
+    title: "Sainsbury's 1800 Calorie Meal Plan UK - 7-Day Guide",
     description: "A Sainsbury's 1800 calorie meal plan for UK weight loss. Simple high-protein meals using Sainsbury's own-brand and Nectar Price products, with weekly shopping list.",
     h1: "Sainsbury's 1800 Calorie Meal Plan UK — 7-Day Weight Loss Guide",
     planLabel: "Sainsbury's 1800 Calorie",
@@ -1032,7 +1032,7 @@ export const mealPlansData = {
   },
 
   'sainsburys-low-calorie-meal-plan': {
-    title: "Sainsbury's Low Calorie Meal Plan UK | 7-Day 1500 Calorie Weight Loss Guide",
+    title: "Sainsbury's Low Calorie Meal Plan UK - 1500 Calories",
     description: "A Sainsbury's 1500 calorie meal plan for UK weight loss. Simple high-protein meals using Sainsbury's own-brand products, ~£40/week, with full shopping list and Nectar card tips.",
     h1: "Sainsbury's Low Calorie Meal Plan UK — 7-Day 1500 Calorie Guide",
     planLabel: "Sainsbury's 1500 Calorie",
@@ -1073,7 +1073,7 @@ export const mealPlansData = {
   },
 
   'morrisons-low-calorie-meal-plan': {
-    title: "Morrisons Low Calorie Meal Plan UK | 7-Day 1500 Calorie Weight Loss Guide",
+    title: "Morrisons Low Calorie Meal Plan UK - 1500 Calories",
     description: "A Morrisons 1500 calorie meal plan for UK weight loss. High-protein meals using Morrisons own-brand products, ~£40/week, with Market Street tips and full shopping list.",
     h1: "Morrisons Low Calorie Meal Plan UK — 7-Day 1500 Calorie Guide",
     planLabel: 'Morrisons 1500 Calorie',
@@ -1114,7 +1114,7 @@ export const mealPlansData = {
   },
 
   'lidl-1800-calorie-meal-plan': {
-    title: 'Lidl 1800 Calorie Meal Plan UK | Budget 7-Day Weight Loss Guide',
+    title: "Lidl 1800 Calorie Meal Plan UK - Budget 7-Day Plan",
     description: 'A budget Lidl 1800 calorie meal plan for UK weight loss. Simple high-protein meals using Lidl own-brand ingredients, with weekly shopping list and price estimate.',
     h1: 'Lidl 1800 Calorie Meal Plan UK — Budget 7-Day Weight Loss Guide',
     planLabel: 'Lidl 1800 Calorie',
@@ -1149,7 +1149,7 @@ export const mealPlansData = {
   },
 
   'morrisons-1800-calorie-meal-plan': {
-    title: 'Morrisons 1800 Calorie Meal Plan UK | 7-Day Weight Loss Guide',
+    title: "Morrisons 1800 Calorie Meal Plan UK - 7-Day Guide",
     description: 'A Morrisons 1800 calorie meal plan for UK weight loss. Simple high-protein meals using Morrisons own-brand ingredients with shopping list and Morrisons More tips.',
     h1: 'Morrisons 1800 Calorie Meal Plan UK — 7-Day Weight Loss Guide',
     planLabel: 'Morrisons 1800 Calorie',
@@ -1184,7 +1184,7 @@ export const mealPlansData = {
   },
 
   'iceland-budget-meal-plan': {
-    title: 'Iceland Budget Meal Plan UK | 7-Day Cheap Frozen Food Meal Plan',
+    title: "Iceland Budget Meal Plan UK - 7 Days Under £30",
     description: 'A budget Iceland meal plan using frozen food for cheap UK weight loss. High-protein meals using Iceland frozen proteins, veg, and own-brand staples under £30 per week.',
     h1: 'Iceland Budget Meal Plan UK — 7-Day Cheap Frozen Food Guide',
     planLabel: 'Iceland Budget',
@@ -1219,7 +1219,7 @@ export const mealPlansData = {
   },
 
   '2500-calorie-meal-plan': {
-    title: '2500 Calorie Meal Plan UK | Free 7-Day Active & Muscle Gain Guide',
+    title: "Free 2500 Calorie Meal Plan UK - Active + Muscle Gain",
     description: 'A free 2500 calorie UK meal plan for active adults, muscle gain, or maintenance. High-protein meals with everyday supermarket ingredients, prep times, and shopping list.',
     h1: '2500 Calorie Meal Plan UK — Free 7-Day Active & Muscle Gain Guide',
     planLabel: '2500 Calorie',
@@ -1254,7 +1254,7 @@ export const mealPlansData = {
   },
 
   'cheap-student-meal-plan-uk': {
-    title: 'Cheap Student Meal Plan UK | Budget 7-Day Healthy Eating Guide',
+    title: "Cheap Student Meal Plan UK - 7 Days Under £25",
     description: 'A cheap UK student meal plan for healthy eating on a student budget. Simple high-protein meals under £25 per week using supermarket own-brand ingredients.',
     h1: 'Cheap Student Meal Plan UK — Healthy Eating on a Budget',
     planLabel: 'Cheap Student',
@@ -1289,7 +1289,7 @@ export const mealPlansData = {
   },
 
   'high-protein-vegetarian-meal-plan-uk': {
-    title: 'High Protein Vegetarian Meal Plan UK | 7-Day Fat Loss Guide',
+    title: "High Protein Vegetarian Meal Plan UK - 7 Days + Shopping List",
     description: 'A high protein vegetarian meal plan for UK fat loss, with 100–130g protein per day from eggs, dairy, tofu, legumes, and simple supermarket ingredients.',
     h1: 'High Protein Vegetarian Meal Plan UK — 7-Day Fat Loss Guide',
     planLabel: 'High Protein Vegetarian',
@@ -1324,7 +1324,7 @@ export const mealPlansData = {
   },
 
   'budget-bodybuilding-meal-plan-uk': {
-    title: 'Budget Bodybuilding Meal Plan UK | 7-Day Cheap Muscle-Building Guide',
+    title: "Budget Bodybuilding Meal Plan UK - Cheap 7-Day Plan",
     description: 'A budget UK bodybuilding meal plan for muscle gain on a limited budget. High-protein meals at 2000 calories using cheap supermarket staples with a shopping list.',
     h1: 'Budget Bodybuilding Meal Plan UK — Cheap 7-Day Muscle-Building Guide',
     planLabel: 'Budget Bodybuilding',
@@ -1359,7 +1359,7 @@ export const mealPlansData = {
   },
 
   'gym-beginner-meal-plan-uk': {
-    title: 'Gym Beginner Meal Plan UK | Free 7-Day High-Protein Starter Guide',
+    title: "Gym Beginner Meal Plan UK - Free 7-Day High-Protein Plan",
     description: 'A gym beginner meal plan for UK adults starting weight training. Simple high-protein meals at 1800 calories using everyday supermarket ingredients.',
     h1: 'Gym Beginner Meal Plan UK — Free 7-Day High-Protein Starter Guide',
     planLabel: 'Gym Beginner',
@@ -1394,7 +1394,7 @@ export const mealPlansData = {
   },
 
   'budget-fat-loss-meal-plan-uk': {
-    title: 'Budget Fat Loss Meal Plan UK | 7-Day Cheap Weight Loss Guide',
+    title: "Budget Fat Loss Meal Plan UK - 7 Days Under £25",
     description: 'A budget UK fat loss meal plan for maximum results on minimum spend. High-protein weight loss meals under £25 per week using cheap supermarket staples.',
     h1: 'Budget Fat Loss Meal Plan UK — Cheap 7-Day Weight Loss Guide',
     planLabel: 'Budget Fat Loss',
@@ -1429,7 +1429,7 @@ export const mealPlansData = {
   },
 
   'muscle-gain-meal-plan-uk': {
-    title: 'Muscle Gain Meal Plan UK | Free 7-Day Bulking Diet Guide',
+    title: "Muscle Gain Meal Plan UK - Free 7-Day Bulking Guide",
     description: 'A free UK muscle gain meal plan for clean bulking. High-protein meals at 2500 calories using everyday supermarket ingredients, with shopping list and weekly cost.',
     h1: 'Muscle Gain Meal Plan UK — Free 7-Day Bulking Diet Guide',
     planLabel: 'Muscle Gain',
@@ -1464,7 +1464,7 @@ export const mealPlansData = {
   },
 
   'cheap-high-protein-meal-plan-uk': {
-    title: 'Cheap High Protein Meal Plan UK | Budget 7-Day Fat Loss Guide',
+    title: "Cheap High Protein Meal Plan UK - 140g+ Protein Under £30",
     description: 'A cheap UK high protein meal plan for fat loss on a budget. 140g+ protein per day using the cheapest supermarket protein sources, under £30 per week.',
     h1: 'Cheap High Protein Meal Plan UK — Budget 7-Day Fat Loss Guide',
     planLabel: 'Cheap High Protein',
@@ -1499,7 +1499,7 @@ export const mealPlansData = {
   },
 
   'low-effort-meal-plan-uk': {
-    title: 'Low Effort Meal Plan UK | 7-Day Lazy Healthy Eating Guide',
+    title: "Low Effort Meal Plan UK - 7 Days, Minimal Cooking",
     description: 'A low effort UK meal plan for healthy eating with minimal cooking. Simple high-protein meals under 15 minutes using everyday UK supermarket ingredients.',
     h1: 'Low Effort Meal Plan UK — Healthy Eating Without the Hard Work',
     planLabel: 'Low Effort',
@@ -1534,7 +1534,7 @@ export const mealPlansData = {
   },
 
   'busy-professional-meal-plan-uk': {
-    title: 'Busy Professional Meal Plan UK | 7-Day Quick Healthy Eating Guide',
+    title: "Busy Professional Meal Plan UK - Quick 7-Day Healthy Plan",
     description: 'A meal plan for busy professionals in the UK. Quick high-protein meals for weight loss that fit around a full work schedule, with batch cooking tips and shopping list.',
     h1: 'Busy Professional Meal Plan UK — Quick Healthy Eating for Working Adults',
     planLabel: 'Busy Professional',

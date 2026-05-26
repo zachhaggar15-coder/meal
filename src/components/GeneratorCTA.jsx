@@ -10,10 +10,10 @@ export default function GeneratorCTA({ sourcePage, calories, supermarket, compac
 
   return (
     <div className={`generator-cta${compact ? ' generator-cta--compact' : ''}`}>
-      <h2 className="generator-cta-headline">Want this meal plan personalised?</h2>
+      <h2 className="generator-cta-headline">Want this tailored to your calories?</h2>
       <p className="generator-cta-body">
-        Use the free AI meal plan generator to adapt this plan to your calories, protein target,
-        budget, supermarket, dietary preferences, and foods you actually like.
+        Build a free 7-day plan with meals, calories, protein, and a UK supermarket shopping
+        list matched to your budget and food preferences.
       </p>
       <div className="generator-cta-btns">
         <Link
@@ -22,7 +22,7 @@ export default function GeneratorCTA({ sourcePage, calories, supermarket, compac
           data-event="generator_cta_click"
           data-source-page={sourcePage || ''}
         >
-          Generate my personalised meal plan
+          Build my free 7-day plan
         </Link>
         <Link to="/#popular-plans" className="generator-cta-secondary">
           See example meal plans

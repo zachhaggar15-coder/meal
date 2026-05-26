@@ -17,6 +17,11 @@ export default function BlogPost() {
     return total + pWords + bWords;
   }, 0);
   const readingTime = data.readingTime ?? Math.max(4, Math.round(wordCount / 220));
+  const updatedDate = data.dateModified ?? '2026-05-01';
+  const formattedUpdatedDate = new Date(updatedDate).toLocaleDateString('en-GB', {
+    month: 'long',
+    year: 'numeric',
+  });
 
   const jsonLd = [
     {
@@ -51,6 +56,7 @@ export default function BlogPost() {
         description={data.description}
         canonical={`/blog/${slug}`}
         ogType="article"
+        ogImage="/og-blog.png"
         jsonLd={jsonLd}
       />
       <div className="page content-page">
@@ -67,6 +73,7 @@ export default function BlogPost() {
               {new Date(data.datePublished ?? '2025-09-01').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
             </time>
             {' · '}{readingTime} min read
+            {' · '}Updated {formattedUpdatedDate}
           </p>
           <p className="content-intro">{data.intro}</p>
 
@@ -113,6 +120,18 @@ export default function BlogPost() {
                   </table>
                 </div>
               )}
+              {i === 1 && (
+                <div className="inline-cta">
+                  <strong>Want this calculated for your calories?</strong>{' '}
+                  <Link
+                    to={`/?from=blog-${slug}`}
+                    data-event="generator_cta_click"
+                    data-source-page={`blog-${slug}`}
+                  >
+                    Build my free 7-day plan
+                  </Link>
+                </div>
+              )}
             </section>
           ))}
 
@@ -143,7 +162,7 @@ export default function BlogPost() {
               data-event="generator_cta_click"
               data-source-page={`blog-${slug}`}
             >
-              Generate My Personalised Plan &rarr;
+              Build My Free 7-Day Plan &rarr;
             </Link>
           </div>
 

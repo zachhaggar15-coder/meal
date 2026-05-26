@@ -5,7 +5,8 @@ const DEFAULT_OG_IMAGE = `${DOMAIN}/og-preview.png`;
 
 export default function SEO({ title, description, canonical, jsonLd, ogType = 'website', ogImage }) {
   const url = `${DOMAIN}${canonical || '/'}`;
-  const image = ogImage || DEFAULT_OG_IMAGE;
+  const selectedImage = ogImage || DEFAULT_OG_IMAGE;
+  const image = selectedImage.startsWith('http') ? selectedImage : `${DOMAIN}${selectedImage}`;
   return (
     <Helmet>
       <title>{title}</title>

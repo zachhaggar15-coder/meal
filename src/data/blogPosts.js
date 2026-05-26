@@ -3,8 +3,8 @@
 
 export const blogPostsData = {
   'how-to-build-a-calorie-deficit': {
-    title: 'How to Build a Calorie Deficit UK: Calculate Your TDEE & Start Losing Weight',
-    description: 'How to build a calorie deficit for sustainable weight loss in the UK. Calculate your TDEE, choose the right deficit size, avoid common mistakes, and get a free personalised meal plan.',
+    title: "How to Build a Calorie Deficit UK (2026): TDEE + Free Meal Plan",
+    description: "Calculate your calorie deficit in the UK with TDEE examples, safe deficit targets, common mistakes, and a free 7-day meal plan with shopping list.",
     h1: 'How to Build a Calorie Deficit for Sustainable Weight Loss',
     datePublished: '2025-09-15',
     dateModified: '2026-05-01',
@@ -83,8 +83,8 @@ export const blogPostsData = {
   },
 
   'best-low-calorie-foods-uk': {
-    title: 'Best Low Calorie Foods UK: Cheap Supermarket Foods for Fat Loss',
-    description: 'The best low calorie foods in UK supermarkets — Tesco, Aldi, Asda, and Lidl. High-protein, filling options under 200 kcal. Includes a free personalised meal plan generator.',
+    title: "Best Low Calorie Foods UK 2026: Cheap Tesco, Aldi & Asda Picks",
+    description: "Filling low calorie foods from Tesco, Aldi, Asda and Lidl. High-protein supermarket picks under 200 kcal, plus a free meal plan generator.",
     h1: 'The Best Low Calorie Foods Available in UK Supermarkets',
     datePublished: '2025-10-01',
     dateModified: '2026-05-01',
@@ -178,8 +178,8 @@ export const blogPostsData = {
   },
 
   'high-protein-low-calorie-meals': {
-    title: 'High Protein Low Calorie Meals UK: 30 Easy Ideas Under 500 Calories',
-    description: 'The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Simple Tesco, Aldi, and Asda ingredients.',
+    title: "30 High Protein Low Calorie Meals UK - Under 500 Calories",
+    description: "30 high protein low calorie meal ideas using UK supermarket ingredients. Breakfasts, lunches and dinners under 500 kcal with 30g+ protein.",
     h1: 'High Protein Low Calorie Meals for UK Weight Loss',
     datePublished: '2025-10-15',
     dateModified: '2026-05-01',
@@ -269,8 +269,8 @@ export const blogPostsData = {
   },
 
   'tesco-low-calorie-shopping-list': {
-    title: 'Tesco Low Calorie Shopping List UK: What to Buy for Weight Loss',
-    description: 'The ultimate Tesco low calorie shopping list for UK weight loss. Best Tesco own-brand protein foods, vegetables, and snacks with prices and calorie counts. Clubcard-friendly picks.',
+    title: "Tesco Low Calorie Shopping List UK 2026 - Weight Loss Basket",
+    description: "Tesco low calorie shopping list for UK weight loss with own-brand protein foods, vegetables, snacks, prices, calories and Clubcard-friendly picks.",
     h1: 'The Ultimate Tesco Low Calorie Shopping List',
     datePublished: '2025-11-01',
     dateModified: '2026-05-01',
@@ -374,8 +374,8 @@ export const blogPostsData = {
   },
 
   'how-to-meal-plan-for-weight-loss': {
-    title: 'How to Meal Plan for Weight Loss UK: Step-by-Step Beginner\'s Guide',
-    description: 'How to meal plan for weight loss in the UK — set your calories, choose meals, batch cook, and shop smarter. Includes a free AI generator for your personalised 7-day plan.',
+    title: "How to Meal Plan for Weight Loss UK - Beginner's 7-Day Guide",
+    description: "Learn how to meal plan for weight loss in the UK: set calories, choose meals, batch cook, shop smarter, and generate a free 7-day plan.",
     h1: 'How to Meal Plan for Weight Loss — A UK Beginner\'s Guide',
     datePublished: '2025-11-15',
     dateModified: '2026-05-01',
@@ -452,8 +452,8 @@ export const blogPostsData = {
   },
 
   'best-cheap-high-protein-foods-uk': {
-    title: 'Best Cheap High-Protein Foods UK: Ranked by Protein Per Penny',
-    description: 'The cheapest high-protein foods in UK supermarkets — ranked by protein per penny. Tesco, Aldi, Lidl, and Asda picks with prices, protein counts, and meal prep tips.',
+    title: "Cheapest High Protein Foods UK 2026 - Protein Per Penny Ranked",
+    description: "The cheapest high protein foods in UK supermarkets ranked by protein per penny, with Tesco, Aldi, Lidl and Asda prices plus meal prep ideas.",
     h1: 'Best Cheap High-Protein Foods in UK Supermarkets',
     datePublished: '2025-12-01',
     dateModified: '2026-05-01',
@@ -521,8 +521,8 @@ export const blogPostsData = {
   },
 
   'aldi-vs-tesco-meal-prep': {
-    title: 'Aldi vs Tesco for Meal Prep UK: Which is Cheaper for High-Protein Eating?',
-    description: 'Aldi vs Tesco for meal prep — head-to-head price comparison on chicken, eggs, oats, yogurt, and frozen veg. Which UK supermarket wins for high-protein weight loss?',
+    title: "Aldi vs Tesco Meal Prep UK 2026 - Which Is Cheaper?",
+    description: "Aldi vs Tesco meal prep price comparison for chicken, eggs, oats, yogurt and frozen veg. See which supermarket is cheaper for weight loss.",
     h1: 'Aldi vs Tesco for Meal Prep: Which Supermarket Is Better?',
     datePublished: '2025-12-15',
     dateModified: '2026-05-01',
@@ -589,8 +589,8 @@ export const blogPostsData = {
   },
 
   'cheapest-uk-supermarket-meal-prep': {
-    title: 'Cheapest UK Supermarket for Meal Prep: Aldi, Lidl, Tesco & Asda Compared',
-    description: 'Which UK supermarket is cheapest for meal prep? Full 2025 comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland on a high-protein weekly shop.',
+    title: "Cheapest UK Supermarket for Meal Prep 2026 - Aldi vs Tesco",
+    description: "Which UK supermarket is cheapest for meal prep? Compare Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury's and Iceland for a weekly shop.",
     h1: 'Cheapest UK Supermarket for Meal Prep: Full 2025 Comparison',
     datePublished: '2026-01-10',
     dateModified: '2026-05-01',
@@ -651,8 +651,8 @@ export const blogPostsData = {
   },
 
   '1500-vs-1800-vs-2000-calories': {
-    title: '1500 vs 1800 vs 2000 Calories UK: Which Meal Plan Is Right for You?',
-    description: '1500, 1800, or 2000 calories — which is right for your weight loss? This guide explains who each target suits, expected fat loss per week, and how to choose. Generate your plan free.',
+    title: "1500 vs 1800 vs 2000 Calories UK - Which Meal Plan Fits You?",
+    description: "Compare 1500, 1800 and 2000 calorie meal plans for UK weight loss. See who each target suits, expected fat loss and generate a free plan.",
     h1: '1500 vs 1800 vs 2000 Calorie Meal Plans: Which Is Right for You?',
     datePublished: '2026-01-20',
     dateModified: '2026-05-01',
@@ -727,8 +727,8 @@ export const blogPostsData = {
   },
 
   'how-much-protein-when-dieting': {
-    title: 'How Much Protein Do You Need When Dieting UK? (With Food Examples)',
-    description: 'How much protein do you need when dieting in the UK? Exact targets for men and women, why protein matters for fat loss, and the best UK supermarket sources to hit your goal.',
+    title: "How Much Protein Do You Need When Dieting UK? Calculator + Foods",
+    description: "Protein targets for dieting in the UK, with food examples, supermarket sources and a free meal plan to help hit your daily goal.",
     h1: 'How Much Protein Do You Need When Dieting?',
     datePublished: '2026-02-01',
     dateModified: '2026-05-01',
@@ -798,8 +798,8 @@ export const blogPostsData = {
   },
 
   'cheap-meal-prep-shopping-list-uk': {
-    title: 'Cheap Meal Prep Shopping List UK: Full Week Under £30 at Aldi or Tesco',
-    description: 'A complete cheap meal prep shopping list for the UK — high-protein, calorie-controlled meals under £30/week at Aldi, Lidl, or Tesco. Estimated prices, batch cook tips, and free plan generator.',
+    title: "Cheap Meal Prep Shopping List UK - 7 Days Under £30",
+    description: "A cheap UK meal prep shopping list for 7 days under £30. High-protein Aldi, Lidl and Tesco staples with batch cook tips and free plan.",
     h1: 'Cheap Meal Prep Shopping List UK: Under £30 for a Full Week',
     datePublished: '2026-02-15',
     dateModified: '2026-05-01',
@@ -875,8 +875,8 @@ export const blogPostsData = {
   },
 
   'how-many-calories-to-lose-weight': {
-    title: 'How Many Calories to Lose Weight UK? TDEE Calculator & Safe Deficit Guide',
-    description: 'How many calories do you need to lose weight in the UK? Calculate your TDEE, choose a safe deficit, and see expected weekly fat loss. Includes a free UK meal plan generator.',
+    title: "How Many Calories to Lose Weight UK? 2026 TDEE + Meal Plan",
+    description: "Calculate how many calories you need to lose weight in the UK. TDEE, safe deficit examples, weekly fat loss estimates and a free meal plan.",
     h1: 'How Many Calories Do You Need to Lose Weight?',
     datePublished: '2026-03-01',
     dateModified: '2026-05-01',
@@ -986,8 +986,8 @@ export const blogPostsData = {
   },
 
   'how-to-lose-weight-fast-uk': {
-    title: 'How to Lose Weight Fast UK: Safe Methods That Actually Work in 2025',
-    description: 'How to lose weight fast in the UK safely — calorie deficits, high-protein eating, and realistic timelines. Avoid crash diets and get a free personalised meal plan.',
+    title: "How to Lose Weight Fast UK 2026 - Safe 7-Day Meal Plan Method",
+    description: "Lose weight faster safely with UK calorie deficit targets, high-protein meals, realistic timelines and a free personalised 7-day meal plan.",
     h1: 'How to Lose Weight Fast in the UK — Safe, Evidence-Based Methods',
     datePublished: '2026-03-15',
     dateModified: '2026-05-01',
@@ -1088,8 +1088,8 @@ export const blogPostsData = {
   },
 
   'meal-prep-for-beginners-uk': {
-    title: 'Meal Prep for Beginners UK: How to Start, What to Cook & Save £100/Month',
-    description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Free meal plan generator.',
+    title: "Meal Prep for Beginners UK - Start Today + Save £100/Month",
+    description: "Beginner UK meal prep guide: what to cook, how to batch cook, container tips and how to save £100+ per month. Free meal plan included.",
     h1: 'Meal Prep for Beginners UK — How to Start and Save Money on Food',
     datePublished: '2026-04-01',
     dateModified: '2026-05-01',
@@ -1182,8 +1182,8 @@ export const blogPostsData = {
   },
 
   'high-protein-breakfast-uk': {
-    title: 'High Protein Breakfast UK: 12 Quick Ideas (30g+ Protein, Under 400 kcal)',
-    description: '12 high-protein breakfast ideas for UK adults — 30g+ protein, under 400 kcal, using everyday Tesco, Aldi, and Asda ingredients. With prep times and calorie counts.',
+    title: "High Protein Breakfast UK - 12 Ideas Under 400 kcal",
+    description: "12 quick high-protein breakfast ideas using UK supermarket ingredients. 30g+ protein, under 400 kcal, with prep times and calories.",
     h1: 'High Protein Breakfast UK — 12 Quick Ideas with 30g+ Protein',
     datePublished: '2026-04-15',
     dateModified: '2026-05-01',
