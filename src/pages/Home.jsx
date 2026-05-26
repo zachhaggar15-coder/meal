@@ -6,6 +6,8 @@ import ShoppingList from '../components/ShoppingList.jsx';
 import EditPlanBox from '../components/EditPlanBox.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import StickerPromo from '../components/StickerPromo.jsx';
+import { MEAL_PREP_STICKERS } from '../data/offers.js';
 
 const homeJsonLd = [
   {
@@ -550,6 +552,8 @@ export default function Home() {
           </p>
         </header>
 
+        <StickerPromo sourcePage="home-above-generator" compact />
+
         <div className="form-preview-layout">
           <section className="card form-col">
             <MealForm onSubmit={handleGenerate} disabled={loading} />
@@ -585,17 +589,20 @@ export default function Home() {
               <div className="preview-total">~1,760 kcal &nbsp;&middot;&nbsp; ~112g protein</div>
             </div>
             <a
-              href="https://ebay.us/m/w68ZOg"
+              href={MEAL_PREP_STICKERS.href}
               target="_blank"
               rel="noopener noreferrer nofollow sponsored"
               className="ad-card"
+              data-event={MEAL_PREP_STICKERS.eventName}
+              data-source-page="home-sidebar"
+              data-offer={MEAL_PREP_STICKERS.name}
             >
               <span className="ad-label">Sponsored</span>
-              <img src="/meal-stickers-ad.png" alt="Meal prep starter kit sticker set" className="ad-card-img" />
+              <img src={MEAL_PREP_STICKERS.image} alt="Meal prep starter kit sticker set" className="ad-card-img" />
               <div className="ad-card-body">
-                <strong className="ad-card-title">Meal Prep Starter Kit</strong>
-                <p>Labels, portion trackers, and weekly planner stickers to keep your meal prep organised and stress-free.</p>
-                <span className="ad-card-cta">Shop on eBay &rarr;</span>
+                <strong className="ad-card-title">{MEAL_PREP_STICKERS.name}</strong>
+                <p>Stick a date, calories, protein, and reheating note on every batch-cooked portion.</p>
+                <span className="ad-card-cta">View sticker kit &rarr;</span>
               </div>
             </a>
           </aside>
@@ -752,6 +759,9 @@ export default function Home() {
           )}
           {plan?.shopping_list && lastValues?.shoppingList && (
             <ShoppingList list={plan.shopping_list} price={plan.price_estimate} />
+          )}
+          {plan?.weekly_plan && (
+            <StickerPromo sourcePage="home-generated-plan" />
           )}
         </div>
 

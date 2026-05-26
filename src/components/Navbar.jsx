@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { MEAL_PREP_STICKERS } from '../data/offers.js';
 
 const PLANS = [
   { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', tag: 'Popular' },
@@ -33,6 +34,15 @@ export default function Navbar({ onMenuToggle }) {
           ☰
         </button>
         <Link to="/" className="nav-brand">MealPrep.org.uk</Link>
+        <Link
+          to={MEAL_PREP_STICKERS.internalPath}
+          className="nav-offer-link"
+          data-event={MEAL_PREP_STICKERS.promoEventName}
+          data-source-page="nav"
+          data-offer={MEAL_PREP_STICKERS.name}
+        >
+          Labels
+        </Link>
         <div className="nav-right" ref={menuRef}>
           <button
             className="nav-plans-btn"

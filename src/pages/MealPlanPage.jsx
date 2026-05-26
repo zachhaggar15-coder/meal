@@ -156,6 +156,7 @@ export default function MealPlanPage() {
           calories={data.targetCalories}
           supermarket={data.summary?.supermarket}
         />
+        <StickerPromo sourcePage={`${slug}-above-plan`} compact />
 
         <h2>Why Choose a {data.planLabel} Meal Plan?</h2>
         <p>{data.whyThisPlan}</p>
@@ -216,7 +217,7 @@ export default function MealPlanPage() {
         </div>
 
         {/* Sticker promo — after shopping list, feels relevant here */}
-        <StickerPromo />
+        <StickerPromo sourcePage={`${slug}-shopping-list`} />
 
         <h2>Tips for Success</h2>
         <ul className="tips-list">

@@ -63,6 +63,7 @@ export default function BlogPost() {
 
           {/* Early CTA — after the intro, before the main body */}
           <GeneratorCTA sourcePage={`blog-${slug}`} />
+          <StickerPromo sourcePage={`blog-${slug}-intro`} compact />
 
           {data.sections.map((section, i) => (
             <section key={i}>
@@ -108,7 +109,7 @@ export default function BlogPost() {
           ))}
 
           {/* Sticker promo — before final CTA */}
-          <StickerPromo />
+          <StickerPromo sourcePage={`blog-${slug}-body`} />
 
           <div className="cta-box cta-box--large">
             <h2>Generate Your Free UK Meal Plan</h2>

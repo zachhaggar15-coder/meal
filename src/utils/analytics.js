@@ -2,7 +2,14 @@
 // Replace trackEvent with your provider (e.g. window.gtag?.('event', name, props)).
 
 export function trackEvent(name, props = {}) {
-  // window.gtag?.('event', name, props);
+  if (typeof window === 'undefined' || !name) return;
+
+  const cleanProps = Object.fromEntries(
+    Object.entries(props).filter(([, value]) => value !== undefined && value !== '')
+  );
+
+  window.gtag?.('event', name, cleanProps);
+  window.plausible?.(name, { props: cleanProps });
 }
 
 export const track = {

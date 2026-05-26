@@ -198,6 +198,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Product pages -->
+  <url>
+    <loc>https://www.mealprep.org.uk/stickers</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- Blog posts -->
   <url>
     <loc>https://www.mealprep.org.uk/blog/how-to-build-a-calorie-deficit</loc>
