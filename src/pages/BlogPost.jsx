@@ -171,8 +171,8 @@ export default function BlogPost() {
               </Link>
             </li>
             <li>
-              <Link to="/stickers" data-event="sticker_promo_click" data-source-page={`blog-${slug}`}>
-                Meal prep labels for batch cooking
+              <Link to="/stickers" data-event="container_promo_click" data-source-page={`blog-${slug}`}>
+                Glass meal prep containers for batch cooking
               </Link>
             </li>
           </ul>

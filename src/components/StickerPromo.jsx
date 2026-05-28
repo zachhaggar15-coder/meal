@@ -13,14 +13,14 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
         data-source-page={sourcePage}
         data-offer={MEAL_PREP_STICKERS.name}
       >
-        <img src={MEAL_PREP_STICKERS.image} alt="Meal prep labels and marker pens" />
+        <img src={MEAL_PREP_STICKERS.image} alt="BOROHOUSE 10-pack glass food storage containers" />
       </a>
       <div className="sticker-promo-text">
-        <span className="offer-kicker">Sponsored</span>
-        <h3 className="sticker-promo-headline">Meal prep labels for organised portions</h3>
+        <span className="offer-kicker">Sponsored #ad</span>
+        <h3 className="sticker-promo-headline">Glass meal prep containers for organised portions</h3>
         <p className="sticker-promo-body">
-          Optional freezer-safe labels for marking dates, calories, protein, portions,
-          and reheating notes on batch-cooked meals.
+          Airtight borosilicate glass containers for batch-cooked meals — fridge, freezer,
+          and microwave safe. 10-pack to cover a full week of portions.
         </p>
         <div className="sticker-promo-actions">
           <a
@@ -32,7 +32,7 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
             data-source-page={sourcePage}
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            View labels
+            View on Amazon
           </a>
           <Link
             to={MEAL_PREP_STICKERS.internalPath}
@@ -45,10 +45,11 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
           </Link>
         </div>
         <div className="offer-proof-row" aria-label="Product highlights">
-          <span>Freezer-safe</span>
-          <span>Date fields</span>
-          <span>Portion tracking</span>
+          <span>Airtight lids</span>
+          <span>Microwave-safe</span>
+          <span>Stackable</span>
         </div>
+        <p className="sponsored-note">{MEAL_PREP_STICKERS.disclosure}</p>
       </div>
     </aside>
   );

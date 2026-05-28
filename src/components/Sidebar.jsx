@@ -95,7 +95,7 @@ export default function Sidebar({ open, onClose }) {
             Generator
           </Link>
           <Link to="/stickers" className={`sidebar-top-link${location.pathname === '/stickers' ? ' sidebar-link--active' : ''}`} onClick={onClose}>
-            Meal Prep Labels
+            Meal Prep Containers
           </Link>
 
           {NAV.map(group => (

@@ -601,11 +601,11 @@ export default function Home() {
               data-offer={MEAL_PREP_STICKERS.name}
             >
               <span className="ad-label">Sponsored</span>
-              <img src={MEAL_PREP_STICKERS.image} alt="Meal prep starter kit sticker set" className="ad-card-img" />
+              <img src={MEAL_PREP_STICKERS.image} alt="BOROHOUSE 10-pack glass food storage containers" className="ad-card-img" />
               <div className="ad-card-body">
                 <strong className="ad-card-title">{MEAL_PREP_STICKERS.name}</strong>
-                <p>Stick a date, calories, protein, and reheating note on every batch-cooked portion.</p>
-                <span className="ad-card-cta">View labels &rarr;</span>
+                <p>Airtight glass containers for batch-cooked portions — fridge, freezer, and microwave safe. #ad</p>
+                <span className="ad-card-cta">View on Amazon &rarr;</span>
               </div>
             </a>
           </aside>

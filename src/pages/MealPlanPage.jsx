@@ -279,8 +279,8 @@ export default function MealPlanPage() {
             </Link>
           </li>
           <li>
-            <Link to="/stickers" data-event="sticker_promo_click" data-source-page={slug}>
-              Meal prep labels for your portions
+            <Link to="/stickers" data-event="container_promo_click" data-source-page={slug}>
+              Glass meal prep containers for your portions
             </Link>
           </li>
         </ul>

@@ -3,21 +3,21 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 
-const stickerJsonLd = [
+const containerJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Meal Prep Labels UK',
+    name: 'Glass Meal Prep Containers UK',
     url: 'https://www.mealprep.org.uk/stickers',
     description:
-      'Freezer-safe meal prep labels for UK batch cooking, portion tracking, calorie notes, and reheating instructions.',
+      'Airtight borosilicate glass food storage containers for UK batch cooking — fridge, freezer, and microwave safe. 10-pack.',
   },
   {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk' },
-      { '@type': 'ListItem', position: 2, name: 'Meal Prep Labels', item: 'https://www.mealprep.org.uk/stickers' },
+      { '@type': 'ListItem', position: 2, name: 'Meal Prep Containers', item: 'https://www.mealprep.org.uk/stickers' },
     ],
   },
 ];
@@ -26,25 +26,25 @@ export default function Stickers() {
   return (
     <>
       <SEO
-        title="Meal Prep Labels UK | Freezer-Safe Stickers for Batch Cooking"
-        description="Freezer-safe meal prep labels for UK batch cooking. Record dates, calories, protein, portions, and reheating notes so every container is easy to grab."
+        title="Glass Meal Prep Containers UK | 10-Pack Airtight Storage"
+        description="Airtight borosilicate glass food containers for UK batch cooking. Fridge, freezer, and microwave safe — 10-pack to cover a full week of portions."
         canonical="/stickers"
-        ogImage="https://www.mealprep.org.uk/meal-stickers-ad.png"
-        jsonLd={stickerJsonLd}
+        ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
+        jsonLd={containerJsonLd}
       />
       <div className="page content-page">
         <nav className="breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
-          <span>Meal Prep Labels</span>
+          <span>Meal Prep Containers</span>
         </nav>
 
         <section className="sticker-hero">
           <div className="sticker-hero-copy">
-            <span className="offer-kicker">Sponsored</span>
-            <h1>Meal Prep Labels for Batch Cooking</h1>
+            <span className="offer-kicker">Sponsored #ad</span>
+            <h1>Glass Meal Prep Containers for Batch Cooking</h1>
             <p className="content-intro">
-              Mark the date, meal name, calories, protein, portion, and reheating note on every
-              container before it goes in the fridge or freezer.
+              Store your batch-cooked portions in airtight borosilicate glass containers — go straight
+              from fridge or freezer to microwave without switching dishes.
             </p>
             <div className="sticker-hero-actions">
               <a
@@ -56,13 +56,13 @@ export default function Stickers() {
                 data-source-page="stickers-hero"
                 data-offer={MEAL_PREP_STICKERS.name}
               >
-                View labels &rarr;
+                View on Amazon &rarr;
               </a>
-              <a href="#why-labels" className="btn-secondary">
-                Why labels help
+              <a href="#why-glass" className="btn-secondary">
+                Why glass containers
               </a>
             </div>
-            <p className="sponsored-note">Sponsored listing. Opens in a new tab.</p>
+            <p className="sponsored-note">{MEAL_PREP_STICKERS.disclosure}</p>
           </div>
           <a
             href={MEAL_PREP_STICKERS.href}
@@ -73,14 +73,14 @@ export default function Stickers() {
             data-source-page="stickers-image"
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            <img src={MEAL_PREP_STICKERS.image} alt="Meal prep labels and marker pens" />
+            <img src={MEAL_PREP_STICKERS.image} alt="BOROHOUSE 10-pack glass food storage containers" />
           </a>
         </section>
 
-        <section className="conversion-panel" aria-label="Meal prep label benefits">
+        <section className="conversion-panel" aria-label="Glass container benefits">
           <div>
             <strong>Useful for</strong>
-            <span>Batch cooked lunches, freezer meals, calorie notes, leftovers, and family portions.</span>
+            <span>Batch-cooked lunches, freezer meals, portioned dinners, snacks, and leftovers.</span>
           </div>
           <a
             href={MEAL_PREP_STICKERS.href}
@@ -91,26 +91,27 @@ export default function Stickers() {
             data-source-page="stickers-benefit-strip"
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            View labels
+            View on Amazon
           </a>
         </section>
 
-        <h2 id="why-labels">Why Label Your Meal Prep?</h2>
+        <h2 id="why-glass">Why Use Glass Containers for Meal Prep?</h2>
         <ul className="content-bullets">
-          <li>Know what each container is before you open it.</li>
-          <li>Track dates so the oldest portions get eaten first.</li>
-          <li>Keep calories and protein visible without recalculating every meal.</li>
-          <li>Add reheating notes so meals come out properly instead of dry or overdone.</li>
+          <li>No plastic chemicals leaching into reheated food — safe for everyday use.</li>
+          <li>Airtight lids keep meals fresh in the fridge for 4–5 days.</li>
+          <li>Go straight from freezer to microwave without switching dishes.</li>
+          <li>See exactly what&apos;s inside each container without opening it.</li>
+          <li>Durable enough to last years — cheaper than disposable alternatives long-term.</li>
         </ul>
 
         <div className="sticker-product-card">
           <div className="sticker-product-card-inner">
-            <h2>Meal Prep Label Kit</h2>
+            <h2>BOROHOUSE 10-Pack Glass Storage Containers</h2>
             <ul className="content-bullets">
-              <li>Freezer-safe adhesive for batch-cooked portions</li>
-              <li>Fields for date, meal name, calories, protein, and reheating notes</li>
-              <li>Works with standard food storage containers and zip-lock bags</li>
-              <li>Useful for fridge organisation, portion control, and reducing food waste</li>
+              <li>Borosilicate glass — oven, microwave, dishwasher, freezer, and fridge safe</li>
+              <li>Snap-lock airtight lids to keep portions fresh all week</li>
+              <li>10-pack covers breakfast, lunch, dinner, and snacks across a full meal prep week</li>
+              <li>Stackable design to keep your fridge and freezer tidy</li>
             </ul>
             <a
               href={MEAL_PREP_STICKERS.href}
@@ -121,17 +122,17 @@ export default function Stickers() {
               data-source-page="stickers-product-card"
               data-offer={MEAL_PREP_STICKERS.name}
             >
-              View labels &rarr;
+              View on Amazon &rarr;
             </a>
-            <p className="sponsored-note">Sponsored listing.</p>
+            <p className="sponsored-note">{MEAL_PREP_STICKERS.disclosure}</p>
           </div>
         </div>
 
         <h2>Works Best With a Meal Plan</h2>
         <p>
-          Labels are most useful when each container belongs to a planned week. Use the free AI
+          Glass containers are most useful when you know exactly what you&apos;re cooking. Use the free AI
           generator to build a personalised 7-day plan for your supermarket, calorie target, and
-          dietary preferences, then label the portions as you cook.
+          dietary preferences, then batch-cook and portion everything into containers.
         </p>
 
         <div className="cta-box">
