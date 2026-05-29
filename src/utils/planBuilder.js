@@ -18,6 +18,11 @@ export const GOAL_LABELS = {
   'budget-bodybuilding': 'Budget Bodybuilding',
   'gym-beginner': 'Gym Beginner',
   'cheap-high-protein': 'Cheap High Protein',
+  'maintenance': 'Maintenance',
+  'anti-inflammatory': 'Anti-Inflammatory',
+  'menopause-nutrition': 'Menopause Nutrition',
+  'endurance-athlete': 'Endurance & Running',
+  'cutting': 'Cutting Phase',
 };
 
 export const BUDGET_ESTIMATES = {
@@ -72,6 +77,11 @@ const GOAL_BEST_FOR = {
   'budget-bodybuilding': 'Budget-focused muscle building',
   'gym-beginner': 'New to structured gym nutrition',
   'cheap-high-protein': 'Maximum protein on a tight budget',
+  'maintenance': 'Maintaining current weight at a balanced ~2,000 kcal/day',
+  'anti-inflammatory': 'Reducing inflammation with omega-3-rich, whole-food meals',
+  'menopause-nutrition': 'Supporting hormonal balance with calcium, iron and protein',
+  'endurance-athlete': 'Fuelling running and endurance training with higher-carb meals',
+  'cutting': 'Aggressive calorie deficit while preserving lean muscle mass',
 };
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

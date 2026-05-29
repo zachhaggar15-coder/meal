@@ -21,6 +21,11 @@ const GOALS = [
   { value: 'vegan-low-cal',         label: 'Vegan Low Cal' },
   { value: 'high-protein-vegetarian','label': 'High Protein Veg' },
   { value: 'pescatarian',           label: 'Pescatarian' },
+  { value: 'maintenance',           label: 'Maintenance' },
+  { value: 'anti-inflammatory',     label: 'Anti-Inflammatory' },
+  { value: 'menopause-nutrition',   label: 'Menopause Nutrition' },
+  { value: 'endurance-athlete',     label: 'Endurance & Running' },
+  { value: 'cutting',               label: 'Cutting Phase' },
 ];
 
 const SUPERMARKETS = [
@@ -47,7 +52,10 @@ const CALORIES = [
   { value: '',     label: 'Any calories' },
   { value: '1500', label: '~1,500 kcal' },
   { value: '1800', label: '~1,800 kcal' },
+  { value: '1400', label: '~1,400 kcal' },
+  { value: '1600', label: '~1,600 kcal' },
   { value: '2000', label: '~2,000 kcal' },
+  { value: '2200', label: '~2,200 kcal' },
   { value: '2500', label: '~2,500 kcal' },
 ];
 
@@ -121,7 +129,7 @@ export default function BrowsePlans() {
     <>
       <SEO
         title="Browse 250 UK Meal Plans — MealPrep.org.uk"
-        description="Browse 250 free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Find the right plan for weight loss, muscle gain, student budgets, and more."
+        description="Browse 300 free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Find the right plan for weight loss, muscle gain, endurance, anti-inflammatory eating, and more."
         canonical="https://www.mealprep.org.uk/browse"
       />
 

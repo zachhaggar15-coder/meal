@@ -142,6 +142,31 @@ const PLAN_SLUGS = [
   'tesco-cheap-hp-1800','iceland-cheap-hp-1800',
   'aldi-cheap-hp-2000','lidl-cheap-hp-1500',
   'any-cheap-hp-1800','aldi-cheap-hp-veg-1800','morrisons-cheap-hp-1800',
+  // Maintenance (10)
+  'aldi-maintenance-2000','tesco-maintenance-2000','asda-maintenance-2000',
+  'sainsburys-maintenance-2000','lidl-maintenance-2000','morrisons-maintenance-2000',
+  'any-maintenance-2000','aldi-maintenance-veg-2000',
+  'tesco-maintenance-vegan-2000','any-maintenance-pesc-2000',
+  // Anti-Inflammatory (10)
+  'aldi-anti-inflammatory-1800','tesco-anti-inflammatory-1800',
+  'sainsburys-anti-inflammatory-2000','asda-anti-inflammatory-1800',
+  'lidl-anti-inflammatory-1800','morrisons-anti-inflammatory-1800',
+  'aldi-anti-inflammatory-veg-1800','tesco-anti-inflammatory-vegan-1800',
+  'any-anti-inflammatory-1800','sainsburys-anti-inflammatory-pesc-1800',
+  // Menopause Nutrition (10)
+  'aldi-menopause-1800','tesco-menopause-1800','sainsburys-menopause-1800',
+  'asda-menopause-1800','morrisons-menopause-1800','lidl-menopause-1800',
+  'any-menopause-1800','tesco-menopause-veg-1800',
+  'sainsburys-menopause-1600','aldi-menopause-pesc-1800',
+  // Endurance & Running (8)
+  'aldi-endurance-2000','tesco-endurance-2200','sainsburys-endurance-2500',
+  'asda-endurance-2000','lidl-endurance-2000','any-endurance-2000',
+  'aldi-endurance-veg-2000','tesco-endurance-pesc-2000',
+  // Cutting Phase (10)
+  'aldi-cutting-1400','tesco-cutting-1400','asda-cutting-1400',
+  'aldi-cutting-1600','lidl-cutting-1400','sainsburys-cutting-1600',
+  'morrisons-cutting-1400','any-cutting-1400',
+  'any-cutting-1600','tesco-cutting-pesc-1500',
 ];
 
 const ROUTES = [
