@@ -97,6 +97,15 @@ function pick(arr, seed) {
   return arr[((seed % arr.length) + arr.length) % arr.length];
 }
 
+// Main protein keywords in priority order — used to avoid same-protein lunch+dinner on one day
+const MAIN_PROTEIN_KW = ['chicken', 'turkey', 'beef', 'pork', 'lamb', 'tuna', 'salmon', 'mackerel', 'cod', 'sardine', 'prawn'];
+
+function getMainProtein(meal) {
+  if (!meal) return null;
+  const text = (meal.ingredients || []).join(' ').toLowerCase();
+  return MAIN_PROTEIN_KW.find(p => text.includes(p)) || null;
+}
+
 // ── Shopping list builder ──────────────────────────────────────────────────────
 
 const PROTEIN_KW  = ['chicken','beef','turkey','pork','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince'];
@@ -255,8 +264,17 @@ export function buildPlan(seed) {
   const plan = DAYS.map((day, di) => {
     const s = base + di * 11;
     const b = di < 5 ? bPrimary : bSecondary; // Mon–Fri primary, Sat–Sun secondary
-    const l = pick(lunches,    s + 3);
-    const d = pick(dinners,    s + 7);
+    const l = pick(lunches, s + 3);
+
+    // Pick a dinner that doesn't share its main protein with lunch
+    const lunchProtein = getMainProtein(l);
+    let d = pick(dinners, s + 7);
+    if (lunchProtein && getMainProtein(d) === lunchProtein) {
+      d = pick(dinners, s + 7 + 19);
+    }
+    if (lunchProtein && getMainProtein(d) === lunchProtein) {
+      d = pick(dinners, s + 7 + 37);
+    }
 
     const mealList = [b, l, d].filter(Boolean);
 
