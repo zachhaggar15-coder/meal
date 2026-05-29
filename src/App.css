@@ -2285,7 +2285,7 @@ input:focus, select:focus {
   font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
-  margin-right: 4px;
+  margin-right: 12px;
   transition: background 0.15s;
 }
 .nav-quiz-btn:hover { background: #1d4ed8; }
