@@ -1184,4 +1184,949 @@ export const blogPostsData = {
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High-Protein Foods UK', type: 'blog' },
     ],
   },
+
+  'anti-inflammatory-diet-meal-plan-uk': {
+    title: 'Anti-Inflammatory Diet UK: 7-Day Meal Plan & Food List',
+    description: 'Anti-inflammatory diet UK guide — what to eat, what to avoid, and a 7-day meal plan built around omega-3-rich, whole foods. Free personalised plan generator.',
+    h1: 'Anti-Inflammatory Diet UK: Foods, Meal Plan, and What the Research Says',
+    intro: 'Chronic low-grade inflammation is linked to a wide range of conditions including heart disease, type 2 diabetes, joint pain, fatigue, and cognitive decline. An anti-inflammatory diet addresses this at its root by loading your meals with foods that reduce inflammatory markers and eliminating those that drive them up. This guide explains exactly which foods to eat and avoid, the research behind them, and a practical 7-day UK meal plan using readily available supermarket ingredients.',
+    sections: [
+      {
+        h2: 'What is an Anti-Inflammatory Diet?',
+        paragraphs: [
+          'An anti-inflammatory diet is not a single rigid protocol — it is a way of eating that prioritises foods rich in antioxidants, omega-3 fatty acids, fibre, and phytonutrients while minimising ultra-processed foods, refined sugars, and industrial seed oils. The Mediterranean diet is the most researched anti-inflammatory eating pattern, but a UK-adapted version built around familiar supermarket staples is equally effective.',
+          'The key mechanism is simple: certain foods trigger the release of inflammatory cytokines (chemical messengers that promote inflammation), while others suppress them. A diet high in refined carbohydrates, trans fats, and processed meats consistently raises inflammatory markers such as C-reactive protein (CRP) and interleukin-6. A diet rich in oily fish, leafy greens, berries, nuts, and olive oil consistently lowers them.',
+        ],
+      },
+      {
+        h2: 'The Best Anti-Inflammatory Foods Available in UK Supermarkets',
+        paragraphs: [
+          'These are the highest-impact anti-inflammatory foods, all widely available at Tesco, Aldi, Sainsbury\'s, and Asda:',
+        ],
+        bullets: [
+          'Oily fish (salmon, mackerel, sardines, trout): the richest dietary source of long-chain omega-3 fatty acids (EPA and DHA), which directly suppress inflammatory pathways. Aim for 2–3 portions per week.',
+          'Extra-virgin olive oil: high in oleocanthal, a compound with anti-inflammatory properties similar to ibuprofen. Use as your primary cooking and dressing oil.',
+          'Berries (blueberries, strawberries, raspberries, blackberries): extremely high in anthocyanins and other flavonoids that reduce oxidative stress and inflammation. Fresh or frozen are equally effective.',
+          'Leafy greens (spinach, kale, rocket): rich in vitamin K, magnesium, and carotenoids, all of which help modulate inflammatory responses.',
+          'Walnuts and almonds: provide omega-3 ALA (plant-based), vitamin E, and polyphenols. A 30 g daily portion consistently reduces inflammatory markers in clinical trials.',
+          'Turmeric: curcumin, the active compound, has potent anti-inflammatory effects comparable to some NSAIDs in research settings. Combine with black pepper (piperine) to increase bioavailability by up to 2,000%.',
+          'Green tea: EGCG (epigallocatechin gallate) is one of the most well-studied anti-inflammatory phytonutrients. 2–3 cups per day shows meaningful effects in research.',
+          'Wholegrains (oats, brown rice, quinoa): provide resistant starch and fibre that feed beneficial gut bacteria, reducing gut permeability and systemic inflammation.',
+        ],
+      },
+      {
+        h2: 'Foods to Avoid on an Anti-Inflammatory Diet',
+        paragraphs: [
+          'Just as important as what you eat is what you reduce or eliminate. The following foods consistently raise inflammatory markers:',
+        ],
+        bullets: [
+          'Refined sugars and sugary drinks: drive insulin spikes that trigger inflammatory cytokine release. This includes fizzy drinks, fruit juice, sweets, and heavily processed breakfast cereals.',
+          'Ultra-processed foods (UPFs): crisps, ready meals, fast food, and most packaged snacks contain a combination of refined carbohydrates, trans fats, and additives that promote inflammation.',
+          'Refined vegetable and seed oils: sunflower, corn, and soybean oils are high in omega-6 fatty acids, which in excess shift the omega-3:omega-6 ratio towards inflammation. Use olive oil instead.',
+          'Processed meats: bacon, sausages, salami, and deli meats contain nitrates and advanced glycation end-products (AGEs) that are strongly associated with inflammatory disease.',
+          'Excess alcohol: more than 14 units per week consistently raises CRP and other inflammatory markers in population studies.',
+        ],
+      },
+      {
+        h2: '7-Day Anti-Inflammatory UK Meal Plan',
+        paragraphs: [
+          'This plan is built around anti-inflammatory staples available at UK supermarkets. Approximate calories: 1,800–2,000 kcal per day with high omega-3 content.',
+          'Monday: Breakfast — overnight oats with frozen blueberries, walnuts, and a teaspoon of ground flaxseed. Lunch — tinned mackerel salad with spinach, cucumber, cherry tomatoes, and extra-virgin olive oil. Dinner — baked salmon fillet with roasted sweet potato and tenderstem broccoli.',
+          'Tuesday: Breakfast — scrambled eggs with spinach and wholemeal toast. Lunch — lentil soup with kale and turmeric (batch-cooked). Dinner — chicken breast with quinoa, roasted red peppers, and olive oil dressing.',
+          'Wednesday–Sunday follows the same pattern: alternate oily fish with lean poultry, keep greens and wholegrains at every meal, snack on mixed nuts and berries. Browse our anti-inflammatory plans for a complete prebuilt 7-day schedule.',
+        ],
+      },
+      {
+        h2: 'Anti-Inflammatory Eating on a UK Budget',
+        paragraphs: [
+          'Anti-inflammatory eating does not require expensive superfoods. The most impactful foods — tinned sardines, frozen berries, oats, spinach, frozen broccoli, and eggs — are among the cheapest items in any UK supermarket. Tinned sardines at Aldi cost around 55p per tin and deliver more omega-3 per pound than fresh salmon.',
+          'Frozen oily fish (salmon fillets, mackerel fillets) from Iceland or Aldi costs £2–3 per portion and is nutritionally equivalent to fresh. Frozen mixed berries (Tesco, Aldi, Iceland) are available for £2–2.50 per 750 g bag — far cheaper than fresh and equally rich in anthocyanins.',
+        ],
+      },
+      {
+        h2: 'How Long Does It Take to See Results?',
+        paragraphs: [
+          'Research shows measurable reductions in inflammatory markers (CRP, IL-6) within 2–4 weeks of consistent anti-inflammatory eating. Clinical improvements — reduced joint pain, better energy, improved sleep — are typically reported within 4–8 weeks. Full metabolic benefits accrue over months of sustained dietary change.',
+          'Use our free meal plan generator to build a personalised anti-inflammatory plan. Select the Anti-Inflammatory goal category and choose your preferred supermarket to receive a complete 7-day plan with shopping list.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-anti-inflammatory-1800', label: 'Anti-Inflammatory Meal Plan', type: 'meal-plan' },
+      { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
+      { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
+      { slug: 'vegan-meal-prep-uk', label: 'Vegan Meal Prep UK', type: 'blog' },
+    ],
+  },
+
+  'menopause-diet-plan-uk': {
+    title: 'Menopause Diet Plan UK: What to Eat for Hormonal Balance',
+    description: 'Menopause diet plan UK — the best foods for managing symptoms, protecting bone density, and supporting weight management during perimenopause and menopause. Generate a free plan.',
+    h1: 'Menopause Diet Plan UK: What to Eat for Hormonal Balance and Weight Management',
+    intro: 'Menopause brings significant hormonal shifts that affect metabolism, bone density, muscle mass, and weight distribution. The right diet can meaningfully reduce common symptoms including hot flushes, poor sleep, low energy, and weight gain — while protecting long-term health. This guide explains the evidence-based dietary approach for perimenopausal and postmenopausal women in the UK, with practical meal ideas using everyday supermarket ingredients.',
+    sections: [
+      {
+        h2: 'How Menopause Changes Your Nutritional Needs',
+        paragraphs: [
+          'The decline in oestrogen during perimenopause and menopause has wide-ranging effects on nutrition and metabolism. Bone mineral density decreases as oestrogen no longer protects bone tissue — increasing the risk of osteoporosis. Muscle mass declines faster than in pre-menopause, lowering resting metabolic rate and making weight gain easier. Insulin sensitivity often decreases, making refined carbohydrate intake more likely to lead to fat storage around the abdomen.',
+          'At the same time, cardiovascular risk increases as oestrogen\'s protective effects on arterial walls diminish. These changes mean that the dietary priorities during and after menopause differ meaningfully from earlier in life — with calcium, vitamin D, protein, and omega-3 fatty acids becoming especially important.',
+        ],
+      },
+      {
+        h2: 'Key Nutrients for Menopause: What to Prioritise',
+        paragraphs: [
+          'These nutrients are the most important to focus on during and after menopause:',
+        ],
+        bullets: [
+          'Calcium (700–1,200 mg/day): essential for bone density protection. Best UK sources: low-fat Greek yogurt (120 mg per 100 g), skimmed milk (120 mg per 100 ml), tinned sardines with bones (350 mg per 100 g), kale (150 mg per 100 g cooked), and fortified plant milks.',
+          'Vitamin D (10 mcg/day minimum, 25 mcg recommended): works with calcium for bone health and immune function. UK sunlight is insufficient October–April, so supplementation is recommended by NHS. Also found in oily fish, eggs, and fortified foods.',
+          'Protein (1.2–1.6 g/kg body weight/day): essential to counteract muscle loss. Higher than general adult recommendations. Distribute across meals (30+ g per meal) to maximise muscle protein synthesis.',
+          'Omega-3 fatty acids (EPA/DHA): reduce cardiovascular risk and may reduce hot flush frequency. From oily fish (salmon, mackerel, sardines) 2–3 times per week.',
+          'Magnesium (300 mg/day): supports sleep quality, bone metabolism, and mood. From dark leafy greens, nuts, seeds, and wholegrains.',
+          'Phytoestrogens: plant compounds that weakly mimic oestrogen. Modest evidence for reducing hot flushes. Found in soy (tofu, edamame), flaxseed, and chickpeas.',
+        ],
+      },
+      {
+        h2: 'Foods That May Reduce Menopause Symptoms',
+        paragraphs: [
+          'Beyond general nutritional targets, certain foods have specific evidence for reducing menopausal symptoms:',
+          'Soy foods (tofu, edamame, soy milk): contain isoflavones (genistein and daidzein) that act as weak phytoestrogens. Meta-analyses suggest 40–80 mg of soy isoflavones per day can reduce hot flush frequency by 20–30% in some women. Tofu is available at all major UK supermarkets for around £1.50–2.50 per block.',
+          'Flaxseeds (linseeds): contain lignans with phytoestrogenic activity. 1–2 tablespoons per day, ground, added to yogurt or porridge. Tesco and Aldi sell ground flaxseed for around £1.50–2 per 250 g.',
+          'Calcium-rich dairy and fortified alternatives: protecting bone density is the most evidence-backed dietary priority for postmenopausal women. Aim for 3 servings of calcium-rich foods per day.',
+        ],
+      },
+      {
+        h2: 'Managing Weight During Menopause',
+        paragraphs: [
+          'The hormonal changes of menopause reduce resting metabolic rate by an estimated 100–200 kcal per day and shift fat storage towards the abdomen. Many women find that eating habits that maintained their weight previously now lead to gradual weight gain.',
+          'The most effective dietary strategies for weight management during menopause are: increasing protein intake to 1.2–1.6 g/kg per day (this counters muscle loss and keeps hunger controlled); reducing refined carbohydrates and added sugars (improved insulin sensitivity makes this especially impactful); and prioritising whole foods over ultra-processed alternatives.',
+          'A modest calorie reduction of 200–300 kcal per day — achieved by cutting portion sizes of carbohydrates slightly and eliminating liquid calories — is often enough to halt or reverse menopausal weight gain without aggressive restriction.',
+        ],
+      },
+      {
+        h2: 'A Sample Day on a Menopause-Friendly Diet',
+        paragraphs: [
+          'Breakfast: 200 g 0% Greek yogurt with mixed berries, 2 tablespoons ground flaxseed, and a small handful of walnuts (~350 kcal, 25 g protein, high calcium and omega-3).',
+          'Lunch: 150 g tinned sardines (with bones) on wholemeal toast with spinach salad dressed in extra-virgin olive oil (~400 kcal, 35 g protein, 350 mg calcium).',
+          'Dinner: 150 g salmon fillet with edamame, brown rice, and steamed broccoli (~500 kcal, 40 g protein, rich in omega-3 and phytoestrogens).',
+          'Snack: 200 ml warm soy milk with a small handful of almonds (~200 kcal, 12 g protein, calcium and phytoestrogens).',
+          'Total: ~1,450 kcal, ~112 g protein. Add an extra snack or larger portions to reach 1,600–1,800 kcal depending on activity level.',
+        ],
+      },
+      {
+        h2: 'Getting a Personalised Menopause Nutrition Plan',
+        paragraphs: [
+          'Use our free meal plan generator to access plans specifically designed for menopause nutrition — built around calcium-rich foods, oily fish, whole grains, and phytoestrogen-containing ingredients. Select the Menopause Nutrition goal and your preferred supermarket for a complete 7-day plan with shopping list.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-menopause-nutrition-1600', label: 'Menopause Nutrition Meal Plan', type: 'meal-plan' },
+      { slug: 'anti-inflammatory-diet-meal-plan-uk', label: 'Anti-Inflammatory Diet UK', type: 'blog' },
+      { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
+      { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
+    ],
+  },
+
+  'endurance-running-nutrition-uk': {
+    title: 'Endurance & Running Nutrition UK: What to Eat to Fuel Training',
+    description: 'Endurance and running nutrition guide for UK athletes — carb loading, pre-run meals, recovery nutrition, and a sample high-carb meal plan. Generate a free endurance plan.',
+    h1: 'Endurance and Running Nutrition UK: Fuelling Your Training',
+    intro: 'Nutrition for endurance sport differs fundamentally from a general weight-loss or muscle-building diet. Runners, cyclists, and endurance athletes need more carbohydrates, adequate protein for recovery, and precise fuelling strategies to perform and recover effectively. This guide covers everything UK endurance athletes need to know — from daily macronutrient targets to race-day nutrition and recovery meals.',
+    sections: [
+      {
+        h2: 'Why Carbohydrates Are the Endurance Athlete\'s Primary Fuel',
+        paragraphs: [
+          'During sustained moderate-to-high intensity exercise (above approximately 65% VO2max), carbohydrates are the dominant fuel source. Glycogen — the form carbohydrates are stored in your liver and muscles — is finite: the average person stores roughly 400–500 g, providing around 1,600–2,000 kcal of fuel. A 90-minute run can deplete muscle glycogen by 60–80% in well-trained athletes.',
+          'This is why low-carb diets are generally inappropriate for serious endurance athletes. The evidence consistently shows that carbohydrate availability during training improves performance, reduces perceived effort, and supports immune function after hard sessions. For endurance athletes, the question is not whether to eat carbohydrates, but how much and when.',
+        ],
+      },
+      {
+        h2: 'Daily Macronutrient Targets for Endurance Athletes',
+        paragraphs: [
+          'These are research-based targets for adults training 5–10 hours per week:',
+        ],
+        bullets: [
+          'Carbohydrates: 5–7 g per kg of body weight per day for moderate training (1–2 hours/day); 6–10 g/kg for heavy training (2–4 hours/day). A 70 kg runner doing 1–2 hours of training per day needs 350–490 g of carbohydrate daily.',
+          'Protein: 1.4–1.7 g per kg per day for repair and adaptation. A 70 kg athlete needs 98–119 g of protein per day. Higher than sedentary requirements but lower than bodybuilders.',
+          'Fat: Minimum 20% of total calories, predominantly unsaturated. Fat becomes an important fuel at lower exercise intensities and contributes to fat-soluble vitamin absorption and hormonal function.',
+          'Total calories: most endurance athletes are not trying to lose weight. Calorie requirements depend on training volume — a 70 kg runner covering 60 km per week may need 2,500–3,000 kcal per day just to maintain weight.',
+        ],
+      },
+      {
+        h2: 'Pre-Run Meal Ideas (2–3 Hours Before)',
+        paragraphs: [
+          'The pre-run meal should be high in easily digestible carbohydrates, moderate in protein, and low in fat and fibre to minimise gastrointestinal discomfort during exercise. These options work well for most runners:',
+        ],
+        bullets: [
+          'Porridge with banana and a drizzle of honey (~450 kcal, 65 g carbs, 12 g protein). Oats digest steadily and provide sustained energy without spikes.',
+          'Wholemeal toast (2 slices) with peanut butter and a banana (~450 kcal, 60 g carbs, 14 g protein). Simple, reliable, and available everywhere.',
+          'White rice with grilled chicken breast and steamed vegetables (~550 kcal, 70 g carbs, 40 g protein). For longer or harder sessions, white rice is preferable to brown — faster to digest.',
+          'Bagel with low-fat cream cheese and a banana (~400 kcal, 72 g carbs, 14 g protein). High glycaemic index for rapid glycogen top-up before a morning run.',
+        ],
+      },
+      {
+        h2: 'Post-Run Recovery Nutrition',
+        paragraphs: [
+          'The 30–60 minutes after a hard run is the "recovery window" during which the body is maximally primed to replenish glycogen and synthesise new muscle protein. A recovery meal or snack should provide a 3:1 or 4:1 ratio of carbohydrates to protein.',
+          'Effective UK recovery options: chocolate milk (21 g carbs, 8 g protein per 250 ml — research-backed, cheap, and available everywhere); Greek yogurt with banana and granola; a bowl of oats with protein powder and berries; or a chicken and rice meal if appetite allows.',
+          'Rehydration is equally important. Replace fluid losses at a rate of 1.5 litres per 1 kg of bodyweight lost during exercise. Adding a pinch of salt to water or drinking a small amount of milk helps replace sodium and aids fluid retention.',
+        ],
+      },
+      {
+        h2: 'Carb Loading Before a Race or Long Run',
+        paragraphs: [
+          'Carb loading — systematically increasing carbohydrate intake for 2–3 days before a race lasting 90+ minutes — can improve performance by ensuring glycogen stores are completely full at the start line. This is not about eating more calories overall; it is about shifting the macronutrient ratio towards carbohydrates (to 8–10 g/kg per day) while temporarily reducing fat and protein.',
+          'Practical carb loading for UK runners: switch to white rice, white pasta, and white bread (faster to digest than wholegrain); add bananas, bagels, and rice cakes as snacks; drink orange juice or sports drinks to top up; and avoid high-fibre foods that slow gastric emptying. This approach is relevant for half-marathons, marathons, and long sportives — not necessary for shorter events.',
+        ],
+      },
+      {
+        h2: 'High-Carb UK Foods for Endurance Athletes',
+        paragraphs: [
+          'The most useful high-carb staples for UK endurance athletes, all available cheaply at supermarkets:',
+        ],
+        bullets: [
+          'Oats (Aldi, 1 kg, ~70p): 58 g carbs per 100 g dry. The best endurance breakfast base.',
+          'Bananas (~15–20p each): 23 g carbs each, easy to digest, portable on the run or bike.',
+          'White or brown rice (Aldi, 1 kg, ~90p): 77 g carbs per 100 g dry. The ultimate glycogen replenishment food.',
+          'Wholemeal or white pasta (Tesco, 500 g, ~75p): 70 g carbs per 100 g dry.',
+          'Bagels (Tesco 5-pack, ~£1.20): 50 g carbs per bagel. Great before and after training.',
+          'Sports gels and chews: for runs over 75 minutes, consuming 30–60 g of carbohydrates per hour (from gels, bananas, or Haribo) maintains blood glucose and delays fatigue.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-endurance-athlete-2000', label: 'Endurance Athlete Meal Plan', type: 'meal-plan' },
+      { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
+      { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+    ],
+  },
+
+  'how-to-lose-belly-fat-uk': {
+    title: 'How to Lose Belly Fat UK: What Actually Works (Evidence-Based)',
+    description: 'How to lose belly fat in the UK — the evidence on diet, exercise, and lifestyle changes that reduce visceral fat. No gimmicks, no detoxes. Generate a free personalised meal plan.',
+    h1: 'How to Lose Belly Fat UK: What the Research Actually Shows',
+    intro: 'Belly fat is not just a cosmetic concern — visceral fat (the fat stored around the abdominal organs) is metabolically active and directly increases the risk of type 2 diabetes, heart disease, and certain cancers. The good news is that visceral fat responds well to evidence-based interventions: a calorie deficit with high protein, targeted exercise, and specific lifestyle habits. This guide explains exactly what works — and what does not.',
+    sections: [
+      {
+        h2: 'Why Belly Fat is Different from Subcutaneous Fat',
+        paragraphs: [
+          'There are two types of body fat: subcutaneous fat (under the skin, the kind you can pinch) and visceral fat (deep within the abdominal cavity, surrounding the organs). Visceral fat is more metabolically active — it releases more inflammatory cytokines and free fatty acids than subcutaneous fat, directly contributing to insulin resistance, elevated blood pressure, and systemic inflammation.',
+          'You cannot choose where you lose fat from through targeted exercise. Crunches and sit-ups strengthen the abdominal muscles but do not burn fat in that area. Fat loss occurs systemically — when you are in a calorie deficit, your body draws on fat stores throughout the body, with visceral fat typically mobilised alongside overall fat loss.',
+        ],
+      },
+      {
+        h2: 'Diet: The Most Important Factor',
+        paragraphs: [
+          'A calorie deficit is the primary driver of visceral fat loss. There is no special diet that specifically targets belly fat — but the research does show that the composition of your diet affects how much visceral fat you lose relative to other fat. Specifically:',
+          'High protein intake (1.6–2 g/kg per day) is associated with greater visceral fat loss compared to lower-protein diets at the same calorie level. Protein preserves muscle mass and reduces hunger, making the deficit easier to sustain.',
+          'Reducing refined carbohydrates and added sugars significantly reduces visceral fat in several randomised controlled trials, independent of calorie intake. This does not mean avoiding all carbohydrates — it means replacing white bread, sugary cereals, and fizzy drinks with oats, brown rice, and wholemeal alternatives.',
+          'Eliminating alcohol is one of the most effective single changes for reducing belly fat. Alcohol is preferentially stored as visceral fat, and even moderate drinking (7–14 units per week) is associated with significantly greater abdominal fat accumulation.',
+        ],
+      },
+      {
+        h2: 'Exercise: Cardio, Strength, or Both?',
+        paragraphs: [
+          'Both aerobic exercise and resistance training reduce visceral fat, but they work through slightly different mechanisms. Aerobic exercise (running, cycling, swimming) burns calories directly and improves insulin sensitivity, both of which mobilise visceral fat. Resistance training builds muscle, which increases resting metabolic rate and improves insulin sensitivity even in the absence of significant calorie burn during the session.',
+          'The most effective approach for belly fat reduction is combining both. A 2019 meta-analysis found that combined exercise programmes (aerobic plus resistance training) produced significantly greater visceral fat reduction than either mode alone. For people new to exercise, brisk walking (7,000–10,000 steps per day) combined with 2–3 resistance training sessions per week is a sustainable and highly effective starting point.',
+        ],
+      },
+      {
+        h2: 'Sleep and Stress: Underrated Belly Fat Drivers',
+        paragraphs: [
+          'Two lifestyle factors have a direct, well-documented effect on visceral fat accumulation: sleep and stress. Chronic sleep deprivation (under 7 hours per night) consistently raises cortisol levels. Cortisol directly promotes visceral fat storage by increasing appetite, reducing insulin sensitivity, and directing fat storage towards the abdomen. A large meta-analysis found that short sleepers were significantly more likely to accumulate visceral fat than those sleeping 7–9 hours per night.',
+          'Chronic psychological stress raises cortisol through the same mechanisms. Stress management approaches — exercise, mindfulness, adequate rest, and social connection — reduce cortisol and in turn reduce abdominal fat accumulation over time.',
+        ],
+      },
+      {
+        h2: 'What Does Not Work for Belly Fat',
+        paragraphs: [
+          'Despite widespread marketing claims, the following approaches have no meaningful evidence for specifically targeting belly fat:',
+        ],
+        bullets: [
+          'Ab exercises and crunches: strengthen muscles but do not burn the fat above them.',
+          'Waist trainers and compression belts: redistribute the appearance of fat temporarily, no metabolic effect.',
+          '"Belly fat-burning" supplements: no supplement has robust evidence for selectively reducing visceral fat. Many are expensive placebos; some are dangerous.',
+          'Juice cleanses and detoxes: no scientific basis for "detoxification" via juice fasting. Any weight loss is water and glycogen, rapidly regained.',
+          'Dramatic calorie restriction (under 1,200 kcal/day): causes muscle loss alongside fat loss, reducing metabolic rate and making the fat regain faster and more likely.',
+        ],
+      },
+      {
+        h2: 'A Practical Starting Plan',
+        paragraphs: [
+          'The most effective approach for losing belly fat specifically is: a 300–500 calorie deficit below TDEE; high protein intake (at least 1.6 g/kg); elimination of alcohol and sugary drinks; combined aerobic exercise and resistance training; and 7–9 hours of sleep per night. This combination addresses all the primary drivers of visceral fat accumulation simultaneously.',
+          'Use our free meal plan generator to build a high-protein, calorie-controlled plan tailored to your goals. The weight-loss and high-protein-low-calorie categories are the best starting points.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit', type: 'blog' },
+      { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'how-to-lose-weight-fast-uk', label: 'How to Lose Weight Fast UK', type: 'blog' },
+    ],
+  },
+
+  'low-calorie-snacks-uk': {
+    title: 'Best Low Calorie Snacks UK: 20 Ideas Under 150 kcal',
+    description: 'Best low calorie snacks UK — 20 filling, high-protein snack ideas under 150 kcal using everyday Tesco, Aldi, and Asda products. With calorie counts and protein content.',
+    h1: 'Best Low Calorie Snacks UK — 20 Ideas Under 150 kcal',
+    intro: 'Snacking is one of the biggest obstacles to staying within a calorie target. The wrong snacks — crisps, biscuits, chocolate — pack 200–400 calories into a small volume with minimal protein or fibre, leaving you no fuller than before. The right snacks keep you satisfied between meals, add useful protein to your daily total, and cost almost nothing extra. These 20 low-calorie snack ideas are all available from UK supermarkets and keep you under 150 kcal per serving.',
+    sections: [
+      {
+        h2: 'What Makes a Good Low-Calorie Snack?',
+        paragraphs: [
+          'The best low-calorie snacks share three qualities: they are high in protein or fibre (or both), they have a high volume relative to their calorie count, and they are genuinely satisfying enough to prevent you reaching for something else within 30 minutes.',
+          'A 100-calorie bag of crisps satisfies none of these criteria — it is low volume, low protein, low fibre, and designed to be difficult to stop eating. A 100-calorie pot of Greek yogurt, by contrast, delivers 10–15 g of protein, keeps you full for 2–3 hours, and costs around 30–40p.',
+        ],
+      },
+      {
+        h2: 'The 20 Best Low-Calorie UK Snacks',
+        paragraphs: [
+          'All items are available from Tesco, Aldi, Lidl, Sainsbury\'s, or Asda. Calorie counts are approximate based on own-brand nutritional data.',
+        ],
+        table: {
+          headers: ['Snack', 'Calories', 'Protein', 'Available From'],
+          rows: [
+            ['200 g 0% Greek yogurt', '~115 kcal', '20 g', 'All supermarkets'],
+            ['2 boiled eggs', '~140 kcal', '12 g', 'All supermarkets'],
+            ['1 small tin tuna (100 g, drained)', '~100 kcal', '24 g', 'All supermarkets'],
+            ['200 g low-fat cottage cheese', '~140 kcal', '22 g', 'Tesco, Asda, Lidl'],
+            ['30 g mixed nuts (almonds, walnuts)', '~180 kcal', '5 g', 'All supermarkets'],
+            ['1 apple + 1 tbsp peanut butter', '~140 kcal', '4 g', 'All supermarkets'],
+            ['1 rice cake + 2 tbsp cottage cheese', '~80 kcal', '10 g', 'All supermarkets'],
+            ['100 g edamame pods (cooked)', '~90 kcal', '9 g', 'Tesco, Sainsbury\'s, Asda'],
+            ['15 cherry tomatoes', '~40 kcal', '2 g', 'All supermarkets'],
+            ['200 g cucumber slices + 3 tbsp hummus', '~130 kcal', '5 g', 'All supermarkets'],
+            ['1 high-protein yogurt pot (e.g. Arla Skyr 150 g)', '~80 kcal', '12 g', 'Tesco, Asda, Sainsbury\'s'],
+            ['3 oatcakes + 2 tbsp cottage cheese', '~130 kcal', '10 g', 'All supermarkets'],
+            ['1 medium banana', '~90 kcal', '1 g', 'All supermarkets'],
+            ['50 g smoked salmon', '~65 kcal', '10 g', 'Tesco, Sainsbury\'s'],
+            ['1 hard-boiled egg + 10 cherry tomatoes', '~110 kcal', '7 g', 'All supermarkets'],
+            ['150 g frozen berries (thawed) + 100 g Greek yogurt', '~120 kcal', '11 g', 'All supermarkets'],
+            ['2 × Babybel Light', '~82 kcal', '9 g', 'Tesco, Asda, Sainsbury\'s'],
+            ['1 scoop whey protein in water', '~120 kcal', '22 g', 'Holland & Barrett, Amazon'],
+            ['100 g raw carrot sticks + 2 tbsp reduced-fat hummus', '~100 kcal', '4 g', 'All supermarkets'],
+            ['1 slice wholemeal toast + 1 tbsp peanut butter', '~150 kcal', '6 g', 'All supermarkets'],
+          ],
+        },
+      },
+      {
+        h2: 'Best Snacks for Different Goals',
+        paragraphs: [
+          'For maximum protein in minimal calories: tinned tuna (24 g protein per 100 kcal) and 0% Greek yogurt (20 g protein per 115 kcal) are the standout options. Both are significantly cheaper than protein bars and more nutritious.',
+          'For maximum fullness: cottage cheese and Greek yogurt score highest on satiety indices relative to their calorie cost. Studies show dairy protein (casein in particular) is among the most satiating macronutrients per calorie.',
+          'For convenience (no refrigeration needed): oatcakes with individual nut butter sachets, rice cakes, a banana, or a small bag of mixed nuts are all shelf-stable and portable. Useful for office snacks, travel, and post-gym.',
+        ],
+      },
+      {
+        h2: 'Snacks to Avoid on a Calorie Deficit',
+        paragraphs: [
+          'These common UK snacks are easy to over-consume and provide poor nutritional value relative to their calorie cost:',
+        ],
+        bullets: [
+          'Standard crisps and pretzels: 150–180 kcal per small bag with almost no protein or fibre. Engineered to be eaten past fullness.',
+          'Cereal bars and "healthy" snack bars: typically 180–250 kcal, 2–5 g protein, high sugar. Marketed as health foods but nutritionally closer to biscuits.',
+          'Full-fat cheese (more than a 30 g portion): extremely calorie-dense — 30 g of Cheddar is ~120 kcal. Easy to eat far more than intended.',
+          'Fruit juice and smoothies: drink calories without triggering satiety. A 250 ml glass of orange juice is 110 kcal with no protein or fat — easily consumed alongside other snacks without registering as food.',
+          'Biscuits: 50–80 kcal each, zero protein, highly processed. One often leads to five.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
+      { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit', type: 'blog' },
+    ],
+  },
+
+  'vegan-meal-prep-uk': {
+    title: 'Vegan Meal Prep UK: High-Protein Weekly Plan & Shopping List',
+    description: 'Vegan meal prep UK — how to hit your protein targets, batch cook efficiently, and build a full week of high-protein plant-based meals. Shopping list included. Generate a free vegan plan.',
+    h1: 'Vegan Meal Prep UK: High-Protein Weekly Plan',
+    intro: 'Vegan meal prep gets a bad reputation for being difficult and protein-sparse — but a well-planned vegan week can hit 100–130 g of protein per day using affordable UK supermarket ingredients. The key is combining complementary plant proteins and anchoring every meal around a protein source. This guide covers everything you need: daily protein targets, the best vegan protein sources available in UK supermarkets, and a complete batch-cook plan for the week.',
+    sections: [
+      {
+        h2: 'Hitting Protein on a Vegan Diet',
+        paragraphs: [
+          'Plant proteins are generally less bioavailable than animal proteins and lower in one or more essential amino acids. This does not mean you cannot build muscle or maintain weight on a vegan diet — but it does mean you need to be more deliberate about combining protein sources and hitting a slightly higher total intake to account for lower bioavailability.',
+          'The research suggests vegan athletes and dieters aim for 1.8–2.2 g of protein per kg of body weight — somewhat higher than the 1.6–2.0 g/kg recommended for omnivores. For a 70 kg person, that means 126–154 g of protein per day from plant sources.',
+          'The key is variety. By combining different plant protein sources (legumes + wholegrains, soy + nuts, tofu + seeds), you ensure a full complement of essential amino acids across the day. You do not need to combine them within every meal — daily totals are what matters.',
+        ],
+      },
+      {
+        h2: 'Best Vegan Protein Sources in UK Supermarkets',
+        paragraphs: [
+          'These are the highest-impact vegan protein sources available at Tesco, Aldi, Sainsbury\'s, and Asda:',
+        ],
+        bullets: [
+          'Firm tofu: 8–10 g protein per 100 g, ~80 kcal. Tesco, Sainsbury\'s, and Asda sell 280–400 g blocks for £1.50–2.50. Freeze, then thaw for a chewier texture that absorbs marinades better.',
+          'Edamame beans (frozen): 11 g protein per 100 g, ~120 kcal. Available frozen at Tesco and Sainsbury\'s for ~£2 per 500 g. Outstanding vegan protein-to-calorie ratio.',
+          'Lentils (red or green, dried): 9 g protein per 100 g cooked, ~116 kcal. Aldi sells 500 g dried red lentils for 75p — one of the cheapest protein sources available.',
+          'Chickpeas (tinned): 7 g protein per 100 g drained. 4 × 400 g tins at Aldi for ~£2.20. Bulk any curry or salad.',
+          'Black beans (tinned): 8.9 g protein per 100 g. Excellent for chilli, burrito bowls, and salads.',
+          'Soy mince / textured vegetable protein (TVP): 15–17 g protein per 100 g dry. Available at most supermarkets for £1–2 per 300 g. Rehydrates in boiling water and takes on flavours well.',
+          'Tempeh: 19 g protein per 100 g — the highest of any common plant protein. Increasingly available at Tesco and Sainsbury\'s for ~£2.50 per 200 g.',
+          'Seitan (wheat protein): 25 g protein per 100 g. Available ready-made or as vital wheat gluten for home preparation.',
+          'Pumpkin seeds: 19 g protein per 100 g. Add to yogurt, porridge, or salads.',
+          'Hemp seeds: 32 g protein per 100 g. Expensive but extremely protein-dense. 2–3 tablespoons per day in smoothies or on yogurt.',
+        ],
+      },
+      {
+        h2: 'A Sample Vegan Meal Prep Week (Under £35)',
+        paragraphs: [
+          'Sunday batch cook (approximately 2 hours): Cook a large pot of red lentil dal (500 g dry lentils + tinned tomatoes + onion + spices — 5 portions). Cook 500 g dry brown rice. Marinate and bake 2 blocks of tofu (slice, toss in soy sauce, garlic, and smoked paprika, bake at 200°C for 25 minutes). Prepare 5 overnight oat jars with oat milk, chia seeds, and frozen berries.',
+          'Monday–Friday meals from the prep: Breakfast — overnight oats with soy protein powder stirred in (25 g protein). Lunch — dal over brown rice with a handful of spinach (22 g protein). Dinner — tofu stir-fry with frozen edamame, mixed veg, and soy sauce over rice (28 g protein). Snack — 30 g pumpkin seeds + 200 g soy yogurt (22 g protein). Total daily protein: ~97 g.',
+          'To push protein higher: add a serving of hemp seeds to breakfast (+10 g protein) or swap one dinner for seitan-based meal (+30 g protein per meal compared to tofu).',
+        ],
+      },
+      {
+        h2: 'Vegan Micronutrients to Watch',
+        paragraphs: [
+          'A well-planned vegan diet can meet most nutritional needs, but three nutrients require active attention: vitamin B12 (not found in plant foods — supplement with 1,000 mcg daily); vitamin D (supplement with 10–25 mcg daily, especially October–April in the UK); and long-chain omega-3 (EPA/DHA from algae-based supplements — flaxseed and walnuts provide ALA but conversion to EPA/DHA is limited).',
+          'Iron and calcium from plant sources are less bioavailable than animal sources. Vitamin C consumed alongside iron-rich foods (lentils + bell pepper, spinach + lemon juice) significantly improves iron absorption. For calcium, choose fortified oat or soy milk and eat calcium-rich vegetables like kale and broccoli regularly.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-vegan-low-cal-1500', label: 'Vegan Low Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'best-cheap-high-protein-foods-uk', label: 'Cheap High Protein Foods UK', type: 'blog' },
+      { slug: 'vegetarian-meal-prep-uk', label: 'Vegetarian Meal Prep UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+    ],
+  },
+
+  'vegetarian-meal-prep-uk': {
+    title: 'Vegetarian Meal Prep UK: High-Protein Weekly Plan & Shopping List',
+    description: 'Vegetarian meal prep UK — hit 100g+ protein per day, batch cook efficiently, and build a full week of meals. Shopping list and calorie breakdown included. Generate a free plan.',
+    h1: 'Vegetarian Meal Prep UK: High-Protein Weekly Plan',
+    intro: 'A vegetarian diet that includes dairy and eggs (lacto-ovo vegetarian) has access to some of the most protein-dense and cost-effective foods available in UK supermarkets. Greek yogurt, eggs, and cottage cheese rival chicken breast on a protein-per-calorie basis and are often cheaper. With the right planning, a vegetarian meal prep week can easily deliver 120–150 g of protein per day at under £35.',
+    sections: [
+      {
+        h2: 'Best High-Protein Vegetarian Foods in UK Supermarkets',
+        paragraphs: [
+          'Vegetarian diets that include dairy and eggs have access to excellent protein sources. The best options by protein density:',
+        ],
+        bullets: [
+          '0% Greek yogurt: 10 g protein per 100 g, 57 kcal. Tesco 500 g tub ~£1.20. Use as breakfast base, snack, and sauce thickener.',
+          'Eggs (large): 6.3 g protein per egg, 78 kcal. Buy 12-pack free range at Aldi for ~£2.60.',
+          'Low-fat cottage cheese: 12 g protein per 100 g, 80 kcal. Available at all major supermarkets for £1–1.20 per 300 g.',
+          'Skyr (Icelandic-style yogurt): 11 g protein per 100 g. Lidl Milbona range is excellent value at ~£1–1.50 per 450 g.',
+          'Reduced-fat feta: 14 g protein per 100 g. Great in omelettes and salads.',
+          'Edamame beans (frozen): 11 g protein per 100 g. Best plant protein in any supermarket.',
+          'Lentils (red or green, dried): 9 g protein per 100 g cooked.',
+          'Tofu (firm): 8–10 g protein per 100 g. Widely available, versatile, and absorbs flavours well.',
+          'Reduced-fat halloumi: 20 g protein per 100 g. Slightly higher calorie than Greek yogurt but excellent for adding variety to meal prep.',
+          'Whey protein powder: 20–25 g protein per scoop. Stir into yogurt or oats for an easy protein boost.',
+        ],
+      },
+      {
+        h2: 'A Sample Vegetarian Meal Prep Week',
+        paragraphs: [
+          'Sunday batch-cook plan (under 2 hours): Prepare 5 overnight oat jars (oats + skimmed milk + Greek yogurt + mixed berries). Hard-boil 10 eggs. Make a large roasted vegetable and chickpea tray bake (courgette, peppers, red onion, tinned chickpeas, olive oil, cumin — roast 35 min at 200°C, makes 5 portions). Cook 400 g dry brown rice. Slice and marinate firm tofu.',
+          'Daily structure: Breakfast — overnight oats with Greek yogurt and berries (~30 g protein, 400 kcal). Lunch — tray bake with 2 boiled eggs and a large salad (~35 g protein, 450 kcal). Dinner — scrambled tofu with brown rice, spinach, and turmeric (~28 g protein, 500 kcal). Snack — cottage cheese with cucumber and oatcakes (~22 g protein, 200 kcal). Total: ~115 g protein, ~1,550 kcal.',
+        ],
+      },
+      {
+        h2: 'Keeping Vegetarian Meal Prep Affordable',
+        paragraphs: [
+          'The cheapest vegetarian protein sources in UK supermarkets are eggs (~£2.60 for 12), dried lentils (75p for 500 g at Aldi), tinned chickpeas (55p per 400 g tin at Aldi), and own-brand Greek yogurt (~£1.20 per 500 g). A week built primarily around these staples with supplementary tofu and halloumi for variety costs £25–30.',
+          'Reducing reliance on cheese (calorie-dense, expensive per gram of protein) and increasing eggs, yogurt, and legumes is the fastest way to cut the weekly food spend without reducing protein intake.',
+        ],
+      },
+      {
+        h2: 'Making Vegetarian Meal Prep Less Boring',
+        paragraphs: [
+          'The biggest pitfall in vegetarian meal prep is eating the same meals every day. These strategies add variety without adding complexity: rotate between lentil dal, chickpea curry, bean chilli, and egg-based dinners across the week; use different spice profiles (Middle Eastern, Mexican, Indian, Italian) on the same base ingredients; and introduce one new recipe per week alongside reliable staples.',
+          'Halloumi, reduced-fat feta, and ricotta are excellent for adding variety — they cook quickly, taste very different from dairy-only options, and provide variety in texture. Use our free meal plan generator to browse vegetarian meal plans across all calorie levels.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-veg-low-cal-1500', label: 'Vegetarian Low Cal Meal Plan', type: 'meal-plan' },
+      { slug: 'aldi-hp-veg-1800', label: 'High Protein Vegetarian Plan', type: 'meal-plan' },
+      { slug: 'vegan-meal-prep-uk', label: 'Vegan Meal Prep UK', type: 'blog' },
+      { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
+    ],
+  },
+
+  'muscle-building-meal-plan-uk': {
+    title: 'Muscle Building Meal Plan UK: What to Eat to Gain Muscle',
+    description: 'Muscle building meal plan UK — how many calories and protein you need to gain muscle, what to eat, and a sample high-protein 2,500 kcal weekly plan. Generate a free plan.',
+    h1: 'Muscle Building Meal Plan UK: Nutrition for Muscle Gain',
+    intro: 'Building muscle requires two things above all else: consistent progressive resistance training and a diet that provides enough protein and calories to support muscle growth. This guide covers exactly how much you need to eat, which foods deliver the best results for UK gym-goers, and a practical weekly meal plan to support muscle growth without excessive fat gain.',
+    sections: [
+      {
+        h2: 'How Many Calories Do You Need to Build Muscle?',
+        paragraphs: [
+          'Building muscle requires a calorie surplus — eating slightly more than your Total Daily Energy Expenditure (TDEE). However, the size of the surplus matters. A very large surplus (500+ calories above TDEE per day) accelerates fat gain significantly faster than muscle gain, since muscle can only be built at a limited rate regardless of calorie intake.',
+          'The research suggests an optimal surplus of 200–300 calories per day above TDEE for most natural trainees. This "lean bulk" approach maximises muscle-to-fat gain ratio. For a moderately active 80 kg man with a TDEE of 2,500 kcal, this means eating 2,700–2,800 kcal per day.',
+          'Track your weight weekly. You should gain approximately 0.2–0.4 kg per week on an effective muscle-building plan. Faster than this and you are gaining primarily fat; slower and your calorie surplus is too small.',
+        ],
+      },
+      {
+        h2: 'Protein Requirements for Muscle Building',
+        paragraphs: [
+          'Protein is the building material of muscle. For muscle gain, the evidence supports 1.6–2.2 g of protein per kilogram of body weight per day. An 80 kg man needs 128–176 g of protein daily; a 65 kg woman needs 104–143 g.',
+          'Distribute protein intake across 3–5 meals (30–50 g per meal) to maximise muscle protein synthesis throughout the day. There is strong evidence for consuming 30–40 g of protein within two hours of a resistance training session to support muscle repair and growth.',
+        ],
+      },
+      {
+        h2: 'Best Muscle-Building Foods Available in UK Supermarkets',
+        paragraphs: [
+          'These foods provide the best combination of protein quality, calorie density, and cost for muscle building:',
+        ],
+        bullets: [
+          'Chicken breast (1 kg frozen, Aldi, ~£3.50): 31 g protein per 100 g. The most cost-effective muscle-building protein available.',
+          'Whole eggs (12-pack, Aldi, ~£2.60): 6.3 g protein per egg plus healthy fats, vitamin D, and leucine — the amino acid most important for triggering muscle protein synthesis.',
+          'Lean beef mince (5% fat, Tesco, 500 g, ~£3.50): 26 g protein per 100 g plus creatine, zinc, and iron — all important for training performance and recovery.',
+          'Full-fat Greek yogurt (Tesco, 500 g, ~£1.50): higher in calories than 0% for a calorie surplus; 8–10 g protein per 100 g.',
+          'Brown rice or basmati (Aldi, 1 kg, ~£0.89): 77 g carbs per 100 g dry — essential for replenishing glycogen after training.',
+          'Oats (Aldi, 1 kg, ~£0.69): high in beta-glucan, slow-digesting carbs, and surprisingly high in protein (12 g per 100 g dry).',
+          'Whole milk (Tesco, 2 L, ~£1.30): a classic muscle-building supplement — 3.5 g protein per 100 ml plus saturated fat and calories. GOMAD (gallon of milk a day) is unnecessary; 500–1,000 ml per day is sufficient.',
+          'Salmon (frozen fillets, Iceland or Aldi): high protein, omega-3 fatty acids, and vitamin D — all important for training recovery and hormonal health.',
+        ],
+      },
+      {
+        h2: 'A Sample 2,500 kcal Muscle-Building Day',
+        paragraphs: [
+          'Breakfast (7 am): 4 scrambled eggs + 3 slices wholemeal toast + 200 ml whole milk (~700 kcal, 45 g protein).',
+          'Post-training snack (10 am, if morning training): 200 g Greek yogurt + banana + 30 g oats (~350 kcal, 25 g protein).',
+          'Lunch (1 pm): 200 g chicken breast + 100 g dry brown rice + large roasted vegetable portion (~600 kcal, 55 g protein).',
+          'Dinner (7 pm): 200 g lean beef mince bolognese + 100 g dry wholemeal pasta + side salad (~750 kcal, 50 g protein).',
+          'Evening snack (9 pm): 200 g cottage cheese + mixed nuts (~300 kcal, 25 g protein).',
+          'Total: ~2,700 kcal, ~200 g protein. Adjust portions up or down based on training volume and weekly weight trend.',
+        ],
+      },
+      {
+        h2: 'Common Muscle-Building Nutrition Mistakes',
+        paragraphs: [
+          'Not eating enough total calories is the most common reason muscle gain stalls. Many gym-goers eat high protein but remain at maintenance calories — sufficient to preserve muscle but not build it. Track your calories for two weeks to confirm you are consistently above your TDEE.',
+          'Skipping carbohydrates is counterproductive for muscle building. Carbohydrates are the primary fuel for resistance training, and inadequate carbohydrate intake impairs training performance, reduces training volume, and limits the stimulus for muscle growth. Unless you are following a specific ketogenic protocol with experience, keep carbohydrates as the dominant calorie source.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-muscle-gain-2000', label: 'Muscle Gain Meal Plan', type: 'meal-plan' },
+      { slug: 'aldi-budget-bodybuilding-2000', label: 'Budget Bodybuilding Plan', type: 'meal-plan' },
+      { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
+      { slug: 'best-cheap-high-protein-foods-uk', label: 'Cheap High Protein Foods UK', type: 'blog' },
+    ],
+  },
+
+  'cutting-diet-plan-uk': {
+    title: 'Cutting Phase Diet UK: How to Lose Fat and Keep Muscle',
+    description: 'Cutting phase diet UK — how to set up a calorie deficit that preserves muscle, how much protein you need, and a sample 1,500 kcal cutting plan for the UK. Generate a free cutting plan.',
+    h1: 'Cutting Phase Diet UK: Lose Fat While Keeping Your Muscle',
+    intro: 'A cutting phase — reducing body fat while preserving as much muscle as possible — is the most technically demanding diet goal. The challenge is that the very calorie deficit needed to burn fat also puts muscle tissue at risk of being used for energy. With the right protein intake, training approach, and food choices, you can minimise muscle loss and emerge leaner with the same strength and size. This guide explains exactly how to set up an effective cut in the UK.',
+    sections: [
+      {
+        h2: 'The Cutting Phase: Goals and Timeline',
+        paragraphs: [
+          'A cutting phase typically follows a period of muscle building (a "bulk") and aims to reduce body fat percentage while retaining lean mass. The target rate of fat loss during a cut is 0.5–1% of body weight per week — fast enough to make meaningful progress without losing significant muscle.',
+          'For a 90 kg person carrying 20% body fat, a 10-week cut at 0.5 kg per week would lose approximately 5 kg of fat (assuming muscle is well-preserved) — dropping to around 15% body fat. Most people find a cut of 8–16 weeks effective before diet fatigue sets in and a maintenance phase is needed.',
+        ],
+      },
+      {
+        h2: 'Setting Up Your Cutting Calories',
+        paragraphs: [
+          'A cutting deficit of 500–700 calories per day below TDEE is appropriate for most people. This produces fat loss of 0.5–0.7 kg per week. Larger deficits (750+ calories below TDEE) accelerate fat loss but substantially increase muscle loss risk and hunger, making the cut harder to sustain.',
+          'For a moderately active 85 kg man with a TDEE of 2,700 kcal, a cutting target of 2,000–2,200 kcal per day creates a meaningful 500–700 calorie deficit. For a moderately active 65 kg woman with a TDEE of 2,000 kcal, a cutting target of 1,400–1,500 kcal creates the same deficit.',
+        ],
+      },
+      {
+        h2: 'Protein: The Most Important Cutting Variable',
+        paragraphs: [
+          'Protein intake during a cut should be higher than during maintenance or building — not lower. The research supports 2.0–2.4 g of protein per kg of body weight during a calorie deficit to maximise muscle retention. For an 85 kg man, that means 170–200 g of protein per day.',
+          'This high protein intake serves two purposes: it signals the body to preserve muscle tissue even when energy is scarce, and it is the most satiating macronutrient — making the deficit far easier to sustain. At 1,600–2,000 kcal per day with 170+ g of protein, there is limited room for fat and carbohydrate — which is why cutting diets tend to be lean and precise.',
+        ],
+      },
+      {
+        h2: 'Best Foods for a Cutting Phase',
+        paragraphs: [
+          'During a cut, you need foods that maximise protein and satiety per calorie — minimising the calorie cost of hitting your protein target so the remaining budget can be used on nutritious carbohydrates and fats:',
+        ],
+        bullets: [
+          'Chicken breast (skinless): 31 g protein per 100 g, only 165 kcal. The most calorie-efficient muscle-preserving protein available.',
+          '0% Greek yogurt: 10 g protein per 100 g, 57 kcal. Near-perfect for cutting — high protein, very low calorie, filling.',
+          'Egg whites: 11 g protein per 100 g, 50 kcal. Buy cartons of liquid egg whites for convenience.',
+          'Tinned tuna in spring water: 25 g protein per 100 g, 100 kcal. Fastest high-protein cutting food available.',
+          'Cod or haddock (fresh or frozen): 18–20 g protein per 100 g, 80–90 kcal. Lower calorie than chicken breast.',
+          'Non-starchy vegetables (broccoli, spinach, courgette, cucumber): 15–35 kcal per 100 g. Eat as much as you want — they add volume and micronutrients for almost no calorie cost.',
+          'Rice cakes (plain): 35 kcal each. Low-calorie vehicle for protein spreads when you need a carbohydrate top-up.',
+        ],
+      },
+      {
+        h2: 'Training During a Cut',
+        paragraphs: [
+          'Continue resistance training throughout your cut — this is the most important factor in preserving muscle mass. The training stimulus tells your body that muscle is needed and should be maintained. Without it, a calorie deficit will result in significant muscle loss alongside fat loss.',
+          'Reduce training volume by 20–30% during an aggressive cut (fewer sets, same weight) to manage recovery with limited energy. Avoid adding large amounts of new cardio on top of resistance training — excessive cardio on a calorie deficit accelerates muscle loss and makes recovery difficult. 2–3 cardio sessions per week of 30–45 minutes is appropriate alongside 3–4 resistance training sessions.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'aldi-cutting-1500', label: 'Cutting Phase Meal Plan', type: 'meal-plan' },
+      { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
+      { slug: 'how-to-lose-belly-fat-uk', label: 'How to Lose Belly Fat UK', type: 'blog' },
+      { slug: '1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories', type: 'blog' },
+    ],
+  },
+
+  'batch-cooking-for-beginners-uk': {
+    title: 'Batch Cooking for Beginners UK: 5 Meals in 2 Hours (2025)',
+    description: 'Batch cooking for beginners UK — a step-by-step 2-hour Sunday cook that produces 5 days of healthy, high-protein meals. Shopping list, timings, and storage tips included.',
+    h1: 'Batch Cooking for Beginners UK: 5 High-Protein Meals in 2 Hours',
+    intro: 'Batch cooking is the single most effective habit for eating well during a busy week. Two hours on a Sunday produces five days of ready-to-eat meals that cost a fraction of takeaways and meal deals — eliminating the daily temptation of unhealthy options when you are tired and hungry. This guide walks a complete beginner through a structured Sunday batch-cook session that produces five high-protein lunches and dinners for under £30.',
+    sections: [
+      {
+        h2: 'Why Batch Cooking Works',
+        paragraphs: [
+          'The biggest threat to a healthy diet during the week is a moment of exhaustion combined with an empty fridge. Batch cooking eliminates that scenario. When Tuesday evening arrives and you have already cooked chicken, rice, and roasted vegetables waiting in the fridge, the path of least resistance is the healthy option.',
+          'The financial case is equally compelling. A meal-deal lunch at a UK supermarket or café costs £5–7. A batch-cooked equivalent (chicken rice bowl, pasta salad, wrap) costs £1.20–1.80. For five lunches per week, that is a saving of £15–25 — over £1,000 per year. Factor in avoided takeaways and the savings compound further.',
+        ],
+      },
+      {
+        h2: 'What You Need Before You Start',
+        paragraphs: [
+          'Equipment: a large baking tray, a large saucepan or rice cooker, a frying pan, a sharp knife, a chopping board, and 5 × 1-litre sealable containers. Glass containers (available on Amazon for £15–20 for a 5-pack) last for years and go in the dishwasher and microwave. If you are new to meal prep, plastic containers (£8–12 at Ikea or Tesco) work fine to start.',
+          'Ingredients for this session: 1 kg frozen chicken breast (Aldi, ~£3.49), 500 g brown rice (Aldi, ~£0.89), 1 kg mixed frozen vegetables (Aldi, ~£0.95), 2 × 400 g tins chickpeas (Aldi, ~£1.10), 2 × 400 g tins tomatoes (Aldi, ~£0.70), 200 g baby spinach (Tesco, ~£1.00), 1 bulb garlic (£0.45), olive oil spray (£1.75). Total: approximately £10–12.',
+        ],
+      },
+      {
+        h2: 'The 2-Hour Batch Cook: Step by Step',
+        paragraphs: [
+          'Follow this sequence to have five complete meals ready with the minimum active cooking time:',
+        ],
+        numbered: [
+          '0:00 — Start the rice. Add 500 g brown rice to a large saucepan with 1 litre of water. Bring to the boil, reduce to a simmer, cover. Brown rice takes 25–30 minutes.',
+          '0:05 — Season the chicken. Remove 1 kg frozen chicken breast from packaging (or use fresh). Toss in olive oil spray, garlic powder, salt, pepper, and dried mixed herbs. Spread across a large baking tray.',
+          '0:10 — Put the chicken in the oven. Bake at 200°C (fan 180°C) for 25–30 minutes (fresh) or 35–40 minutes (from frozen). Chicken is cooked when internal temperature reaches 75°C.',
+          '0:15 — Prepare the chickpea and tomato sauce. Fry 3 crushed garlic cloves in olive oil spray. Add the chickpeas (drained), tinned tomatoes, salt, pepper, and a teaspoon of cumin. Simmer for 15–20 minutes. This makes 5 portions of a protein-rich tomato sauce.',
+          '0:35 — Check the rice. Stir, add water if needed, replace lid.',
+          '0:40 — Check the chicken (should be cooked). Remove from oven and rest for 5 minutes, then slice into portions.',
+          '0:50 — Cook the frozen veg. Microwave or steam 1 kg frozen mixed vegetables for 5 minutes.',
+          '1:00 — Portion everything. Into each of 5 containers: a portion of brown rice, a portion of sliced chicken, a portion of roasted veg, and a ladle of chickpea sauce. Seal and refrigerate.',
+          '1:20 — Prepare a snack batch (optional). Prepare 5 overnight oat jars: 60 g oats + 150 ml skimmed milk + 100 g Greek yogurt + frozen berries. Seal and refrigerate.',
+          '1:30 — Done. Clean up. Total active cooking time: approximately 45 minutes.',
+        ],
+      },
+      {
+        h2: 'Storage and Food Safety',
+        paragraphs: [
+          'Properly stored in sealed containers at or below 5°C, the meals above last 4–5 days. Sunday cook covers Monday through Friday — a full working week. Cool food to room temperature before sealing and refrigerating (no longer than 1 hour out of the oven or hob). Do not refrigerate food that is still steaming — this raises the internal fridge temperature and risks other food.',
+          'Freeze what you will not eat by Thursday. Cooked chicken and rice freeze well — portion into individual containers and freeze on Sunday for use later in the week or the following week. Defrost in the fridge overnight.',
+        ],
+      },
+      {
+        h2: 'Scaling Up: Advanced Batch Cooking',
+        paragraphs: [
+          'Once you are comfortable with a basic batch cook, scale up by adding a second protein (a batch of salmon or turkey mince), preparing soups or stews that freeze well, or making overnight oats for breakfast. A three-hour Sunday session can prepare all breakfasts, lunches, dinners, and snacks for the entire week, reducing daily cooking time to near zero.',
+          'Use our free meal plan generator to get a complete week of meals with a structured shopping list tailored to your calorie target and preferred UK supermarket.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
+      { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
+      { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'aldi-1800-calorie-meal-plan', label: 'Aldi 1800 Calorie Meal Plan', type: 'meal-plan' },
+    ],
+  },
+
+  'intermittent-fasting-meal-plan-uk': {
+    title: 'Intermittent Fasting Meal Plan UK: 16:8 Guide & Food Ideas (2025)',
+    description: 'Intermittent fasting meal plan UK — how to do 16:8 IF, what to eat during your eating window, and whether it actually works for weight loss. Generate a free IF-compatible meal plan.',
+    h1: 'Intermittent Fasting Meal Plan UK: 16:8 Guide and What to Eat',
+    intro: 'Intermittent fasting (IF) has become one of the most popular dietary approaches in the UK, with 16:8 (16 hours fasting, 8 hours eating) being the most widely used protocol. The research on its effectiveness for weight loss is solid — but largely because it is a convenient way to create a calorie deficit, not because fasting has unique metabolic benefits beyond what a calorie deficit achieves. This guide explains 16:8 practically for UK adults, including what to eat, when to eat, and how to combine it with meal prep.',
+    sections: [
+      {
+        h2: 'What is Intermittent Fasting and Does It Work?',
+        paragraphs: [
+          'Intermittent fasting is not a diet in the traditional sense — it is an eating pattern that restricts food consumption to a defined window each day. The 16:8 protocol means eating all your meals within an 8-hour window (typically 12 noon to 8 pm) and fasting for the remaining 16 hours.',
+          'The evidence on IF for weight loss is positive but nuanced. Multiple meta-analyses find that IF produces similar weight loss to continuous calorie restriction when total calories are matched — meaning the fasting itself is not metabolically superior to a standard calorie deficit. What it does do well is make calorie restriction easier for many people by reducing the number of eating occasions and eliminating late-night snacking.',
+          'For some people, skipping breakfast and eating only from midday onwards naturally reduces total daily calorie intake without conscious tracking. For others, delaying eating until noon simply makes them ravenous and leads to larger meals. IF works best for those who are not hungry in the mornings and tend to overeat in the evenings.',
+        ],
+      },
+      {
+        h2: 'Getting Started with 16:8',
+        paragraphs: [
+          'The most common 16:8 schedule for UK adults working standard hours: fast from 8 pm the previous evening until 12 noon; eat between 12 noon and 8 pm; fast from 8 pm onwards. This means skipping breakfast and having your first meal of the day at lunchtime.',
+          'The first 1–2 weeks can involve significant morning hunger as your body adjusts. Black coffee (no milk or sugar), black tea, and water are all permitted during the fasting window and help suppress hunger. After 2–3 weeks, most people find morning hunger diminishes as circadian hunger hormones adapt to the new pattern.',
+          'If you train in the mornings, eating before exercise is generally better for performance. A modified 14:10 protocol (10-hour eating window) may be more appropriate for morning trainers — eating from 8 am to 6 pm rather than skipping breakfast entirely.',
+        ],
+      },
+      {
+        h2: 'What to Eat During the Eating Window',
+        paragraphs: [
+          'Having an 8-hour eating window does not give permission to eat anything in unlimited quantities — total calorie intake still determines weight loss. The most effective approach is to plan two or three well-structured meals within the window rather than grazing continuously.',
+          'A typical 16:8 day at 1,600 kcal: Meal 1 at noon — large high-protein lunch (500–600 kcal, 40–50 g protein): chicken rice bowl, tuna salad, or egg-based dish. Snack at 3 pm — Greek yogurt with berries or nuts (150–200 kcal, 15–20 g protein). Dinner at 7 pm — high-protein dinner (700–800 kcal, 50–60 g protein): salmon with vegetables and brown rice, or chicken and lentil curry.',
+        ],
+      },
+      {
+        h2: '16:8 Meal Prep Strategy',
+        paragraphs: [
+          'Intermittent fasting pairs very naturally with meal prep because you have fewer meals to prepare. Batch cooking Sunday lunches and dinners covers both meals for the week, with a simple snack bridging the gap.',
+          'Effective batch-cook plan for 16:8: cook a large protein base (chicken breast, salmon, or turkey mince), a grain (brown rice or quinoa), and roasted vegetables. Portion into 10 containers — 5 lunches and 5 dinners. This takes 1.5–2 hours on Sunday and eliminates all cooking decisions for the week.',
+        ],
+      },
+      {
+        h2: 'Is 16:8 Right for You?',
+        paragraphs: [
+          'Intermittent fasting is a useful tool but not a magic solution. It tends to work well for: people who are not hungry in the morning; those who overeat in the evening and need a hard stop; people who find constant calorie tracking difficult and prefer a time-based rule; and those who already eat most of their calories in the afternoon and evening.',
+          'It is less appropriate for: people with a history of disordered eating; those who train hard in the morning and need pre-workout fuel; pregnant or breastfeeding women; and people who experience significant morning hunger and find skipping breakfast increases rather than decreases their total intake.',
+          'Whether you fast or not, total daily calories and protein intake remain the primary determinants of weight loss and body composition. Use our free meal plan generator to build a calorie-controlled plan — the meal timings can be adjusted to suit a 16:8 schedule.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit', type: 'blog' },
+      { slug: '1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories', type: 'blog' },
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+    ],
+  },
+
+  'sainsburys-meal-prep-uk': {
+    title: "Sainsbury's Meal Prep UK: Best Own-Brand Picks & Weekly Plan",
+    description: "Sainsbury's meal prep UK — best own-brand protein, vegetables, and staples for high-protein calorie-controlled eating. Prices, calorie counts, and a full weekly plan. Generate a free plan.",
+    h1: "Sainsbury's Meal Prep: Best Products and Weekly Plan",
+    intro: "Sainsbury's is the UK's second-largest supermarket and a strong choice for meal preppers who value quality and range over the absolute lowest price. The own-brand Taste the Difference range offers restaurant-quality ingredients, while the standard Sainsbury's own label competes well on price for everyday staples. This guide covers the best Sainsbury's products for high-protein, calorie-controlled meal prep — with prices, calorie counts, and a complete weekly plan.",
+    sections: [
+      {
+        h2: "Why Choose Sainsbury's for Meal Prep?",
+        paragraphs: [
+          "Sainsbury's offers a wider range of fresh fish, lean proteins, and specialist health foods than most budget supermarkets. The Nectar loyalty scheme provides meaningful discounts for regular shoppers, and the online shopping service is one of the most reliable in the UK — with same-day or next-day delivery options.",
+          "For meal preppers, Sainsbury's particular strengths are: a broad range of fresh and smoked fish (including fresh salmon, cod, sea bass, and trout at competitive prices with Nectar discounts); an excellent range of high-protein yogurts and dairy alternatives; and a good selection of organic and free-range options for those who prioritise food quality.",
+        ],
+      },
+      {
+        h2: "Best Sainsbury's Products for Meal Prep",
+        paragraphs: [
+          "These Sainsbury's own-brand products offer the best value for high-protein, calorie-controlled eating:",
+        ],
+        bullets: [
+          "Sainsbury's British Chicken Breast Fillets (1 kg) — ~£5.50 (Nectar). ~165 kcal and 31 g protein per 100 g. Look for Nectar Price deals that bring this to £4–4.50.",
+          "Sainsbury's Low Fat Greek Style Yogurt (500 g) — ~£1.25. 10 g protein per 100 g, ~57 kcal. Excellent for breakfasts and snacks.",
+          "Sainsbury's Tinned Tuna in Spring Water (4 × 145 g) — ~£2.75. 25 g protein per 100 g. Reliable quality and widely available.",
+          "Sainsbury's Free Range Eggs (12 large) — ~£3.00. 6.3 g protein per egg. Frequently on Nectar deal.",
+          "Sainsbury's Salmon Fillets (2 × 130 g, fresh) — ~£3.80 (Nectar). Rich in omega-3; frequently discounted.",
+          "Sainsbury's Low Fat Cottage Cheese (300 g) — ~£1.10. 12 g protein per 100 g, ~80 kcal.",
+          "Sainsbury's Frozen Broccoli (900 g) — ~£1.00. 34 kcal per 100 g — bulk up any meal.",
+          "Sainsbury's Rolled Oats (1 kg) — ~£0.95. ~370 kcal per 100 g dry; 50 g portion is very filling.",
+          "Sainsbury's Easy Cook Brown Rice (1 kg) — ~£1.35. Lower GI than white rice; fills you up.",
+          "Sainsbury's Wholemeal Sliced Bread (800 g) — ~£1.20. ~95 kcal and 3.5 g fibre per slice.",
+        ],
+      },
+      {
+        h2: "Sample Sainsbury's Weekly Meal Prep Budget",
+        paragraphs: [
+          "A full week of high-protein meal prep for one person using Sainsbury's own-brand products: 1 kg chicken breast + 12 eggs + 500 g Greek yogurt + 4 × tuna tins + 1 kg oats + 1 kg brown rice + 900 g frozen broccoli + 200 g spinach + 300 g cottage cheese + 500 g wholemeal bread = approximately £22–28 without Nectar, or £18–24 with Nectar prices.",
+          "Adding salmon (2 × 130 g, ~£3.80) and a pack of lean turkey mince (500 g, ~£3.20) for dinner variety brings the total to £27–36 — significantly more expensive than Aldi but within reach for shoppers who value range and quality.",
+        ],
+      },
+      {
+        h2: "Getting the Most from Sainsbury's for Meal Prep",
+        paragraphs: [
+          "Always check Nectar Prices before shopping. Sainsbury's runs personalised Nectar offers based on purchase history, so frequent meal prep shoppers often receive meaningful discounts on chicken, salmon, eggs, and dairy. Download the Sainsbury's app to see your personalised offers before building your shopping list.",
+          "Check the reduced-to-clear section. Sainsbury's marks down fresh meat and fish daily — usually in the morning and after 5 pm. Fresh salmon, chicken breast, and fresh fish fillets are frequently reduced by 30–50% and can be frozen immediately.",
+          "Use our free meal plan generator and select Sainsbury's as your supermarket to receive a complete 7-day plan with ingredients tailored to what's available at Sainsbury's.",
+        ],
+      },
+    ],
+    related: [
+      { slug: 'tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List', type: 'blog' },
+      { slug: 'cheapest-uk-supermarket-meal-prep', label: 'Cheapest UK Supermarket for Meal Prep', type: 'blog' },
+      { slug: 'aldi-vs-tesco-meal-prep', label: 'Aldi vs Tesco for Meal Prep', type: 'blog' },
+      { slug: 'sainsburys-weight-loss-1800', label: "Sainsbury's Weight Loss Meal Plan", type: 'meal-plan' },
+    ],
+  },
+
+  'asda-meal-prep-uk': {
+    title: 'Asda Meal Prep UK: Best Budget Picks for High-Protein Eating',
+    description: 'Asda meal prep UK — best own-brand protein, frozen veg, and staples for calorie-controlled eating. Prices, calorie counts, and a weekly plan. Generate a free Asda meal plan.',
+    h1: 'Asda Meal Prep UK: Best Products and Budget Weekly Plan',
+    intro: "Asda is one of the UK's best value supermarkets for meal prep, competing closely with Aldi and Lidl on everyday staples while offering a broader range and a full online delivery service. The Asda own-brand range is consistently well-priced on the core meal prep foods — chicken, eggs, oats, frozen vegetables, and tinned fish — making it an excellent choice for budget-conscious meal preppers who want more flexibility than the discount supermarkets offer.",
+    sections: [
+      {
+        h2: "Why Asda is a Strong Choice for Meal Prep",
+        paragraphs: [
+          "Asda's price positioning sits between Aldi/Lidl and Tesco/Sainsbury's — typically 10–20% cheaper than Tesco on own-brand staples, and within 5–15% of Aldi on most items. The Asda Rewards loyalty scheme adds further savings, and the full online grocery service (with same-day delivery in many areas) is more reliable than Aldi's limited click-and-collect service.",
+          "For meal preppers, Asda's particular strengths are: competitive pricing on frozen protein; a good range of frozen fish and ready-to-cook chicken formats; a wide selection of frozen vegetables and fruits; and one of the best own-brand protein yogurt ranges in UK retail.",
+        ],
+      },
+      {
+        h2: "Best Asda Own-Brand Products for Meal Prep",
+        paragraphs: [
+          "These Asda own-brand products provide the best value for high-protein, calorie-controlled meal prep:",
+        ],
+        bullets: [
+          "Asda Butcher's Selection Chicken Breast Fillets (1 kg) — ~£4.50. ~165 kcal and 31 g protein per 100 g.",
+          "Asda Frozen Chicken Breast Fillets (1 kg) — ~£3.50. Nutritionally identical to fresh; defrost overnight in the fridge.",
+          "Asda Free Range Eggs (12 large) — ~£2.75–3.00. Frequently on Rollback deals.",
+          "Asda Chosen By You Fat Free Greek Style Yogurt (500 g) — ~£1.10. 10 g protein per 100 g.",
+          "Asda Tinned Tuna in Spring Water (3 × 200 g) — ~£2.40. Great value multipack.",
+          "Asda Extra Special Salmon Fillets (2 × 130 g) — ~£3.30. Very competitive price for fresh salmon.",
+          "Asda Low Fat Cottage Cheese (300 g) — ~£1.00. A strong budget snack option.",
+          "Asda Frozen Broccoli Florets (1 kg) — ~£0.90. Cheap bulk vegetable for every dinner.",
+          "Asda Good & Balanced Rolled Oats (1 kg) — ~£0.80. Excellent price for a premium brand.",
+          "Asda Wholegrain Brown Rice (1 kg) — ~£1.00. Standard meal prep carb base.",
+          "Asda Smart Price Tinned Tomatoes (4 × 400 g) — ~£1.00. The cheapest in UK supermarkets.",
+        ],
+      },
+      {
+        h2: "Sample Asda Meal Prep Week Under £28",
+        paragraphs: [
+          "A one-person, one-week high-protein meal prep basket at Asda: 1 kg frozen chicken (£3.50) + 12 eggs (£2.75) + 500 g Greek yogurt (£1.10) + 3 × 200 g tuna (£2.40) + 1 kg oats (£0.80) + 1 kg brown rice (£1.00) + 1 kg frozen broccoli (£0.90) + 300 g cottage cheese (£1.00) + 4 × tinned tomatoes (£1.00) + 200 g spinach (£0.90) + 800 g wholemeal bread (£0.95) + garlic (£0.45) + olive oil spray (£1.75) = approximately £19–24.",
+          "Adding fresh salmon (£3.30) and turkey mince (£3.00) for dinner variety brings the total to £25–30 — strong value compared to Tesco and competitive with Aldi for a similar quality basket. With Asda Rewards cashback applied over time, the effective weekly cost drops further.",
+        ],
+      },
+      {
+        h2: "Asda vs Aldi for Meal Prep: Which Wins?",
+        paragraphs: [
+          "Aldi wins on raw price — particularly on chicken breast, oats, rice, and tinned tuna where the gap is 10–25%. But Asda offers a full online delivery service, a broader product range, and a loyalty scheme that narrows the gap for regular shoppers. For shoppers who cannot easily visit Aldi or prefer to shop online, Asda represents the best budget-to-range trade-off of the big four supermarkets.",
+          "Use our free meal plan generator and select Asda as your supermarket for a complete 7-day plan with ingredients and estimated weekly cost.",
+        ],
+      },
+    ],
+    related: [
+      { slug: 'asda-weight-loss-1800', label: 'Asda Weight Loss Meal Plan', type: 'meal-plan' },
+      { slug: 'cheapest-uk-supermarket-meal-prep', label: 'Cheapest UK Supermarket for Meal Prep', type: 'blog' },
+      { slug: 'aldi-vs-tesco-meal-prep', label: 'Aldi vs Tesco for Meal Prep', type: 'blog' },
+      { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
+    ],
+  },
+
+  'high-protein-snacks-uk': {
+    title: 'Best High Protein Snacks UK: 15 Quick Options (20g+ Protein)',
+    description: 'Best high protein snacks UK — 15 quick, convenient options delivering 20g+ protein per serving using Tesco, Aldi, and Asda products. With calorie counts and prices.',
+    h1: 'Best High Protein Snacks UK: 15 Options with 20g+ Protein',
+    intro: 'High-protein snacks are one of the most effective tools for hitting daily protein targets without adding excessive calories. They reduce hunger between meals, preserve muscle during a calorie deficit, and make the difference between a 120 g and 150 g protein day for many people. These 15 options each deliver at least 20 g of protein per serving and are available at UK supermarkets — no specialist health food shops required.',
+    sections: [
+      {
+        h2: 'Why High-Protein Snacks Matter',
+        paragraphs: [
+          'Many people hit their protein targets at breakfast and dinner but fall short at lunch and especially between meals. The typical UK snack — biscuits, crisps, cereal bars — provides 100–300 calories with 2–5 g of protein. Switching to high-protein alternatives adds 20–30 g of protein per snack occasion without significantly increasing calorie intake.',
+          'For someone targeting 150 g of protein per day, two high-protein snacks (40–50 g combined) can make the difference between consistently hitting or missing the target — directly affecting muscle retention, satiety, and fat loss efficiency.',
+        ],
+      },
+      {
+        h2: 'The 15 Best High Protein Snacks Available in the UK',
+        paragraphs: [
+          'All options below are widely available from UK supermarkets or online. Protein and calorie figures are approximate.',
+        ],
+        table: {
+          headers: ['Snack', 'Protein', 'Calories', 'Approx Cost'],
+          rows: [
+            ['200 g 0% Greek yogurt + 1 scoop whey', '43 g', '250 kcal', '~£0.80'],
+            ['1 tin tuna (145 g, drained) + oatcakes (3)', '30 g', '230 kcal', '~£1.00'],
+            ['200 g low-fat cottage cheese', '24 g', '160 kcal', '~£0.70'],
+            ['3 boiled eggs', '19 g', '210 kcal', '~£0.60'],
+            ['150 g smoked salmon', '30 g', '195 kcal', '~£2.00'],
+            ['1 scoop whey protein in 300 ml milk', '35 g', '280 kcal', '~£0.80'],
+            ['200 g Arla Protein yogurt (or similar)', '20 g', '120 kcal', '~£1.20'],
+            ['100 g edamame + 100 g cottage cheese', '22 g', '185 kcal', '~£1.00'],
+            ['2 × Babybel + 2 boiled eggs', '21 g', '290 kcal', '~£1.00'],
+            ['200 g cooked turkey slices (deli)', '28 g', '190 kcal', '~£1.50'],
+            ['150 g tinned sardines (with bones)', '25 g', '225 kcal', '~£0.80'],
+            ['200 g skyr yogurt', '22 g', '130 kcal', '~£1.00'],
+            ['30 g hemp seeds + 200 g Greek yogurt', '29 g', '250 kcal', '~£0.90'],
+            ['Protein bar (e.g. Grenade, PhD)', '20–25 g', '200–280 kcal', '£1.50–2.50'],
+            ['100 g cooked chicken breast + cucumber', '31 g', '185 kcal', '~£0.80'],
+          ],
+        },
+      },
+      {
+        h2: 'Best High-Protein Snacks by Scenario',
+        paragraphs: [
+          'For maximum protein per calorie: Greek yogurt with whey (43 g protein per 250 kcal) and tinned tuna (25 g per 100 kcal) are unmatched. Both are significantly cheaper per gram of protein than any commercial protein bar.',
+          'For convenience and portability (no refrigeration needed): protein bars are the most practical solution when travelling or at the office without fridge access. Buy in bulk online (Grenade, PhD, MyProtein) for £1–1.50 per bar rather than paying £2.50+ in-store.',
+          'For budget-conscious shoppers: tinned sardines (~80p per tin), boiled eggs (~£0.60 for 3), and cottage cheese (~£0.70 per 200 g serving) provide the best protein per pound spent.',
+        ],
+      },
+      {
+        h2: 'Protein Bars vs Whole Food Snacks: Which Is Better?',
+        paragraphs: [
+          'Protein bars are convenient but expensive relative to whole food alternatives. A Grenade protein bar costs £2–2.50 and delivers 20–25 g of protein. 200 g of 0% Greek yogurt with a scoop of whey protein costs around 80p–£1.00 and delivers 35–45 g of protein. The whole food option is consistently cheaper and provides more protein per pound spent.',
+          'The case for protein bars is convenience: they require no preparation, no refrigeration, and travel well. For most people, the best approach is to use whole food snacks at home and work (where a fridge is available), and reserve protein bars for travel, post-gym away from home, or situations where nothing else is available.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'low-calorie-snacks-uk', label: 'Low Calorie Snacks UK', type: 'blog' },
+      { slug: 'best-cheap-high-protein-foods-uk', label: 'Cheap High Protein Foods UK', type: 'blog' },
+      { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
+      { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
+    ],
+  },
+
+  'meal-prep-containers-uk': {
+    title: 'Best Meal Prep Containers UK: Glass vs Plastic (2025 Guide)',
+    description: 'Best meal prep containers UK 2025 — glass vs plastic, what size to buy, which brands are worth it, and where to get them cheap. Full guide for UK meal preppers.',
+    h1: 'Best Meal Prep Containers UK: Glass vs Plastic and What to Buy',
+    intro: 'The right containers make meal prep dramatically more practical — they need to stack neatly, seal airtight, survive the microwave and dishwasher, and keep food fresh for 5 days. The wrong ones warp, stain, leak, or stop sealing after a few uses. This guide covers everything UK meal preppers need to know: the glass versus plastic debate, what sizes to buy, and where to get the best value in 2025.',
+    sections: [
+      {
+        h2: 'Glass vs Plastic Meal Prep Containers',
+        paragraphs: [
+          'The choice between glass and plastic comes down to priorities: glass is more durable, does not stain or absorb odours, and is generally safer for reheating (no plastic leaching risk). Plastic is lighter, cheaper, and less likely to break if dropped.',
+        ],
+        bullets: [
+          'Glass advantages: does not stain from tomato sauce, curries, or berries; does not absorb food odours over time; microwave-safe (without the lid, in most cases); oven-safe in many cases; lasts indefinitely if not dropped; does not leach chemicals into food.',
+          'Glass disadvantages: heavier (important if you carry containers to work); more expensive upfront; breaks if dropped; takes longer to cool after cooking.',
+          'Plastic advantages: lightweight, cheap (£8–15 for a 5-pack), will not break if dropped; easier to take on commutes.',
+          'Plastic disadvantages: stains permanently from tomato-based sauces; absorbs odours after repeated use; can warp in the microwave on high settings; older plastic (BPA-containing) is being replaced by BPA-free alternatives but some consumers prefer to avoid entirely.',
+          'Verdict for long-term meal preppers: glass is almost always the better investment. A set of glass containers lasts years and provides a better eating experience. Start with plastic to test meal prep before upgrading.',
+        ],
+      },
+      {
+        h2: 'What Sizes to Buy',
+        paragraphs: [
+          'Different container sizes suit different meal prep purposes:',
+        ],
+        bullets: [
+          '1-litre rectangular containers (most important): the standard for a complete lunch or dinner. Should hold a protein portion (150–200 g chicken), a carb portion (150–200 g cooked rice or pasta), and a vegetable portion comfortably. Buy at least 5 — one per weekday lunch.',
+          '500–700 ml containers: suitable for single-component meal prep (just cooked chicken, just cooked rice) or smaller meals. Also good for soups and stews.',
+          '300–400 ml containers: ideal for snacks, sauces, dips, and overnight oats. A 400 ml jar with a lid works well for Greek yogurt bowls and overnight oats.',
+          '1.5–2 litre containers: useful for batch soups, curries, and stews that you portion throughout the week. Not needed for individual portioned meal prep.',
+        ],
+      },
+      {
+        h2: 'Where to Buy Meal Prep Containers in the UK',
+        paragraphs: [
+          'The best value meal prep containers in the UK:',
+        ],
+        bullets: [
+          'Amazon: the widest selection and most competitive prices. Search for "glass meal prep containers 1 litre" or "glass food storage containers UK". Sets of 5 × 1-litre glass containers cost £15–25 from reputable sellers. Ikea 365+ glass containers are highly rated.',
+          'Ikea (IKEA 365+ range): rectangular glass containers with bamboo lids, stack neatly, dishwasher and microwave safe. Available in store or online from ~£4 per container. The most popular choice among experienced UK meal preppers.',
+          'Tesco: sells own-brand plastic meal prep containers in a 5-pack for £6–8. Good starter option. Glass versions available but pricier at £15–20 for a 5-pack.',
+          'Wilko: excellent value plastic containers in various sizes. Check the food storage section in store.',
+          'Home Bargains / B&M: frequently stock multipacks of plastic or basic glass containers for £5–10. Worth checking if you have one nearby.',
+        ],
+      },
+      {
+        h2: 'Container Features to Look For',
+        paragraphs: [
+          'Airtight seal: the most important feature for keeping food fresh for 5 days. Test by filling with water and inverting — a good lid will not leak. Clip-lock lids or silicone seal rings provide the most reliable seal.',
+          'Microwave safe: essential for reheating at work. Most glass containers are microwave safe without the lid. Check the bottom of plastic containers for the microwave symbol (wavy lines). Remove metal clips or inserts before microwaving.',
+          'Stackable: particularly important for fridge storage. Rectangular containers stack far more efficiently than round ones — rectangular is always the better choice for meal prep.',
+          'Dishwasher safe: a non-negotiable for anyone doing consistent meal prep. Hand-washing 10 containers per week is time-consuming. All glass containers and most quality plastic containers are dishwasher safe.',
+        ],
+      },
+      {
+        h2: 'Recommended UK Meal Prep Container Starter Set',
+        paragraphs: [
+          'For a complete meal prep setup: 5 × 1-litre glass rectangular containers for lunches and dinners (£20–25 from Amazon or Ikea); 5 × 400 ml glass jars with lids for overnight oats and yogurt bowls (£10–15); 3 × 600 ml containers for snacks and sides (£8–12). Total investment: £35–50. This covers all meal prep storage needs for one person for years.',
+          'If on a tight budget, start with a £8 5-pack of plastic containers from Tesco or Wilko. Once you have established the habit, upgrade to glass at your own pace.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+      { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
+    ],
+  },
 };
