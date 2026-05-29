@@ -176,22 +176,25 @@ export default function PlanPage() {
 
           {/* Macro bars */}
           <div className="plan-macros">
-            <h3 className="plan-macros-title">Macro emphasis</h3>
+            <h3 className="plan-macros-title">Estimated daily macros</h3>
             <div className="macro-bars">
               {[
-                { key: 'protein', label: 'Protein' },
-                { key: 'carbs',   label: 'Carbs' },
-                { key: 'fats',    label: 'Fats' },
-                { key: 'fibre',   label: 'Fibre' },
-              ].map(({ key, label }) => (
-                <div className="macro-bar-row" key={key}>
-                  <span className="macro-bar-label">{label}</span>
-                  <div className="macro-bar-track">
-                    <div className="macro-bar-fill" style={{ width: `${plan.macros[key] || 50}%` }} />
+                { key: 'protein', label: 'Protein', max: 200 },
+                { key: 'carbs',   label: 'Carbs',   max: 300 },
+                { key: 'fats',    label: 'Fats',    max: 120 },
+                { key: 'fibre',   label: 'Fibre',   max: 50  },
+              ].map(({ key, label, max }) => {
+                const g = plan.macrosGrams?.[key] ?? 0;
+                return (
+                  <div className="macro-bar-row" key={key}>
+                    <span className="macro-bar-label">{label}</span>
+                    <div className="macro-bar-track">
+                      <div className="macro-bar-fill" style={{ width: `${Math.min(100, Math.round((g / max) * 100))}%` }} />
+                    </div>
+                    <span className="macro-bar-pct">{g}g</span>
                   </div>
-                  <span className="macro-bar-pct">{plan.macros[key] || 50}%</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

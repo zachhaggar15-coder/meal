@@ -45,6 +45,18 @@ export const MACRO_PROFILES = {
   'low-cal-swaps':  { protein: 70, carbs: 55, fats: 40, fibre: 60 },
 };
 
+// Estimated average daily gram targets per emphasis type — used for display only.
+// Quiz matching still uses MACRO_PROFILES (0–100 scale, cosine similarity).
+const MACRO_GRAMS = {
+  'lean-protein':   { protein: 160, carbs: 150, fats: 55, fibre: 30 },
+  'whole-food':     { protein: 100, carbs: 220, fats: 65, fibre: 42 },
+  'batch-cooking':  { protein: 130, carbs: 200, fats: 60, fibre: 35 },
+  'minimal-effort': { protein: 90,  carbs: 210, fats: 70, fibre: 25 },
+  'frozen-friendly':{ protein: 100, carbs: 225, fats: 70, fibre: 25 },
+  'high-variety':   { protein: 120, carbs: 190, fats: 65, fibre: 35 },
+  'low-cal-swaps':  { protein: 120, carbs: 160, fats: 50, fibre: 35 },
+};
+
 const GOAL_BEST_FOR = {
   'weight-loss': 'Anyone aiming for a sustainable calorie deficit',
   'high-protein-low-cal': 'Fat loss while preserving muscle mass',
@@ -286,6 +298,7 @@ export function buildPlan(seed) {
     effortLabel:   EFFORT_LABELS[seed.effort]  || seed.effort,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
+    macrosGrams:   MACRO_GRAMS[seed.emphasis]    || MACRO_GRAMS['lean-protein'],
 
     summary: {
       supermarkets:    seed.supermarket === 'any' ? 'Any UK supermarket' : cap(seed.supermarket),
