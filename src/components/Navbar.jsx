@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const PLANS = [
-  { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', tag: 'Popular' },
-  { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan', tag: '' },
-  { slug: '2000-calorie-meal-plan', label: '2000 Calorie Meal Plan', tag: '' },
-  { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan', tag: '' },
-  { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Meal Plan', tag: '' },
-  { slug: 'aldi-low-calorie-meal-plan', label: 'Aldi Meal Plan', tag: '' },
-  { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Plan', tag: '' },
-  { slug: 'vegan-low-calorie-meal-plan', label: 'Vegan Plan', tag: '' },
+const QUICK_PLANS = [
+  { to: '/plans/aldi-weight-loss-1500',        label: 'Aldi Weight Loss 1,500 kcal', tag: 'Popular' },
+  { to: '/plans/tesco-weight-loss-1800',       label: 'Tesco Weight Loss 1,800 kcal', tag: '' },
+  { to: '/plans/aldi-high-protein-low-cal-1500',label: 'High Protein Low Cal', tag: '' },
+  { to: '/plans/aldi-muscle-gain-2000',        label: 'Muscle Gain 2,000 kcal', tag: '' },
+  { to: '/plans/aldi-cheap-student-1800',      label: 'Cheap Student', tag: '' },
+  { to: '/plans/aldi-veg-low-cal-1500',        label: 'Vegetarian Low Cal', tag: '' },
+  { to: '/plans/aldi-vegan-low-cal-1500',      label: 'Vegan Low Cal', tag: '' },
+  { to: '/browse',                             label: 'All 250 plans →', tag: '' },
 ];
 
 export default function Navbar({ onMenuToggle }) {
@@ -18,9 +18,7 @@ export default function Navbar({ onMenuToggle }) {
 
   useEffect(() => {
     function close(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
+      if (menuRef.current && !menuRef.current.contains(e.target)) setOpen(false);
     }
     document.addEventListener('mousedown', close);
     return () => document.removeEventListener('mousedown', close);
@@ -34,6 +32,7 @@ export default function Navbar({ onMenuToggle }) {
         </button>
         <Link to="/" className="nav-brand">MealPrep.org.uk</Link>
         <div className="nav-right" ref={menuRef}>
+          <Link to="/quiz" className="nav-quiz-btn">Find My Plan</Link>
           <button
             className="nav-plans-btn"
             onClick={() => setOpen(o => !o)}
@@ -44,10 +43,10 @@ export default function Navbar({ onMenuToggle }) {
           </button>
           {open && (
             <div className="nav-dropdown" role="menu">
-              {PLANS.map(p => (
+              {QUICK_PLANS.map(p => (
                 <Link
-                  key={p.slug}
-                  to={`/meal-plan/${p.slug}`}
+                  key={p.to}
+                  to={p.to}
                   className="nav-dropdown-item"
                   role="menuitem"
                   onClick={() => setOpen(false)}

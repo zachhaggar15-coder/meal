@@ -3,80 +3,69 @@ import { Link, useLocation } from 'react-router-dom';
 
 const NAV = [
   {
-    label: 'Calorie Targets',
+    label: 'By Goal',
     items: [
-      { to: '/meal-plan/1500-calorie-meal-plan', label: '1500 Calorie' },
-      { to: '/meal-plan/1800-calorie-meal-plan', label: '1800 Calorie' },
-      { to: '/meal-plan/2000-calorie-meal-plan', label: '2000 Calorie' },
-      { to: '/meal-plan/2500-calorie-meal-plan', label: '2500 Calorie' },
+      { to: '/plans/aldi-weight-loss-1500',           label: 'Weight Loss' },
+      { to: '/plans/aldi-budget-fat-loss-1500',        label: 'Budget Fat Loss' },
+      { to: '/plans/aldi-high-protein-low-cal-1500',   label: 'High Protein Low Cal' },
+      { to: '/plans/aldi-muscle-gain-2000',            label: 'Muscle Gain' },
+      { to: '/plans/aldi-gym-beginner-1800',           label: 'Gym Beginner' },
+      { to: '/plans/aldi-budget-bodybuilding-2000',    label: 'Budget Bodybuilding' },
+      { to: '/plans/aldi-cheap-student-1800',          label: 'Cheap Student' },
+      { to: '/plans/aldi-cheap-hp-1800',               label: 'Cheap High Protein' },
+      { to: '/plans/aldi-low-effort-1800',             label: 'Low Effort' },
+      { to: '/plans/aldi-busy-professional-1800',      label: 'Busy Professional' },
     ],
   },
   {
     label: 'By Supermarket',
     items: [
-      { to: '/meal-plan/aldi-low-calorie-meal-plan', label: 'Aldi – Low Calorie' },
-      { to: '/meal-plan/aldi-1800-calorie-meal-plan', label: 'Aldi – 1800 Calorie' },
-      { to: '/meal-plan/aldi-high-protein-meal-plan', label: 'Aldi – High Protein' },
-      { to: '/meal-plan/asda-1500-calorie-meal-plan', label: 'Asda – 1500 Calorie' },
-      { to: '/meal-plan/asda-1800-calorie-meal-plan', label: 'Asda – 1800 Calorie' },
-      { to: '/meal-plan/iceland-budget-meal-plan', label: 'Iceland – Budget' },
-      { to: '/meal-plan/lidl-1800-calorie-meal-plan', label: 'Lidl – 1800 Calorie' },
-      { to: '/meal-plan/morrisons-low-calorie-meal-plan', label: 'Morrisons – Low Cal' },
-      { to: '/meal-plan/morrisons-1800-calorie-meal-plan', label: 'Morrisons – 1800 Cal' },
-      { to: '/meal-plan/sainsburys-low-calorie-meal-plan', label: "Sainsbury's – Low Cal" },
-      { to: '/meal-plan/sainsburys-1800-calorie-meal-plan', label: "Sainsbury's – 1800 Cal" },
-      { to: '/meal-plan/tesco-low-calorie-meal-plan', label: 'Tesco – Low Calorie' },
-      { to: '/meal-plan/tesco-1800-calorie-meal-plan', label: 'Tesco – 1800 Calorie' },
-      { to: '/meal-plan/tesco-high-protein-meal-plan', label: 'Tesco – High Protein' },
+      { to: '/plans/aldi-weight-loss-1800',            label: 'Aldi' },
+      { to: '/plans/lidl-weight-loss-1800',            label: 'Lidl' },
+      { to: '/plans/tesco-weight-loss-1800',           label: 'Tesco' },
+      { to: '/plans/asda-weight-loss-1800',            label: 'Asda' },
+      { to: '/plans/sainsburys-weight-loss-1800',      label: "Sainsbury's" },
+      { to: '/plans/morrisons-weight-loss-1800',       label: 'Morrisons' },
+      { to: '/plans/iceland-weight-loss-1800',         label: 'Iceland' },
     ],
   },
   {
-    label: 'By Goal',
+    label: 'By Calories',
     items: [
-      { to: '/meal-plan/high-protein-low-calorie-meal-plan', label: 'High Protein Low Cal' },
-      { to: '/meal-plan/budget-fat-loss-meal-plan-uk', label: 'Budget Fat Loss' },
-      { to: '/meal-plan/muscle-gain-meal-plan-uk', label: 'Muscle Gain' },
-      { to: '/meal-plan/gym-beginner-meal-plan-uk', label: 'Gym Beginner' },
-      { to: '/meal-plan/budget-bodybuilding-meal-plan-uk', label: 'Budget Bodybuilding' },
-      { to: '/meal-plan/cheap-student-meal-plan-uk', label: 'Cheap Student' },
-      { to: '/meal-plan/cheap-high-protein-meal-plan-uk', label: 'Cheap High Protein' },
-      { to: '/meal-plan/low-effort-meal-plan-uk', label: 'Low Effort' },
-      { to: '/meal-plan/busy-professional-meal-plan-uk', label: 'Busy Professional' },
+      { to: '/plans/any-weight-loss-1500',             label: '~1,500 kcal' },
+      { to: '/plans/any-weight-loss-1800',             label: '~1,800 kcal' },
+      { to: '/plans/any-muscle-gain-2000',             label: '~2,000 kcal' },
+      { to: '/plans/any-muscle-gain-2500',             label: '~2,500 kcal' },
     ],
   },
   {
     label: 'Diet Type',
     items: [
-      { to: '/meal-plan/vegetarian-low-calorie-meal-plan', label: 'Vegetarian Low Cal' },
-      { to: '/meal-plan/high-protein-vegetarian-meal-plan-uk', label: 'High Protein Vegetarian' },
-      { to: '/meal-plan/vegan-low-calorie-meal-plan', label: 'Vegan Low Calorie' },
+      { to: '/plans/aldi-veg-low-cal-1500',            label: 'Vegetarian Low Cal' },
+      { to: '/plans/aldi-hp-veg-1800',                 label: 'High Protein Vegetarian' },
+      { to: '/plans/aldi-vegan-low-cal-1500',          label: 'Vegan Low Calorie' },
+      { to: '/plans/aldi-pescatarian-1800',            label: 'Pescatarian' },
     ],
   },
   {
     label: 'Blog',
     items: [
-      { to: '/blog/how-to-lose-weight-fast-uk', label: 'How to Lose Weight Fast' },
-      { to: '/blog/how-to-build-a-calorie-deficit', label: 'Calorie Deficit Guide' },
-      { to: '/blog/how-many-calories-to-lose-weight', label: 'How Many Calories?' },
-      { to: '/blog/high-protein-breakfast-uk', label: 'High Protein Breakfast' },
-      { to: '/blog/high-protein-low-calorie-meals', label: 'High Protein Meals' },
-      { to: '/blog/how-much-protein-when-dieting', label: 'Protein When Dieting' },
-      { to: '/blog/meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners' },
-      { to: '/blog/how-to-meal-plan-for-weight-loss', label: 'Meal Plan for Weight Loss' },
-      { to: '/blog/best-low-calorie-foods-uk', label: 'Best Low Calorie Foods' },
-      { to: '/blog/best-cheap-high-protein-foods-uk', label: 'Cheap High Protein Foods' },
-      { to: '/blog/cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep List' },
-      { to: '/blog/tesco-low-calorie-shopping-list', label: 'Tesco Shopping List' },
-      { to: '/blog/aldi-vs-tesco-meal-prep', label: 'Aldi vs Tesco' },
-      { to: '/blog/cheapest-uk-supermarket-meal-prep', label: 'Cheapest Supermarket' },
-      { to: '/blog/1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Cal' },
+      { to: '/blog/how-to-lose-weight-fast-uk',        label: 'How to Lose Weight Fast' },
+      { to: '/blog/how-to-build-a-calorie-deficit',    label: 'Calorie Deficit Guide' },
+      { to: '/blog/how-many-calories-to-lose-weight',  label: 'How Many Calories?' },
+      { to: '/blog/high-protein-breakfast-uk',         label: 'High Protein Breakfast' },
+      { to: '/blog/high-protein-low-calorie-meals',    label: 'High Protein Meals' },
+      { to: '/blog/how-much-protein-when-dieting',     label: 'Protein When Dieting' },
+      { to: '/blog/meal-prep-for-beginners-uk',        label: 'Meal Prep for Beginners' },
+      { to: '/blog/best-cheap-high-protein-foods-uk',  label: 'Cheap High Protein Foods' },
+      { to: '/blog/aldi-vs-tesco-meal-prep',           label: 'Aldi vs Tesco' },
     ],
   },
 ];
 
 export default function Sidebar({ open, onClose }) {
   const location = useLocation();
-  const [expanded, setExpanded] = useState({ 'Calorie Targets': true });
+  const [expanded, setExpanded] = useState({ 'By Goal': true });
 
   function toggle(label) {
     setExpanded(prev => ({ ...prev, [label]: !prev[label] }));
@@ -91,10 +80,36 @@ export default function Sidebar({ open, onClose }) {
       {open && <div className="sidebar-backdrop" onClick={onClose} aria-hidden />}
       <nav className={`sidebar${open ? ' sidebar--open' : ''}`} aria-label="Site navigation">
         <div className="sidebar-inner">
-          <Link to="/" className={`sidebar-home${location.pathname === '/' ? ' sidebar-link--active' : ''}`} onClick={onClose}>
-            Generator
+
+          <Link
+            to="/quiz"
+            className="sidebar-quiz-cta"
+            onClick={onClose}
+          >
+            🎯 Find My Plan — Take the Quiz
           </Link>
-          <Link to="/stickers" className={`sidebar-top-link${location.pathname === '/stickers' ? ' sidebar-link--active' : ''}`} onClick={onClose}>
+
+          <Link
+            to="/browse"
+            className={`sidebar-top-link${location.pathname === '/browse' ? ' sidebar-link--active' : ''}`}
+            onClick={onClose}
+          >
+            Browse All 250 Plans
+          </Link>
+
+          <Link
+            to="/"
+            className={`sidebar-top-link${location.pathname === '/' ? ' sidebar-link--active' : ''}`}
+            onClick={onClose}
+          >
+            Home
+          </Link>
+
+          <Link
+            to="/stickers"
+            className={`sidebar-top-link${location.pathname === '/stickers' ? ' sidebar-link--active' : ''}`}
+            onClick={onClose}
+          >
             Meal Prep Containers
           </Link>
 
@@ -126,6 +141,7 @@ export default function Sidebar({ open, onClose }) {
               )}
             </div>
           ))}
+
         </div>
       </nav>
     </>
