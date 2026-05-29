@@ -80,13 +80,16 @@ export default function PlanPage() {
     const meal = displayPlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx];
 
     try {
-      const res = await fetch('/api/edit', {
+      const res = await fetch('/api/edit-meal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ meal, prompt: editPrompt }),
       });
 
-      if (!res.ok) throw new Error('Edit failed');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Edit failed');
+      }
       const data = await res.json();
 
       if (data.meal) {
