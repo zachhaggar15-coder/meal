@@ -26,10 +26,10 @@ export default function Navbar({ onMenuToggle }) {
 
   return (
     <nav className="site-nav" aria-label="Main navigation">
+      <button className="nav-menu-toggle" onClick={onMenuToggle} aria-label="Toggle navigation menu" type="button">
+        ☰
+      </button>
       <div className="nav-inner">
-        <button className="nav-menu-toggle" onClick={onMenuToggle} aria-label="Toggle navigation menu" type="button">
-          ☰
-        </button>
         <Link to="/" className="nav-brand">MealPrep.org.uk</Link>
         <div className="nav-right" ref={menuRef}>
           <Link to="/quiz" className="nav-quiz-btn">Find My Plan</Link>
