@@ -20,6 +20,17 @@ function ScrollToTop() {
   return null;
 }
 
+// Strip tracking query params from the homepage so Google indexes the clean URL
+function StripHomeParams() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (pathname === '/' && window.location.search) {
+      window.history.replaceState(null, '', '/');
+    }
+  }, [pathname]);
+  return null;
+}
+
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -27,6 +38,7 @@ export default function App() {
     <>
       <ClickTracking />
       <ScrollToTop />
+      <StripHomeParams />
       <Navbar onMenuToggle={() => setSidebarOpen(o => !o)} />
       <div className="layout-body">
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />

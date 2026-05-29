@@ -3,7 +3,8 @@ import { Helmet } from 'react-helmet-async';
 const DOMAIN = 'https://www.mealprep.org.uk';
 
 export default function SEO({ title, description, canonical, jsonLd, ogType = 'website', ogImage, twitterImage }) {
-  const url = `${DOMAIN}${canonical || '/'}`;
+  const cleanPath = (canonical || '/').split('?')[0].split('#')[0];
+  const url = `${DOMAIN}${cleanPath}`;
   const image = ogImage || `${DOMAIN}/og-preview.png`;
   const twitterImg = twitterImage || image;
 

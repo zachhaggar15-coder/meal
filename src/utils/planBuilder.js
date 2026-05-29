@@ -234,9 +234,15 @@ export function buildPlan(seed) {
   // Use mealSetIndex as a large prime-multiplied offset so sets diverge quickly
   const base = seed.mealSetIndex * 37;
 
+  // Pick 2 breakfasts for the whole week: primary (Mon–Fri) and secondary (Sat–Sun).
+  // This mirrors real UK meal-prep behaviour and keeps the week feeling coherent.
+  const bPrimary = pick(breakfasts, base);
+  let bSecondary = pick(breakfasts, base + 13);
+  if (bSecondary.id === bPrimary.id) bSecondary = pick(breakfasts, base + 7);
+
   const plan = DAYS.map((day, di) => {
     const s = base + di * 11;
-    const b = pick(breakfasts, s);
+    const b = di < 5 ? bPrimary : bSecondary; // Mon–Fri primary, Sat–Sun secondary
     const l = pick(lunches,    s + 3);
     const d = pick(dinners,    s + 7);
 
@@ -299,8 +305,11 @@ export function buildPlan(seed) {
 }
 
 function buildMealDesc(meal, seed) {
-  const dietAdj = seed.dietType === 'vegan' ? 'plant-based' : seed.dietType === 'vegetarian' ? 'meat-free' : 'protein-rich';
-  return `${meal.name} — a ${dietAdj} option suited to your ${GOAL_LABELS[seed.goal] || seed.goal} plan.`;
+  const mainIngs = (meal.ingredients || [])
+    .slice(0, 3)
+    .map(i => i.replace(/\s+\d[\d.]*.*$/i, '').toLowerCase())
+    .join(', ');
+  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${meal.cal} kcal, ${meal.pro}g protein.`;
 }
 
 // ── Lookups ───────────────────────────────────────────────────────────────────

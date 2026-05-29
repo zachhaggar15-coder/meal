@@ -244,8 +244,8 @@ export default function PlanPage() {
                     <span className="plan-meal-macros">{meal.kcal} kcal · {meal.protein}g protein · {meal.prep}</span>
                   </div>
                   <h4 className="plan-meal-name">{meal.name}</h4>
-                  {meal.portion_size && (
-                    <p className="plan-meal-portions">{meal.portion_size}</p>
+                  {meal.desc && (
+                    <p className="plan-meal-desc">{meal.desc}</p>
                   )}
 
                   {/* AI edit trigger */}

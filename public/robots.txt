@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /?from=
 
 Sitemap: https://www.mealprep.org.uk/sitemap.xml
