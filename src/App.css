@@ -2979,3 +2979,14 @@ details[open] .faq-question::after { content: '▴'; }
   .plan-bottom-ctas { flex-direction: column; }
   .quiz-results-actions { flex-direction: column; }
 }
+
+
+/* ---------- Blog index page ---------- */
+.blog-category-section { margin: 32px 0; }
+.blog-category-heading { font-size: 1.1rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 14px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+.blog-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.blog-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s, box-shadow 0.15s; }
+.blog-card:hover { border-color: #93c5fd; box-shadow: 0 2px 12px rgba(37, 99, 235, 0.10); }
+.blog-card-title { font-size: 0.95rem; font-weight: 700; color: var(--text); line-height: 1.4; margin: 0; }
+.blog-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin: 0; flex: 1; }
+.blog-card-cta { font-size: 0.8rem; font-weight: 600; color: var(--accent-dark); margin-top: 4px; }

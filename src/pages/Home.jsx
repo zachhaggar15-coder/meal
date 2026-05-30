@@ -17,7 +17,15 @@ const homeJsonLd = [
     '@type': 'WebSite',
     name: 'MealPrep.org.uk — UK Meal Plan Library',
     url: 'https://www.mealprep.org.uk',
-    description: 'Browse 250 free UK meal plans by goal, supermarket, calories, and diet. Take a 30-second quiz to find your perfect plan.',
+    description: 'Browse 300 free UK meal plans by goal, supermarket, calories, and diet. Take a 30-second quiz to find your perfect plan.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://www.mealprep.org.uk/browse?q={search_term_string}',
+      },
+      'query-input': 'required name=search_term_string',
+    },
   },
   {
     '@context': 'https://schema.org',

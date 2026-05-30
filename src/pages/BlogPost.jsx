@@ -20,9 +20,10 @@ export default function BlogPost() {
       '@type': 'Article',
       headline: data.h1,
       description: data.description,
-      datePublished: '2025-01-01',
-      dateModified: '2026-05-26',
-      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
+      datePublished: data.published || '2026-05-28',
+      dateModified: '2026-05-30',
+      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': `https://www.mealprep.org.uk/blog/${slug}`,
@@ -34,7 +35,7 @@ export default function BlogPost() {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk' },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.mealprep.org.uk/#popular-plans' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.mealprep.org.uk/blog' },
         { '@type': 'ListItem', position: 3, name: data.h1, item: `https://www.mealprep.org.uk/blog/${slug}` },
       ],
     },
@@ -156,7 +157,7 @@ export default function BlogPost() {
           <ul className="plan-links">
             {data.related.map(r => (
               <li key={r.slug}>
-                <Link to={`/${r.type === 'blog' ? 'blog' : 'meal-plan'}/${r.slug}`}>
+                <Link to={`/${r.type === 'blog' ? 'blog' : r.type === 'plan' ? 'plans' : 'meal-plan'}/${r.slug}`}>
                   {r.label}
                 </Link>
               </li>

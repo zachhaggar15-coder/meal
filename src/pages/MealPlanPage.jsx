@@ -49,9 +49,10 @@ export default function MealPlanPage() {
       '@type': 'Article',
       headline: data.h1,
       description: data.description,
-      datePublished: '2025-01-01',
-      dateModified: '2026-05-26',
-      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk' },
+      datePublished: data.published || '2026-05-28',
+      dateModified: '2026-05-30',
+      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': `https://www.mealprep.org.uk/meal-plan/${slug}`,

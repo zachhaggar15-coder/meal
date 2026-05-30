@@ -6,6 +6,7 @@ import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Home from './pages/Home.jsx';
 import MealPlanPage from './pages/MealPlanPage.jsx';
+import Blog from './pages/Blog.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import Stickers from './pages/Stickers.jsx';
 import Quiz from './pages/Quiz.jsx';
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="/plans/:slug" element={<PlanPage />} />
             <Route path="/browse" element={<BrowsePlans />} />
             <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/stickers" element={<Stickers />} />
             <Route path="*" element={<NotFound />} />

@@ -128,8 +128,8 @@ export default function BrowsePlans() {
   return (
     <>
       <SEO
-        title="Browse 250 UK Meal Plans — MealPrep.org.uk"
-        description="Browse 300 free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Find the right plan for weight loss, muscle gain, endurance, anti-inflammatory eating, and more."
+        title="Free UK Meal Plans 2026 — Search by Goal, Supermarket & Calories | MealPrep.org.uk"
+        description="Browse 300 free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Weight loss, muscle gain, vegan, vegetarian, anti-inflammatory and more — no sign-up needed."
         canonical="https://www.mealprep.org.uk/browse"
       />
 

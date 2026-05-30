@@ -159,11 +159,11 @@ function buildSeo(seed) {
   const diet = seed.dietType !== 'standard' ? ` ${cap(seed.dietType)}` : '';
 
   return {
-    title: `${seed.title} | Free UK Meal Plans — MealPrep.org.uk`,
-    description: `Free 7-day${diet} ${gl.toLowerCase()} meal plan for ${mkt} at ~${cal} kcal/day. Includes full shopping list, macros, swaps, and cost estimate.`,
+    title: `${seed.title} | MealPrep.org.uk`,
+    description: `Free 7-day${diet} ${gl.toLowerCase()} meal plan for ${mkt}. Targets ~${cal} kcal/day with a full shopping list, macro breakdown, and AI meal swaps — no sign-up needed.`,
     canonical: `https://www.mealprep.org.uk/plans/${seed.slug}`,
     ogTitle: seed.title,
-    ogDescription: `Complete 7-day${diet} ${gl.toLowerCase()} meal plan for ${mkt}. Shopping list, macros, and calorie targets included.`,
+    ogDescription: `Free 7-day${diet} ${gl.toLowerCase()} meal plan for ${mkt} at ~${cal} kcal/day. Full shopping list, macros, swaps included.`,
   };
 }
 

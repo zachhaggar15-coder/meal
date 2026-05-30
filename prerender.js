@@ -207,6 +207,7 @@ const ROUTES = [
   '/meal-plan/sainsburys-low-calorie-meal-plan',
   '/meal-plan/morrisons-low-calorie-meal-plan',
   '/stickers',
+  '/blog',
   // Blog posts
   '/blog/how-to-build-a-calorie-deficit',
   '/blog/best-low-calorie-foods-uk',
@@ -324,6 +325,7 @@ async function prerender() {
     urlEntry('/meal-plan/vegan-low-calorie-meal-plan', '0.7'),
     urlEntry('/meal-plan/sainsburys-low-calorie-meal-plan', '0.7'),
     urlEntry('/meal-plan/morrisons-low-calorie-meal-plan', '0.7'),
+    urlEntry('/blog', '0.8', 'weekly'),
     // Blog posts
     urlEntry('/blog/how-to-build-a-calorie-deficit', '0.7'),
     urlEntry('/blog/best-low-calorie-foods-uk', '0.7'),
