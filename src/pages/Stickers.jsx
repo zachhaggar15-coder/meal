@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
-import { MEAL_PREP_STICKERS } from '../data/offers.js';
+import { MEAL_PREP_STICKERS, BUDGET_CONTAINERS } from '../data/offers.js';
 
 const containerJsonLd = [
   {
@@ -104,27 +104,57 @@ export default function Stickers() {
           <li>Durable enough to last years — cheaper than disposable alternatives long-term.</li>
         </ul>
 
-        <div className="sticker-product-card">
-          <div className="sticker-product-card-inner">
-            <h2>BOROHOUSE 10-Pack Glass Storage Containers</h2>
-            <ul className="content-bullets">
-              <li>Borosilicate glass — oven, microwave, dishwasher, freezer, and fridge safe</li>
-              <li>Snap-lock airtight lids to keep portions fresh all week</li>
-              <li>10-pack covers breakfast, lunch, dinner, and snacks across a full meal prep week</li>
-              <li>Stackable design to keep your fridge and freezer tidy</li>
-            </ul>
-            <a
-              href={MEAL_PREP_STICKERS.href}
-              target="_blank"
-              rel="noopener noreferrer nofollow sponsored"
-              className="btn-primary"
-              data-event={MEAL_PREP_STICKERS.eventName}
-              data-source-page="stickers-product-card"
-              data-offer={MEAL_PREP_STICKERS.name}
-            >
-              View on Amazon &rarr;
-            </a>
-            <p className="sponsored-note">{MEAL_PREP_STICKERS.disclosure}</p>
+        <div className="product-comparison-grid">
+          {/* Premium glass option */}
+          <div className="sticker-product-card">
+            <div className="sticker-product-card-inner">
+              <span className="product-badge product-badge--premium">Glass · Premium</span>
+              <h2>BOROHOUSE 10-Pack Glass Storage Containers</h2>
+              <ul className="content-bullets">
+                <li>Borosilicate glass — oven, microwave, dishwasher, freezer, and fridge safe</li>
+                <li>Snap-lock airtight lids to keep portions fresh all week</li>
+                <li>10-pack covers a full week of breakfast, lunch, dinner, and snacks</li>
+                <li>Stackable design to keep your fridge and freezer tidy</li>
+              </ul>
+              <a
+                href={MEAL_PREP_STICKERS.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow sponsored"
+                className="btn-primary"
+                data-event={MEAL_PREP_STICKERS.eventName}
+                data-source-page="stickers-product-card"
+                data-offer={MEAL_PREP_STICKERS.name}
+              >
+                View on Amazon &rarr;
+              </a>
+              <p className="sponsored-note">{MEAL_PREP_STICKERS.disclosure}</p>
+            </div>
+          </div>
+
+          {/* Budget compartment option */}
+          <div className="sticker-product-card sticker-product-card--budget">
+            <div className="sticker-product-card-inner">
+              <span className="product-badge product-badge--budget">Plastic · Budget</span>
+              <h2>Compartment Meal Prep Containers</h2>
+              <ul className="content-bullets">
+                <li>Divided compartments keep proteins, carbs, and veg separate</li>
+                <li>Reusable and lightweight — easy to carry to work or the gym</li>
+                <li>Leak-resistant lids suitable for fridge and freezer storage</li>
+                <li>Great entry-level option if you are new to meal prep</li>
+              </ul>
+              <a
+                href={BUDGET_CONTAINERS.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow sponsored"
+                className="btn-secondary"
+                data-event={BUDGET_CONTAINERS.eventName}
+                data-source-page="stickers-product-card"
+                data-offer={BUDGET_CONTAINERS.name}
+              >
+                View on Amazon &rarr;
+              </a>
+              <p className="sponsored-note">{BUDGET_CONTAINERS.disclosure}</p>
+            </div>
           </div>
         </div>
 

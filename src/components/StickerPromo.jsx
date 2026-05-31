@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MEAL_PREP_STICKERS } from '../data/offers.js';
+import { MEAL_PREP_STICKERS, BUDGET_CONTAINERS } from '../data/offers.js';
 
 export default function StickerPromo({ sourcePage = 'unknown', compact = false }) {
   return (
@@ -50,6 +50,19 @@ export default function StickerPromo({ sourcePage = 'unknown', compact = false }
           <span>Stackable</span>
         </div>
         <p className="sponsored-note">{MEAL_PREP_STICKERS.disclosure}</p>
+        <p className="sticker-promo-budget-alt">
+          On a budget?{' '}
+          <a
+            href={BUDGET_CONTAINERS.href}
+            target="_blank"
+            rel="noopener noreferrer nofollow sponsored"
+            data-event={BUDGET_CONTAINERS.promoEventName}
+            data-source-page={sourcePage}
+            data-offer={BUDGET_CONTAINERS.name}
+          >
+            Cheaper compartment containers also available →
+          </a>
+        </p>
       </div>
     </aside>
   );

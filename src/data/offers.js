@@ -8,3 +8,13 @@ export const MEAL_PREP_STICKERS = {
   promoEventName: 'container_promo_click',
   disclosure: 'As an Amazon Associate I earn from qualifying purchases. #ad',
 };
+
+export const BUDGET_CONTAINERS = {
+  name: 'Compartment Meal Prep Containers (Budget)',
+  shortName: 'Budget containers',
+  href: 'https://www.amazon.co.uk/Pack-Meal-Containers-Compartment-Reusable/dp/B09KNNZ9FC?pd_rd_i=B09KNNZ9FC&pd_rd_w=nOFeZ&content-id=amzn1.sym.5f2ca5dd-2d4f-430d-beef-f2cfe15e1815&pf_rd_p=5f2ca5dd-2d4f-430d-beef-f2cfe15e1815&pf_rd_r=C7914TB2Y9XYMNHHTCHN&pd_rd_wg=CqfRu&pd_rd_r=d22db63d-2aa5-4bc9-b54f-a6019d839c5c&th=1&linkCode=ll2&tag=amazonaff01d8-21&linkId=f3899ce6943833c498ce2811e76595ef&ref_=as_li_ss_tl',
+  internalPath: '/stickers',
+  eventName: 'budget_container_product_click',
+  promoEventName: 'budget_container_promo_click',
+  disclosure: 'As an Amazon Associate I earn from qualifying purchases. #ad',
+};
