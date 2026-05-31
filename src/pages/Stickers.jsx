@@ -107,6 +107,17 @@ export default function Stickers() {
         <div className="product-comparison-grid">
           {/* Premium glass option */}
           <div className="sticker-product-card">
+            <a
+              href={MEAL_PREP_STICKERS.href}
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="product-card-image-link"
+              data-event={MEAL_PREP_STICKERS.eventName}
+              data-source-page="stickers-product-card-img"
+              data-offer={MEAL_PREP_STICKERS.name}
+            >
+              <img src={MEAL_PREP_STICKERS.image} alt={MEAL_PREP_STICKERS.imageAlt} className="product-card-img" />
+            </a>
             <div className="sticker-product-card-inner">
               <span className="product-badge product-badge--premium">Glass · Premium</span>
               <h2>BOROHOUSE 10-Pack Glass Storage Containers</h2>
@@ -133,6 +144,17 @@ export default function Stickers() {
 
           {/* Budget compartment option */}
           <div className="sticker-product-card sticker-product-card--budget">
+            <a
+              href={BUDGET_CONTAINERS.href}
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="product-card-image-link"
+              data-event={BUDGET_CONTAINERS.eventName}
+              data-source-page="stickers-product-card-img"
+              data-offer={BUDGET_CONTAINERS.name}
+            >
+              <img src={BUDGET_CONTAINERS.image} alt={BUDGET_CONTAINERS.imageAlt} className="product-card-img" />
+            </a>
             <div className="sticker-product-card-inner">
               <span className="product-badge product-badge--budget">Plastic · Budget</span>
               <h2>Compartment Meal Prep Containers</h2>

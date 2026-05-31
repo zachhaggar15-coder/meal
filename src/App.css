@@ -1506,6 +1506,16 @@ input:focus, select:focus {
 .product-badge--premium { background: #fef3c7; color: #92400e; }
 .product-badge--budget  { background: #eff6ff; color: #1e40af; }
 
+.product-card-image-link { display: block; }
+.product-card-img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 8px 8px 0 0;
+  background: #f8fafc;
+  padding: 12px;
+}
+
 .sticker-promo-budget-alt {
   font-size: 0.78rem;
   color: var(--muted);
