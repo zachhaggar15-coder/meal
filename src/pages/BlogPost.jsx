@@ -5,6 +5,7 @@ import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { generateBlogImageUrl } from '../utils/imageGenerator.js';
+import { BUDGET_CONTAINERS } from '../data/offers.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -135,7 +136,7 @@ export default function BlogPost() {
             </>
           )}
 
-          <StickerPromo sourcePage={`blog-${slug}-body`} />
+          <StickerPromo offer={BUDGET_CONTAINERS} sourcePage={`blog-${slug}-body`} />
 
           <div className="cta-box cta-box--large">
             <h2>Generate Your Free UK Meal Plan</h2>
