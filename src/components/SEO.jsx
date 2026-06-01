@@ -2,9 +2,15 @@ import { Helmet } from 'react-helmet-async';
 
 const DOMAIN = 'https://www.mealprep.org.uk';
 
+function cleanCanonicalUrl(canonical = '/') {
+  const url = new URL(canonical || '/', DOMAIN);
+  url.search = '';
+  url.hash = '';
+  return url.toString();
+}
+
 export default function SEO({ title, description, canonical, jsonLd, ogType = 'website', ogImage, twitterImage }) {
-  const cleanPath = (canonical || '/').split('?')[0].split('#')[0];
-  const url = `${DOMAIN}${cleanPath}`;
+  const url = cleanCanonicalUrl(canonical);
   const image = ogImage || `${DOMAIN}/og-preview.png`;
   const twitterImg = twitterImage || image;
 

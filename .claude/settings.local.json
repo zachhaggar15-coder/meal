@@ -33,7 +33,8 @@
       "PowerShell(Get-ChildItem C:\\\\Windows\\\\Fonts | Where-Object { $_.Name -match \"segoeui|arial|calibri|inter\" } | Select-Object Name | Sort-Object Name)",
       "Read(//c/Windows/Fonts/**)",
       "Bash(py -3 -c \"import os; fonts=[f for f in os.listdir\\('C:/Windows/Fonts'\\) if f.endswith\\('.ttf'\\)]; print\\('\\\\n'.join\\(sorted\\(fonts\\)[:40]\\)\\)\")",
-      "Bash(py -3 -)"
+      "Bash(py -3 -)",
+      "Bash(git fetch *)"
     ]
   }
 }
