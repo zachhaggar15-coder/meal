@@ -1,4 +1,4 @@
-export const PLAN_SEEDS = [
+const CORE_PLAN_SEEDS = [
   // ── WEIGHT LOSS (30) ─────────────────────────────────────────────────────
   { slug: 'aldi-weight-loss-1500', goal: 'weight-loss', supermarket: 'aldi', calories: 1500, dietType: 'standard', budget: 'very-cheap', effort: 'standard', mealSetIndex: 0, title: 'Aldi Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
   { slug: 'aldi-weight-loss-1800', goal: 'weight-loss', supermarket: 'aldi', calories: 1800, dietType: 'standard', budget: 'very-cheap', effort: 'standard', mealSetIndex: 0, title: 'Aldi Weight Loss Meal Plan — 1,800 kcal', emphasis: 'lean-protein' },
@@ -335,3 +335,222 @@ export const PLAN_SEEDS = [
   { slug: 'any-cutting-1600', goal: 'cutting', supermarket: 'any', calories: 1600, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 29, title: 'Cutting Phase Meal Plan — 1,600 kcal', emphasis: 'lean-protein' },
   { slug: 'tesco-cutting-pesc-1500', goal: 'cutting', supermarket: 'tesco', calories: 1500, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 29, title: 'Tesco Pescatarian Cutting Phase Plan — 1,500 kcal', emphasis: 'lean-protein' },
 ];
+
+const MARKET_TITLES = {
+  aldi: 'Aldi',
+  lidl: 'Lidl',
+  tesco: 'Tesco',
+  asda: 'Asda',
+  sainsburys: "Sainsbury's",
+  morrisons: 'Morrisons',
+  iceland: 'Iceland',
+};
+
+const DIET_TITLES = {
+  vegetarian: 'Vegetarian',
+  vegan: 'Vegan',
+  pescatarian: 'Pescatarian',
+};
+
+const GOAL_TITLES = {
+  'weight-loss': 'Weight Loss',
+  'high-protein-low-cal': 'High Protein Low Calorie',
+  'muscle-gain': 'Muscle Gain',
+  'budget-fat-loss': 'Budget Fat Loss',
+  'cheap-student': 'Cheap Student',
+  'busy-professional': 'Busy Professional',
+  'low-effort': 'Low Effort',
+  'vegetarian-low-cal': 'Vegetarian Low Calorie',
+  'vegan-low-cal': 'Vegan Low Calorie',
+  'high-protein-vegetarian': 'High Protein Vegetarian',
+  pescatarian: 'Pescatarian',
+  'budget-bodybuilding': 'Budget Bodybuilding',
+  'gym-beginner': 'Gym Beginner',
+  'cheap-high-protein': 'Cheap High Protein',
+  maintenance: 'Maintenance',
+  'anti-inflammatory': 'Anti-Inflammatory',
+  'menopause-nutrition': 'Menopause Nutrition',
+  'endurance-athlete': 'Endurance Athlete',
+  cutting: 'Cutting Phase',
+};
+
+const GOALS_WITH_DIET_IN_TITLE = new Set([
+  'vegetarian-low-cal',
+  'vegan-low-cal',
+  'high-protein-vegetarian',
+  'pescatarian',
+]);
+
+// A second curated wave: one complementary variant for every original seed.
+// The variants keep the same supermarket, calorie target, budget, and diet rules,
+// while changing the prep style, macro emphasis, and meal selection offset.
+const EXPANSION_STYLES = {
+  'weight-loss': [
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'meal-prep', label: 'Meal Prep', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'lean-protein', label: 'Lean Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'low-cal-swaps', label: 'Low-Calorie Swaps', effort: 'minimal', emphasis: 'low-cal-swaps' },
+  ],
+  'high-protein-low-cal': [
+    { slug: 'lean-protein', label: 'Lean', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
+    { slug: 'budget-smart', label: 'Budget-Smart', effort: 'standard', emphasis: 'low-cal-swaps' },
+  ],
+  'muscle-gain': [
+    { slug: 'clean-bulk', label: 'Clean Bulk', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'meal-prep', label: 'Meal Prep', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
+    { slug: 'budget-bulk', label: 'Budget Bulk', effort: 'standard', emphasis: 'lean-protein' },
+  ],
+  'budget-fat-loss': [
+    { slug: 'budget-smart', label: 'Best-Value', effort: 'standard', emphasis: 'low-cal-swaps' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'freezer-friendly', label: 'Freezer-Friendly', effort: 'low', emphasis: 'frozen-friendly' },
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'simple-prep', label: 'Simple Prep', effort: 'minimal', emphasis: 'minimal-effort' },
+  ],
+  'cheap-student': [
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'no-fuss', label: 'No-Fuss', effort: 'minimal', emphasis: 'minimal-effort' },
+    { slug: 'one-pan', label: 'One-Pan', effort: 'low', emphasis: 'frozen-friendly' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'freezer-friendly', label: 'Freezer-Friendly', effort: 'low', emphasis: 'frozen-friendly' },
+  ],
+  'busy-professional': [
+    { slug: 'workweek-prep', label: 'Workweek Prep', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'grab-and-go', label: 'Grab-and-Go', effort: 'minimal', emphasis: 'minimal-effort' },
+    { slug: 'twenty-minute', label: '20-Minute', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'desk-lunch', label: 'Desk Lunch', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
+  ],
+  'low-effort': [
+    { slug: 'no-cook', label: 'No-Cook', effort: 'minimal', emphasis: 'minimal-effort' },
+    { slug: 'fifteen-minute', label: '15-Minute', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'microwave-friendly', label: 'Microwave-Friendly', effort: 'minimal', emphasis: 'frozen-friendly' },
+    { slug: 'simple-protein', label: 'Simple High-Protein', effort: 'low', emphasis: 'lean-protein' },
+    { slug: 'batch-light', label: 'Light Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+  ],
+  'vegetarian-low-cal': [
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'whole-food', label: 'Whole-Food', effort: 'standard', emphasis: 'whole-food' },
+  ],
+  'vegan-low-cal': [
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'protein-focused', label: 'Protein-Focused', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'whole-food', label: 'Whole-Food', effort: 'standard', emphasis: 'whole-food' },
+  ],
+  'high-protein-vegetarian': [
+    { slug: 'protein-focused', label: 'Protein-Focused', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'budget-smart', label: 'Budget-Smart', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
+  ],
+  pescatarian: [
+    { slug: 'omega-three', label: 'Omega-3', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'mediterranean', label: 'Mediterranean', effort: 'high-variety', emphasis: 'high-variety' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+  ],
+  'budget-bodybuilding': [
+    { slug: 'lean-bulk', label: 'Lean Bulk', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'budget-protein', label: 'Protein-Focused', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'high-calorie', label: 'Higher-Calorie', effort: 'standard', emphasis: 'batch-cooking' },
+  ],
+  'gym-beginner': [
+    { slug: 'simple-gym', label: 'Simple Gym', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'meal-prep', label: 'Meal Prep', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'budget-smart', label: 'Budget-Smart', effort: 'standard', emphasis: 'low-cal-swaps' },
+  ],
+  'cheap-high-protein': [
+    { slug: 'best-value', label: 'Best-Value', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'lean-protein', label: 'Lean Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'simple-prep', label: 'Simple Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'tinned-and-frozen', label: 'Tinned & Frozen', effort: 'minimal', emphasis: 'frozen-friendly' },
+  ],
+  maintenance: [
+    { slug: 'balanced', label: 'Balanced', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'meal-prep', label: 'Meal Prep', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+    { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
+  ],
+  'anti-inflammatory': [
+    { slug: 'omega-three', label: 'Omega-3', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'mediterranean', label: 'Mediterranean', effort: 'high-variety', emphasis: 'high-variety' },
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'plant-forward', label: 'Plant-Forward', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+  ],
+  'menopause-nutrition': [
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'calcium-rich', label: 'Calcium-Rich', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'balanced', label: 'Balanced', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+  ],
+  'endurance-athlete': [
+    { slug: 'long-run-fuel', label: 'Long-Run Fuel', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'higher-carb', label: 'Higher-Carb', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+  ],
+  cutting: [
+    { slug: 'lean-cut', label: 'Lean', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'low-calorie', label: 'Low-Calorie', effort: 'standard', emphasis: 'low-cal-swaps' },
+    { slug: 'quick-prep', label: 'Quick Prep', effort: 'low', emphasis: 'minimal-effort' },
+  ],
+};
+
+function buildExpandedPlanSeed(seed, index) {
+  const styles = EXPANSION_STYLES[seed.goal] || EXPANSION_STYLES['weight-loss'];
+  const style = styles[index % styles.length];
+  const titleStyle = { ...style, label: getDistinctStyleLabel(seed, style) };
+
+  return {
+    ...seed,
+    slug: `${seed.slug}-${style.slug}`,
+    effort: style.effort,
+    emphasis: style.emphasis,
+    mealSetIndex: seed.mealSetIndex + 31 + (index % 37),
+    title: buildExpandedTitle(seed, titleStyle),
+  };
+}
+
+function getDistinctStyleLabel(seed, style) {
+  if (/-v\d($|-)/.test(seed.slug)) return `Alternative ${style.label}`;
+  if (seed.slug.includes('-batch-') && style.slug === 'batch-cook') return 'Sunday Prep';
+  return style.label;
+}
+
+function buildExpandedTitle(seed, style) {
+  const market = seed.supermarket === 'any' ? '' : `${MARKET_TITLES[seed.supermarket]} `;
+  const diet = seed.dietType !== 'standard' && !GOALS_WITH_DIET_IN_TITLE.has(seed.goal)
+    ? `${DIET_TITLES[seed.dietType]} `
+    : '';
+  const goal = GOAL_TITLES[seed.goal] || seed.goal;
+  return `${market}${diet}${style.label} ${goal} Plan \u2014 ${seed.calories.toLocaleString('en-GB')} kcal`;
+}
+
+const ADDITIONAL_PLAN_SEEDS = CORE_PLAN_SEEDS.map(buildExpandedPlanSeed);
+
+export const PLAN_SEEDS = [...CORE_PLAN_SEEDS, ...ADDITIONAL_PLAN_SEEDS];
+export const PLAN_COUNT = PLAN_SEEDS.length;

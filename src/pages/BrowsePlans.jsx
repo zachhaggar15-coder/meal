@@ -1,9 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
-import { getAllPlanMeta, GOAL_LABELS, BUDGET_ESTIMATES } from '../utils/planBuilder.js';
+import SiteLogo from '../components/SiteLogo.jsx';
+import { getAllPlanMeta } from '../utils/planBuilder.js';
 
 const ALL_PLANS = getAllPlanMeta();
+const PLAN_COUNT = ALL_PLANS.length;
 
 const GOALS = [
   { value: '',                      label: 'All goals' },
@@ -129,12 +131,13 @@ export default function BrowsePlans() {
     <>
       <SEO
         title="Free UK Meal Plans 2026 — Search by Goal, Supermarket & Calories | MealPrep.org.uk"
-        description="Browse 300 free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Weight loss, muscle gain, vegan, vegetarian, anti-inflammatory and more — no sign-up needed."
+        description={`Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Weight loss, muscle gain, vegan, vegetarian, anti-inflammatory and more — no sign-up needed.`}
         canonical="https://www.mealprep.org.uk/browse"
       />
 
       <div className="content-page browse-page">
         <div className="browse-header">
+          <SiteLogo variant="page" className="page-header-logo" />
           <h1>Browse All UK Meal Plans</h1>
           <p className="browse-sub">
             {ALL_PLANS.length} plans covering every goal, supermarket, and diet.

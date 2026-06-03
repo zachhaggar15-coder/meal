@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const EFFORT_LABELS = {
   'minimal':      'Minimal prep',
@@ -58,6 +60,7 @@ export default function QuizResults() {
 
       <div className="quiz-results-page content-page">
         <div className="quiz-results-header">
+          <SiteLogo variant="page" className="page-header-logo" />
           <h1 className="quiz-results-title">Your top meal plan matches</h1>
           <p className="quiz-results-sub">
             Based on your goal, supermarket, budget, and diet preferences.
@@ -112,7 +115,7 @@ export default function QuizResults() {
         {/* Actions */}
         <div className="quiz-results-actions">
           <Link to="/quiz" className="btn-secondary">← Retake Quiz</Link>
-          <Link to="/browse" className="btn-secondary">Browse All 250 Plans</Link>
+          <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT} Plans</Link>
         </div>
       </div>
     </>

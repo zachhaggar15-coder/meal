@@ -7,7 +7,9 @@ import EditPlanBox from '../components/EditPlanBox.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 // ── JSON-LD ───────────────────────────────────────────────────────────────────
 
@@ -17,7 +19,7 @@ const homeJsonLd = [
     '@type': 'WebSite',
     name: 'MealPrep.org.uk — UK Meal Plan Library',
     url: 'https://www.mealprep.org.uk',
-    description: 'Browse 300 free UK meal plans by goal, supermarket, calories, and diet. Take a 30-second quiz to find your perfect plan.',
+    description: `Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories, and diet. Take a 30-second quiz to find your perfect plan.`,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -36,7 +38,7 @@ const homeJsonLd = [
         name: 'How does the meal plan quiz work?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Answer 7 quick questions about your goal, diet type, supermarket, calorie target, budget, cooking effort, and macro preferences. The quiz matches you with your top 3 plans from a library of 250 UK meal plans.',
+          text: `Answer 7 quick questions about your goal, diet type, supermarket, calorie target, budget, cooking effort, and macro preferences. The quiz matches you with your top 3 plans from a library of ${PLAN_COUNT} UK meal plans.`,
         },
       },
       {
@@ -44,7 +46,7 @@ const homeJsonLd = [
         name: 'Are the meal plans free?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. All 250 meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.',
+          text: `Yes. All ${PLAN_COUNT} meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.`,
         },
       },
       {
@@ -245,8 +247,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Free UK Meal Plans — 250 Plans by Goal, Supermarket & Diet | MealPrep.org.uk"
-        description="Find your perfect UK meal plan in 30 seconds. Browse 250 free 7-day meal plans by goal, supermarket, calories, budget, and diet. Vegetarian, vegan, budget, high protein and more."
+        title={`Free UK Meal Plans — ${PLAN_COUNT} Plans by Goal, Supermarket & Diet | MealPrep.org.uk`}
+        description={`Find your perfect UK meal plan in 30 seconds. Browse ${PLAN_COUNT} free 7-day meal plans by goal, supermarket, calories, budget, and diet. Vegetarian, vegan, budget, high protein and more.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -255,6 +257,7 @@ export default function Home() {
 
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <header className="home-hero">
+          <SiteLogo variant="hero" className="home-hero-logo" />
           <h1 className="home-hero-h1">
             Find your perfect UK meal plan in 30 seconds
           </h1>
@@ -266,11 +269,11 @@ export default function Home() {
               Start the Quiz →
             </Link>
             <Link to="/browse" className="btn-hero-secondary">
-              Browse All 250 Plans
+              Browse All {PLAN_COUNT} Plans
             </Link>
           </div>
           <div className="trust-row">
-            <span className="trust-badge">250 ready-made plans</span>
+            <span className="trust-badge">{PLAN_COUNT} ready-made plans</span>
             <span className="trust-badge">Aldi · Tesco · Lidl · Asda · Morrisons</span>
             <span className="trust-badge">Vegan · Vegetarian · Pescatarian</span>
             <span className="trust-badge">Free, no sign-up</span>
@@ -289,7 +292,7 @@ export default function Home() {
             <div className="hiw-step">
               <span className="hiw-num">2</span>
               <strong>Get matched</strong>
-              <p>We rank all 250 plans against your answers and show your top 3 matches.</p>
+              <p>We rank all {PLAN_COUNT} plans against your answers and show your top 3 matches.</p>
             </div>
             <div className="hiw-step">
               <span className="hiw-num">3</span>
@@ -326,7 +329,7 @@ export default function Home() {
 
           <div className="featured-browse-cta">
             <Link to="/browse" className="btn-secondary">
-              Browse all 250 plans →
+              Browse all {PLAN_COUNT} plans →
             </Link>
           </div>
         </section>
@@ -357,7 +360,7 @@ export default function Home() {
               },
               {
                 q: 'Are the plans free?',
-                a: 'All 250 plans are completely free with no account required. The AI editing tool is also free.',
+                a: `All ${PLAN_COUNT} plans are completely free with no account required. The AI editing tool is also free.`,
               },
             ].map((f, i) => (
               <details className="faq-item" key={i}>

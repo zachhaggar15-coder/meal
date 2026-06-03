@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { MEAL_PREP_STICKERS, BUDGET_CONTAINERS } from '../data/offers.js';
 
 const containerJsonLd = [
@@ -38,6 +39,7 @@ export default function Stickers() {
           <span>Meal Prep Containers</span>
         </nav>
 
+        <SiteLogo variant="page" className="page-header-logo" />
         <section className="sticker-hero">
           <div className="sticker-hero-copy">
             <span className="offer-kicker">Sponsored #ad</span>

@@ -1,13 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { PLAN_SEEDS } from './src/data/planSeeds.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(__dirname, 'dist');
 
-// ── Static plan slugs (250 plans) ─────────────────────────────────────────────
-// Generated from PLAN_SEEDS in src/data/planSeeds.js
-const PLAN_SLUGS = [
+// Legacy slug snapshot retained for reference. Build routes come from PLAN_SEEDS.
+const STATIC_PLAN_SLUGS = [
   // Weight Loss (30)
   'aldi-weight-loss-1500','aldi-weight-loss-1800','aldi-weight-loss-1500-v2','aldi-weight-loss-1800-vegan',
   'tesco-weight-loss-1500','tesco-weight-loss-1800','tesco-weight-loss-1800-veg',
@@ -169,11 +169,13 @@ const PLAN_SLUGS = [
   'any-cutting-1600','tesco-cutting-pesc-1500',
 ];
 
+const PLAN_SLUGS = PLAN_SEEDS.map(seed => seed.slug);
+
 const ROUTES = [
   '/',
   '/quiz',
   '/browse',
-  // New plan library (250 plans at /plans/:slug)
+  // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),
   // Legacy meal plan pages (preserved for SEO)
   '/meal-plan/1500-calorie-meal-plan',
@@ -292,7 +294,7 @@ async function prerender() {
     urlEntry('/', '1.0', 'weekly'),
     urlEntry('/quiz', '0.9', 'monthly'),
     urlEntry('/browse', '0.9', 'weekly'),
-    // 250 new plan pages
+    // New plan pages
     ...PLAN_SLUGS.map(slug => urlEntry(`/plans/${slug}`, '0.8')),
     // Legacy meal plan pages (preserved for existing rankings)
     urlEntry('/meal-plan/1500-calorie-meal-plan', '0.7'),

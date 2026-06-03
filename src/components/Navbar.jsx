@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SiteLogo from './SiteLogo.jsx';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const QUICK_PLANS = [
   { to: '/plans/aldi-weight-loss-1500',        label: 'Aldi Weight Loss 1,500 kcal', tag: 'Popular' },
@@ -9,7 +11,7 @@ const QUICK_PLANS = [
   { to: '/plans/aldi-cheap-student-1800',      label: 'Cheap Student', tag: '' },
   { to: '/plans/aldi-veg-low-cal-1500',        label: 'Vegetarian Low Cal', tag: '' },
   { to: '/plans/aldi-vegan-low-cal-1500',      label: 'Vegan Low Cal', tag: '' },
-  { to: '/browse',                             label: 'All 250 plans →', tag: '' },
+  { to: '/browse',                             label: `All ${PLAN_COUNT} plans \u2192`, tag: '' },
 ];
 
 export default function Navbar({ onMenuToggle }) {
@@ -30,7 +32,7 @@ export default function Navbar({ onMenuToggle }) {
         ☰
       </button>
       <div className="nav-inner">
-        <Link to="/" className="nav-brand">MealPrep.org.uk</Link>
+        <SiteLogo variant="nav" showName />
         <div className="nav-right" ref={menuRef}>
           <Link to="/quiz" className="nav-quiz-btn">Find My Plan</Link>
           <button

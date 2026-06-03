@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 // ── Quiz steps definition ─────────────────────────────────────────────────────
 
@@ -146,7 +148,7 @@ export default function Quiz() {
       name: 'How does the meal plan quiz work?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Answer 7 short questions about your goal, diet, supermarket, calories, budget, effort, and macro preferences. We match you with the top 3 plans from our library of 250 UK meal plans.',
+        text: `Answer 7 short questions about your goal, diet, supermarket, calories, budget, effort, and macro preferences. We match you with the top 3 plans from our library of ${PLAN_COUNT} UK meal plans.`,
       },
     }],
   }];
@@ -155,7 +157,7 @@ export default function Quiz() {
     <>
       <SEO
         title="Find Your Perfect UK Meal Plan — Free Quiz | MealPrep.org.uk"
-        description="Answer 7 quick questions to find the best UK meal plan for your goal, budget, supermarket, and diet. 250 ready-made plans to match."
+        description={`Answer 7 quick questions to find the best UK meal plan for your goal, budget, supermarket, and diet. ${PLAN_COUNT} ready-made plans to match.`}
         canonical="https://www.mealprep.org.uk/quiz"
         jsonLd={jsonLd}
       />
@@ -165,14 +167,15 @@ export default function Quiz() {
 
           {/* Static SEO shell — always rendered, visible to crawlers */}
           <header className="quiz-shell-header">
+            <SiteLogo variant="page" className="page-header-logo" />
             <h1 className="quiz-shell-h1">Find your perfect UK meal plan</h1>
             <p className="quiz-shell-sub">
               Answer 7 quick questions about your goal, diet, supermarket, calories, budget, and
-              cooking effort. We'll match you with the best plans from our library of 250 free
+              cooking effort. We'll match you with the best plans from our library of {PLAN_COUNT} free
               UK meal plans — with full shopping lists, macros, and cost estimates.
             </p>
             <ul className="quiz-shell-features">
-              <li>250 plans across Aldi, Tesco, Lidl, Asda, Morrisons, Sainsbury's &amp; Iceland</li>
+              <li>{PLAN_COUNT} plans across Aldi, Tesco, Lidl, Asda, Morrisons, Sainsbury's &amp; Iceland</li>
               <li>Vegetarian, vegan, pescatarian and standard options</li>
               <li>1,500–2,500 kcal targets · £20–70/week budgets</li>
               <li>Takes 30 seconds · free · no sign-up</li>

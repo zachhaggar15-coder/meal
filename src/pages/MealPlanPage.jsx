@@ -5,6 +5,7 @@ import Footer from '../components/Footer.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 
@@ -96,6 +97,7 @@ export default function MealPlanPage() {
           <span>{data.h1}</span>
         </nav>
 
+        <SiteLogo variant="page" className="page-header-logo" />
         <h1>{data.h1}</h1>
 
         {/* Quick-stats summary card */}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 
 export default function NotFound() {
   return (
@@ -12,6 +13,7 @@ export default function NotFound() {
       />
       <div className="page not-found-page">
         <div className="not-found-content">
+          <SiteLogo variant="page" className="page-header-logo" />
           <h1 className="not-found-heading">Page not found</h1>
           <p className="not-found-sub">
             That plan or page doesn&apos;t exist — but we can build you one in under 30 seconds.

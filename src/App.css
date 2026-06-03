@@ -771,18 +771,80 @@ input:focus, select:focus {
   gap: 16px;
 }
 
-.nav-brand {
-  font-weight: 700;
-  font-size: 1rem;
+.nav-right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Site logo ---------- */
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
   color: var(--accent-dark);
   text-decoration: none;
+}
+
+.site-logo:hover {
+  color: var(--accent);
+}
+
+.site-logo-img {
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.site-logo--nav {
+  gap: 8px;
+  min-width: 0;
+}
+
+.site-logo--nav .site-logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.site-logo-text {
+  font-weight: 800;
+  font-size: 1rem;
+  color: inherit;
   white-space: nowrap;
 }
 
-.nav-brand:hover { color: var(--accent); }
+.site-logo--sidebar {
+  justify-content: center;
+  margin: 0 12px 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
 
-.nav-right {
-  position: relative;
+.site-logo--sidebar .site-logo-img {
+  width: min(164px, 100%);
+  height: auto;
+}
+
+.site-logo--hero {
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+
+.site-logo--hero .site-logo-img {
+  width: clamp(150px, 22vw, 230px);
+  height: auto;
+}
+
+.site-logo--page {
+  justify-content: flex-start;
+  margin: 0 0 12px;
+}
+
+.site-logo--page .site-logo-img {
+  width: 96px;
+  height: auto;
 }
 
 .nav-plans-btn {
@@ -1686,6 +1748,10 @@ input:focus, select:focus {
   flex-direction: column;
 }
 
+.sidebar:not(.sidebar--open) .sidebar-inner {
+  visibility: hidden;
+}
+
 .sidebar-home {
   display: block;
   padding: 8px 16px;
@@ -2108,10 +2174,21 @@ input:focus, select:focus {
 @media (max-width: 760px) {
   .nav-inner {
     gap: 8px;
+    padding-left: 58px;
+    padding-right: 12px;
   }
 
-  .nav-brand {
-    font-size: 0.92rem;
+  .site-logo--nav {
+    gap: 6px;
+  }
+
+  .site-logo--nav .site-logo-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .site-logo--nav .site-logo-text {
+    display: none;
   }
 
   .sticker-promo,
@@ -2144,6 +2221,19 @@ input:focus, select:focus {
 }
 
 @media (max-width: 460px) {
+  .site-logo--nav .site-logo-text {
+    display: none;
+  }
+
+  .nav-right {
+    gap: 6px;
+  }
+
+  .nav-quiz-btn {
+    padding: 7px 9px;
+    font-size: 0.78rem;
+  }
+
   .nav-plans-btn {
     padding: 7px 9px;
     font-size: 0.78rem;
@@ -2358,7 +2448,6 @@ input:focus, select:focus {
   font-size: 0.85rem;
   font-weight: 700;
   text-decoration: none;
-  margin-right: 12px;
   transition: background 0.15s;
 }
 .nav-quiz-btn:hover { background: #1d4ed8; }

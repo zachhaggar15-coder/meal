@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { getPlanBySlug } from '../utils/planBuilder.js';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -148,6 +150,7 @@ export default function PlanPage() {
         </nav>
 
         {/* Hero */}
+        <SiteLogo variant="page" className="page-header-logo" />
         <h1 className="plan-page-h1">{plan.title}</h1>
         <p className="plan-page-intro">{plan.seo.description}</p>
 
@@ -379,7 +382,7 @@ export default function PlanPage() {
         {/* Bottom CTAs */}
         <div className="plan-bottom-ctas">
           <Link to="/quiz" className="btn-primary">Find a better match →</Link>
-          <Link to="/browse" className="btn-secondary">Browse all 250 plans</Link>
+          <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT} plans</Link>
         </div>
 
       </div>

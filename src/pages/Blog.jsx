@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const CATEGORY_ORDER = [
   {
@@ -85,6 +87,7 @@ export default function Blog() {
           <Link to="/">Home</Link> <span aria-hidden>›</span> <span>Blog</span>
         </nav>
 
+        <SiteLogo variant="page" className="page-header-logo" />
         <h1>UK Meal Prep &amp; Nutrition Blog</h1>
         <p className="content-intro">
           Free guides covering everything from calorie deficits and high-protein eating to
@@ -113,7 +116,7 @@ export default function Blog() {
 
         <div className="cta-box cta-box--large">
           <h2>Ready to put it into practice?</h2>
-          <p>Browse 300 free UK meal plans or take the quiz to get matched in 30 seconds.</p>
+          <p>Browse {PLAN_COUNT} free UK meal plans or take the quiz to get matched in 30 seconds.</p>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/quiz" className="btn-primary">Take the Quiz →</Link>
             <Link to="/browse" className="btn-secondary">Browse All Plans</Link>

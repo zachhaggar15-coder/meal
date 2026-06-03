@@ -3,6 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { generateBlogImageUrl } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
@@ -72,6 +73,7 @@ export default function BlogPost() {
         </nav>
 
         <article>
+          <SiteLogo variant="page" className="page-header-logo" />
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
 

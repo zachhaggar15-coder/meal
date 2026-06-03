@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import SiteLogo from './SiteLogo.jsx';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const NAV = [
   {
@@ -95,6 +97,7 @@ export default function Sidebar({ open, onClose }) {
       {open && <div className="sidebar-backdrop" onClick={onClose} aria-hidden />}
       <nav className={`sidebar${open ? ' sidebar--open' : ''}`} aria-label="Site navigation">
         <div className="sidebar-inner">
+          <SiteLogo variant="sidebar" onClick={onClose} />
 
           <Link
             to="/quiz"
@@ -109,7 +112,7 @@ export default function Sidebar({ open, onClose }) {
             className={`sidebar-top-link${location.pathname === '/browse' ? ' sidebar-link--active' : ''}`}
             onClick={onClose}
           >
-            Browse All 250 Plans
+            Browse All {PLAN_COUNT} Plans
           </Link>
 
           <Link
