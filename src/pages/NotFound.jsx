@@ -2,14 +2,16 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 
 export default function NotFound() {
   return (
     <>
       <SEO
         title="Page Not Found | MealPrep.org.uk"
-        description="This page doesn't exist. Generate a free UK meal plan or browse ready-made plans."
+        description={`This page doesn't exist. Generate a free UK meal plan or browse ${PLAN_COUNT} ready-made plans.`}
         canonical="/404"
+        robots="noindex,follow"
       />
       <div className="page not-found-page">
         <div className="not-found-content">
@@ -20,7 +22,7 @@ export default function NotFound() {
           </p>
           <div className="not-found-actions">
             <Link to="/" className="btn-primary">Generate a free meal plan</Link>
-            <Link to="/#popular-plans" className="btn-secondary">Browse ready-made plans</Link>
+            <Link to="/browse" className="btn-secondary">Browse {PLAN_COUNT} ready-made plans</Link>
           </div>
         </div>
       </div>

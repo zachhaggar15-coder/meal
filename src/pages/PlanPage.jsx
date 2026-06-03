@@ -29,7 +29,7 @@ export default function PlanPage() {
     return (
       <div className="content-page">
         <h1>Plan not found</h1>
-        <p><Link to="/browse">Browse all meal plans</Link></p>
+        <p><Link to="/browse">Browse all {PLAN_COUNT} meal plans</Link></p>
       </div>
     );
   }

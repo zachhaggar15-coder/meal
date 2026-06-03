@@ -14,7 +14,16 @@ function cleanCanonicalUrl(canonical = '/') {
   return url.toString();
 }
 
-export default function SEO({ title, description, canonical, jsonLd, ogType = 'website', ogImage, twitterImage }) {
+export default function SEO({
+  title,
+  description,
+  canonical,
+  jsonLd,
+  ogType = 'website',
+  ogImage,
+  twitterImage,
+  robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
+}) {
   const url = cleanCanonicalUrl(canonical);
   const image = ogImage || `${DOMAIN}/og-preview.png`;
   const twitterImg = twitterImage || image;
@@ -27,6 +36,7 @@ export default function SEO({ title, description, canonical, jsonLd, ogType = 'w
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="robots" content={robots} />
       <meta name="application-name" content={SITE_NAME} />
       <meta name="theme-color" content="#2f855a" />
       <link rel="canonical" href={url} />

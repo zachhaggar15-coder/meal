@@ -119,7 +119,7 @@ export default function Blog() {
           <p>Browse {PLAN_COUNT} free UK meal plans or take the quiz to get matched in 30 seconds.</p>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/quiz" className="btn-primary">Take the Quiz →</Link>
-            <Link to="/browse" className="btn-secondary">Browse All Plans</Link>
+            <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT} Plans</Link>
           </div>
         </div>
       </div>

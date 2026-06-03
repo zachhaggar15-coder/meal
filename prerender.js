@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { PLAN_SEEDS } from './src/data/planSeeds.js';
+import { blogPostsData } from './src/data/blogPosts.js';
+import { mealPlansData } from './src/data/mealPlans.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(__dirname, 'dist');
@@ -170,79 +172,27 @@ const STATIC_PLAN_SLUGS = [
 ];
 
 const PLAN_SLUGS = PLAN_SEEDS.map(seed => seed.slug);
+const LEGACY_MEAL_PLAN_SLUGS = Object.keys(mealPlansData);
+const BLOG_SLUGS = Object.keys(blogPostsData);
 
-const ROUTES = [
+function uniqueRoutes(routes) {
+  return [...new Set(routes)];
+}
+
+const ROUTES = uniqueRoutes([
   '/',
   '/quiz',
+  '/quiz/results',
   '/browse',
+  '/stickers',
+  '/blog',
   // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),
   // Legacy meal plan pages (preserved for SEO)
-  '/meal-plan/1500-calorie-meal-plan',
-  '/meal-plan/1800-calorie-meal-plan',
-  '/meal-plan/2000-calorie-meal-plan',
-  '/meal-plan/2500-calorie-meal-plan',
-  '/meal-plan/high-protein-low-calorie-meal-plan',
-  '/meal-plan/high-protein-vegetarian-meal-plan-uk',
-  '/meal-plan/cheap-student-meal-plan-uk',
-  '/meal-plan/budget-bodybuilding-meal-plan-uk',
-  '/meal-plan/gym-beginner-meal-plan-uk',
-  '/meal-plan/budget-fat-loss-meal-plan-uk',
-  '/meal-plan/muscle-gain-meal-plan-uk',
-  '/meal-plan/cheap-high-protein-meal-plan-uk',
-  '/meal-plan/low-effort-meal-plan-uk',
-  '/meal-plan/busy-professional-meal-plan-uk',
-  '/meal-plan/tesco-low-calorie-meal-plan',
-  '/meal-plan/tesco-1800-calorie-meal-plan',
-  '/meal-plan/tesco-high-protein-meal-plan',
-  '/meal-plan/aldi-low-calorie-meal-plan',
-  '/meal-plan/aldi-1800-calorie-meal-plan',
-  '/meal-plan/aldi-high-protein-meal-plan',
-  '/meal-plan/asda-1800-calorie-meal-plan',
-  '/meal-plan/asda-1500-calorie-meal-plan',
-  '/meal-plan/sainsburys-1800-calorie-meal-plan',
-  '/meal-plan/lidl-1800-calorie-meal-plan',
-  '/meal-plan/morrisons-1800-calorie-meal-plan',
-  '/meal-plan/iceland-budget-meal-plan',
-  '/meal-plan/vegetarian-low-calorie-meal-plan',
-  '/meal-plan/vegan-low-calorie-meal-plan',
-  '/meal-plan/sainsburys-low-calorie-meal-plan',
-  '/meal-plan/morrisons-low-calorie-meal-plan',
-  '/stickers',
-  '/blog',
+  ...LEGACY_MEAL_PLAN_SLUGS.map(slug => `/meal-plan/${slug}`),
   // Blog posts
-  '/blog/how-to-build-a-calorie-deficit',
-  '/blog/best-low-calorie-foods-uk',
-  '/blog/high-protein-low-calorie-meals',
-  '/blog/tesco-low-calorie-shopping-list',
-  '/blog/how-to-meal-plan-for-weight-loss',
-  '/blog/how-many-calories-to-lose-weight',
-  '/blog/best-cheap-high-protein-foods-uk',
-  '/blog/aldi-vs-tesco-meal-prep',
-  '/blog/cheapest-uk-supermarket-meal-prep',
-  '/blog/1500-vs-1800-vs-2000-calories',
-  '/blog/how-much-protein-when-dieting',
-  '/blog/cheap-meal-prep-shopping-list-uk',
-  '/blog/how-to-lose-weight-fast-uk',
-  '/blog/meal-prep-for-beginners-uk',
-  '/blog/high-protein-breakfast-uk',
-  // New blog posts (15 additional)
-  '/blog/anti-inflammatory-diet-meal-plan-uk',
-  '/blog/menopause-diet-plan-uk',
-  '/blog/endurance-running-nutrition-uk',
-  '/blog/how-to-lose-belly-fat-uk',
-  '/blog/low-calorie-snacks-uk',
-  '/blog/vegan-meal-prep-uk',
-  '/blog/vegetarian-meal-prep-uk',
-  '/blog/muscle-building-meal-plan-uk',
-  '/blog/cutting-diet-plan-uk',
-  '/blog/batch-cooking-for-beginners-uk',
-  '/blog/intermittent-fasting-meal-plan-uk',
-  '/blog/sainsburys-meal-prep-uk',
-  '/blog/asda-meal-prep-uk',
-  '/blog/high-protein-snacks-uk',
-  '/blog/meal-prep-containers-uk',
-];
+  ...BLOG_SLUGS.map(slug => `/blog/${slug}`),
+]);
 
 async function prerender() {
   const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf-8');
@@ -290,77 +240,23 @@ async function prerender() {
     return `  <url>\n    <loc>https://www.mealprep.org.uk${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
   }
 
-  const sitemapEntries = [
-    urlEntry('/', '1.0', 'weekly'),
-    urlEntry('/quiz', '0.9', 'monthly'),
-    urlEntry('/browse', '0.9', 'weekly'),
-    // New plan pages
-    ...PLAN_SLUGS.map(slug => urlEntry(`/plans/${slug}`, '0.8')),
-    // Legacy meal plan pages (preserved for existing rankings)
-    urlEntry('/meal-plan/1500-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/2000-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/2500-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/high-protein-low-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/high-protein-vegetarian-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/cheap-student-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/budget-bodybuilding-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/gym-beginner-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/budget-fat-loss-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/muscle-gain-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/cheap-high-protein-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/low-effort-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/busy-professional-meal-plan-uk', '0.7'),
-    urlEntry('/meal-plan/tesco-low-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/tesco-1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/tesco-high-protein-meal-plan', '0.7'),
-    urlEntry('/meal-plan/aldi-low-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/aldi-1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/aldi-high-protein-meal-plan', '0.7'),
-    urlEntry('/meal-plan/asda-1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/asda-1500-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/sainsburys-1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/lidl-1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/morrisons-1800-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/iceland-budget-meal-plan', '0.7'),
-    urlEntry('/meal-plan/vegetarian-low-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/vegan-low-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/sainsburys-low-calorie-meal-plan', '0.7'),
-    urlEntry('/meal-plan/morrisons-low-calorie-meal-plan', '0.7'),
-    urlEntry('/blog', '0.8', 'weekly'),
-    // Blog posts
-    urlEntry('/blog/how-to-build-a-calorie-deficit', '0.7'),
-    urlEntry('/blog/best-low-calorie-foods-uk', '0.7'),
-    urlEntry('/blog/high-protein-low-calorie-meals', '0.7'),
-    urlEntry('/blog/tesco-low-calorie-shopping-list', '0.7'),
-    urlEntry('/blog/how-to-meal-plan-for-weight-loss', '0.7'),
-    urlEntry('/blog/how-many-calories-to-lose-weight', '0.7'),
-    urlEntry('/blog/best-cheap-high-protein-foods-uk', '0.7'),
-    urlEntry('/blog/aldi-vs-tesco-meal-prep', '0.7'),
-    urlEntry('/blog/cheapest-uk-supermarket-meal-prep', '0.7'),
-    urlEntry('/blog/1500-vs-1800-vs-2000-calories', '0.7'),
-    urlEntry('/blog/how-much-protein-when-dieting', '0.7'),
-    urlEntry('/blog/cheap-meal-prep-shopping-list-uk', '0.7'),
-    urlEntry('/blog/how-to-lose-weight-fast-uk', '0.7'),
-    urlEntry('/blog/meal-prep-for-beginners-uk', '0.7'),
-    urlEntry('/blog/high-protein-breakfast-uk', '0.7'),
-    urlEntry('/blog/anti-inflammatory-diet-meal-plan-uk', '0.7'),
-    urlEntry('/blog/menopause-diet-plan-uk', '0.7'),
-    urlEntry('/blog/endurance-running-nutrition-uk', '0.7'),
-    urlEntry('/blog/how-to-lose-belly-fat-uk', '0.7'),
-    urlEntry('/blog/low-calorie-snacks-uk', '0.7'),
-    urlEntry('/blog/vegan-meal-prep-uk', '0.7'),
-    urlEntry('/blog/vegetarian-meal-prep-uk', '0.7'),
-    urlEntry('/blog/muscle-building-meal-plan-uk', '0.7'),
-    urlEntry('/blog/cutting-diet-plan-uk', '0.7'),
-    urlEntry('/blog/batch-cooking-for-beginners-uk', '0.7'),
-    urlEntry('/blog/intermittent-fasting-meal-plan-uk', '0.7'),
-    urlEntry('/blog/sainsburys-meal-prep-uk', '0.7'),
-    urlEntry('/blog/asda-meal-prep-uk', '0.7'),
-    urlEntry('/blog/high-protein-snacks-uk', '0.7'),
-    urlEntry('/blog/meal-prep-containers-uk', '0.7'),
-    urlEntry('/stickers', '0.5'),
-  ];
+  function routePriority(route) {
+    if (route === '/') return ['1.0', 'weekly'];
+    if (route === '/browse') return ['0.9', 'weekly'];
+    if (route === '/quiz') return ['0.9', 'monthly'];
+    if (route === '/blog') return ['0.8', 'weekly'];
+    if (route.startsWith('/plans/')) return ['0.8', 'monthly'];
+    if (route.startsWith('/meal-plan/')) return ['0.7', 'monthly'];
+    if (route.startsWith('/blog/')) return ['0.7', 'monthly'];
+    if (route === '/quiz/results') return ['0.6', 'monthly'];
+    if (route === '/stickers') return ['0.5', 'monthly'];
+    return ['0.5', 'monthly'];
+  }
+
+  const sitemapEntries = ROUTES.map(route => {
+    const [priority, changefreq] = routePriority(route);
+    return urlEntry(route, priority, changefreq);
+  });
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.join('\n')}\n</urlset>\n`;
 
