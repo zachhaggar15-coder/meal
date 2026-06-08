@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import ContextualLinks from '../components/ContextualLinks.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { generateBlogImageUrl } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
@@ -23,7 +24,7 @@ export default function BlogPost() {
       headline: data.h1,
       description: data.description,
       datePublished: data.published || '2026-05-28',
-      dateModified: '2026-05-30',
+      dateModified: data.modified || '2026-05-30',
       author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       mainEntityOfPage: {
@@ -76,6 +77,7 @@ export default function BlogPost() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
+          <ContextualLinks blocks={data.contextualLinks} />
 
           {/* Early CTA — after the intro, before the main body */}
           <GeneratorCTA sourcePage={`blog-${slug}`} />

@@ -6,8 +6,30 @@ import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import ContextualLinks from '../components/ContextualLinks.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
+
+function ContentTable({ headers, rows }) {
+  return (
+    <div className="content-table-wrap">
+      <table className="content-table">
+        <thead>
+          <tr>
+            {headers.map(header => <th key={header}>{header}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export default function MealPlanPage() {
   const { slug } = useParams();
@@ -51,7 +73,7 @@ export default function MealPlanPage() {
       headline: data.h1,
       description: data.description,
       datePublished: data.published || '2026-05-28',
-      dateModified: '2026-05-30',
+      dateModified: data.modified || '2026-05-30',
       author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       mainEntityOfPage: {
@@ -119,6 +141,30 @@ export default function MealPlanPage() {
                 <th>Weekly cost</th>
                 <td>{data.priceEstimate}</td>
               </tr>
+              {data.summary?.costPerDay && (
+                <tr>
+                  <th>Cost per day</th>
+                  <td>{data.summary.costPerDay}</td>
+                </tr>
+              )}
+              {data.summary?.costPerMeal && (
+                <tr>
+                  <th>Cost per meal</th>
+                  <td>{data.summary.costPerMeal}</td>
+                </tr>
+              )}
+              {data.summary?.costPerGramProtein && (
+                <tr>
+                  <th>Cost per g protein</th>
+                  <td>{data.summary.costPerGramProtein}</td>
+                </tr>
+              )}
+              {data.summary?.updated && (
+                <tr>
+                  <th>Updated</th>
+                  <td>{data.summary.updated}</td>
+                </tr>
+              )}
               {data.summary?.supermarkets && (
                 <tr>
                   <th>Supermarkets</th>
@@ -154,15 +200,81 @@ export default function MealPlanPage() {
 
         <p className="content-intro">{data.intro}</p>
 
-        {/* Primary CTA — above the fold on most screens */}
-        <GeneratorCTA
-          sourcePage={slug}
-          calories={data.targetCalories}
-          supermarket={data.summary?.supermarket}
-        />
+        {data.ctaPlacements?.intro !== false && (
+          <GeneratorCTA
+            sourcePage={slug}
+            calories={data.targetCalories}
+            supermarket={data.summary?.supermarket}
+          />
+        )}
 
         <h2>Why Choose a {data.planLabel} Meal Plan?</h2>
         <p>{data.whyThisPlan}</p>
+
+        <ContextualLinks blocks={data.contextualLinks} />
+
+        {data.tescoPricing && (
+          <>
+            <h2>{data.tescoPricing.heading}</h2>
+            <p>{data.tescoPricing.intro}</p>
+            <div className="metric-grid">
+              {data.tescoPricing.metrics.map(metric => (
+                <div key={metric.label} className="metric-card">
+                  <span className="metric-label">{metric.label}</span>
+                  <strong>{metric.value}</strong>
+                  {metric.note && <span className="metric-note">{metric.note}</span>}
+                </div>
+              ))}
+            </div>
+
+            <h3>Cheapest Protein Sources at Tesco</h3>
+            <ContentTable
+              headers={['Tesco item', 'Estimated price', 'Protein supplied', 'Cost per g protein', 'Best use']}
+              rows={data.tescoPricing.proteinSources.map(item => [
+                item.item,
+                item.price,
+                item.protein,
+                item.costPerGram,
+                item.bestUse,
+              ])}
+            />
+
+            <h3>Cheapest Low Calorie Foods at Tesco</h3>
+            <ContentTable
+              headers={['Tesco item', 'Estimated price', 'Calories', 'Why it helps']}
+              rows={data.tescoPricing.lowCalorieFoods.map(item => [
+                item.item,
+                item.price,
+                item.calories,
+                item.why,
+              ])}
+            />
+
+            <h3>Clubcard and Tesco Saving Opportunities</h3>
+            <ul className="content-bullets">
+              {data.tescoPricing.clubcard.map((tip, i) => <li key={i}>{tip}</li>)}
+            </ul>
+          </>
+        )}
+
+        {data.budgetBreakdown && (
+          <>
+            <h2>{data.budgetBreakdown.heading}</h2>
+            <p>{data.budgetBreakdown.intro}</p>
+            <ContentTable
+              headers={['Item', 'Quantity', 'Estimated Tesco price', 'Number of meals supplied']}
+              rows={data.budgetBreakdown.rows.map(row => [
+                row.item,
+                row.quantity,
+                row.price,
+                row.meals,
+              ])}
+            />
+            {data.budgetBreakdown.note && (
+              <p className="method-note">{data.budgetBreakdown.note}</p>
+            )}
+          </>
+        )}
 
         <h2>Example 7-Day {data.planLabel} Meal Plan</h2>
         <p>
@@ -202,8 +314,9 @@ export default function MealPlanPage() {
           ))}
         </div>
 
-        {/* Mid-page CTA — after the plan */}
-        <GeneratorCTA sourcePage={slug} calories={data.targetCalories} compact />
+        {data.ctaPlacements?.afterPlan !== false && (
+          <GeneratorCTA sourcePage={slug} calories={data.targetCalories} compact />
+        )}
 
         <h2>Sample Weekly Shopping List</h2>
         <p>
@@ -219,6 +332,63 @@ export default function MealPlanPage() {
           ))}
         </div>
 
+        {data.tescoSubstitutions && (
+          <>
+            <h2>Tesco Ingredient Substitutions</h2>
+            <p>{data.tescoSubstitutions.intro}</p>
+            <ContentTable
+              headers={['Major ingredient', 'Cheaper Tesco substitute', 'Higher protein substitute', 'Vegetarian substitute']}
+              rows={data.tescoSubstitutions.rows.map(row => [
+                row.ingredient,
+                row.cheaper,
+                row.higherProtein,
+                row.vegetarian,
+              ])}
+            />
+          </>
+        )}
+
+        {data.tescoConvenience && (
+          <>
+            <h2>Tesco Convenience Picks for Weight Loss</h2>
+            <p>{data.tescoConvenience.intro}</p>
+            <ContentTable
+              headers={['Need', 'Best Tesco option', 'Calories/protein', 'Why it works']}
+              rows={data.tescoConvenience.rows.map(row => [
+                row.need,
+                row.option,
+                row.nutrition,
+                row.why,
+              ])}
+            />
+          </>
+        )}
+
+        {data.supermarketComparison && (
+          <>
+            <h2>Tesco vs Aldi vs Asda for Low Calorie Meal Prep</h2>
+            <p>{data.supermarketComparison.intro}</p>
+            <ContentTable
+              headers={['Supermarket', 'Best for', 'Strength', 'Watch-out']}
+              rows={data.supermarketComparison.rows.map(row => [
+                row.supermarket,
+                row.bestFor,
+                row.strength,
+                row.watchOut,
+              ])}
+            />
+          </>
+        )}
+
+        {data.methodology && (
+          <>
+            <h2>{data.methodology.heading}</h2>
+            <ul className="content-bullets">
+              {data.methodology.points.map((point, i) => <li key={i}>{point}</li>)}
+            </ul>
+          </>
+        )}
+
         {/* Sticker promo — after shopping list, feels relevant here */}
         <StickerPromo sourcePage={`${slug}-shopping-list`} />
 
@@ -227,22 +397,24 @@ export default function MealPlanPage() {
           {data.tips.map((tip, i) => <li key={i}>{tip}</li>)}
         </ul>
 
-        <div className="cta-box cta-box--large">
-          <h2>Generate Your Free Personalised Plan</h2>
-          <p>
-            Our AI generator creates a personalised {data.planLabel} meal plan tailored to your
-            preferred UK supermarket, dietary requirements, and cooking time. Free, no sign-up needed.
-          </p>
-          <Link
-            to="/"
-            className="btn-primary"
-            data-event="generator_cta_click"
-            data-source-page={slug}
-            data-target-calories={data.targetCalories}
-          >
-            Generate My {data.planLabel} Plan &rarr;
-          </Link>
-        </div>
+        {data.ctaPlacements?.final !== false && (
+          <div className="cta-box cta-box--large">
+            <h2>Generate Your Free Personalised Plan</h2>
+            <p>
+              Our AI generator creates a personalised {data.planLabel} meal plan tailored to your
+              preferred UK supermarket, dietary requirements, and cooking time. Free, no sign-up needed.
+            </p>
+            <Link
+              to="/"
+              className="btn-primary"
+              data-event="generator_cta_click"
+              data-source-page={slug}
+              data-target-calories={data.targetCalories}
+            >
+              Generate My {data.planLabel} Plan &rarr;
+            </Link>
+          </div>
+        )}
 
         <p className="disclaimer">
           Meal plans are for general information only. Calories and protein are estimates. For
@@ -272,15 +444,17 @@ export default function MealPlanPage() {
               <Link to={b.path}>{b.label}</Link>
             </li>
           ))}
-          <li>
-            <Link
-              to="/"
-              data-event="generator_cta_click"
-              data-source-page={slug}
-            >
-              Generate a personalised {data.planLabel} plan
-            </Link>
-          </li>
+          {data.ctaPlacements?.relatedGenerator !== false && (
+            <li>
+              <Link
+                to="/"
+                data-event="generator_cta_click"
+                data-source-page={slug}
+              >
+                Generate a personalised {data.planLabel} plan
+              </Link>
+            </li>
+          )}
           <li>
             <Link to="/stickers" data-event="container_promo_click" data-source-page={slug}>
               Glass meal prep containers for your portions

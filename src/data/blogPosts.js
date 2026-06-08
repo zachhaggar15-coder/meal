@@ -86,6 +86,21 @@ export const blogPostsData = {
     description: 'Best low calorie foods at Tesco, Aldi, Asda, Sainsbury\'s. High protein, filling, under 200 kcal. Budget-friendly fat loss foods. Generate a free meal plan.',
     h1: 'The Best Low Calorie Foods Available in UK Supermarkets',
     intro: 'Choosing the right low-calorie foods is the foundation of any successful weight loss diet. The best choices are not just low in calories — they are also filling, nutritious, and genuinely enjoyable to eat. This guide covers the highest-value low-calorie foods available at UK supermarkets including Tesco, Aldi, Sainsbury\'s, and Asda, organised by food group.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'If you want these foods turned into a Tesco basket, use the ' },
+          { label: 'Tesco low calorie meal plan', to: '/meal-plan/tesco-low-calorie-meal-plan' },
+          { text: '. For ready-made calorie targets, compare the ' },
+          { label: '1,500 calorie plan', to: '/meal-plan/1500-calorie-meal-plan' },
+          { text: ', ' },
+          { label: '1,800 calorie plan', to: '/meal-plan/1800-calorie-meal-plan' },
+          { text: ' and ' },
+          { label: '2,000 calorie plan', to: '/meal-plan/2000-calorie-meal-plan' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
       {
         h2: 'Why Food Choice Matters on a Calorie Deficit',
@@ -161,10 +176,10 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Meal Plan', type: 'meal-plan' },
       { slug: 'tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List', type: 'blog' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
       { slug: 'aldi-weight-loss-1500', label: '1500 kcal Meal Plan', type: 'plan' },
-      { slug: 'aldi-high-protein-low-cal-1500', label: 'High Protein Low Cal Plan', type: 'plan' },
     ],
     faq: [
       { q: 'Which low calorie foods are most filling?', a: 'The most filling low-calorie foods are those high in protein or fibre: 0% Greek yogurt, chicken breast, eggs, cottage cheese, and non-starchy vegetables like broccoli and spinach. Protein is more satiating per calorie than carbohydrates or fat.' },
@@ -268,6 +283,17 @@ export const blogPostsData = {
     description: 'The ultimate Tesco low calorie shopping list for UK weight loss. Best Tesco own-brand protein foods, vegetables, and snacks with prices and calorie counts. Generate your free plan.',
     h1: 'The Ultimate Tesco Low Calorie Shopping List',
     intro: 'Tesco is the UK\'s largest supermarket and one of the easiest places to build an affordable, calorie-controlled diet. This shopping list covers everything you need for a full week of low-calorie, high-protein eating — with Tesco product names, approximate prices, and calorie counts for each item. It is designed to pair with our free Tesco low-calorie meal plan generator, which creates a personalised weekly plan using Tesco ingredients.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For the full 7-day plan with cost per day, substitutions and Tesco ready-meal picks, use the ' },
+          { label: 'Tesco low calorie meal plan', to: '/meal-plan/tesco-low-calorie-meal-plan' },
+          { text: '. If protein is your bottleneck, cross-check with the ' },
+          { label: 'cheap high protein foods UK guide', to: '/blog/best-cheap-high-protein-foods-uk' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
       {
         h2: 'Why Tesco is Great for Low-Calorie Eating',
@@ -447,6 +473,19 @@ export const blogPostsData = {
     description: 'Best cheap protein UK. Tinned tuna, eggs, lentils ranked by protein per penny. Under £3/day for 150g protein. Tesco, Aldi, Asda picks.',
     h1: 'Best Cheap High-Protein Foods in UK Supermarkets',
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets you can hit a daily target of 150 g of protein for well under £3 if you choose the right foods. This guide ranks the cheapest high-protein foods available at Tesco, Aldi, Lidl, and Asda by protein per penny — so you can build an affordable, muscle-preserving diet without overspending.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For a Tesco-specific basket using these protein rules, see the ' },
+          { label: 'Tesco low calorie meal plan', to: '/meal-plan/tesco-low-calorie-meal-plan' },
+          { text: '. For a higher daily protein target, use the ' },
+          { label: 'high protein low calorie meal plan', to: '/meal-plan/high-protein-low-calorie-meal-plan' },
+          { text: ' or compare against the simpler ' },
+          { label: '1,500 calorie plan', to: '/meal-plan/1500-calorie-meal-plan' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
       {
         h2: 'Why Protein Matters on a Budget Diet',
@@ -496,10 +535,10 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Low Calorie Plan', type: 'meal-plan' },
       { slug: 'aldi-cheap-hp-1800', label: 'Cheap High-Protein Meal Plan', type: 'plan' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
-      { slug: 'aldi-weight-loss-1800', label: 'Aldi 1800 kcal Plan', type: 'plan' },
-      { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List', type: 'blog' },
     ],
     faq: [
       { q: 'What is the cheapest high protein food in the UK?', a: 'Tinned sardines (around 55p per tin, ~22g protein) and tinned tuna (65–70p per tin, ~25g protein) offer the best protein per penny in UK supermarkets. Eggs (~22p each), dried red lentils (~75p per 500g), and 0% Greek yogurt (~£1.20 per 500g) follow closely.' },
