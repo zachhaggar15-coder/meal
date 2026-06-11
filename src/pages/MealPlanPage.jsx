@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
@@ -35,7 +35,11 @@ export default function MealPlanPage() {
   const { slug } = useParams();
   const data = mealPlansData[slug];
 
-  const [plan, setPlan] = useState(data?.plan ?? []);
+  const [plan, setPlan] = useState(() => normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+
+  useEffect(() => {
+    setPlan(normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+  }, [slug, data]);
 
   if (!data) return <Navigate to="/" replace />;
 
@@ -465,4 +469,64 @@ export default function MealPlanPage() {
       <Footer />
     </>
   );
+}
+
+function normalisePlanCalories(plan, targetCalories) {
+  if (!Array.isArray(plan) || !targetCalories) return [];
+
+  return plan.map(day => {
+    const meals = rebalanceLegacyMeals(day.meals || [], targetCalories);
+    return {
+      ...day,
+      meals,
+      totals: {
+        kcal: meals.reduce((sum, meal) => sum + (meal.kcal || 0), 0),
+        protein: meals.reduce((sum, meal) => sum + (meal.protein || 0), 0),
+      },
+    };
+  });
+}
+
+function rebalanceLegacyMeals(meals, targetCalories) {
+  const baseTotal = meals.reduce((sum, meal) => sum + (meal.kcal || 0), 0);
+  if (!baseTotal || !targetCalories) return meals;
+
+  const portionScale = targetCalories / baseTotal;
+  const rawCalories = meals.map(meal => (meal.kcal || 0) * portionScale);
+  const adjustedCalories = distributeRoundedTotal(rawCalories, targetCalories);
+
+  return meals.map((meal, index) => ({
+    ...meal,
+    kcal: adjustedCalories[index],
+    protein: Math.max(1, Math.round((meal.protein || 0) * portionScale)),
+    desc: addPortionScaleNote(meal.desc, portionScale),
+    portion_size: addPortionScaleNote(meal.portion_size, portionScale),
+  }));
+}
+
+function distributeRoundedTotal(values, targetTotal) {
+  const floors = values.map(Math.floor);
+  let remaining = targetTotal - floors.reduce((sum, value) => sum + value, 0);
+  const order = values
+    .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
+    .sort((a, b) => b.fraction - a.fraction);
+
+  for (let i = 0; i < Math.abs(remaining); i += 1) {
+    const target = order[i % order.length]?.index ?? 0;
+    floors[target] += remaining > 0 ? 1 : -1;
+  }
+
+  return floors;
+}
+
+function addPortionScaleNote(text, portionScale) {
+  if (!text || !Number.isFinite(portionScale) || Math.abs(portionScale - 1) < 0.03) {
+    return text;
+  }
+  return `${text} Use about ${formatScale(portionScale)}x this portion to match the plan target.`;
+}
+
+function formatScale(scale) {
+  if (scale >= 0.95 && scale <= 1.05) return '1';
+  return scale.toFixed(2).replace(/\.?0+$/, '');
 }

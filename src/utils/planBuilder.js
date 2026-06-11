@@ -294,16 +294,18 @@ export function buildPlan(seed) {
     if (seed.calories >= 1800 && snacks.length) mealList.push(pick(snacks, s + 13));
     if (seed.calories >= 2000 && snacks.length) mealList.push(pick(snacks, s + 19));
 
-    const meals = mealList.map(m => ({
+    const adjustedMeals = rebalanceMealsToTarget(mealList, seed.calories);
+
+    const meals = adjustedMeals.map(({ meal: m, kcal, protein, portionScale }) => ({
       type:       cap(m.type),
       name:       m.name,
-      kcal:       m.cal,
-      protein:    m.pro,
+      kcal,
+      protein,
       prep:       `${m.prepMins} min`,
-      desc:       buildMealDesc(m, seed),
+      desc:       buildMealDesc(m, kcal, protein, portionScale),
       ingredients: m.ingredients,
-      portion_size: m.ingredients.join(', '),
-      recipe:     buildRecipeSteps(m),
+      portion_size: buildPortionSize(m.ingredients, portionScale),
+      recipe:     buildRecipeSteps(m, portionScale),
     }));
 
     const totals = {
@@ -348,22 +350,79 @@ export function buildPlan(seed) {
   };
 }
 
-function buildMealDesc(meal, seed) {
+function rebalanceMealsToTarget(meals, targetCalories) {
+  const baseTotal = meals.reduce((sum, meal) => sum + (meal.cal || 0), 0);
+  if (!baseTotal || !targetCalories) {
+    return meals.map(meal => ({
+      meal,
+      kcal: meal.cal,
+      protein: meal.pro,
+      portionScale: 1,
+    }));
+  }
+
+  const portionScale = targetCalories / baseTotal;
+  const rawCalories = meals.map(meal => (meal.cal || 0) * portionScale);
+  const roundedCalories = distributeRoundedTotal(rawCalories, targetCalories);
+
+  return meals.map((meal, index) => ({
+    meal,
+    kcal: roundedCalories[index],
+    protein: Math.max(1, Math.round((meal.pro || 0) * portionScale)),
+    portionScale,
+  }));
+}
+
+function distributeRoundedTotal(values, targetTotal) {
+  const floors = values.map(Math.floor);
+  let remaining = targetTotal - floors.reduce((sum, value) => sum + value, 0);
+  const order = values
+    .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
+    .sort((a, b) => b.fraction - a.fraction);
+
+  for (let i = 0; i < Math.abs(remaining); i += 1) {
+    const target = order[i % order.length]?.index ?? 0;
+    floors[target] += remaining > 0 ? 1 : -1;
+  }
+
+  return floors;
+}
+
+function buildPortionSize(ingredients, portionScale) {
+  const base = (ingredients || []).join(', ');
+  if (!Number.isFinite(portionScale) || Math.abs(portionScale - 1) < 0.03) {
+    return base;
+  }
+  return `${base}. Use about ${formatScale(portionScale)}x these listed amounts to hit the calorie target.`;
+}
+
+function formatScale(scale) {
+  if (scale >= 0.95 && scale <= 1.05) return '1';
+  return scale.toFixed(2).replace(/\.?0+$/, '');
+}
+
+function buildMealDesc(meal, kcal, protein, portionScale = 1) {
   const mainIngs = (meal.ingredients || [])
     .slice(0, 3)
     .map(i => i.replace(/\s+\d[\d.]*.*$/i, '').toLowerCase())
     .join(', ');
-  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${meal.cal} kcal, ${meal.pro}g protein.`;
+  const portionNote = Math.abs(portionScale - 1) >= 0.03
+    ? ` Portion adjusted to ${formatScale(portionScale)}x to match the plan target.`
+    : '';
+  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${kcal} kcal, ${protein}g protein.${portionNote}`;
 }
 
-function buildRecipeSteps(meal) {
+function buildRecipeSteps(meal, portionScale = 1) {
   const ingredients = (meal.ingredients || []).join(', ');
   const name = meal.name.toLowerCase();
   const isNoCook = meal.prepMins <= 5 || (meal.tags || []).includes('easy');
+  const portionNote = Math.abs(portionScale - 1) >= 0.03
+    ? ` Use about ${formatScale(portionScale)}x the listed amounts for this plan.`
+    : '';
 
   if (name.includes('overnight') || name.includes('chia')) {
     return [
-      `Add ${ingredients} to a lidded container.`,
+      `Add ${ingredients} to a lidded container.${portionNote}`,
       'Stir well, cover, and chill for at least 4 hours or overnight.',
       'Stir again before eating and add a splash of milk if it is too thick.',
     ];
@@ -371,7 +430,7 @@ function buildRecipeSteps(meal) {
 
   if (name.includes('smoothie')) {
     return [
-      `Add ${ingredients} to a blender.`,
+      `Add ${ingredients} to a blender.${portionNote}`,
       'Blend until smooth, adding a splash more milk or water if needed.',
       'Pour into a glass or shaker and serve cold.',
     ];
@@ -379,7 +438,7 @@ function buildRecipeSteps(meal) {
 
   if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
     return [
-      `Add the base ingredients to a bowl: ${ingredients}.`,
+      `Add the base ingredients to a bowl: ${ingredients}.${portionNote}`,
       'Top with the fruit, nuts, seeds, or honey listed.',
       'Eat straight away, or cover and chill for later the same day.',
     ];
@@ -388,14 +447,14 @@ function buildRecipeSteps(meal) {
   if (name.includes('toast') || name.includes('bagel') || name.includes('wrap') || name.includes('sandwich')) {
     return [
       'Toast or warm the bread, bagel, wrap, or pitta if preferred.',
-      `Prepare the filling ingredients: ${ingredients}.`,
+      `Prepare the filling ingredients: ${ingredients}.${portionNote}`,
       'Layer the filling evenly, season to taste, and serve or wrap tightly for later.',
     ];
   }
 
   if (name.includes('salad') || name.includes('bowl')) {
     return [
-      `Wash and chop the salad or vegetable ingredients: ${ingredients}.`,
+      `Wash and chop the salad or vegetable ingredients: ${ingredients}.${portionNote}`,
       'Cook or warm any protein or grains listed, then let them cool slightly.',
       'Combine everything in a bowl, season, and pack dressing separately if meal prepping.',
     ];
@@ -404,14 +463,14 @@ function buildRecipeSteps(meal) {
   if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
     return [
       'Cook the pasta, rice, or noodles according to the packet instructions.',
-      `Meanwhile, prepare the remaining ingredients: ${ingredients}.`,
+      `Meanwhile, prepare the remaining ingredients: ${ingredients}.${portionNote}`,
       'Combine in a pan or bowl, heat through, season, and portion into containers if needed.',
     ];
   }
 
   if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
     return [
-      `Prep the listed ingredients: ${ingredients}.`,
+      `Prep the listed ingredients: ${ingredients}.${portionNote}`,
       'Cook the protein and firmer vegetables in a pan for 5-8 minutes.',
       'Add sauces, tins, stock, or pulses from the ingredient list and simmer until hot and thickened.',
     ];
@@ -419,7 +478,7 @@ function buildRecipeSteps(meal) {
 
   if (name.includes('egg') || name.includes('scramble') || name.includes('omelette')) {
     return [
-      `Prepare the ingredients: ${ingredients}.`,
+      `Prepare the ingredients: ${ingredients}.${portionNote}`,
       'Cook the eggs in a non-stick pan over medium heat, stirring or folding gently.',
       'Serve with the listed bread, vegetables, or toppings.',
     ];
@@ -427,14 +486,14 @@ function buildRecipeSteps(meal) {
 
   if (isNoCook) {
     return [
-      `Lay out the ingredients: ${ingredients}.`,
+      `Lay out the ingredients: ${ingredients}.${portionNote}`,
       'Drain, slice, or portion anything that needs preparing.',
       'Assemble in a bowl or container, season, and eat cold or microwave until hot if preferred.',
     ];
   }
 
   return [
-    `Prepare the ingredients: ${ingredients}.`,
+    `Prepare the ingredients: ${ingredients}.${portionNote}`,
     'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
     'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
   ];
