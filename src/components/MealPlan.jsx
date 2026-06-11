@@ -29,6 +29,10 @@ function buildPlanText(weeklyPlan) {
       let line = `  ${m.type}: ${m.name} — ${m.calories || 0} kcal, ${m.protein || 0}g protein`;
       if (m.prep_time) line += `, ${m.prep_time}`;
       if (m.portion_size) line += `\n    Portion: ${m.portion_size}`;
+      const recipe = getMealRecipe(m);
+      if (recipe.length) {
+        line += `\n    Recipe:\n${recipe.map((step, index) => `      ${index + 1}. ${step}`).join('\n')}`;
+      }
       return line;
     }).join('\n');
     const totals = day.daily_totals
@@ -38,15 +42,19 @@ function buildPlanText(weeklyPlan) {
   }).join('\n\n');
 }
 
-export default function MealPlan({ weeklyPlan, shoppingList, price }) {
+export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
+  const resolvedWeeklyPlan = weeklyPlan || plan?.weekly_plan;
+  const resolvedShoppingList = shoppingList || plan?.shopping_list;
+  const resolvedPrice = price || plan?.price_estimate;
+
   const [copied, setCopied] = useState(false);
   const [copiedAll, setCopiedAll] = useState(false);
   const [shared, setShared] = useState(false);
 
-  if (!Array.isArray(weeklyPlan) || weeklyPlan.length === 0) return null;
+  if (!Array.isArray(resolvedWeeklyPlan) || resolvedWeeklyPlan.length === 0) return null;
 
   async function copyPlan() {
-    const text = `YOUR MEAL PLAN\n${'='.repeat(40)}\n\n${buildPlanText(weeklyPlan)}\n\nGenerated at mealprep.org.uk`;
+    const text = `YOUR MEAL PLAN\n${'='.repeat(40)}\n\n${buildPlanText(resolvedWeeklyPlan)}\n\nGenerated at mealprep.org.uk`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -57,9 +65,9 @@ export default function MealPlan({ weeklyPlan, shoppingList, price }) {
 
   async function copyAll() {
     const sep = `\n${'='.repeat(40)}\n`;
-    let text = `YOUR MEAL PLAN${sep}\n${buildPlanText(weeklyPlan)}`;
-    if (shoppingList) {
-      text += `\n\nSHOPPING LIST${sep}\n${buildShoppingText(shoppingList, price)}`;
+    let text = `YOUR MEAL PLAN${sep}\n${buildPlanText(resolvedWeeklyPlan)}`;
+    if (resolvedShoppingList) {
+      text += `\n\nSHOPPING LIST${sep}\n${buildShoppingText(resolvedShoppingList, resolvedPrice)}`;
     }
     text += '\n\nGenerated at mealprep.org.uk';
     try {
@@ -75,7 +83,7 @@ export default function MealPlan({ weeklyPlan, shoppingList, price }) {
       try {
         await navigator.share({
           title: 'My UK Meal Plan — MealPrep.org.uk',
-          text: buildPlanText(weeklyPlan),
+          text: buildPlanText(resolvedWeeklyPlan),
           url: 'https://www.mealprep.org.uk/',
         });
         setShared(true);
@@ -100,7 +108,7 @@ export default function MealPlan({ weeklyPlan, shoppingList, price }) {
           <button className="action-btn" onClick={copyPlan}>
             {copied ? '✓ Copied!' : 'Copy plan'}
           </button>
-          {shoppingList && (
+          {resolvedShoppingList && (
             <button className="action-btn" onClick={copyAll}>
               {copiedAll ? '✓ Copied!' : 'Copy all'}
             </button>
@@ -112,7 +120,7 @@ export default function MealPlan({ weeklyPlan, shoppingList, price }) {
         </div>
       </div>
 
-      {weeklyPlan.map((day, idx) => (
+      {resolvedWeeklyPlan.map((day, idx) => (
         <div key={idx} className="card day-card">
           <h3>{day.day || `Day ${idx + 1}`}</h3>
           {Array.isArray(day.meals) &&
@@ -136,9 +144,17 @@ export default function MealPlan({ weeklyPlan, shoppingList, price }) {
                 {Array.isArray(meal.ingredients) && meal.ingredients.length > 0 && (
                   <ul className="meal-ingredients">
                     {meal.ingredients.map((ing, iIdx) => (
-                      <li key={iIdx}>{ing.item}{ing.amount ? ` — ${ing.amount}` : ''}</li>
+                      <li key={iIdx}>{formatMealIngredient(ing)}</li>
                     ))}
                   </ul>
+                )}
+                {getMealRecipe(meal).length > 0 && (
+                  <details className="plan-meal-recipe">
+                    <summary>Recipe</summary>
+                    <ol>
+                      {getMealRecipe(meal).map((step, iIdx) => <li key={iIdx}>{step}</li>)}
+                    </ol>
+                  </details>
                 )}
               </div>
             ))}
@@ -153,4 +169,96 @@ export default function MealPlan({ weeklyPlan, shoppingList, price }) {
       ))}
     </section>
   );
+}
+
+function getMealRecipe(meal) {
+  if (Array.isArray(meal.recipe)) {
+    const steps = meal.recipe.map(step => String(step || '').trim()).filter(Boolean);
+    if (steps.length) return steps.slice(0, 6);
+  }
+
+  if (typeof meal.recipe === 'string') {
+    const steps = meal.recipe
+      .split(/\n+|(?:^|\s)\d+\.\s*/g)
+      .map(step => step.trim())
+      .filter(Boolean);
+    if (steps.length) return steps.slice(0, 6);
+  }
+
+  return buildFallbackRecipe(meal);
+}
+
+function buildFallbackRecipe(meal) {
+  const ingredients = getIngredientText(meal);
+  const name = String(meal.name || '').toLowerCase();
+
+  if (name.includes('smoothie')) {
+    return [
+      `Add the listed ingredients to a blender: ${ingredients}.`,
+      'Blend until smooth, adding a splash of liquid if needed.',
+      'Serve chilled straight away.',
+    ];
+  }
+
+  if (name.includes('oats') || name.includes('yogurt') || String(meal.type || '').toLowerCase().includes('breakfast')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Combine the base ingredients in a bowl or container and stir well.',
+      'Add toppings last and eat straight away or chill until needed.',
+    ];
+  }
+
+  if (name.includes('wrap') || name.includes('sandwich') || name.includes('toast') || name.includes('pitta')) {
+    return [
+      'Toast or warm the bread, wrap, pitta, or bagel if preferred.',
+      `Prepare the filling ingredients: ${ingredients}.`,
+      'Layer everything evenly, season to taste, and serve or wrap for later.',
+    ];
+  }
+
+  if (name.includes('salad') || name.includes('bowl')) {
+    return [
+      `Wash, chop, and portion the ingredients: ${ingredients}.`,
+      'Cook or warm any grains or protein, then let them cool slightly.',
+      'Combine everything in a bowl and keep dressing separate until serving if prepping ahead.',
+    ];
+  }
+
+  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Cook the protein, aromatics, and firmer vegetables in a pan for 5-8 minutes.',
+      'Add the remaining ingredients and simmer until hot, thickened, and cooked through.',
+    ];
+  }
+
+  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
+    return [
+      'Cook the pasta, rice, or noodles according to the packet instructions.',
+      `Prepare the remaining ingredients while it cooks: ${ingredients}.`,
+      'Combine everything, heat through, season to taste, and portion if meal prepping.',
+    ];
+  }
+
+  return [
+    `Prepare the ingredients: ${ingredients}.`,
+    'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
+    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
+  ];
+}
+
+function getIngredientText(meal) {
+  if (Array.isArray(meal.ingredients) && meal.ingredients.length > 0) {
+    return meal.ingredients.map(formatMealIngredient).filter(Boolean).join(', ');
+  }
+  return meal.portion_size || meal.name || 'the listed ingredients';
+}
+
+function formatMealIngredient(ingredient) {
+  if (typeof ingredient === 'object' && ingredient !== null) {
+    const name = ingredient.item || ingredient.name || '';
+    const amount = ingredient.amount ? ` ${ingredient.amount}` : '';
+    return `${name}${amount}`.trim();
+  }
+  return String(ingredient || '').trim();
 }

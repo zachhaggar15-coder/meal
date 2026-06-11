@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
-import { getPlanBySlug } from '../utils/planBuilder.js';
+import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const MKT_LABEL = {
@@ -99,16 +99,14 @@ export default function PlanPage() {
         if (!originalPlan) setOriginalPlan(displayPlan);
 
         const newPlan = JSON.parse(JSON.stringify(displayPlan));
-        newPlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx] = {
-          ...meal,
-          ...data.meal,
-        };
+        newPlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx] = normaliseEditedMeal(meal, data.meal);
         // Recalculate day totals
         const dayMeals = newPlan.plan[editTarget.dayIdx].meals;
         newPlan.plan[editTarget.dayIdx].totals = {
           kcal:    dayMeals.reduce((s, m) => s + (m.kcal || 0), 0),
           protein: dayMeals.reduce((s, m) => s + (m.protein || 0), 0),
         };
+        newPlan.shoppingList = buildShoppingList(newPlan.plan);
 
         setEditedPlan(newPlan);
         setEditNote('Plan updated. Calorie and macro values are estimates after AI editing.');
@@ -439,6 +437,141 @@ function SummaryItem({ label, value }) {
       <span className="plan-summary-value">{value}</span>
     </div>
   );
+}
+
+function normaliseEditedMeal(currentMeal, returnedMeal = {}) {
+  const merged = { ...currentMeal, ...returnedMeal };
+  const ingredients = normaliseIngredients(merged.ingredients, merged.portion_size, merged.name);
+  const portionSize = merged.portion_size || ingredients.join(', ');
+  const mealWithIngredients = {
+    ...merged,
+    kcal: toInteger(merged.kcal ?? merged.calories ?? currentMeal.kcal),
+    protein: toInteger(merged.protein ?? currentMeal.protein),
+    ingredients,
+    portion_size: portionSize,
+  };
+
+  return {
+    ...mealWithIngredients,
+    recipe: normaliseRecipe(merged.recipe) || buildDynamicRecipe(mealWithIngredients),
+  };
+}
+
+function normaliseIngredients(value, portionSize, mealName) {
+  if (Array.isArray(value)) {
+    const ingredients = value.map(formatIngredient).filter(Boolean);
+    if (ingredients.length) return ingredients;
+  }
+
+  if (typeof value === 'string') {
+    const ingredients = value.split(',').map(formatIngredient).filter(Boolean);
+    if (ingredients.length) return ingredients;
+  }
+
+  if (portionSize) {
+    const ingredients = String(portionSize).split(',').map(formatIngredient).filter(Boolean);
+    if (ingredients.length) return ingredients;
+  }
+
+  return mealName ? [mealName] : [];
+}
+
+function formatIngredient(ingredient) {
+  if (typeof ingredient === 'object' && ingredient !== null) {
+    const name = ingredient.item || ingredient.name || '';
+    const amount = ingredient.amount ? ` ${ingredient.amount}` : '';
+    return cleanIngredient(`${name}${amount}`);
+  }
+  return cleanIngredient(ingredient);
+}
+
+function cleanIngredient(ingredient) {
+  return String(ingredient || '')
+    .replace(/\.\s*Use about .*$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normaliseRecipe(recipe) {
+  if (Array.isArray(recipe)) {
+    const steps = recipe.map(step => String(step || '').trim()).filter(Boolean);
+    return steps.length ? steps.slice(0, 6) : null;
+  }
+
+  if (typeof recipe === 'string') {
+    const steps = recipe
+      .split(/\n+|(?:^|\s)\d+\.\s*/g)
+      .map(step => step.trim())
+      .filter(Boolean);
+    return steps.length ? steps.slice(0, 6) : null;
+  }
+
+  return null;
+}
+
+function buildDynamicRecipe(meal) {
+  const ingredients = meal.ingredients?.length ? meal.ingredients.join(', ') : meal.portion_size || meal.name;
+  const name = String(meal.name || '').toLowerCase();
+  const type = String(meal.type || '').toLowerCase();
+
+  if (name.includes('smoothie')) {
+    return [
+      `Add the listed ingredients to a blender: ${ingredients}.`,
+      'Blend until smooth, adding a splash of water or milk if it is too thick.',
+      'Pour into a glass or shaker and serve chilled.',
+    ];
+  }
+
+  if (type.includes('breakfast') || name.includes('oats') || name.includes('yogurt')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Combine the base ingredients in a bowl or container and stir well.',
+      'Top with any fruit, nuts, seeds, or sauces listed and eat straight away or chill for later.',
+    ];
+  }
+
+  if (name.includes('wrap') || name.includes('sandwich') || name.includes('toast') || name.includes('pitta')) {
+    return [
+      'Warm or toast the bread, wrap, pitta, or bagel if preferred.',
+      `Prepare the filling ingredients: ${ingredients}.`,
+      'Layer the filling evenly, season to taste, then serve or wrap tightly for meal prep.',
+    ];
+  }
+
+  if (name.includes('salad') || name.includes('bowl')) {
+    return [
+      `Wash, chop, and portion the listed ingredients: ${ingredients}.`,
+      'Cook or warm any grains or protein, then let them cool slightly.',
+      'Combine everything in a bowl, season, and keep dressing separate until serving if prepping ahead.',
+    ];
+  }
+
+  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Cook the protein, aromatics, and firmer vegetables in a pan until lightly browned.',
+      'Add the remaining ingredients and simmer until hot, thickened, and cooked through.',
+    ];
+  }
+
+  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
+    return [
+      'Cook the pasta, rice, or noodles according to the packet instructions.',
+      `Prepare the remaining ingredients while it cooks: ${ingredients}.`,
+      'Combine everything, heat through, season to taste, and portion into containers if needed.',
+    ];
+  }
+
+  return [
+    `Prepare the ingredients: ${ingredients}.`,
+    'Cook the main protein or vegetables in a non-stick pan over medium heat until cooked through.',
+    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
+  ];
+}
+
+function toInteger(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
 function formatShoppingList(plan) {

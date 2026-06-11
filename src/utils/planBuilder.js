@@ -136,14 +136,16 @@ function categoriseIngredient(ing) {
   return 'extras';
 }
 
-function buildShoppingList(plan) {
+export function buildShoppingList(plan) {
   const seen = new Set();
   const list = { protein: [], carbs: [], vegetables: [], dairy: [], extras: [] };
 
   for (const day of plan) {
     for (const meal of day.meals) {
-      for (const ing of meal.ingredients || []) {
-        const key = ing.split(' ')[0].toLowerCase();
+      for (const rawIng of meal.ingredients || []) {
+        const ing = normaliseShoppingIngredient(rawIng);
+        if (!ing) continue;
+        const key = buildShoppingKey(ing);
         if (seen.has(key)) continue;
         seen.add(key);
         const cat = categoriseIngredient(ing);
@@ -152,6 +154,26 @@ function buildShoppingList(plan) {
     }
   }
   return list;
+}
+
+function normaliseShoppingIngredient(ing) {
+  if (typeof ing === 'object' && ing !== null) {
+    const name = ing.item || ing.name || '';
+    const amount = ing.amount ? ` ${ing.amount}` : '';
+    return `${name}${amount}`.trim();
+  }
+  return String(ing || '').trim();
+}
+
+function buildShoppingKey(ing) {
+  return ing
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, '')
+    .replace(/\b\d+(\.\d+)?\s*(g|kg|ml|l|tsp|tbsp|cup|cups|x|medium|small|large|tin|tins|slice|slices|scoop|scoops|pack|packs)\b/g, '')
+    .replace(/^\d+(\.\d+)?\s*/, '')
+    .replace(/\b\d+(\.\d+)?\b/g, '')
+    .replace(/\s+/g, ' ')
+    .trim() || ing.toLowerCase();
 }
 
 // ── SEO metadata ──────────────────────────────────────────────────────────────

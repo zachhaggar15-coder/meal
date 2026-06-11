@@ -189,6 +189,7 @@ CRITICAL RECIPE QUALITY RULES — failure to follow these will make the output u
    - Apply the same logic to every named dish: include what actually makes it taste like that dish.
 6. Do NOT name a dish after a sauce, paste, or spice blend and then omit that sauce, paste, or spice blend from the ingredients.
 7. The shopping list must consolidate EVERY ingredient from every meal across all days — including all oils, spices, pastes, sauces, stock, and condiments. These belong in the "pantry" category and must never be omitted.
+8. Every meal must include a "recipe" array with 3-5 short, followable cooking steps that match the ingredients and portion_size.
 
 Other rules:
 - Meals must be practical, well-flavoured, and use common UK supermarket ingredients (${supermarket}).
@@ -216,6 +217,11 @@ Output format MUST be valid JSON matching exactly:
             { "item": "rolled oats", "amount": "50g" },
             { "item": "skimmed milk", "amount": "200ml" },
             { "item": "banana", "amount": "1 medium" }
+          ],
+          "recipe": [
+            "Add the oats, milk and sliced banana to a bowl or container.",
+            "Stir well, then chill overnight or microwave for 2-3 minutes.",
+            "Serve cold or warm, adjusting with a splash of milk if needed."
           ]
         }
       ],
@@ -245,6 +251,7 @@ Output format MUST be valid JSON matching exactly:
 
 CRITICAL — ingredients array is REQUIRED on every meal. List EVERY ingredient used to cook the dish (protein, carbs, vegetables, oil, spices, sauces, aromatics, condiments), each with a precise quantity. Do not omit any flavouring or cooking ingredient — this list drives the shopping list.
 CRITICAL — portion_size is REQUIRED on every meal. Comma-separated list of main ingredients with exact gram/ml weights. Format: "150g chicken breast, 40g brown rice (dry), 200g broccoli".
+CRITICAL — recipe array is REQUIRED on every meal. Use 3-5 practical steps that a beginner can follow and that match the listed ingredients.
 Rules for shopping_list items: each item must have "name", "amount" (total needed for the whole plan), and "packs" (e.g. "2 × 500g packs"). The "pantry" category covers ALL spices, pastes, sauces, oils, stock, and condiments — these must never be omitted or left empty when meals require them.
 
 Return ONLY valid JSON. No markdown, no commentary.`;

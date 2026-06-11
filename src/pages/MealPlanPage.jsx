@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
@@ -9,6 +9,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
+import { buildShoppingList } from '../utils/planBuilder.js';
 
 function ContentTable({ headers, rows }) {
   return (
@@ -36,23 +37,20 @@ export default function MealPlanPage() {
   const data = mealPlansData[slug];
 
   const [plan, setPlan] = useState(() => normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+  const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
 
   useEffect(() => {
     setPlan(normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
   }, [slug, data]);
+
+  const shoppingList = useMemo(() => buildShoppingList(plan), [plan]);
 
   if (!data) return <Navigate to="/" replace />;
 
   function handleSwap(dayIdx, mealIdx, newMeal) {
     setPlan(prev => prev.map((day, di) => {
       if (di !== dayIdx) return day;
-      const meals = day.meals.map((m, mi) => mi !== mealIdx ? m : {
-        ...m,
-        name: newMeal.name ?? m.name,
-        kcal: newMeal.calories ?? newMeal.kcal ?? m.kcal,
-        protein: newMeal.protein ?? m.protein,
-        desc: newMeal.description ?? newMeal.desc ?? m.desc,
-      });
+      const meals = day.meals.map((m, mi) => mi !== mealIdx ? m : normaliseSwappedMeal(m, newMeal));
       return {
         ...day,
         meals,
@@ -62,6 +60,17 @@ export default function MealPlanPage() {
         },
       };
     }));
+  }
+
+  async function copyShoppingList() {
+    try {
+      await navigator.clipboard.writeText(formatLegacyShoppingList(data.h1, shoppingList));
+      setShoppingCopyStatus('Copied');
+      setTimeout(() => setShoppingCopyStatus(''), 1800);
+    } catch {
+      setShoppingCopyStatus('Copy failed');
+      setTimeout(() => setShoppingCopyStatus(''), 2200);
+    }
   }
 
   const avgProtein = plan.length
@@ -306,6 +315,16 @@ export default function MealPlanPage() {
                   {meal.portion_size && (
                     <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
                   )}
+                  {meal.recipe?.length > 0 && (
+                    <details className="plan-meal-recipe">
+                      <summary>Recipe</summary>
+                      <ol>
+                        {meal.recipe.map((stepText, stepIdx) => (
+                          <li key={stepIdx}>{stepText}</li>
+                        ))}
+                      </ol>
+                    </details>
+                  )}
                   <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(i, j, newMeal)} />
                 </div>
               ))}
@@ -322,13 +341,18 @@ export default function MealPlanPage() {
           <GeneratorCTA sourcePage={slug} calories={data.targetCalories} compact />
         )}
 
-        <h2>Sample Weekly Shopping List</h2>
+        <div className="plan-shopping-header">
+          <h2>Sample Weekly Shopping List</h2>
+          <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
+            {shoppingCopyStatus || 'Copy shopping list'}
+          </button>
+        </div>
         <p>
           Here is a sample shopping list to cover this 7-day plan. Estimated cost:{' '}
           <strong>{data.priceEstimate}</strong>.
         </p>
         <div className="shop-grid">
-          {Object.entries(data.shoppingList).map(([group, items]) => (
+          {Object.entries(shoppingList).filter(([, items]) => items.length > 0).map(([group, items]) => (
             <div key={group} className="shop-group">
               <h4>{group.charAt(0).toUpperCase() + group.slice(1)}</h4>
               <ul>{items.map((item, i) => <li key={i}>{item}</li>)}</ul>
@@ -489,19 +513,193 @@ function normalisePlanCalories(plan, targetCalories) {
 
 function rebalanceLegacyMeals(meals, targetCalories) {
   const baseTotal = meals.reduce((sum, meal) => sum + (meal.kcal || 0), 0);
-  if (!baseTotal || !targetCalories) return meals;
+  if (!baseTotal || !targetCalories) return meals.map(enrichLegacyMeal);
 
   const portionScale = targetCalories / baseTotal;
   const rawCalories = meals.map(meal => (meal.kcal || 0) * portionScale);
   const adjustedCalories = distributeRoundedTotal(rawCalories, targetCalories);
 
-  return meals.map((meal, index) => ({
+  return meals.map((meal, index) => enrichLegacyMeal({
     ...meal,
     kcal: adjustedCalories[index],
     protein: Math.max(1, Math.round((meal.protein || 0) * portionScale)),
     desc: addPortionScaleNote(meal.desc, portionScale),
     portion_size: addPortionScaleNote(meal.portion_size, portionScale),
   }));
+}
+
+function normaliseSwappedMeal(currentMeal, newMeal = {}) {
+  return enrichLegacyMeal({
+    ...currentMeal,
+    name: newMeal.name ?? currentMeal.name,
+    kcal: toInteger(newMeal.calories ?? newMeal.kcal, currentMeal.kcal),
+    protein: toInteger(newMeal.protein, currentMeal.protein),
+    prep: newMeal.prep_time ?? newMeal.prep ?? currentMeal.prep,
+    desc: newMeal.description ?? newMeal.desc ?? currentMeal.desc,
+    portion_size: newMeal.portion_size ?? currentMeal.portion_size,
+    ingredients: newMeal.ingredients ?? currentMeal.ingredients,
+    recipe: newMeal.recipe ?? currentMeal.recipe,
+  });
+}
+
+function enrichLegacyMeal(meal) {
+  const ingredients = normaliseLegacyIngredients(meal.ingredients, meal.portion_size, meal.name);
+  const mealWithIngredients = {
+    ...meal,
+    ingredients,
+    portion_size: meal.portion_size || ingredients.join(', '),
+  };
+
+  return {
+    ...mealWithIngredients,
+    recipe: normaliseLegacyRecipe(meal.recipe) || buildLegacyRecipe(mealWithIngredients),
+  };
+}
+
+function normaliseLegacyIngredients(value, portionSize, mealName) {
+  if (Array.isArray(value)) {
+    const ingredients = value.map(formatLegacyIngredient).filter(Boolean);
+    if (ingredients.length) return ingredients;
+  }
+
+  if (typeof value === 'string') {
+    const ingredients = value.split(',').map(formatLegacyIngredient).filter(Boolean);
+    if (ingredients.length) return ingredients;
+  }
+
+  if (portionSize) {
+    const ingredients = String(portionSize).split(',').map(formatLegacyIngredient).filter(Boolean);
+    if (ingredients.length) return ingredients;
+  }
+
+  return mealName ? [mealName] : [];
+}
+
+function formatLegacyIngredient(ingredient) {
+  if (typeof ingredient === 'object' && ingredient !== null) {
+    const name = ingredient.item || ingredient.name || '';
+    const amount = ingredient.amount ? ` ${ingredient.amount}` : '';
+    return cleanLegacyIngredient(`${name}${amount}`);
+  }
+  return cleanLegacyIngredient(ingredient);
+}
+
+function cleanLegacyIngredient(ingredient) {
+  return String(ingredient || '')
+    .replace(/\.\s*Use about .*$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normaliseLegacyRecipe(recipe) {
+  if (Array.isArray(recipe)) {
+    const steps = recipe.map(step => String(step || '').trim()).filter(Boolean);
+    return steps.length ? steps.slice(0, 6) : null;
+  }
+
+  if (typeof recipe === 'string') {
+    const steps = recipe
+      .split(/\n+|(?:^|\s)\d+\.\s*/g)
+      .map(step => step.trim())
+      .filter(Boolean);
+    return steps.length ? steps.slice(0, 6) : null;
+  }
+
+  return null;
+}
+
+function buildLegacyRecipe(meal) {
+  const ingredients = meal.ingredients?.length ? meal.ingredients.join(', ') : meal.portion_size || meal.name;
+  const name = String(meal.name || '').toLowerCase();
+  const type = String(meal.type || '').toLowerCase();
+
+  if (name.includes('smoothie')) {
+    return [
+      `Add the listed ingredients to a blender: ${ingredients}.`,
+      'Blend until smooth, adding a splash of milk or water if needed.',
+      'Serve chilled straight away.',
+    ];
+  }
+
+  if (type.includes('breakfast') || name.includes('oats') || name.includes('yogurt')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Combine the base ingredients in a bowl or container and stir well.',
+      'Add toppings last, then eat straight away or chill until needed.',
+    ];
+  }
+
+  if (name.includes('wrap') || name.includes('sandwich') || name.includes('toast') || name.includes('pitta')) {
+    return [
+      'Toast or warm the bread, wrap, pitta, or bagel if preferred.',
+      `Prepare the filling ingredients: ${ingredients}.`,
+      'Layer everything evenly, season to taste, and serve or wrap for later.',
+    ];
+  }
+
+  if (name.includes('salad') || name.includes('bowl')) {
+    return [
+      `Wash, chop, and portion the ingredients: ${ingredients}.`,
+      'Cook or warm any grains or protein, then let them cool slightly.',
+      'Combine in a bowl and keep dressing separate until serving if meal prepping.',
+    ];
+  }
+
+  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Cook the protein, aromatics, and firmer vegetables in a pan for 5-8 minutes.',
+      'Add the remaining ingredients and simmer until hot, thickened, and cooked through.',
+    ];
+  }
+
+  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
+    return [
+      'Cook the pasta, rice, or noodles according to the packet instructions.',
+      `Prepare the remaining ingredients while it cooks: ${ingredients}.`,
+      'Combine everything, heat through, season to taste, and portion if meal prepping.',
+    ];
+  }
+
+  if (name.includes('egg') || name.includes('omelette') || name.includes('scramble')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Cook the eggs in a non-stick pan over medium heat, stirring or folding gently.',
+      'Serve with the listed sides or toppings.',
+    ];
+  }
+
+  return [
+    `Prepare the ingredients: ${ingredients}.`,
+    'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
+    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
+  ];
+}
+
+function formatLegacyShoppingList(title, shoppingList) {
+  const groups = Object.entries(shoppingList || {})
+    .filter(([, items]) => items?.length)
+    .map(([group, items]) => [
+      formatShoppingGroup(group),
+      ...items.map(item => `- ${item}`),
+    ].join('\n'));
+
+  return `${title || 'Meal plan'} shopping list\n\n${groups.join('\n\n')}`;
+}
+
+function formatShoppingGroup(group) {
+  return {
+    protein: 'Protein',
+    carbs: 'Carbs & Grains',
+    vegetables: 'Vegetables',
+    dairy: 'Dairy & Eggs',
+    extras: 'Extras & Condiments',
+  }[group] || group;
+}
+
+function toInteger(value, fallback = 0) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function distributeRoundedTotal(values, targetTotal) {

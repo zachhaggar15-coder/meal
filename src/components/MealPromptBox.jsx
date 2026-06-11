@@ -23,6 +23,10 @@ export default function MealPromptBox({ meal, onSwap }) {
           description: meal.desc || meal.description || '',
           calories: meal.kcal || meal.calories || 0,
           protein: meal.protein || 0,
+          prep_time: meal.prep_time || meal.prep || '',
+          portion_size: meal.portion_size || '',
+          ingredients: normalisePromptIngredients(meal),
+          recipe: normalisePromptRecipe(meal.recipe),
         }],
         daily_totals: {
           calories: meal.kcal || meal.calories || 0,
@@ -78,6 +82,14 @@ export default function MealPromptBox({ meal, onSwap }) {
                 </p>
               )}
               {result.description && <p className="meal-prompt-result-desc">{result.description}</p>}
+              {Array.isArray(result.recipe) && result.recipe.length > 0 && (
+                <details className="plan-meal-recipe">
+                  <summary>Recipe</summary>
+                  <ol>
+                    {result.recipe.map((step, i) => <li key={i}>{step}</li>)}
+                  </ol>
+                </details>
+              )}
               <div className="meal-prompt-result-actions">
                 {onSwap && (
                   <button
@@ -116,4 +128,24 @@ export default function MealPromptBox({ meal, onSwap }) {
       )}
     </div>
   );
+}
+
+function normalisePromptIngredients(meal) {
+  if (Array.isArray(meal.ingredients) && meal.ingredients.length > 0) {
+    return meal.ingredients;
+  }
+  if (meal.portion_size) {
+    return String(meal.portion_size)
+      .split(',')
+      .map(item => item.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function normalisePromptRecipe(recipe) {
+  if (Array.isArray(recipe)) {
+    return recipe.map(step => String(step || '').trim()).filter(Boolean);
+  }
+  return [];
 }

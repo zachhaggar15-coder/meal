@@ -32,7 +32,9 @@ Rules:
 - Keep the same JSON structure as the input — do not add or remove keys.
 - Every meal must have a "portion_size" field with exact gram/ml weights (e.g. "150g chicken breast, 40g brown rice (dry), 200g broccoli"). If a meal is changed, update its portion_size to match the new dish.
 - Every meal must have an "ingredients" array listing EVERY ingredient used in the dish (protein, carbs, vegetables, oil, spices, sauces, aromatics, condiments), each with a precise quantity. If a meal is changed, replace its ingredients array completely to match the new dish — including all flavourings and cooking ingredients, not just the main protein and carb.
+- If the input meal includes a "recipe" array, keep it. If that meal is changed, replace recipe with 3-5 short, followable steps that match the updated ingredients and portion_size.
 - A named dish must include all components that define it: a curry needs curry paste/spice blend, aromatics, and a liquid base; a stir-fry needs sauce and aromatics; a pasta dish needs its sauce.
+- If the input includes shopping_list and any meal or ingredient changes, rebuild shopping_list from every meal's ingredients. Remove ingredients no longer used and add replacement ingredients.
 - Return the complete updated plan, not just the changed parts.
 - Return ONLY valid JSON. No markdown, no commentary.`;
 
