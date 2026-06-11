@@ -323,6 +323,18 @@ const CORE_PLAN_SEEDS = [
   { slug: 'aldi-endurance-veg-2000', goal: 'endurance-athlete', supermarket: 'aldi', calories: 2000, dietType: 'vegetarian', budget: 'budget', effort: 'standard', mealSetIndex: 24, title: 'Aldi Vegetarian Endurance Plan — 2,000 kcal', emphasis: 'whole-food' },
   { slug: 'tesco-endurance-pesc-2000', goal: 'endurance-athlete', supermarket: 'tesco', calories: 2000, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 24, title: 'Tesco Pescatarian Endurance Plan — 2,000 kcal', emphasis: 'whole-food' },
 
+  // ── BODY RECOMPOSITION (10) ─────────────────────────────────────────────────
+  { slug: 'aldi-body-recomp-1800', goal: 'body-recomp', supermarket: 'aldi', calories: 1800, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 30, title: 'Aldi Body Recomposition Meal Plan — 1,800 kcal', emphasis: 'recomp-protein' },
+  { slug: 'tesco-body-recomp-2000', goal: 'body-recomp', supermarket: 'tesco', calories: 2000, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 31, title: 'Tesco Body Recomposition Plan — 2,000 kcal', emphasis: 'recomp-protein' },
+  { slug: 'asda-body-recomp-2000', goal: 'body-recomp', supermarket: 'asda', calories: 2000, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 32, title: 'Asda Body Recomposition Meal Plan — 2,000 kcal', emphasis: 'recomp-protein' },
+  { slug: 'lidl-body-recomp-1800', goal: 'body-recomp', supermarket: 'lidl', calories: 1800, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 33, title: 'Lidl Body Recomposition Meal Plan — 1,800 kcal', emphasis: 'recomp-protein' },
+  { slug: 'sainsburys-body-recomp-2200', goal: 'body-recomp', supermarket: 'sainsburys', calories: 2200, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 34, title: "Sainsbury's Body Recomposition Plan — 2,200 kcal", emphasis: 'recomp-protein' },
+  { slug: 'morrisons-body-recomp-2000', goal: 'body-recomp', supermarket: 'morrisons', calories: 2000, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 35, title: 'Morrisons Body Recomposition Plan — 2,000 kcal', emphasis: 'recomp-protein' },
+  { slug: 'any-body-recomp-2000', goal: 'body-recomp', supermarket: 'any', calories: 2000, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 36, title: 'Body Recomposition Meal Plan — 2,000 kcal', emphasis: 'recomp-protein' },
+  { slug: 'aldi-body-recomp-veg-2000', goal: 'body-recomp', supermarket: 'aldi', calories: 2000, dietType: 'vegetarian', budget: 'budget', effort: 'standard', mealSetIndex: 37, title: 'Aldi Vegetarian Body Recomposition Plan — 2,000 kcal', emphasis: 'recomp-protein' },
+  { slug: 'tesco-body-recomp-pesc-2000', goal: 'body-recomp', supermarket: 'tesco', calories: 2000, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 38, title: 'Tesco Pescatarian Body Recomposition Plan — 2,000 kcal', emphasis: 'recomp-protein' },
+  { slug: 'asda-body-recomp-2200', goal: 'body-recomp', supermarket: 'asda', calories: 2200, dietType: 'standard', budget: 'budget', effort: 'batch', mealSetIndex: 39, title: 'Asda Body Recomposition Batch Plan — 2,200 kcal', emphasis: 'recomp-protein' },
+
   // ── CUTTING PHASE (10) ────────────────────────────────────────────────────
   { slug: 'aldi-cutting-1400', goal: 'cutting', supermarket: 'aldi', calories: 1400, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 25, title: 'Aldi Cutting Phase Meal Plan — 1,400 kcal', emphasis: 'lean-protein' },
   { slug: 'tesco-cutting-1400', goal: 'cutting', supermarket: 'tesco', calories: 1400, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 26, title: 'Tesco Cutting Phase Meal Plan — 1,400 kcal', emphasis: 'lean-protein' },
@@ -371,6 +383,7 @@ const GOAL_TITLES = {
   'anti-inflammatory': 'Anti-Inflammatory',
   'menopause-nutrition': 'Menopause Nutrition',
   'endurance-athlete': 'Endurance Athlete',
+  'body-recomp': 'Body Recomposition',
   cutting: 'Cutting Phase',
 };
 
@@ -510,6 +523,13 @@ const EXPANSION_STYLES = {
     { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'lean-protein' },
     { slug: 'higher-carb', label: 'Higher-Carb', effort: 'standard', emphasis: 'whole-food' },
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+  ],
+  'body-recomp': [
+    { slug: 'lean-recomp', label: 'Lean', effort: 'standard', emphasis: 'recomp-protein' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'recomp-protein' },
+    { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'recomp-protein' },
+    { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
   ],
   cutting: [
     { slug: 'lean-cut', label: 'Lean', effort: 'standard', emphasis: 'lean-protein' },

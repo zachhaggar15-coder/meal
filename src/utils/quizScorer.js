@@ -1,5 +1,5 @@
 import { PLAN_SEEDS } from '../data/planSeeds.js';
-import { GOAL_LABELS, BUDGET_ESTIMATES, MACRO_PROFILES } from './planBuilder.js';
+import { GOAL_LABELS, BUDGET_ESTIMATES, MACRO_PROFILES, MACRO_GRAMS } from './planBuilder.js';
 
 // ── Weights ───────────────────────────────────────────────────────────────────
 const W_GOAL        = 30;
@@ -15,9 +15,9 @@ const W_TOTAL       = W_GOAL + W_DIET + W_SUPERMARKET + W_CALORIES + W_BUDGET + 
 const RELATED_GOALS = {
   'weight-loss':           ['budget-fat-loss', 'high-protein-low-cal', 'low-effort'],
   'budget-fat-loss':       ['weight-loss', 'cheap-high-protein', 'cheap-student'],
-  'high-protein-low-cal':  ['weight-loss', 'cheap-high-protein', 'muscle-gain'],
-  'muscle-gain':           ['gym-beginner', 'budget-bodybuilding', 'high-protein-low-cal'],
-  'gym-beginner':          ['muscle-gain', 'high-protein-low-cal'],
+  'high-protein-low-cal':  ['weight-loss', 'cheap-high-protein', 'muscle-gain', 'body-recomp'],
+  'muscle-gain':           ['gym-beginner', 'budget-bodybuilding', 'high-protein-low-cal', 'body-recomp'],
+  'gym-beginner':          ['muscle-gain', 'high-protein-low-cal', 'body-recomp'],
   'budget-bodybuilding':   ['muscle-gain', 'cheap-high-protein'],
   'cheap-student':         ['budget-fat-loss', 'cheap-high-protein', 'low-effort'],
   'cheap-high-protein':    ['high-protein-low-cal', 'budget-fat-loss', 'cheap-student'],
@@ -27,6 +27,7 @@ const RELATED_GOALS = {
   'vegan-low-cal':         ['vegetarian-low-cal'],
   'high-protein-vegetarian':['vegetarian-low-cal', 'high-protein-low-cal'],
   'pescatarian':           ['high-protein-low-cal', 'weight-loss'],
+  'body-recomp':           ['high-protein-low-cal', 'muscle-gain', 'maintenance', 'cutting'],
 };
 
 const EFFORT_ORDER = ['minimal', 'low', 'standard', 'batch', 'high-variety'];
@@ -114,7 +115,9 @@ function scorePlan(seed, answers) {
 
   // ── Macro preference (5pts bonus) ──
   if (answers.macros) {
-    const plan = MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'];
+    const plan = answers.macroMode === 'custom-grams'
+      ? MACRO_GRAMS[seed.emphasis] || MACRO_GRAMS['lean-protein']
+      : MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'];
     const sim = cosineSimilarity(answers.macros, plan);
     score += Math.round(sim * W_MACROS);
   } else {
@@ -187,6 +190,7 @@ export function getTopMatches(answers, n = 3) {
     effort:        seed.effort,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
+    macrosGrams:   MACRO_GRAMS[seed.emphasis] || MACRO_GRAMS['lean-protein'],
     score,
     matchLabel:    matchLabel(score),
     matchReason:   buildMatchReason(seed, enrichedAnswers),

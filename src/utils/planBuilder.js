@@ -22,6 +22,7 @@ export const GOAL_LABELS = {
   'anti-inflammatory': 'Anti-Inflammatory',
   'menopause-nutrition': 'Menopause Nutrition',
   'endurance-athlete': 'Endurance & Running',
+  'body-recomp': 'Body Recomposition',
   'cutting': 'Cutting Phase',
 };
 
@@ -48,11 +49,12 @@ export const MACRO_PROFILES = {
   'frozen-friendly':{ protein: 65, carbs: 70, fats: 55, fibre: 45 },
   'high-variety':   { protein: 70, carbs: 60, fats: 55, fibre: 65 },
   'low-cal-swaps':  { protein: 70, carbs: 55, fats: 40, fibre: 60 },
+  'recomp-protein': { protein: 88, carbs: 62, fats: 42, fibre: 60 },
 };
 
-// Estimated average daily gram targets per emphasis type — used for display only.
-// Quiz matching still uses MACRO_PROFILES (0–100 scale, cosine similarity).
-const MACRO_GRAMS = {
+// Estimated average daily gram targets per emphasis type.
+// Quiz custom macro matching and plan displays use these concrete values.
+export const MACRO_GRAMS = {
   'lean-protein':   { protein: 160, carbs: 150, fats: 55, fibre: 30 },
   'whole-food':     { protein: 100, carbs: 220, fats: 65, fibre: 42 },
   'batch-cooking':  { protein: 130, carbs: 200, fats: 60, fibre: 35 },
@@ -60,6 +62,7 @@ const MACRO_GRAMS = {
   'frozen-friendly':{ protein: 100, carbs: 225, fats: 70, fibre: 25 },
   'high-variety':   { protein: 120, carbs: 190, fats: 65, fibre: 35 },
   'low-cal-swaps':  { protein: 120, carbs: 160, fats: 50, fibre: 35 },
+  'recomp-protein': { protein: 165, carbs: 190, fats: 60, fibre: 35 },
 };
 
 const GOAL_BEST_FOR = {
@@ -81,6 +84,7 @@ const GOAL_BEST_FOR = {
   'anti-inflammatory': 'Reducing inflammation with omega-3-rich, whole-food meals',
   'menopause-nutrition': 'Supporting hormonal balance with calcium, iron and protein',
   'endurance-athlete': 'Fuelling running and endurance training with higher-carb meals',
+  'body-recomp': 'Body recomposition with high protein and slightly higher calories',
   'cutting': 'Aggressive calorie deficit while preserving lean muscle mass',
 };
 
@@ -299,6 +303,7 @@ export function buildPlan(seed) {
       desc:       buildMealDesc(m, seed),
       ingredients: m.ingredients,
       portion_size: m.ingredients.join(', '),
+      recipe:     buildRecipeSteps(m),
     }));
 
     const totals = {
@@ -349,6 +354,90 @@ function buildMealDesc(meal, seed) {
     .map(i => i.replace(/\s+\d[\d.]*.*$/i, '').toLowerCase())
     .join(', ');
   return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${meal.cal} kcal, ${meal.pro}g protein.`;
+}
+
+function buildRecipeSteps(meal) {
+  const ingredients = (meal.ingredients || []).join(', ');
+  const name = meal.name.toLowerCase();
+  const isNoCook = meal.prepMins <= 5 || (meal.tags || []).includes('easy');
+
+  if (name.includes('overnight') || name.includes('chia')) {
+    return [
+      `Add ${ingredients} to a lidded container.`,
+      'Stir well, cover, and chill for at least 4 hours or overnight.',
+      'Stir again before eating and add a splash of milk if it is too thick.',
+    ];
+  }
+
+  if (name.includes('smoothie')) {
+    return [
+      `Add ${ingredients} to a blender.`,
+      'Blend until smooth, adding a splash more milk or water if needed.',
+      'Pour into a glass or shaker and serve cold.',
+    ];
+  }
+
+  if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
+    return [
+      `Add the base ingredients to a bowl: ${ingredients}.`,
+      'Top with the fruit, nuts, seeds, or honey listed.',
+      'Eat straight away, or cover and chill for later the same day.',
+    ];
+  }
+
+  if (name.includes('toast') || name.includes('bagel') || name.includes('wrap') || name.includes('sandwich')) {
+    return [
+      'Toast or warm the bread, bagel, wrap, or pitta if preferred.',
+      `Prepare the filling ingredients: ${ingredients}.`,
+      'Layer the filling evenly, season to taste, and serve or wrap tightly for later.',
+    ];
+  }
+
+  if (name.includes('salad') || name.includes('bowl')) {
+    return [
+      `Wash and chop the salad or vegetable ingredients: ${ingredients}.`,
+      'Cook or warm any protein or grains listed, then let them cool slightly.',
+      'Combine everything in a bowl, season, and pack dressing separately if meal prepping.',
+    ];
+  }
+
+  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
+    return [
+      'Cook the pasta, rice, or noodles according to the packet instructions.',
+      `Meanwhile, prepare the remaining ingredients: ${ingredients}.`,
+      'Combine in a pan or bowl, heat through, season, and portion into containers if needed.',
+    ];
+  }
+
+  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
+    return [
+      `Prep the listed ingredients: ${ingredients}.`,
+      'Cook the protein and firmer vegetables in a pan for 5-8 minutes.',
+      'Add sauces, tins, stock, or pulses from the ingredient list and simmer until hot and thickened.',
+    ];
+  }
+
+  if (name.includes('egg') || name.includes('scramble') || name.includes('omelette')) {
+    return [
+      `Prepare the ingredients: ${ingredients}.`,
+      'Cook the eggs in a non-stick pan over medium heat, stirring or folding gently.',
+      'Serve with the listed bread, vegetables, or toppings.',
+    ];
+  }
+
+  if (isNoCook) {
+    return [
+      `Lay out the ingredients: ${ingredients}.`,
+      'Drain, slice, or portion anything that needs preparing.',
+      'Assemble in a bowl or container, season, and eat cold or microwave until hot if preferred.',
+    ];
+  }
+
+  return [
+    `Prepare the ingredients: ${ingredients}.`,
+    'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
+    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
+  ];
 }
 
 // ── Lookups ───────────────────────────────────────────────────────────────────

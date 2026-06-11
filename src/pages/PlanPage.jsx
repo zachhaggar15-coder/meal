@@ -24,6 +24,7 @@ export default function PlanPage() {
   const [editError, setEditError]          = useState('');
   const [editNote, setEditNote]            = useState('');
   const [originalPlan, setOriginalPlan]    = useState(null);
+  const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
 
   if (!plan) {
     return (
@@ -125,6 +126,30 @@ export default function PlanPage() {
     setEditedPlan(null);
     setOriginalPlan(null);
     setEditNote('');
+  }
+
+  async function copyShoppingList() {
+    const text = formatShoppingList(displayPlan);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      setShoppingCopyStatus('Copied');
+      setTimeout(() => setShoppingCopyStatus(''), 1800);
+    } catch {
+      setShoppingCopyStatus('Copy failed');
+      setTimeout(() => setShoppingCopyStatus(''), 2200);
+    }
   }
 
   return (
@@ -254,6 +279,17 @@ export default function PlanPage() {
                     <p className="plan-meal-desc">{meal.desc}</p>
                   )}
 
+                  {meal.recipe?.length > 0 && (
+                    <details className="plan-meal-recipe">
+                      <summary>Recipe</summary>
+                      <ol>
+                        {meal.recipe.map((stepText, stepIdx) => (
+                          <li key={stepIdx}>{stepText}</li>
+                        ))}
+                      </ol>
+                    </details>
+                  )}
+
                   {/* AI edit trigger */}
                   <button
                     className="plan-meal-edit-btn"
@@ -309,7 +345,12 @@ export default function PlanPage() {
 
         {/* Shopping List */}
         <section className="plan-shopping-section">
-          <h2>Weekly Shopping List</h2>
+          <div className="plan-shopping-header">
+            <h2>Weekly Shopping List</h2>
+            <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
+              {shoppingCopyStatus || 'Copy shopping list'}
+            </button>
+          </div>
           <p className="plan-shopping-note">Estimated cost: <strong>{plan.priceEstimate}/week</strong> for one person from {MKT_LABEL[plan.supermarket] || plan.supermarket}.</p>
           <div className="shopping-list-grid">
             {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
@@ -398,6 +439,17 @@ function SummaryItem({ label, value }) {
       <span className="plan-summary-value">{value}</span>
     </div>
   );
+}
+
+function formatShoppingList(plan) {
+  const groups = Object.entries(plan.shoppingList || {})
+    .filter(([, items]) => items?.length)
+    .map(([cat, items]) => [
+      catLabel(cat),
+      ...items.map(item => `- ${item}`),
+    ].join('\n'));
+
+  return `${plan.title || 'Meal plan'} shopping list\n\n${groups.join('\n\n')}`;
 }
 
 function catLabel(cat) {

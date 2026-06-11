@@ -13,6 +13,7 @@ const GOALS = [
   { value: 'budget-fat-loss',       label: 'Budget Fat Loss' },
   { value: 'high-protein-low-cal',  label: 'High Protein Low Cal' },
   { value: 'muscle-gain',           label: 'Muscle Gain' },
+  { value: 'body-recomp',           label: 'Body Recomp' },
   { value: 'gym-beginner',          label: 'Gym Beginner' },
   { value: 'budget-bodybuilding',   label: 'Budget Bodybuilding' },
   { value: 'cheap-student',         label: 'Cheap Student' },

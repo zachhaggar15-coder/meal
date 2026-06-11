@@ -85,7 +85,7 @@ export default function QuizResults() {
             )}
           </div>
 
-          <MacroBars macros={best.macros} />
+          <MacroBars macros={best.macrosGrams || best.macros} />
 
           <Link to={`/plans/${best.slug}`} className="result-card-cta result-card-cta--primary">
             View Full Plan →
@@ -124,6 +124,8 @@ export default function QuizResults() {
 }
 
 function MacroBars({ macros }) {
+  const maxByMacro = { protein: 220, carbs: 320, fats: 120, fibre: 50 };
+
   return (
     <div className="macro-bars">
       {[
@@ -135,8 +137,12 @@ function MacroBars({ macros }) {
         <div className="macro-bar-row" key={key}>
           <span className="macro-bar-label">{label}</span>
           <div className="macro-bar-track">
-            <div className="macro-bar-fill" style={{ width: `${macros[key] || 50}%` }} />
+            <div
+              className="macro-bar-fill"
+              style={{ width: `${Math.min(100, Math.round(((macros[key] || 0) / maxByMacro[key]) * 100))}%` }}
+            />
           </div>
+          <span className="macro-bar-pct">{macros[key] || 0}g</span>
         </div>
       ))}
     </div>
