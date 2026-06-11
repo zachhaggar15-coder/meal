@@ -194,6 +194,8 @@ const ROUTES = uniqueRoutes([
   ...BLOG_SLUGS.map(slug => `/blog/${slug}`),
 ]);
 
+const SITEMAP_ROUTES = ROUTES.filter(route => route !== '/quiz/results');
+
 async function prerender() {
   const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf-8');
   const ssrBundle = pathToFileURL(path.join(dist, 'ssr', 'entry-server.js')).href;
@@ -253,7 +255,7 @@ async function prerender() {
     return ['0.5', 'monthly'];
   }
 
-  const sitemapEntries = ROUTES.map(route => {
+  const sitemapEntries = SITEMAP_ROUTES.map(route => {
     const [priority, changefreq] = routePriority(route);
     return urlEntry(route, priority, changefreq);
   });

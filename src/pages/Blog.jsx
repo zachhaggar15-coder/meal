@@ -67,7 +67,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'MealPrep.org.uk Blog — UK Meal Prep & Nutrition Guides',
-  description: 'Free UK meal prep guides, nutrition advice, supermarket shopping tips, and diet plans for weight loss, muscle building, and healthy eating.',
+  description: 'Free UK meal prep guides for weight loss, high protein eating, supermarket shopping, vegan meals, batch cooking and budget planning.',
   url: 'https://www.mealprep.org.uk/blog',
   publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
 };
@@ -77,7 +77,7 @@ export default function Blog() {
     <>
       <SEO
         title="Meal Prep Blog UK — Free Nutrition Guides & Eating Plans | MealPrep.org.uk"
-        description="Free UK meal prep guides, nutrition advice, supermarket shopping tips, and diet plans. 30 articles covering weight loss, high protein, vegan, batch cooking, and more."
+        description="Free UK meal prep guides for weight loss, high protein eating, supermarket shopping, vegan meals, batch cooking and budget planning."
         canonical="/blog"
         jsonLd={jsonLd}
       />

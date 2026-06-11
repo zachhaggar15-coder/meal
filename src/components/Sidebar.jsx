@@ -128,6 +128,14 @@ export default function Sidebar({ open, onClose }) {
             Meal Prep Containers
           </Link>
 
+          <Link
+            to="/blog"
+            className={`sidebar-top-link${location.pathname === '/blog' ? ' sidebar-link--active' : ''}`}
+            onClick={onClose}
+          >
+            Blog
+          </Link>
+
           {NAV.map(group => (
             <div key={group.label} className="sidebar-group">
               <button

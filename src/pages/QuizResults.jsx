@@ -56,6 +56,7 @@ export default function QuizResults() {
         title="Your Meal Plan Matches — MealPrep.org.uk"
         description="Here are your top 3 matching UK meal plans based on your goal, budget, supermarket, and diet preferences."
         canonical="https://www.mealprep.org.uk/quiz/results"
+        robots="noindex,follow"
       />
 
       <div className="quiz-results-page content-page">

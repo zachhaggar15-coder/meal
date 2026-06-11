@@ -19,7 +19,7 @@ const homeJsonLd = [
     '@type': 'WebSite',
     name: 'MealPrep.org.uk — UK Meal Plan Library',
     url: 'https://www.mealprep.org.uk',
-    description: `Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories, and diet. Take a 30-second quiz to find your perfect plan.`,
+    description: `Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories and diet, or take the quiz to find your best match.`,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -248,7 +248,7 @@ export default function Home() {
     <>
       <SEO
         title={`Free UK Meal Plans — ${PLAN_COUNT} Plans by Goal, Supermarket & Diet | MealPrep.org.uk`}
-        description={`Find your perfect UK meal plan in 30 seconds. Browse ${PLAN_COUNT} free 7-day meal plans by goal, supermarket, calories, budget, and diet. Vegetarian, vegan, budget, high protein and more.`}
+        description={`Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories and diet, or take the quiz to find your best match.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />

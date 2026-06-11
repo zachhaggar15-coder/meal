@@ -8,6 +8,8 @@ export default function Footer() {
           <h4>Generator</h4>
           <ul>
             <li><Link to="/">Free Meal Plan Generator</Link></li>
+            <li><Link to="/browse">Browse All Meal Plans</Link></li>
+            <li><Link to="/blog">Meal Prep Blog</Link></li>
           </ul>
         </div>
 

@@ -88,6 +88,14 @@ const EFFORT_LABEL = {
   batch: 'Batch cook', 'high-variety': 'High variety',
 };
 
+const PLAN_INDEX_GROUPS = GOALS
+  .filter(g => g.value)
+  .map(g => ({
+    ...g,
+    plans: ALL_PLANS.filter(p => p.goal === g.value),
+  }))
+  .filter(g => g.plans.length > 0);
+
 export default function BrowsePlans() {
   const [search,     setSearch]     = useState('');
   const [goal,       setGoal]       = useState('');
@@ -131,7 +139,7 @@ export default function BrowsePlans() {
     <>
       <SEO
         title="Free UK Meal Plans 2026 — Search by Goal, Supermarket & Calories | MealPrep.org.uk"
-        description={`Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories, diet, budget, and effort. Weight loss, muscle gain, vegan, vegetarian, anti-inflammatory and more — no sign-up needed.`}
+        description={`Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories, diet and budget. Filter weight loss, muscle gain, vegan and vegetarian plans.`}
         canonical="https://www.mealprep.org.uk/browse"
       />
 
@@ -221,6 +229,30 @@ export default function BrowsePlans() {
             </button>
           </div>
         )}
+
+        <section className="browse-index" aria-labelledby="browse-index-heading">
+          <div className="browse-index-header">
+            <h2 id="browse-index-heading">Complete Plan Index</h2>
+            <p>Every free UK meal plan, grouped by goal.</p>
+          </div>
+          <div className="browse-index-grid">
+            {PLAN_INDEX_GROUPS.map(group => (
+              <details className="browse-index-group" key={group.value}>
+                <summary>
+                  <span>{group.label}</span>
+                  <span>{group.plans.length} plans</span>
+                </summary>
+                <ul className="browse-index-list">
+                  {group.plans.map(plan => (
+                    <li key={plan.slug}>
+                      <Link to={`/plans/${plan.slug}`}>{plan.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+          </div>
+        </section>
       </div>
     </>
   );
