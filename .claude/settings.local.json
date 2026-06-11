@@ -34,7 +34,26 @@
       "Read(//c/Windows/Fonts/**)",
       "Bash(py -3 -c \"import os; fonts=[f for f in os.listdir\\('C:/Windows/Fonts'\\) if f.endswith\\('.ttf'\\)]; print\\('\\\\n'.join\\(sorted\\(fonts\\)[:40]\\)\\)\")",
       "Bash(py -3 -)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "WebSearch",
+      "Bash(git config *)",
+      "Bash(echo \"name: $\\(git config user.name\\)\")",
+      "Bash(echo \"email: $\\(git config user.email\\)\")",
+      "Bash(npm start *)",
+      "Bash(curl -s --retry 25 --retry-delay 1 --retry-connrefused http://localhost:3000/internal/content-audit -o a.html)",
+      "Bash(grep -o \"No problems detected[^\\\\\\\\]*\\\\|check\\(s\\) need attention\" a.html)",
+      "Bash(curl -s http://localhost:3000/products/timemore-chestnut-c2 -o p.html)",
+      "Bash(curl -s http://localhost:3000/guides/best-coffee-grinders-for-small-kitchens -o g.html)",
+      "Bash(curl -s http://localhost:3000/sitemap.xml -o s.xml)",
+      "PowerShell(try { $p = \\(Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction Stop\\).OwningProcess; Stop-Process -Id $p -Force; \"Stopped server PID $p\" } catch { \"No server on port 3000\" })",
+      "Bash(grep -o \"[0-9]*$\")",
+      "Bash(curl -s http://localhost:3000/products/sage-bambino-plus -o sage.html)",
+      "Bash(curl -s http://localhost:3000/categories/espresso-machines)",
+      "Bash(curl -s http://localhost:3000/sitemap.xml)",
+      "Bash(curl -s --retry 25 --retry-delay 1 --retry-connrefused http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/cookie-policy)",
+      "Bash(curl -s http://localhost:3000/guides/best-coffee-grinders-for-small-kitchens)",
+      "WebFetch(domain:compactcoffee.co.uk)"
     ]
   }
 }
