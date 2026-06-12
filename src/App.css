@@ -848,6 +848,93 @@ input:focus, select:focus {
 
 .footer-col a:hover { color: #fff; }
 
+.footer-feedback h4 {
+  color: #fff;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 12px;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feedback-label {
+  color: #d1d5db;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.feedback-textarea {
+  width: 100%;
+  min-height: 104px;
+  resize: vertical;
+  padding: 10px 12px;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  background: #111827;
+  color: #f9fafb;
+  line-height: 1.45;
+}
+
+.feedback-textarea::placeholder {
+  color: #9ca3af;
+}
+
+.feedback-textarea:focus {
+  outline: 2px solid #34d399;
+  outline-offset: 1px;
+  border-color: #34d399;
+}
+
+.feedback-textarea:disabled {
+  opacity: 0.7;
+}
+
+.feedback-submit {
+  align-self: flex-start;
+  background: var(--accent);
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 9px 14px;
+}
+
+.feedback-submit:hover {
+  background: var(--accent-dark);
+}
+
+.feedback-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.feedback-status {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.feedback-status--sent {
+  color: #a7f3d0;
+}
+
+.feedback-status--error {
+  color: #fecaca;
+}
+
+.feedback-honeypot {
+  position: absolute;
+  left: -9999px;
+}
+
 .footer-copy {
   max-width: 900px;
   margin: 0 auto;
@@ -861,6 +948,7 @@ input:focus, select:focus {
   .content-page h2 { font-size: 1.15rem; }
   .plan-meal-meta { font-size: 0.8rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-feedback { grid-column: 1 / -1; }
 }
 
 /* ---------- Navbar ---------- */
