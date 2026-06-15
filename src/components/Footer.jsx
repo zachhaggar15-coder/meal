@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import FeedbackBox from './FeedbackBox.jsx';
 
 export default function Footer() {
   return (
@@ -41,7 +40,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        <FeedbackBox />
       </div>
       <p className="footer-copy footer-disclaimer">
         Meal plans are generated for general information only. Calories and protein are estimates. For medical conditions, pregnancy, eating disorders, or clinical dietary needs, speak to a qualified healthcare professional.

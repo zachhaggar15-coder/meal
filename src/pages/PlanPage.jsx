@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
@@ -423,6 +424,8 @@ export default function PlanPage() {
           <Link to="/quiz" className="btn-primary">Find a better match →</Link>
           <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT} plans</Link>
         </div>
+
+        <FeedbackBox />
 
       </div>
       <Footer />

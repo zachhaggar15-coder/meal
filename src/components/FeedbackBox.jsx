@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 const MAX_FEEDBACK_LENGTH = 4000;
 
@@ -6,7 +6,9 @@ async function safeJson(res) {
   try { return await res.json(); } catch { return {}; }
 }
 
-export default function FeedbackBox() {
+export default function FeedbackBox({ className = '' }) {
+  const feedbackId = useId();
+  const honeypotId = useId();
   const [feedback, setFeedback] = useState('');
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState('idle');
@@ -49,28 +51,44 @@ export default function FeedbackBox() {
   }
 
   return (
-    <div className="footer-feedback">
-      <h4>Feedback</h4>
+    <section
+      className={['plan-feedback-section', className].filter(Boolean).join(' ')}
+      aria-labelledby={`${feedbackId}-heading`}
+    >
+      <div className="plan-feedback-copy">
+        <h2 className="plan-feedback-heading" id={`${feedbackId}-heading`}>
+          Feedback
+        </h2>
+        <p className="plan-feedback-text">
+          Seen something off with this plan? Send a quick note and we will review it.
+        </p>
+      </div>
       <form className="feedback-form" onSubmit={handleSubmit}>
-        <label className="feedback-label" htmlFor="site-feedback">
-          How can we improve?
+        <label className="feedback-label" htmlFor={`${feedbackId}-input`}>
+          What should we improve?
         </label>
         <textarea
-          id="site-feedback"
+          id={`${feedbackId}-input`}
           className="feedback-textarea"
           value={feedback}
-          onChange={(e) => setFeedback(e.target.value)}
+          onChange={(e) => {
+            setFeedback(e.target.value);
+            if (status === 'error') {
+              setStatus('idle');
+              setMessage('');
+            }
+          }}
           maxLength={MAX_FEEDBACK_LENGTH}
-          placeholder="Share feedback, bugs, or meal plan ideas"
+          placeholder="Missing ingredient, confusing recipe, better swap idea..."
           rows={4}
           disabled={sending}
           required
         />
-        <label className="feedback-honeypot" htmlFor="feedback-website">
+        <label className="feedback-honeypot" htmlFor={honeypotId}>
           Website
         </label>
         <input
-          id="feedback-website"
+          id={honeypotId}
           className="feedback-honeypot"
           type="text"
           value={website}
@@ -87,6 +105,6 @@ export default function FeedbackBox() {
           </p>
         )}
       </form>
-    </div>
+    </section>
   );
 }

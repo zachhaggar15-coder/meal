@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import FeedbackBox from '../components/FeedbackBox.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
@@ -489,6 +490,8 @@ export default function MealPlanPage() {
             </Link>
           </li>
         </ul>
+
+        <FeedbackBox />
       </div>
       <Footer />
     </>
