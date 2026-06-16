@@ -1,19 +1,9 @@
 import { useId, useState } from 'react';
 
 const MAX_FEEDBACK_LENGTH = 4000;
-const FEEDBACK_EMAIL = 'dojostack@protonmail.com';
 
 async function safeJson(res) {
   try { return await res.json(); } catch { return {}; }
-}
-
-function buildFallbackMailto(feedbackText) {
-  const params = new URLSearchParams({
-    subject: 'MealPrep.org.uk feedback',
-    body: `${feedbackText}\n\nSource: ${window.location.href}`,
-  });
-
-  return `mailto:${FEEDBACK_EMAIL}?${params.toString()}`;
 }
 
 export default function FeedbackBox({ className = '' }) {
@@ -23,7 +13,6 @@ export default function FeedbackBox({ className = '' }) {
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
-  const [fallbackHref, setFallbackHref] = useState('');
 
   const feedbackText = feedback.trim();
   const sending = status === 'sending';
@@ -35,7 +24,6 @@ export default function FeedbackBox({ className = '' }) {
 
     setStatus('sending');
     setMessage('');
-    setFallbackHref('');
 
     try {
       const res = await fetch('/api/feedback', {
@@ -58,8 +46,7 @@ export default function FeedbackBox({ className = '' }) {
       setMessage('Thanks - your feedback has been sent.');
     } catch (err) {
       setStatus('error');
-      setFallbackHref(buildFallbackMailto(feedbackText));
-      setMessage(`${err.message || 'Could not send feedback right now.'} You can email it directly instead.`);
+      setMessage(err.message || 'Could not send feedback right now. Please try again in a minute.');
     }
   }
 
@@ -89,7 +76,6 @@ export default function FeedbackBox({ className = '' }) {
             if (status === 'error') {
               setStatus('idle');
               setMessage('');
-              setFallbackHref('');
             }
           }}
           maxLength={MAX_FEEDBACK_LENGTH}
@@ -116,12 +102,6 @@ export default function FeedbackBox({ className = '' }) {
         {message && (
           <p className={`feedback-status feedback-status--${status}`} aria-live="polite">
             {message}
-            {status === 'error' && fallbackHref && (
-              <>
-                {' '}
-                <a href={fallbackHref}>Email feedback directly</a>
-              </>
-            )}
           </p>
         )}
       </form>

@@ -2,7 +2,7 @@
 // Sends site feedback to the configured inbox via Resend.
 
 const DEFAULT_FEEDBACK_TO = 'dojostack@protonmail.com';
-const DEFAULT_FEEDBACK_FROM = 'MealPrep Feedback <feedback@mealprep.org.uk>';
+const DEFAULT_FEEDBACK_FROM = 'MealPrep Feedback <onboarding@resend.dev>';
 const MAX_FEEDBACK_LENGTH = 4000;
 
 export default async function handler(req, res) {
@@ -103,7 +103,7 @@ function cleanEmailHeader(value, fallback) {
 
 function resolveFeedbackFrom(value) {
   const cleaned = cleanEmailHeader(value, '');
-  if (!cleaned || /yourdomain\.com|example\.com|onboarding@resend\.dev/i.test(cleaned)) {
+  if (!cleaned || /yourdomain\.com|example\.com/i.test(cleaned)) {
     return DEFAULT_FEEDBACK_FROM;
   }
 

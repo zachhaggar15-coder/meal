@@ -184,10 +184,10 @@ function buildSeo(seed) {
   const cal = seed.calories;
   return {
     title: `${seed.title} | MealPrep.org.uk`,
-    description: `Free 7-day ${gl.toLowerCase()} meal plan for ${mkt}: ~${cal} kcal/day with shopping list, macros and AI meal swaps.`,
+    description: `Free printable 7-day ${gl.toLowerCase()} meal plan for ${mkt}: ~${cal} kcal/day with shopping list, macros, PDF export and AI meal swaps.`,
     canonical: `https://www.mealprep.org.uk/plans/${seed.slug}`,
     ogTitle: seed.title,
-    ogDescription: `Free 7-day ${gl.toLowerCase()} meal plan for ${mkt}: ~${cal} kcal/day with shopping list, macros and swaps.`,
+    ogDescription: `Free printable 7-day ${gl.toLowerCase()} meal plan for ${mkt}: ~${cal} kcal/day with shopping list, macros and PDF export.`,
   };
 }
 
@@ -211,6 +211,10 @@ function buildFaqs(seed) {
     {
       q: `Can I swap meals I don't like?`,
       a: `Yes. Use the AI edit button on any meal to swap it out. Common requests include swapping chicken for turkey, replacing salmon with tinned tuna, or making a day vegetarian. The shopping list updates automatically.`,
+    },
+    {
+      q: `Can I print this ${gl} meal plan or save it as a PDF?`,
+      a: `Yes. Use the export / print PDF button on the plan page. The printable version summarises the full 7-day meal plan and includes the weekly shopping list.`,
     },
     {
       q: `Is this plan suitable for meal prep?`,
@@ -318,17 +322,22 @@ export function buildPlan(seed) {
 
     const adjustedMeals = rebalanceMealsToTarget(mealList, seed.calories);
 
-    const meals = adjustedMeals.map(({ meal: m, kcal, protein, portionScale }) => ({
-      type:       cap(m.type),
-      name:       m.name,
-      kcal,
-      protein,
-      prep:       `${m.prepMins} min`,
-      desc:       buildMealDesc(m, kcal, protein, portionScale),
-      ingredients: m.ingredients,
-      portion_size: buildPortionSize(m.ingredients, portionScale),
-      recipe:     buildRecipeSteps(m, portionScale),
-    }));
+    const meals = adjustedMeals.map(({ meal: m, kcal, protein, portionScale }) => {
+      const ingredients = scaleIngredientsForPortion(m.ingredients, portionScale);
+      const displayMeal = { ...m, ingredients };
+
+      return {
+        type:       cap(m.type),
+        name:       m.name,
+        kcal,
+        protein,
+        prep:       `${m.prepMins} min`,
+        desc:       buildMealDesc(displayMeal, kcal, protein),
+        ingredients,
+        portion_size: buildPortionSize(ingredients),
+        recipe:     buildRecipeSteps(displayMeal),
+      };
+    });
 
     const totals = {
       kcal:    meals.reduce((sum, m) => sum + m.kcal, 0),
@@ -410,41 +419,157 @@ function distributeRoundedTotal(values, targetTotal) {
   return floors;
 }
 
-function buildPortionSize(ingredients, portionScale) {
-  const base = (ingredients || []).join(', ');
+function buildPortionSize(ingredients) {
+  return (ingredients || []).join(', ');
+}
+
+export function scaleIngredientsForPortion(ingredients, portionScale = 1) {
+  const values = Array.isArray(ingredients) ? ingredients : [];
   if (!Number.isFinite(portionScale) || Math.abs(portionScale - 1) < 0.03) {
-    return base;
+    return values.map(cleanPortionScaleText);
   }
-  return `${base}. Use about ${formatScale(portionScale)}x these listed amounts to hit the calorie target.`;
+  return values.map(ingredient => scaleIngredientForPortion(ingredient, portionScale));
 }
 
-function formatScale(scale) {
-  if (scale >= 0.95 && scale <= 1.05) return '1';
-  return scale.toFixed(2).replace(/\.?0+$/, '');
+function scaleIngredientForPortion(rawIngredient, portionScale) {
+  const ingredient = cleanPortionScaleText(rawIngredient);
+  if (!ingredient) return ingredient;
+
+  const leadingMeasured = ingredient.match(/^(\d+(?:\.\d+)?)\s*(kg|g|ml|l|tbsp|tsp)\b(.*)$/i);
+  if (leadingMeasured) {
+    const [, amount, unit, rest] = leadingMeasured;
+    return `${formatMeasuredAmount(Number(amount) * portionScale, unit)}${rest}`;
+  }
+
+  const measured = ingredient.match(/^(.*?)(\d+(?:\.\d+)?)\s*(kg|g|ml|l|tbsp|tsp)\b(.*)$/i);
+  if (measured) {
+    const [, prefix, amount, unit, suffix] = measured;
+    return `${prefix}${formatMeasuredAmount(Number(amount) * portionScale, unit)}${suffix}`;
+  }
+
+  const leadingCount = ingredient.match(/^(\d+(?:\.\d+)?)\s+([a-z]+s?)\b(.*)$/i);
+  if (leadingCount && isCountUnit(leadingCount[2])) {
+    const [, amount, unit, rest] = leadingCount;
+    const count = formatWholeCount(Number(amount) * portionScale);
+    return `${count} ${formatCountUnit(unit, count)}${rest}`;
+  }
+
+  const countWithUnit = ingredient.match(/^(.*?)(\d+(?:\.\d+)?)\s+([a-z]+s?)\b(.*)$/i);
+  if (countWithUnit && isCountUnit(countWithUnit[3])) {
+    const [, prefix, amount, unit, suffix] = countWithUnit;
+    const count = formatWholeCount(Number(amount) * portionScale);
+    return `${prefix}${count} ${formatCountUnit(unit, count)}${suffix}`;
+  }
+
+  const trailingCount = ingredient.match(/^(.*?)(\d+(?:\.\d+)?)(\s+(?:baked|cooked|roasted|grated|mashed|soft-boiled))?$/i);
+  if (trailingCount) {
+    const [, prefix, amount, suffix = ''] = trailingCount;
+    return `${prefix}${formatWholeCount(Number(amount) * portionScale)}${suffix}`;
+  }
+
+  return scaleWordAmount(ingredient, portionScale);
 }
 
-function buildMealDesc(meal, kcal, protein, portionScale = 1) {
+function cleanPortionScaleText(value) {
+  return String(value || '')
+    .replace(/\.\s*Use about .*$/i, '')
+    .replace(/\s*Use about .*?(?:\.|$)/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function formatMeasuredAmount(value, unit) {
+  const lowerUnit = unit.toLowerCase();
+  let rounded = value;
+
+  if (lowerUnit === 'g' || lowerUnit === 'ml') {
+    if (value < 10) rounded = Math.max(1, Math.round(value));
+    else if (value < 250) rounded = roundTo(value, 5);
+    else if (value < 500) rounded = roundTo(value, 10);
+    else rounded = roundTo(value, 25);
+  } else if (lowerUnit === 'kg' || lowerUnit === 'l') {
+    rounded = roundTo(value, 0.05);
+  } else {
+    rounded = Math.max(0.25, roundTo(value, 0.25));
+  }
+
+  const spacer = lowerUnit === 'tbsp' || lowerUnit === 'tsp' ? ' ' : '';
+  return `${formatNumber(rounded)}${spacer}${unit}`;
+}
+
+function formatWholeCount(value) {
+  return Math.max(1, Math.round(value));
+}
+
+function isCountUnit(unit) {
+  return [
+    'biscuit', 'biscuits', 'cake', 'cakes', 'clove', 'cloves', 'cracker', 'crackers',
+    'date', 'dates', 'egg', 'eggs', 'fillet', 'fillets', 'leaf', 'leaves', 'pack',
+    'packs', 'pitta', 'pittas', 'rasher', 'rashers', 'roll', 'rolls', 'sausage',
+    'sausages', 'scoop', 'scoops', 'slice', 'slices', 'stick', 'sticks', 'stalk',
+    'stalks', 'tin', 'tins', 'tortilla', 'tortillas', 'wrap', 'wraps',
+  ].includes(unit.toLowerCase());
+}
+
+function formatCountUnit(unit, count) {
+  const lowerUnit = unit.toLowerCase();
+  const singular = { leaves: 'leaf' };
+  const plural = { leaf: 'leaves' };
+
+  if (count === 1 && singular[lowerUnit]) return singular[lowerUnit];
+  if (count !== 1 && plural[lowerUnit]) return plural[lowerUnit];
+  if (count === 1 && lowerUnit.endsWith('s')) return unit.slice(0, -1);
+  if (count !== 1 && !lowerUnit.endsWith('s')) return `${unit}s`;
+  return unit;
+}
+
+function scaleWordAmount(ingredient, portionScale) {
+  const wordAmount = ingredient.match(/\b(half|quarter)\b/i);
+  if (!wordAmount) return ingredient;
+
+  const base = wordAmount[1].toLowerCase() === 'half' ? 0.5 : 0.25;
+  return ingredient.replace(wordAmount[0], formatFractionAmount(base * portionScale));
+}
+
+function formatFractionAmount(value) {
+  const rounded = Math.max(0.25, roundTo(value, 0.25));
+  const whole = Math.floor(rounded);
+  const fraction = Number((rounded - whole).toFixed(2));
+  const fractionText = {
+    0.25: 'quarter',
+    0.5: 'half',
+    0.75: '3/4',
+  }[fraction] || '';
+
+  if (!whole) return fractionText || formatNumber(rounded);
+  if (!fractionText) return String(whole);
+  return `${whole} ${fractionText}`;
+}
+
+function roundTo(value, increment) {
+  return Math.round(value / increment) * increment;
+}
+
+function formatNumber(value) {
+  return String(Number(value.toFixed(2))).replace(/\.0$/, '');
+}
+
+function buildMealDesc(meal, kcal, protein) {
   const mainIngs = (meal.ingredients || [])
     .slice(0, 3)
     .map(i => i.replace(/\s+\d[\d.]*.*$/i, '').toLowerCase())
     .join(', ');
-  const portionNote = Math.abs(portionScale - 1) >= 0.03
-    ? ` Portion adjusted to ${formatScale(portionScale)}x to match the plan target.`
-    : '';
-  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${kcal} kcal, ${protein}g protein.${portionNote}`;
+  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${kcal} kcal, ${protein}g protein.`;
 }
 
-function buildRecipeSteps(meal, portionScale = 1) {
+function buildRecipeSteps(meal) {
   const ingredients = (meal.ingredients || []).join(', ');
   const name = meal.name.toLowerCase();
   const isNoCook = meal.prepMins <= 5 || (meal.tags || []).includes('easy');
-  const portionNote = Math.abs(portionScale - 1) >= 0.03
-    ? ` Use about ${formatScale(portionScale)}x the listed amounts for this plan.`
-    : '';
 
   if (name.includes('overnight') || name.includes('chia')) {
     return [
-      `Add ${ingredients} to a lidded container.${portionNote}`,
+      `Add ${ingredients} to a lidded container.`,
       'Stir well, cover, and chill for at least 4 hours or overnight.',
       'Stir again before eating and add a splash of milk if it is too thick.',
     ];
@@ -452,7 +577,7 @@ function buildRecipeSteps(meal, portionScale = 1) {
 
   if (name.includes('smoothie')) {
     return [
-      `Add ${ingredients} to a blender.${portionNote}`,
+      `Add ${ingredients} to a blender.`,
       'Blend until smooth, adding a splash more milk or water if needed.',
       'Pour into a glass or shaker and serve cold.',
     ];
@@ -460,7 +585,7 @@ function buildRecipeSteps(meal, portionScale = 1) {
 
   if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
     return [
-      `Add the base ingredients to a bowl: ${ingredients}.${portionNote}`,
+      `Add the base ingredients to a bowl: ${ingredients}.`,
       'Top with the fruit, nuts, seeds, or honey listed.',
       'Eat straight away, or cover and chill for later the same day.',
     ];
@@ -469,14 +594,14 @@ function buildRecipeSteps(meal, portionScale = 1) {
   if (name.includes('toast') || name.includes('bagel') || name.includes('wrap') || name.includes('sandwich')) {
     return [
       'Toast or warm the bread, bagel, wrap, or pitta if preferred.',
-      `Prepare the filling ingredients: ${ingredients}.${portionNote}`,
+      `Prepare the filling ingredients: ${ingredients}.`,
       'Layer the filling evenly, season to taste, and serve or wrap tightly for later.',
     ];
   }
 
   if (name.includes('salad') || name.includes('bowl')) {
     return [
-      `Wash and chop the salad or vegetable ingredients: ${ingredients}.${portionNote}`,
+      `Wash and chop the salad or vegetable ingredients: ${ingredients}.`,
       'Cook or warm any protein or grains listed, then let them cool slightly.',
       'Combine everything in a bowl, season, and pack dressing separately if meal prepping.',
     ];
@@ -485,14 +610,14 @@ function buildRecipeSteps(meal, portionScale = 1) {
   if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
     return [
       'Cook the pasta, rice, or noodles according to the packet instructions.',
-      `Meanwhile, prepare the remaining ingredients: ${ingredients}.${portionNote}`,
+      `Meanwhile, prepare the remaining ingredients: ${ingredients}.`,
       'Combine in a pan or bowl, heat through, season, and portion into containers if needed.',
     ];
   }
 
   if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
     return [
-      `Prep the listed ingredients: ${ingredients}.${portionNote}`,
+      `Prep the listed ingredients: ${ingredients}.`,
       'Cook the protein and firmer vegetables in a pan for 5-8 minutes.',
       'Add sauces, tins, stock, or pulses from the ingredient list and simmer until hot and thickened.',
     ];
@@ -500,7 +625,7 @@ function buildRecipeSteps(meal, portionScale = 1) {
 
   if (name.includes('egg') || name.includes('scramble') || name.includes('omelette')) {
     return [
-      `Prepare the ingredients: ${ingredients}.${portionNote}`,
+      `Prepare the ingredients: ${ingredients}.`,
       'Cook the eggs in a non-stick pan over medium heat, stirring or folding gently.',
       'Serve with the listed bread, vegetables, or toppings.',
     ];
@@ -508,14 +633,14 @@ function buildRecipeSteps(meal, portionScale = 1) {
 
   if (isNoCook) {
     return [
-      `Lay out the ingredients: ${ingredients}.${portionNote}`,
+      `Lay out the ingredients: ${ingredients}.`,
       'Drain, slice, or portion anything that needs preparing.',
       'Assemble in a bowl or container, season, and eat cold or microwave until hot if preferred.',
     ];
   }
 
   return [
-    `Prepare the ingredients: ${ingredients}.${portionNote}`,
+    `Prepare the ingredients: ${ingredients}.`,
     'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
     'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
   ];

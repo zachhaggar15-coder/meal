@@ -3010,6 +3010,48 @@ input:focus, select:focus {
 }
 .btn-quiz-inline:hover { text-decoration: underline; }
 
+.plan-export-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 28px;
+}
+.plan-export-section h2 {
+  color: #111827;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+.plan-export-section p {
+  color: #4b5563;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.plan-export-btn {
+  flex: 0 0 auto;
+  background: #2563eb;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 10px 14px;
+}
+.plan-export-btn:hover {
+  background: #1d4ed8;
+}
+.plan-print-summary {
+  display: none;
+}
+
 /* Day tabs */
 .plan-days-section { margin-bottom: 32px; }
 .plan-days-section h2 { font-size: 1.3rem; font-weight: 700; margin: 0 0 14px; }
@@ -3304,6 +3346,151 @@ details[open] .faq-question::after { content: '▴'; }
 .feedback-honeypot {
   position: absolute;
   left: -9999px;
+}
+
+@media (max-width: 640px) {
+  .plan-export-section {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .plan-export-btn {
+    width: 100%;
+  }
+}
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111827 !important;
+  }
+
+  .site-nav,
+  .navbar,
+  .sidebar,
+  .breadcrumb,
+  .page-header-logo,
+  .plan-page-h1,
+  .plan-page-intro,
+  .plan-edit-notice,
+  .plan-summary-card,
+  .plan-quiz-cta,
+  .plan-export-section,
+  .plan-days-section,
+  .plan-shopping-section,
+  .plan-swaps-section,
+  .plan-faq-section,
+  .plan-related-section,
+  .plan-bottom-ctas,
+  .plan-feedback-section,
+  .site-footer,
+  footer {
+    display: none !important;
+  }
+
+  .content-page.plan-page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .plan-print-summary {
+    display: block !important;
+    font-size: 10pt;
+    line-height: 1.35;
+  }
+
+  .print-summary-header {
+    border-bottom: 2px solid #111827;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .print-summary-kicker {
+    color: #374151;
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0 0 4px;
+    text-transform: uppercase;
+  }
+
+  .print-summary-header h2 {
+    font-size: 18pt;
+    line-height: 1.15;
+    margin: 0 0 6px;
+  }
+
+  .print-summary-header p,
+  .print-summary-meta,
+  .print-day li,
+  .print-shopping-group li {
+    color: #111827;
+  }
+
+  .print-summary-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 14px;
+    margin-bottom: 14px;
+  }
+
+  .plan-print-summary h3 {
+    border-bottom: 1px solid #9ca3af;
+    font-size: 13pt;
+    margin: 16px 0 8px;
+    padding-bottom: 4px;
+  }
+
+  .print-day,
+  .print-shopping-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-day {
+    border: 1px solid #d1d5db;
+    margin-bottom: 8px;
+    padding: 8px;
+  }
+
+  .print-day-heading {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .print-day-heading h4,
+  .print-shopping-group h4 {
+    font-size: 10.5pt;
+    margin: 0;
+  }
+
+  .print-day-heading span {
+    color: #374151;
+    font-size: 9pt;
+    font-weight: 700;
+  }
+
+  .print-day ul,
+  .print-shopping-group ul {
+    margin: 4px 0 0 18px;
+    padding: 0;
+  }
+
+  .print-shopping-list {
+    column-count: 2;
+    column-gap: 18px;
+  }
+
+  .print-shopping-group {
+    margin-bottom: 10px;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

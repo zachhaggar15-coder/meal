@@ -10,7 +10,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
-import { buildShoppingList } from '../utils/planBuilder.js';
+import { buildShoppingList, scaleIngredientsForPortion } from '../utils/planBuilder.js';
 
 function ContentTable({ headers, rows }) {
   return (
@@ -522,13 +522,21 @@ function rebalanceLegacyMeals(meals, targetCalories) {
   const rawCalories = meals.map(meal => (meal.kcal || 0) * portionScale);
   const adjustedCalories = distributeRoundedTotal(rawCalories, targetCalories);
 
-  return meals.map((meal, index) => enrichLegacyMeal({
-    ...meal,
-    kcal: adjustedCalories[index],
-    protein: Math.max(1, Math.round((meal.protein || 0) * portionScale)),
-    desc: addPortionScaleNote(meal.desc, portionScale),
-    portion_size: addPortionScaleNote(meal.portion_size, portionScale),
-  }));
+  return meals.map((meal, index) => {
+    const ingredients = scaleIngredientsForPortion(
+      normaliseLegacyIngredients(meal.ingredients, meal.portion_size, meal.name),
+      portionScale,
+    );
+
+    return enrichLegacyMeal({
+      ...meal,
+      kcal: adjustedCalories[index],
+      protein: Math.max(1, Math.round((meal.protein || 0) * portionScale)),
+      desc: cleanLegacyCopy(meal.desc),
+      ingredients,
+      portion_size: ingredients.join(', '),
+    });
+  });
 }
 
 function normaliseSwappedMeal(currentMeal, newMeal = {}) {
@@ -588,22 +596,27 @@ function formatLegacyIngredient(ingredient) {
 }
 
 function cleanLegacyIngredient(ingredient) {
-  return String(ingredient || '')
+  return cleanLegacyCopy(ingredient);
+}
+
+function cleanLegacyCopy(value) {
+  return String(value || '')
     .replace(/\.\s*Use about .*$/i, '')
+    .replace(/\s*Use about .*?(?:\.|$)/i, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
 function normaliseLegacyRecipe(recipe) {
   if (Array.isArray(recipe)) {
-    const steps = recipe.map(step => String(step || '').trim()).filter(Boolean);
+    const steps = recipe.map(cleanLegacyCopy).filter(Boolean);
     return steps.length ? steps.slice(0, 6) : null;
   }
 
   if (typeof recipe === 'string') {
     const steps = recipe
       .split(/\n+|(?:^|\s)\d+\.\s*/g)
-      .map(step => step.trim())
+      .map(cleanLegacyCopy)
       .filter(Boolean);
     return steps.length ? steps.slice(0, 6) : null;
   }
@@ -718,16 +731,4 @@ function distributeRoundedTotal(values, targetTotal) {
   }
 
   return floors;
-}
-
-function addPortionScaleNote(text, portionScale) {
-  if (!text || !Number.isFinite(portionScale) || Math.abs(portionScale - 1) < 0.03) {
-    return text;
-  }
-  return `${text} Use about ${formatScale(portionScale)}x this portion to match the plan target.`;
-}
-
-function formatScale(scale) {
-  if (scale >= 0.95 && scale <= 1.05) return '1';
-  return scale.toFixed(2).replace(/\.?0+$/, '');
 }

@@ -570,7 +570,134 @@ function buildExpandedTitle(seed, style) {
   return `${market}${diet}${style.label} ${goal} Plan \u2014 ${seed.calories.toLocaleString('en-GB')} kcal`;
 }
 
-const ADDITIONAL_PLAN_SEEDS = CORE_PLAN_SEEDS.map(buildExpandedPlanSeed);
+const TARGET_PLAN_COUNT = 1000;
 
-export const PLAN_SEEDS = [...CORE_PLAN_SEEDS, ...ADDITIONAL_PLAN_SEEDS];
+const DEEP_EXPANSION_STYLE_LIBRARY = {
+  'balanced-plate': { slug: 'balanced-plate', label: 'Balanced Plate', effort: 'standard', emphasis: 'whole-food' },
+  'five-a-day': { slug: 'five-a-day', label: '5-a-Day', effort: 'standard', emphasis: 'whole-food' },
+  wholegrain: { slug: 'wholegrain', label: 'Wholegrain', effort: 'standard', emphasis: 'whole-food' },
+  'batch-friendly': { slug: 'batch-friendly', label: 'Batch-Friendly', effort: 'batch', emphasis: 'batch-cooking' },
+  'freezer-friendly': { slug: 'freezer-friendly', label: 'Freezer-Friendly', effort: 'low', emphasis: 'frozen-friendly' },
+  'work-lunch': { slug: 'work-lunch', label: 'Work Lunch', effort: 'low', emphasis: 'minimal-effort' },
+  'printable-prep': { slug: 'printable-prep', label: 'Printable Prep', effort: 'batch', emphasis: 'batch-cooking' },
+  'quick-shop': { slug: 'quick-shop', label: 'Quick Shop', effort: 'low', emphasis: 'minimal-effort' },
+  'higher-protein': { slug: 'higher-protein', label: 'Higher-Protein', effort: 'standard', emphasis: 'lean-protein' },
+  'high-fibre': { slug: 'high-fibre', label: 'High-Fibre', effort: 'standard', emphasis: 'whole-food' },
+  'cook-once': { slug: 'cook-once', label: 'Cook-Once', effort: 'batch', emphasis: 'batch-cooking' },
+  'family-friendly': { slug: 'family-friendly', label: 'Family-Friendly', effort: 'standard', emphasis: 'high-variety' },
+  'low-fuss': { slug: 'low-fuss', label: 'Low-Fuss', effort: 'minimal', emphasis: 'minimal-effort' },
+  'budget-smart': { slug: 'budget-smart', label: 'Budget-Smart', effort: 'standard', emphasis: 'low-cal-swaps' },
+  'training-day': { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+  recovery: { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'lean-protein' },
+  'omega-three': { slug: 'omega-three', label: 'Omega-3', effort: 'standard', emphasis: 'whole-food' },
+  'calcium-rich': { slug: 'calcium-rich', label: 'Calcium-Rich', effort: 'standard', emphasis: 'whole-food' },
+  'lower-sugar': { slug: 'lower-sugar', label: 'Lower-Sugar', effort: 'standard', emphasis: 'whole-food' },
+  'plant-forward': { slug: 'plant-forward', label: 'Plant-Forward', effort: 'standard', emphasis: 'whole-food' },
+  'tinned-and-frozen': { slug: 'tinned-and-frozen', label: 'Tinned & Frozen', effort: 'minimal', emphasis: 'frozen-friendly' },
+  'desk-lunch': { slug: 'desk-lunch', label: 'Desk Lunch', effort: 'low', emphasis: 'lean-protein' },
+  'sunday-prep': { slug: 'sunday-prep', label: 'Sunday Prep', effort: 'batch', emphasis: 'batch-cooking' },
+};
+
+const DEFAULT_DEEP_STYLE_SLUGS = [
+  'balanced-plate',
+  'five-a-day',
+  'wholegrain',
+  'batch-friendly',
+  'freezer-friendly',
+  'quick-shop',
+  'family-friendly',
+  'printable-prep',
+];
+
+const DEEP_STYLE_SLUGS_BY_GOAL = {
+  'weight-loss': ['five-a-day', 'high-fibre', 'balanced-plate', 'lower-sugar', 'batch-friendly', 'quick-shop', 'work-lunch'],
+  'high-protein-low-cal': ['higher-protein', 'desk-lunch', 'high-fibre', 'batch-friendly', 'low-fuss', 'balanced-plate'],
+  'muscle-gain': ['higher-protein', 'training-day', 'recovery', 'wholegrain', 'batch-friendly', 'quick-shop'],
+  'budget-fat-loss': ['budget-smart', 'tinned-and-frozen', 'cook-once', 'freezer-friendly', 'low-fuss', 'high-fibre'],
+  'cheap-student': ['budget-smart', 'tinned-and-frozen', 'low-fuss', 'cook-once', 'quick-shop', 'higher-protein'],
+  'busy-professional': ['desk-lunch', 'work-lunch', 'quick-shop', 'sunday-prep', 'batch-friendly', 'low-fuss'],
+  'low-effort': ['low-fuss', 'quick-shop', 'freezer-friendly', 'work-lunch', 'tinned-and-frozen', 'printable-prep'],
+  'vegetarian-low-cal': ['plant-forward', 'high-fibre', 'five-a-day', 'batch-friendly', 'wholegrain', 'higher-protein'],
+  'vegan-low-cal': ['plant-forward', 'high-fibre', 'five-a-day', 'batch-friendly', 'wholegrain', 'lower-sugar'],
+  'high-protein-vegetarian': ['higher-protein', 'plant-forward', 'batch-friendly', 'wholegrain', 'desk-lunch', 'recovery'],
+  pescatarian: ['omega-three', 'higher-protein', 'balanced-plate', 'batch-friendly', 'quick-shop', 'work-lunch'],
+  'budget-bodybuilding': ['higher-protein', 'budget-smart', 'training-day', 'batch-friendly', 'tinned-and-frozen', 'wholegrain'],
+  'gym-beginner': ['higher-protein', 'training-day', 'balanced-plate', 'batch-friendly', 'quick-shop', 'recovery'],
+  'cheap-high-protein': ['higher-protein', 'budget-smart', 'tinned-and-frozen', 'cook-once', 'low-fuss', 'desk-lunch'],
+  maintenance: ['balanced-plate', 'five-a-day', 'wholegrain', 'family-friendly', 'cook-once', 'quick-shop'],
+  'anti-inflammatory': ['omega-three', 'plant-forward', 'high-fibre', 'five-a-day', 'balanced-plate', 'wholegrain'],
+  'menopause-nutrition': ['calcium-rich', 'higher-protein', 'high-fibre', 'balanced-plate', 'batch-friendly', 'five-a-day'],
+  'endurance-athlete': ['training-day', 'recovery', 'wholegrain', 'batch-friendly', 'quick-shop', 'balanced-plate'],
+  'body-recomp': ['higher-protein', 'training-day', 'desk-lunch', 'batch-friendly', 'balanced-plate', 'recovery'],
+  cutting: ['higher-protein', 'high-fibre', 'lower-sugar', 'desk-lunch', 'batch-friendly', 'low-fuss'],
+};
+
+const VEGAN_VARIANT_UNSUITABLE_GOALS = new Set([
+  'muscle-gain',
+  'budget-bodybuilding',
+  'endurance-athlete',
+]);
+
+function buildDeepExpansionSeeds(targetCount) {
+  const seeds = [];
+  let wave = 0;
+
+  while (seeds.length < targetCount) {
+    for (let i = 0; i < CORE_PLAN_SEEDS.length && seeds.length < targetCount; i += 1) {
+      seeds.push(buildDeepExpandedPlanSeed(CORE_PLAN_SEEDS[i], i, wave));
+    }
+    wave += 1;
+  }
+
+  return seeds;
+}
+
+function buildDeepExpandedPlanSeed(seed, index, wave) {
+  const style = getDeepExpansionStyle(seed, index, wave);
+  const dietType = getDeepExpansionDietType(seed, index, wave);
+  const dietSuffix = dietType !== seed.dietType ? `-${dietType}` : '';
+
+  return {
+    ...seed,
+    slug: `${seed.slug}-${style.slug}${dietSuffix}-v${wave + 3}`,
+    dietType,
+    effort: style.effort,
+    emphasis: style.emphasis,
+    mealSetIndex: seed.mealSetIndex + 97 + (wave * 53) + (index % 89),
+    title: buildDeepExpandedTitle(seed, style, dietType),
+  };
+}
+
+function getDeepExpansionStyle(seed, index, wave) {
+  const styleSlugs = DEEP_STYLE_SLUGS_BY_GOAL[seed.goal] || DEFAULT_DEEP_STYLE_SLUGS;
+  const styleSlug = styleSlugs[(index + (wave * 3)) % styleSlugs.length];
+  return DEEP_EXPANSION_STYLE_LIBRARY[styleSlug] || DEEP_EXPANSION_STYLE_LIBRARY['balanced-plate'];
+}
+
+function getDeepExpansionDietType(seed, index, wave) {
+  if (seed.dietType !== 'standard') return seed.dietType;
+
+  const roll = (index + (wave * 7)) % 12;
+  if (roll === 0) {
+    return VEGAN_VARIANT_UNSUITABLE_GOALS.has(seed.goal) ? 'vegetarian' : 'vegan';
+  }
+  if (roll === 4) return 'pescatarian';
+  if (roll === 8) return 'vegetarian';
+  return 'standard';
+}
+
+function buildDeepExpandedTitle(seed, style, dietType) {
+  const market = seed.supermarket === 'any' ? '' : `${MARKET_TITLES[seed.supermarket]} `;
+  const diet = dietType !== 'standard' && !GOALS_WITH_DIET_IN_TITLE.has(seed.goal)
+    ? `${DIET_TITLES[dietType]} `
+    : '';
+  const goal = GOAL_TITLES[seed.goal] || seed.goal;
+  return `${market}${diet}${style.label} Weekly ${goal} Plan \u2014 ${seed.calories.toLocaleString('en-GB')} kcal`;
+}
+
+const ADDITIONAL_PLAN_SEEDS = CORE_PLAN_SEEDS.map(buildExpandedPlanSeed);
+const BASE_PLAN_SEEDS = [...CORE_PLAN_SEEDS, ...ADDITIONAL_PLAN_SEEDS];
+const DEEP_EXPANSION_SEEDS = buildDeepExpansionSeeds(Math.max(0, TARGET_PLAN_COUNT - BASE_PLAN_SEEDS.length));
+
+export const PLAN_SEEDS = [...BASE_PLAN_SEEDS, ...DEEP_EXPANSION_SEEDS];
 export const PLAN_COUNT = PLAN_SEEDS.length;

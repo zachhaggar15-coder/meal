@@ -151,6 +151,10 @@ export default function PlanPage() {
     }
   }
 
+  function handlePrintPlan() {
+    window.print();
+  }
+
   return (
     <>
       <SEO
@@ -230,6 +234,24 @@ export default function PlanPage() {
         <div className="plan-quiz-cta">
           <Link to="/quiz" className="btn-quiz-inline">Not right for you? Take the quiz →</Link>
         </div>
+
+        <section className="plan-export-section" aria-labelledby="plan-export-heading">
+          <div>
+            <h2 id="plan-export-heading">Export This Meal Plan as a PDF</h2>
+            <p>
+              Print this 7-day meal plan or save it as a PDF. The printable meal plan summary includes
+              every meal, daily calories, protein totals and the full weekly shopping list.
+            </p>
+          </div>
+          <button className="plan-export-btn" onClick={handlePrintPlan} type="button">
+            Export / print PDF
+          </button>
+        </section>
+
+        <PrintablePlanSummary
+          plan={displayPlan}
+          marketLabel={MKT_LABEL[plan.supermarket] || plan.supermarket}
+        />
 
         {/* 7-Day Plan */}
         <section className="plan-days-section">
@@ -439,6 +461,62 @@ function SummaryItem({ label, value }) {
       <span className="plan-summary-label">{label}</span>
       <span className="plan-summary-value">{value}</span>
     </div>
+  );
+}
+
+function PrintablePlanSummary({ plan, marketLabel }) {
+  const shoppingGroups = Object.entries(plan.shoppingList || {})
+    .filter(([, items]) => items?.length);
+
+  return (
+    <section className="plan-print-summary" aria-label="Printable meal plan PDF summary">
+      <header className="print-summary-header">
+        <p className="print-summary-kicker">Printable meal plan PDF</p>
+        <h2>{plan.title}</h2>
+        <p>
+          A 7-day UK meal plan summary for saving as a PDF or printing, including every meal,
+          daily calories, protein totals and the weekly shopping list.
+        </p>
+      </header>
+
+      <div className="print-summary-meta">
+        <span>Supermarket: {marketLabel}</span>
+        <span>Calories: {plan.summary?.calorieRange || `~${plan.calories} kcal/day`}</span>
+        <span>Budget: {plan.summary?.budgetRange || plan.priceEstimate}</span>
+        <span>Diet: {plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType)}</span>
+      </div>
+
+      <h3>7-day meal plan</h3>
+      <div className="print-days">
+        {plan.plan.map(day => (
+          <article className="print-day" key={day.day}>
+            <div className="print-day-heading">
+              <h4>{day.day}</h4>
+              <span>{day.totals.kcal} kcal - {day.totals.protein}g protein</span>
+            </div>
+            <ul>
+              {day.meals.map((meal, index) => (
+                <li key={`${day.day}-${meal.type}-${index}`}>
+                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {meal.protein}g protein)
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <h3>Weekly shopping list</h3>
+      <div className="print-shopping-list">
+        {shoppingGroups.map(([cat, items]) => (
+          <section className="print-shopping-group" key={cat}>
+            <h4>{catLabel(cat)}</h4>
+            <ul>
+              {items.map((item, index) => <li key={`${cat}-${index}`}>{item}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </section>
   );
 }
 
