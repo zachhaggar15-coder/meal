@@ -202,6 +202,10 @@ export default function Stickers() {
 
         <h2>Related Meal Plans</h2>
         <ul className="plan-links">
+          <li><Link to="/meal-prep-containers/budget">Budget Meal Prep Containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/mid-range">Mid Range Meal Prep Containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/premium">Premium Meal Prep Containers UK</Link></li>
+          <li><Link to="/blog/best-meal-prep-containers-uk">Best Meal Prep Containers UK</Link></li>
           <li><Link to="/meal-plan/1800-calorie-meal-plan">7-Day 1800 Calorie Meal Plan UK</Link></li>
           <li><Link to="/meal-plan/high-protein-low-calorie-meal-plan">High Protein Low Calorie Meal Plan UK</Link></li>
           <li><Link to="/meal-plan/aldi-1800-calorie-meal-plan">Aldi 1800 Calorie Meal Plan UK</Link></li>

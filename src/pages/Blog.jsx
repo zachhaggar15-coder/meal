@@ -40,6 +40,21 @@ const CATEGORY_ORDER = [
     ],
   },
   {
+    label: 'Meal Prep Containers',
+    slugs: [
+      'best-meal-prep-containers-uk',
+      'glass-vs-plastic-meal-prep-containers',
+      'leakproof-meal-prep-containers-uk',
+      'meal-prep-container-size-guide',
+      'meal-prep-boxes-for-work-lunches',
+      'freezer-safe-meal-prep-containers',
+      'dishwasher-safe-meal-prep-containers',
+      'bento-meal-prep-boxes-uk',
+      'meal-prep-tubs-for-batch-cooking',
+      'how-many-meal-prep-containers-do-you-need',
+    ],
+  },
+  {
     label: 'Supermarket Guides',
     slugs: [
       'tesco-low-calorie-shopping-list',

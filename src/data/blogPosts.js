@@ -1,7 +1,10 @@
+import { containerBlogPostsData } from './containerBlogPosts.js';
+
 // Static content for the five SEO blog posts.
 // Each entry keyed by URL slug.
 
 export const blogPostsData = {
+  ...containerBlogPostsData,
   'how-to-build-a-calorie-deficit': {
     published: '2026-05-28',
     title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',
@@ -2275,6 +2278,29 @@ export const blogPostsData = {
     description: 'Best meal prep containers UK 2025 — glass vs plastic, what size to buy, which brands are worth it, and where to get them cheap. Full guide for UK meal preppers.',
     h1: 'Best Meal Prep Containers UK: Glass vs Plastic and What to Buy',
     intro: 'The right containers make meal prep dramatically more practical — they need to stack neatly, seal airtight, survive the microwave and dishwasher, and keep food fresh for 5 days. The wrong ones warp, stain, leak, or stop sealing after a few uses. This guide covers everything UK meal preppers need to know: the glass versus plastic debate, what sizes to buy, and where to get the best value in 2025.',
+    affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For product comparisons, see the new ' },
+          { label: 'budget meal prep containers', to: '/meal-prep-containers/budget' },
+          { text: ', ' },
+          { label: 'mid range glass containers', to: '/meal-prep-containers/mid-range' },
+          { text: ' and ' },
+          { label: 'premium meal prep containers', to: '/meal-prep-containers/premium' },
+          { text: ' buying guides.' },
+        ],
+      },
+    ],
+    productRecommendations: {
+      title: 'Compare meal prep container picks',
+      intro: 'Start with the budget, mid range, and premium picks below, then open the dedicated buying guide for the tier that fits your budget.',
+      productIds: [
+        'budget-compartment-50-pack',
+        'harbour-housewares-glass-5-pack',
+        'borohouse-10-pack-glass',
+      ],
+    },
     sections: [
       {
         h2: 'Glass vs Plastic Meal Prep Containers',

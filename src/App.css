@@ -3546,3 +3546,236 @@ details[open] .faq-question::after { content: '▴'; }
 .blog-card-title { font-size: 0.95rem; font-weight: 700; color: var(--text); line-height: 1.4; margin: 0; }
 .blog-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin: 0; flex: 1; }
 .blog-card-cta { font-size: 0.8rem; font-weight: 600; color: var(--accent-dark); margin-top: 4px; }
+
+/* ---------- Meal prep container buying guides ---------- */
+.affiliate-disclosure {
+  margin: 12px 0 18px;
+  padding: 10px 12px;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #713f12;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.container-guide-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  align-items: center;
+  margin: 18px 0 22px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.container-guide-copy h1 { margin-top: 8px; }
+
+.container-guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 18px 0 0;
+}
+
+.container-guide-image {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.container-guide-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.container-tier-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.container-tier-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent-dark);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.container-tier-link--active,
+.container-tier-link:hover {
+  border-color: var(--accent);
+  background: #ecfdf5;
+  color: var(--accent-dark);
+}
+
+.affiliate-product-section {
+  margin: 30px 0 36px;
+}
+
+.affiliate-section-head h2 {
+  margin-top: 0;
+}
+
+.affiliate-section-head p {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+.affiliate-product-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.affiliate-product-card {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 18px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.affiliate-product-media {
+  overflow: hidden;
+  align-self: start;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.affiliate-product-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.affiliate-product-body h3 {
+  margin: 8px 0 6px;
+  color: var(--text);
+  font-size: 1.02rem;
+}
+
+.affiliate-product-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.affiliate-product-summary {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.affiliate-product-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.affiliate-product-facts div {
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.affiliate-product-facts dt {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.affiliate-product-facts dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.affiliate-product-bullets {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+}
+
+.affiliate-watchout {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.affiliate-product-cta {
+  align-self: start;
+}
+
+@media (max-width: 760px) {
+  .container-guide-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .container-guide-image {
+    order: -1;
+    max-width: 320px;
+  }
+
+  .affiliate-product-card {
+    grid-template-columns: 1fr;
+  }
+
+  .affiliate-product-media {
+    max-width: 320px;
+  }
+
+  .affiliate-product-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 460px) {
+  .container-guide-hero {
+    padding: 16px;
+  }
+
+  .container-guide-actions,
+  .container-tier-nav {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .container-tier-link,
+  .affiliate-product-cta {
+    justify-content: center;
+    width: 100%;
+  }
+}

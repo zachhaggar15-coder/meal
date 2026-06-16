@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import { PLAN_SEEDS } from './src/data/planSeeds.js';
 import { blogPostsData } from './src/data/blogPosts.js';
 import { mealPlansData } from './src/data/mealPlans.js';
+import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(__dirname, 'dist');
@@ -186,6 +187,7 @@ const ROUTES = uniqueRoutes([
   '/browse',
   '/stickers',
   '/blog',
+  ...CONTAINER_GUIDE_SLUGS.map(slug => `/meal-prep-containers/${slug}`),
   // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),
   // Legacy meal plan pages (preserved for SEO)
@@ -247,6 +249,7 @@ async function prerender() {
     if (route === '/browse') return ['0.9', 'weekly'];
     if (route === '/quiz') return ['0.9', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
+    if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];
     if (route.startsWith('/meal-plan/')) return ['0.7', 'monthly'];
     if (route.startsWith('/blog/')) return ['0.7', 'monthly'];

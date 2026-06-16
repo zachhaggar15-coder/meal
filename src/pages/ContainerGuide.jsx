@@ -1,0 +1,206 @@
+import { Link, Navigate, useParams } from 'react-router-dom';
+import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
+import SiteLogo from '../components/SiteLogo.jsx';
+import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
+import {
+  AFFILIATE_DISCLOSURE,
+  CONTAINER_GUIDES,
+  CONTAINER_PRODUCTS,
+} from '../data/containerProducts.js';
+
+const guideOrder = ['budget', 'mid-range', 'premium'];
+
+function guideLabel(slug) {
+  if (slug === 'mid-range') return 'Mid range';
+  return slug.charAt(0).toUpperCase() + slug.slice(1);
+}
+
+export default function ContainerGuide() {
+  const { tier } = useParams();
+  const guide = CONTAINER_GUIDES[tier];
+
+  if (!guide) return <Navigate to="/meal-prep-containers/mid-range" replace />;
+
+  const heroProduct = CONTAINER_PRODUCTS[guide.heroProductId];
+  const canonical = `/meal-prep-containers/${guide.slug}`;
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: guide.h1,
+      description: guide.description,
+      url: `https://www.mealprep.org.uk${canonical}`,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'MealPrep.org.uk',
+        url: 'https://www.mealprep.org.uk',
+      },
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: guide.productIds.map((id, index) => {
+          const product = CONTAINER_PRODUCTS[id];
+          return {
+            '@type': 'ListItem',
+            position: index + 1,
+            name: product.name,
+            url: product.href,
+          };
+        }),
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk' },
+        { '@type': 'ListItem', position: 2, name: 'Meal Prep Containers', item: 'https://www.mealprep.org.uk/blog/meal-prep-containers-uk' },
+        { '@type': 'ListItem', position: 3, name: guide.h1, item: `https://www.mealprep.org.uk${canonical}` },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: guide.faq.map(item => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+  ];
+
+  return (
+    <>
+      <SEO
+        title={`${guide.title} | MealPrep.org.uk`}
+        description={guide.description}
+        canonical={canonical}
+        ogImage={`https://www.mealprep.org.uk${guide.heroImage}`}
+        jsonLd={jsonLd}
+      />
+
+      <div className="page content-page container-guide-page">
+        <nav className="breadcrumb">
+          <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
+          <Link to="/blog/meal-prep-containers-uk">Meal Prep Containers</Link>{' '}
+          <span aria-hidden>&rsaquo;</span> <span>{guideLabel(guide.slug)}</span>
+        </nav>
+
+        <SiteLogo variant="page" className="page-header-logo" />
+
+        <section className="container-guide-hero">
+          <div className="container-guide-copy">
+            <span className="offer-kicker">Sponsored #ad - {guide.kicker}</span>
+            <h1>{guide.h1}</h1>
+            <p className="content-intro">{guide.intro}</p>
+            <div className="container-guide-actions">
+              {heroProduct && (
+                <a
+                  href={heroProduct.href}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow sponsored"
+                  className="btn-primary"
+                  data-event="container_product_click"
+                  data-source-page={`${guide.slug}-hero`}
+                  data-offer={heroProduct.name}
+                >
+                  Check top pick on Amazon UK
+                </a>
+              )}
+              <a href="#comparison" className="btn-secondary">
+                Compare all 6 picks
+              </a>
+            </div>
+            <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
+          </div>
+          {heroProduct && (
+            <a
+              href={heroProduct.href}
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="container-guide-image"
+              data-event="container_product_click"
+              data-source-page={`${guide.slug}-hero-image`}
+              data-offer={heroProduct.name}
+            >
+              <img src={guide.heroImage} alt={`${heroProduct.name} for meal prep`} />
+            </a>
+          )}
+        </section>
+
+        <div className="container-tier-nav" aria-label="Meal prep container price bands">
+          {guideOrder.map(slug => (
+            <Link
+              key={slug}
+              to={`/meal-prep-containers/${slug}`}
+              className={slug === guide.slug ? 'container-tier-link container-tier-link--active' : 'container-tier-link'}
+            >
+              {guideLabel(slug)}
+            </Link>
+          ))}
+        </div>
+
+        <section className="conversion-panel" aria-label="Buying guide summary">
+          <div>
+            <strong>{guide.priceBand}</strong>
+            <span>
+              Compare six Amazon UK meal prep boxes, tubs, and containers for this price tier.
+            </span>
+          </div>
+          {heroProduct && (
+            <a
+              href={heroProduct.href}
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+              className="conversion-panel-btn"
+              data-event="container_product_click"
+              data-source-page={`${guide.slug}-summary`}
+              data-offer={heroProduct.name}
+            >
+              View top pick
+            </a>
+          )}
+        </section>
+
+        <div id="comparison">
+          <AffiliateProductGrid
+            title={`Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
+            intro="Each recommendation is chosen for a different buyer job: low cost, glass upgrade, divided portions, leak resistance, commuting, or a fuller weekly setup."
+            productIds={guide.productIds}
+            sourcePage={`${guide.slug}-guide`}
+            showDisclosure={false}
+          />
+        </div>
+
+        {guide.sections.map(section => (
+          <section key={section.h2}>
+            <h2>{section.h2}</h2>
+            {section.paragraphs.map(paragraph => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </section>
+        ))}
+
+        <h2>Frequently Asked Questions</h2>
+        <div className="faq">
+          {guide.faq.map(item => (
+            <div key={item.q} className="faq-item">
+              <h3>{item.q}</h3>
+              <p>{item.a}</p>
+            </div>
+          ))}
+        </div>
+
+        <h2>Related Container Guides</h2>
+        <ul className="plan-links">
+          <li><Link to="/blog/best-meal-prep-containers-uk">Best meal prep containers UK</Link></li>
+          <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
+          <li><Link to="/blog/leakproof-meal-prep-containers-uk">Leakproof meal prep containers UK</Link></li>
+          <li><Link to="/blog/meal-prep-container-size-guide">Meal prep container size guide</Link></li>
+        </ul>
+      </div>
+      <Footer />
+    </>
+  );
+}

@@ -49,6 +49,16 @@ const NAV = [
     ],
   },
   {
+    label: 'Container Guides',
+    items: [
+      { to: '/meal-prep-containers/budget',             label: 'Budget Containers' },
+      { to: '/meal-prep-containers/mid-range',          label: 'Mid Range Containers' },
+      { to: '/meal-prep-containers/premium',            label: 'Premium Containers' },
+      { to: '/blog/best-meal-prep-containers-uk',       label: 'Best Containers UK' },
+      { to: '/blog/leakproof-meal-prep-containers-uk',  label: 'Leakproof Containers' },
+    ],
+  },
+  {
     label: 'Blog',
     items: [
       { to: '/blog/how-to-lose-weight-fast-uk',              label: 'How to Lose Weight Fast' },
@@ -75,6 +85,9 @@ const NAV = [
       { to: '/blog/sainsburys-meal-prep-uk',                 label: "Sainsbury's Meal Prep" },
       { to: '/blog/asda-meal-prep-uk',                       label: 'Asda Meal Prep' },
       { to: '/blog/meal-prep-containers-uk',                 label: 'Meal Prep Containers' },
+      { to: '/blog/best-meal-prep-containers-uk',            label: 'Best Meal Prep Containers' },
+      { to: '/blog/glass-vs-plastic-meal-prep-containers',   label: 'Glass vs Plastic Containers' },
+      { to: '/blog/meal-prep-container-size-guide',          label: 'Container Size Guide' },
     ],
   },
 ];
@@ -121,8 +134,8 @@ export default function Sidebar({ open, onClose }) {
           </Link>
 
           <Link
-            to="/stickers"
-            className={`sidebar-top-link${location.pathname === '/stickers' ? ' sidebar-link--active' : ''}`}
+            to="/meal-prep-containers/mid-range"
+            className={`sidebar-top-link${location.pathname.startsWith('/meal-prep-containers') ? ' sidebar-link--active' : ''}`}
             onClick={onClose}
           >
             Meal Prep Containers

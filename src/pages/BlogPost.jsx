@@ -5,6 +5,7 @@ import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
+import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { generateBlogImageUrl } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
@@ -77,7 +78,20 @@ export default function BlogPost() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
+          {data.affiliateDisclosure && (
+            <p className="affiliate-disclosure">{data.affiliateDisclosure}</p>
+          )}
           <ContextualLinks blocks={data.contextualLinks} />
+
+          {data.productRecommendations && (
+            <AffiliateProductGrid
+              title={data.productRecommendations.title}
+              intro={data.productRecommendations.intro}
+              productIds={data.productRecommendations.productIds}
+              sourcePage={`blog-${slug}-recommendations`}
+              showDisclosure={false}
+            />
+          )}
 
           {/* Early CTA — after the intro, before the main body */}
           <GeneratorCTA sourcePage={`blog-${slug}`} />
@@ -161,8 +175,8 @@ export default function BlogPost() {
           <h2>Related Articles &amp; Meal Plans</h2>
           <ul className="plan-links">
             {data.related.map(r => (
-              <li key={r.slug}>
-                <Link to={`/${r.type === 'blog' ? 'blog' : r.type === 'plan' ? 'plans' : 'meal-plan'}/${r.slug}`}>
+              <li key={r.path || r.slug}>
+                <Link to={r.path || `/${r.type === 'blog' ? 'blog' : r.type === 'plan' ? 'plans' : 'meal-plan'}/${r.slug}`}>
                   {r.label}
                 </Link>
               </li>
