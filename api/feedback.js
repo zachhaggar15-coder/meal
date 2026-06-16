@@ -1,7 +1,8 @@
 // Vercel serverless function: POST /api/feedback
 // Sends site feedback to the configured inbox via Resend.
 
-const FEEDBACK_TO = 'dojostack@protonmail.com';
+const DEFAULT_FEEDBACK_TO = 'dojostack@protonmail.com';
+const DEFAULT_FEEDBACK_FROM = 'MealPrep Feedback <feedback@mealprep.org.uk>';
 const MAX_FEEDBACK_LENGTH = 4000;
 
 export default async function handler(req, res) {
@@ -31,7 +32,9 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Feedback email is not configured yet.' });
   }
 
-  const from = process.env.FEEDBACK_FROM_EMAIL || 'MealPrep Feedback <onboarding@resend.dev>';
+  const from = resolveFeedbackFrom(process.env.FEEDBACK_FROM_EMAIL);
+  const to = cleanEmailHeader(process.env.FEEDBACK_TO_EMAIL, DEFAULT_FEEDBACK_TO);
+  const recipients = parseEmailRecipients(to);
   const subject = 'MealPrep.org.uk feedback';
   const text = [
     'New MealPrep.org.uk feedback',
@@ -58,7 +61,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from,
-        to: FEEDBACK_TO,
+        to: recipients,
         subject,
         text,
         html,
@@ -87,6 +90,33 @@ function parseBody(body) {
 
 function cleanMeta(value) {
   return String(value || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 500);
+}
+
+function cleanEmailHeader(value, fallback) {
+  const cleaned = String(value || fallback || '')
+    .trim()
+    .replace(/^['"]|['"]$/g, '')
+    .replace(/[\r\n]+/g, ' ');
+
+  return cleaned || fallback;
+}
+
+function resolveFeedbackFrom(value) {
+  const cleaned = cleanEmailHeader(value, '');
+  if (!cleaned || /yourdomain\.com|example\.com|onboarding@resend\.dev/i.test(cleaned)) {
+    return DEFAULT_FEEDBACK_FROM;
+  }
+
+  return cleaned;
+}
+
+function parseEmailRecipients(value) {
+  const recipients = String(value || '')
+    .split(',')
+    .map(item => cleanEmailHeader(item, ''))
+    .filter(Boolean);
+
+  return recipients.length ? recipients : [DEFAULT_FEEDBACK_TO];
 }
 
 function escapeHtml(value) {

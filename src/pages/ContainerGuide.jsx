@@ -23,6 +23,7 @@ export default function ContainerGuide() {
   if (!guide) return <Navigate to="/meal-prep-containers/mid-range" replace />;
 
   const heroProduct = CONTAINER_PRODUCTS[guide.heroProductId];
+  const heroImage = heroProduct?.image || guide.heroImage;
   const canonical = `/meal-prep-containers/${guide.slug}`;
 
   const jsonLd = [
@@ -124,7 +125,7 @@ export default function ContainerGuide() {
               data-source-page={`${guide.slug}-hero-image`}
               data-offer={heroProduct.name}
             >
-              <img src={guide.heroImage} alt={`${heroProduct.name} for meal prep`} />
+              <img src={heroImage} alt={`${heroProduct.name} for meal prep`} />
             </a>
           )}
         </section>
