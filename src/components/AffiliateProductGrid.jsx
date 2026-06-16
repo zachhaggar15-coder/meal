@@ -1,4 +1,4 @@
-import { CONTAINER_PRODUCTS, AFFILIATE_DISCLOSURE } from '../data/containerProducts.js';
+import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerProducts.js';
 
 export default function AffiliateProductGrid({
   title = 'Recommended meal prep containers',
@@ -7,7 +7,7 @@ export default function AffiliateProductGrid({
   sourcePage = 'container-guide',
   showDisclosure = true,
 }) {
-  const products = productIds.map(id => CONTAINER_PRODUCTS[id]).filter(Boolean);
+  const products = getContainerProducts(productIds);
 
   if (!products.length) return null;
 
@@ -45,7 +45,37 @@ export default function AffiliateProductGrid({
                   <dt>Best for</dt>
                   <dd>{product.bestFor}</dd>
                 </div>
+                <div>
+                  <dt>Set format</dt>
+                  <dd>{product.setSize}</dd>
+                </div>
+                <div>
+                  <dt>Layout</dt>
+                  <dd>{product.layout}</dd>
+                </div>
+                <div>
+                  <dt>Storage fit</dt>
+                  <dd>{product.storageFit}</dd>
+                </div>
               </dl>
+              <div className="affiliate-product-fit">
+                <p><strong>Buy if:</strong> {product.buyIf}</p>
+                <p><strong>Avoid if:</strong> {product.avoidIf}</p>
+              </div>
+              <div className="affiliate-pro-con-grid">
+                <div>
+                  <strong>Pros</strong>
+                  <ul>
+                    {product.pros?.map(item => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <strong>Cons</strong>
+                  <ul>
+                    {product.cons?.map(item => <li key={item}>{item}</li>)}
+                  </ul>
+                </div>
+              </div>
               <ul className="content-bullets affiliate-product-bullets">
                 {product.keyFeatures.map(feature => <li key={feature}>{feature}</li>)}
               </ul>

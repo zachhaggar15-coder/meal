@@ -230,6 +230,8 @@ export default function PlanPage() {
           </div>
         </div>
 
+        <PlanQuickFacts plan={plan} />
+
         {/* Quiz CTA */}
         <div className="plan-quiz-cta">
           <Link to="/quiz" className="btn-quiz-inline">Not right for you? Take the quiz →</Link>
@@ -387,6 +389,8 @@ export default function PlanPage() {
           </div>
         </section>
 
+        <PlanContainerLinks plan={plan} />
+
         {/* Swaps & suggestions */}
         <section className="plan-swaps-section">
           <h2>Swaps &amp; Suggestions</h2>
@@ -461,6 +465,59 @@ function SummaryItem({ label, value }) {
       <span className="plan-summary-label">{label}</span>
       <span className="plan-summary-value">{value}</span>
     </div>
+  );
+}
+
+function PlanQuickFacts({ plan }) {
+  const facts = [
+    { label: 'Best for', value: plan.summary.bestFor },
+    { label: 'Calories', value: plan.summary.calorieRange },
+    { label: 'Budget', value: `${plan.summary.budgetRange}/week estimate` },
+    { label: 'Prep style', value: plan.effortLabel },
+    { label: 'Includes', value: '7 days, recipes, macros, PDF export and shopping list' },
+    { label: 'Diet', value: plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType) },
+  ];
+
+  return (
+    <section className="plan-quick-facts" aria-labelledby="plan-quick-facts-heading">
+      <h2 id="plan-quick-facts-heading">Plan Quick Facts</h2>
+      <div className="plan-quick-facts-grid">
+        {facts.map(fact => (
+          <div className="plan-quick-fact" key={fact.label}>
+            <strong>{fact.label}</strong>
+            <span>{fact.value}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function PlanContainerLinks({ plan }) {
+  const isBudget = plan.budget === 'very-cheap' || plan.budget === 'budget';
+  const primary = isBudget ? '/meal-prep-containers/budget' : '/meal-prep-containers/mid-range';
+  const primaryLabel = isBudget ? 'Budget meal prep containers' : 'Glass meal prep containers';
+
+  return (
+    <section className="plan-container-links" aria-labelledby="plan-container-links-heading">
+      <div>
+        <h2 id="plan-container-links-heading">Containers for this meal prep plan</h2>
+        <p>
+          Batch cooking this week? Compare meal prep boxes, tubs and glass containers before you portion
+          the shopping list into lunches and dinners.
+        </p>
+      </div>
+      <div className="plan-container-link-list">
+        <Link to={primary}>{primaryLabel}</Link>
+        {primary !== '/meal-prep-containers/budget' && (
+          <Link to="/meal-prep-containers/budget">Budget plastic tubs</Link>
+        )}
+        {primary !== '/meal-prep-containers/mid-range' && (
+          <Link to="/meal-prep-containers/mid-range">Mid-range glass boxes</Link>
+        )}
+        <Link to="/meal-prep-containers/premium">Premium storage sets</Link>
+      </div>
+    </section>
   );
 }
 

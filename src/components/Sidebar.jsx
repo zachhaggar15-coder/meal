@@ -4,6 +4,19 @@ import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const NAV = [
   {
+    label: 'Meal Plan Hubs',
+    items: [
+      { to: '/meal-plans/weight-loss',                 label: 'Weight Loss Plans' },
+      { to: '/meal-plans/1500-calorie',                label: '1500 Calorie Plans' },
+      { to: '/meal-plans/high-protein',                label: 'High Protein Plans' },
+      { to: '/meal-plans/vegetarian',                  label: 'Vegetarian Plans' },
+      { to: '/meal-plans/aldi',                        label: 'Aldi Meal Plans' },
+      { to: '/meal-plans/tesco-weight-loss',           label: 'Tesco Weight Loss' },
+      { to: '/meal-plans/printable-meal-plans',        label: 'Printable PDF Plans' },
+      { to: '/meal-plans/meal-plans-with-shopping-list', label: 'Plans with Shopping Lists' },
+    ],
+  },
+  {
     label: 'By Goal',
     items: [
       { to: '/plans/aldi-weight-loss-1500',           label: 'Weight Loss' },

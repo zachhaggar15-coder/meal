@@ -16,15 +16,26 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Calorie Plans</h4>
           <ul>
-            <li><Link to="/meal-plan/1500-calorie-meal-plan">1500 Calorie Meal Plan</Link></li>
+            <li><Link to="/meal-plans/1500-calorie">1500 Calorie Meal Plans</Link></li>
             <li><Link to="/meal-plan/1800-calorie-meal-plan">1800 Calorie Meal Plan</Link></li>
             <li><Link to="/meal-plan/2000-calorie-meal-plan">2000 Calorie Meal Plan</Link></li>
-            <li><Link to="/meal-plan/high-protein-low-calorie-meal-plan">High Protein Plan</Link></li>
-            <li><Link to="/meal-plan/budget-fat-loss-meal-plan-uk">Budget Fat Loss Plan</Link></li>
-            <li><Link to="/meal-plan/tesco-low-calorie-meal-plan">Tesco Meal Plan</Link></li>
-            <li><Link to="/meal-plan/aldi-low-calorie-meal-plan">Aldi Meal Plan</Link></li>
-            <li><Link to="/meal-plan/vegetarian-low-calorie-meal-plan">Vegetarian Plan</Link></li>
+            <li><Link to="/meal-plans/high-protein">High Protein Meal Plans</Link></li>
+            <li><Link to="/meal-plans/weight-loss">Weight Loss Meal Plans</Link></li>
+            <li><Link to="/meal-plans/tesco-weight-loss">Tesco Weight Loss Plans</Link></li>
+            <li><Link to="/meal-plans/aldi">Aldi Meal Plans</Link></li>
+            <li><Link to="/meal-plans/vegetarian">Vegetarian Meal Plans</Link></li>
             <li><Link to="/meal-plan/vegan-low-calorie-meal-plan">Vegan Plan</Link></li>
+          </ul>
+        </div>
+
+        <div className="footer-col">
+          <h4>Printable Plans</h4>
+          <ul>
+            <li><Link to="/meal-plans/printable-meal-plans">Printable Meal Plans</Link></li>
+            <li><Link to="/meal-plans/meal-plans-with-shopping-list">Plans with Shopping Lists</Link></li>
+            <li><Link to="/meal-prep-containers/budget">Budget Meal Prep Containers</Link></li>
+            <li><Link to="/meal-prep-containers/mid-range">Glass Meal Prep Containers</Link></li>
+            <li><Link to="/meal-prep-containers/premium">Premium Meal Prep Containers</Link></li>
           </ul>
         </div>
 

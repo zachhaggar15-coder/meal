@@ -33,6 +33,17 @@ export const BUDGET_ESTIMATES = {
   'flexible': '£50–70',
 };
 
+const SUPERMARKET_LABELS = {
+  aldi: 'Aldi',
+  lidl: 'Lidl',
+  tesco: 'Tesco',
+  asda: 'Asda',
+  sainsburys: "Sainsbury's",
+  morrisons: 'Morrisons',
+  iceland: 'Iceland',
+  any: 'UK',
+};
+
 export const EFFORT_LABELS = {
   'minimal': 'Minimal (under 10 min/day)',
   'low': 'Low (10–20 min/day)',
@@ -179,22 +190,41 @@ function buildShoppingKey(ing) {
 // ── SEO metadata ──────────────────────────────────────────────────────────────
 
 function buildSeo(seed) {
-  const mkt = seed.supermarket === 'any' ? 'UK' : cap(seed.supermarket);
+  const mkt = getMarketLabel(seed.supermarket);
   const gl = GOAL_LABELS[seed.goal] || seed.goal;
   const cal = seed.calories;
   return {
-    title: `${seed.title} | MealPrep.org.uk`,
-    description: `Free printable 7-day ${gl.toLowerCase()} meal plan for ${mkt}: ~${cal} kcal/day with shopping list, macros, PDF export and AI meal swaps.`,
+    title: `${buildCtrPlanTitle(seed, mkt, gl, cal)} | MealPrep.org.uk`,
+    description: buildCtrPlanDescription(seed, mkt, gl, cal),
     canonical: `https://www.mealprep.org.uk/plans/${seed.slug}`,
-    ogTitle: seed.title,
-    ogDescription: `Free printable 7-day ${gl.toLowerCase()} meal plan for ${mkt}: ~${cal} kcal/day with shopping list, macros and PDF export.`,
+    ogTitle: buildCtrPlanTitle(seed, mkt, gl, cal),
+    ogDescription: buildCtrPlanDescription(seed, mkt, gl, cal),
   };
+}
+
+function buildCtrPlanTitle(seed, marketLabel, goalLabel, calories) {
+  const diet = seed.dietType !== 'standard' && !goalLabel.toLowerCase().includes(seed.dietType)
+    ? `${cap(seed.dietType)} `
+    : '';
+  const market = marketLabel === 'UK' ? 'UK' : marketLabel;
+  return `${market} ${diet}${calories.toLocaleString('en-GB')} Calorie ${goalLabel} Meal Plan - PDF + Shopping List`;
+}
+
+function buildCtrPlanDescription(seed, marketLabel, goalLabel, calories) {
+  const diet = seed.dietType === 'standard' ? 'UK' : `${seed.dietType} UK`;
+  const budget = BUDGET_ESTIMATES[seed.budget];
+  const marketPhrase = marketLabel === 'UK' ? 'UK supermarkets' : marketLabel;
+  return `Free printable ${diet} ${goalLabel.toLowerCase()} meal plan for ${marketPhrase}: 7 days at ~${calories.toLocaleString('en-GB')} kcal/day, ${budget}/week estimate, macros and shopping list.`;
+}
+
+function getMarketLabel(supermarket) {
+  return SUPERMARKET_LABELS[supermarket] || cap(supermarket);
 }
 
 // ── FAQs ──────────────────────────────────────────────────────────────────────
 
 function buildFaqs(seed) {
-  const mkt = seed.supermarket === 'any' ? 'any UK supermarket' : cap(seed.supermarket);
+  const mkt = seed.supermarket === 'any' ? 'any UK supermarket' : getMarketLabel(seed.supermarket);
   const gl = (GOAL_LABELS[seed.goal] || seed.goal).toLowerCase();
 
   return [

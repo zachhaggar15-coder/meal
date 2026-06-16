@@ -6,7 +6,8 @@ import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import {
   AFFILIATE_DISCLOSURE,
   CONTAINER_GUIDES,
-  CONTAINER_PRODUCTS,
+  getContainerProduct,
+  getContainerProducts,
 } from '../data/containerProducts.js';
 
 const guideOrder = ['budget', 'mid-range', 'premium'];
@@ -22,7 +23,8 @@ export default function ContainerGuide() {
 
   if (!guide) return <Navigate to="/meal-prep-containers/mid-range" replace />;
 
-  const heroProduct = CONTAINER_PRODUCTS[guide.heroProductId];
+  const products = getContainerProducts(guide.productIds);
+  const heroProduct = getContainerProduct(guide.heroProductId);
   const heroImage = heroProduct?.image || guide.heroImage;
   const canonical = `/meal-prep-containers/${guide.slug}`;
 
@@ -40,15 +42,21 @@ export default function ContainerGuide() {
       },
       mainEntity: {
         '@type': 'ItemList',
-        itemListElement: guide.productIds.map((id, index) => {
-          const product = CONTAINER_PRODUCTS[id];
-          return {
+        itemListElement: products.map((product, index) => (
+          {
             '@type': 'ListItem',
             position: index + 1,
             name: product.name,
             url: product.href,
-          };
-        }),
+            item: {
+              '@type': 'Product',
+              name: product.name,
+              image: product.image,
+              description: product.summary,
+              sku: product.asin,
+            },
+          }
+        )),
       },
     },
     {
@@ -69,6 +77,7 @@ export default function ContainerGuide() {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     },
+    ...products.map(product => buildProductReviewJsonLd(product)),
   ];
 
   return (
@@ -164,6 +173,60 @@ export default function ContainerGuide() {
           )}
         </section>
 
+        <section className="container-comparison-section" aria-labelledby="container-comparison-heading">
+          <div className="section-head-inline">
+            <div>
+              <h2 id="container-comparison-heading">Quick comparison</h2>
+              <p>
+                Shortlist by material, format, layout and buyer need before opening the Amazon UK listing.
+              </p>
+            </div>
+          </div>
+          <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
+          <div className="content-table-wrap">
+            <table className="content-table container-comparison-table">
+              <thead>
+                <tr>
+                  <th>Pick</th>
+                  <th>Best for</th>
+                  <th>Material</th>
+                  <th>Format</th>
+                  <th>Layout</th>
+                  <th>Watch-out</th>
+                  <th>Amazon</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map(product => (
+                  <tr key={product.id}>
+                    <td>
+                      <strong>{product.badge}</strong>
+                      <span>{product.shortName}</span>
+                    </td>
+                    <td>{product.bestFor}</td>
+                    <td>{product.material}</td>
+                    <td>{product.setSize}</td>
+                    <td>{product.layout}</td>
+                    <td>{product.watchOut}</td>
+                    <td>
+                      <a
+                        href={product.href}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow sponsored"
+                        data-event="container_product_click"
+                        data-source-page={`${guide.slug}-comparison-table`}
+                        data-offer={product.name}
+                      >
+                        View deal
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <div id="comparison">
           <AffiliateProductGrid
             title={`Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
@@ -204,4 +267,40 @@ export default function ContainerGuide() {
       <Footer />
     </>
   );
+}
+
+function buildProductReviewJsonLd(product) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    image: product.image,
+    description: product.summary,
+    sku: product.asin,
+    url: product.href,
+    review: {
+      '@type': 'Review',
+      author: {
+        '@type': 'Organization',
+        name: 'MealPrep.org.uk',
+      },
+      reviewBody: `${product.summary} ${product.buyIf} ${product.avoidIf}`,
+      positiveNotes: {
+        '@type': 'ItemList',
+        itemListElement: (product.pros || []).map((note, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: note,
+        })),
+      },
+      negativeNotes: {
+        '@type': 'ItemList',
+        itemListElement: (product.cons || []).map((note, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: note,
+        })),
+      },
+    },
+  };
 }
