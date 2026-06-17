@@ -6,6 +6,7 @@ import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
+import PopularGuides from '../components/PopularGuides.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { generateBlogImageUrl } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
@@ -95,6 +96,7 @@ export default function BlogPost() {
 
           {/* Early CTA — after the intro, before the main body */}
           <GeneratorCTA sourcePage={`blog-${slug}`} />
+          <PopularGuides slug={slug} post={data} />
 
           {data.sections.map((section, i) => (
             <section key={i}>

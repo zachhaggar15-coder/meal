@@ -132,6 +132,21 @@ export const expandedBlogPostsData = {
         ],
       },
       {
+        h2: '1400 calorie plan comparison',
+        paragraphs: [
+          'Use this quick comparison if you are deciding whether 1400 calories is the right target or whether a slightly higher plan would be easier to repeat.',
+        ],
+        table: {
+          headers: ['Plan style', 'Best for', 'Watch out'],
+          rows: [
+            ['1200 calories', 'Very small, less active adults using a short-term target', 'Often too low for training, busy jobs, or long-term adherence'],
+            ['1400 calories', 'Smaller adults wanting structure with proper meals', 'Needs protein at breakfast and lunch to avoid evening hunger'],
+            ['1600 calories', 'People who want a steadier deficit and more dinner flexibility', 'Progress may be slower but usually easier to maintain'],
+            ['1800 calories', 'Active adults, taller adults, and gym beginners', 'Portions still need measuring, especially oils and snacks'],
+          ],
+        },
+      },
+      {
         h2: 'Simple UK supermarket basket',
         paragraphs: [
           'Start with eggs, chicken breast or thighs, 0% Greek yogurt, tinned tuna, tofu, cottage cheese, frozen mixed vegetables, salad bags, potatoes, rice, oats, berries, apples, and a low-calorie sauce you like.',
@@ -227,6 +242,21 @@ export const expandedBlogPostsData = {
         ],
       },
       {
+        h2: '1800 calorie meal plan comparison',
+        paragraphs: [
+          'This table shows the easiest way to make 1800 calories feel like normal eating rather than a diet built from tiny portions.',
+        ],
+        table: {
+          headers: ['Meal slot', 'Calorie guide', 'Good UK meal prep option'],
+          rows: [
+            ['Breakfast', '350-450 kcal', 'Greek yogurt oats, eggs on toast, or protein porridge'],
+            ['Lunch', '450-550 kcal', 'Chicken rice bowl, tuna pasta salad, or tofu noodle box'],
+            ['Dinner', '600-750 kcal', 'Chilli with rice, salmon potatoes, curry, or pasta bake'],
+            ['Snack', '150-300 kcal', 'Fruit and yogurt, boiled eggs, cottage cheese, or soup'],
+          ],
+        },
+      },
+      {
         h2: 'A weekday structure that feels normal',
         paragraphs: [
           'Start with a 400 calorie breakfast, a 500 calorie lunch, a 650 calorie dinner, and a 250 calorie snack allowance. You can move calories around for social plans, but keeping the workweek steady reduces decision fatigue.',
@@ -271,6 +301,21 @@ export const expandedBlogPostsData = {
           'This target commonly suits people who walk a lot, lift weights, play sport, work on their feet, or have a maintenance intake well above 2400 calories. It can also suit anyone moving down from a higher intake who wants a less dramatic first step.',
           'The plan should still be structured. A 2000 calorie target disappears quickly if breakfast is a pastry, lunch is a meal deal, and dinner is unmeasured pasta with oil.',
         ],
+      },
+      {
+        h2: '2000 calorie plan comparison',
+        paragraphs: [
+          'At 2000 calories, the main decision is whether the plan is for fat loss, maintenance, or gym performance. The foods can be similar, but the portions and snack choices change.',
+        ],
+        table: {
+          headers: ['Goal', 'Best approach', 'Useful meals'],
+          rows: [
+            ['Weight loss', 'Keep protein high and measure calorie-dense extras', 'Chicken pasta salad, chilli rice bowls, salmon potatoes'],
+            ['Maintenance', 'Use consistent breakfasts and flexible dinners', 'Porridge, wraps, stir-fries, traybakes'],
+            ['Gym beginner', 'Spread protein across 3-4 eating occasions', 'Egg breakfast, chicken lunch, Greek yogurt snack, mince dinner'],
+            ['Busy workweek', 'Batch cook lunches and leave dinners flexible', 'Tuna pasta, turkey chilli, tofu curry, soup and toast'],
+          ],
+        },
       },
       {
         h2: 'What a good day looks like',
@@ -1431,6 +1476,21 @@ export const expandedBlogPostsData = {
         ],
       },
       {
+        h2: 'Lidl meal prep comparison',
+        paragraphs: [
+          'Use Lidl when you want the cheapest reliable version of a simple meal prep basket rather than a very specialist product range.',
+        ],
+        table: {
+          headers: ['Lidl strength', 'Best meals', 'When to top up elsewhere'],
+          rows: [
+            ['Low-cost staples', 'Oats, eggs, rice, potatoes, beans, frozen veg', 'If you need niche free-from or specialist diet products'],
+            ['Budget protein', 'Chicken bowls, turkey chilli, yogurt breakfasts', 'If the exact meat or fish option is out of stock'],
+            ['Frozen basics', 'Soups, stir-fries, curry, freezer portions', 'If you want a wider frozen fish or prawn range'],
+            ['Simple weekly shops', 'Repeat breakfasts and batch lunches', 'If you want branded sauces or high-variety snacks'],
+          ],
+        },
+      },
+      {
         h2: 'Best meal prep ideas',
         paragraphs: [
           'Lidl works well for chicken rice bowls, turkey chilli, Greek yogurt breakfasts, egg wraps, tuna pasta salad, lentil dhal, freezer soups, and traybakes.',
@@ -1468,6 +1528,21 @@ export const expandedBlogPostsData = {
           'Look for own-brand oats, eggs, Greek-style yogurt, cottage cheese, chicken, lean mince, fish, tinned tuna, beans, potatoes, frozen veg, salad, and fresh fruit.',
           'Where available, Market Street counters can help with fish, meat, and fresh options, but the cheapest meal prep still comes from basic own-brand staples.',
         ],
+      },
+      {
+        h2: 'Morrisons meal prep comparison',
+        paragraphs: [
+          'Morrisons is strongest when you use the full supermarket range for staples and add fresh-counter options where they genuinely improve the week.',
+        ],
+        table: {
+          headers: ['Shopping style', 'Best for', 'Watch out'],
+          rows: [
+            ['Own-brand staples', 'Oats, eggs, yogurt, beans, potatoes, rice', 'Still compare larger pack prices against discount supermarkets'],
+            ['Fresh counters', 'Fish, meat, and flexible protein choices', 'Can lift the weekly cost if every meal uses premium items'],
+            ['Frozen and tinned', 'Backup meals, soups, chilli, tuna lunches', 'Check cupboard stock before buying duplicates'],
+            ['Family batch cooking', 'Bolognese, curry, traybakes, jacket potatoes', 'Portion before storing so leftovers become lunches'],
+          ],
+        },
       },
       {
         h2: 'Meal ideas',
@@ -1509,6 +1584,21 @@ export const expandedBlogPostsData = {
         ],
       },
       {
+        h2: 'Iceland meal prep comparison',
+        paragraphs: [
+          'Iceland works best as a freezer-first shop. The table below separates the useful meal prep staples from the convenience items that need a little more care.',
+        ],
+        table: {
+          headers: ['Iceland option', 'Best use', 'Meal prep note'],
+          rows: [
+            ['Frozen protein', 'Fish, chicken, prawns, and quick dinners', 'Check whether the product is raw, cooked, coated, or sauced'],
+            ['Frozen vegetables', 'Stir-fries, soups, chilli, curry, omelettes', 'Excellent for reducing waste and adding volume'],
+            ['Frozen fruit', 'Smoothies, yogurt bowls, porridge toppings', 'Use measured portions if calories matter'],
+            ['Ready meals', 'Emergency backup meals', 'Compare protein and calories before making them the plan'],
+          ],
+        },
+      },
+      {
         h2: 'Meal prep ideas',
         paragraphs: [
           'Try fish with potatoes and peas, chicken stir-fry with frozen veg, prawn rice bowls, turkey or beef chilli with frozen peppers, and smoothie packs with frozen berries.',
@@ -1546,6 +1636,21 @@ export const expandedBlogPostsData = {
           'The plan is built around average UK supermarket staples: oats, eggs, Greek yogurt, chicken, tuna, tofu, beans, lentils, rice, pasta, potatoes, frozen vegetables, salad, and fruit.',
           'This is the most flexible option if you chase offers, use delivery substitutions, or split your shopping between discount and full-size supermarkets.',
         ],
+      },
+      {
+        h2: 'Generic vs named supermarket plans',
+        paragraphs: [
+          'A generic plan is not worse than a named-store plan; it simply optimises for availability and substitutions rather than one exact basket.',
+        ],
+        table: {
+          headers: ['Plan type', 'Best for', 'Trade-off'],
+          rows: [
+            ['Generic UK supermarket', 'People who shop across multiple stores', 'Costs are averaged rather than tied to one live basket'],
+            ['Aldi or Lidl', 'Cheapest simple meal prep staples', 'Smaller specialist ranges'],
+            ['Tesco or Asda', 'Wider choice and easier substitutions', 'Offers can distract from the list'],
+            ['Iceland plus top-up shop', 'Freezer-led meal prep and backup meals', 'Fresh staples may need a second store'],
+          ],
+        },
       },
       {
         h2: 'Best meals for any supermarket',
@@ -1587,6 +1692,21 @@ export const expandedBlogPostsData = {
         ],
       },
       {
+        h2: 'Tesco Clubcard meal prep comparison',
+        paragraphs: [
+          'Clubcard prices are most useful when they reduce the cost of foods already in your plan. They are less useful when they add snacks, extras, and duplicate ingredients.',
+        ],
+        table: {
+          headers: ['Clubcard offer type', 'Good use', 'Risk'],
+          rows: [
+            ['Protein staples', 'Chicken, fish, mince, yogurt, cottage cheese', 'Buying more than you can cook or freeze'],
+            ['Carbohydrate staples', 'Rice, pasta, oats, wraps, potatoes', 'Duplicating cupboard foods you already have'],
+            ['Convenience ingredients', 'Microwave grains, salad bags, chopped veg', 'Higher cost than plain ingredients'],
+            ['Snacks and treats', 'Planned portions within the week', 'Cheap-looking extras that raise the total basket'],
+          ],
+        },
+      },
+      {
         h2: 'How to use Clubcard prices well',
         paragraphs: [
           'Use offers on foods already in your plan: protein, yogurt, frozen veg, rice, pasta, fruit, and household staples. Be careful with snacks and extras that look cheap but do not become meals.',
@@ -1624,6 +1744,21 @@ export const expandedBlogPostsData = {
           'Look for eggs, chicken, turkey mince, tinned tuna, Greek-style yogurt, cottage cheese, milk, tofu when stocked, lentils, beans, chickpeas, frozen fish, frozen veg, oats, rice, potatoes, wraps, and salad.',
           "Aldi is strongest when you keep the plan simple. If you need specialist products, pair Aldi with Tesco, Asda, or Sainsbury's for top-ups.",
         ],
+      },
+      {
+        h2: 'Aldi high protein shopping comparison',
+        paragraphs: [
+          'This comparison helps decide what should go in the Aldi basket first and what is better treated as an occasional top-up.',
+        ],
+        table: {
+          headers: ['Food group', 'Best Aldi buys', 'Use them for'],
+          rows: [
+            ['Breakfast protein', 'Eggs, Greek-style yogurt, milk, cottage cheese', 'Oats, yogurt bowls, omelettes, snack plates'],
+            ['Lunch protein', 'Chicken, tuna, turkey mince, tofu when stocked', 'Rice bowls, wraps, pasta salad, chilli'],
+            ['Vegetarian protein', 'Beans, lentils, chickpeas, tofu, dairy', 'Dhal, chilli, curry, salads, cottage cheese toast'],
+            ['Volume foods', 'Frozen veg, salad, potatoes, fruit', 'Keeping high-protein meals filling without raising cost'],
+          ],
+        },
       },
       {
         h2: 'A useful weekly list',
