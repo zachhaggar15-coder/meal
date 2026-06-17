@@ -1,5 +1,5 @@
 // Vercel serverless function: POST /api/feedback
-// Sends site feedback to the configured inbox via Resend.
+// Sends site feedback through a private webhook or Resend.
 
 const DEFAULT_FEEDBACK_TO = 'dojostack@protonmail.com';
 const DEFAULT_FEEDBACK_FROM = 'MealPrep Feedback <onboarding@resend.dev>';
@@ -27,15 +27,36 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: `Feedback must be ${MAX_FEEDBACK_LENGTH} characters or fewer.` });
   }
 
+  const subject = 'MealPrep.org.uk feedback';
+  const payload = {
+    site: 'MealPrep.org.uk',
+    type: 'feedback',
+    submittedAt: new Date().toISOString(),
+    feedback,
+    source: source || 'Unknown',
+    userAgent: userAgent || 'Unknown',
+  };
+
+  const webhookUrl = cleanUrl(process.env.FEEDBACK_WEBHOOK_URL);
+  if (webhookUrl) {
+    try {
+      await sendFeedbackWebhook(webhookUrl, payload);
+      return res.status(200).json({ ok: true, provider: 'webhook' });
+    } catch (err) {
+      console.error('Feedback webhook error:', err);
+      return res.status(502).json({ error: 'Could not send feedback right now. Please try again later.' });
+    }
+  }
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'Feedback email is not configured yet.' });
+    console.error('Feedback provider missing: set FEEDBACK_WEBHOOK_URL or RESEND_API_KEY.');
+    return res.status(503).json({ error: 'Feedback is not configured on the server yet.' });
   }
 
   const from = resolveFeedbackFrom(process.env.FEEDBACK_FROM_EMAIL);
   const to = cleanEmailHeader(process.env.FEEDBACK_TO_EMAIL, DEFAULT_FEEDBACK_TO);
   const recipients = parseEmailRecipients(to);
-  const subject = 'MealPrep.org.uk feedback';
   const text = [
     'New MealPrep.org.uk feedback',
     '',
@@ -82,6 +103,22 @@ export default async function handler(req, res) {
   }
 }
 
+async function sendFeedbackWebhook(webhookUrl, payload) {
+  const webhookRes = await fetch(webhookUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'User-Agent': 'MealPrep.org.uk feedback bot',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!webhookRes.ok) {
+    const errText = await webhookRes.text();
+    throw new Error(`Webhook returned ${webhookRes.status}: ${errText.slice(0, 500)}`);
+  }
+}
+
 function parseBody(body) {
   if (!body) return {};
   if (typeof body === 'object') return body;
@@ -99,6 +136,18 @@ function cleanEmailHeader(value, fallback) {
     .replace(/[\r\n]+/g, ' ');
 
   return cleaned || fallback;
+}
+
+function cleanUrl(value) {
+  const cleaned = String(value || '').trim().replace(/^['"]|['"]$/g, '');
+  if (!cleaned) return '';
+
+  try {
+    const url = new URL(cleaned);
+    return url.protocol === 'https:' ? url.toString() : '';
+  } catch {
+    return '';
+  }
 }
 
 function resolveFeedbackFrom(value) {

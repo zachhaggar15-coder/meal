@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PLAN_COUNT } from '../data/planSeeds.js';
-import { buildPlanChooserPath, GOAL_CHOOSER_ITEMS } from '../data/planChooser.js';
+import {
+  buildCalorieChooserPath,
+  buildDietChooserPath,
+  buildPlanChooserPath,
+  buildSupermarketChooserPath,
+  CALORIE_CHOICES,
+  DIET_CHOICES,
+  GOAL_CHOOSER_ITEMS,
+  SUPERMARKET_CHOICES,
+} from '../data/planChooser.js';
 
 const NAV = [
   {
@@ -10,7 +19,11 @@ const NAV = [
       { to: '/meal-plans/weight-loss',                 label: 'Weight Loss Plans' },
       { to: '/meal-plans/1500-calorie',                label: '1500 Calorie Plans' },
       { to: '/meal-plans/high-protein',                label: 'High Protein Plans' },
+      { to: '/meal-plans/muscle-gain',                 label: 'Muscle Gain Plans' },
+      { to: '/meal-plans/3000-calorie',                label: '3000 Calorie Plans' },
+      { to: '/meal-plans/3500-calorie',                label: '3500 Calorie Plans' },
       { to: '/meal-plans/vegetarian',                  label: 'Vegetarian Plans' },
+      { to: '/meal-plans/generic-uk-supermarket',      label: 'Generic UK Plans' },
       { to: '/meal-plans/aldi',                        label: 'Aldi Meal Plans' },
       { to: '/meal-plans/tesco-weight-loss',           label: 'Tesco Weight Loss' },
       { to: '/meal-plans/printable-meal-plans',        label: 'Printable PDF Plans' },
@@ -26,34 +39,24 @@ const NAV = [
   },
   {
     label: 'By Supermarket',
-    items: [
-      { to: '/plans/any-weight-loss-1800',             label: 'Generic UK supermarket' },
-      { to: '/plans/aldi-weight-loss-1800',            label: 'Aldi' },
-      { to: '/plans/lidl-weight-loss-1800',            label: 'Lidl' },
-      { to: '/plans/tesco-weight-loss-1800',           label: 'Tesco' },
-      { to: '/plans/asda-weight-loss-1800',            label: 'Asda' },
-      { to: '/plans/sainsburys-weight-loss-1800',      label: "Sainsbury's" },
-      { to: '/plans/morrisons-weight-loss-1800',       label: 'Morrisons' },
-      { to: '/plans/iceland-weight-loss-1800',         label: 'Iceland' },
-    ],
+    items: SUPERMARKET_CHOICES.map(item => ({
+      to: buildSupermarketChooserPath(item.value),
+      label: item.label,
+    })),
   },
   {
     label: 'By Calories',
-    items: [
-      { to: '/plans/any-weight-loss-1500',             label: '~1,500 kcal' },
-      { to: '/plans/any-weight-loss-1800',             label: '~1,800 kcal' },
-      { to: '/plans/any-muscle-gain-2000',             label: '~2,000 kcal' },
-      { to: '/plans/any-muscle-gain-2500',             label: '~2,500 kcal' },
-    ],
+    items: CALORIE_CHOICES.map(item => ({
+      to: buildCalorieChooserPath(item.value),
+      label: `~${item.label}`,
+    })),
   },
   {
     label: 'Diet Type',
-    items: [
-      { to: '/plans/aldi-veg-low-cal-1500',            label: 'Vegetarian Low Cal' },
-      { to: '/plans/aldi-hp-veg-1800',                 label: 'High Protein Vegetarian' },
-      { to: '/plans/aldi-vegan-low-cal-1500',          label: 'Vegan Low Calorie' },
-      { to: '/plans/aldi-pescatarian-1800',            label: 'Pescatarian' },
-    ],
+    items: DIET_CHOICES.map(item => ({
+      to: buildDietChooserPath(item.value),
+      label: item.label,
+    })),
   },
   {
     label: 'Container Guides',
@@ -82,6 +85,7 @@ const NAV = [
       { to: '/blog/endurance-running-nutrition-uk',          label: 'Endurance Nutrition' },
       { to: '/blog/cutting-diet-plan-uk',                    label: 'Cutting Phase Diet' },
       { to: '/blog/muscle-building-meal-plan-uk',            label: 'Muscle Building Diet' },
+      { to: '/blog/3000-vs-3500-calorie-meal-plan-uk',       label: '3000 vs 3500 Calories' },
       { to: '/blog/intermittent-fasting-meal-plan-uk',       label: 'Intermittent Fasting' },
       { to: '/blog/meal-prep-for-beginners-uk',              label: 'Meal Prep for Beginners' },
       { to: '/blog/batch-cooking-for-beginners-uk',          label: 'Batch Cooking Guide' },
@@ -89,12 +93,15 @@ const NAV = [
       { to: '/blog/vegan-meal-prep-uk',                      label: 'Vegan Meal Prep' },
       { to: '/blog/vegetarian-meal-prep-uk',                 label: 'Vegetarian Meal Prep' },
       { to: '/blog/aldi-vs-tesco-meal-prep',                 label: 'Aldi vs Tesco' },
+      { to: '/blog/aldi-vs-lidl-meal-prep',                  label: 'Aldi vs Lidl' },
+      { to: '/blog/best-supermarket-for-high-protein-meal-prep-uk', label: 'Best High Protein Supermarket' },
       { to: '/blog/sainsburys-meal-prep-uk',                 label: "Sainsbury's Meal Prep" },
       { to: '/blog/asda-meal-prep-uk',                       label: 'Asda Meal Prep' },
       { to: '/blog/meal-prep-containers-uk',                 label: 'Meal Prep Containers' },
       { to: '/blog/best-meal-prep-containers-uk',            label: 'Best Meal Prep Containers' },
       { to: '/blog/glass-vs-plastic-meal-prep-containers',   label: 'Glass vs Plastic Containers' },
       { to: '/blog/meal-prep-container-size-guide',          label: 'Container Size Guide' },
+      { to: '/blog/budget-vs-premium-meal-prep-containers',  label: 'Budget vs Premium Containers' },
     ],
   },
 ];
@@ -154,6 +161,14 @@ export default function Sidebar({ open, onClose }) {
             onClick={onClose}
           >
             Blog
+          </Link>
+
+          <Link
+            to="/tools"
+            className={`sidebar-top-link${location.pathname === '/tools' ? ' sidebar-link--active' : ''}`}
+            onClick={onClose}
+          >
+            Tools
           </Link>
 
           {NAV.map(group => (

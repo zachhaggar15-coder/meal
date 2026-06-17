@@ -349,6 +349,8 @@ export function buildPlan(seed) {
     // Add snack(s) based on calorie target
     if (seed.calories >= 1800 && snacks.length) mealList.push(pick(snacks, s + 13));
     if (seed.calories >= 2000 && snacks.length) mealList.push(pick(snacks, s + 19));
+    if (seed.calories >= 3000 && snacks.length) mealList.push(pick(snacks, s + 29));
+    if (seed.calories >= 3500 && snacks.length) mealList.push(pick(snacks, s + 41));
 
     const adjustedMeals = rebalanceMealsToTarget(mealList, seed.calories);
 

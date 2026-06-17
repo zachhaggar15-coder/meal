@@ -4158,6 +4158,157 @@ details[open] .faq-question::after { content: '▴'; }
 }
 .plan-chooser-change:hover { text-decoration: underline; }
 
+.choice-index-note {
+  margin: 28px 0 0;
+  padding: 18px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+.choice-index-note h2 {
+  margin: 0 0 8px;
+  color: #111827;
+  font-size: 1.15rem;
+}
+.choice-index-note p {
+  max-width: 760px;
+  margin: 0 0 14px;
+  color: #4b5563;
+}
+
+/* ---------- Tools page ---------- */
+.tools-page {
+  max-width: 1120px;
+}
+.tools-hero {
+  margin-bottom: 24px;
+}
+.tools-hero h1 {
+  margin: 8px 0 10px;
+  color: #111827;
+  font-size: 1.9rem;
+  line-height: 1.18;
+}
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.tool-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+.tool-panel h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.05rem;
+}
+.tool-fields {
+  display: grid;
+  gap: 10px;
+}
+.tool-fields--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.tool-field {
+  display: grid;
+  gap: 5px;
+  color: #374151;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.tool-field input,
+.tool-field select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  font: inherit;
+  font-weight: 600;
+  padding: 8px 10px;
+}
+.tool-number-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+.tool-number-wrap small {
+  color: #6b7280;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.tool-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #374151;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+.tool-toggle input {
+  width: 18px;
+  height: 18px;
+}
+.tool-result {
+  display: grid;
+  gap: 6px;
+  margin-top: auto;
+  padding: 13px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #eff6ff;
+}
+.tool-result strong {
+  color: #1e3a8a;
+  font-size: 1.15rem;
+}
+.tool-result span {
+  color: #374151;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.tools-print-section {
+  margin: 28px 0 0;
+  padding: 20px;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  background: #f0fdf4;
+}
+.tools-print-section h2 {
+  margin: 0 0 8px;
+  color: #14532d;
+}
+.tools-print-section p {
+  max-width: 780px;
+  color: #374151;
+}
+.tools-print-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tools-print-links a {
+  padding: 8px 11px;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  background: #fff;
+  color: #166534;
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+.tools-print-links a:hover {
+  border-color: #22c55e;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE OVERRIDES
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -4167,6 +4318,13 @@ details[open] .faq-question::after { content: '▴'; }
   .home-hero-actions { flex-direction: column; align-items: stretch; }
   .btn-hero-primary, .btn-hero-secondary { text-align: center; }
   .hiw-steps { grid-template-columns: 1fr 1fr; }
+  .tools-grid,
+  .tool-fields--two {
+    grid-template-columns: 1fr;
+  }
+  .tool-panel {
+    padding: 16px;
+  }
   .quiz-options { grid-template-columns: 1fr 1fr; }
   .quiz-options--wide { grid-template-columns: repeat(2, 1fr); }
   .quiz-macro-choice-grid,
@@ -4201,9 +4359,31 @@ details[open] .faq-question::after { content: '▴'; }
 .blog-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 .blog-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s, box-shadow 0.15s; }
 .blog-card:hover { border-color: #93c5fd; box-shadow: 0 2px 12px rgba(37, 99, 235, 0.10); }
+.blog-card-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 4px;
+  background: #f1f5f9;
+}
 .blog-card-title { font-size: 0.95rem; font-weight: 700; color: var(--text); line-height: 1.4; margin: 0; }
 .blog-card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; margin: 0; flex: 1; }
 .blog-card-cta { font-size: 0.8rem; font-weight: 600; color: var(--accent-dark); margin-top: 4px; }
+
+.blog-hero-image {
+  margin: 18px 0 22px;
+}
+.blog-hero-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f8fafc;
+}
 
 /* ---------- Meal prep container buying guides ---------- */
 .affiliate-disclosure {
@@ -4504,6 +4684,110 @@ details[open] .faq-question::after { content: '▴'; }
   align-self: start;
 }
 
+.container-finder {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 16px;
+  margin: 24px 0 28px;
+  padding: 18px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+.container-finder-copy h2 {
+  margin: 8px 0 8px;
+  color: #111827;
+  font-size: 1.2rem;
+}
+.container-finder-copy p {
+  margin: 0 0 10px;
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+.container-finder-controls {
+  display: grid;
+  gap: 12px;
+}
+.container-finder-group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.container-finder-group legend,
+.container-finder-slider span {
+  display: block;
+  margin-bottom: 6px;
+  color: #374151;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.container-finder-group div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.container-finder-choice {
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.container-finder-choice--active {
+  border-color: #2563eb;
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+.container-finder-slider input {
+  width: 100%;
+  accent-color: #2563eb;
+}
+.container-finder-result {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  background: #f0fdf4;
+}
+.container-finder-result span {
+  color: #166534;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.container-finder-result strong {
+  color: #111827;
+  font-size: 1.12rem;
+}
+.container-finder-result p {
+  margin: 0;
+  color: #374151;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.container-finder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+}
+.container-finder-actions .btn-primary,
+.container-finder-actions .btn-secondary {
+  padding: 9px 12px;
+  font-size: 0.82rem;
+}
+
 .container-comparison-section {
   margin: 28px 0 34px;
 }
@@ -4540,6 +4824,10 @@ details[open] .faq-question::after { content: '▴'; }
   }
 
   .affiliate-product-card {
+    grid-template-columns: 1fr;
+  }
+
+  .container-finder {
     grid-template-columns: 1fr;
   }
 

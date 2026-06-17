@@ -1941,4 +1941,192 @@ export const expandedBlogPostsData = {
       { q: 'Should I eat after a night shift?', a: 'Some people prefer a light snack before sleep, others do not need it. Avoid forcing a heavy meal if it disrupts sleep.' },
     ],
   }),
+
+  'aldi-vs-lidl-meal-prep': post({
+    title: 'Aldi vs Lidl Meal Prep UK: Which Is Better for Weekly Plans?',
+    description: 'A practical Aldi vs Lidl meal prep comparison for UK shoppers, covering protein, frozen foods, staples, price control and weekly shopping lists.',
+    h1: 'Aldi vs Lidl Meal Prep UK',
+    intro: 'Aldi and Lidl are both strong meal prep supermarkets, but they suit slightly different shopping habits. The best choice is usually the one that makes your repeat shop easier, not the one with one headline bargain.',
+    sections: [
+      {
+        h2: 'Quick verdict',
+        paragraphs: [
+          'Choose Aldi if you want a very predictable budget shop built around oats, rice, pasta, eggs, chicken, frozen veg, tinned tomatoes, beans, yogurt and simple snacks.',
+          'Choose Lidl if you like a similar budget shop but want a little more variety from bakery items, themed ranges, fresh produce deals and rotating middle-aisle finds.',
+        ],
+        table: {
+          headers: ['Category', 'Aldi', 'Lidl'],
+          rows: [
+            ['Budget control', 'Very strong for repeat shops', 'Very strong, with more rotating offers'],
+            ['Protein staples', 'Chicken, mince, eggs, yogurt, tuna, tofu in many stores', 'Similar staples, often good on dairy and fish offers'],
+            ['Meal prep style', 'Simple, repeatable, batch-friendly', 'Budget-friendly with a little more variety'],
+            ['Best plan type', 'Budget fat loss or cheap high protein', 'Cheap student, low effort or budget bodybuilding'],
+          ],
+        },
+      },
+      {
+        h2: 'Which is better for high protein meal prep?',
+        paragraphs: [
+          'Both work well. Aldi is usually easier when you want the exact same basket every week. Lidl can be better if you are happy to swap proteins based on what looks best that week.',
+          'For high-protein plans, prioritise the protein anchors first: eggs, Greek-style yogurt, cottage cheese, chicken, fish, tofu, beans, lentils and lean mince. Then build carbs and vegetables around them.',
+        ],
+      },
+      {
+        h2: 'How to decide',
+        paragraphs: [
+          'If you already pass one store on the commute, choose that one. Meal prep fails more often because the shop is inconvenient than because the spreadsheet says another store is marginally cheaper.',
+          'Use the supermarket chooser if you want the same goal at either store before committing to a weekly plan.',
+        ],
+      },
+    ],
+    related: [
+      { path: '/choose-supermarket/aldi', label: 'Choose an Aldi meal plan', type: 'guide' },
+      { path: '/choose-supermarket/lidl', label: 'Choose a Lidl meal plan', type: 'guide' },
+      { slug: 'cheapest-uk-supermarket-meal-prep', label: 'Cheapest UK Supermarket Meal Prep', type: 'blog' },
+    ],
+    faq: [
+      { q: 'Is Aldi or Lidl cheaper for meal prep?', a: 'Both can be very cheap for meal prep. Aldi is often easier for a repeatable basket, while Lidl can be excellent when weekly offers match your plan.' },
+      { q: 'Can I use an Aldi plan at Lidl?', a: 'Yes. Most ingredients are common UK supermarket staples, but exact products and prices will vary.' },
+    ],
+  }),
+
+  'best-supermarket-for-high-protein-meal-prep-uk': post({
+    title: 'Best Supermarket for High Protein Meal Prep UK',
+    description: 'Compare Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland and generic UK supermarket plans for high protein meal prep.',
+    h1: 'Best Supermarket for High Protein Meal Prep UK',
+    intro: 'The best supermarket for high protein meal prep depends on whether you care most about price, variety, convenience or freezer backup. A good high-protein shop starts with repeatable protein sources, then adds carbs, vegetables and sauces you will actually eat.',
+    sections: [
+      {
+        h2: 'Best supermarket by use case',
+        paragraphs: [
+          'Aldi and Lidl are the simplest choices for budget high-protein meal prep. Tesco and Asda are useful when you want more range and easier swaps. Sainsbury\'s and Morrisons can work well for broader fresh food choice. Iceland is strongest as a freezer-friendly backup.',
+        ],
+        table: {
+          headers: ['Supermarket', 'Best for', 'Watch-out'],
+          rows: [
+            ['Aldi', 'Budget high protein staples', 'Less choice if you need specialist swaps'],
+            ['Lidl', 'Budget staples plus rotating variety', 'Offers change, so keep swaps flexible'],
+            ['Tesco', 'Range, online shopping and easy substitutions', 'Basket can creep up without a list'],
+            ['Asda', 'Family-friendly larger shops', 'Check protein portions against price'],
+            ['Sainsbury\'s', 'Wider premium and own-brand choice', 'Usually less budget-focused'],
+            ['Iceland', 'Frozen protein and backup meals', 'Fresh produce range can be narrower'],
+          ],
+        },
+      },
+      {
+        h2: 'What to buy first',
+        paragraphs: [
+          'Start with protein anchors: eggs, Greek yogurt or skyr, chicken, tuna, salmon, lean mince, tofu, cottage cheese, beans, lentils and edamame. Then add cheap carbs such as oats, rice, pasta, potatoes, wraps and wholemeal bread.',
+          'Frozen vegetables are a high-value habit because they reduce waste and make batch cooking more reliable.',
+        ],
+      },
+      {
+        h2: 'Best plan to start with',
+        paragraphs: [
+          'For fat loss, start with high-protein low-calorie. For price, choose cheap high protein. For training, choose gym beginner, body recomposition or muscle gain depending on calories.',
+        ],
+      },
+    ],
+    related: [
+      { path: '/meal-plans/high-protein', label: 'High Protein Meal Plans UK', type: 'guide' },
+      { path: '/choose-plan/cheap-high-protein', label: 'Cheap High Protein Plans by Supermarket', type: 'guide' },
+      { slug: 'cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK Supermarkets', type: 'blog' },
+    ],
+    faq: [
+      { q: 'Which UK supermarket is best for cheap protein?', a: 'Aldi and Lidl are usually the easiest starting points for cheap protein staples, while Tesco and Asda offer broader ranges and convenient swaps.' },
+      { q: 'Do I need protein powder for high protein meal prep?', a: 'No. Protein powder can help, but eggs, yogurt, chicken, fish, tofu, beans and lentils can cover most meal prep plans.' },
+    ],
+  }),
+
+  'budget-vs-premium-meal-prep-containers': post({
+    title: 'Budget vs Premium Meal Prep Containers UK',
+    description: 'Compare budget and premium meal prep containers for UK batch cooking, including plastic tubs, glass boxes, leak resistance and weekly prep.',
+    h1: 'Budget vs Premium Meal Prep Containers UK',
+    intro: 'Budget containers are not automatically bad, and premium containers are not automatically worth it. The right choice depends on how often you prep, whether you commute, how much you reheat, and whether leaks would ruin your day.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: containerLinks,
+    sections: [
+      {
+        h2: 'Quick comparison',
+        paragraphs: [
+          'Choose budget containers if you are testing meal prep, mostly storing food at home, or need several tubs for a low upfront cost. Choose premium containers if you commute, reheat often, freeze meals or want fewer replacements over time.',
+        ],
+        table: {
+          headers: ['Feature', 'Budget containers', 'Premium containers'],
+          rows: [
+            ['Best material', 'Usually plastic', 'Often glass or thicker plastic'],
+            ['Best for', 'Starting out, dry meals, fridge storage', 'Commuting, reheating, freezer meals'],
+            ['Main risk', 'Lids warping or leaks', 'Higher cost and heavier boxes'],
+            ['Buying strategy', 'Buy enough to cover a week', 'Buy fewer, better boxes for main meals'],
+          ],
+        },
+      },
+      {
+        h2: 'When budget containers make sense',
+        paragraphs: [
+          'Budget tubs are fine for rice bowls, pasta, chopped vegetables, overnight oats and meals eaten at home. They are also useful when you need several backup boxes and do not want to spend much before knowing your routine.',
+          'Avoid relying on the cheapest tubs for soup, curry in a bag, or anything that will sit sideways in a work bag.',
+        ],
+      },
+      {
+        h2: 'When premium containers are worth it',
+        paragraphs: [
+          'Premium glass or heavy-duty leakproof containers are worth considering if you microwave meals often, dislike staining, commute with food or batch cook freezer portions.',
+          'The practical middle ground is usually a mixed setup: budget tubs for low-risk food and better glass or leakproof boxes for main meals.',
+        ],
+      },
+    ],
+    related: [
+      ...guideRelated,
+      { slug: 'glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Containers', type: 'blog' },
+    ],
+    faq: [
+      { q: 'Are premium meal prep containers worth it?', a: 'They can be worth it if you commute, reheat often, freeze meals or need reliable leak resistance. For basic fridge storage, budget tubs may be enough.' },
+      { q: 'Should I buy glass or plastic meal prep containers?', a: 'Glass is better for reheating and stain resistance. Plastic is lighter, cheaper and easier for large batches.' },
+    ],
+  }),
+
+  '3000-vs-3500-calorie-meal-plan-uk': post({
+    title: '3000 vs 3500 Calorie Meal Plan UK: Which Target Should You Choose?',
+    description: 'Compare 3000 and 3500 calorie meal plans for UK muscle gain, bulking, endurance training and high-calorie meal prep.',
+    h1: '3000 vs 3500 Calorie Meal Plan UK',
+    intro: 'A 3000 calorie plan and a 3500 calorie plan are both high-calorie targets, but they are not interchangeable. The right choice depends on your current weight trend, training load, appetite and how consistently you can follow the plan.',
+    sections: [
+      {
+        h2: 'Quick comparison',
+        paragraphs: [
+          'Start with 3000 calories if you are moving up from a normal maintenance intake or trying to gain slowly. Use 3500 calories when you already know 3000 is not enough, or your activity level is genuinely high.',
+        ],
+        table: {
+          headers: ['Target', 'Best for', 'Practical note'],
+          rows: [
+            ['3000 kcal', 'Moderate bulking, active jobs, endurance training', 'Usually easier to follow without feeling stuffed'],
+            ['3500 kcal', 'Hard gainers, heavy training, large active users', 'Needs planned snacks and liquid calories may help'],
+          ],
+        },
+      },
+      {
+        h2: 'How to make higher calories realistic',
+        paragraphs: [
+          'Do not rely on simply multiplying a normal plan. A better high-calorie day uses breakfast, lunch, dinner, two or three snacks, and calorie-dense additions such as oats, rice, pasta, potatoes, olive oil, peanut butter, yogurt, milk and nuts.',
+          'Keep protein steady, but do not turn every meal into a protein challenge. Carbs are usually the easier way to make heavy training weeks feel better.',
+        ],
+      },
+      {
+        h2: 'Which plan should you try first?',
+        paragraphs: [
+          'If your weight is stable and you want a controlled surplus, try 3000 calories first for two to three weeks and watch the trend. If weight still will not move and adherence is good, move up to 3500 calories.',
+        ],
+      },
+    ],
+    related: [
+      { path: '/meal-plans/3000-calorie', label: '3000 Calorie Meal Plans', type: 'guide' },
+      { path: '/meal-plans/3500-calorie', label: '3500 Calorie Meal Plans', type: 'guide' },
+      { path: '/meal-plans/muscle-gain', label: 'Muscle Gain Meal Plans', type: 'guide' },
+    ],
+    faq: [
+      { q: 'Is 3500 calories too much?', a: 'It can be too much for many people. It is mainly useful for high energy needs, heavy training or deliberate weight gain when lower targets are not enough.' },
+      { q: 'Can I print a 3000 or 3500 calorie plan?', a: 'Yes. Open a matching plan and use the export or print PDF section to save the full week and shopping list.' },
+    ],
+  }),
 };

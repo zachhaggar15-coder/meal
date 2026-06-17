@@ -74,6 +74,126 @@ export const MEAL_PLAN_HUBS = {
     ],
     relatedSlugs: ['1500-calorie', 'weight-loss', 'vegetarian', 'meal-plans-with-shopping-list'],
   },
+  'muscle-gain': {
+    slug: 'muscle-gain',
+    path: '/meal-plans/muscle-gain',
+    title: 'Muscle Gain Meal Plans UK - 2500, 3000 and 3500 Calorie Plans',
+    description:
+      'Browse free UK muscle gain meal plans with 2500, 3000 and 3500 calorie options, supermarket filters, macros, PDF export and shopping lists.',
+    h1: 'Muscle Gain Meal Plans UK',
+    kicker: 'Higher calorie plan hub',
+    intro:
+      'Muscle gain meal prep works best when calories are high enough, protein is spread through the day, and meals are still realistic to cook. These plans include bigger training-day options without asking you to build the week from scratch.',
+    match: { goals: ['muscle-gain', 'budget-bodybuilding', 'gym-beginner', 'body-recomp'], calories: [2500, 3000, 3500, 2200, 2000] },
+    stats: ['2500-3500 kcal options', 'High-protein meals', 'Supermarket shopping lists'],
+    sections: [
+      {
+        h2: 'How to choose a muscle gain plan',
+        paragraphs: [
+          'Start with your calorie target. A 2500 calorie plan suits many lighter or less active users, while 3000 and 3500 calorie plans are better for larger users, hard gainers, active jobs or heavy training blocks.',
+          'Choose budget bodybuilding when cost matters most, muscle gain when you want a balanced surplus, or endurance plans when your training needs more carbohydrate.',
+        ],
+      },
+      {
+        h2: 'What makes these plans realistic',
+        paragraphs: [
+          'Higher-calorie plans use extra snacks and larger but still readable ingredient amounts. That is easier to follow than one enormous dinner or vague instructions to multiply every ingredient.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Do the muscle gain plans include 3000 and 3500 calorie options?',
+        a: 'Yes. The plan library includes 3000 and 3500 calorie muscle gain, budget bodybuilding and endurance-style options.',
+      },
+      {
+        q: 'Can I print a muscle gain meal plan?',
+        a: 'Yes. Open any plan and use the export or print PDF section to save the full week and shopping list.',
+      },
+    ],
+    relatedSlugs: ['3000-calorie', '3500-calorie', 'high-protein', 'meal-plans-with-shopping-list'],
+  },
+  '3000-calorie': {
+    slug: '3000-calorie',
+    path: '/meal-plans/3000-calorie',
+    title: '3000 Calorie Meal Plans UK - Muscle Gain + Shopping Lists',
+    description:
+      'Browse free 3000 calorie meal plans for UK muscle gain, endurance training and budget bodybuilding, with printable PDFs and shopping lists.',
+    h1: '3000 Calorie Meal Plans UK',
+    kicker: 'High calorie plan hub',
+    intro:
+      'A 3000 calorie meal plan needs enough food to support training without turning the day into constant cooking. These plans use familiar UK meals, extra snacks and supermarket-friendly ingredients.',
+    match: { calories: [3000], goals: ['muscle-gain', 'budget-bodybuilding', 'endurance-athlete'] },
+    stats: ['3000 kcal/day', 'Muscle gain options', 'PDF and shopping list'],
+    sections: [
+      {
+        h2: 'Who a 3000 calorie plan suits',
+        paragraphs: [
+          'A 3000 calorie plan can suit active people, larger users, gym users trying to gain weight, and endurance athletes with higher weekly training demands.',
+          'If this target feels too much, compare 2500 calorie plans first. If you still struggle to gain weight, look at the 3500 calorie options.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Are these 3000 calorie plans only for bodybuilding?', a: 'No. Some are muscle gain or budget bodybuilding plans, while others are endurance-focused for higher training volume.' },
+      { q: 'Do the 3000 calorie plans include shopping lists?', a: 'Yes. Each plan includes a full grouped shopping list and printable PDF export.' },
+    ],
+    relatedSlugs: ['muscle-gain', '3500-calorie', 'high-protein', 'printable-meal-plans'],
+  },
+  '3500-calorie': {
+    slug: '3500-calorie',
+    path: '/meal-plans/3500-calorie',
+    title: '3500 Calorie Meal Plans UK - Bulking + Heavy Training Plans',
+    description:
+      'Browse free 3500 calorie meal plans for UK bulking, heavy training and hard gainers, including supermarket shopping lists and PDFs.',
+    h1: '3500 Calorie Meal Plans UK',
+    kicker: 'Very high calorie plan hub',
+    intro:
+      'A 3500 calorie meal plan is a specialist target for people with high energy needs. These plans are built for bulking, heavy training weeks and users who already know a lower target is not enough.',
+    match: { calories: [3500], goals: ['muscle-gain', 'budget-bodybuilding', 'endurance-athlete'] },
+    stats: ['3500 kcal/day', 'Bulking-friendly', 'Printable shopping list'],
+    sections: [
+      {
+        h2: 'How to make 3500 calories easier to follow',
+        paragraphs: [
+          'Use breakfast, lunch, dinner and several snacks rather than forcing huge single meals. Higher-calorie plans should still use foods you can buy repeatedly: oats, rice, pasta, potatoes, yogurt, milk, eggs, chicken, tofu, fish, beans and olive oil.',
+          'Because 3500 calories is high for many adults, use it when your weight trend, training demands or professional advice justify that target.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Is a 3500 calorie meal plan suitable for everyone?', a: 'No. It is a high intake target and is mainly for people with high energy needs, heavy training or deliberate weight gain goals.' },
+      { q: 'Can I choose a supermarket for 3500 calorie plans?', a: 'Yes. Use the 3500 calorie chooser or browse filters to combine calorie target with supermarket.' },
+    ],
+    relatedSlugs: ['3000-calorie', 'muscle-gain', 'high-protein', 'meal-plans-with-shopping-list'],
+  },
+  'generic-uk-supermarket': {
+    slug: 'generic-uk-supermarket',
+    path: '/meal-plans/generic-uk-supermarket',
+    title: 'Generic UK Supermarket Meal Plans - Average Price Shopping Lists',
+    description:
+      'Browse generic UK supermarket meal plans using average supermarket pricing, with calorie targets, goals, printable PDFs and shopping lists.',
+    h1: 'Generic UK Supermarket Meal Plans',
+    kicker: 'Average-price plan hub',
+    intro:
+      'Generic UK supermarket plans are useful when you do not want the plan tied to Aldi, Tesco, Asda or another named store. They use common ingredients and average-price assumptions so you can shop where convenient.',
+    match: { supermarkets: ['any'] },
+    stats: ['Average UK pricing', 'No named-store default', 'Printable PDFs'],
+    sections: [
+      {
+        h2: 'When to use the generic supermarket option',
+        paragraphs: [
+          'Choose the generic option if you switch supermarkets, use a mix of online shops and local stores, or want a plan that is not built around one retailer.',
+          'The recipes use standard UK supermarket ingredients, so you can still shop at Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons or Iceland.',
+        ],
+      },
+    ],
+    faq: [
+      { q: 'Does generic mean no shopping list?', a: 'No. Generic plans still include a full shopping list, but the price estimate uses average UK supermarket assumptions.' },
+      { q: 'Can I switch from generic to a named supermarket?', a: 'Yes. Use the supermarket chooser or browse filters to pick a named store.' },
+    ],
+    relatedSlugs: ['weight-loss', '1500-calorie', 'muscle-gain', 'meal-plans-with-shopping-list'],
+  },
   aldi: {
     slug: 'aldi',
     path: '/meal-plans/aldi',

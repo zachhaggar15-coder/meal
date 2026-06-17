@@ -60,6 +60,8 @@ const CALORIES = [
   { value: '2000', label: '~2,000 kcal' },
   { value: '2200', label: '~2,200 kcal' },
   { value: '2500', label: '~2,500 kcal' },
+  { value: '3000', label: '~3,000 kcal' },
+  { value: '3500', label: '~3,500 kcal' },
 ];
 
 const BUDGETS = [

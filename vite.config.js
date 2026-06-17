@@ -15,14 +15,21 @@ export default defineConfig({
           if (id.includes('node_modules/')) {
             return 'vendor';
           }
-          // All static data files into one lazy-cacheable chunk
+          if (id.includes('/src/data/planSeeds') || id.includes('/src/data/mealLibrary')) {
+            return 'generated-plan-data';
+          }
+          if (id.includes('/src/data/mealPlans')) {
+            return 'legacy-plan-data';
+          }
           if (
-            id.includes('/src/data/mealPlans') ||
-            id.includes('/src/data/mealLibrary') ||
-            id.includes('/src/data/planSeeds') ||
-            id.includes('/src/data/blogPosts')
+            id.includes('/src/data/blogPosts') ||
+            id.includes('/src/data/expandedBlogPosts') ||
+            id.includes('/src/data/containerBlogPosts')
           ) {
-            return 'plan-data';
+            return 'blog-data';
+          }
+          if (id.includes('/src/data/containerProducts') || id.includes('/src/data/offers')) {
+            return 'container-data';
           }
         },
       },

@@ -6,7 +6,12 @@ import { blogPostsData } from './src/data/blogPosts.js';
 import { mealPlansData } from './src/data/mealPlans.js';
 import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
 import { MEAL_PLAN_HUB_SLUGS } from './src/data/mealPlanHubs.js';
-import { GOAL_CHOOSER_SLUGS } from './src/data/planChooser.js';
+import {
+  CALORIE_CHOOSER_SLUGS,
+  DIET_CHOOSER_SLUGS,
+  GOAL_CHOOSER_SLUGS,
+  SUPERMARKET_CHOOSER_SLUGS,
+} from './src/data/planChooser.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(__dirname, 'dist');
@@ -189,7 +194,11 @@ const ROUTES = uniqueRoutes([
   '/browse',
   '/stickers',
   '/blog',
+  '/tools',
   ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
+  ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
+  ...DIET_CHOOSER_SLUGS.map(slug => `/choose-diet/${slug}`),
+  ...CALORIE_CHOOSER_SLUGS.map(slug => `/choose-calories/${slug}`),
   ...MEAL_PLAN_HUB_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...CONTAINER_GUIDE_SLUGS.map(slug => `/meal-prep-containers/${slug}`),
   // New plan library at /plans/:slug
@@ -252,8 +261,12 @@ async function prerender() {
     if (route === '/') return ['1.0', 'weekly'];
     if (route === '/browse') return ['0.9', 'weekly'];
     if (route.startsWith('/choose-plan/')) return ['0.9', 'weekly'];
+    if (route.startsWith('/choose-supermarket/')) return ['0.9', 'weekly'];
+    if (route.startsWith('/choose-diet/')) return ['0.9', 'weekly'];
+    if (route.startsWith('/choose-calories/')) return ['0.9', 'weekly'];
     if (route.startsWith('/meal-plans/')) return ['0.9', 'weekly'];
     if (route === '/quiz') return ['0.9', 'monthly'];
+    if (route === '/tools') return ['0.8', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];

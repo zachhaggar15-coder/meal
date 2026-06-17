@@ -3,6 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
+import ContainerFinder from '../components/ContainerFinder.jsx';
 import {
   AFFILIATE_DISCLOSURE,
   CONTAINER_GUIDES,
@@ -150,6 +151,8 @@ export default function ContainerGuide() {
             </Link>
           ))}
         </div>
+
+        <ContainerFinder currentTier={guide.slug} />
 
         <section className="conversion-panel" aria-label="Buying guide summary">
           <div>

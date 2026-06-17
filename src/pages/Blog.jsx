@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 
 const CATEGORY_ORDER = [
   {
@@ -20,6 +21,7 @@ const CATEGORY_ORDER = [
       '1600-calorie-meal-plan-uk',
       '1800-calorie-meal-plan-for-weight-loss-uk',
       '2000-calorie-weight-loss-meal-plan-uk',
+      '3000-vs-3500-calorie-meal-plan-uk',
       'weekly-calorie-deficit-meal-prep-uk',
       'weight-loss-meal-prep-mistakes-uk',
       'low-calorie-dinners-for-meal-prep-uk',
@@ -82,6 +84,7 @@ const CATEGORY_ORDER = [
       'meal-prep-containers-for-salads-uk',
       'best-lunch-bags-for-meal-prep-uk',
       'meal-prep-container-lids-leaking',
+      'budget-vs-premium-meal-prep-containers',
     ],
   },
   {
@@ -89,6 +92,8 @@ const CATEGORY_ORDER = [
     slugs: [
       'tesco-low-calorie-shopping-list',
       'aldi-vs-tesco-meal-prep',
+      'aldi-vs-lidl-meal-prep',
+      'best-supermarket-for-high-protein-meal-prep-uk',
       'cheapest-uk-supermarket-meal-prep',
       'sainsburys-meal-prep-uk',
       'asda-meal-prep-uk',
@@ -125,6 +130,17 @@ const jsonLd = {
   description: 'Free UK meal prep guides for weight loss, high protein eating, supermarket shopping, vegan meals, batch cooking and budget planning.',
   url: 'https://www.mealprep.org.uk/blog',
   publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: CATEGORY_ORDER.flatMap(cat => cat.slugs)
+      .filter(slug => blogPostsData[slug])
+      .map((slug, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: blogPostsData[slug].h1,
+        url: `https://www.mealprep.org.uk/blog/${slug}`,
+      })),
+  },
 };
 
 export default function Blog() {
@@ -159,6 +175,14 @@ export default function Blog() {
                 if (!post) return null;
                 return (
                   <Link key={slug} to={`/blog/${slug}`} className="blog-card">
+                    {hasCustomBlogImage(slug) && (
+                      <img
+                        className="blog-card-thumb"
+                        src={generateBlogImageUrl(slug)}
+                        alt=""
+                        loading="lazy"
+                      />
+                    )}
                     <h3 className="blog-card-title">{post.h1}</h3>
                     <p className="blog-card-desc">{post.description}</p>
                     <span className="blog-card-cta">Read guide →</span>

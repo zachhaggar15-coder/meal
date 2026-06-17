@@ -8,7 +8,7 @@ import ContextualLinks from '../components/ContextualLinks.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
-import { generateBlogImageUrl } from '../utils/imageGenerator.js';
+import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
 
 export default function BlogPost() {
@@ -29,6 +29,11 @@ export default function BlogPost() {
       dateModified: data.modified || '2026-05-30',
       author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+      about: [
+        'UK meal prep',
+        'Meal planning',
+        data.h1,
+      ],
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': `https://www.mealprep.org.uk/blog/${slug}`,
@@ -79,6 +84,11 @@ export default function BlogPost() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
+          {hasCustomBlogImage(slug) && (
+            <figure className="blog-hero-image">
+              <img src={ogImageUrl} alt={`${data.h1} guide`} />
+            </figure>
+          )}
           {data.affiliateDisclosure && (
             <p className="affiliate-disclosure">{data.affiliateDisclosure}</p>
           )}

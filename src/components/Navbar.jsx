@@ -2,18 +2,26 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SiteLogo from './SiteLogo.jsx';
 import { PLAN_COUNT } from '../data/planSeeds.js';
-import { buildPlanChooserPath } from '../data/planChooser.js';
+import {
+  buildCalorieChooserPath,
+  buildDietChooserPath,
+  buildPlanChooserPath,
+  buildSupermarketChooserPath,
+} from '../data/planChooser.js';
 
 const QUICK_PLANS = [
   { to: '/meal-plans/weight-loss',             label: 'Weight Loss Meal Plans', tag: 'Hub' },
   { to: '/meal-plans/high-protein',            label: 'High Protein Meal Plans', tag: '' },
-  { to: '/plans/aldi-weight-loss-1500',        label: 'Aldi Weight Loss 1,500 kcal', tag: 'Popular' },
-  { to: '/plans/tesco-weight-loss-1800',       label: 'Tesco Weight Loss 1,800 kcal', tag: '' },
+  { to: buildSupermarketChooserPath('aldi'),   label: 'Aldi Meal Plans', tag: 'Popular' },
+  { to: buildSupermarketChooserPath('tesco'),  label: 'Tesco Meal Plans', tag: '' },
   { to: buildPlanChooserPath('high-protein-low-cal'), label: 'High Protein Low Cal', tag: '' },
   { to: buildPlanChooserPath('muscle-gain'),   label: 'Muscle Gain', tag: '' },
+  { to: buildCalorieChooserPath('3000'),        label: '3,000 kcal plans', tag: 'New' },
+  { to: buildCalorieChooserPath('3500'),        label: '3,500 kcal plans', tag: 'New' },
   { to: buildPlanChooserPath('cheap-student'), label: 'Cheap Student', tag: '' },
-  { to: '/plans/aldi-veg-low-cal-1500',        label: 'Vegetarian Low Cal', tag: '' },
-  { to: '/plans/aldi-vegan-low-cal-1500',      label: 'Vegan Low Cal', tag: '' },
+  { to: buildDietChooserPath('vegetarian'),     label: 'Vegetarian Low Cal', tag: '' },
+  { to: buildDietChooserPath('vegan'),          label: 'Vegan Low Cal', tag: '' },
+  { to: '/tools',                               label: 'Meal Prep Tools', tag: '' },
   { to: '/meal-plans/meal-plans-with-shopping-list', label: 'Plans with Shopping Lists', tag: '' },
   { to: '/browse',                             label: `All ${PLAN_COUNT} plans \u2192`, tag: '' },
 ];

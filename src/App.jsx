@@ -14,8 +14,10 @@ import Quiz from './pages/Quiz.jsx';
 import QuizResults from './pages/QuizResults.jsx';
 import PlanPage from './pages/PlanPage.jsx';
 import PlanChooserPage from './pages/PlanChooserPage.jsx';
+import ChoiceLandingPage from './pages/ChoiceLandingPage.jsx';
 import BrowsePlans from './pages/BrowsePlans.jsx';
 import MealPlanHubPage from './pages/MealPlanHubPage.jsx';
+import ToolsPage from './pages/ToolsPage.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 function ScrollToTop() {
@@ -59,8 +61,12 @@ export default function App() {
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/quiz/results" element={<QuizResults />} />
             <Route path="/choose-plan/:goal" element={<PlanChooserPage />} />
+            <Route path="/choose-supermarket/:supermarket" element={<ChoiceLandingPage mode="supermarket" />} />
+            <Route path="/choose-diet/:diet" element={<ChoiceLandingPage mode="diet" />} />
+            <Route path="/choose-calories/:calories" element={<ChoiceLandingPage mode="calories" />} />
             <Route path="/plans/:slug" element={<PlanPage />} />
             <Route path="/browse" element={<BrowsePlans />} />
+            <Route path="/tools" element={<ToolsPage />} />
             <Route path="/meal-plans/:slug" element={<MealPlanHubPage />} />
             <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
             <Route path="/blog" element={<Blog />} />
