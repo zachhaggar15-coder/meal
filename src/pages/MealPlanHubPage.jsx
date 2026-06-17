@@ -19,7 +19,7 @@ const MARKET_LABEL = {
   sainsburys: "Sainsbury's",
   morrisons: 'Morrisons',
   iceland: 'Iceland',
-  any: 'Any UK supermarket',
+  any: 'Generic UK supermarket',
 };
 
 const EFFORT_LABEL = {

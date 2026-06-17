@@ -475,7 +475,7 @@ export const mealPlansData = {
     planLabel: '1500 Calorie',
     targetCalories: 1500,
     summary: {
-      supermarkets: 'Any UK supermarket',
+      supermarkets: 'Generic UK supermarket',
       bestFor: 'Fat loss, lighter adults, women',
       prepDifficulty: 'Easy (15–25 min)',
     },
@@ -528,7 +528,7 @@ export const mealPlansData = {
     planLabel: '1800 Calorie',
     targetCalories: 1800,
     summary: {
-      supermarkets: 'Any UK supermarket',
+      supermarkets: 'Generic UK supermarket',
       bestFor: 'Sustainable fat loss, active adults',
       prepDifficulty: 'Easy (15–30 min)',
     },
@@ -580,7 +580,7 @@ export const mealPlansData = {
     planLabel: '2000 Calorie',
     targetCalories: 2000,
     summary: {
-      supermarkets: 'Any UK supermarket',
+      supermarkets: 'Generic UK supermarket',
       bestFor: 'Active adults, maintenance or gentle cut',
       prepDifficulty: 'Easy–Medium (15–35 min)',
     },
@@ -630,7 +630,7 @@ export const mealPlansData = {
     description: 'High protein low calorie meal plan UK. Lose fat, keep muscle. 150g+ protein daily, simple recipes, and full shopping list. Generate yours free.',
     h1: 'High Protein Low Calorie Meal Plan UK — Free 7-Day Guide',
     summary: {
-      supermarkets: 'Any UK supermarket',
+      supermarkets: 'Generic UK supermarket',
       bestFor: 'Fat loss while preserving muscle',
       prepDifficulty: 'Easy (10–25 min)',
     },
@@ -854,7 +854,7 @@ export const mealPlansData = {
     description: 'Vegetarian meal plan for weight loss. 75-90g protein daily from eggs, yogurt, tofu. 1500 calories. Complete shopping list. Generate your free plan.',
     h1: 'Vegetarian Low Calorie Meal Plan UK — Free 7-Day Guide',
     summary: {
-      supermarkets: 'Any UK supermarket',
+      supermarkets: 'Generic UK supermarket',
       bestFor: 'Vegetarians, fat loss, plant-forward eating',
       prepDifficulty: 'Easy (10–25 min)',
     },

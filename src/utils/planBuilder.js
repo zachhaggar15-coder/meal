@@ -224,7 +224,7 @@ function getMarketLabel(supermarket) {
 // ── FAQs ──────────────────────────────────────────────────────────────────────
 
 function buildFaqs(seed) {
-  const mkt = seed.supermarket === 'any' ? 'any UK supermarket' : getMarketLabel(seed.supermarket);
+  const mkt = seed.supermarket === 'any' ? 'a generic UK supermarket average' : getMarketLabel(seed.supermarket);
   const gl = (GOAL_LABELS[seed.goal] || seed.goal).toLowerCase();
 
   return [
@@ -395,7 +395,7 @@ export function buildPlan(seed) {
     macrosGrams:   MACRO_GRAMS[seed.emphasis]    || MACRO_GRAMS['lean-protein'],
 
     summary: {
-      supermarkets:    seed.supermarket === 'any' ? 'Any UK supermarket' : cap(seed.supermarket),
+      supermarkets:    seed.supermarket === 'any' ? 'Generic UK supermarket' : cap(seed.supermarket),
       bestFor:         GOAL_BEST_FOR[seed.goal]  || 'General healthy eating',
       prepDifficulty:  EFFORT_LABELS[seed.effort]  || seed.effort,
       calorieRange:    `~${seed.calories} kcal/day`,

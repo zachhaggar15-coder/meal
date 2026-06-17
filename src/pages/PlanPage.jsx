@@ -10,7 +10,7 @@ import { PLAN_COUNT } from '../data/planSeeds.js';
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
   sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland',
-  any: 'Any UK supermarket',
+  any: 'Generic UK supermarket',
 };
 
 export default function PlanPage() {

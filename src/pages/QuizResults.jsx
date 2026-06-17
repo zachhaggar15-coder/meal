@@ -23,7 +23,7 @@ const DIET_LABELS = {
 const MKT_LABELS = {
   'aldi': 'Aldi', 'lidl': 'Lidl', 'tesco': 'Tesco',
   'asda': 'Asda', 'sainsburys': "Sainsbury's",
-  'morrisons': 'Morrisons', 'iceland': 'Iceland', 'any': 'Any UK supermarket',
+  'morrisons': 'Morrisons', 'iceland': 'Iceland', 'any': 'Generic UK supermarket',
 };
 
 export default function QuizResults() {

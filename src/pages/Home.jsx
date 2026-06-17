@@ -352,7 +352,7 @@ export default function Home() {
               },
               {
                 q: 'Which supermarkets do the plans cover?',
-                a: "Plans cover Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, and Iceland. Plans marked 'Any UK supermarket' use ingredients available at most UK stores.",
+                a: "Plans cover Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, and Iceland. Plans marked 'Generic UK supermarket' use ingredients available at most UK stores with average UK supermarket pricing.",
               },
               {
                 q: 'Are calorie counts accurate?',

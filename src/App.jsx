@@ -13,6 +13,7 @@ import Stickers from './pages/Stickers.jsx';
 import Quiz from './pages/Quiz.jsx';
 import QuizResults from './pages/QuizResults.jsx';
 import PlanPage from './pages/PlanPage.jsx';
+import PlanChooserPage from './pages/PlanChooserPage.jsx';
 import BrowsePlans from './pages/BrowsePlans.jsx';
 import MealPlanHubPage from './pages/MealPlanHubPage.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/quiz/results" element={<QuizResults />} />
+            <Route path="/choose-plan/:goal" element={<PlanChooserPage />} />
             <Route path="/plans/:slug" element={<PlanPage />} />
             <Route path="/browse" element={<BrowsePlans />} />
             <Route path="/meal-plans/:slug" element={<MealPlanHubPage />} />

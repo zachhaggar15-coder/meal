@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { buildPlanChooserPath, GOAL_CHOOSER_ITEMS } from '../data/planChooser.js';
 
 const NAV = [
   {
@@ -18,22 +19,15 @@ const NAV = [
   },
   {
     label: 'By Goal',
-    items: [
-      { to: '/plans/aldi-weight-loss-1500',           label: 'Weight Loss' },
-      { to: '/plans/aldi-budget-fat-loss-1500',        label: 'Budget Fat Loss' },
-      { to: '/plans/aldi-high-protein-low-cal-1500',   label: 'High Protein Low Cal' },
-      { to: '/plans/aldi-muscle-gain-2000',            label: 'Muscle Gain' },
-      { to: '/plans/aldi-gym-beginner-1800',           label: 'Gym Beginner' },
-      { to: '/plans/aldi-budget-bodybuilding-2000',    label: 'Budget Bodybuilding' },
-      { to: '/plans/aldi-cheap-student-1800',          label: 'Cheap Student' },
-      { to: '/plans/aldi-cheap-hp-1800',               label: 'Cheap High Protein' },
-      { to: '/plans/aldi-low-effort-1800',             label: 'Low Effort' },
-      { to: '/plans/aldi-busy-professional-1800',      label: 'Busy Professional' },
-    ],
+    items: GOAL_CHOOSER_ITEMS.map(item => ({
+      to: buildPlanChooserPath(item.value),
+      label: item.label,
+    })),
   },
   {
     label: 'By Supermarket',
     items: [
+      { to: '/plans/any-weight-loss-1800',             label: 'Generic UK supermarket' },
       { to: '/plans/aldi-weight-loss-1800',            label: 'Aldi' },
       { to: '/plans/lidl-weight-loss-1800',            label: 'Lidl' },
       { to: '/plans/tesco-weight-loss-1800',           label: 'Tesco' },

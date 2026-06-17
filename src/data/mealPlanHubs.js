@@ -91,7 +91,7 @@ export const MEAL_PLAN_HUBS = {
         h2: 'Why choose Aldi meal plans?',
         paragraphs: [
           'Aldi is a strong fit for structured meal prep because own-brand staples, frozen vegetables, oats, rice, pasta, tins, yogurts and lean proteins can keep the weekly shop predictable.',
-          'Use Aldi plans when budget control matters. If you want the same structure with broader product ranges, compare Tesco or Any UK supermarket plans.',
+          'Use Aldi plans when budget control matters. If you want the same structure without choosing one store, compare Tesco or Generic UK supermarket plans.',
         ],
       },
     ],

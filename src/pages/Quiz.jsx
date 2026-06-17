@@ -38,9 +38,10 @@ const STEPS = [
   {
     id: 'supermarket',
     question: 'Which supermarket do you mainly shop at?',
-    hint: 'Plans use realistic products from your chosen store.',
+    hint: 'Choose a named store, or use a generic UK supermarket average.',
     type: 'single',
     options: [
+      { value: 'any', label: 'Generic UK supermarket', icon: 'UK' },
       { value: 'aldi', label: 'Aldi', icon: '🛒' },
       { value: 'lidl', label: 'Lidl', icon: '🛒' },
       { value: 'tesco', label: 'Tesco', icon: '🛒' },
@@ -48,7 +49,6 @@ const STEPS = [
       { value: 'sainsburys', label: "Sainsbury's", icon: '🛒' },
       { value: 'morrisons', label: 'Morrisons', icon: '🛒' },
       { value: 'iceland', label: 'Iceland', icon: '🛒' },
-      { value: 'any', label: 'No preference', icon: '🏪' },
     ],
   },
   {

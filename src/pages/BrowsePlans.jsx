@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
@@ -33,6 +33,7 @@ const GOALS = [
 
 const SUPERMARKETS = [
   { value: '', label: 'All supermarkets' },
+  { value: 'any',        label: 'Generic UK supermarket' },
   { value: 'aldi',       label: 'Aldi' },
   { value: 'lidl',       label: 'Lidl' },
   { value: 'tesco',      label: 'Tesco' },
@@ -40,7 +41,6 @@ const SUPERMARKETS = [
   { value: 'sainsburys', label: "Sainsbury's" },
   { value: 'morrisons',  label: 'Morrisons' },
   { value: 'iceland',    label: 'Iceland' },
-  { value: 'any',        label: 'Any / No preference' },
 ];
 
 const DIETS = [
@@ -81,7 +81,7 @@ const EFFORTS = [
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
-  sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland', any: 'Any',
+  sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland', any: 'Generic UK supermarket',
 };
 
 const EFFORT_LABEL = {
@@ -98,15 +98,28 @@ const PLAN_INDEX_GROUPS = GOALS
   .filter(g => g.plans.length > 0);
 
 export default function BrowsePlans() {
-  const [search,     setSearch]     = useState('');
-  const [goal,       setGoal]       = useState('');
-  const [supermarket,setSupermarket]= useState('');
-  const [diet,       setDiet]       = useState('');
-  const [calories,   setCalories]   = useState('');
-  const [budget,     setBudget]     = useState('');
-  const [effort,     setEffort]     = useState('');
+  const [params] = useSearchParams();
+  const paramString = params.toString();
+  const [search,     setSearch]     = useState(() => params.get('search') || '');
+  const [goal,       setGoal]       = useState(() => readFilterParam(params, 'goal', GOALS));
+  const [supermarket,setSupermarket]= useState(() => readFilterParam(params, 'supermarket', SUPERMARKETS));
+  const [diet,       setDiet]       = useState(() => readFilterParam(params, 'diet', DIETS));
+  const [calories,   setCalories]   = useState(() => readFilterParam(params, 'calories', CALORIES));
+  const [budget,     setBudget]     = useState(() => readFilterParam(params, 'budget', BUDGETS));
+  const [effort,     setEffort]     = useState(() => readFilterParam(params, 'effort', EFFORTS));
   const [page,       setPage]       = useState(1);
   const PER_PAGE = 24;
+
+  useEffect(() => {
+    setSearch(params.get('search') || '');
+    setGoal(readFilterParam(params, 'goal', GOALS));
+    setSupermarket(readFilterParam(params, 'supermarket', SUPERMARKETS));
+    setDiet(readFilterParam(params, 'diet', DIETS));
+    setCalories(readFilterParam(params, 'calories', CALORIES));
+    setBudget(readFilterParam(params, 'budget', BUDGETS));
+    setEffort(readFilterParam(params, 'effort', EFFORTS));
+    setPage(1);
+  }, [paramString]);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -279,4 +292,9 @@ function Select({ label, value, onChange, options }) {
 
 function cap(s) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+}
+
+function readFilterParam(params, key, options) {
+  const value = params.get(key) || '';
+  return options.some(option => option.value === value) ? value : '';
 }
