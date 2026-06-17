@@ -1,10 +1,12 @@
 import { containerBlogPostsData } from './containerBlogPosts.js';
+import { expandedBlogPostsData } from './expandedBlogPosts.js';
 
-// Static content for the five SEO blog posts.
+// Static content for SEO blog posts.
 // Each entry keyed by URL slug.
 
 export const blogPostsData = {
   ...containerBlogPostsData,
+  ...expandedBlogPostsData,
   'how-to-build-a-calorie-deficit': {
     published: '2026-05-28',
     title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',
