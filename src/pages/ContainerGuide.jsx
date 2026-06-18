@@ -13,6 +13,39 @@ import {
 
 const guideOrder = ['budget', 'mid-range', 'premium'];
 
+const searchIntentRows = [
+  {
+    intent: 'Best meal prep containers UK',
+    best: 'Mid range glass containers',
+    why: 'Best balance of reheating, stain resistance, lid quality and sensible price.',
+    path: '/meal-prep-containers/mid-range',
+  },
+  {
+    intent: 'Budget meal prep tubs',
+    best: 'Plastic multipacks',
+    why: 'Lowest cost per box for batch cooking, freezer portions and beginner meal prep.',
+    path: '/meal-prep-containers/budget',
+  },
+  {
+    intent: 'Glass meal prep containers',
+    best: 'Five-pack rectangular glass sets',
+    why: 'Good for work lunches, curry, chilli, pasta and repeat microwave reheating.',
+    path: '/meal-prep-containers/mid-range',
+  },
+  {
+    intent: 'Leakproof lunch boxes',
+    best: 'Premium clip-lock or twist-lock sets',
+    why: 'Better fit for commuting, soup, chilli, salad dressing and saucy meals.',
+    path: '/meal-prep-containers/premium',
+  },
+  {
+    intent: 'Meal prep boxes for work',
+    best: 'Rectangular lunch containers',
+    why: 'Easy to stack, pack and portion for five weekday lunches.',
+    path: '/meal-prep-containers/mid-range',
+  },
+];
+
 function guideLabel(slug) {
   if (slug === 'mid-range') return 'Mid range';
   return slug.charAt(0).toUpperCase() + slug.slice(1);
@@ -151,6 +184,40 @@ export default function ContainerGuide() {
             </Link>
           ))}
         </div>
+
+        <section className="container-intent-section" aria-labelledby="container-intent-heading">
+          <div className="section-head-inline">
+            <div>
+              <h2 id="container-intent-heading">Best container by search intent</h2>
+              <p>
+                Match the buyer need first: cheap plastic tubs, glass meal prep boxes,
+                leakproof lunch containers or a work-lunch setup.
+              </p>
+            </div>
+          </div>
+          <div className="content-table-wrap">
+            <table className="content-table container-intent-table">
+              <thead>
+                <tr>
+                  <th>Search</th>
+                  <th>Best choice</th>
+                  <th>Why</th>
+                  <th>Guide</th>
+                </tr>
+              </thead>
+              <tbody>
+                {searchIntentRows.map(row => (
+                  <tr key={row.intent}>
+                    <td>{row.intent}</td>
+                    <td>{row.best}</td>
+                    <td>{row.why}</td>
+                    <td><Link to={row.path}>Compare</Link></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
 
         <ContainerFinder currentTier={guide.slug} />
 

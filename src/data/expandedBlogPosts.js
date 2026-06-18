@@ -70,6 +70,180 @@ function containerPost(data) {
 }
 
 export const expandedBlogPostsData = {
+  'best-low-calorie-ready-meals-uk': post({
+    title: 'Best Low Calorie Ready Meals UK: Supermarket Picks & Swaps',
+    description: 'Best low calorie ready meals UK: how to choose filling calorie-controlled meals from Tesco, Aldi, Asda, Sainsbury\'s and Lidl, plus better swaps.',
+    h1: 'Best Low Calorie Ready Meals UK',
+    intro: 'Low calorie ready meals can be useful when a busy week would otherwise turn into takeaway or random snacking. The trick is choosing meals that are filling enough to count as dinner, not just low enough to look good on the front of the pack. This guide shows what to look for in UK supermarkets and when a simple homemade swap is better.',
+    reviewed: '17 June 2026',
+    sources: [
+      {
+        label: 'NHS Eatwell Guide',
+        url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/',
+      },
+      {
+        label: 'NHS healthy weight guidance',
+        url: 'https://www.nhs.uk/live-well/healthy-weight/',
+      },
+    ],
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For a full week instead of one-off meals, compare the ' },
+          { label: 'printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
+          { text: ' and the main ' },
+          { label: 'low calorie foods UK guide', to: '/blog/best-low-calorie-foods-uk' },
+          { text: '.' },
+        ],
+      },
+    ],
+    sections: [
+      {
+        h2: 'Quick answer: what makes a ready meal worth buying?',
+        paragraphs: [
+          'A good low calorie ready meal should have enough protein, fibre or vegetables to feel like a meal. A 280 calorie pasta pot with little protein can leave you hungry; a 450 calorie curry with lean protein, rice and vegetables may work better inside a 1500 or 1800 calorie day.',
+          'Use the front-of-pack calories as a starting point, then check protein, portion size, vegetables and whether you need to add a side salad, soup or yogurt to make it complete.',
+        ],
+        table: {
+          headers: ['What to check', 'Good target', 'Why it matters'],
+          rows: [
+            ['Calories', '350-550 kcal for lunch or dinner', 'Low enough for a calorie-controlled day but not too small'],
+            ['Protein', '20g+ if possible', 'Helps the meal feel more satisfying'],
+            ['Vegetables', 'Visible veg or add a side', 'Adds volume, fibre and micronutrients'],
+            ['Salt', 'Compare labels', 'Ready meals can vary a lot by range and sauce'],
+            ['Side plan', 'Salad, veg, fruit, soup or skyr', 'Turns a small ready meal into a workable meal'],
+          ],
+        },
+      },
+      {
+        h2: 'Best ready-meal styles for calorie control',
+        paragraphs: [
+          'These meal types tend to work better than ultra-creamy or pastry-heavy options because they are easier to balance with protein and vegetables.',
+        ],
+        table: {
+          headers: ['Ready-meal style', 'Best supermarket examples to look for', 'Easy upgrade'],
+          rows: [
+            ['Chilli and rice', 'Beef, turkey, bean or lentil chilli bowls', 'Add salad or extra frozen veg'],
+            ['Curry and rice', 'Chicken tikka, lentil dal, Thai-style curry', 'Choose leaner sauces and add spinach'],
+            ['Stir fry or noodle bowls', 'Chicken, prawn, tofu or vegetable noodle meals', 'Add edamame or cooked chicken'],
+            ['Soup plus protein side', 'Chicken, lentil, bean or vegetable soup', 'Add skyr, eggs, tuna or cottage cheese toast'],
+            ['Fish or chicken with potatoes', 'Balanced chilled meals with veg included', 'Add microwave veg if the portion is small'],
+          ],
+        },
+      },
+      {
+        h2: 'Supermarket notes: Tesco, Aldi, Asda, Sainsbury\'s and Lidl',
+        paragraphs: [
+          'Tesco and Sainsbury\'s usually give the broadest choice for calorie-controlled, higher-protein and vegetarian ready meals. Aldi and Lidl are often better for value, but ranges can be more limited and change more often. Asda is useful for budget chilled meals, frozen options and larger family-style trays that can be portioned.',
+          'Because listings and ranges change, treat this as a buying framework rather than a fixed product list. Your weekly automation can confirm live availability, while this guide explains what should earn a place in the basket.',
+        ],
+      },
+      {
+        h2: 'When homemade is better than ready-made',
+        paragraphs: [
+          'If you are buying the same ready meal every week, it is worth making a two-portion batch version. Turkey chilli, chicken curry, lentil dal, tuna pasta bake, tofu stir fry and jacket potatoes are all cheap UK supermarket meals that reheat well and give more control over portions.',
+          'Ready meals are best used as a backup, a lunch option or a low-effort dinner inside a planned week, not as the entire diet. Pair them with the printable meal plan hub if you want structure without cooking from scratch every night.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'best-low-calorie-foods-uk', label: 'Low Calorie Foods UK', type: 'blog' },
+      { path: '/meal-plans/1500-calorie', label: '1500 Calorie Meal Plan UK', type: 'guide' },
+      { slug: 'healthy-ready-meal-alternatives-uk', label: 'Healthy Ready Meal Alternatives', type: 'blog' },
+      { slug: 'low-calorie-dinners-for-meal-prep-uk', label: 'Low Calorie Dinners for Meal Prep', type: 'blog' },
+    ],
+    faq: [
+      { q: 'Are low calorie ready meals good for weight loss?', a: 'They can help if they fit your calorie target and contain enough protein or vegetables to keep you full. They work best as part of a planned week with fruit, vegetables and higher-protein meals elsewhere.' },
+      { q: 'What is a good calorie target for a ready meal?', a: 'For lunch or dinner, 350-550 calories is a useful range for many calorie-controlled plans. Smaller meals may need a side such as salad, soup, fruit, skyr or cottage cheese.' },
+      { q: 'Which supermarket has the best low calorie ready meals?', a: 'Tesco and Sainsbury\'s usually have the widest choice, while Aldi and Lidl can be strong for value. Availability changes, so compare labels and choose meals with enough protein, vegetables and sensible portions.' },
+    ],
+  }),
+
+  'what-does-1500-calories-look-like-uk': post({
+    title: 'What Does 1500 Calories Look Like? UK Meal Examples',
+    description: 'See what 1500 calories looks like in the UK, with realistic breakfast, lunch, dinner, snack and supermarket examples plus printable plan links.',
+    h1: 'What Does 1500 Calories Look Like?',
+    intro: '1500 calories should not look like black coffee, lettuce and a tiny dinner. A realistic UK 1500 calorie day usually includes three proper meals and a snack, with enough protein and high-volume foods to make the day repeatable.',
+    reviewed: '17 June 2026',
+    sources: [
+      {
+        label: 'NHS Eatwell Guide',
+        url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/',
+      },
+      {
+        label: 'NHS healthy weight guidance',
+        url: 'https://www.nhs.uk/live-well/healthy-weight/',
+      },
+    ],
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For complete printable weeks, use the ' },
+          { label: '1500 calorie meal plan UK hub', to: '/meal-plans/1500-calorie' },
+          { text: ', or compare filling foods in the ' },
+          { label: 'low calorie foods UK guide', to: '/blog/best-low-calorie-foods-uk' },
+          { text: '.' },
+        ],
+      },
+    ],
+    sections: [
+      {
+        h2: 'Quick answer: a realistic 1500 calorie day',
+        paragraphs: [
+          'A practical 1500 calorie day often splits into roughly 350-400 calories at breakfast, 400-450 at lunch, 500-550 at dinner and 150-250 for snacks. That is flexible, but it stops one tiny meal from making the evening impossible.',
+        ],
+        table: {
+          headers: ['Meal', 'Example', 'Approx calories', 'Why it works'],
+          rows: [
+            ['Breakfast', 'Greek yogurt, berries, oats and a few seeds', '350-400', 'Protein, fibre and sweetness without a huge portion'],
+            ['Lunch', 'Chicken salad wrap with fruit or soup', '400-450', 'Portable and easier than a salad-only lunch'],
+            ['Dinner', 'Turkey chilli with rice and vegetables', '500-550', 'Warm, batch-friendly and filling'],
+            ['Snack', 'Skyr, cottage cheese, boiled eggs or fruit', '150-250', 'Closes the protein gap between meals'],
+          ],
+        },
+      },
+      {
+        h2: 'Three UK examples of 1500 calories',
+        paragraphs: [
+          'These examples show the shape of a day, not a rule. Portions and brands change the numbers, so use labels if you need exact tracking.',
+        ],
+        table: {
+          headers: ['Style', 'Breakfast', 'Lunch', 'Dinner', 'Snack'],
+          rows: [
+            ['High protein', 'Skyr, oats and berries', 'Tuna jacket potato with salad', 'Chicken curry with rice and veg', 'Cottage cheese and fruit'],
+            ['Vegetarian', 'Eggs on toast with spinach', 'Halloumi and roasted veg salad', 'Lentil chilli with rice', 'Greek yogurt or skyr'],
+            ['Low effort', 'Protein yogurt and banana', 'Chicken wrap and soup', 'Low calorie ready meal with extra veg', 'Boiled eggs or fruit'],
+          ],
+        },
+      },
+      {
+        h2: 'What 1500 calories should not look like',
+        paragraphs: [
+          'It should not require skipping breakfast, eating no carbohydrates or saving nearly all calories for dinner. Those patterns can work for a day, but they are hard to repeat and often lead to evening snacking.',
+          'It also should not ask you to multiply ingredient amounts by awkward numbers. A useful plan should show the actual portions needed for that calorie target, with a shopping list that matches the meals.',
+        ],
+      },
+      {
+        h2: 'How to make 1500 calories more filling',
+        paragraphs: [
+          'Use lean protein at each meal, add vegetables freely, choose potatoes, oats, beans, lentils or wholemeal bread over tiny low-volume snacks, and measure calorie-dense extras such as oil, cheese, peanut butter and sauces.',
+          'If 1500 calories feels too hard, compare 1600 or 1800 calorie plans before assuming you lack discipline. A slightly higher plan that you can follow for weeks is usually better than a perfect day that breaks by Thursday.',
+        ],
+      },
+    ],
+    related: [
+      { path: '/meal-plans/1500-calorie', label: 'Printable 1500 Calorie Meal Plan', type: 'guide' },
+      { slug: 'best-low-calorie-foods-uk', label: 'Low Calorie Foods UK', type: 'blog' },
+      { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
+      { slug: '1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories', type: 'blog' },
+    ],
+    faq: [
+      { q: 'Is 1500 calories enough food?', a: 'It depends on body size, activity, health status and goals. For some adults it is a moderate deficit; for others it is too low. Use it as general information, not medical advice.' },
+      { q: 'Can 1500 calories include snacks?', a: 'Yes. Most realistic 1500 calorie days include at least one snack. The key is choosing snacks that add protein, fruit, fibre or useful volume rather than spending calories without filling you up.' },
+      { q: 'Can I print a 1500 calorie meal plan?', a: 'Yes. The 1500 calorie meal plan hub links to printable plans with weekly recipes, calories, macros and shopping lists.' },
+    ],
+  }),
+
   '1200-calorie-meal-plan-uk': post({
     title: '1200 Calorie Meal Plan UK: Simple Low Calorie Day Ideas',
     description: 'A practical 1200 calorie meal plan UK guide with filling meal ideas, safety notes, supermarket staples and better options for most adults.',

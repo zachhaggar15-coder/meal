@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PopularSearches from '../components/PopularSearches.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
+import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_COUNT = ALL_PLANS.length;
@@ -99,6 +101,25 @@ const PLAN_INDEX_GROUPS = GOALS
   }))
   .filter(g => g.plans.length > 0);
 
+const HUB_INDEX_GROUPS = [
+  {
+    label: 'Calorie plan hubs',
+    slugs: ['1200-calorie', '1400-calorie', '1500-calorie', '1600-calorie', '1800-calorie', '2000-calorie', '2500-calorie', '3000-calorie', '3500-calorie'],
+  },
+  {
+    label: 'Supermarket plan hubs',
+    slugs: ['aldi', 'lidl', 'tesco', 'asda', 'sainsburys', 'morrisons', 'iceland', 'generic-uk-supermarket'],
+  },
+  {
+    label: 'Goal and diet hubs',
+    slugs: ['free-online-diet-plans-uk', 'weight-loss', 'high-protein', 'vegetarian', 'vegan', 'pescatarian', 'muscle-gain', 'menopause', 'endurance', 'cheap-student', 'budget-bodybuilding'],
+  },
+  {
+    label: 'Shopping-list hubs',
+    slugs: ['meal-plans-with-shopping-list', 'printable-meal-plans', 'low-calorie-shopping-list', 'high-protein-shopping-list', 'budget-shopping-list'],
+  },
+];
+
 export default function BrowsePlans() {
   const [params] = useSearchParams();
   const paramString = params.toString();
@@ -154,8 +175,8 @@ export default function BrowsePlans() {
   return (
     <>
       <SEO
-        title="Free UK Meal Plans 2026 — Search by Goal, Supermarket & Calories | MealPrep.org.uk"
-        description={`Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories, diet and budget. Filter weight loss, muscle gain, vegan and vegetarian plans.`}
+        title={`Free UK Diet Plans - Browse ${PLAN_COUNT} Meal Plans by Calories & Supermarket | MealPrep.org.uk`}
+        description="Browse free online diet plans for UK supermarkets, including 1500 calorie, high protein, vegetarian, muscle gain and printable shopping-list plans."
         canonical="https://www.mealprep.org.uk/browse"
       />
 
@@ -168,6 +189,12 @@ export default function BrowsePlans() {
             {' '}<Link to="/quiz" className="browse-quiz-link">Take the quiz to get matched →</Link>
           </p>
         </div>
+
+        <PopularSearches
+          title="Popular UK searches"
+          intro="Use these shortcuts for the highest-demand calorie, protein, shopping-list and container guides."
+          className="popular-searches--browse"
+        />
 
         {/* Search + filters */}
         <div className="browse-filters">
@@ -245,6 +272,28 @@ export default function BrowsePlans() {
             </button>
           </div>
         )}
+
+        <section className="browse-hub-index" aria-labelledby="browse-hub-index-heading">
+          <div className="browse-index-header">
+            <h2 id="browse-hub-index-heading">UK Meal Plan Hubs</h2>
+            <p>Start from a calorie target, supermarket, diet goal or printable shopping list.</p>
+          </div>
+          <div className="browse-hub-index-grid">
+            {HUB_INDEX_GROUPS.map(group => (
+              <div className="browse-hub-index-group" key={group.label}>
+                <h3>{group.label}</h3>
+                <div className="browse-hub-links">
+                  {group.slugs.map(slug => {
+                    const hub = MEAL_PLAN_HUBS[slug];
+                    return hub ? (
+                      <Link key={hub.slug} to={hub.path}>{hub.h1}</Link>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <section className="browse-index" aria-labelledby="browse-index-heading">
           <div className="browse-index-header">

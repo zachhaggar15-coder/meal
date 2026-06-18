@@ -23,10 +23,10 @@ const guideRelated = [
 export const containerBlogPostsData = {
   'best-meal-prep-containers-uk': {
     published: '2026-06-16',
-    modified: '2026-06-16',
-    title: 'Best Meal Prep Containers UK: Budget, Glass and Premium Picks',
-    description: 'Best meal prep containers UK guide: compare budget boxes, glass containers, premium sets, meal prep tubs and work lunch boxes from Amazon UK.',
-    h1: 'Best Meal Prep Containers UK: Budget, Glass and Premium Picks',
+    modified: '2026-06-17',
+    title: 'Best Meal Prep Containers UK: Glass, Plastic & Leakproof Picks',
+    description: 'Best meal prep containers UK: compare glass boxes, plastic tubs, leakproof lunch containers, budget meal prep boxes and premium Amazon UK picks.',
+    h1: 'Best Meal Prep Containers UK: Glass, Plastic & Leakproof Picks',
     intro:
       'The best meal prep containers are the ones that make Sunday cooking easier and weekday eating calmer. For most UK meal preppers, that means enough containers for five lunches, lids that do not leak in a work bag, bases that survive repeated washing, and sizes that fit proper portions.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
@@ -62,6 +62,23 @@ export const containerBlogPostsData = {
             ['Twist-lid tubs', 'Chilli, soup, overnight oats, sauces', 'Round shape wastes fridge space'],
             ['Premium glass sets', 'Long-term meal prep systems', 'Higher upfront cost and more cupboard space'],
             ['Stainless steel boxes', 'Commuters who dislike heavy glass', 'Must check microwave suitability by listing'],
+          ],
+        },
+      },
+      {
+        h2: 'Best container by search intent',
+        paragraphs: [
+          'Different searches usually mean different buyer needs. A student searching for cheap meal prep tubs is not looking for the same product as someone searching for glass lunch boxes for work.',
+        ],
+        table: {
+          headers: ['Search intent', 'Best starting point', 'Why'],
+          rows: [
+            ['Best meal prep containers UK', 'Mid range glass containers', 'Best all-round balance for lunches, reheating and long-term use'],
+            ['Cheap meal prep containers', 'Budget plastic multipacks', 'Lowest cost per tub for batch cooking and freezer portions'],
+            ['Glass meal prep containers', 'Five-pack rectangular glass sets', 'Good for curry, chilli, pasta and work lunches'],
+            ['Meal prep tubs for batch cooking', 'Large plastic or twist-lid multipacks', 'Useful when you need many freezer portions'],
+            ['Leakproof lunch boxes', 'Premium clip-lock or twist-lock containers', 'Better for commuting, soup, chilli and dressings'],
+            ['Meal prep boxes for work', 'Rectangular glass or sturdy divided boxes', 'Easier to pack, stack and reheat at the office'],
           ],
         },
       },

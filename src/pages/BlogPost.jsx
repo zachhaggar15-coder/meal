@@ -7,7 +7,9 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
+import TrustBox from '../components/TrustBox.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
+import { SEO_OPPORTUNITY_QUICK_ANSWERS } from '../data/seoOpportunityPages.js';
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
 
@@ -18,6 +20,9 @@ export default function BlogPost() {
   if (!data) return <Navigate to="/" replace />;
 
   const ogImageUrl = generateBlogImageUrl(slug, data.title);
+  const sources = data.sources || [];
+  const showTrustBox = Boolean(data.reviewed || data.sources?.length || data.trustNote);
+  const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
 
   const jsonLd = [
     {
@@ -50,6 +55,10 @@ export default function BlogPost() {
       ],
     },
   ];
+
+  if (sources.length) {
+    jsonLd[0].citation = sources.map(source => source.url);
+  }
 
   if (data.faq?.length) {
     jsonLd.push({
@@ -91,6 +100,26 @@ export default function BlogPost() {
           )}
           {data.affiliateDisclosure && (
             <p className="affiliate-disclosure">{data.affiliateDisclosure}</p>
+          )}
+          {quickAnswer && (
+            <aside className="quick-answer-box" aria-label="Quick answer">
+              <strong>Quick answer</strong>
+              <p>{quickAnswer.answer}</p>
+              {quickAnswer.links?.length > 0 && (
+                <div className="quick-answer-links">
+                  {quickAnswer.links.map(link => (
+                    <Link key={link.to} to={link.to}>{link.label}</Link>
+                  ))}
+                </div>
+              )}
+            </aside>
+          )}
+          {showTrustBox && (
+            <TrustBox
+              sources={sources}
+              reviewed={data.reviewed || data.modified || '17 June 2026'}
+              note={data.trustNote}
+            />
           )}
           <ContextualLinks blocks={data.contextualLinks} />
 

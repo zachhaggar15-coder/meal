@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PopularSearches from '../components/PopularSearches.jsx';
+import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   filterPlansForHub,
@@ -30,6 +32,13 @@ const EFFORT_LABEL = {
   'high-variety': 'High variety',
 };
 
+const DEFAULT_SUPPORTING_GUIDES = [
+  { label: 'Low calorie foods UK', to: '/blog/best-low-calorie-foods-uk' },
+  { label: 'High protein snacks UK', to: '/blog/high-protein-snacks-uk' },
+  { label: 'Printable meal plan PDFs', to: '/meal-plans/printable-meal-plans' },
+  { label: 'Meal plans with shopping lists', to: '/meal-plans/meal-plans-with-shopping-list' },
+];
+
 export default function MealPlanHubPage() {
   const { slug } = useParams();
   const hub = MEAL_PLAN_HUBS[slug];
@@ -39,6 +48,8 @@ export default function MealPlanHubPage() {
   const matchingPlans = filterPlansForHub(ALL_PLANS, hub);
   const shownPlans = matchingPlans.slice(0, CARD_LIMIT);
   const canonical = `/meal-plans/${hub.slug}`;
+  const sources = hub.sources || DEFAULT_SOURCES;
+  const supportingGuides = hub.supportingGuides || DEFAULT_SUPPORTING_GUIDES;
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -46,6 +57,7 @@ export default function MealPlanHubPage() {
       name: hub.h1,
       description: hub.description,
       url: `https://www.mealprep.org.uk${canonical}`,
+      citation: sources.map(source => source.url),
       isPartOf: {
         '@type': 'WebSite',
         name: 'MealPrep.org.uk',
@@ -130,6 +142,14 @@ export default function MealPlanHubPage() {
           </div>
         </section>
 
+        <TrustBox sources={sources} reviewed={hub.reviewed || '17 June 2026'} />
+
+        <PopularSearches
+          title="Popular UK searches"
+          intro="Related guides and plan hubs for calorie targets, printable PDFs, supermarket shopping and meal prep kit."
+          className="popular-searches--hub"
+        />
+
         <section id="top-plans" className="meal-hub-plans">
           <div className="section-head-inline">
             <div>
@@ -165,8 +185,49 @@ export default function MealPlanHubPage() {
           <section key={section.h2} className="meal-hub-copy-section">
             <h2>{section.h2}</h2>
             {section.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+            {section.bullets && (
+              <ul className="content-bullets">
+                {section.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}
+              </ul>
+            )}
+            {section.table && (
+              <div className="content-table-wrap">
+                <table className="content-table">
+                  {section.table.headers && (
+                    <thead>
+                      <tr>
+                        {section.table.headers.map(header => <th key={header}>{header}</th>)}
+                      </tr>
+                    </thead>
+                  )}
+                  <tbody>
+                    {section.table.rows.map((row, rowIndex) => (
+                      <tr key={`${section.h2}-${rowIndex}`}>
+                        {row.map((cell, cellIndex) => <td key={`${section.h2}-${rowIndex}-${cellIndex}`}>{cell}</td>)}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </section>
         ))}
+
+        <section className="meal-hub-supporting-guides" aria-labelledby="meal-hub-supporting-guides-heading">
+          <div className="section-head-inline">
+            <div>
+              <h2 id="meal-hub-supporting-guides-heading">Supporting guides</h2>
+              <p>Use these guides to refine the plan, build the shopping list and choose practical UK ingredients.</p>
+            </div>
+          </div>
+          <div className="meal-hub-supporting-grid">
+            {supportingGuides.slice(0, 5).map(guide => (
+              <Link key={guide.to} to={guide.to} className="meal-hub-supporting-card">
+                {guide.label}
+              </Link>
+            ))}
+          </div>
+        </section>
 
         <section className="meal-hub-container-cta">
           <div>

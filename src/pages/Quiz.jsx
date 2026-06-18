@@ -220,8 +220,8 @@ export default function Quiz() {
   return (
     <>
       <SEO
-        title="Find Your Perfect UK Meal Plan - Free Quiz | MealPrep.org.uk"
-        description={`Answer 7 quick questions to find the best UK meal plan for your goal, budget, supermarket, and diet. ${PLAN_COUNT} ready-made plans to match.`}
+        title="Free UK Meal Plan Quiz - Find a Printable Diet Plan | MealPrep.org.uk"
+        description={`Answer 7 quick questions to find a free UK diet plan with calories, macros, supermarket choices, printable PDF export and shopping list. ${PLAN_COUNT} plans to match.`}
         canonical="https://www.mealprep.org.uk/quiz"
         jsonLd={jsonLd}
       />

@@ -16,18 +16,29 @@ const NAV = [
   {
     label: 'Meal Plan Hubs',
     items: [
+      { to: '/meal-plans/free-online-diet-plans-uk', label: 'Free Online Diet Plans' },
       { to: '/meal-plans/weight-loss',                 label: 'Weight Loss Plans' },
+      { to: '/meal-plans/1200-calorie',                label: '1200 Calorie Plans' },
+      { to: '/meal-plans/1400-calorie',                label: '1400 Calorie Plans' },
       { to: '/meal-plans/1500-calorie',                label: '1500 Calorie Plans' },
+      { to: '/meal-plans/1800-calorie',                label: '1800 Calorie Plans' },
+      { to: '/meal-plans/2000-calorie',                label: '2000 Calorie Plans' },
+      { to: '/meal-plans/2500-calorie',                label: '2500 Calorie Plans' },
       { to: '/meal-plans/high-protein',                label: 'High Protein Plans' },
       { to: '/meal-plans/muscle-gain',                 label: 'Muscle Gain Plans' },
       { to: '/meal-plans/3000-calorie',                label: '3000 Calorie Plans' },
       { to: '/meal-plans/3500-calorie',                label: '3500 Calorie Plans' },
       { to: '/meal-plans/vegetarian',                  label: 'Vegetarian Plans' },
+      { to: '/meal-plans/vegan',                       label: 'Vegan Plans' },
+      { to: '/meal-plans/pescatarian',                 label: 'Pescatarian Plans' },
       { to: '/meal-plans/generic-uk-supermarket',      label: 'Generic UK Plans' },
       { to: '/meal-plans/aldi',                        label: 'Aldi Meal Plans' },
-      { to: '/meal-plans/tesco-weight-loss',           label: 'Tesco Weight Loss' },
+      { to: '/meal-plans/tesco',                       label: 'Tesco Meal Plans' },
+      { to: '/meal-plans/lidl',                        label: 'Lidl Meal Plans' },
       { to: '/meal-plans/printable-meal-plans',        label: 'Printable PDF Plans' },
       { to: '/meal-plans/meal-plans-with-shopping-list', label: 'Plans with Shopping Lists' },
+      { to: '/meal-plans/low-calorie-shopping-list',   label: 'Low Calorie Shopping List' },
+      { to: '/meal-plans/high-protein-shopping-list',  label: 'High Protein Shopping List' },
     ],
   },
   {
@@ -74,10 +85,12 @@ const NAV = [
       { to: '/blog/how-to-lose-weight-fast-uk',              label: 'How to Lose Weight Fast' },
       { to: '/blog/how-to-build-a-calorie-deficit',          label: 'Calorie Deficit Guide' },
       { to: '/blog/how-many-calories-to-lose-weight',        label: 'How Many Calories?' },
+      { to: '/blog/what-does-1500-calories-look-like-uk',    label: 'What 1500 Calories Looks Like' },
       { to: '/blog/how-to-lose-belly-fat-uk',                label: 'How to Lose Belly Fat' },
       { to: '/blog/high-protein-breakfast-uk',               label: 'High Protein Breakfast' },
       { to: '/blog/high-protein-low-calorie-meals',          label: 'High Protein Meals' },
       { to: '/blog/high-protein-snacks-uk',                  label: 'High Protein Snacks' },
+      { to: '/blog/best-low-calorie-ready-meals-uk',         label: 'Low Calorie Ready Meals' },
       { to: '/blog/low-calorie-snacks-uk',                   label: 'Low Calorie Snacks' },
       { to: '/blog/how-much-protein-when-dieting',           label: 'Protein When Dieting' },
       { to: '/blog/anti-inflammatory-diet-meal-plan-uk',     label: 'Anti-Inflammatory Diet' },
@@ -169,6 +182,14 @@ export default function Sidebar({ open, onClose }) {
             onClick={onClose}
           >
             Tools
+          </Link>
+
+          <Link
+            to="/about"
+            className={`sidebar-top-link${location.pathname === '/about' ? ' sidebar-link--active' : ''}`}
+            onClick={onClose}
+          >
+            About
           </Link>
 
           {NAV.map(group => (

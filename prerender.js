@@ -195,6 +195,7 @@ const ROUTES = uniqueRoutes([
   '/stickers',
   '/blog',
   '/tools',
+  '/about',
   ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
   ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
   ...DIET_CHOOSER_SLUGS.map(slug => `/choose-diet/${slug}`),

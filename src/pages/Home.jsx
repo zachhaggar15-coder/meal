@@ -8,6 +8,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PopularSearches from '../components/PopularSearches.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 
@@ -17,9 +18,9 @@ const homeJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'MealPrep.org.uk — UK Meal Plan Library',
+    name: 'MealPrep.org.uk - Free UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk',
-    description: `Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories and diet, or take the quiz to find your best match.`,
+    description: `Use a free UK meal plan generator, browse ${PLAN_COUNT} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -247,8 +248,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title={`Free UK Meal Plans — ${PLAN_COUNT} Plans by Goal, Supermarket & Diet | MealPrep.org.uk`}
-        description={`Browse ${PLAN_COUNT} free UK meal plans by goal, supermarket, calories and diet, or take the quiz to find your best match.`}
+        title={`Free UK Meal Plan Generator - ${PLAN_COUNT} Diet Plans + Shopping Lists | MealPrep.org.uk`}
+        description="Build free online diet plans for UK supermarkets, including 1500 calorie, high protein and low calorie meal plans with printable PDFs and shopping lists."
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -279,6 +280,12 @@ export default function Home() {
             <span className="trust-badge">Free, no sign-up</span>
           </div>
         </header>
+
+        <PopularSearches
+          title="Popular UK Meal Plan Searches"
+          intro="Start with the highest-demand guides, then jump into a printable plan or shopping list."
+          className="popular-searches--home"
+        />
 
         {/* ── How it works ─────────────────────────────────────────────────── */}
         <section className="how-it-works">

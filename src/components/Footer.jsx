@@ -10,6 +10,7 @@ export default function Footer() {
             <li><Link to="/">Free Meal Plan Generator</Link></li>
             <li><Link to="/browse">Browse All Meal Plans</Link></li>
             <li><Link to="/blog">Meal Prep Blog</Link></li>
+            <li><Link to="/about">About &amp; Editorial Notes</Link></li>
           </ul>
         </div>
 
@@ -17,14 +18,16 @@ export default function Footer() {
           <h4>Calorie Plans</h4>
           <ul>
             <li><Link to="/meal-plans/1500-calorie">1500 Calorie Meal Plans</Link></li>
-            <li><Link to="/meal-plan/1800-calorie-meal-plan">1800 Calorie Meal Plan</Link></li>
-            <li><Link to="/meal-plan/2000-calorie-meal-plan">2000 Calorie Meal Plan</Link></li>
+            <li><Link to="/meal-plans/1800-calorie">1800 Calorie Meal Plans</Link></li>
+            <li><Link to="/meal-plans/2000-calorie">2000 Calorie Meal Plans</Link></li>
+            <li><Link to="/meal-plans/2500-calorie">2500 Calorie Meal Plans</Link></li>
             <li><Link to="/meal-plans/high-protein">High Protein Meal Plans</Link></li>
             <li><Link to="/meal-plans/weight-loss">Weight Loss Meal Plans</Link></li>
-            <li><Link to="/meal-plans/tesco-weight-loss">Tesco Weight Loss Plans</Link></li>
+            <li><Link to="/meal-plans/tesco">Tesco Meal Plans</Link></li>
             <li><Link to="/meal-plans/aldi">Aldi Meal Plans</Link></li>
+            <li><Link to="/meal-plans/lidl">Lidl Meal Plans</Link></li>
             <li><Link to="/meal-plans/vegetarian">Vegetarian Meal Plans</Link></li>
-            <li><Link to="/meal-plan/vegan-low-calorie-meal-plan">Vegan Plan</Link></li>
+            <li><Link to="/meal-plans/vegan">Vegan Meal Plans</Link></li>
           </ul>
         </div>
 
@@ -33,6 +36,9 @@ export default function Footer() {
           <ul>
             <li><Link to="/meal-plans/printable-meal-plans">Printable Meal Plans</Link></li>
             <li><Link to="/meal-plans/meal-plans-with-shopping-list">Plans with Shopping Lists</Link></li>
+            <li><Link to="/meal-plans/low-calorie-shopping-list">Low Calorie Shopping List</Link></li>
+            <li><Link to="/meal-plans/high-protein-shopping-list">High Protein Shopping List</Link></li>
+            <li><Link to="/meal-plans/budget-shopping-list">Budget Shopping List</Link></li>
             <li><Link to="/meal-prep-containers/budget">Budget Meal Prep Containers</Link></li>
             <li><Link to="/meal-prep-containers/mid-range">Glass Meal Prep Containers</Link></li>
             <li><Link to="/meal-prep-containers/premium">Premium Meal Prep Containers</Link></li>

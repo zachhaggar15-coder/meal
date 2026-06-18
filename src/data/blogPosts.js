@@ -87,17 +87,29 @@ export const blogPostsData = {
 
   'best-low-calorie-foods-uk': {
     published: '2026-05-28',
-    title: 'Best Low Calorie Foods UK: 25+ Budget Supermarket Picks',
-    description: 'Best low calorie foods at Tesco, Aldi, Asda, Sainsbury\'s. High protein, filling, under 200 kcal. Budget-friendly fat loss foods. Generate a free meal plan.',
-    h1: 'The Best Low Calorie Foods Available in UK Supermarkets',
-    intro: 'Choosing the right low-calorie foods is the foundation of any successful weight loss diet. The best choices are not just low in calories — they are also filling, nutritious, and genuinely enjoyable to eat. This guide covers the highest-value low-calorie foods available at UK supermarkets including Tesco, Aldi, Sainsbury\'s, and Asda, organised by food group.',
+    modified: '2026-06-17',
+    reviewed: '17 June 2026',
+    title: 'Low Calorie Foods UK: 80 Filling Tesco, Aldi & Asda Picks',
+    description: 'Best low calorie foods UK: high-protein, high-fibre, ready-to-eat and supermarket staples for weight loss, with 1500 calorie meal plan links.',
+    h1: 'Low Calorie Foods UK: Filling Supermarket Picks',
+    intro: 'This is the main UK guide to low calorie foods for realistic weight loss weeks: high-protein staples, high-volume vegetables, fruit, ready-to-eat options and supermarket swaps from Tesco, Aldi, Asda, Sainsbury\'s, Lidl and Morrisons. Use it to build a better basket, then jump into a printable 1500 calorie or 1800 calorie meal plan with a shopping list.',
+    sources: [
+      {
+        label: 'NHS Eatwell Guide',
+        url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/',
+      },
+      {
+        label: 'NHS healthy weight guidance',
+        url: 'https://www.nhs.uk/live-well/healthy-weight/',
+      },
+    ],
     contextualLinks: [
       {
         parts: [
           { text: 'If you want these foods turned into a Tesco basket, use the ' },
           { label: 'Tesco low calorie meal plan', to: '/meal-plan/tesco-low-calorie-meal-plan' },
           { text: '. For ready-made calorie targets, compare the ' },
-          { label: '1,500 calorie plan', to: '/meal-plan/1500-calorie-meal-plan' },
+          { label: 'printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
           { text: ', ' },
           { label: '1,800 calorie plan', to: '/meal-plan/1800-calorie-meal-plan' },
           { text: ' and ' },
@@ -107,6 +119,39 @@ export const blogPostsData = {
       },
     ],
     sections: [
+      {
+        h2: 'Quick answer: best low calorie foods in UK supermarkets',
+        paragraphs: [
+          'The most useful low calorie foods are the ones that keep meals filling: lean protein, high-fibre carbohydrates, vegetables, fruit, soups, low-fat dairy and simple ready-to-eat options. A good 1500 calorie day usually needs proper meals, not just tiny snack portions.',
+          'For weight loss, start with foods you can buy repeatedly and cook without fuss. The table below covers the fastest wins for UK shoppers.',
+        ],
+        table: {
+          headers: ['Food type', 'Best UK examples', 'Why it helps'],
+          rows: [
+            ['Lean protein', 'Chicken breast, tuna, prawns, turkey, eggs, tofu, cottage cheese, skyr', 'Higher protein for fewer calories and better meal satisfaction'],
+            ['High-volume veg', 'Broccoli, cauliflower, spinach, courgette, mushrooms, salad bags, frozen mixed veg', 'Big portions for low calories, useful for lunch and dinner volume'],
+            ['Filling carbs', 'Oats, potatoes, rice, wholemeal wraps, lentils, beans', 'Keeps meals realistic and easier to repeat than salad-only plans'],
+            ['Ready-to-eat helpers', 'Soup, pre-cooked chicken, boiled eggs, protein yogurt, salad bowls', 'Useful when time is the main reason plans fail'],
+            ['Snacks', 'Fruit, skyr, cottage cheese, boiled eggs, popcorn, veg sticks', 'Helps bridge meals without turning snacks into a second dinner'],
+          ],
+        },
+      },
+      {
+        h2: 'Low calorie ready-meal alternatives',
+        paragraphs: [
+          'Ready meals can help on busy weeks, but the best alternative is usually a repeatable plate you can assemble from supermarket basics. These swaps keep the convenience while giving you more control over protein, fibre and portion size.',
+          'If you want a full ready-meal comparison, use the dedicated low calorie ready meals UK guide, then link the best options into a weekly plan.',
+        ],
+        table: {
+          headers: ['If you usually buy', 'Lower calorie supermarket swap', 'Best next step'],
+          rows: [
+            ['Creamy pasta ready meal', 'Tomato pasta with chicken, tuna or lentils plus a salad bag', 'Printable 1500 calorie meal plan'],
+            ['Pizza or garlic bread night', 'Wrap pizza with extra veg and a yogurt-based side', 'Low calorie dinner ideas'],
+            ['Takeaway-style curry', 'Lean chicken or tofu curry with microwave rice and frozen veg', 'Tesco or generic supermarket plan'],
+            ['Meal deal sandwich, crisps and drink', 'Protein wrap, fruit and skyr or soup', 'High protein low calorie plan'],
+          ],
+        },
+      },
       {
         h2: 'Why Food Choice Matters on a Calorie Deficit',
         paragraphs: [
@@ -181,10 +226,10 @@ export const blogPostsData = {
       },
     ],
     related: [
-      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Meal Plan', type: 'meal-plan' },
-      { slug: 'tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List', type: 'blog' },
+      { path: '/meal-plans/1500-calorie', label: 'Printable 1500 Calorie Meal Plan', type: 'guide' },
+      { slug: 'best-low-calorie-ready-meals-uk', label: 'Best Low Calorie Ready Meals UK', type: 'blog' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
-      { slug: 'aldi-weight-loss-1500', label: '1500 kcal Meal Plan', type: 'plan' },
+      { slug: 'tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List', type: 'blog' },
     ],
     faq: [
       { q: 'Which low calorie foods are most filling?', a: 'The most filling low-calorie foods are those high in protein or fibre: 0% Greek yogurt, chicken breast, eggs, cottage cheese, and non-starchy vegetables like broccoli and spinach. Protein is more satiating per calorie than carbohydrates or fat.' },
@@ -2207,11 +2252,55 @@ export const blogPostsData = {
 
   'high-protein-snacks-uk': {
     published: '2026-05-30',
-    title: 'Best High Protein Snacks UK: 15 Quick Options (20g+ Protein)',
-    description: 'Best high protein snacks UK — 15 quick, convenient options delivering 20g+ protein per serving using Tesco, Aldi, and Asda products. With calorie counts and prices.',
-    h1: 'Best High Protein Snacks UK: 15 Options with 20g+ Protein',
-    intro: 'High-protein snacks are one of the most effective tools for hitting daily protein targets without adding excessive calories. They reduce hunger between meals, preserve muscle during a calorie deficit, and make the difference between a 120 g and 150 g protein day for many people. These 15 options each deliver at least 20 g of protein per serving and are available at UK supermarkets — no specialist health food shops required.',
+    modified: '2026-06-17',
+    reviewed: '17 June 2026',
+    title: 'High Protein Snacks UK: 50 Supermarket Picks to Buy',
+    description: 'High protein snacks UK: cheap, low calorie and ready-to-eat supermarket picks from Tesco, Aldi, Asda, Lidl and Sainsbury\'s, with plan links.',
+    h1: 'High Protein Snacks UK: Supermarket Picks to Buy',
+    intro: 'High-protein snacks are useful when lunch and dinner are not enough to hit your target. This UK guide covers ready-to-eat supermarket snacks, cheap whole-food options, low-calorie choices, vegetarian picks and no-fridge backups so you can build a realistic day rather than relying only on protein bars.',
+    sources: [
+      {
+        label: 'NHS Eatwell Guide',
+        url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/',
+      },
+      {
+        label: 'NHS protein and balanced diet guidance',
+        url: 'https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eating-a-balanced-diet/',
+      },
+    ],
     sections: [
+      {
+        h2: 'Quick answer: best high protein snacks by need',
+        paragraphs: [
+          'The best snack depends on whether you need low calories, low cost, portability or a vegetarian option. Most people do better with a mix: fridge snacks for home and work, plus one no-fridge option for travel or late meetings.',
+        ],
+        table: {
+          headers: ['Need', 'Best UK snack picks', 'Why it works'],
+          rows: [
+            ['Highest protein per calorie', 'Tuna, prawns, chicken breast, skyr, 0% Greek yogurt', 'Big protein return without spending many calories'],
+            ['Cheap high protein', 'Eggs, cottage cheese, sardines, Greek yogurt, lentils, beans', 'Low cost per serving and easy to buy repeatedly'],
+            ['Ready to eat', 'Protein yogurt, cooked chicken, boiled eggs, cottage cheese pots, smoked salmon', 'Useful for offices, meal deals and busy evenings'],
+            ['No fridge', 'Protein bar, jerky, roasted edamame, tuna pouch, powdered shake', 'Backup options for travel or long days out'],
+            ['Vegetarian', 'Skyr, cottage cheese, eggs, edamame, tofu bites, Greek yogurt', 'High protein without meat or fish'],
+          ],
+        },
+      },
+      {
+        h2: 'Best supermarket protein snacks to buy',
+        paragraphs: [
+          'Most UK supermarkets now have a decent protein-snack shelf, but the best value still tends to be in ordinary dairy, eggs, tins and cooked meats rather than sports-nutrition aisles.',
+        ],
+        table: {
+          headers: ['Supermarket', 'Strong snack options', 'Best use'],
+          rows: [
+            ['Aldi', 'Protein yogurts, cottage cheese, eggs, tuna, cooked chicken', 'Budget work snacks and simple meal prep'],
+            ['Lidl', 'Milbona skyr, quark, eggs, turkey slices, smoked fish', 'Cheap dairy-led protein snacks'],
+            ['Tesco', 'Skyr, protein yogurts, cooked meats, tuna pouches, soup', 'Meal deal swaps and wider choice'],
+            ['Asda', 'Cottage cheese, protein puddings, tinned fish, chicken pieces', 'Low-cost snack variety'],
+            ['Sainsbury\'s', 'Premium yogurts, smoked salmon, edamame, chilled protein snacks', 'Convenience and wider specialist options'],
+          ],
+        },
+      },
       {
         h2: 'Why High-Protein Snacks Matter',
         paragraphs: [
@@ -2262,10 +2351,10 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { path: '/meal-plans/high-protein', label: 'High Protein Meal Plans UK', type: 'guide' },
       { slug: 'low-calorie-snacks-uk', label: 'Low Calorie Snacks UK', type: 'blog' },
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Cheap High Protein Foods UK', type: 'blog' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
-      { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
     ],
     faq: [
       { q: 'Are protein bars better than whole food snacks?', a: 'Whole food snacks (Greek yogurt, tinned tuna, cottage cheese, boiled eggs) are almost always cheaper and more nutritious per gram of protein than protein bars. A Grenade bar costs £2–2.50 for 20–25g protein; the equivalent Greek yogurt + whey costs ~£0.80 and delivers 35–45g protein. Bars are useful for convenience when refrigeration is not available.' },

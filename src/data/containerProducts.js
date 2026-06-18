@@ -563,9 +563,9 @@ export const CONTAINER_GUIDES = {
   budget: {
     slug: 'budget',
     path: '/meal-prep-containers/budget',
-    title: 'Budget Meal Prep Containers UK - Compare 6 Low-Cost Amazon Picks',
+    title: 'Budget Meal Prep Containers UK - Best Plastic Tubs & Boxes',
     description:
-      'Compare six low-cost plastic meal prep containers, boxes and tubs for UK batch cooking, with pros, cons, buyer fit, storage notes and Amazon UK affiliate links.',
+      'Compare budget meal prep containers UK: cheap plastic tubs, lunch boxes and batch-cooking multipacks with Amazon UK affiliate links and buyer-fit notes.',
     h1: 'Budget Meal Prep Containers UK',
     kicker: 'Budget buying guide',
     priceBand: 'Around \u00a315-\u00a325 target',
@@ -621,10 +621,10 @@ export const CONTAINER_GUIDES = {
   'mid-range': {
     slug: 'mid-range',
     path: '/meal-prep-containers/mid-range',
-    title: 'Mid Range Meal Prep Containers UK - Compare 6 Glass Boxes',
+    title: 'Best Meal Prep Containers UK - Glass, Plastic & Leakproof Picks',
     description:
-      'Compare six mid range meal prep containers for UK meal prep, including glass boxes, pros, cons, set formats, storage notes and Amazon UK affiliate links.',
-    h1: 'Mid Range Meal Prep Containers UK',
+      'Compare the best meal prep containers UK for everyday use, including glass boxes, leakproof lunch tubs, work containers and Amazon UK picks.',
+    h1: 'Best Mid Range Meal Prep Containers UK',
     kicker: 'Best balance',
     priceBand: '\u00a315-\u00a330 target',
     heroProductId: 'harbour-housewares-glass-5-pack',
@@ -679,9 +679,9 @@ export const CONTAINER_GUIDES = {
   premium: {
     slug: 'premium',
     path: '/meal-prep-containers/premium',
-    title: 'Premium Meal Prep Containers UK - Compare Glass and Steel Sets',
+    title: 'Premium Meal Prep Containers UK - Glass, Steel & Leakproof Sets',
     description:
-      'Compare six premium meal prep containers from Amazon UK, including larger glass sets, steel lunch kits, nesting sets, pros, cons and buyer-fit advice.',
+      'Compare premium meal prep containers UK: larger glass sets, stainless steel lunch kits, leakproof boxes, nesting storage and Amazon UK picks.',
     h1: 'Premium Meal Prep Containers UK',
     kicker: 'Premium buying guide',
     priceBand: '\u00a330+ target',

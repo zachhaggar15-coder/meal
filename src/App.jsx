@@ -18,6 +18,7 @@ import ChoiceLandingPage from './pages/ChoiceLandingPage.jsx';
 import BrowsePlans from './pages/BrowsePlans.jsx';
 import MealPlanHubPage from './pages/MealPlanHubPage.jsx';
 import ToolsPage from './pages/ToolsPage.jsx';
+import About from './pages/About.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 function ScrollToTop() {
@@ -67,6 +68,7 @@ export default function App() {
             <Route path="/plans/:slug" element={<PlanPage />} />
             <Route path="/browse" element={<BrowsePlans />} />
             <Route path="/tools" element={<ToolsPage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/meal-plans/:slug" element={<MealPlanHubPage />} />
             <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
             <Route path="/blog" element={<Blog />} />

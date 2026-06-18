@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PopularSearches from '../components/PopularSearches.jsx';
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
 
 const ACTIVITY = {
@@ -116,8 +117,8 @@ export default function ToolsPage() {
   return (
     <>
       <SEO
-        title="Free UK Meal Prep Tools - Calorie, Protein, Shopping List & Container Calculators | MealPrep.org.uk"
-        description="Use free UK meal prep calculators for calorie targets, protein targets, weekly supermarket budget estimates and how many containers you need."
+        title="Free UK Diet Plan Tools - Calorie, Protein, PDF & Shopping List Calculators | MealPrep.org.uk"
+        description="Use free UK diet-plan tools for calorie targets, protein ranges, printable PDFs, shopping lists, supermarket budgets and meal prep containers."
         canonical="/tools"
         jsonLd={jsonLd}
       />
@@ -138,6 +139,12 @@ export default function ToolsPage() {
             then jump straight to printable meal plans with shopping lists.
           </p>
         </header>
+
+        <PopularSearches
+          title="Popular UK planning shortcuts"
+          intro="Open the most useful plan hubs and buying guides after using the calculators."
+          className="popular-searches--tools"
+        />
 
         <div className="tools-grid">
           <section className="tool-panel">
