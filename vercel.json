@@ -1,20 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "redirects": [
-    {
-      "source": "/",
-      "has": [{ "type": "query", "key": "from" }],
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "query", "key": "kcal" }],
-      "destination": "/",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
