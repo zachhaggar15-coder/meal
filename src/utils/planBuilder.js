@@ -131,40 +131,174 @@ function getMainProtein(meal) {
   return MAIN_PROTEIN_KW.find(p => text.includes(p)) || null;
 }
 
+function isBatchPlan(seed) {
+  return seed.effort === 'batch';
+}
+
+function batchFriendlyMeals(meals, fallback = meals) {
+  const batchable = meals.filter(meal => (meal.tags || []).includes('batch-friendly'));
+  return batchable.length ? batchable : fallback;
+}
+
+function easyBatchSnacks(meals, fallback = meals) {
+  const batchable = meals.filter(meal => {
+    const tags = meal.tags || [];
+    return tags.includes('batch-friendly') || tags.includes('easy');
+  });
+  return batchable.length ? batchable : fallback;
+}
+
+function pickDifferent(arr, seed, usedIds = new Set()) {
+  if (!arr || arr.length === 0) return null;
+  for (let offset = 0; offset < arr.length; offset += 1) {
+    const meal = pick(arr, seed + offset);
+    if (meal && !usedIds.has(meal.id)) return meal;
+  }
+  return pick(arr, seed);
+}
+
+function pickDinnerForLunch(dinners, seed, lunch, usedIds = new Set()) {
+  const lunchProtein = getMainProtein(lunch);
+  for (let offset = 0; offset < dinners.length; offset += 1) {
+    const dinner = pick(dinners, seed + offset);
+    if (!dinner || usedIds.has(dinner.id)) continue;
+    if (!lunchProtein || getMainProtein(dinner) !== lunchProtein) return dinner;
+  }
+  return pickDifferent(dinners, seed, usedIds);
+}
+
 // ── Shopping list builder ──────────────────────────────────────────────────────
 
 const PROTEIN_KW  = ['chicken','beef','turkey','pork','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince'];
-const CARB_KW     = ['bread','rice','pasta','oat','potato','tortilla','roll','pitta','noodle','flour','wraps','granola'];
+const CARB_KW     = ['bread','rice','pasta','oat','potato','tortilla','roll','pitta','noodle','flour','wraps','granola','quinoa','couscous','orzo','soba'];
 const DAIRY_KW    = ['milk','yogurt','cheese','cream','butter','skyr','ricotta','halloumi','cottage','mozzarella'];
-const VEG_KW      = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','kale','cucumber','celery','avocado','mushroom','sweet potato','parsnip','pea','edamame','corn','bean sprout','cabbage','leek','asparagus'];
+const VEG_KW      = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','leaf','leaves','kale','cucumber','celery','avocado','mushroom','butternut squash','sweet potato','parsnip','pea','edamame','corn','bean sprout','cabbage','leek','asparagus'];
 
 function categoriseIngredient(ing) {
   const lower = ing.toLowerCase();
+  if (lower.includes('peanut butter') || lower.includes('almond butter')) return 'extras';
   if (PROTEIN_KW.some(k => lower.includes(k)))  return 'protein';
-  if (DAIRY_KW.some(k => lower.includes(k)))    return 'dairy';
   if (VEG_KW.some(k => lower.includes(k)))      return 'vegetables';
   if (CARB_KW.some(k => lower.includes(k)))     return 'carbs';
+  if (DAIRY_KW.some(k => lower.includes(k)))    return 'dairy';
   return 'extras';
 }
 
 export function buildShoppingList(plan) {
-  const seen = new Set();
-  const list = { protein: [], carbs: [], vegetables: [], dairy: [], extras: [] };
+  const grouped = { protein: new Map(), carbs: new Map(), vegetables: new Map(), dairy: new Map(), extras: new Map() };
 
   for (const day of plan) {
     for (const meal of day.meals) {
       for (const rawIng of meal.ingredients || []) {
         const ing = normaliseShoppingIngredient(rawIng);
         if (!ing) continue;
-        const key = buildShoppingKey(ing);
-        if (seen.has(key)) continue;
-        seen.add(key);
         const cat = categoriseIngredient(ing);
-        list[cat].push(ing);
+        addShoppingIngredient(grouped[cat], ing);
       }
     }
   }
-  return list;
+
+  return Object.fromEntries(
+    Object.entries(grouped).map(([cat, items]) => [
+      cat,
+      [...items.values()].map(formatShoppingIngredient),
+    ]),
+  );
+}
+
+function addShoppingIngredient(group, ingredient) {
+  const parsed = parseShoppingIngredient(ingredient);
+  const existing = group.get(parsed.key);
+
+  if (!existing) {
+    group.set(parsed.key, parsed);
+    return;
+  }
+
+  if (parsed.amount !== null && existing.amount !== null && parsed.unit === existing.unit) {
+    existing.amount += parsed.amount;
+    return;
+  }
+
+  if (parsed.amount === null && existing.amount === null) {
+    existing.count += 1;
+  }
+}
+
+function parseShoppingIngredient(ingredient) {
+  const cleaned = cleanPortionScaleText(ingredient);
+  const measured = cleaned.match(/^(.*?)(\d+(?:\.\d+)?)\s*(kg|g|ml|l|tbsp|tsp)\b(.*)$/i);
+  if (measured) {
+    const [, prefix, amount, unit, suffix] = measured;
+    const normalised = normaliseMeasuredAmount(Number(amount), unit);
+    return buildParsedIngredient(prefix, normalised.amount, normalised.unit, suffix);
+  }
+
+  const countWithUnit = cleaned.match(/^(.*?)(\d+(?:\.\d+)?)\s+([a-z]+s?)\b(.*)$/i);
+  if (countWithUnit && isCountUnit(countWithUnit[3])) {
+    const [, prefix, amount, unit, suffix] = countWithUnit;
+    return buildParsedIngredient(prefix, Number(amount), unit.toLowerCase(), suffix);
+  }
+
+  const mixedFraction = cleaned.match(/^(.*?)(?:(\d+)\s+)?(\d+)\s*\/\s*(\d+)(.*)$/);
+  if (mixedFraction) {
+    const [, prefix, whole = '0', numerator, denominator, suffix] = mixedFraction;
+    const amount = Number(whole) + (Number(numerator) / Number(denominator));
+    return buildParsedIngredient(prefix, amount, 'item', suffix);
+  }
+
+  const trailingCount = cleaned.match(/^(.*?)(\d+(?:\.\d+)?)(\s+(?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled))?$/i);
+  if (trailingCount) {
+    const [, prefix, amount, suffix = ''] = trailingCount;
+    return buildParsedIngredient(prefix, Number(amount), 'item', suffix);
+  }
+
+  const wordAmount = cleaned.match(/\b(half|quarter)\b/i);
+  if (wordAmount) {
+    const amount = wordAmount[1].toLowerCase() === 'half' ? 0.5 : 0.25;
+    const prefix = cleaned.slice(0, wordAmount.index);
+    const suffix = cleaned.slice(wordAmount.index + wordAmount[0].length);
+    return buildParsedIngredient(prefix, amount, 'item', suffix);
+  }
+
+  const key = buildShoppingKey(cleaned);
+  return { key, label: cleaned, amount: null, unit: '', suffix: '', count: 1 };
+}
+
+function buildParsedIngredient(prefix, amount, unit, suffix = '') {
+  const label = prefix.trim();
+  const cleanSuffix = suffix.trim();
+  const key = `${buildShoppingKey(label)}|${unit}|${buildShoppingKey(cleanSuffix)}`;
+
+  return {
+    key,
+    label,
+    amount,
+    unit,
+    suffix: cleanSuffix,
+    count: 1,
+  };
+}
+
+function normaliseMeasuredAmount(amount, unit) {
+  const lowerUnit = unit.toLowerCase();
+  if (lowerUnit === 'kg') return { amount: amount * 1000, unit: 'g' };
+  if (lowerUnit === 'l') return { amount: amount * 1000, unit: 'ml' };
+  return { amount, unit: lowerUnit };
+}
+
+function formatShoppingIngredient(item) {
+  if (item.amount === null) {
+    return item.count > 1 ? `${item.label} x${item.count}` : item.label;
+  }
+
+  const amount = item.unit === 'item'
+    ? formatFractionAmount(item.amount)
+    : isCountUnit(item.unit)
+      ? `${formatWholeCount(item.amount)} ${formatCountUnit(item.unit, formatWholeCount(item.amount))}`
+      : formatMeasuredAmount(item.amount, item.unit);
+  const suffix = item.suffix ? ` ${item.suffix}` : '';
+  return `${item.label} ${amount}${suffix}`.trim();
 }
 
 function normaliseShoppingIngredient(ing) {
@@ -313,44 +447,99 @@ function getRelatedSlugs(seed) {
 
 // ── Core builder ──────────────────────────────────────────────────────────────
 
+function buildBatchPrepPlan(seed, plan) {
+  if (!isBatchPlan(seed)) return null;
+
+  const weekdays = plan.slice(0, 5);
+  const lunches = uniqueMealNames(weekdays, 'Lunch');
+  const dinners = uniqueMealNames(weekdays, 'Dinner');
+  const breakfasts = uniqueMealNames(weekdays, 'Breakfast');
+  const snacks = uniqueMealNames(weekdays, 'Snack');
+  const steps = [];
+
+  if (breakfasts.length) {
+    steps.push(`Prepare ${breakfasts.length === 1 ? 'five portions' : 'weekday portions'} of ${joinNames(breakfasts)} for quick breakfasts.`);
+  }
+  if (lunches.length) {
+    steps.push(`Cook and portion five lunches of ${joinNames(lunches)}.`);
+  }
+  if (dinners.length) {
+    steps.push(`Batch cook ${joinNames(dinners)} as the main dinner bases, then alternate them Monday to Friday.`);
+  }
+  if (snacks.length) {
+    steps.push(`Portion snacks in advance: ${joinNames(snacks)}.`);
+  }
+
+  steps.push('Keep Monday to Wednesday portions in the fridge and freeze later-week portions if you prefer fresher storage.');
+
+  return {
+    title: 'Sunday batch-cook plan',
+    intro: 'This plan uses repeated weekday bases so the Sunday prep instruction matches the actual meals.',
+    steps,
+  };
+}
+
+function uniqueMealNames(days, type) {
+  return [...new Set(
+    days
+      .flatMap(day => day.meals || [])
+      .filter(meal => meal.type === type)
+      .map(meal => meal.name)
+      .filter(Boolean),
+  )];
+}
+
+function joinNames(names) {
+  if (names.length <= 1) return names[0] || '';
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
+}
+
 export function buildPlan(seed) {
   const eligible = getEligibleMeals(seed.dietType);
   const breakfasts = eligible.filter(m => m.type === 'breakfast');
   const lunches    = eligible.filter(m => m.type === 'lunch');
   const dinners    = eligible.filter(m => m.type === 'dinner');
   const snacks     = eligible.filter(m => m.type === 'snack');
+  const batchPlan  = isBatchPlan(seed);
+  const breakfastPool = batchPlan ? batchFriendlyMeals(breakfasts) : breakfasts;
+  const lunchPool     = batchPlan ? batchFriendlyMeals(lunches) : lunches;
+  const dinnerPool    = batchPlan ? batchFriendlyMeals(dinners) : dinners;
+  const snackPool     = batchPlan ? easyBatchSnacks(snacks) : snacks;
 
   // Use mealSetIndex as a large prime-multiplied offset so sets diverge quickly
   const base = seed.mealSetIndex * 37;
 
   // Pick 2 breakfasts for the whole week: primary (Mon–Fri) and secondary (Sat–Sun).
   // This mirrors real UK meal-prep behaviour and keeps the week feeling coherent.
-  const bPrimary = pick(breakfasts, base);
-  let bSecondary = pick(breakfasts, base + 13);
+  const bPrimary = pick(breakfastPool, base);
+  let bSecondary = pick(breakfastPool, base + 13);
   if (bSecondary.id === bPrimary.id) bSecondary = pick(breakfasts, base + 7);
+
+  const batchLunch = batchPlan ? pick(lunchPool, base + 3) : null;
+  const batchWeekendLunch = batchPlan ? pickDifferent(lunchPool, base + 17, new Set([batchLunch?.id])) : null;
+  const batchDinnerA = batchPlan ? pickDinnerForLunch(dinnerPool, base + 7, batchLunch) : null;
+  const batchDinnerB = batchPlan ? pickDinnerForLunch(dinnerPool, base + 29, batchLunch, new Set([batchDinnerA?.id])) : null;
+  const batchSnackA = batchPlan ? pick(snackPool, base + 13) : null;
+  const batchSnackB = batchPlan ? pickDifferent(snackPool, base + 19, new Set([batchSnackA?.id])) : null;
 
   const plan = DAYS.map((day, di) => {
     const s = base + di * 11;
     const b = di < 5 ? bPrimary : bSecondary; // Mon–Fri primary, Sat–Sun secondary
-    const l = pick(lunches, s + 3);
-
-    // Pick a dinner that doesn't share its main protein with lunch
-    const lunchProtein = getMainProtein(l);
-    let d = pick(dinners, s + 7);
-    if (lunchProtein && getMainProtein(d) === lunchProtein) {
-      d = pick(dinners, s + 7 + 19);
-    }
-    if (lunchProtein && getMainProtein(d) === lunchProtein) {
-      d = pick(dinners, s + 7 + 37);
-    }
+    const l = batchPlan && di < 5 ? batchLunch : batchPlan ? batchWeekendLunch : pick(lunches, s + 3);
+    const d = batchPlan && di < 5
+      ? (di % 2 === 0 ? batchDinnerA : batchDinnerB)
+      : batchPlan
+        ? pickDinnerForLunch(dinnerPool, s + 7, l)
+        : pickDinnerForLunch(dinners, s + 7, l);
 
     const mealList = [b, l, d].filter(Boolean);
 
     // Add snack(s) based on calorie target
-    if (seed.calories >= 1800 && snacks.length) mealList.push(pick(snacks, s + 13));
-    if (seed.calories >= 2000 && snacks.length) mealList.push(pick(snacks, s + 19));
-    if (seed.calories >= 3000 && snacks.length) mealList.push(pick(snacks, s + 29));
-    if (seed.calories >= 3500 && snacks.length) mealList.push(pick(snacks, s + 41));
+    if (seed.calories >= 1800 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snacks, s + 13));
+    if (seed.calories >= 2000 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snacks, s + 19));
+    if (seed.calories >= 3000 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snacks, s + 29));
+    if (seed.calories >= 3500 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snacks, s + 41));
 
     const adjustedMeals = rebalanceMealsToTarget(mealList, seed.calories);
 
@@ -378,6 +567,7 @@ export function buildPlan(seed) {
 
     return { day, meals, totals };
   });
+  const prepPlan = buildBatchPrepPlan(seed, plan);
 
   return {
     slug:         seed.slug,
@@ -407,6 +597,7 @@ export function buildPlan(seed) {
     seo:          buildSeo(seed),
     faq:          buildFaqs(seed),
     swaps:        buildSwaps(seed),
+    prepPlan,
     plan,
     shoppingList: buildShoppingList(plan),
     relatedSlugs: getRelatedSlugs(seed),
@@ -568,8 +759,8 @@ function formatFractionAmount(value) {
   const whole = Math.floor(rounded);
   const fraction = Number((rounded - whole).toFixed(2));
   const fractionText = {
-    0.25: 'quarter',
-    0.5: 'half',
+    0.25: '1/4',
+    0.5: '1/2',
     0.75: '3/4',
   }[fraction] || '';
 

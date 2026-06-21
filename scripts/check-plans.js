@@ -1,0 +1,96 @@
+import { MEALS } from '../src/data/mealLibrary.js';
+import { PLAN_SEEDS } from '../src/data/planSeeds.js';
+import { buildPlan } from '../src/utils/planBuilder.js';
+
+const sourceByName = new Map(MEALS.map(meal => [meal.name, meal]));
+const errors = [];
+
+for (const seed of PLAN_SEEDS) {
+  const plan = buildPlan(seed);
+
+  if (!Array.isArray(plan.plan) || plan.plan.length !== 7) {
+    errors.push(`${seed.slug}: expected 7 days`);
+    continue;
+  }
+
+  for (const day of plan.plan) {
+    if (!Array.isArray(day.meals) || day.meals.length < 3) {
+      errors.push(`${seed.slug}: ${day.day} has too few meals`);
+    }
+
+    if (day.totals?.kcal !== seed.calories) {
+      errors.push(`${seed.slug}: ${day.day} totals ${day.totals?.kcal} kcal, expected ${seed.calories}`);
+    }
+
+    for (const meal of day.meals || []) {
+      const text = [
+        meal.type,
+        meal.name,
+        meal.desc,
+        meal.portion_size,
+        ...(meal.ingredients || []),
+        ...(meal.recipe || []),
+      ].join(' ');
+
+      if (/\b(undefined|null|NaN)\b/i.test(text)) {
+        errors.push(`${seed.slug}: ${day.day} contains broken text in ${meal.name}`);
+      }
+    }
+  }
+
+  for (const [group, items] of Object.entries(plan.shoppingList || {})) {
+    for (const item of items || []) {
+      if (/\b(undefined|null|NaN)\b/i.test(item) || /\d+\/\s+\d/.test(item)) {
+        errors.push(`${seed.slug}: malformed shopping item in ${group}: ${item}`);
+      }
+    }
+  }
+
+  if (seed.effort === 'batch') {
+    const weekdays = plan.plan.slice(0, 5);
+    const weekdayLunches = uniqueMeals(weekdays, 'Lunch');
+    const weekdayDinners = uniqueMeals(weekdays, 'Dinner');
+
+    if (weekdayLunches.length > 1) {
+      errors.push(`${seed.slug}: batch weekdays use ${weekdayLunches.length} lunch bases`);
+    }
+
+    if (weekdayDinners.length > 2) {
+      errors.push(`${seed.slug}: batch weekdays use ${weekdayDinners.length} dinner bases`);
+    }
+
+    if (!plan.prepPlan?.steps?.length) {
+      errors.push(`${seed.slug}: missing Sunday prep plan`);
+    }
+
+    for (const mealName of [...weekdayLunches, ...weekdayDinners]) {
+      const source = sourceByName.get(mealName);
+      if (!source?.tags?.includes('batch-friendly')) {
+        errors.push(`${seed.slug}: ${mealName} is not tagged batch-friendly`);
+      }
+    }
+  }
+}
+
+if (errors.length) {
+  console.error(`Plan sanity check failed with ${errors.length} issue(s):`);
+  for (const error of errors.slice(0, 80)) {
+    console.error(`- ${error}`);
+  }
+  if (errors.length > 80) {
+    console.error(`...and ${errors.length - 80} more`);
+  }
+  process.exit(1);
+}
+
+console.log(`Plan sanity check passed for ${PLAN_SEEDS.length} plans.`);
+
+function uniqueMeals(days, type) {
+  return [...new Set(
+    days
+      .flatMap(day => day.meals || [])
+      .filter(meal => meal.type === type)
+      .map(meal => meal.name)
+      .filter(Boolean),
+  )];
+}

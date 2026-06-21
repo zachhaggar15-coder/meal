@@ -43,7 +43,9 @@ export default function FeedbackBox({ className = '' }) {
       setFeedback('');
       setWebsite('');
       setStatus('sent');
-      setMessage('Thanks - your feedback has been sent.');
+      setMessage(data?.provider === 'server-log'
+        ? 'Thanks - your feedback has been received for review.'
+        : 'Thanks - your feedback has been sent.');
     } catch (err) {
       setStatus('error');
       setMessage(err.message || 'Could not send feedback right now. Please try again in a minute.');

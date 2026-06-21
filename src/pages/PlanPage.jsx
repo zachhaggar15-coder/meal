@@ -231,6 +231,7 @@ export default function PlanPage() {
         </div>
 
         <PlanQuickFacts plan={plan} />
+        <BatchPrepPlan prepPlan={plan.prepPlan} />
 
         {/* Quiz CTA */}
         <div className="plan-quiz-cta">
@@ -489,6 +490,22 @@ function PlanQuickFacts({ plan }) {
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+function BatchPrepPlan({ prepPlan }) {
+  if (!prepPlan?.steps?.length) return null;
+
+  return (
+    <section className="plan-prep-section" aria-labelledby="plan-prep-heading">
+      <div>
+        <h2 id="plan-prep-heading">{prepPlan.title}</h2>
+        <p>{prepPlan.intro}</p>
+      </div>
+      <ol className="plan-prep-list">
+        {prepPlan.steps.map((step, index) => <li key={index}>{step}</li>)}
+      </ol>
     </section>
   );
 }

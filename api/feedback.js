@@ -44,14 +44,14 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, provider: 'webhook' });
     } catch (err) {
       console.error('Feedback webhook error:', err);
-      return res.status(502).json({ error: 'Could not send feedback right now. Please try again later.' });
+      return acceptFeedbackFallback(res, payload, 'webhook_error', err);
     }
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error('Feedback provider missing: set FEEDBACK_WEBHOOK_URL or RESEND_API_KEY.');
-    return res.status(503).json({ error: 'Feedback is not configured on the server yet.' });
+    return acceptFeedbackFallback(res, payload, 'provider_missing');
   }
 
   const from = resolveFeedbackFrom(process.env.FEEDBACK_FROM_EMAIL);
@@ -92,15 +92,39 @@ export default async function handler(req, res) {
     if (!emailRes.ok) {
       const errText = await emailRes.text();
       console.error('Resend error:', emailRes.status, errText);
-      return res.status(502).json({ error: 'Could not send feedback right now. Please try again later.' });
+      return acceptFeedbackFallback(
+        res,
+        payload,
+        `resend_${emailRes.status}`,
+        new Error(errText.slice(0, 500)),
+      );
     }
 
     const data = await emailRes.json();
     return res.status(200).json({ ok: true, id: data?.id });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Something went wrong sending feedback. Please try again.' });
+    return acceptFeedbackFallback(res, payload, 'send_exception', err);
   }
+}
+
+function acceptFeedbackFallback(res, payload, reason, err) {
+  const fallbackPayload = {
+    ...payload,
+    deliveryFallback: true,
+    deliveryReason: reason,
+  };
+
+  console.warn('Feedback accepted without email delivery:', JSON.stringify(fallbackPayload));
+  if (err) {
+    console.error('Feedback fallback reason:', err);
+  }
+
+  return res.status(202).json({
+    ok: true,
+    provider: 'server-log',
+    warning: 'Feedback was received, but email delivery is temporarily unavailable.',
+  });
 }
 
 async function sendFeedbackWebhook(webhookUrl, payload) {

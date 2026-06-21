@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist/ssr && node prerender.js",
+    "check:plans": "node scripts/check-plans.js",
     "preview": "vite preview",
     "start": "vercel dev"
   },
