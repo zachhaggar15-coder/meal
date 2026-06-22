@@ -1,8 +1,13 @@
 import { MEALS } from '../src/data/mealLibrary.js';
 import { PLAN_SEEDS } from '../src/data/planSeeds.js';
-import { buildPlan } from '../src/utils/planBuilder.js';
+import {
+  COMBO_LANDING_PAGES,
+  filterPlansForCombo,
+} from '../src/data/comboLandingPages.js';
+import { buildPlan, getAllPlanMeta } from '../src/utils/planBuilder.js';
 
 const sourceByName = new Map(MEALS.map(meal => [meal.name, meal]));
+const seedSlugs = new Set(PLAN_SEEDS.map(seed => seed.slug));
 const errors = [];
 
 for (const seed of PLAN_SEEDS) {
@@ -72,6 +77,32 @@ for (const seed of PLAN_SEEDS) {
   }
 }
 
+const allPlanMeta = getAllPlanMeta();
+for (const [slug, comboPage] of Object.entries(COMBO_LANDING_PAGES)) {
+  const matchingPlans = filterPlansForCombo(allPlanMeta, comboPage);
+  if (matchingPlans.length === 0) {
+    errors.push(`${slug}: combo landing page has no matching plans`);
+  }
+
+  for (const preferredSlug of comboPage.preferredSlugs || []) {
+    if (!seedSlugs.has(preferredSlug)) {
+      errors.push(`${slug}: unknown preferred plan slug ${preferredSlug}`);
+    }
+  }
+
+  for (const relatedSlug of comboPage.relatedSlugs || []) {
+    if (!COMBO_LANDING_PAGES[relatedSlug]) {
+      errors.push(`${slug}: unknown related combo slug ${relatedSlug}`);
+    }
+  }
+
+  for (const link of comboPage.supportingLinks || []) {
+    if (!link.label || !link.to?.startsWith('/')) {
+      errors.push(`${slug}: malformed supporting link ${JSON.stringify(link)}`);
+    }
+  }
+}
+
 if (errors.length) {
   console.error(`Plan sanity check failed with ${errors.length} issue(s):`);
   for (const error of errors.slice(0, 80)) {
@@ -83,7 +114,7 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Plan sanity check passed for ${PLAN_SEEDS.length} plans.`);
+console.log(`Plan sanity check passed for ${PLAN_SEEDS.length} plans and ${Object.keys(COMBO_LANDING_PAGES).length} combo pages.`);
 
 function uniqueMeals(days, type) {
   return [...new Set(

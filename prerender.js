@@ -5,6 +5,7 @@ import { PLAN_SEEDS } from './src/data/planSeeds.js';
 import { blogPostsData } from './src/data/blogPosts.js';
 import { mealPlansData } from './src/data/mealPlans.js';
 import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
+import { COMBO_LANDING_SLUGS } from './src/data/comboLandingPages.js';
 import { MEAL_PLAN_HUB_SLUGS } from './src/data/mealPlanHubs.js';
 import {
   CALORIE_CHOOSER_SLUGS,
@@ -201,6 +202,7 @@ const ROUTES = uniqueRoutes([
   ...DIET_CHOOSER_SLUGS.map(slug => `/choose-diet/${slug}`),
   ...CALORIE_CHOOSER_SLUGS.map(slug => `/choose-calories/${slug}`),
   ...MEAL_PLAN_HUB_SLUGS.map(slug => `/meal-plans/${slug}`),
+  ...COMBO_LANDING_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...CONTAINER_GUIDE_SLUGS.map(slug => `/meal-prep-containers/${slug}`),
   // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),

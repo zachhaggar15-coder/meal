@@ -156,3 +156,111 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     CONTAINER_LINKS,
   ),
 };
+
+export const SEO_EXACT_PLAN_LINKS = {
+  'best-low-calorie-foods-uk': [
+    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+    { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
+    { label: 'Tesco meal prep for weight loss', to: '/meal-plans/tesco-meal-prep-for-weight-loss' },
+  ],
+  'best-low-calorie-ready-meals-uk': [
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+    { label: 'Asda 1800 calorie meal plan', to: '/meal-plans/asda-1800-calorie-meal-plan' },
+    { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
+  ],
+  'what-does-1500-calories-look-like-uk': [
+    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+    { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
+    { label: 'Aldi Weight Loss 1500 kcal plan', to: '/plans/aldi-weight-loss-1500' },
+  ],
+  '1500-vs-1800-vs-2000-calories': [
+    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+    { label: 'Asda 1800 calorie meal plan', to: '/meal-plans/asda-1800-calorie-meal-plan' },
+    { label: 'Tesco meal prep for weight loss', to: '/meal-plans/tesco-meal-prep-for-weight-loss' },
+  ],
+  '1200-calorie-meal-plan-uk': [
+    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+    { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
+    { label: 'Printable 1500 calorie plan hub', to: '/meal-plans/1500-calorie' },
+  ],
+  '1400-calorie-meal-plan-uk': [
+    { label: 'Tesco cutting 1400 kcal plan', to: '/plans/tesco-cutting-1400' },
+    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+    { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
+  ],
+  '1600-calorie-meal-plan-uk': [
+    { label: 'Aldi cutting 1600 kcal plan', to: '/plans/aldi-cutting-1600' },
+    { label: 'Tesco meal prep for weight loss', to: '/meal-plans/tesco-meal-prep-for-weight-loss' },
+    { label: 'Asda 1800 calorie meal plan', to: '/meal-plans/asda-1800-calorie-meal-plan' },
+  ],
+  '1800-calorie-meal-plan-for-weight-loss-uk': [
+    { label: 'Asda 1800 calorie meal plan', to: '/meal-plans/asda-1800-calorie-meal-plan' },
+    { label: 'Tesco meal prep for weight loss', to: '/meal-plans/tesco-meal-prep-for-weight-loss' },
+    { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
+  ],
+  '2000-calorie-weight-loss-meal-plan-uk': [
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+    { label: 'High protein vegetarian meal prep', to: '/meal-plans/high-protein-vegetarian-meal-prep' },
+  ],
+  'high-protein-low-calorie-meals': [
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+    { label: 'High protein vegetarian meal prep', to: '/meal-plans/high-protein-vegetarian-meal-prep' },
+  ],
+  'high-protein-breakfast-uk': [
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+    { label: 'Protein meal prep without powder', to: '/blog/protein-meal-prep-without-powder-uk' },
+  ],
+  'high-protein-snacks-uk': [
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
+    { label: 'High protein vegetarian meal prep', to: '/meal-plans/high-protein-vegetarian-meal-prep' },
+  ],
+  'high-protein-lunches-for-work-uk': [
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+    { label: 'Meal prep boxes for work lunches', to: '/blog/meal-prep-boxes-for-work-lunches' },
+  ],
+  'best-cheap-high-protein-foods-uk': [
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
+    { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
+    { label: 'Cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
+  ],
+  'cheap-protein-sources-uk-supermarkets': [
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+    { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
+  ],
+  'protein-meal-prep-without-powder-uk': [
+    { label: 'High protein vegetarian meal prep', to: '/meal-plans/high-protein-vegetarian-meal-prep' },
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
+    { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+  ],
+  'meal-prep-for-beginners-uk': [
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+    { label: 'Vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
+    { label: 'Cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
+  ],
+  'batch-cooking-for-beginners-uk': [
+    { label: 'Vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
+    { label: 'Vegan batch cooking meal plan', to: '/meal-plans/vegan-batch-cooking-meal-plan' },
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+  ],
+  'cheap-meal-prep-shopping-list-uk': [
+    { label: 'Cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
+    { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
+    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+  ],
+  'meal-prep-boxes-for-work-lunches': [
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+    { label: 'High protein lunches for work UK', to: '/blog/high-protein-lunches-for-work-uk' },
+    { label: 'Leakproof containers guide', to: '/blog/leakproof-meal-prep-containers-uk' },
+  ],
+  'meal-prep-tubs-for-batch-cooking': [
+    { label: 'Vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
+    { label: 'Vegan batch cooking meal plan', to: '/meal-plans/vegan-batch-cooking-meal-plan' },
+    { label: 'Batch cooking for beginners UK', to: '/blog/batch-cooking-for-beginners-uk' },
+  ],
+};

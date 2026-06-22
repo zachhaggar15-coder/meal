@@ -9,7 +9,10 @@ import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import TrustBox from '../components/TrustBox.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
-import { SEO_OPPORTUNITY_QUICK_ANSWERS } from '../data/seoOpportunityPages.js';
+import {
+  SEO_EXACT_PLAN_LINKS,
+  SEO_OPPORTUNITY_QUICK_ANSWERS,
+} from '../data/seoOpportunityPages.js';
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
 
@@ -23,6 +26,7 @@ export default function BlogPost() {
   const sources = data.sources || [];
   const showTrustBox = Boolean(data.reviewed || data.sources?.length || data.trustNote);
   const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
+  const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
 
   const jsonLd = [
     {
@@ -136,6 +140,7 @@ export default function BlogPost() {
           {/* Early CTA — after the intro, before the main body */}
           <GeneratorCTA sourcePage={`blog-${slug}`} />
           <PopularGuides slug={slug} post={data} />
+          <ExactPlanLinks links={exactPlanLinks} />
 
           {data.sections.map((section, i) => (
             <section key={i}>
@@ -241,5 +246,23 @@ export default function BlogPost() {
       </div>
       <Footer />
     </>
+  );
+}
+
+function ExactPlanLinks({ links }) {
+  if (!links.length) return null;
+
+  return (
+    <aside className="exact-plan-links" aria-label="Exact meal plan matches">
+      <div>
+        <strong>Exact plan matches</strong>
+        <p>Jump straight from this guide to a practical plan, shopping list or printable week.</p>
+      </div>
+      <div className="exact-plan-link-list">
+        {links.map(link => (
+          <Link key={link.to} to={link.to}>{link.label}</Link>
+        ))}
+      </div>
+    </aside>
   );
 }

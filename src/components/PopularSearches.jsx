@@ -2,14 +2,16 @@ import { useId } from 'react';
 import { Link } from 'react-router-dom';
 
 const DEFAULT_LINKS = [
+  { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+  { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+  { label: 'work lunch meal prep UK', to: '/meal-plans/work-lunch-meal-prep-uk' },
   { label: 'low calorie foods UK', to: '/blog/best-low-calorie-foods-uk' },
   { label: 'printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
   { label: 'high protein snacks UK', to: '/blog/high-protein-snacks-uk' },
   { label: 'best meal prep containers UK', to: '/blog/best-meal-prep-containers-uk' },
   { label: 'low calorie ready meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },
-  { label: 'free online diet plans UK', to: '/meal-plans/free-online-diet-plans-uk' },
-  { label: 'what does 1500 calories look like?', to: '/blog/what-does-1500-calories-look-like-uk' },
-  { label: 'cheap protein foods UK', to: '/blog/best-cheap-high-protein-foods-uk' },
+  { label: 'cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
+  { label: 'vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
 ];
 
 export default function PopularSearches({

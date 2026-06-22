@@ -6,6 +6,8 @@ import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { getSupermarketEvidence } from '../data/comboLandingPages.js';
+import { track } from '../utils/analytics.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -26,6 +28,8 @@ export default function PlanPage() {
   const [editNote, setEditNote]            = useState('');
   const [originalPlan, setOriginalPlan]    = useState(null);
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
+  const [planCopyStatus, setPlanCopyStatus] = useState('');
+  const [shareStatus, setShareStatus] = useState('');
 
   if (!plan) {
     return (
@@ -144,10 +148,46 @@ export default function PlanPage() {
         document.body.removeChild(textarea);
       }
       setShoppingCopyStatus('Copied');
+      track.shoppingListCopied();
       setTimeout(() => setShoppingCopyStatus(''), 1800);
     } catch {
       setShoppingCopyStatus('Copy failed');
       setTimeout(() => setShoppingCopyStatus(''), 2200);
+    }
+  }
+
+  async function copyPlanSummary() {
+    try {
+      await writeClipboard(formatPlanShareText(displayPlan, plan.seo.canonical));
+      setPlanCopyStatus('Copied');
+      track.planCopied();
+      setTimeout(() => setPlanCopyStatus(''), 1800);
+    } catch {
+      setPlanCopyStatus('Copy failed');
+      setTimeout(() => setPlanCopyStatus(''), 2200);
+    }
+  }
+
+  async function sharePlan() {
+    const shareData = {
+      title: plan.title,
+      text: `${plan.title} with recipes, macros and a shopping list.`,
+      url: plan.seo.canonical,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        setShareStatus('Shared');
+      } else {
+        await writeClipboard(plan.seo.canonical);
+        setShareStatus('Link copied');
+      }
+      track.shareClicked();
+      setTimeout(() => setShareStatus(''), 1800);
+    } catch {
+      setShareStatus('Share cancelled');
+      setTimeout(() => setShareStatus(''), 1800);
     }
   }
 
@@ -231,6 +271,13 @@ export default function PlanPage() {
         </div>
 
         <PlanQuickFacts plan={plan} />
+        <PlanShareTools
+          onCopyPlan={copyPlanSummary}
+          onSharePlan={sharePlan}
+          planCopyStatus={planCopyStatus}
+          shareStatus={shareStatus}
+        />
+        <SupermarketEvidence plan={plan} />
         <BatchPrepPlan prepPlan={plan.prepPlan} />
 
         {/* Quiz CTA */}
@@ -494,6 +541,47 @@ function PlanQuickFacts({ plan }) {
   );
 }
 
+function PlanShareTools({ onCopyPlan, onSharePlan, planCopyStatus, shareStatus }) {
+  return (
+    <section className="plan-share-section" aria-labelledby="plan-share-heading">
+      <div>
+        <h2 id="plan-share-heading">Save or share this plan</h2>
+        <p>
+          Copy a clean weekly summary, send the link to yourself, or share it with
+          someone you shop or meal prep with.
+        </p>
+      </div>
+      <div className="plan-share-actions">
+        <button className="plan-share-btn" onClick={onCopyPlan} type="button">
+          {planCopyStatus || 'Copy plan summary'}
+        </button>
+        <button className="plan-share-btn plan-share-btn--primary" onClick={onSharePlan} type="button">
+          {shareStatus || 'Share plan link'}
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function SupermarketEvidence({ plan }) {
+  const evidence = getSupermarketEvidence(plan.supermarket);
+
+  return (
+    <section className="supermarket-evidence" aria-labelledby="plan-evidence-heading">
+      <div>
+        <h2 id="plan-evidence-heading">{evidence.label} shopping evidence notes</h2>
+        <p>
+          These basket notes explain why this plan is shaped around certain
+          ingredients and swaps before you open the shopping list.
+        </p>
+      </div>
+      <ul>
+        {evidence.notes.map(note => <li key={note}>{note}</li>)}
+      </ul>
+    </section>
+  );
+}
+
 function BatchPrepPlan({ prepPlan }) {
   if (!prepPlan?.steps?.length) return null;
 
@@ -738,6 +826,41 @@ function formatShoppingList(plan) {
     ].join('\n'));
 
   return `${plan.title || 'Meal plan'} shopping list\n\n${groups.join('\n\n')}`;
+}
+
+function formatPlanShareText(plan, url) {
+  const dayLines = (plan.plan || []).map(day => {
+    const meals = day.meals.map(meal => `${meal.type}: ${meal.name}`).join('; ');
+    return `${day.day}: ${meals} (${day.totals.kcal} kcal, ${day.totals.protein}g protein)`;
+  });
+
+  return [
+    plan.title,
+    plan.summary?.calorieRange,
+    plan.summary?.budgetRange ? `Budget: ${plan.summary.budgetRange}/week estimate` : null,
+    '',
+    '7-day menu',
+    ...dayLines,
+    '',
+    `Open the plan: ${url}`,
+  ].filter(line => line !== null && line !== undefined).join('\n');
+}
+
+async function writeClipboard(text) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
 }
 
 function catLabel(cat) {

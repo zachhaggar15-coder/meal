@@ -5,6 +5,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
+import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_COUNT = ALL_PLANS.length;
@@ -117,6 +118,18 @@ const HUB_INDEX_GROUPS = [
   {
     label: 'Shopping-list hubs',
     slugs: ['meal-plans-with-shopping-list', 'printable-meal-plans', 'low-calorie-shopping-list', 'high-protein-shopping-list', 'budget-shopping-list'],
+  },
+  {
+    label: 'Exact high-intent pages',
+    slugs: [
+      'aldi-1500-calorie-meal-plan',
+      'tesco-1500-calorie-meal-plan',
+      'aldi-high-protein-meal-plan',
+      'tesco-high-protein-meal-plan',
+      'cheap-student-meal-prep-aldi',
+      'vegetarian-batch-cooking-meal-plan',
+      'work-lunch-meal-prep-uk',
+    ],
   },
 ];
 
@@ -284,9 +297,9 @@ export default function BrowsePlans() {
                 <h3>{group.label}</h3>
                 <div className="browse-hub-links">
                   {group.slugs.map(slug => {
-                    const hub = MEAL_PLAN_HUBS[slug];
-                    return hub ? (
-                      <Link key={hub.slug} to={hub.path}>{hub.h1}</Link>
+                    const page = MEAL_PLAN_HUBS[slug] || COMBO_LANDING_PAGES[slug];
+                    return page ? (
+                      <Link key={page.slug} to={page.path}>{page.h1}</Link>
                     ) : null;
                   })}
                 </div>
