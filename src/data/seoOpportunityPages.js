@@ -17,7 +17,7 @@ const SHOPPING_LINKS = [
 ];
 
 const CONTAINER_LINKS = [
-  { label: 'Best meal prep containers UK', to: '/blog/best-meal-prep-containers-uk' },
+  { label: 'Best meal prep containers UK', to: '/meal-prep-containers' },
   { label: 'Glass meal prep containers', to: '/meal-prep-containers/mid-range' },
   { label: 'Budget meal prep tubs', to: '/meal-prep-containers/budget' },
 ];
@@ -72,7 +72,11 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     HIGH_PROTEIN_LINKS,
   ),
   'high-protein-breakfast-uk': qa(
-    'The best high protein breakfasts in the UK are quick and repeatable: skry or Greek yogurt bowls, eggs on toast, protein oats, cottage cheese toast and tofu scramble.',
+    'The best high protein breakfasts in the UK are quick and repeatable: skyr or Greek yogurt bowls, eggs on toast, protein porridge, cottage cheese toast and tofu scramble.',
+    HIGH_PROTEIN_LINKS,
+  ),
+  'protein-porridge-and-yogurt-breakfasts-uk': qa(
+    'Protein porridge is oats plus a protein boost such as Greek yogurt, skyr, cottage cheese, milk or protein powder. It is one of the easiest cheap high-protein breakfasts for UK meal prep.',
     HIGH_PROTEIN_LINKS,
   ),
   'high-protein-snacks-uk': qa(
@@ -84,11 +88,11 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     HIGH_PROTEIN_LINKS,
   ),
   'best-cheap-high-protein-foods-uk': qa(
-    'The cheapest high protein foods in the UK are usually eggs, tuna, Greek yogurt, cottage cheese, chicken, lentils, beans, tofu, sardines and milk rather than specialist protein snacks.',
+    'Cheap protein in the UK usually means supermarket staples: eggs, tuna, Greek yogurt, cottage cheese, chicken, lentils, beans, tofu, sardines and milk rather than specialist protein snacks.',
     HIGH_PROTEIN_LINKS,
   ),
   'cheap-protein-sources-uk-supermarkets': qa(
-    'Cheap protein works best when you mix animal and plant staples: eggs, tins, yogurt, chicken, tofu, beans, lentils and frozen fish all keep the weekly shop flexible.',
+    'Cheap protein works best when you mix fridge, freezer and cupboard staples: eggs, tins, yogurt, chicken, tofu, beans, lentils and frozen fish all keep the weekly shop flexible.',
     HIGH_PROTEIN_LINKS,
   ),
   'low-calorie-high-volume-foods-uk': qa(
@@ -211,7 +215,12 @@ export const SEO_EXACT_PLAN_LINKS = {
   'high-protein-breakfast-uk': [
     { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
     { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
-    { label: 'Protein meal prep without powder', to: '/blog/protein-meal-prep-without-powder-uk' },
+    { label: 'Protein porridge UK', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
+  ],
+  'protein-porridge-and-yogurt-breakfasts-uk': [
+    { label: 'High protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
+    { label: 'Cheap protein UK guide', to: '/blog/best-cheap-high-protein-foods-uk' },
+    { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
   ],
   'high-protein-snacks-uk': [
     { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
@@ -224,9 +233,9 @@ export const SEO_EXACT_PLAN_LINKS = {
     { label: 'Meal prep boxes for work lunches', to: '/blog/meal-prep-boxes-for-work-lunches' },
   ],
   'best-cheap-high-protein-foods-uk': [
+    { label: 'High protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
     { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
     { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
-    { label: 'Cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
   ],
   'cheap-protein-sources-uk-supermarkets': [
     { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },

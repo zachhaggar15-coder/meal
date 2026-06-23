@@ -519,24 +519,41 @@ export const blogPostsData = {
 
   'best-cheap-high-protein-foods-uk': {
     published: '2026-05-28',
-    title: 'Cheapest High Protein Foods UK — 2p-4p Per Gram (Ranked)',
-    description: 'Best cheap protein UK. Tinned tuna, eggs, lentils ranked by protein per penny. Under £3/day for 150g protein. Tesco, Aldi, Asda picks.',
-    h1: 'Best Cheap High-Protein Foods in UK Supermarkets',
-    intro: 'Getting enough protein does not have to be expensive. In UK supermarkets you can hit a daily target of 150 g of protein for well under £3 if you choose the right foods. This guide ranks the cheapest high-protein foods available at Tesco, Aldi, Lidl, and Asda by protein per penny — so you can build an affordable, muscle-preserving diet without overspending.',
+    modified: '2026-06-23',
+    title: 'Cheap Protein UK: Best Budget Protein Sources in Supermarkets',
+    description: 'Cheap protein UK guide: eggs, tuna, lentils, Greek yogurt, chicken, tofu and beans ranked for budget meal prep and high-protein shopping.',
+    h1: 'Cheap Protein UK: Budget Protein Sources for Meal Prep',
+    intro: 'Getting enough protein does not have to be expensive. In UK supermarkets, the best cheap protein usually comes from ordinary staples: eggs, tinned fish, Greek yogurt, lentils, beans, tofu, frozen chicken and cottage cheese. This guide ranks the options by usefulness for budget meal prep, not just headline protein grams.',
     contextualLinks: [
       {
         parts: [
-          { text: 'For a Tesco-specific basket using these protein rules, see the ' },
-          { label: 'Tesco low calorie meal plan', to: '/meal-plan/tesco-low-calorie-meal-plan' },
-          { text: '. For a higher daily protein target, use the ' },
-          { label: 'high protein low calorie meal plan', to: '/meal-plan/high-protein-low-calorie-meal-plan' },
-          { text: ' or compare against the simpler ' },
-          { label: '1,500 calorie plan', to: '/meal-plan/1500-calorie-meal-plan' },
+          { text: 'Turn these cheap protein staples into a week with the ' },
+          { label: 'high protein meal plans hub', to: '/meal-plans/high-protein' },
+          { text: ', compare the ' },
+          { label: 'high protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
+          { text: ', or use ' },
+          { label: 'protein porridge breakfasts', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
           { text: '.' },
         ],
       },
     ],
     sections: [
+      {
+        h2: 'Quick answer: what is the best cheap protein in the UK?',
+        paragraphs: [
+          'The best cheap protein in the UK is usually a mix of eggs, tinned tuna or sardines, Greek yogurt or skyr, cottage cheese, red lentils, beans, tofu, frozen chicken and milk. The right choice depends on whether you need breakfast protein, no-cook lunches, batch-cooked dinners or vegetarian staples.',
+          'For meal prep, build each day around one fridge protein, one cupboard protein and one freezer protein. That keeps cost down and avoids relying on protein bars or expensive branded snacks.',
+        ],
+        table: {
+          headers: ['Need', 'Best cheap protein', 'Meal prep use'],
+          rows: [
+            ['Breakfast', 'Eggs, Greek yogurt, skyr, milk', 'Porridge, yogurt bowls, omelettes'],
+            ['No-cook lunch', 'Tinned tuna, sardines, cottage cheese', 'Jackets, wraps, salad boxes'],
+            ['Batch cooking', 'Frozen chicken, turkey mince, tofu', 'Chilli, curry, rice boxes'],
+            ['Vegetarian budget', 'Lentils, beans, tofu, eggs, yogurt', 'Dhal, soups, burrito bowls'],
+          ],
+        },
+      },
       {
         h2: 'Why Protein Matters on a Budget Diet',
         paragraphs: [
@@ -547,7 +564,7 @@ export const blogPostsData = {
       {
         h2: 'Top Cheap Protein Foods Ranked by Protein per Penny',
         paragraphs: [
-          'The following list ranks common UK supermarket protein foods by grams of protein per penny spent (approximate Aldi/Tesco own-brand prices as of 2025):',
+          'Use this list as a budget-shopping framework: compare own-brand staples by grams of protein per pound, then check current shelf prices in your supermarket app before buying.',
         ],
         bullets: [
           'Eggs (12-pack, ~£2.80): ~6.3 g protein per egg, ~2.7 g per penny. One of the cheapest protein sources available anywhere.',
@@ -585,6 +602,8 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK', type: 'blog' },
+      { slug: 'protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge UK', type: 'blog' },
       { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Meal Plan', type: 'meal-plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Low Calorie Plan', type: 'meal-plan' },
       { slug: 'aldi-cheap-hp-1800', label: 'Cheap High-Protein Meal Plan', type: 'plan' },
@@ -2243,7 +2262,7 @@ export const blogPostsData = {
       { slug: 'aldi-vs-tesco-meal-prep', label: 'Aldi vs Tesco for Meal Prep', type: 'blog' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
     ],
-    faq: [
+    oldFaq: [
       { q: 'Is Asda cheaper than Tesco for weekly food shopping?', a: 'Generally yes. Asda own-brand products are typically 10–20% cheaper than Tesco equivalents without loyalty discounts. With Tesco Clubcard, the gap narrows to 5–10% on most items. Both are significantly more expensive than Aldi and Lidl for the core meal prep staples.' },
       { q: 'Does Asda deliver groceries?', a: 'Yes. Asda offers home delivery with same-day and next-day slots available in most areas. Minimum order applies. The Asda website and app list full nutritional information for all own-brand products, making it easy to plan a calorie-controlled shop in advance.' },
       { q: "What are Asda's best own-brand products for meal prep?", a: 'Top picks: Asda Frozen Chicken Breast Fillets (1kg, ~£3.50), Fat Free Greek Style Yogurt (500g, ~£1.10), Tinned Tuna in Spring Water (3×200g, ~£2.40), Free Range Eggs (12 large, ~£2.75–3), Frozen Broccoli Florets (1kg, ~£0.90), and Good & Balanced Rolled Oats (1kg, ~£0.80).' },
@@ -2365,15 +2384,20 @@ export const blogPostsData = {
 
   'meal-prep-containers-uk': {
     published: '2026-05-30',
-    title: 'Best Meal Prep Containers UK: Glass vs Plastic (2025 Guide)',
+    modified: '2026-06-23',
+    title: 'Meal Prep Containers UK 2026: Glass vs Plastic, Sizes and Starter Sets',
     description: 'Best meal prep containers UK 2025 — glass vs plastic, what size to buy, which brands are worth it, and where to get them cheap. Full guide for UK meal preppers.',
-    h1: 'Best Meal Prep Containers UK: Glass vs Plastic and What to Buy',
+    h1: 'Meal Prep Containers UK: Glass vs Plastic, Sizes and Starter Sets',
+    description: 'Meal prep containers UK guide: compare glass vs plastic, container sizes, starter sets, budget tubs, glass boxes and premium meal prep storage.',
     intro: 'The right containers make meal prep dramatically more practical — they need to stack neatly, seal airtight, survive the microwave and dishwasher, and keep food fresh for 5 days. The wrong ones warp, stain, leak, or stop sealing after a few uses. This guide covers everything UK meal preppers need to know: the glass versus plastic debate, what sizes to buy, and where to get the best value in 2025.',
+    intro: 'The right containers make meal prep dramatically more practical: they need to stack neatly, seal well, suit reheating, survive repeat washing and keep food fresh. The wrong ones warp, stain, leak, or stop sealing after a few uses. This guide covers the glass versus plastic debate, what sizes to buy and how to build a sensible starter set.',
     affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
     contextualLinks: [
       {
         parts: [
           { text: 'For product comparisons, see the new ' },
+          { label: 'best meal prep containers hub', to: '/meal-prep-containers' },
+          { text: ', then compare ' },
           { label: 'budget meal prep containers', to: '/meal-prep-containers/budget' },
           { text: ', ' },
           { label: 'mid range glass containers', to: '/meal-prep-containers/mid-range' },
@@ -2430,6 +2454,15 @@ export const blogPostsData = {
           'Wilko: excellent value plastic containers in various sizes. Check the food storage section in store.',
           'Home Bargains / B&M: frequently stock multipacks of plastic or basic glass containers for £5–10. Worth checking if you have one nearby.',
         ],
+        paragraphs: [
+          'The best place to buy depends on whether you want range, low cost, or a container you can inspect in person before buying.',
+        ],
+        bullets: [
+          'Amazon UK: widest range for comparing budget tubs, glass meal prep boxes, leakproof lids and larger storage systems. Check dimensions, recent reviews and current availability before buying.',
+          'Supermarkets: useful for starter plastic sets when you need containers quickly. Compare lid fit, capacity and whether the exact item is marked microwave, freezer and dishwasher safe.',
+          'Homeware stores: useful if you want to inspect glass weight, lid clips and stackability in person before committing to a set.',
+          'Discount stores: can be good for cheap plastic multipacks, but inspect the seals and food-safe markings carefully.',
+        ],
       },
       {
         h2: 'Container Features to Look For',
@@ -2443,6 +2476,10 @@ export const blogPostsData = {
       {
         h2: 'Recommended UK Meal Prep Container Starter Set',
         paragraphs: [
+          'For a complete starter setup, aim for five lunch-sized rectangular containers, two or three smaller tubs for snacks or sauces, and one or two larger containers for freezer portions or batch bases.',
+          'If you are on a tight budget, start with plastic tubs and upgrade the containers you use most often. If you already reheat meals every week, glass is usually the better first buy.',
+        ],
+        oldParagraphs: [
           'For a complete meal prep setup: 5 × 1-litre glass rectangular containers for lunches and dinners (£20–25 from Amazon or Ikea); 5 × 400 ml glass jars with lids for overnight oats and yogurt bowls (£10–15); 3 × 600 ml containers for snacks and sides (£8–12). Total investment: £35–50. This covers all meal prep storage needs for one person for years.',
           'If on a tight budget, start with a £8 5-pack of plastic containers from Tesco or Wilko. Once you have established the habit, upgrade to glass at your own pace.',
         ],
@@ -2458,6 +2495,11 @@ export const blogPostsData = {
       { q: 'Are glass or plastic meal prep containers better?', a: 'Glass is better for long-term use: it does not stain, does not absorb odours, lasts indefinitely if not dropped, and is safer for reheating. Plastic is cheaper (£8–15 for a 5-pack vs £20–25 for glass), lighter, and will not break if dropped. For anyone meal prepping consistently, glass is worth the upfront investment.' },
       { q: 'What size meal prep containers do I need?', a: 'For one-person meal prep: 5 × 1-litre rectangular containers for lunches and dinners, 5 × 400ml jars for overnight oats and yogurt bowls, and 3 × 600ml containers for snacks. This covers all meal prep storage needs. Rectangular containers stack far more efficiently in the fridge than round ones.' },
       { q: 'Where can I buy cheap meal prep containers in the UK?', a: 'Amazon is the best value for glass containers — sets of 5 × 1-litre glass containers cost £15–25 from reputable sellers. Ikea 365+ glass containers are popular and available in store. Tesco sells own-brand plastic containers in a 5-pack for £6–8. Wilko and Home Bargains often have good deals on both plastic and basic glass options.' },
+    ],
+    faq: [
+      { q: 'Are glass or plastic meal prep containers better?', a: 'Glass is better for frequent reheating, stain resistance and long-term use. Plastic is better for low cost, lighter commuting and bulk freezer portions. Many people start with plastic and upgrade their main lunch containers to glass later.' },
+      { q: 'What size meal prep containers do I need?', a: 'For one-person meal prep, start with five rectangular lunch containers around 900ml to 1 litre, plus a few smaller tubs for sauces, snacks and overnight oats. Rectangular containers stack more efficiently than round tubs for complete meals.' },
+      { q: 'Where can I buy cheap meal prep containers in the UK?', a: 'Compare Amazon UK, supermarkets, homeware stores and discount stores. Check the exact capacity, lid design, recent reviews and whether the item is marked microwave, freezer and dishwasher safe before buying.' },
     ],
   },
 };

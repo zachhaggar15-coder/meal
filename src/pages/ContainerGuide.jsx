@@ -98,7 +98,7 @@ export default function ContainerGuide() {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk' },
-        { '@type': 'ListItem', position: 2, name: 'Meal Prep Containers', item: 'https://www.mealprep.org.uk/blog/meal-prep-containers-uk' },
+        { '@type': 'ListItem', position: 2, name: 'Meal Prep Containers', item: 'https://www.mealprep.org.uk/meal-prep-containers' },
         { '@type': 'ListItem', position: 3, name: guide.h1, item: `https://www.mealprep.org.uk${canonical}` },
       ],
     },
@@ -127,7 +127,7 @@ export default function ContainerGuide() {
       <div className="page content-page container-guide-page">
         <nav className="breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
-          <Link to="/blog/meal-prep-containers-uk">Meal Prep Containers</Link>{' '}
+          <Link to="/meal-prep-containers">Meal Prep Containers</Link>{' '}
           <span aria-hidden>&rsaquo;</span> <span>{guideLabel(guide.slug)}</span>
         </nav>
 
@@ -328,7 +328,8 @@ export default function ContainerGuide() {
 
         <h2>Related Container Guides</h2>
         <ul className="plan-links">
-          <li><Link to="/blog/best-meal-prep-containers-uk">Best meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers">Best meal prep containers UK</Link></li>
+          <li><Link to="/blog/best-meal-prep-containers-uk">Detailed container buying guide</Link></li>
           <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
           <li><Link to="/blog/leakproof-meal-prep-containers-uk">Leakproof meal prep containers UK</Link></li>
           <li><Link to="/blog/meal-prep-container-size-guide">Meal prep container size guide</Link></li>

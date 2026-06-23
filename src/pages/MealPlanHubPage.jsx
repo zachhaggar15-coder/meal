@@ -242,6 +242,7 @@ export default function MealPlanHubPage() {
             </p>
           </div>
           <div className="meal-hub-container-links">
+            <Link to="/meal-prep-containers">Best containers</Link>
             <Link to="/meal-prep-containers/budget">Budget containers</Link>
             <Link to="/meal-prep-containers/mid-range">Mid-range containers</Link>
             <Link to="/meal-prep-containers/premium">Premium containers</Link>

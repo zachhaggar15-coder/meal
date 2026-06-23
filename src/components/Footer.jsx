@@ -7,7 +7,8 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Generator</h4>
           <ul>
-            <li><Link to="/">Free Meal Plan Generator</Link></li>
+            <li><Link to="/">Generate a Weekly UK Meal Plan</Link></li>
+            <li><Link to="/quiz">Meal Plan Quiz</Link></li>
             <li><Link to="/browse">Browse All Meal Plans</Link></li>
             <li><Link to="/blog">Meal Prep Blog</Link></li>
             <li><Link to="/about">About &amp; Editorial Notes</Link></li>
@@ -39,6 +40,7 @@ export default function Footer() {
             <li><Link to="/meal-plans/low-calorie-shopping-list">Low Calorie Shopping List</Link></li>
             <li><Link to="/meal-plans/high-protein-shopping-list">High Protein Shopping List</Link></li>
             <li><Link to="/meal-plans/budget-shopping-list">Budget Shopping List</Link></li>
+            <li><Link to="/meal-prep-containers">Best Meal Prep Containers</Link></li>
             <li><Link to="/meal-prep-containers/budget">Budget Meal Prep Containers</Link></li>
             <li><Link to="/meal-prep-containers/mid-range">Glass Meal Prep Containers</Link></li>
             <li><Link to="/meal-prep-containers/premium">Premium Meal Prep Containers</Link></li>
@@ -50,6 +52,8 @@ export default function Footer() {
           <ul>
             <li><Link to="/blog/how-to-build-a-calorie-deficit">Calorie Deficit Guide</Link></li>
             <li><Link to="/blog/best-low-calorie-foods-uk">Best Low Calorie Foods UK</Link></li>
+            <li><Link to="/blog/best-cheap-high-protein-foods-uk">Cheap Protein UK</Link></li>
+            <li><Link to="/blog/protein-porridge-and-yogurt-breakfasts-uk">Protein Porridge UK</Link></li>
             <li><Link to="/blog/high-protein-low-calorie-meals">High Protein Meals</Link></li>
             <li><Link to="/blog/tesco-low-calorie-shopping-list">Tesco Shopping List</Link></li>
             <li><Link to="/blog/how-to-meal-plan-for-weight-loss">How to Meal Plan</Link></li>

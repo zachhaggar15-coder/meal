@@ -202,6 +202,7 @@ export default function Stickers() {
 
         <h2>Related Meal Plans</h2>
         <ul className="plan-links">
+          <li><Link to="/meal-prep-containers">Best Meal Prep Containers UK</Link></li>
           <li><Link to="/meal-prep-containers/budget">Budget Meal Prep Containers UK</Link></li>
           <li><Link to="/meal-prep-containers/mid-range">Mid Range Meal Prep Containers UK</Link></li>
           <li><Link to="/meal-prep-containers/premium">Premium Meal Prep Containers UK</Link></li>

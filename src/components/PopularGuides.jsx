@@ -30,6 +30,12 @@ function buildGuides(slug, post) {
   if (isContainer) {
     return [
       {
+        to: '/meal-prep-containers',
+        title: 'Best containers',
+        description: 'Start with the full comparison hub for glass, plastic and leakproof picks.',
+        event: 'popular_guide_container_click',
+      },
+      {
         to: '/meal-prep-containers/budget',
         title: 'Budget containers',
         description: 'Cheap meal prep boxes and tubs for starting out.',
@@ -39,12 +45,6 @@ function buildGuides(slug, post) {
         to: '/meal-prep-containers/mid-range',
         title: 'Glass containers',
         description: 'Mid-range glass picks for reheating and work lunches.',
-        event: 'popular_guide_container_click',
-      },
-      {
-        to: '/meal-prep-containers/premium',
-        title: 'Premium containers',
-        description: 'Long-term sets with stronger lids and better storage.',
         event: 'popular_guide_container_click',
       },
       base[0],
@@ -67,7 +67,7 @@ function buildGuides(slug, post) {
         event: 'popular_guide_hub_click',
       },
       {
-        to: '/meal-prep-containers/mid-range',
+        to: '/meal-prep-containers',
         title: 'Container guide',
         description: 'Compare work-lunch boxes, tubs, and glass containers.',
         event: 'popular_guide_container_click',
@@ -86,12 +86,12 @@ function buildGuides(slug, post) {
       },
       {
         to: '/meal-plans/weight-loss',
-        title: 'Weight loss plans',
-        description: 'Browse structured plans by goal, supermarket, and diet type.',
+        title: 'Lose weight meal plan',
+        description: 'Browse UK plans by calories, supermarket and diet type.',
         event: 'popular_guide_hub_click',
       },
       {
-        to: '/meal-prep-containers/mid-range',
+        to: '/meal-prep-containers',
         title: 'Prep containers',
         description: 'Make batch cooking easier with boxes that fit real portions.',
         event: 'popular_guide_container_click',
@@ -108,12 +108,17 @@ function buildGuides(slug, post) {
         description: 'Protein-led plans for fat loss, gym beginners, and muscle gain.',
         event: 'popular_guide_hub_click',
       },
-      base[1],
       {
-        to: '/meal-prep-containers/mid-range',
-        title: 'Prep containers',
-        description: 'Compare containers for work lunches and batch cooking.',
-        event: 'popular_guide_container_click',
+        to: '/blog/best-cheap-high-protein-foods-uk',
+        title: 'Cheap protein UK',
+        description: 'Budget supermarket protein staples for meal prep.',
+        event: 'popular_guide_blog_click',
+      },
+      {
+        to: '/blog/protein-porridge-and-yogurt-breakfasts-uk',
+        title: 'Protein porridge UK',
+        description: 'High-protein oats and yogurt breakfasts for busy weeks.',
+        event: 'popular_guide_blog_click',
       },
     ];
   }
@@ -128,7 +133,7 @@ function buildGuides(slug, post) {
       event: 'popular_guide_hub_click',
     },
     {
-      to: '/meal-prep-containers/mid-range',
+      to: '/meal-prep-containers',
       title: 'Container guide',
       description: 'Compare meal prep boxes, tubs, and glass containers.',
       event: 'popular_guide_container_click',

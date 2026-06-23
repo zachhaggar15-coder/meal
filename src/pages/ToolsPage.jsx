@@ -206,7 +206,7 @@ export default function ToolsPage() {
                 containerResult >= 14 ? 'A larger divided set or glass bundle is likely to be easier.' : 'A compact plastic or glass set should cover this prep style.',
               ]}
             />
-            <Link className="btn-primary" to={containerResult >= 14 ? '/meal-prep-containers/premium' : '/meal-prep-containers/mid-range'}>
+            <Link className="btn-primary" to="/meal-prep-containers">
               Compare containers
             </Link>
           </section>

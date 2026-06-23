@@ -194,6 +194,7 @@ const ROUTES = uniqueRoutes([
   '/quiz/results',
   '/browse',
   '/stickers',
+  '/meal-prep-containers',
   '/blog',
   '/tools',
   '/about',
@@ -271,6 +272,7 @@ async function prerender() {
     if (route === '/quiz') return ['0.9', 'monthly'];
     if (route === '/tools') return ['0.8', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
+    if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];
     if (route.startsWith('/meal-plan/')) return ['0.7', 'monthly'];

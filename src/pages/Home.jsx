@@ -20,7 +20,7 @@ const homeJsonLd = [
     '@type': 'WebSite',
     name: 'MealPrep.org.uk - Free UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk',
-    description: `Use a free UK meal plan generator, browse ${PLAN_COUNT} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
+    description: `Generate a weekly UK meal plan using supermarket ingredients, browse ${PLAN_COUNT} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -48,6 +48,14 @@ const homeJsonLd = [
         acceptedAnswer: {
           '@type': 'Answer',
           text: `Yes. All ${PLAN_COUNT} meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I generate a weekly meal plan using ingredients from UK supermarkets?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: "Yes. Choose a goal, calorie target and supermarket, then use the quiz or generator to build a 7-day plan with ingredients from Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland or generic UK supermarket staples.",
         },
       },
       {
@@ -248,8 +256,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title={`Free UK Meal Plan Generator - ${PLAN_COUNT} Diet Plans + Shopping Lists | MealPrep.org.uk`}
-        description="Build free online diet plans for UK supermarkets, including 1500 calorie, high protein and low calorie meal plans with printable PDFs and shopping lists."
+        title={`Generate a Weekly UK Meal Plan - ${PLAN_COUNT} Plans + Shopping Lists | MealPrep.org.uk`}
+        description="Generate a weekly meal plan using UK supermarket ingredients, with Aldi, Tesco, Lidl, Asda and Sainsbury's options, calories, PDFs and shopping lists."
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -260,10 +268,10 @@ export default function Home() {
         <header className="home-hero">
           <SiteLogo variant="hero" className="home-hero-logo" />
           <h1 className="home-hero-h1">
-            Find your perfect UK meal plan in 30 seconds
+            Generate a weekly UK meal plan from supermarket ingredients
           </h1>
           <p className="home-hero-sub">
-            Answer a few questions about your goal, budget, supermarket, and diet. We'll match you with ready-made UK meal plans using realistic supermarket ingredients.
+            Answer a few questions about your goal, budget, supermarket, and diet. We'll match you with ready-made 7-day meal plans using ingredients you can buy from UK supermarkets.
           </p>
           <div className="home-hero-actions">
             <Link to="/quiz" className="btn-hero-primary">
@@ -356,6 +364,10 @@ export default function Home() {
               {
                 q: 'Can I edit a plan I don\'t fully like?',
                 a: 'Yes. Every plan page has an AI edit tool. Type instructions like "make this meal vegetarian", "remove tuna", "make it cheaper", or "increase the protein" — the plan updates in place and the shopping list changes too.',
+              },
+              {
+                q: 'Can I generate a weekly meal plan using ingredients from UK supermarkets?',
+                a: "Yes. Use the quiz for ready-made 7-day plans or the AI generator for a custom week. Plans can be matched to Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, or generic UK supermarket ingredients.",
               },
               {
                 q: 'Which supermarkets do the plans cover?',

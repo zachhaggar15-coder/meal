@@ -17,7 +17,7 @@ const NAV = [
     label: 'Meal Plan Hubs',
     items: [
       { to: '/meal-plans/free-online-diet-plans-uk', label: 'Free Online Diet Plans' },
-      { to: '/meal-plans/weight-loss',                 label: 'Weight Loss Plans' },
+      { to: '/meal-plans/weight-loss',                 label: 'Lose Weight Meal Plan UK' },
       { to: '/meal-plans/1200-calorie',                label: '1200 Calorie Plans' },
       { to: '/meal-plans/1400-calorie',                label: '1400 Calorie Plans' },
       { to: '/meal-plans/1500-calorie',                label: '1500 Calorie Plans' },
@@ -72,6 +72,7 @@ const NAV = [
   {
     label: 'Container Guides',
     items: [
+      { to: '/meal-prep-containers',                    label: 'Best Meal Prep Containers' },
       { to: '/meal-prep-containers/budget',             label: 'Budget Containers' },
       { to: '/meal-prep-containers/mid-range',          label: 'Mid Range Containers' },
       { to: '/meal-prep-containers/premium',            label: 'Premium Containers' },
@@ -88,6 +89,7 @@ const NAV = [
       { to: '/blog/what-does-1500-calories-look-like-uk',    label: 'What 1500 Calories Looks Like' },
       { to: '/blog/how-to-lose-belly-fat-uk',                label: 'How to Lose Belly Fat' },
       { to: '/blog/high-protein-breakfast-uk',               label: 'High Protein Breakfast' },
+      { to: '/blog/protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge UK' },
       { to: '/blog/high-protein-low-calorie-meals',          label: 'High Protein Meals' },
       { to: '/blog/high-protein-snacks-uk',                  label: 'High Protein Snacks' },
       { to: '/blog/best-low-calorie-ready-meals-uk',         label: 'Low Calorie Ready Meals' },
@@ -102,7 +104,8 @@ const NAV = [
       { to: '/blog/intermittent-fasting-meal-plan-uk',       label: 'Intermittent Fasting' },
       { to: '/blog/meal-prep-for-beginners-uk',              label: 'Meal Prep for Beginners' },
       { to: '/blog/batch-cooking-for-beginners-uk',          label: 'Batch Cooking Guide' },
-      { to: '/blog/best-cheap-high-protein-foods-uk',        label: 'Cheap High Protein Foods' },
+      { to: '/blog/best-cheap-high-protein-foods-uk',        label: 'Cheap Protein UK' },
+      { to: '/blog/cheap-protein-sources-uk-supermarkets',   label: 'Cheap Protein Sources' },
       { to: '/blog/vegan-meal-prep-uk',                      label: 'Vegan Meal Prep' },
       { to: '/blog/vegetarian-meal-prep-uk',                 label: 'Vegetarian Meal Prep' },
       { to: '/blog/aldi-vs-tesco-meal-prep',                 label: 'Aldi vs Tesco' },
@@ -161,7 +164,7 @@ export default function Sidebar({ open, onClose }) {
           </Link>
 
           <Link
-            to="/meal-prep-containers/mid-range"
+            to="/meal-prep-containers"
             className={`sidebar-top-link${location.pathname.startsWith('/meal-prep-containers') ? ' sidebar-link--active' : ''}`}
             onClick={onClose}
           >

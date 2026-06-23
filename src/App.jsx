@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import ClickTracking from './components/ClickTracking.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -8,6 +8,7 @@ import Home from './pages/Home.jsx';
 import MealPlanPage from './pages/MealPlanPage.jsx';
 import Blog from './pages/Blog.jsx';
 import BlogPost from './pages/BlogPost.jsx';
+import ContainerHub from './pages/ContainerHub.jsx';
 import ContainerGuide from './pages/ContainerGuide.jsx';
 import Stickers from './pages/Stickers.jsx';
 import Quiz from './pages/Quiz.jsx';
@@ -73,7 +74,7 @@ export default function App() {
             <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/meal-prep-containers" element={<Navigate to="/meal-prep-containers/mid-range" replace />} />
+            <Route path="/meal-prep-containers" element={<ContainerHub />} />
             <Route path="/meal-prep-containers/:tier" element={<ContainerGuide />} />
             <Route path="/stickers" element={<Stickers />} />
             <Route path="*" element={<NotFound />} />

@@ -15,11 +15,12 @@ const GUIDE_LINKS = {
   lowCalorieFoods: { label: 'Low calorie foods UK', to: '/blog/best-low-calorie-foods-uk' },
   lowCalorieReadyMeals: { label: 'Low calorie ready meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },
   highProteinSnacks: { label: 'High protein snacks UK', to: '/blog/high-protein-snacks-uk' },
-  cheapProtein: { label: 'Cheap high protein foods UK', to: '/blog/best-cheap-high-protein-foods-uk' },
+  cheapProtein: { label: 'Cheap protein UK', to: '/blog/best-cheap-high-protein-foods-uk' },
+  proteinPorridge: { label: 'Protein porridge UK', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
   mealPrepBeginners: { label: 'Meal prep for beginners UK', to: '/blog/meal-prep-for-beginners-uk' },
   shoppingList: { label: 'Meal plans with shopping lists', to: '/meal-plans/meal-plans-with-shopping-list' },
   printable: { label: 'Printable meal plan PDFs', to: '/meal-plans/printable-meal-plans' },
-  containers: { label: 'Best meal prep containers UK', to: '/blog/best-meal-prep-containers-uk' },
+  containers: { label: 'Best meal prep containers UK', to: '/meal-prep-containers' },
 };
 
 function createCalorieHub({
@@ -749,25 +750,48 @@ export const MEAL_PLAN_HUBS = {
   'weight-loss': {
     slug: 'weight-loss',
     path: '/meal-plans/weight-loss',
-    title: 'Weight Loss Meal Plans UK - Free 7-Day Plans + Shopping Lists',
+    title: 'Lose Weight Meal Plan UK - Free 7-Day Plans + Shopping Lists',
     description:
-      'Browse free UK weight loss meal plans by supermarket, calories and diet, with printable PDFs, macros, recipes and weekly shopping lists.',
-    h1: 'Weight Loss Meal Plans UK',
+      'Browse free UK lose weight meal plans by supermarket, calories and diet, with printable PDFs, macros, recipes and weekly shopping lists.',
+    h1: 'Lose Weight Meal Plan UK',
     kicker: 'Fat loss plan hub',
     intro:
-      'The best weight loss meal plan is not the most extreme one. It is the one you can shop for, cook and repeat. These UK plans focus on calorie control, protein, fibre and realistic meals.',
+      'A good lose weight meal plan is not the most extreme one. It is the one you can shop for, cook and repeat. These UK plans focus on calorie control, protein, fibre and realistic supermarket meals.',
     match: { goals: ['weight-loss', 'budget-fat-loss', 'high-protein-low-cal', 'vegetarian-low-cal', 'vegan-low-cal', 'cutting'] },
     stats: ['Calorie-controlled plans', 'Supermarket filters', 'Free PDF export'],
+    reviewed: '23 June 2026',
+    sources: COMMON_NUTRITION_SOURCES,
     sections: [
       {
-        h2: 'Choosing a weight loss plan',
+        h2: 'Quick answer: which UK meal plan helps you lose weight?',
         paragraphs: [
-          'Start with your calorie target, then choose a supermarket and diet type. If you are unsure, a 1500 or 1800 calorie weight loss plan is often easier to compare than a highly specialised plan.',
-          'High-protein and high-fibre versions are useful when hunger is the main barrier. Budget versions help when the weekly shop needs to stay predictable.',
+          'The best lose weight meal plan UK shoppers can start with is usually a 1500, 1600 or 1800 calorie plan that includes protein at every meal, filling carbs, fruit, vegetables and a shopping list for the supermarket you actually use.',
+          'Pick the lowest calorie target you can repeat without constant hunger. High-protein and high-fibre versions are useful when appetite is the main barrier, while budget versions help when the weekly shop needs to stay predictable.',
+        ],
+        table: {
+          headers: ['Need', 'Best starting point', 'Why it works'],
+          rows: [
+            ['Simple fat loss', '1500 or 1800 calorie plans', 'Clear portions and familiar UK meals'],
+            ['Hunger control', 'High-protein low-calorie plans', 'More protein, fibre and volume'],
+            ['Lower weekly shop', 'Budget fat loss plans', 'Repeats cheap staples and avoids niche products'],
+            ['Named supermarket', 'Aldi, Tesco, Lidl or Asda plans', 'Uses the store you already shop in'],
+          ],
+        },
+      },
+      {
+        h2: 'How to choose a lose weight meal plan',
+        paragraphs: [
+          'Start with your calorie target, then choose a supermarket and diet type. If you are unsure, compare a 1500 calorie plan with an 1800 calorie plan before choosing a more specialised option.',
+          'Use the shopping list before you start the week. A plan is much easier to follow when the protein, breakfast staples, lunch ingredients and snacks are already in the kitchen.',
         ],
       },
     ],
+    supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.cheapProtein, GUIDE_LINKS.proteinPorridge, GUIDE_LINKS.shoppingList],
     faq: [
+      {
+        q: 'What is the best lose weight meal plan UK?',
+        a: 'For many people, the best starting point is a 1500, 1600 or 1800 calorie plan with protein at every meal, high-fibre foods, realistic portions and a supermarket shopping list.',
+      },
       {
         q: 'Which weight loss meal plan should I start with?',
         a: 'Start with a supermarket you already use and a calorie target you can follow consistently. Then adjust with the AI meal edit tool if a meal does not suit you.',

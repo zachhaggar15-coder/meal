@@ -17,6 +17,13 @@ const planFinderLinks = [
 const containerLinks = [
   {
     parts: [
+      { text: 'Start with the ' },
+      { label: 'best meal prep containers hub', to: '/meal-prep-containers' },
+      { text: ' for the quick comparison, then use the detailed guides below.' },
+    ],
+  },
+  {
+    parts: [
       { text: 'For product comparisons, see the ' },
       { label: 'budget container guide', to: '/meal-prep-containers/budget' },
       { text: ', ' },
@@ -29,6 +36,7 @@ const containerLinks = [
 ];
 
 const guideRelated = [
+  { slug: 'best-meal-prep-containers-hub', path: '/meal-prep-containers', label: 'Best Meal Prep Containers UK', type: 'guide' },
   { slug: 'budget-meal-prep-containers-guide', path: '/meal-prep-containers/budget', label: 'Budget Meal Prep Containers', type: 'guide' },
   { slug: 'mid-range-meal-prep-containers-guide', path: '/meal-prep-containers/mid-range', label: 'Mid Range Meal Prep Containers', type: 'guide' },
   { slug: 'premium-meal-prep-containers-guide', path: '/meal-prep-containers/premium', label: 'Premium Meal Prep Containers', type: 'guide' },
@@ -739,11 +747,40 @@ export const expandedBlogPostsData = {
   }),
 
   'cheap-protein-sources-uk-supermarkets': post({
-    title: 'Cheap Protein Sources UK Supermarkets',
-    description: 'The cheapest protein sources in UK supermarkets, including eggs, tuna, chicken, lentils, yogurt, cottage cheese, tofu and frozen fish.',
+    modified: '2026-06-23',
+    title: 'Cheap Protein UK: Supermarket Protein Sources Ranked',
+    description: 'Cheap protein UK guide with eggs, tuna, chicken, lentils, Greek yogurt, cottage cheese, tofu and frozen fish for budget meal prep.',
     h1: 'Cheap Protein Sources in UK Supermarkets',
-    intro: 'Protein does not have to mean expensive powders, branded snacks, or steak. The best value options in UK supermarkets are usually simple staples that have been around forever.',
+    intro: 'Cheap protein does not have to mean expensive powders, branded snacks, or steak. The best value options in UK supermarkets are usually simple staples that are easy to repeat in breakfasts, lunches and batch-cooked dinners.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For a full budget protein ranking, use the ' },
+          { label: 'cheap protein UK guide', to: '/blog/best-cheap-high-protein-foods-uk' },
+          { text: ', then turn the basket into a week with the ' },
+          { label: 'high protein meal plan hub', to: '/meal-plans/high-protein' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
+      {
+        h2: 'Quick answer: what is cheap protein in the UK?',
+        paragraphs: [
+          'Cheap protein in UK supermarkets usually means ordinary staples with a strong protein return for the price: eggs, tinned tuna, sardines, Greek yogurt, cottage cheese, lentils, beans, tofu, frozen fish, chicken thighs and larger chicken packs.',
+          'The best basket mixes fridge, freezer and cupboard options so you are not relying on one food all week.',
+        ],
+        table: {
+          headers: ['Protein source', 'Best use', 'Why it helps'],
+          rows: [
+            ['Eggs', 'Breakfasts, wraps, snacks', 'Cheap, flexible and quick'],
+            ['Tinned fish', 'Jackets, pasta, salads', 'High protein with no cooking'],
+            ['Greek yogurt or skyr', 'Porridge, bowls, sauces', 'Breakfast and snack protein'],
+            ['Lentils and beans', 'Chilli, dhal, soup', 'Adds fibre as well as protein'],
+            ['Chicken or tofu', 'Meal prep boxes', 'Easy lunch and dinner anchor'],
+          ],
+        },
+      },
       {
         h2: 'Best value animal proteins',
         paragraphs: [
@@ -788,11 +825,39 @@ export const expandedBlogPostsData = {
   }),
 
   'protein-porridge-and-yogurt-breakfasts-uk': post({
-    title: 'Protein Porridge and Yogurt Breakfasts UK',
-    description: 'Easy high-protein breakfast ideas with oats, Greek yogurt, berries, cottage cheese and supermarket ingredients for UK meal prep.',
-    h1: 'Protein Porridge and Yogurt Breakfasts UK',
-    intro: 'Breakfast is the easiest meal to repeat, which makes it valuable for weight loss and muscle gain. Protein porridge and yogurt bowls are cheap, quick, and much more reliable than grabbing a pastry on the way out.',
+    modified: '2026-06-23',
+    title: 'Protein Porridge UK: High-Protein Oats and Yogurt Breakfasts',
+    description: 'Protein porridge UK guide with oats, Greek yogurt, skyr, cottage cheese, berries and supermarket ingredients for cheap high-protein breakfasts.',
+    h1: 'Protein Porridge UK',
+    intro: 'Protein porridge is one of the easiest breakfasts to repeat because oats are cheap, filling and available everywhere. Add Greek yogurt, skyr, milk, cottage cheese or protein powder and it becomes a useful high-protein breakfast for weight loss, muscle gain or simple weekday meal prep.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For a full breakfast basket, compare ' },
+          { label: 'cheap protein UK staples', to: '/blog/best-cheap-high-protein-foods-uk' },
+          { text: ' and the ' },
+          { label: 'high protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
+      {
+        h2: 'Quick answer: how do you make protein porridge?',
+        paragraphs: [
+          'Make protein porridge by cooking oats with milk or water, then adding a protein source such as Greek yogurt, skyr, cottage cheese blended smooth, milk powder or protein powder. Finish with berries, banana, cinnamon or a small amount of nut butter.',
+          'For most UK shoppers, the cheapest powder-free version is oats plus milk, Greek yogurt or skyr and frozen berries.',
+        ],
+        table: {
+          headers: ['Version', 'Protein boost', 'Best for'],
+          rows: [
+            ['Greek yogurt oats', 'Stir yogurt in after cooking', 'Creamy breakfast meal prep'],
+            ['Skyr porridge', 'Top warm oats with skyr', 'Higher protein with little prep'],
+            ['Cottage cheese oats', 'Blend cottage cheese before adding', 'Cheap, mild and filling'],
+            ['Protein powder oats', 'Stir powder in off the heat', 'Fastest high-protein option'],
+          ],
+        },
+      },
       {
         h2: 'Protein porridge basics',
         paragraphs: [

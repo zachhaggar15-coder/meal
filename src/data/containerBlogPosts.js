@@ -3,6 +3,13 @@ import { AFFILIATE_DISCLOSURE } from './containerProducts.js';
 const containerLinks = [
   {
     parts: [
+      { text: 'Start with the ' },
+      { label: 'best meal prep containers hub', to: '/meal-prep-containers' },
+      { text: ' for the quick comparison, then use the detailed buying guides below.' },
+    ],
+  },
+  {
+    parts: [
       { text: 'Compare the dedicated buying guides for ' },
       { label: 'budget meal prep containers', to: '/meal-prep-containers/budget' },
       { text: ', ' },
@@ -15,6 +22,7 @@ const containerLinks = [
 ];
 
 const guideRelated = [
+  { slug: 'best-meal-prep-containers-hub', path: '/meal-prep-containers', label: 'Best Meal Prep Containers UK', type: 'guide' },
   { slug: 'budget-meal-prep-containers-guide', path: '/meal-prep-containers/budget', label: 'Budget Meal Prep Containers', type: 'guide' },
   { slug: 'mid-range-meal-prep-containers-guide', path: '/meal-prep-containers/mid-range', label: 'Mid Range Meal Prep Containers', type: 'guide' },
   { slug: 'premium-meal-prep-containers-guide', path: '/meal-prep-containers/premium', label: 'Premium Meal Prep Containers', type: 'guide' },
@@ -23,10 +31,10 @@ const guideRelated = [
 export const containerBlogPostsData = {
   'best-meal-prep-containers-uk': {
     published: '2026-06-16',
-    modified: '2026-06-17',
-    title: 'Best Meal Prep Containers UK: Glass, Plastic & Leakproof Picks',
-    description: 'Best meal prep containers UK: compare glass boxes, plastic tubs, leakproof lunch containers, budget meal prep boxes and premium Amazon UK picks.',
-    h1: 'Best Meal Prep Containers UK: Glass, Plastic & Leakproof Picks',
+    modified: '2026-06-23',
+    title: 'Best Meal Prep Containers UK 2026: Glass, Plastic & Leakproof Picks',
+    description: 'Best meal prep containers UK 2026: compare glass boxes, plastic tubs, leakproof lunch containers, budget meal prep boxes and Amazon UK picks.',
+    h1: 'Best Meal Prep Containers UK 2026: Glass, Plastic & Leakproof Picks',
     intro:
       'The best meal prep containers are the ones that make Sunday cooking easier and weekday eating calmer. For most UK meal preppers, that means enough containers for five lunches, lids that do not leak in a work bag, bases that survive repeated washing, and sizes that fit proper portions.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
