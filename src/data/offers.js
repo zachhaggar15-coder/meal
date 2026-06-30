@@ -15,12 +15,12 @@ export const MEAL_PREP_STICKERS = {
 };
 
 export const BUDGET_CONTAINERS = {
-  name: 'Compartment Meal Prep Containers',
+  name: 'Vinsani 3 Compartment Meal Prep Containers',
   shortName: 'Budget containers',
-  href: 'https://www.amazon.co.uk/Pack-Meal-Containers-Compartment-Reusable/dp/B09KNNZ9FC?pd_rd_i=B09KNNZ9FC&pd_rd_w=nOFeZ&content-id=amzn1.sym.5f2ca5dd-2d4f-430d-beef-f2cfe15e1815&pf_rd_p=5f2ca5dd-2d4f-430d-beef-f2cfe15e1815&pf_rd_r=C7914TB2Y9XYMNHHTCHN&pd_rd_wg=CqfRu&pd_rd_r=d22db63d-2aa5-4bc9-b54f-a6019d839c5c&th=1&linkCode=ll2&tag=amazonaff01d8-21&linkId=f3899ce6943833c498ce2811e76595ef&ref_=as_li_ss_tl',
+  href: 'https://www.amazon.co.uk/Vinsani-Compartment-Containers-Reusable-Stackable/dp/B0DN32KNK3?tag=amazonaff01d8-21&linkCode=ll2',
   internalPath: '/stickers',
   image: '/budget-containers-ad.jpg',
-  imageAlt: 'Reusable compartment meal prep containers',
+  imageAlt: 'Vinsani reusable compartment meal prep containers',
   headline: 'Budget meal prep containers with compartments',
   body: 'Reusable divided containers that keep your protein, carbs, and veg separate — lightweight, leak-resistant, and easy to carry to work or the gym.',
   proofPoints: ['Divided compartments', 'Leak-resistant', 'Reusable'],
