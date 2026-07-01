@@ -1,5 +1,12 @@
 import { MEALS } from '../src/data/mealLibrary.js';
-import { PLAN_SEEDS } from '../src/data/planSeeds.js';
+import {
+  COVERAGE_FILTER_VALUES,
+  COVERAGE_GOAL_PROFILES,
+  COVERAGE_PLAN_SEEDS,
+  INDEXABLE_PLAN_SEEDS,
+  PLAN_SEEDS,
+  isCoverageCombinationFeasible,
+} from '../src/data/planSeeds.js';
 import {
   COMBO_LANDING_PAGES,
   filterPlansForCombo,
@@ -8,9 +15,15 @@ import { buildPlan, getAllPlanMeta } from '../src/utils/planBuilder.js';
 
 const sourceByName = new Map(MEALS.map(meal => [meal.name, meal]));
 const seedSlugs = new Set(PLAN_SEEDS.map(seed => seed.slug));
+const planFilterKeys = new Set(PLAN_SEEDS.map(planFilterKey));
 const errors = [];
 
-for (const seed of PLAN_SEEDS) {
+if (seedSlugs.size !== PLAN_SEEDS.length) {
+  errors.push(`duplicate plan slugs detected: ${PLAN_SEEDS.length - seedSlugs.size} duplicate(s)`);
+}
+
+const detailCheckSeeds = getDetailCheckSeeds();
+for (const seed of detailCheckSeeds) {
   const plan = buildPlan(seed);
 
   if (!Array.isArray(plan.plan) || plan.plan.length !== 7) {
@@ -77,6 +90,8 @@ for (const seed of PLAN_SEEDS) {
   }
 }
 
+const feasibleCoverageCombos = validateCoverageCombos();
+
 const allPlanMeta = getAllPlanMeta();
 for (const [slug, comboPage] of Object.entries(COMBO_LANDING_PAGES)) {
   const matchingPlans = filterPlansForCombo(allPlanMeta, comboPage);
@@ -114,7 +129,7 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Plan sanity check passed for ${PLAN_SEEDS.length} plans and ${Object.keys(COMBO_LANDING_PAGES).length} combo pages.`);
+console.log(`Plan sanity check passed for ${PLAN_SEEDS.length} plans, ${detailCheckSeeds.length} detail-built plans, ${feasibleCoverageCombos} feasible filter combinations, and ${Object.keys(COMBO_LANDING_PAGES).length} combo pages.`);
 
 function uniqueMeals(days, type) {
   return [...new Set(
@@ -124,4 +139,84 @@ function uniqueMeals(days, type) {
       .map(meal => meal.name)
       .filter(Boolean),
   )];
+}
+
+function getDetailCheckSeeds() {
+  const seeds = new Map();
+  for (const seed of INDEXABLE_PLAN_SEEDS) {
+    seeds.set(seed.slug, seed);
+  }
+
+  const stride = Math.max(1, Math.floor(COVERAGE_PLAN_SEEDS.length / 1500));
+  for (let i = 0; i < COVERAGE_PLAN_SEEDS.length; i += 1) {
+    const seed = COVERAGE_PLAN_SEEDS[i];
+    if (
+      i % stride === 0 ||
+      (seed.goal === 'budget-bodybuilding' && seed.supermarket === 'sainsburys' && seed.calories === 2500) ||
+      (seed.goal === 'cheap-high-protein' && seed.supermarket === 'sainsburys') ||
+      (seed.goal === 'endurance-athlete' && seed.supermarket === 'morrisons')
+    ) {
+      seeds.set(seed.slug, seed);
+    }
+  }
+
+  return [...seeds.values()];
+}
+
+function validateCoverageCombos() {
+  let checked = 0;
+
+  for (const goal of COVERAGE_FILTER_VALUES.goals) {
+    const profile = COVERAGE_GOAL_PROFILES[goal];
+    for (const supermarket of COVERAGE_FILTER_VALUES.supermarkets) {
+      for (const dietType of profile.dietTypes) {
+        for (const calories of profile.calories) {
+          for (const budget of COVERAGE_FILTER_VALUES.budgets) {
+            for (const effort of COVERAGE_FILTER_VALUES.efforts) {
+              const combo = { goal, supermarket, dietType, calories, budget, effort };
+              if (!isCoverageCombinationFeasible(combo)) continue;
+
+              checked += 1;
+              if (!planFilterKeys.has(planFilterKey(combo))) {
+                errors.push(`missing feasible plan filter combo: ${planFilterKey(combo)}`);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const impossibleCombos = [
+    { goal: 'budget-bodybuilding', supermarket: 'sainsburys', dietType: 'standard', calories: 3500, budget: 'very-cheap', effort: 'batch' },
+    { goal: 'muscle-gain', supermarket: 'tesco', dietType: 'standard', calories: 3500, budget: 'very-cheap', effort: 'standard' },
+    { goal: 'weight-loss', supermarket: 'aldi', dietType: 'standard', calories: 3500, budget: 'budget', effort: 'standard' },
+  ];
+
+  for (const combo of impossibleCombos) {
+    if (planFilterKeys.has(planFilterKey(combo))) {
+      errors.push(`impossible combo unexpectedly has a plan: ${planFilterKey(combo)}`);
+    }
+  }
+
+  if (!PLAN_SEEDS.some(seed => (
+    seed.goal === 'budget-bodybuilding' &&
+    seed.supermarket === 'sainsburys' &&
+    seed.calories === 2500
+  ))) {
+    errors.push("screenshot query still has no Sainsbury's 2500 kcal Budget Bodybuilding plan");
+  }
+
+  return checked;
+}
+
+function planFilterKey(seed) {
+  return [
+    seed.goal,
+    seed.supermarket,
+    seed.dietType,
+    seed.calories,
+    seed.budget,
+    seed.effort,
+  ].join('|');
 }

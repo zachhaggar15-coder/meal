@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
-import { PLAN_SEEDS } from './src/data/planSeeds.js';
+import { INDEXABLE_PLAN_SEEDS } from './src/data/planSeeds.js';
 import { blogPostsData } from './src/data/blogPosts.js';
 import { mealPlansData } from './src/data/mealPlans.js';
 import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
@@ -17,7 +17,7 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(__dirname, 'dist');
 
-// Legacy slug snapshot retained for reference. Build routes come from PLAN_SEEDS.
+// Legacy slug snapshot retained for reference. Static build routes come from INDEXABLE_PLAN_SEEDS.
 const STATIC_PLAN_SLUGS = [
   // Weight Loss (30)
   'aldi-weight-loss-1500','aldi-weight-loss-1800','aldi-weight-loss-1500-v2','aldi-weight-loss-1800-vegan',
@@ -180,7 +180,7 @@ const STATIC_PLAN_SLUGS = [
   'any-cutting-1600','tesco-cutting-pesc-1500',
 ];
 
-const PLAN_SLUGS = PLAN_SEEDS.map(seed => seed.slug);
+const PLAN_SLUGS = INDEXABLE_PLAN_SEEDS.map(seed => seed.slug);
 const LEGACY_MEAL_PLAN_SLUGS = Object.keys(mealPlansData);
 const BLOG_SLUGS = Object.keys(blogPostsData);
 

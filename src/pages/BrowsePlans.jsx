@@ -9,6 +9,7 @@ import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_COUNT = ALL_PLANS.length;
+const PLAN_INDEX_LIMIT = 80;
 
 const GOALS = [
   { value: '',                      label: 'All goals' },
@@ -96,11 +97,15 @@ const EFFORT_LABEL = {
 
 const PLAN_INDEX_GROUPS = GOALS
   .filter(g => g.value)
-  .map(g => ({
-    ...g,
-    plans: ALL_PLANS.filter(p => p.goal === g.value),
-  }))
-  .filter(g => g.plans.length > 0);
+  .map(g => {
+    const plans = ALL_PLANS.filter(p => p.goal === g.value);
+    return {
+      ...g,
+      total: plans.length,
+      plans: plans.slice(0, PLAN_INDEX_LIMIT),
+    };
+  })
+  .filter(g => g.total > 0);
 
 const HUB_INDEX_GROUPS = [
   {
@@ -157,20 +162,26 @@ export default function BrowsePlans() {
     setPage(1);
   }, [paramString]);
 
-  const filtered = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    return ALL_PLANS.filter(p => {
-      if (goal       && p.goal !== goal)                         return false;
-      if (supermarket && p.supermarket !== supermarket)          return false;
-      if (diet       && p.dietType !== diet)                     return false;
-      if (calories   && String(p.calories) !== calories)         return false;
-      if (budget     && p.budget !== budget)                     return false;
-      if (effort     && p.effort !== effort)                     return false;
-      if (q && !p.title.toLowerCase().includes(q) &&
-               !p.goalLabel.toLowerCase().includes(q))           return false;
-      return true;
-    });
-  }, [search, goal, supermarket, diet, calories, budget, effort]);
+  const filters = useMemo(() => ({
+    search,
+    goal,
+    supermarket,
+    dietType: diet,
+    calories,
+    budget,
+    effort,
+  }), [search, goal, supermarket, diet, calories, budget, effort]);
+
+  const filtered = useMemo(() => (
+    ALL_PLANS.filter(plan => planMatchesFilters(plan, filters))
+  ), [filters]);
+
+  const goalOptions = useMemo(() => withOptionCounts(GOALS, 'goal', filters), [filters]);
+  const supermarketOptions = useMemo(() => withOptionCounts(SUPERMARKETS, 'supermarket', filters), [filters]);
+  const dietOptions = useMemo(() => withOptionCounts(DIETS, 'dietType', filters), [filters]);
+  const calorieOptions = useMemo(() => withOptionCounts(CALORIES, 'calories', filters), [filters]);
+  const budgetOptions = useMemo(() => withOptionCounts(BUDGETS, 'budget', filters), [filters]);
+  const effortOptions = useMemo(() => withOptionCounts(EFFORTS, 'effort', filters), [filters]);
 
   const pageCount  = Math.ceil(filtered.length / PER_PAGE);
   const shown      = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
@@ -221,12 +232,12 @@ export default function BrowsePlans() {
           />
 
           <div className="browse-filter-row">
-            <Select label="Goal"        value={goal}        onChange={v => updateFilter(setGoal, v)}        options={GOALS} />
-            <Select label="Supermarket" value={supermarket} onChange={v => updateFilter(setSupermarket, v)} options={SUPERMARKETS} />
-            <Select label="Diet"        value={diet}        onChange={v => updateFilter(setDiet, v)}        options={DIETS} />
-            <Select label="Calories"    value={calories}    onChange={v => updateFilter(setCalories, v)}    options={CALORIES} />
-            <Select label="Budget"      value={budget}      onChange={v => updateFilter(setBudget, v)}      options={BUDGETS} />
-            <Select label="Effort"      value={effort}      onChange={v => updateFilter(setEffort, v)}      options={EFFORTS} />
+            <Select label="Goal"        value={goal}        onChange={v => updateFilter(setGoal, v)}        options={goalOptions} />
+            <Select label="Supermarket" value={supermarket} onChange={v => updateFilter(setSupermarket, v)} options={supermarketOptions} />
+            <Select label="Diet"        value={diet}        onChange={v => updateFilter(setDiet, v)}        options={dietOptions} />
+            <Select label="Calories"    value={calories}    onChange={v => updateFilter(setCalories, v)}    options={calorieOptions} />
+            <Select label="Budget"      value={budget}      onChange={v => updateFilter(setBudget, v)}      options={budgetOptions} />
+            <Select label="Effort"      value={effort}      onChange={v => updateFilter(setEffort, v)}      options={effortOptions} />
           </div>
 
           <div className="browse-filter-meta">
@@ -310,15 +321,15 @@ export default function BrowsePlans() {
 
         <section className="browse-index" aria-labelledby="browse-index-heading">
           <div className="browse-index-header">
-            <h2 id="browse-index-heading">Complete Plan Index</h2>
-            <p>Every free UK meal plan, grouped by goal.</p>
+            <h2 id="browse-index-heading">Goal Plan Index</h2>
+            <p>Featured free UK meal plans, grouped by goal.</p>
           </div>
           <div className="browse-index-grid">
             {PLAN_INDEX_GROUPS.map(group => (
               <details className="browse-index-group" key={group.value}>
                 <summary>
                   <span>{group.label}</span>
-                  <span>{group.plans.length} plans</span>
+                  <span>{group.total} plans</span>
                 </summary>
                 <ul className="browse-index-list">
                   {group.plans.map(plan => (
@@ -347,7 +358,7 @@ function Select({ label, value, onChange, options }) {
         aria-label={label}
       >
         {options.map(o => (
-          <option key={o.value} value={o.value}>{o.label}</option>
+          <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>
         ))}
       </select>
     </label>
@@ -361,4 +372,34 @@ function cap(s) {
 function readFilterParam(params, key, options) {
   const value = params.get(key) || '';
   return options.some(option => option.value === value) ? value : '';
+}
+
+function withOptionCounts(options, field, filters) {
+  return options.map(option => {
+    if (!option.value) return option;
+
+    const optionFilters = { ...filters, [field]: option.value };
+    const count = ALL_PLANS.reduce((total, plan) => (
+      planMatchesFilters(plan, optionFilters) ? total + 1 : total
+    ), 0);
+
+    return {
+      ...option,
+      label: `${option.label} (${count})`,
+      disabled: count === 0 && String(filters[field] || '') !== String(option.value),
+    };
+  });
+}
+
+function planMatchesFilters(plan, filters) {
+  if (filters.goal && plan.goal !== filters.goal) return false;
+  if (filters.supermarket && plan.supermarket !== filters.supermarket) return false;
+  if (filters.dietType && plan.dietType !== filters.dietType) return false;
+  if (filters.calories && String(plan.calories) !== String(filters.calories)) return false;
+  if (filters.budget && plan.budget !== filters.budget) return false;
+  if (filters.effort && plan.effort !== filters.effort) return false;
+
+  const q = String(filters.search || '').trim().toLowerCase();
+  if (!q) return true;
+  return plan.title.toLowerCase().includes(q) || plan.goalLabel.toLowerCase().includes(q);
 }

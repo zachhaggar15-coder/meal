@@ -656,6 +656,160 @@ const VEGAN_VARIANT_UNSUITABLE_GOALS = new Set([
   'endurance-athlete',
 ]);
 
+export const COVERAGE_FILTER_VALUES = {
+  goals: [
+    'weight-loss',
+    'budget-fat-loss',
+    'high-protein-low-cal',
+    'muscle-gain',
+    'body-recomp',
+    'gym-beginner',
+    'budget-bodybuilding',
+    'cheap-student',
+    'cheap-high-protein',
+    'low-effort',
+    'busy-professional',
+    'vegetarian-low-cal',
+    'vegan-low-cal',
+    'high-protein-vegetarian',
+    'pescatarian',
+    'maintenance',
+    'anti-inflammatory',
+    'menopause-nutrition',
+    'endurance-athlete',
+    'cutting',
+  ],
+  supermarkets: ['any', 'aldi', 'lidl', 'tesco', 'asda', 'sainsburys', 'morrisons', 'iceland'],
+  dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+  calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500, 3000, 3500],
+  budgets: ['very-cheap', 'budget', 'moderate', 'flexible'],
+  efforts: ['minimal', 'low', 'standard', 'batch', 'high-variety'],
+};
+
+export const COVERAGE_GOAL_PROFILES = {
+  'weight-loss': {
+    calories: [1400, 1500, 1600, 1800, 2000],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'low-cal-swaps',
+  },
+  'budget-fat-loss': {
+    calories: [1400, 1500, 1600, 1800, 2000],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'low-cal-swaps',
+  },
+  'high-protein-low-cal': {
+    calories: [1400, 1500, 1600, 1800, 2000],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'lean-protein',
+  },
+  'muscle-gain': {
+    calories: [2000, 2200, 2500, 3000, 3500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'lean-protein',
+  },
+  'body-recomp': {
+    calories: [1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'recomp-protein',
+  },
+  'gym-beginner': {
+    calories: [1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'lean-protein',
+  },
+  'budget-bodybuilding': {
+    calories: [2000, 2200, 2500, 3000, 3500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'lean-protein',
+  },
+  'cheap-student': {
+    calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'low-cal-swaps',
+  },
+  'cheap-high-protein': {
+    calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'lean-protein',
+  },
+  'low-effort': {
+    calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500, 3000, 3500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'minimal-effort',
+  },
+  'busy-professional': {
+    calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500, 3000],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'minimal-effort',
+  },
+  'vegetarian-low-cal': {
+    calories: [1400, 1500, 1600, 1800, 2000],
+    dietTypes: ['vegetarian'],
+    emphasis: 'whole-food',
+  },
+  'vegan-low-cal': {
+    calories: [1400, 1500, 1600, 1800, 2000],
+    dietTypes: ['vegan'],
+    emphasis: 'whole-food',
+  },
+  'high-protein-vegetarian': {
+    calories: [1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['vegetarian'],
+    emphasis: 'lean-protein',
+  },
+  pescatarian: {
+    calories: [1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['pescatarian'],
+    emphasis: 'lean-protein',
+  },
+  maintenance: {
+    calories: [1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'whole-food',
+  },
+  'anti-inflammatory': {
+    calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'whole-food',
+  },
+  'menopause-nutrition': {
+    calories: [1400, 1500, 1600, 1800, 2000, 2200],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'whole-food',
+  },
+  'endurance-athlete': {
+    calories: [2000, 2200, 2500, 3000, 3500],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'whole-food',
+  },
+  cutting: {
+    calories: [1400, 1500, 1600, 1800, 2000],
+    dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
+    emphasis: 'lean-protein',
+  },
+};
+
+const COVERAGE_PRIORITY_MARKETS_BY_GOAL = {
+  'budget-bodybuilding': ['sainsburys', 'morrisons', 'tesco', 'asda', 'aldi', 'lidl', 'iceland', 'any'],
+  'cheap-high-protein': ['sainsburys', 'morrisons', 'tesco', 'asda', 'aldi', 'lidl', 'iceland', 'any'],
+  'endurance-athlete': ['morrisons', 'iceland', 'sainsburys', 'tesco', 'asda', 'aldi', 'lidl', 'any'],
+};
+
+const COVERAGE_EFFORT_STYLES = {
+  minimal: { label: 'Minimal Prep', emphasis: 'minimal-effort' },
+  low: { label: 'Low Effort', emphasis: 'minimal-effort' },
+  standard: { label: 'Standard Prep', emphasis: null },
+  batch: { label: 'Batch Cook', emphasis: 'batch-cooking' },
+  'high-variety': { label: 'High-Variety', emphasis: 'high-variety' },
+};
+
+const COVERAGE_BUDGET_TITLE = {
+  'very-cheap': 'Very Cheap',
+  budget: 'Budget',
+  moderate: 'Moderate Budget',
+  flexible: 'Flexible Budget',
+};
+
 function buildDeepExpansionSeeds(targetCount) {
   const seeds = [];
   let wave = 0;
@@ -713,9 +867,114 @@ function buildDeepExpandedTitle(seed, style, dietType) {
   return `${market}${diet}${style.label} Weekly ${goal} Plan \u2014 ${seed.calories.toLocaleString('en-GB')} kcal`;
 }
 
+export function isCoverageCombinationFeasible({ goal, supermarket, dietType, calories, budget, effort }) {
+  const profile = COVERAGE_GOAL_PROFILES[goal];
+  if (!profile) return false;
+  if (!COVERAGE_FILTER_VALUES.supermarkets.includes(supermarket)) return false;
+  if (!profile.dietTypes.includes(dietType)) return false;
+  if (!profile.calories.includes(Number(calories))) return false;
+  if (!COVERAGE_FILTER_VALUES.efforts.includes(effort)) return false;
+  return getFeasibleBudgetsForCoverage(Number(calories), supermarket).includes(budget);
+}
+
+export function getFeasibleBudgetsForCoverage(calories, supermarket) {
+  const cals = Number(calories);
+  const lowCost = supermarket === 'any' || supermarket === 'aldi' || supermarket === 'lidl' || supermarket === 'iceland';
+  const valueStore = lowCost || supermarket === 'asda';
+  const budgets = [];
+
+  if (cals <= 1800 || (cals <= 2000 && lowCost)) {
+    budgets.push('very-cheap');
+  }
+  if (cals <= 2500 || (cals <= 3000 && valueStore) || (cals <= 3500 && lowCost)) {
+    budgets.push('budget');
+  }
+  budgets.push('moderate', 'flexible');
+
+  return budgets;
+}
+
+function buildCoverageSeeds(seedPool) {
+  const seeds = [];
+  const usedSlugs = new Set(seedPool.map(seed => seed.slug));
+  const coveredCombos = new Set(seedPool.map(buildCoverageKey));
+
+  for (const goal of COVERAGE_FILTER_VALUES.goals) {
+    const profile = COVERAGE_GOAL_PROFILES[goal];
+    const markets = COVERAGE_PRIORITY_MARKETS_BY_GOAL[goal] || COVERAGE_FILTER_VALUES.supermarkets;
+
+    for (const supermarket of markets) {
+      for (const dietType of profile.dietTypes) {
+        for (const calories of profile.calories) {
+          for (const budget of getFeasibleBudgetsForCoverage(calories, supermarket)) {
+            for (const effort of COVERAGE_FILTER_VALUES.efforts) {
+              const combo = { goal, supermarket, dietType, calories, budget, effort };
+              const comboKey = buildCoverageKey(combo);
+              if (coveredCombos.has(comboKey)) continue;
+
+              const seed = buildCoverageSeed(combo, seedPool.length + seeds.length);
+              seed.slug = uniqueCoverageSlug(seed.slug, usedSlugs);
+              usedSlugs.add(seed.slug);
+              coveredCombos.add(comboKey);
+              seeds.push(seed);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return seeds;
+}
+
+function buildCoverageSeed(combo, index) {
+  const style = COVERAGE_EFFORT_STYLES[combo.effort] || COVERAGE_EFFORT_STYLES.standard;
+  const profile = COVERAGE_GOAL_PROFILES[combo.goal] || {};
+  const emphasis = style.emphasis || profile.emphasis || 'lean-protein';
+
+  return {
+    ...combo,
+    slug: buildCoverageSlug(combo),
+    mealSetIndex: 1000 + index,
+    title: buildCoverageTitle(combo, style),
+    emphasis,
+  };
+}
+
+function buildCoverageSlug({ goal, supermarket, dietType, calories, budget, effort }) {
+  const market = supermarket === 'any' ? 'uk' : supermarket;
+  const diet = dietType === 'standard' ? '' : `${dietType}-`;
+  return `${market}-${diet}${goal}-${calories}-${budget}-${effort}`;
+}
+
+function uniqueCoverageSlug(slug, usedSlugs) {
+  if (!usedSlugs.has(slug)) return slug;
+  let suffix = 2;
+  while (usedSlugs.has(`${slug}-${suffix}`)) suffix += 1;
+  return `${slug}-${suffix}`;
+}
+
+function buildCoverageTitle(combo, style) {
+  const market = combo.supermarket === 'any' ? 'UK' : MARKET_TITLES[combo.supermarket];
+  const diet = combo.dietType !== 'standard' && !GOALS_WITH_DIET_IN_TITLE.has(combo.goal)
+    ? `${DIET_TITLES[combo.dietType]} `
+    : '';
+  const budget = COVERAGE_BUDGET_TITLE[combo.budget] || combo.budget;
+  const goal = GOAL_TITLES[combo.goal] || combo.goal;
+  const calories = Number(combo.calories).toLocaleString('en-GB');
+  return `${market} ${diet}${budget} ${style.label} ${goal} Plan - ${calories} kcal`;
+}
+
+function buildCoverageKey({ goal, supermarket, dietType, calories, budget, effort }) {
+  return `${goal}|${supermarket}|${dietType}|${calories}|${budget}|${effort}`;
+}
+
 const ADDITIONAL_PLAN_SEEDS = CORE_PLAN_SEEDS.map(buildExpandedPlanSeed);
 const BASE_PLAN_SEEDS = [...CORE_PLAN_SEEDS, ...ADDITIONAL_PLAN_SEEDS];
 const DEEP_EXPANSION_SEEDS = buildDeepExpansionSeeds(Math.max(0, TARGET_PLAN_COUNT - BASE_PLAN_SEEDS.length));
+const INDEXABLE_PLAN_SEED_POOL = [...BASE_PLAN_SEEDS, ...DEEP_EXPANSION_SEEDS];
+export const COVERAGE_PLAN_SEEDS = buildCoverageSeeds(INDEXABLE_PLAN_SEED_POOL);
 
-export const PLAN_SEEDS = [...BASE_PLAN_SEEDS, ...DEEP_EXPANSION_SEEDS];
+export const INDEXABLE_PLAN_SEEDS = INDEXABLE_PLAN_SEED_POOL;
+export const PLAN_SEEDS = [...INDEXABLE_PLAN_SEED_POOL, ...COVERAGE_PLAN_SEEDS];
 export const PLAN_COUNT = PLAN_SEEDS.length;

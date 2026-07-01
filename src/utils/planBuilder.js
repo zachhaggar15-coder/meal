@@ -100,6 +100,9 @@ const GOAL_BEST_FOR = {
 };
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const PLAN_SEED_BY_SLUG = new Map(PLAN_SEEDS.map(seed => [seed.slug, seed]));
+const PLAN_SEEDS_BY_GOAL = groupSeedsBy(PLAN_SEEDS, 'goal');
+const PLAN_SEEDS_BY_SUPERMARKET = groupSeedsBy(PLAN_SEEDS, 'supermarket');
 
 // ── Diet filtering ─────────────────────────────────────────────────────────────
 
@@ -426,13 +429,19 @@ function buildSwaps(seed) {
 // ── Related plans ─────────────────────────────────────────────────────────────
 
 function getRelatedSlugs(seed) {
-  const same_goal_diff_market = PLAN_SEEDS.filter(
-    s => s.goal === seed.goal && s.supermarket !== seed.supermarket && s.slug !== seed.slug
-  ).slice(0, 2);
+  const same_goal_diff_market = takeRelatedSeeds(
+    PLAN_SEEDS_BY_GOAL.get(seed.goal),
+    seed,
+    s => s.supermarket !== seed.supermarket,
+    2,
+  );
 
-  const same_market_diff_cal = PLAN_SEEDS.filter(
-    s => s.supermarket === seed.supermarket && s.calories !== seed.calories && s.slug !== seed.slug
-  ).slice(0, 2);
+  const same_market_diff_cal = takeRelatedSeeds(
+    PLAN_SEEDS_BY_SUPERMARKET.get(seed.supermarket),
+    seed,
+    s => s.calories !== seed.calories,
+    2,
+  );
 
   const seen = new Set([seed.slug]);
   const related = [];
@@ -872,7 +881,7 @@ function buildRecipeSteps(meal) {
 // ── Lookups ───────────────────────────────────────────────────────────────────
 
 export function getPlanBySlug(slug) {
-  const seed = PLAN_SEEDS.find(s => s.slug === slug);
+  const seed = PLAN_SEED_BY_SLUG.get(slug);
   return seed ? buildPlan(seed) : null;
 }
 
@@ -895,4 +904,24 @@ export function getAllPlanMeta() {
 
 function cap(s) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+}
+
+function groupSeedsBy(seeds, key) {
+  const groups = new Map();
+  for (const seed of seeds) {
+    const value = seed[key];
+    if (!groups.has(value)) groups.set(value, []);
+    groups.get(value).push(seed);
+  }
+  return groups;
+}
+
+function takeRelatedSeeds(seeds = [], currentSeed, predicate, limit) {
+  const related = [];
+  for (const seed of seeds) {
+    if (seed.slug === currentSeed.slug || !predicate(seed)) continue;
+    related.push(seed);
+    if (related.length >= limit) break;
+  }
+  return related;
 }
