@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   COMBO_LANDING_PAGES,
@@ -10,6 +11,7 @@ import {
   filterPlansForCombo,
   getSupermarketEvidence,
 } from '../data/comboLandingPages.js';
+import { chooseComboVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -38,6 +40,7 @@ export default function ComboLandingPage({ page }) {
   const matchSummary = comboMatchSummary(page);
   const primaryMarket = page.match?.supermarkets?.[0];
   const evidence = primaryMarket ? getSupermarketEvidence(primaryMarket) : null;
+  const comboVisual = chooseComboVisual(page);
   const relatedPages = page.relatedSlugs
     .map(slug => COMBO_LANDING_PAGES[slug])
     .filter(Boolean);
@@ -117,6 +120,7 @@ export default function ComboLandingPage({ page }) {
             <a className="btn-primary" href="#matching-plans">Compare plans</a>
             <Link className="btn-secondary" to="/quiz">Find my best match</Link>
           </div>
+          <PageHeroVisual visual={comboVisual} className="meal-hub-hero-visual" priority />
         </header>
 
         <section className="combo-quick-answer" aria-label="Quick answer">

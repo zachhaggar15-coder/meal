@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   buildBrowsePlanUrl,
@@ -11,6 +12,7 @@ import {
   GOAL_CHOOSER_ITEMS,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
+import { chooseChooserVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -26,6 +28,7 @@ export default function ChoiceLandingPage({ mode }) {
       plan: chooseBestPlan(card.filters, card.defaultCalories),
     }))
     .filter(card => card.plan);
+  const chooserVisual = chooseChooserVisual({ mode, choice: config.choice });
 
   const jsonLd = [
     {
@@ -84,6 +87,7 @@ export default function ChoiceLandingPage({ mode }) {
             <span>{config.defaultValue}</span>
             <Link to={config.changeUrl}>Change filters</Link>
           </div>
+          <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual" priority />
         </header>
 
         <section className="plan-chooser-grid" aria-label={config.gridLabel}>

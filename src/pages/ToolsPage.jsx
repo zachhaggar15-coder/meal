@@ -4,7 +4,9 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
+import { SITE_VISUALS } from '../data/visualAssets.js';
 
 const ACTIVITY = {
   sedentary: { label: 'Mostly desk based', factor: 1.2 },
@@ -138,6 +140,7 @@ export default function ToolsPage() {
             Estimate a daily calorie target, protein range, shopping budget and container count,
             then jump straight to printable meal plans with shopping lists.
           </p>
+          <PageHeroVisual visual={SITE_VISUALS.tools} className="tools-hero-visual" priority />
         </header>
 
         <PopularSearches

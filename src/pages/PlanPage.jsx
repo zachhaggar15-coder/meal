@@ -4,9 +4,11 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
+import { choosePlanVisual } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 
 const MKT_LABEL = {
@@ -42,6 +44,7 @@ export default function PlanPage() {
 
   const displayPlan = editedPlan || plan;
   const activeDay   = displayPlan.plan[activeDayIdx];
+  const planVisual  = choosePlanVisual(plan);
 
   const jsonLd = [
     {
@@ -221,6 +224,7 @@ export default function PlanPage() {
         <SiteLogo variant="page" className="page-header-logo" />
         <h1 className="plan-page-h1">{plan.title}</h1>
         <p className="plan-page-intro">{plan.seo.description}</p>
+        <PageHeroVisual visual={planVisual} className="plan-page-visual" />
 
         {editNote && (
           <div className="plan-edit-notice">

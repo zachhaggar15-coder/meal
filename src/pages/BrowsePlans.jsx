@@ -3,9 +3,11 @@ import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
+import { SITE_VISUALS } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_COUNT = ALL_PLANS.length;
@@ -213,6 +215,8 @@ export default function BrowsePlans() {
             {' '}<Link to="/quiz" className="browse-quiz-link">Take the quiz to get matched →</Link>
           </p>
         </div>
+
+        <PageHeroVisual visual={SITE_VISUALS.browse} className="browse-hero-visual" priority />
 
         <PopularSearches
           title="Popular UK searches"

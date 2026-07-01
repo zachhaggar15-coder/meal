@@ -1,3 +1,5 @@
+import { chooseBlogVisual } from '../data/visualAssets.js';
+
 const DOMAIN = 'https://www.mealprep.org.uk';
 const STATIC_OG = `${DOMAIN}/og-preview.png`;
 
@@ -26,7 +28,9 @@ function absoluteAsset(path) {
 }
 
 export const generateMealPlanImageUrl = () => STATIC_OG;
-export const generateBlogImageUrl = slug => (
-  BLOG_OG_IMAGES[slug] ? absoluteAsset(BLOG_OG_IMAGES[slug]) : STATIC_OG
-);
-export const hasCustomBlogImage = slug => Boolean(BLOG_OG_IMAGES[slug]);
+export const generateBlogImageUrl = slug => {
+  if (BLOG_OG_IMAGES[slug]) return absoluteAsset(BLOG_OG_IMAGES[slug]);
+  const fallback = chooseBlogVisual(slug);
+  return fallback?.src ? absoluteAsset(fallback.src) : STATIC_OG;
+};
+export const hasCustomBlogImage = slug => Boolean(BLOG_OG_IMAGES[slug] || chooseBlogVisual(slug)?.src);

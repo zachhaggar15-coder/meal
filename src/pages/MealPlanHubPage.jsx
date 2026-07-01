@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import ComboLandingPage from './ComboLandingPage.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
@@ -11,6 +12,7 @@ import {
   MEAL_PLAN_HUBS,
 } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
+import { chooseHubVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const CARD_LIMIT = 24;
@@ -54,6 +56,7 @@ export default function MealPlanHubPage() {
   const canonical = `/meal-plans/${hub.slug}`;
   const sources = hub.sources || DEFAULT_SOURCES;
   const supportingGuides = hub.supportingGuides || DEFAULT_SUPPORTING_GUIDES;
+  const hubVisual = chooseHubVisual(hub);
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -129,6 +132,7 @@ export default function MealPlanHubPage() {
             <a className="btn-primary" href="#top-plans">Compare top plans</a>
             <Link className="btn-secondary" to="/quiz">Find my best match</Link>
           </div>
+          <PageHeroVisual visual={hubVisual} className="meal-hub-hero-visual" priority />
         </header>
 
         <section className="meal-hub-snippet" aria-label="What this hub includes">

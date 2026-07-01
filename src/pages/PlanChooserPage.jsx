@@ -1,12 +1,14 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   buildBrowsePlanUrl,
   getGoalChoice,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
+import { chooseChooserVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -26,6 +28,7 @@ export default function PlanChooserPage() {
   const canonical = `/choose-plan/${goalChoice.value}`;
   const title = `${goalChoice.label} Meal Plans by Supermarket`;
   const description = `Choose a generic UK supermarket, Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons or Iceland ${goalChoice.label.toLowerCase()} meal plan.`;
+  const chooserVisual = chooseChooserVisual({ goalChoice });
 
   const jsonLd = [
     {
@@ -78,6 +81,7 @@ export default function PlanChooserPage() {
             <span>{goalChoice.defaultCalories.toLocaleString('en-GB')} kcal/day</span>
             <Link to={buildBrowsePlanUrl({ goal: goalChoice.value })}>Change calories</Link>
           </div>
+          <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual" priority />
         </header>
 
         <section className="plan-chooser-grid" aria-label={`${goalChoice.label} supermarket choices`}>

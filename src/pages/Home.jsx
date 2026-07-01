@@ -9,8 +9,10 @@ import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
+import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { SITE_VISUALS } from '../data/visualAssets.js';
 
 // ── JSON-LD ───────────────────────────────────────────────────────────────────
 
@@ -287,6 +289,7 @@ export default function Home() {
             <span className="trust-badge">Vegan · Vegetarian · Pescatarian</span>
             <span className="trust-badge">Free, no sign-up</span>
           </div>
+          <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>
 
         <PopularSearches
