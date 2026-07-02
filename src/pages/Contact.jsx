@@ -33,7 +33,7 @@ export default function Contact() {
             <h2>Email</h2>
             <p>
               The fastest way to reach us is email:{' '}
-              <a href="mailto:hello@mealprep.org.uk">hello@mealprep.org.uk</a>
+              <a href="mailto:dojostack@protonmail.com">dojostack@protonmail.com</a>
             </p>
             <p>We aim to reply within 2–3 working days.</p>
           </section>

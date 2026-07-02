@@ -22,7 +22,7 @@ const homeJsonLd = [
       'Free UK meal plan generator and library of calorie-controlled, high-protein meal plans built around UK supermarket ingredients.',
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'hello@mealprep.org.uk',
+      email: 'dojostack@protonmail.com',
       contactType: 'customer support',
       url: 'https://www.mealprep.org.uk/contact',
     },
