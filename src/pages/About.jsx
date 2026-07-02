@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import { SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -13,6 +14,7 @@ const jsonLd = {
     '@type': 'Organization',
     name: 'MealPrep.org.uk',
     url: 'https://www.mealprep.org.uk',
+    email: SITE_CONTACT_EMAIL,
   },
 };
 
@@ -66,6 +68,32 @@ export default function About() {
             Product pages and Amazon UK affiliate guides are kept separate from medical claims.
             Affiliate links may earn commission, but recommendations are written around buyer fit,
             materials, storage, reheating and everyday meal-prep use.
+          </p>
+        </section>
+
+        <section>
+          <h2>How Plans Are Created</h2>
+          <p>
+            Meal plans are assembled from a curated UK meal library with supermarket, diet,
+            calorie, budget and preparation rules. The generator only shows combinations that
+            can be turned into a usable 7-day plan with recipes, macro estimates and a grouped
+            shopping list.
+          </p>
+          <p>
+            Automation helps scale the plan library and route coverage, but pages are structured
+            around practical search intent: what the reader is trying to buy, cook, print or
+            compare. Priority pages are reviewed for duplicated copy, broken internal links,
+            unrealistic budgets and unsupported nutrition claims before release.
+          </p>
+        </section>
+
+        <section>
+          <h2>Contact and Corrections</h2>
+          <p>
+            For editorial corrections, source questions, product updates or business enquiries,
+            contact <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>. Corrections
+            are prioritised when they affect safety, nutrition context, prices, availability or
+            whether a page still reflects current UK supermarket meal prep.
           </p>
         </section>
 

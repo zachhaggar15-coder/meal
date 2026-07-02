@@ -15,6 +15,7 @@ import {
 } from '../data/seoOpportunityPages.js';
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
+import { SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -24,7 +25,7 @@ export default function BlogPost() {
 
   const ogImageUrl = generateBlogImageUrl(slug, data.title);
   const sources = data.sources || [];
-  const showTrustBox = Boolean(data.reviewed || data.sources?.length || data.trustNote);
+  const showTrustBox = data.trustNote !== false;
   const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
   const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
 
@@ -36,8 +37,8 @@ export default function BlogPost() {
       description: data.description,
       datePublished: data.published || '2026-05-28',
       dateModified: data.modified || '2026-05-30',
-      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
-      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk/about', email: SITE_CONTACT_EMAIL },
+      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk', email: SITE_CONTACT_EMAIL },
       about: [
         'UK meal prep',
         'Meal planning',

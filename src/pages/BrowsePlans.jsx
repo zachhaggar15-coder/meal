@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
+import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
@@ -322,6 +323,8 @@ export default function BrowsePlans() {
             ))}
           </div>
         </section>
+
+        <SearchOpportunityLinks />
 
         <section className="browse-index" aria-labelledby="browse-index-heading">
           <div className="browse-index-header">

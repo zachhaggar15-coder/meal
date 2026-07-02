@@ -9,6 +9,7 @@ import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
+import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
@@ -296,6 +297,13 @@ export default function Home() {
           title="Popular UK Meal Plan Searches"
           intro="Start with the highest-demand guides, then jump into a printable plan or shopping list."
           className="popular-searches--home"
+        />
+
+        <SearchOpportunityLinks
+          title="Most requested UK meal prep guides"
+          intro="Quick routes into the pages Search Console is already surfacing: containers, 1500 calorie plans, low-calorie foods, cheap protein and named-supermarket meal prep."
+          showDiscovery={false}
+          compact
         />
 
         {/* ── How it works ─────────────────────────────────────────────────── */}

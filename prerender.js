@@ -7,6 +7,7 @@ import { mealPlansData } from './src/data/mealPlans.js';
 import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
 import { COMBO_LANDING_SLUGS } from './src/data/comboLandingPages.js';
 import { MEAL_PLAN_HUB_SLUGS } from './src/data/mealPlanHubs.js';
+import { SEO_PRIORITY_ROUTES } from './src/data/seoPriorityLinks.js';
 import {
   CALORIE_CHOOSER_SLUGS,
   DIET_CHOOSER_SLUGS,
@@ -183,6 +184,7 @@ const STATIC_PLAN_SLUGS = [
 const PLAN_SLUGS = INDEXABLE_PLAN_SEEDS.map(seed => seed.slug);
 const LEGACY_MEAL_PLAN_SLUGS = Object.keys(mealPlansData);
 const BLOG_SLUGS = Object.keys(blogPostsData);
+const SEO_PRIORITY_ROUTE_SET = new Set(SEO_PRIORITY_ROUTES);
 
 function uniqueRoutes(routes) {
   return [...new Set(routes)];
@@ -211,6 +213,8 @@ const ROUTES = uniqueRoutes([
   ...LEGACY_MEAL_PLAN_SLUGS.map(slug => `/meal-plan/${slug}`),
   // Blog posts
   ...BLOG_SLUGS.map(slug => `/blog/${slug}`),
+  // Search Console opportunity pages and discovered-not-indexed samples.
+  ...SEO_PRIORITY_ROUTES,
 ]);
 
 const SITEMAP_ROUTES = ROUTES.filter(route => route !== '/quiz/results');
@@ -273,6 +277,7 @@ async function prerender() {
     if (route === '/tools') return ['0.8', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
     if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
+    if (SEO_PRIORITY_ROUTE_SET.has(route)) return ['0.9', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];
     if (route.startsWith('/meal-plan/')) return ['0.7', 'monthly'];

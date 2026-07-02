@@ -5,16 +5,41 @@ import Footer from '../components/Footer.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
+import { SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { track } from '../utils/analytics.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
   sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland',
   any: 'Generic UK supermarket',
+};
+
+const GOAL_HUB_SLUGS = {
+  'weight-loss': 'weight-loss',
+  'high-protein-low-cal': 'high-protein',
+  'muscle-gain': 'muscle-gain',
+  'budget-fat-loss': 'weight-loss',
+  'cheap-student': 'cheap-student',
+  'busy-professional': 'work-lunch-meal-prep-uk',
+  'low-effort': 'meal-plans-with-shopping-list',
+  'vegetarian-low-cal': 'vegetarian',
+  'vegan-low-cal': 'vegan',
+  'high-protein-vegetarian': 'high-protein',
+  pescatarian: 'pescatarian',
+  'budget-bodybuilding': 'budget-bodybuilding',
+  'gym-beginner': 'high-protein',
+  'cheap-high-protein': 'high-protein',
+  maintenance: 'free-online-diet-plans-uk',
+  'anti-inflammatory': 'free-online-diet-plans-uk',
+  'menopause-nutrition': 'menopause',
+  'endurance-athlete': 'endurance',
+  'body-recomp': 'high-protein',
+  cutting: 'weight-loss',
 };
 
 export default function PlanPage() {
@@ -45,6 +70,9 @@ export default function PlanPage() {
   const displayPlan = editedPlan || plan;
   const activeDay   = displayPlan.plan[activeDayIdx];
   const planVisual  = choosePlanVisual(plan);
+  const planImageUrl = planVisual?.src?.startsWith('http')
+    ? planVisual.src
+    : `https://www.mealprep.org.uk${planVisual?.src || '/og-preview.png'}`;
 
   const jsonLd = [
     {
@@ -53,11 +81,31 @@ export default function PlanPage() {
       headline: plan.title,
       description: plan.seo.description,
       url: plan.seo.canonical,
+      datePublished: '2026-06-01',
+      dateModified: '2026-07-02',
+      author: {
+        '@type': 'Organization',
+        name: 'MealPrep.org.uk',
+        url: 'https://www.mealprep.org.uk/about',
+        email: SITE_CONTACT_EMAIL,
+      },
       publisher: {
         '@type': 'Organization',
         name: 'MealPrep.org.uk',
         url: 'https://www.mealprep.org.uk',
+        email: SITE_CONTACT_EMAIL,
       },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': plan.seo.canonical,
+      },
+      image: planImageUrl,
+      about: [
+        `${plan.goalLabel} meal plan`,
+        `${MKT_LABEL[plan.supermarket] || plan.supermarket} meal prep`,
+        `${plan.calories.toLocaleString('en-GB')} calorie meal plan`,
+      ],
+      citation: DEFAULT_SOURCES.map(source => source.url),
     },
     {
       '@context': 'https://schema.org',
@@ -226,6 +274,11 @@ export default function PlanPage() {
         <p className="plan-page-intro">{plan.seo.description}</p>
         <PageHeroVisual visual={planVisual} className="plan-page-visual" />
 
+        <TrustBox
+          reviewed="2 July 2026"
+          note="Plans are generated from a curated UK meal library, then rendered with deterministic shopping lists, recipes, calorie estimates and supermarket-specific notes. They are general meal-planning information, not medical advice."
+        />
+
         {editNote && (
           <div className="plan-edit-notice">
             <strong>Note:</strong> {editNote}{' '}
@@ -282,6 +335,7 @@ export default function PlanPage() {
           shareStatus={shareStatus}
         />
         <SupermarketEvidence plan={plan} />
+        <PlanQualityNotes plan={plan} />
         <BatchPrepPlan prepPlan={plan.prepPlan} />
 
         {/* Quiz CTA */}
@@ -586,6 +640,92 @@ function SupermarketEvidence({ plan }) {
   );
 }
 
+function PlanQualityNotes({ plan }) {
+  const market = MKT_LABEL[plan.supermarket] || plan.supermarket;
+  const calorieText = plan.calories.toLocaleString('en-GB');
+  const goalHub = GOAL_HUB_SLUGS[plan.goal] || 'free-online-diet-plans-uk';
+  const hubLinks = [
+    { to: `/meal-plans/${plan.calories}-calorie`, label: `${calorieText} calorie meal plans` },
+    plan.supermarket !== 'any'
+      ? { to: `/meal-plans/${plan.supermarket}`, label: `${market} meal plans` }
+      : { to: '/meal-plans/generic-uk-supermarket', label: 'Generic UK supermarket plans' },
+    { to: `/meal-plans/${goalHub}`, label: `${plan.goalLabel} hub` },
+    { to: '/meal-plans/meal-plans-with-shopping-list', label: 'Plans with shopping lists' },
+  ];
+
+  const rows = [
+    ['Calorie target', `Built around roughly ${calorieText} kcal per day`, getCalorieAssumption(plan.calories)],
+    ['Supermarket', market, getMarketAssumption(plan.supermarket)],
+    ['Budget', `${plan.summary.budgetRange}/week estimate`, getBudgetAssumption(plan.budget)],
+    ['Prep style', plan.effortLabel, getEffortAssumption(plan.effort)],
+  ];
+
+  return (
+    <section className="plan-quality-notes" aria-labelledby="plan-quality-heading">
+      <div className="section-head-inline">
+        <div>
+          <h2 id="plan-quality-heading">Why this exact plan exists</h2>
+          <p>
+            This page is not only a title-and-macros variant. The calorie target, supermarket,
+            diet type, budget and prep style all change the meals, shopping-list assumptions and swaps.
+          </p>
+        </div>
+      </div>
+
+      <div className="plan-quality-grid">
+        <article>
+          <h3>Search intent</h3>
+          <p>
+            A {market} {plan.goalLabel.toLowerCase()} plan at {calorieText} calories is useful when
+            someone wants a printable week before shopping, not just a generic diet article.
+          </p>
+        </article>
+        <article>
+          <h3>Shopping logic</h3>
+          <p>
+            The list favours repeatable UK supermarket staples, grouped by protein, carbs, vegetables,
+            dairy and extras so the basket can be checked before buying.
+          </p>
+        </article>
+        <article>
+          <h3>Practical swaps</h3>
+          <p>
+            The swap section keeps the page usable if a product is out of stock, too expensive, or not
+            right for the reader's diet.
+          </p>
+        </article>
+      </div>
+
+      <div className="content-table-wrap">
+        <table className="content-table plan-quality-table">
+          <thead>
+            <tr>
+              <th>Decision</th>
+              <th>This plan uses</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(row => (
+              <tr key={row[0]}>
+                <td>{row[0]}</td>
+                <td>{row[1]}</td>
+                <td>{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="plan-quality-links" aria-label="Related plan hubs">
+        {hubLinks.map(link => (
+          <Link key={link.to} to={link.to}>{link.label}</Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function BatchPrepPlan({ prepPlan }) {
   if (!prepPlan?.steps?.length) return null;
 
@@ -600,6 +740,48 @@ function BatchPrepPlan({ prepPlan }) {
       </ol>
     </section>
   );
+}
+
+function getCalorieAssumption(calories) {
+  if (calories <= 1500) {
+    return 'Lower-calorie days need protein, fibre and vegetables so the plan still feels like meals.';
+  }
+  if (calories >= 3000) {
+    return 'High-calorie days need snacks and carbohydrate portions rather than one oversized dinner.';
+  }
+  if (calories >= 2200) {
+    return 'Higher targets leave more room for training fuel, snacks and larger carbohydrate portions.';
+  }
+  return 'Moderate targets balance breakfast, lunch, dinner and snacks without extreme restriction.';
+}
+
+function getMarketAssumption(supermarket) {
+  const notes = {
+    aldi: 'Aldi pages lean on own-brand staples, simple proteins, frozen veg and budget-friendly repeats.',
+    lidl: 'Lidl pages work best with simple staples, rotating offers and flexible protein swaps.',
+    tesco: 'Tesco pages can use wider choice, online availability and convenient high-protein or free-from options.',
+    asda: 'Asda pages balance budget staples with broader family-friendly ranges and frozen options.',
+    sainsburys: "Sainsbury's pages allow more prepared ingredients, vegetarian options and premium swaps where useful.",
+    morrisons: 'Morrisons pages suit fresh-counter options plus standard supermarket staples.',
+    iceland: 'Iceland pages lean into freezer-friendly protein, vegetables and low-waste backup meals.',
+    any: 'Generic UK pages use widely available supermarket ingredients and average-price assumptions.',
+  };
+  return notes[supermarket] || 'The plan uses common UK supermarket ingredients and flexible swaps.';
+}
+
+function getBudgetAssumption(budget) {
+  if (budget === 'very-cheap') return 'Very cheap plans repeat staples and avoid niche products.';
+  if (budget === 'budget') return 'Budget plans keep variety while still prioritising own-brand and batch-friendly ingredients.';
+  if (budget === 'moderate') return 'Moderate plans allow more convenience items and variety without becoming premium-only.';
+  return 'Flexible-budget plans can use more varied proteins, higher-calorie extras and convenience foods.';
+}
+
+function getEffortAssumption(effort) {
+  if (effort === 'batch') return 'Batch plans repeat weekday bases so Sunday prep genuinely saves time.';
+  if (effort === 'minimal') return 'Minimal-prep plans use more assembly meals, ready-to-eat staples and short cooking steps.';
+  if (effort === 'low') return 'Low-effort plans keep daily cooking short while preserving enough variety.';
+  if (effort === 'high-variety') return 'High-variety plans trade extra decisions for less repetition.';
+  return 'Standard-prep plans balance variety, fresh meals and realistic weekday cooking.';
 }
 
 function PlanContainerLinks({ plan }) {

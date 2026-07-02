@@ -389,7 +389,7 @@ export const MEAL_PLAN_HUBS = {
   '1500-calorie': {
     slug: '1500-calorie',
     path: '/meal-plans/1500-calorie',
-    title: '1500 Calorie Meal Plan UK - Printable 7-Day PDF + Shopping List',
+    title: '1500 Calorie Meal Plan UK - Simple Printable 7-Day PDF + Shopping List',
     description:
       'Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.',
     h1: '1500 Calorie Meal Plan UK',
@@ -398,7 +398,15 @@ export const MEAL_PLAN_HUBS = {
       'A 1500 calorie meal plan works best when it is simple, filling and easy to shop for in UK supermarkets. Use this hub to compare printable 7-day plans, high-protein options, vegetarian and vegan weeks, PDF exports and shopping lists without building every meal from scratch.',
     match: { calories: [1500, 1400, 1600], goals: ['weight-loss', 'budget-fat-loss', 'high-protein-low-cal', 'vegetarian-low-cal', 'vegan-low-cal', 'cutting'] },
     stats: ['1500 kcal/day options', 'Printable PDF plans', 'Weekly shopping lists'],
-    reviewed: '17 June 2026',
+    modified: '2026-07-02',
+    reviewed: '2 July 2026',
+    supportingGuides: [
+      GUIDE_LINKS.lowCalorieFoods,
+      { label: 'What 1500 calories looks like', to: '/blog/what-does-1500-calories-look-like-uk' },
+      { label: '1500 vs 1800 vs 2000 calories', to: '/blog/1500-vs-1800-vs-2000-calories' },
+      GUIDE_LINKS.highProteinSnacks,
+      GUIDE_LINKS.containers,
+    ],
     sections: [
       {
         h2: 'Quick answer: what does 1500 calories look like?',
@@ -434,6 +442,7 @@ export const MEAL_PLAN_HUBS = {
             ['Simple 1500 calorie meal plan', 'Standard weight loss plans', 'Familiar UK meals, clear portions and no unusual products'],
             ['High protein 1500 calorie plan', 'High protein low calorie plans', 'More chicken, tuna, eggs, yogurt, tofu, beans and lean mince'],
             ['Vegetarian 1500 calorie plan', 'Vegetarian low calorie plans', 'Uses eggs, dairy, tofu, lentils, beans and meat-free protein'],
+            ['Free 1500 calorie diet plan', 'This hub or the quiz', 'No account, no app, shopping-list pages and printable plan views'],
             ['Printable 1500 calorie PDF', 'Any matching plan page', 'Every plan includes a weekly PDF summary and shopping list'],
           ],
         },

@@ -11,6 +11,7 @@ import ContextualLinks from '../components/ContextualLinks.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 import { buildShoppingList, scaleIngredientsForPortion } from '../utils/planBuilder.js';
+import { SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 function ContentTable({ headers, rows }) {
   return (
@@ -79,6 +80,7 @@ export default function MealPlanPage() {
     : null;
 
   const ogImageUrl = generateMealPlanImageUrl(slug, data.title, data.targetCalories);
+  const planFamily = getLegacyPlanFamily(slug, data);
 
   const jsonLd = [
     {
@@ -88,12 +90,19 @@ export default function MealPlanPage() {
       description: data.description,
       datePublished: data.published || '2026-05-28',
       dateModified: data.modified || '2026-05-30',
-      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
-      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
+      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk/about', email: SITE_CONTACT_EMAIL },
+      publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk', email: SITE_CONTACT_EMAIL },
       mainEntityOfPage: {
         '@type': 'WebPage',
         '@id': `https://www.mealprep.org.uk/meal-plan/${slug}`,
       },
+      isPartOf: planFamily
+        ? {
+            '@type': 'CollectionPage',
+            name: planFamily.hubLabel,
+            url: `https://www.mealprep.org.uk${planFamily.hubPath}`,
+          }
+        : undefined,
       image: ogImageUrl,
     },
     {
@@ -226,6 +235,8 @@ export default function MealPlanPage() {
         <p>{data.whyThisPlan}</p>
 
         <ContextualLinks blocks={data.contextualLinks} />
+
+        <LegacyPlanFamilyBox family={planFamily} />
 
         {data.tescoPricing && (
           <>
@@ -496,6 +507,75 @@ export default function MealPlanPage() {
       <Footer />
     </>
   );
+}
+
+function LegacyPlanFamilyBox({ family }) {
+  if (!family) return null;
+
+  return (
+    <aside className="legacy-plan-family" aria-labelledby="legacy-plan-family-heading">
+      <div>
+        <h2 id="legacy-plan-family-heading">Current plan family</h2>
+        <p>
+          This older exact-match page is now connected to the current hub and generated plan
+          library so related calorie, supermarket and shopping-list pages are easier to find.
+        </p>
+      </div>
+      <div className="legacy-plan-family-links">
+        {family.links.map(link => (
+          <Link key={link.to} to={link.to}>{link.label}</Link>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
+function getLegacyPlanFamily(slug, data) {
+  if (!data?.targetCalories) return null;
+
+  const calorieHub = `/meal-plans/${data.targetCalories}-calorie`;
+  const supermarket = detectLegacySupermarket(slug, data);
+  const generatedEquivalent = LEGACY_GENERATED_EQUIVALENTS[slug];
+  const links = [
+    { to: calorieHub, label: `${data.targetCalories.toLocaleString('en-GB')} calorie plan hub` },
+    generatedEquivalent,
+    supermarket ? { to: `/meal-plans/${supermarket.slug}`, label: `${supermarket.label} meal plans` } : null,
+    { to: '/meal-plans/meal-plans-with-shopping-list', label: 'Plans with shopping lists' },
+  ].filter(Boolean);
+
+  return {
+    hubPath: calorieHub,
+    hubLabel: `${data.targetCalories.toLocaleString('en-GB')} calorie meal plans`,
+    links,
+  };
+}
+
+const LEGACY_GENERATED_EQUIVALENTS = {
+  '1500-calorie-meal-plan': { to: '/meal-plans/1500-calorie', label: 'Printable 1500 calorie plans' },
+  '1800-calorie-meal-plan': { to: '/meal-plans/1800-calorie', label: 'Printable 1800 calorie plans' },
+  '2000-calorie-meal-plan': { to: '/meal-plans/2000-calorie', label: 'Printable 2000 calorie plans' },
+  'aldi-low-calorie-meal-plan': { to: '/plans/aldi-weight-loss-1500', label: 'Current Aldi 1500 calorie plan' },
+  'tesco-low-calorie-meal-plan': { to: '/plans/tesco-weight-loss-1500', label: 'Current Tesco 1500 calorie plan' },
+  'asda-1500-calorie-meal-plan': { to: '/plans/asda-weight-loss-1500', label: 'Current Asda 1500 calorie plan' },
+  'sainsburys-low-calorie-meal-plan': { to: '/plans/sainsburys-weight-loss-1500', label: "Current Sainsbury's 1500 calorie plan" },
+  'morrisons-low-calorie-meal-plan': { to: '/plans/morrisons-weight-loss-1500', label: 'Current Morrisons 1500 calorie plan' },
+  'iceland-budget-meal-plan': { to: '/plans/iceland-budget-fat-loss-1500', label: 'Current Iceland budget fat-loss plan' },
+};
+
+function detectLegacySupermarket(slug, data) {
+  const text = `${slug} ${data.summary?.supermarkets || ''} ${data.title || ''}`.toLowerCase();
+  const supermarkets = [
+    ['aldi', 'Aldi'],
+    ['lidl', 'Lidl'],
+    ['tesco', 'Tesco'],
+    ['asda', 'Asda'],
+    ['sainsburys', "Sainsbury's"],
+    ['sainsbury', "Sainsbury's"],
+    ['morrisons', 'Morrisons'],
+    ['iceland', 'Iceland'],
+  ];
+  const match = supermarkets.find(([key]) => text.includes(key));
+  return match ? { slug: match[0] === 'sainsbury' ? 'sainsburys' : match[0], label: match[1] } : null;
 }
 
 function normalisePlanCalories(plan, targetCalories) {

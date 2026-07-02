@@ -2,6 +2,7 @@ export const SITE_NAME = 'MealPrep.org.uk';
 export const SITE_URL = 'https://www.mealprep.org.uk';
 export const SITE_DESCRIPTION =
   'Free UK meal plans by goal, supermarket, calories, budget, and diet.';
+export const SITE_CONTACT_EMAIL = 'dojostack@protonmail.com';
 
 export const SITE_LOGO_PATH = '/mealprep-logo.png';
 export const SITE_LOGO_URL = `${SITE_URL}${SITE_LOGO_PATH}`;
@@ -15,7 +16,14 @@ export const ORGANIZATION_JSON_LD = {
   '@id': ORGANIZATION_ID,
   name: SITE_NAME,
   url: SITE_URL,
+  email: SITE_CONTACT_EMAIL,
   description: SITE_DESCRIPTION,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: SITE_CONTACT_EMAIL,
+    contactType: 'editorial enquiries',
+    availableLanguage: 'en-GB',
+  },
   logo: {
     '@type': 'ImageObject',
     url: SITE_LOGO_URL,

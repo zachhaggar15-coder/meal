@@ -8,6 +8,7 @@ import {
   AFFILIATE_DISCLOSURE,
   getContainerProducts,
 } from '../data/containerProducts.js';
+import { SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 const HUB_PRODUCT_IDS = [
   'budget-compartment-50-pack',
@@ -59,6 +60,14 @@ const setupRows = [
   ['Small kitchen', '5 identical boxes', 'Avoid mixed sets if lid clutter is already a problem.'],
 ];
 
+const methodRows = [
+  ['Capacity', '900ml to 1 litre boxes suit most UK lunch and dinner portions without forcing tiny meals.'],
+  ['Lid reliability', 'Leak resistance, clip strength and spare-lid practicality matter more than a big box count.'],
+  ['Reheating', 'Glass is favoured for tomato-heavy meals, curries and frequent microwave use.'],
+  ['Stacking', 'Identical rectangles usually beat novelty shapes because they save fridge and cupboard space.'],
+  ['Value', 'A cheap set only scores well when the tubs match a real weekly plan and are not awkward to reuse.'],
+];
+
 const faqs = [
   {
     q: 'What are the best meal prep containers for most people?',
@@ -88,6 +97,19 @@ const jsonLd = [
     description:
       'Compare the best meal prep containers UK: budget plastic tubs, mid-range glass boxes, leakproof lunch containers and premium meal prep sets.',
     url: 'https://www.mealprep.org.uk/meal-prep-containers',
+    dateModified: '2026-07-02',
+    author: {
+      '@type': 'Organization',
+      name: 'MealPrep.org.uk',
+      url: 'https://www.mealprep.org.uk/about',
+      email: SITE_CONTACT_EMAIL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'MealPrep.org.uk',
+      url: 'https://www.mealprep.org.uk',
+      email: SITE_CONTACT_EMAIL,
+    },
     isPartOf: {
       '@type': 'WebSite',
       name: 'MealPrep.org.uk',
@@ -126,8 +148,8 @@ export default function ContainerHub() {
   return (
     <>
       <SEO
-        title="Best Meal Prep Containers UK 2026: Glass, Plastic & Leakproof Boxes"
-        description="Compare the best meal prep containers UK: budget plastic tubs, mid-range glass boxes, leakproof lunch containers and a free meal prep box checklist."
+        title="Best Meal Prep Containers UK 2026: Glass vs Plastic, Sizes & Budget Picks"
+        description="Compare the best meal prep containers UK: glass vs plastic boxes, 900ml-1L sizes, budget tubs, leakproof work lunch boxes and starter sets."
         canonical="/meal-prep-containers"
         ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
         jsonLd={jsonLd}
@@ -255,6 +277,33 @@ export default function ContainerHub() {
                     <td>{row[0]}</td>
                     <td>{row[1]}</td>
                     <td>{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="container-intent-section" aria-labelledby="container-method-heading">
+          <h2 id="container-method-heading">How we compare meal prep containers</h2>
+          <p>
+            This hub is reviewed for practical UK meal-prep use rather than only Amazon star
+            ratings. The main question is whether a container set helps someone store, reheat,
+            carry and repeat a real weekly plan without wasting money on unusable sizes.
+          </p>
+          <div className="content-table-wrap">
+            <table className="content-table container-intent-table">
+              <thead>
+                <tr>
+                  <th>Criterion</th>
+                  <th>What we look for</th>
+                </tr>
+              </thead>
+              <tbody>
+                {methodRows.map(row => (
+                  <tr key={row[0]}>
+                    <td>{row[0]}</td>
+                    <td>{row[1]}</td>
                   </tr>
                 ))}
               </tbody>

@@ -13,6 +13,7 @@ import {
 } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { chooseHubVisual } from '../data/visualAssets.js';
+import { SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const CARD_LIMIT = 24;
@@ -64,6 +65,19 @@ export default function MealPlanHubPage() {
       name: hub.h1,
       description: hub.description,
       url: `https://www.mealprep.org.uk${canonical}`,
+      dateModified: hub.modified || '2026-07-02',
+      author: {
+        '@type': 'Organization',
+        name: 'MealPrep.org.uk',
+        url: 'https://www.mealprep.org.uk/about',
+        email: SITE_CONTACT_EMAIL,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'MealPrep.org.uk',
+        url: 'https://www.mealprep.org.uk',
+        email: SITE_CONTACT_EMAIL,
+      },
       citation: sources.map(source => source.url),
       isPartOf: {
         '@type': 'WebSite',

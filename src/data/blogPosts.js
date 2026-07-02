@@ -87,8 +87,8 @@ export const blogPostsData = {
 
   'best-low-calorie-foods-uk': {
     published: '2026-05-28',
-    modified: '2026-06-17',
-    reviewed: '17 June 2026',
+    modified: '2026-07-02',
+    reviewed: '2 July 2026',
     title: 'Low Calorie Foods UK: 80 Filling Tesco, Aldi & Asda Picks',
     description: 'Best low calorie foods UK: high-protein, high-fibre, ready-to-eat and supermarket staples for weight loss, with 1500 calorie meal plan links.',
     h1: 'Low Calorie Foods UK: Filling Supermarket Picks',
@@ -117,6 +117,17 @@ export const blogPostsData = {
           { text: '.' },
         ],
       },
+      {
+        parts: [
+          { text: 'For a printable low-calorie week, start with the ' },
+          { label: '1500 calorie meal plan hub', to: '/meal-plans/1500-calorie' },
+          { text: ', compare ' },
+          { label: 'weight loss meal plans', to: '/meal-plans/weight-loss' },
+          { text: ', or open the ' },
+          { label: 'low calorie shopping list', to: '/meal-plans/low-calorie-shopping-list' },
+          { text: ' for plan pages with grouped baskets.' },
+        ],
+      },
     ],
     sections: [
       {
@@ -133,6 +144,21 @@ export const blogPostsData = {
             ['Filling carbs', 'Oats, potatoes, rice, wholemeal wraps, lentils, beans', 'Keeps meals realistic and easier to repeat than salad-only plans'],
             ['Ready-to-eat helpers', 'Soup, pre-cooked chicken, boiled eggs, protein yogurt, salad bowls', 'Useful when time is the main reason plans fail'],
             ['Snacks', 'Fruit, skyr, cottage cheese, boiled eggs, popcorn, veg sticks', 'Helps bridge meals without turning snacks into a second dinner'],
+          ],
+        },
+      },
+      {
+        h2: 'Best low calorie foods by UK shopping job',
+        paragraphs: [
+          'Searchers usually need one of three things: a quick basket idea, a full printable plan, or a swap for a meal they already buy. Choose the food list by job first, then move into a plan page when you need quantities and a shopping list.',
+        ],
+        table: {
+          headers: ['Need', 'Use these foods', 'Best next page'],
+          rows: [
+            ['Simple 1500 calorie week', 'Greek yogurt, oats, eggs, chicken, tuna, potatoes, frozen veg, fruit', '1500 calorie meal plan hub'],
+            ['Cheap low calorie basket', 'Eggs, lentils, beans, frozen chicken, soup, rice, salad bags', 'Low calorie shopping list'],
+            ['High protein low calorie', 'Chicken breast, prawns, tuna, skyr, cottage cheese, tofu, turkey mince', 'High protein meal plans'],
+            ['No-cook backup', 'Soup, salad bowls, cooked chicken, boiled eggs, skyr, fruit, tuna pouches', 'Low calorie ready meals guide'],
           ],
         },
       },
@@ -519,11 +545,23 @@ export const blogPostsData = {
 
   'best-cheap-high-protein-foods-uk': {
     published: '2026-05-28',
-    modified: '2026-06-23',
+    modified: '2026-07-02',
+    reviewed: '2 July 2026',
     title: 'Cheap Protein UK: Best Budget Protein Sources in Supermarkets',
     description: 'Cheap protein UK guide: eggs, tuna, lentils, Greek yogurt, chicken, tofu and beans ranked for budget meal prep and high-protein shopping.',
     h1: 'Cheap Protein UK: Budget Protein Sources for Meal Prep',
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets, the best cheap protein usually comes from ordinary staples: eggs, tinned fish, Greek yogurt, lentils, beans, tofu, frozen chicken and cottage cheese. This guide ranks the options by usefulness for budget meal prep, not just headline protein grams.',
+    sources: [
+      {
+        label: 'NHS Eatwell Guide',
+        url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/',
+      },
+      {
+        label: 'NHS balanced diet guidance',
+        url: 'https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eating-a-balanced-diet/',
+      },
+    ],
+    trustNote: 'Protein and price examples are general UK supermarket planning estimates. Check current shelf prices, pack sizes and labels before shopping.',
     contextualLinks: [
       {
         parts: [
@@ -534,6 +572,17 @@ export const blogPostsData = {
           { text: ', or use ' },
           { label: 'protein porridge breakfasts', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
           { text: '.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For a full weekly basket, use the ' },
+          { label: 'high protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
+          { text: ', compare ' },
+          { label: 'cheap high-protein meal plans', to: '/meal-plans/high-protein' },
+          { text: ', or open the ' },
+          { label: 'budget bodybuilding hub', to: '/meal-plans/budget-bodybuilding' },
+          { text: ' if the goal is muscle gain on a tighter shop.' },
         ],
       },
     ],
@@ -551,6 +600,21 @@ export const blogPostsData = {
             ['No-cook lunch', 'Tinned tuna, sardines, cottage cheese', 'Jackets, wraps, salad boxes'],
             ['Batch cooking', 'Frozen chicken, turkey mince, tofu', 'Chilli, curry, rice boxes'],
             ['Vegetarian budget', 'Lentils, beans, tofu, eggs, yogurt', 'Dhal, soups, burrito bowls'],
+          ],
+        },
+      },
+      {
+        h2: 'Cheap protein by search intent',
+        paragraphs: [
+          'The cheapest protein source is not always the best answer. A student batch-cook, a low-calorie lunch box and a muscle-gain basket need different staples, so use intent before choosing the product.',
+        ],
+        table: {
+          headers: ['Intent', 'Best cheap protein choices', 'Best next page'],
+          rows: [
+            ['Cheap high protein meal prep', 'Eggs, tuna, frozen chicken, lentils, beans, skyr', 'High protein meal plans'],
+            ['Budget bodybuilding', 'Oats, milk, eggs, chicken thighs, mince, rice, yogurt', 'Budget bodybuilding hub'],
+            ['Low calorie high protein', 'Chicken breast, tuna, prawns, cottage cheese, tofu, turkey mince', '1500 calorie meal plans'],
+            ['Vegetarian budget protein', 'Eggs, Greek yogurt, cottage cheese, tofu, lentils, beans', 'Vegetarian meal plans'],
           ],
         },
       },
