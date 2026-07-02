@@ -7,6 +7,10 @@ import Home from './pages/Home.jsx';
 import MealPlanPage from './pages/MealPlanPage.jsx';
 import BlogPost from './pages/BlogPost.jsx';
 import Stickers from './pages/Stickers.jsx';
+import About from './pages/About.jsx';
+import Contact from './pages/Contact.jsx';
+import Privacy from './pages/Privacy.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,7 +26,10 @@ export default function App() {
             <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/stickers" element={<Stickers />} />
-            <Route path="*" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

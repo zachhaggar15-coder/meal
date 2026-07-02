@@ -42,6 +42,10 @@ const ROUTES = [
   // Meal plan pages — new supermarket low-calorie
   '/meal-plan/sainsburys-low-calorie-meal-plan',
   '/meal-plan/morrisons-low-calorie-meal-plan',
+  // Trust pages
+  '/about',
+  '/contact',
+  '/privacy',
   // Product page
   '/stickers',
   // Blog posts

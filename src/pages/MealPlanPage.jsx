@@ -55,6 +55,15 @@ export default function MealPlanPage() {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk/' },
+        { '@type': 'ListItem', position: 2, name: 'Meal Plans', item: 'https://www.mealprep.org.uk/#popular-plans' },
+        { '@type': 'ListItem', position: 3, name: data.h1 },
+      ],
+    },
   ];
 
   return (

@@ -10,7 +10,27 @@ import Footer from '../components/Footer.jsx';
 const homeJsonLd = [
   {
     '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': 'https://www.mealprep.org.uk/#organization',
+    name: 'MealPrep.org.uk',
+    url: 'https://www.mealprep.org.uk',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.mealprep.org.uk/favicon.svg',
+    },
+    description:
+      'Free UK meal plan generator and library of calorie-controlled, high-protein meal plans built around UK supermarket ingredients.',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'hello@mealprep.org.uk',
+      contactType: 'customer support',
+      url: 'https://www.mealprep.org.uk/contact',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
     '@type': 'WebSite',
+    publisher: { '@id': 'https://www.mealprep.org.uk/#organization' },
     name: 'MealPrep.org.uk — Free UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk',
     description: 'Free UK meal plan generator for weight loss. Create personalised 7-day meal plans by calorie target, diet type, and supermarket.',

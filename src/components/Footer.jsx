@@ -26,6 +26,15 @@ export default function Footer() {
         </div>
 
         <div className="footer-col">
+          <h4>About</h4>
+          <ul>
+            <li><Link to="/about">About Us</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/privacy">Privacy Policy</Link></li>
+          </ul>
+        </div>
+
+        <div className="footer-col">
           <h4>Weight Loss Guides</h4>
           <ul>
             <li><Link to="/blog/how-to-build-a-calorie-deficit">Calorie Deficit Guide</Link></li>

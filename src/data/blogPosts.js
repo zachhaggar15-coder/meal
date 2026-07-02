@@ -8,6 +8,10 @@ export const blogPostsData = {
     h1: 'How to Build a Calorie Deficit for Sustainable Weight Loss',
     datePublished: '2025-09-15',
     dateModified: '2026-05-01',
+    sources: [
+      { label: 'NHS — Managing your weight', url: 'https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/' },
+      { label: 'NHS — BMI healthy weight calculator', url: 'https://www.nhs.uk/health-assessment-tools/calculate-your-body-mass-index/' },
+    ],
     readingTime: 8,
     faq: [
       { q: 'How big should my calorie deficit be to lose weight?', a: 'A deficit of 300–500 calories per day is the recommended sweet spot. This produces roughly 0.3–0.5 kg of fat loss per week without risking muscle loss or unsustainable hunger. The NHS advises cutting no more than 600 calories per day.' },
@@ -656,6 +660,10 @@ export const blogPostsData = {
     h1: '1500 vs 1800 vs 2000 Calorie Meal Plans: Which Is Right for You?',
     datePublished: '2026-01-20',
     dateModified: '2026-05-01',
+    sources: [
+      { label: 'NHS — The Eatwell Guide', url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/the-eatwell-guide/' },
+      { label: 'NHS — Managing your weight', url: 'https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/' },
+    ],
     readingTime: 7,
     faq: [
       { q: 'Should I eat 1500 or 1800 calories to lose weight?', a: '1500 calories works best for smaller or less active people who want to lose weight faster. 1800 calories suits those who are more active or find 1500 too restrictive. Both create a meaningful calorie deficit for most adults — choose the one you can sustain.' },
@@ -732,6 +740,10 @@ export const blogPostsData = {
     h1: 'How Much Protein Do You Need When Dieting?',
     datePublished: '2026-02-01',
     dateModified: '2026-05-01',
+    sources: [
+      { label: 'British Dietetic Association — Food facts', url: 'https://www.bda.uk.com/food-health/food-facts.html' },
+      { label: 'NHS — Eat well', url: 'https://www.nhs.uk/live-well/eat-well/' },
+    ],
     readingTime: 8,
     faq: [
       { q: 'How much protein do I need to lose fat and keep muscle?', a: 'Most research supports eating 1.6–2.2 g of protein per kg of body weight when in a calorie deficit. For a 75 kg person, that is 120–165 g of protein per day. Higher intakes are recommended for those doing resistance training.' },
@@ -880,6 +892,10 @@ export const blogPostsData = {
     h1: 'How Many Calories Do You Need to Lose Weight?',
     datePublished: '2026-03-01',
     dateModified: '2026-05-01',
+    sources: [
+      { label: 'NHS — What should my daily intake of calories be?', url: 'https://www.nhs.uk/common-health-questions/food-and-diet/what-should-my-daily-intake-of-calories-be/' },
+      { label: 'NHS — BMI healthy weight calculator', url: 'https://www.nhs.uk/health-assessment-tools/calculate-your-body-mass-index/' },
+    ],
     readingTime: 9,
     faq: [
       { q: 'How many calories should I eat to lose 1 kg per week?', a: 'To lose 1 kg per week you need a deficit of approximately 7,700 calories over seven days — around 1,100 calories per day. This is aggressive and not recommended for most people. A more sustainable approach is a 500-calorie deficit (0.5 kg/week).' },
@@ -991,6 +1007,10 @@ export const blogPostsData = {
     h1: 'How to Lose Weight Fast in the UK — Safe, Evidence-Based Methods',
     datePublished: '2026-03-15',
     dateModified: '2026-05-01',
+    sources: [
+      { label: 'NHS — Lose weight (Better Health)', url: 'https://www.nhs.uk/better-health/lose-weight/' },
+      { label: 'NHS — Managing your weight', url: 'https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/' },
+    ],
     readingTime: 10,
     faq: [
       { q: 'How quickly can I safely lose weight in the UK?', a: 'Safe weight loss is typically 0.5–1 kg per week for most adults. Faster rates increase the risk of muscle loss, nutrient deficiencies, and rebound weight gain. Very low-calorie diets under medical supervision can produce faster results safely.' },

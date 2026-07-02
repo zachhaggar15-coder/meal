@@ -47,6 +47,15 @@ export default function BlogPost() {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     }] : []),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.mealprep.org.uk/blog' },
+        { '@type': 'ListItem', position: 3, name: data.h1 },
+      ],
+    },
   ];
 
   return (
@@ -69,6 +78,8 @@ export default function BlogPost() {
         <article>
           <h1>{data.h1}</h1>
           <p className="article-meta">
+            By the <Link to="/about">MealPrep.org.uk team</Link>
+            {' · '}
             <time dateTime={data.datePublished ?? '2025-09-01'}>
               {new Date(data.datePublished ?? '2025-09-01').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
             </time>
@@ -134,6 +145,19 @@ export default function BlogPost() {
               )}
             </section>
           ))}
+
+          {data.sources?.length > 0 && (
+            <section className="article-sources">
+              <h2>Sources</h2>
+              <ul className="content-bullets">
+                {data.sources.map((src, i) => (
+                  <li key={i}>
+                    <a href={src.url} target="_blank" rel="noopener noreferrer">{src.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {data.faq?.length > 0 && (
             <div className="faq">
