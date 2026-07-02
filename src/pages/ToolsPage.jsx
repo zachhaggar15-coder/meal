@@ -35,6 +35,118 @@ const MARKET_BASKET_BASE = {
   iceland: { label: 'Iceland', base: 37 },
 };
 
+const DEFAULT_FRIDGE_ROWS = [
+  { id: 1, name: 'Chicken breast', quantity: '200g' },
+  { id: 2, name: 'Cooked rice', quantity: '150g' },
+  { id: 3, name: 'Peppers', quantity: '1' },
+  { id: 4, name: 'Spinach', quantity: '2 handfuls' },
+];
+
+const DINNER_TEMPLATES = [
+  {
+    id: 'chicken-rice-bowl',
+    name: 'High-protein chicken rice bowl',
+    baseKcal: 640,
+    baseProtein: 48,
+    prep: '18 min',
+    sourcePlan: '/plans/aldi-high-protein-low-cal-1500',
+    sourceLabel: 'Aldi high-protein low-calorie plan',
+    keywords: ['chicken', 'turkey', 'rice', 'pepper', 'spinach', 'broccoli', 'beans', 'sweetcorn'],
+    staples: ['Soy sauce 1 tbsp', 'Greek yogurt 2 tbsp', 'Lemon juice 1 tsp'],
+    desc: 'A fast bowl built from lean protein, a measured carb portion and whatever veg is already open.',
+    recipe: [
+      'Slice the protein and cook it in a hot pan with salt, pepper and soy sauce.',
+      'Warm the rice or potato portion and fold through the veg until hot.',
+      'Top with yogurt, lemon juice and any chilli flakes you like.',
+    ],
+  },
+  {
+    id: 'tuna-pasta-salad',
+    name: 'Tuna pasta protein salad',
+    baseKcal: 590,
+    baseProtein: 42,
+    prep: '12 min',
+    sourcePlan: '/meal-plans/high-protein-shopping-list',
+    sourceLabel: 'high-protein shopping list plan',
+    keywords: ['tuna', 'salmon', 'pasta', 'sweetcorn', 'cucumber', 'tomato', 'yogurt', 'lettuce'],
+    staples: ['Light mayo or yogurt 1 tbsp', 'Lemon juice 1 tsp', 'Black pepper'],
+    desc: 'A cold or warm dinner that turns tins, leftover pasta and salad veg into a filling high-protein plate.',
+    recipe: [
+      'Cook or warm the pasta portion, then drain well.',
+      'Mix tuna with yogurt or light mayo, lemon juice and black pepper.',
+      'Toss with chopped veg and serve with extra salad leaves if you have them.',
+    ],
+  },
+  {
+    id: 'egg-potato-frittata',
+    name: 'Egg, potato and veg frittata',
+    baseKcal: 560,
+    baseProtein: 34,
+    prep: '20 min',
+    sourcePlan: '/meal-plans/vegetarian',
+    sourceLabel: 'vegetarian meal plan hub',
+    keywords: ['egg', 'eggs', 'potato', 'cheese', 'spinach', 'mushroom', 'pepper', 'onion'],
+    staples: ['Eggs 3', 'Milk 30ml', 'Cheddar 20g'],
+    desc: 'A cheap skillet dinner for eggs, leftover potato and veg that needs using up.',
+    recipe: [
+      'Fry the veg and cooked potato until browned at the edges.',
+      'Whisk eggs with milk, salt and pepper, then pour into the pan.',
+      'Scatter over cheese and cook gently until set, finishing under the grill if needed.',
+    ],
+  },
+  {
+    id: 'bean-chilli',
+    name: 'Bean and tomato chilli bowl',
+    baseKcal: 620,
+    baseProtein: 31,
+    prep: '22 min',
+    sourcePlan: '/meal-plans/budget-shopping-list',
+    sourceLabel: 'budget shopping list plan',
+    keywords: ['beans', 'kidney', 'chickpea', 'lentil', 'tomato', 'rice', 'quorn', 'mince', 'pepper'],
+    staples: ['Chopped tomatoes 200g', 'Chilli powder 1 tsp', 'Rice 120g cooked'],
+    desc: 'A budget dinner that leans on beans, tomatoes and a measured rice portion.',
+    recipe: [
+      'Simmer beans, tomatoes, chopped veg and chilli powder for 12 to 15 minutes.',
+      'Add mince, Quorn or lentils if you have them and cook until piping hot.',
+      'Serve over rice with yogurt or grated cheese if it fits your target.',
+    ],
+  },
+  {
+    id: 'tofu-stir-fry',
+    name: 'Tofu noodle stir-fry',
+    baseKcal: 610,
+    baseProtein: 36,
+    prep: '16 min',
+    sourcePlan: '/meal-plans/vegan',
+    sourceLabel: 'vegan meal plan hub',
+    keywords: ['tofu', 'noodles', 'rice', 'broccoli', 'carrot', 'pepper', 'edamame', 'cabbage'],
+    staples: ['Soy sauce 1 tbsp', 'Peanut butter 1 tsp', 'Garlic 1 clove'],
+    desc: 'A plant-based dinner that uses tofu, noodles or rice and crunchy fridge veg.',
+    recipe: [
+      'Press and cube the tofu, then fry until golden.',
+      'Add sliced veg and stir-fry on a high heat for 3 to 4 minutes.',
+      'Toss through noodles or rice with soy sauce, garlic and a little peanut butter.',
+    ],
+  },
+  {
+    id: 'wrap-pizza',
+    name: 'Loaded wrap pizza',
+    baseKcal: 540,
+    baseProtein: 33,
+    prep: '10 min',
+    sourcePlan: '/meal-plans/low-calorie-shopping-list',
+    sourceLabel: 'low-calorie shopping list plan',
+    keywords: ['wrap', 'tortilla', 'cheese', 'ham', 'chicken', 'tomato', 'pepper', 'mushroom'],
+    staples: ['Tortilla wrap 1', 'Passata 3 tbsp', 'Mozzarella 40g'],
+    desc: 'A quick low-effort dinner for wraps, passata, cheese and leftover protein or veg.',
+    recipe: [
+      'Spread passata over the wrap and add sliced toppings.',
+      'Scatter over cheese and season with pepper and mixed herbs.',
+      'Bake or air-fry until the edges are crisp and the cheese has melted.',
+    ],
+  },
+];
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -43,7 +155,7 @@ const jsonLd = [
     url: 'https://www.mealprep.org.uk/tools',
     applicationCategory: 'HealthApplication',
     operatingSystem: 'Any',
-    description: 'Free UK meal prep tools for calorie targets, protein targets, shopping budgets and meal prep container planning.',
+    description: 'Free UK meal prep tools for fridge dinner ideas, calorie targets, protein targets, shopping budgets and meal prep container planning.',
   },
   {
     '@context': 'https://schema.org',
@@ -55,6 +167,14 @@ const jsonLd = [
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Yes. Choose a matching plan, then use the export or print PDF section on the plan page to print the full week and shopping list.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How does the fridge dinner tool work?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'It runs in the browser, matches your ingredients and calorie target against premade meal-prep recipe patterns, then returns three dinner ideas that can optionally be edited with AI.',
         },
       },
       {
@@ -89,6 +209,12 @@ export default function ToolsPage() {
   const [shopDays, setShopDays] = useState(7);
   const [highProtein, setHighProtein] = useState(true);
 
+  const [fridgeRows, setFridgeRows] = useState(DEFAULT_FRIDGE_ROWS);
+  const [dinnerCalories, setDinnerCalories] = useState(650);
+  const [dinnerOptions, setDinnerOptions] = useState(() => generateDinnerOptions(DEFAULT_FRIDGE_ROWS, 650));
+  const [aiPrompts, setAiPrompts] = useState({});
+  const [aiStatus, setAiStatus] = useState({ id: '', message: '', busy: false });
+
   const calorieResult = useMemo(() => {
     const bmr = sex === 'male'
       ? (10 * weight) + (6.25 * height) - (5 * age) + 5
@@ -116,6 +242,73 @@ export default function ToolsPage() {
     return Math.round(base * dayFactor * proteinFactor * householdFactor);
   }, [highProtein, market, people, shopDays]);
 
+  function updateFridgeRow(id, field, value) {
+    setFridgeRows(rows => rows.map(row => (
+      row.id === id ? { ...row, [field]: value } : row
+    )));
+  }
+
+  function addFridgeRow() {
+    const nextId = fridgeRows.reduce((max, row) => Math.max(max, row.id), 0) + 1;
+    setFridgeRows(rows => [...rows, { id: nextId, name: '', quantity: '' }]);
+  }
+
+  function removeFridgeRow(id) {
+    setFridgeRows(rows => rows.length <= 1 ? rows : rows.filter(row => row.id !== id));
+  }
+
+  function handleDinnerGenerate(event) {
+    event.preventDefault();
+    const options = generateDinnerOptions(fridgeRows, dinnerCalories);
+    setDinnerOptions(options);
+    setAiStatus({ id: '', message: 'Built three dinners from your current fridge list.', busy: false });
+  }
+
+  function updateAiPrompt(id, value) {
+    setAiPrompts(prompts => ({ ...prompts, [id]: value }));
+  }
+
+  async function editDinnerWithAi(option) {
+    const prompt = (aiPrompts[option.id] || '').trim();
+    if (!prompt) {
+      setAiStatus({ id: option.id, message: 'Add a short change first, such as make it vegetarian or lower calorie.', busy: false });
+      return;
+    }
+
+    setAiStatus({ id: option.id, message: 'Asking AI to edit this dinner...', busy: true });
+
+    try {
+      const response = await fetch('/api/edit-meal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ meal: option, prompt }),
+      });
+      const data = await response.json();
+      if (!response.ok || !data?.meal) {
+        throw new Error(data?.error || 'Could not edit the meal.');
+      }
+
+      setDinnerOptions(options => options.map(item => (
+        item.id === option.id
+          ? {
+              ...item,
+              ...data.meal,
+              id: item.id,
+              sourcePlan: item.sourcePlan,
+              sourceLabel: item.sourceLabel,
+            }
+          : item
+      )));
+      setAiStatus({ id: option.id, message: 'Updated this dinner with AI.', busy: false });
+    } catch (error) {
+      setAiStatus({
+        id: option.id,
+        message: error.message || 'AI edit is unavailable right now. The rule-based options still work locally.',
+        busy: false,
+      });
+    }
+  }
+
   return (
     <>
       <SEO
@@ -137,11 +330,126 @@ export default function ToolsPage() {
           <span className="offer-kicker">Free meal prep calculators</span>
           <h1>UK Meal Prep Tools</h1>
           <p className="content-intro">
-            Estimate a daily calorie target, protein range, shopping budget and container count,
-            then jump straight to printable meal plans with shopping lists.
+            Build dinner from what is already in your fridge, estimate a daily calorie target,
+            check protein, plan your budget and jump to printable meal plans with shopping lists.
           </p>
           <PageHeroVisual visual={SITE_VISUALS.tools} className="tools-hero-visual" priority />
         </header>
+
+        <section className="fridge-tool-panel" aria-labelledby="fridge-dinner-heading">
+          <div className="fridge-tool-copy">
+            <span className="offer-kicker">Client-side dinner builder</span>
+            <h2 id="fridge-dinner-heading">Turn fridge ingredients into dinner</h2>
+            <p>
+              Add ingredients and rough quantities, choose a calorie target, and the tool makes three dinners from
+              rule-based premade recipe patterns. Each option links to a related plan or recipe hub, and you can ask AI
+              to change one after it is made.
+            </p>
+          </div>
+
+          <form className="fridge-tool-form" onSubmit={handleDinnerGenerate}>
+            <div className="fridge-row-head" aria-hidden="true">
+              <span>Ingredient</span>
+              <span>Quantity</span>
+              <span> </span>
+            </div>
+            <div className="fridge-rows">
+              {fridgeRows.map((row, index) => (
+                <div className="fridge-row" key={row.id}>
+                  <input
+                    aria-label={`Ingredient ${index + 1}`}
+                    value={row.name}
+                    onChange={event => updateFridgeRow(row.id, 'name', event.target.value)}
+                    placeholder="Chicken breast"
+                  />
+                  <input
+                    aria-label={`Quantity for ingredient ${index + 1}`}
+                    value={row.quantity}
+                    onChange={event => updateFridgeRow(row.id, 'quantity', event.target.value)}
+                    placeholder="200g"
+                  />
+                  <button type="button" className="fridge-remove-btn" onClick={() => removeFridgeRow(row.id)}>
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="fridge-tool-controls">
+              <button type="button" className="btn-secondary" onClick={addFridgeRow}>Add ingredient</button>
+              <NumberField
+                label="Dinner target"
+                value={dinnerCalories}
+                onChange={setDinnerCalories}
+                min={350}
+                max={1200}
+                suffix="kcal"
+              />
+              <button type="submit" className="btn-primary">Make 3 dinners</button>
+            </div>
+          </form>
+
+          {aiStatus.message && !aiStatus.id && (
+            <p className="fridge-status" role="status">{aiStatus.message}</p>
+          )}
+
+          <div className="fridge-options" aria-live="polite">
+            {dinnerOptions.map((option, index) => (
+              <article className="fridge-option-card" key={option.id}>
+                <div className="fridge-option-head">
+                  <span className="lime-tag">Option {index + 1}</span>
+                  <span>{option.kcal} kcal</span>
+                </div>
+                <h3>{option.name}</h3>
+                <p>{option.desc}</p>
+                <div className="fridge-option-meta">
+                  <span>{option.protein}g protein</span>
+                  <span>{option.prep}</span>
+                  <Link to={option.sourcePlan}>Base recipe: {option.sourceLabel}</Link>
+                </div>
+                <details className="fridge-recipe">
+                  <summary>View recipe and ingredients</summary>
+                  <div className="fridge-recipe-grid">
+                    <div>
+                      <strong>Ingredients</strong>
+                      <ul>
+                        {asList(option.ingredients).map(item => <li key={item}>{item}</li>)}
+                      </ul>
+                    </div>
+                    <div>
+                      <strong>Steps</strong>
+                      <ol>
+                        {asList(option.recipe).map(step => <li key={step}>{step}</li>)}
+                      </ol>
+                    </div>
+                  </div>
+                </details>
+                <div className="ai-edit-box">
+                  <label>
+                    <span>Edit this option with AI</span>
+                    <textarea
+                      value={aiPrompts[option.id] || ''}
+                      onChange={event => updateAiPrompt(option.id, event.target.value)}
+                      placeholder="Example: make it vegetarian and keep it under 550 kcal"
+                      rows={3}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => editDinnerWithAi(option)}
+                    disabled={aiStatus.busy}
+                  >
+                    {aiStatus.busy && aiStatus.id === option.id ? 'Editing...' : 'Edit with AI'}
+                  </button>
+                  {aiStatus.id === option.id && aiStatus.message && (
+                    <p className="fridge-status" role="status">{aiStatus.message}</p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <PopularSearches
           title="Popular UK planning shortcuts"
@@ -254,6 +562,91 @@ export default function ToolsPage() {
       <Footer />
     </>
   );
+}
+
+function generateDinnerOptions(rows, targetCalories) {
+  const ingredients = normaliseFridgeRows(rows);
+  const calories = clamp(Number(targetCalories), 350, 1200);
+  const ranked = DINNER_TEMPLATES
+    .map((template, index) => ({
+      template,
+      index,
+      score: scoreDinnerTemplate(template, ingredients),
+    }))
+    .sort((a, b) => (b.score - a.score) || (a.index - b.index));
+
+  return ranked.slice(0, 3).map(({ template }, index) => (
+    buildDinnerOption(template, ingredients, calories, index)
+  ));
+}
+
+function normaliseFridgeRows(rows) {
+  return rows
+    .map(row => ({
+      name: (row.name || '').trim(),
+      quantity: (row.quantity || '').trim(),
+    }))
+    .filter(row => row.name)
+    .map(row => ({
+      ...row,
+      search: `${row.name} ${row.quantity}`.toLowerCase(),
+    }));
+}
+
+function scoreDinnerTemplate(template, ingredients) {
+  if (!ingredients.length) return 1;
+
+  return ingredients.reduce((score, ingredient) => {
+    const matched = template.keywords.some(keyword => {
+      const keywordText = keyword.toLowerCase();
+      const ingredientText = ingredient.name.toLowerCase();
+      return ingredient.search.includes(keywordText) || keywordText.includes(ingredientText);
+    });
+    return score + (matched ? 4 : 0.5);
+  }, 0);
+}
+
+function buildDinnerOption(template, ingredients, targetCalories, index) {
+  const calorieOffsets = [-50, 0, 50];
+  const kcal = clamp(Math.round((targetCalories + calorieOffsets[index]) / 25) * 25, 350, 1200);
+  const factor = Math.max(0.75, Math.min(1.35, kcal / template.baseKcal));
+  const matched = ingredients.filter(ingredient => (
+    template.keywords.some(keyword => ingredient.search.includes(keyword.toLowerCase()))
+  ));
+  const selected = (matched.length ? matched : ingredients).slice(0, 4);
+  const fridgeIngredients = selected.map(formatFridgeIngredient);
+  const pantryIngredients = template.staples.slice(0, Math.max(3, 7 - fridgeIngredients.length));
+  const optionIngredients = [...fridgeIngredients, ...pantryIngredients].slice(0, 8);
+
+  return {
+    id: template.id,
+    type: 'Dinner',
+    name: template.name,
+    kcal,
+    protein: Math.max(18, Math.round((template.baseProtein * Math.sqrt(factor)) + (matched.length * 1.5))),
+    prep: template.prep,
+    desc: template.desc,
+    ingredients: optionIngredients,
+    portion_size: optionIngredients.slice(0, 4).join(', '),
+    recipe: template.recipe,
+    sourcePlan: template.sourcePlan,
+    sourceLabel: template.sourceLabel,
+  };
+}
+
+function formatFridgeIngredient(row) {
+  return row.quantity ? `${row.name} ${row.quantity}` : row.name;
+}
+
+function asList(value) {
+  if (Array.isArray(value)) {
+    return value.map(item => String(item).trim()).filter(Boolean);
+  }
+  if (!value) return [];
+  return String(value)
+    .split(/\n|\. /)
+    .map(item => item.trim().replace(/\.$/, ''))
+    .filter(Boolean);
 }
 
 function NumberField({ label, value, onChange, min, max, suffix }) {

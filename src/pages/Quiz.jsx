@@ -118,7 +118,7 @@ export default function Quiz() {
   const [customCalorieError, setCustomCalorieError] = useState('');
 
   const current = STEPS[step];
-  const progress = Math.round((step / STEPS.length) * 100);
+  const progress = Math.round(((step + 1) / STEPS.length) * 100);
   const isCustomCaloriesSelected = current.id === 'calories' && (
     answers.calories === 'custom' ||
     (answers.calories && !current.options.some(opt => opt.value === answers.calories))

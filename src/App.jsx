@@ -42,13 +42,6 @@ function StripHomeParams() {
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Open sidebar by default on desktop after hydration
-  useEffect(() => {
-    if (window.matchMedia('(min-width: 769px)').matches) {
-      setSidebarOpen(true);
-    }
-  }, []);
-
   return (
     <>
       <ClickTracking />
