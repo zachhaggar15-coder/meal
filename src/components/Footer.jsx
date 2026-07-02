@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
-        <Link to="/" className="footer-brand">MEALPREP</Link>
+        <Link to="/" className="footer-brand">MealPrep</Link>
         <nav className="footer-links" aria-label="Footer navigation">
           {FOOTER_LINKS.map(link => (
             <Link key={link.to} to={link.to}>{link.label}</Link>

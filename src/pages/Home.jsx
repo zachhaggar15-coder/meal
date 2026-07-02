@@ -271,24 +271,24 @@ export default function Home() {
         <header className="home-hero">
           <SiteLogo variant="hero" className="home-hero-logo" />
           <h1 className="home-hero-h1">
-            Generate a weekly UK meal plan from supermarket ingredients
+            Eat well this week without the guesswork.
           </h1>
           <p className="home-hero-sub">
-            Answer a few questions about your goal, budget, supermarket, and diet. We'll match you with ready-made 7-day meal plans using ingredients you can buy from UK supermarkets.
+            A quiet, considered meal planner. Tell us your goal, budget and supermarket; we return a ready-made 7-day plan and a shopping list, priced to the pound.
           </p>
           <div className="home-hero-actions">
             <Link to="/quiz" className="btn-hero-primary">
-              Start the Quiz →
+              Start the quiz
             </Link>
             <Link to="/browse" className="btn-hero-secondary">
-              Browse All {PLAN_COUNT} Plans
+              Browse all plans
             </Link>
           </div>
           <div className="trust-row">
-            <span className="trust-badge">{PLAN_COUNT} ready-made plans</span>
-            <span className="trust-badge">Aldi · Tesco · Lidl · Asda · Morrisons</span>
-            <span className="trust-badge">Vegan · Vegetarian · Pescatarian</span>
-            <span className="trust-badge">Free, no sign-up</span>
+            <span className="trust-badge"><strong>1,000+</strong> ready-made plans</span>
+            <span className="trust-badge"><strong>7</strong> supermarkets</span>
+            <span className="trust-badge"><strong>£31</strong> avg weekly cost</span>
+            <span className="trust-badge"><strong>2 min</strong> to your match</span>
           </div>
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>

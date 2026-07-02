@@ -246,6 +246,138 @@ export default function PlanPage() {
     window.print();
   }
 
+  const planDaysSection = (
+    <section className="plan-days-section">
+      <h2>Your 7-Day Meal Plan</h2>
+
+      <div className="plan-day-tabs" role="tablist" aria-label="Select day">
+        {displayPlan.plan.map((d, i) => (
+          <button
+            key={d.day}
+            role="tab"
+            aria-selected={activeDayIdx === i}
+            aria-controls={`day-panel-${i}`}
+            className={`plan-day-tab ${activeDayIdx === i ? 'plan-day-tab--active' : ''}`}
+            onClick={() => setActiveDayIdx(i)}
+            type="button"
+          >
+            {d.day.slice(0, 3)}
+          </button>
+        ))}
+      </div>
+
+      <div
+        id={`day-panel-${activeDayIdx}`}
+        role="tabpanel"
+        className="plan-day-panel"
+      >
+        <div className="plan-day-header">
+          <h3 className="plan-day-name">{activeDay.day}</h3>
+          <div className="plan-day-totals">
+            <span>{activeDay.totals.kcal} kcal</span>
+            <span>{activeDay.totals.protein}g protein</span>
+          </div>
+        </div>
+
+        <div className="plan-meals-list">
+          {activeDay.meals.map((meal, mi) => (
+            <div className="plan-meal-card" key={mi}>
+              <div className="plan-meal-header">
+                <span className="plan-meal-type">{meal.type}</span>
+                <span className="plan-meal-macros">{meal.kcal} kcal · {meal.protein}g protein · {meal.prep}</span>
+              </div>
+              <h4 className="plan-meal-name">{meal.name}</h4>
+              {meal.desc && (
+                <p className="plan-meal-desc">{meal.desc}</p>
+              )}
+
+              {meal.recipe?.length > 0 && (
+                <details className="plan-meal-recipe">
+                  <summary>Recipe</summary>
+                  <ol>
+                    {meal.recipe.map((stepText, stepIdx) => (
+                      <li key={stepIdx}>{stepText}</li>
+                    ))}
+                  </ol>
+                </details>
+              )}
+
+              <button
+                className="plan-meal-edit-btn"
+                onClick={() => {
+                  setEditTarget({ dayIdx: activeDayIdx, mealIdx: mi });
+                  setEditPrompt('');
+                  setEditError('');
+                }}
+                type="button"
+              >
+                Edit this meal
+              </button>
+
+              {editTarget?.dayIdx === activeDayIdx && editTarget?.mealIdx === mi && (
+                <form className="plan-meal-edit-form" onSubmit={handleAiEdit}>
+                  <input
+                    className="plan-meal-edit-input"
+                    placeholder="e.g. make this vegetarian, remove tuna, swap for something cheaper..."
+                    value={editPrompt}
+                    onChange={e => setEditPrompt(e.target.value)}
+                    disabled={editLoading}
+                    autoFocus
+                  />
+                  <div className="plan-meal-edit-actions">
+                    <button
+                      className="plan-meal-edit-submit"
+                      type="submit"
+                      disabled={editLoading || !editPrompt.trim()}
+                    >
+                      {editLoading ? 'Updating...' : 'Apply edit'}
+                    </button>
+                    <button
+                      className="plan-meal-edit-cancel"
+                      type="button"
+                      onClick={() => setEditTarget(null)}
+                      disabled={editLoading}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                  {editError && <p className="plan-meal-edit-error">{editError}</p>}
+                  <p className="plan-meal-edit-hint">
+                    Try: "make it vegetarian", "remove eggs", "make it cheaper", "increase protein"
+                  </p>
+                </form>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  const shoppingListSection = (
+    <section className="plan-shopping-section">
+      <div className="plan-shopping-header">
+        <h2>Weekly Shopping List</h2>
+        <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
+          {shoppingCopyStatus || 'Copy shopping list'}
+        </button>
+      </div>
+      <p className="plan-shopping-note">Estimated cost: <strong>{plan.priceEstimate}/week</strong> for one person from {MKT_LABEL[plan.supermarket] || plan.supermarket}.</p>
+      <div className="shopping-list-grid">
+        {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
+          items.length > 0 ? (
+            <div className="shopping-cat" key={cat}>
+              <h3 className="shopping-cat-title">{catLabel(cat)}</h3>
+              <ul className="shopping-items">
+                {items.map((item, i) => <li key={i}>{item}</li>)}
+              </ul>
+            </div>
+          ) : null
+        )}
+      </div>
+    </section>
+  );
+
   return (
     <>
       <SEO
@@ -289,6 +421,9 @@ export default function PlanPage() {
             )}
           </div>
         )}
+
+        {planDaysSection}
+        {shoppingListSection}
 
         {/* Summary card */}
         <div className="plan-summary-card">
@@ -361,6 +496,8 @@ export default function PlanPage() {
           marketLabel={MKT_LABEL[plan.supermarket] || plan.supermarket}
         />
 
+        {false && (
+          <>
         {/* 7-Day Plan */}
         <section className="plan-days-section">
           <h2>Your 7-Day Meal Plan</h2>
@@ -494,6 +631,8 @@ export default function PlanPage() {
             )}
           </div>
         </section>
+          </>
+        )}
 
         <PlanContainerLinks plan={plan} />
 

@@ -125,6 +125,85 @@ export default function MealPlanPage() {
     },
   ];
 
+  const examplePlanSection = (
+    <section className="legacy-plan-primary">
+      <h2>Example 7-Day {data.planLabel} Meal Plan</h2>
+      <p>
+        Below is a sample week. Each day is planned to hit approximately{' '}
+        <strong>{data.targetCalories.toLocaleString()} calories</strong> with a strong protein
+        focus. Calorie and protein figures are estimates; weigh ingredients if you need
+        precision. Use the{' '}
+        <Link to="/" data-event="generator_cta_click" data-source-page={slug}>free generator</Link> to get a freshly personalised version.
+      </p>
+
+      <div className="example-plan">
+        {plan.map((day, i) => (
+          <div key={i} className="plan-day-card">
+            <h3>{day.day}</h3>
+            {day.meals.map((meal, j) => (
+              <div key={j} className="plan-meal">
+                <div className="plan-meal-header">
+                  <span className="meal-type">{meal.type}</span>
+                  <span className="plan-meal-name">{meal.name}</span>
+                  <span className="plan-meal-meta">
+                    {meal.kcal} kcal - {meal.protein}g protein - {meal.prep}
+                  </span>
+                </div>
+                <p className="plan-meal-desc">{meal.desc}</p>
+                {meal.portion_size && (
+                  <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
+                )}
+                {meal.recipe?.length > 0 && (
+                  <details className="plan-meal-recipe">
+                    <summary>Recipe</summary>
+                    <ol>
+                      {meal.recipe.map((stepText, stepIdx) => (
+                        <li key={stepIdx}>{stepText}</li>
+                      ))}
+                    </ol>
+                  </details>
+                )}
+                <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(i, j, newMeal)} />
+              </div>
+            ))}
+            <div className="plan-day-total">
+              Daily total:{' '}
+              <strong>{day.totals.kcal} kcal</strong> -{' '}
+              <strong>{day.totals.protein}g protein</strong>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {data.ctaPlacements?.afterPlan !== false && (
+        <GeneratorCTA sourcePage={slug} calories={data.targetCalories} compact />
+      )}
+    </section>
+  );
+
+  const shoppingListSection = (
+    <section className="legacy-shopping-primary">
+      <div className="plan-shopping-header">
+        <h2>Sample Weekly Shopping List</h2>
+        <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
+          {shoppingCopyStatus || 'Copy shopping list'}
+        </button>
+      </div>
+      <p>
+        Here is a sample shopping list to cover this 7-day plan. Estimated cost:{' '}
+        <strong>{data.priceEstimate}</strong>.
+      </p>
+      <div className="shop-grid">
+        {Object.entries(shoppingList).filter(([, items]) => items.length > 0).map(([group, items]) => (
+          <div key={group} className="shop-group">
+            <h4>{group.charAt(0).toUpperCase() + group.slice(1)}</h4>
+            <ul>{items.map((item, i) => <li key={i}>{item}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+
   return (
     <>
       <SEO
@@ -144,6 +223,9 @@ export default function MealPlanPage() {
 
         <SiteLogo variant="page" className="page-header-logo" />
         <h1>{data.h1}</h1>
+
+        {examplePlanSection}
+        {shoppingListSection}
 
         {/* Quick-stats summary card */}
         <div className="plan-summary-card">
@@ -301,6 +383,8 @@ export default function MealPlanPage() {
           </>
         )}
 
+        {false && (
+          <>
         <h2>Example 7-Day {data.planLabel} Meal Plan</h2>
         <p>
           Below is a sample week. Each day is planned to hit approximately{' '}
@@ -371,6 +455,8 @@ export default function MealPlanPage() {
             </div>
           ))}
         </div>
+          </>
+        )}
 
         {data.tescoSubstitutions && (
           <>

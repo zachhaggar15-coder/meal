@@ -5,7 +5,7 @@ const NAV_LINKS = [
   { to: '/browse', label: 'Plans' },
   { to: '/meal-plans/aldi', label: 'Supermarkets' },
   { to: '/blog', label: 'Guides' },
-  { to: '/tools', label: 'Tools' },
+  { to: '/about', label: 'About' },
 ];
 
 export default function Navbar({ onMenuToggle }) {
@@ -16,7 +16,7 @@ export default function Navbar({ onMenuToggle }) {
           <button className="nav-menu-toggle" onClick={onMenuToggle} aria-label="Open navigation menu" type="button">
             Menu
           </button>
-          <Link to="/" className="nav-brand" aria-label="MealPrep home">MEALPREP</Link>
+          <Link to="/" className="nav-brand" aria-label="MealPrep home">MealPrep</Link>
         </div>
 
         <div className="nav-links" aria-label={`Browse ${PLAN_COUNT} meal plans`}>
