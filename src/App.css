@@ -8249,3 +8249,439 @@ textarea {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Current page polish */
+.tools-hero--compact {
+  display: block;
+  max-width: 760px;
+}
+
+.tools-hero--compact .content-intro {
+  max-width: 720px;
+}
+
+@media (max-width: 640px) {
+  .fridge-tool-panel {
+    padding: 18px 14px;
+  }
+
+  .fridge-tool-controls .btn-primary,
+  .fridge-tool-controls .btn-secondary,
+  .fridge-row .fridge-remove-btn {
+    width: 100%;
+  }
+
+  .fridge-recipe-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile accessibility pass */
+.skip-link {
+  background: var(--lime);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-weight: 950;
+  left: 12px;
+  padding: 10px 14px;
+  position: fixed;
+  top: 10px;
+  transform: translateY(-140%);
+  transition: transform 140ms ease;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.layout-main:focus {
+  outline: none;
+}
+
+.nav-menu-toggle,
+.sidebar-close-btn,
+.sidebar-group-btn,
+.sidebar-link,
+.sidebar-top-link,
+.sidebar-quiz-cta,
+.btn-primary,
+.btn-secondary,
+.btn-hero-primary,
+.btn-hero-secondary,
+.nav-quiz-btn,
+.browse-reset,
+.browse-page-btn,
+.plan-day-tab,
+.fridge-remove-btn,
+.tools-print-links a,
+.popular-searches-links a,
+.exact-plan-link-list a,
+.browse-hub-links a,
+.search-opportunity-card-links a,
+.quick-answer-links a,
+.discovery-priority-list a {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.sidebar-close-btn {
+  align-items: center;
+  background: var(--editorial-paper);
+  border: 1px solid var(--editorial-line);
+  border-radius: 999px;
+  color: var(--editorial-ink);
+  display: none;
+  font-weight: 900;
+  justify-content: center;
+  margin: 0 14px 12px;
+  padding: 9px 14px;
+}
+
+.content-table-wrap {
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  overscroll-behavior-inline: contain;
+}
+
+.content-table {
+  min-width: 620px;
+}
+
+@media (max-width: 900px) {
+  .nav-inner {
+    min-height: 62px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-menu-toggle {
+    display: inline-flex;
+  }
+
+  .nav-quiz-btn {
+    padding-left: 14px;
+    padding-right: 14px;
+    white-space: nowrap;
+  }
+
+  .sidebar-close-btn {
+    display: inline-flex;
+  }
+
+  .sidebar {
+    max-width: min(390px, 92vw);
+  }
+}
+
+@media (max-width: 760px) {
+  .content-page,
+  .browse-page,
+  .plan-page,
+  .meal-plan-hub-page,
+  .choice-page,
+  .plan-chooser-page,
+  .container-hub-page,
+  .container-guide-page,
+  .blog-page,
+  .blog-post-page,
+  .tools-page,
+  .stickers-page,
+  .not-found-page {
+    padding: 26px 16px 56px;
+  }
+
+  .home-hero,
+  .how-it-works,
+  .home-faq,
+  .home-generator-section,
+  .popular-searches,
+  .search-opportunity-links,
+  .popular-guides,
+  .featured-plans {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .content-page h1,
+  .browse-header h1,
+  .plan-page-h1,
+  .meal-hub-title,
+  .choice-title,
+  .blog-page h1,
+  .blog-post-page h1,
+  .container-hub-page h1,
+  .container-guide-page h1,
+  .quiz-shell-h1,
+  .quiz-results-title,
+  .section-title {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .home-hero-h1 {
+    font-size: clamp(2.3rem, 11vw, 3.35rem);
+    line-height: 0.96;
+    overflow-wrap: anywhere;
+  }
+
+  .content-page h2,
+  .tool-panel h2,
+  .fridge-tool-copy h2,
+  .home-generator-section h2,
+  .home-faq h2,
+  .how-it-works h2 {
+    font-size: clamp(1.45rem, 6vw, 2rem);
+    line-height: 1.15;
+  }
+
+  .content-intro,
+  .browse-sub,
+  .plan-page-intro,
+  .quiz-shell-sub,
+  .quiz-results-subtitle,
+  .home-generator-sub,
+  .content-page p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .home-hero-actions,
+  .supermarket-index-actions,
+  .meal-hub-actions,
+  .plan-chooser-actions,
+  .featured-browse-cta,
+  .not-found-actions,
+  .tools-print-links,
+  .container-finder-actions,
+  .browse-pagination {
+    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-actions a,
+  .supermarket-index-actions a,
+  .meal-hub-actions a,
+  .plan-chooser-actions a,
+  .featured-browse-cta a,
+  .not-found-actions a,
+  .tools-print-links a,
+  .container-finder-actions a,
+  .browse-pagination button {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .featured-plan-links,
+  .browse-grid,
+  .meal-hub-grid,
+  .blog-grid,
+  .blog-card-grid,
+  .popular-guides-grid,
+  .search-opportunity-grid,
+  .meal-hub-supporting-grid,
+  .browse-hub-index-grid,
+  .shopping-list-grid,
+  .swaps-grid,
+  .tools-grid,
+  .fridge-options,
+  .related-plans-grid,
+  .shop-grid,
+  .example-plan,
+  .plan-chooser-grid,
+  .supermarket-index-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .featured-plan-link img,
+  .plan-chooser-card > img,
+  .supermarket-index-card img,
+  .blog-card-thumb {
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .plan-chooser-card > :not(img) {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .plan-chooser-card-head,
+  .plan-meal-header,
+  .plan-summary-grid,
+  .plan-share-box,
+  .fridge-row,
+  .fridge-row-head,
+  .fridge-tool-controls,
+  .tool-fields,
+  .tool-fields--two,
+  .browse-filter-row,
+  .quiz-custom-calories-row,
+  .quiz-macro-fields,
+  .fridge-recipe-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .fridge-row-head {
+    display: none;
+  }
+
+  .fridge-row input,
+  .tool-field input,
+  .tool-field select,
+  .browse-search,
+  .browse-filter-select,
+  .ai-edit-box textarea,
+  .custom-calorie-input,
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .plan-day-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 12px;
+    scroll-snap-type: x proximity;
+  }
+
+  .plan-day-tab {
+    flex: 0 0 auto;
+    min-width: 72px;
+    padding: 10px 13px;
+    scroll-snap-align: start;
+    text-align: center;
+  }
+
+  .plan-day-panel {
+    gap: 20px;
+  }
+
+  .plan-day-header {
+    padding: 0 0 14px;
+  }
+
+  .plan-meal-header {
+    align-items: start;
+    gap: 6px;
+  }
+
+  .plan-meal-macros {
+    text-align: left;
+    white-space: normal;
+  }
+
+  .browse-filter-meta {
+    align-items: stretch;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+
+  .browse-reset {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-page,
+  .browse-page,
+  .plan-page,
+  .meal-plan-hub-page,
+  .choice-page,
+  .plan-chooser-page,
+  .container-hub-page,
+  .container-guide-page,
+  .blog-page,
+  .blog-post-page,
+  .tools-page,
+  .stickers-page,
+  .not-found-page {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .nav-inner {
+    gap: 10px;
+  }
+
+  .nav-brand {
+    font-size: 0.92rem;
+  }
+
+  .nav-quiz-btn {
+    font-size: 0.78rem;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .home-hero {
+    padding: 34px 14px;
+  }
+
+  .trust-row,
+  .hiw-steps,
+  .quiz-options,
+  .quiz-options--wide {
+    grid-template-columns: 1fr !important;
+  }
+
+  .browse-filters,
+  .browse-filter-row,
+  .plan-day-tabs,
+  .plan-share-box,
+  .tools-print-section,
+  .container-tier-nav,
+  .tool-panel,
+  .fridge-tool-panel,
+  .fridge-option-card,
+  .browse-plan-card,
+  .result-card,
+  .meal-hub-card,
+  .blog-card,
+  .popular-guide-card,
+  .search-opportunity-card,
+  .plan-day-card,
+  .plan-meal,
+  .shop-group,
+  .metric-card {
+    padding: 16px;
+  }
+
+  .featured-plan-link span,
+  .supermarket-index-card span {
+    padding: 14px 16px;
+  }
+
+  .supermarket-index-card small {
+    padding: 0 16px 16px;
+  }
+
+  .popular-searches-links a,
+  .exact-plan-link-list a,
+  .browse-hub-links a,
+  .search-opportunity-card-links a,
+  .quick-answer-links a,
+  .discovery-priority-list a {
+    justify-content: center;
+    width: 100%;
+  }
+}

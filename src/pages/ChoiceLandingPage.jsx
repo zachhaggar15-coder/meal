@@ -12,7 +12,7 @@ import {
   GOAL_CHOOSER_ITEMS,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
-import { chooseChooserVisual, choosePlanVisual } from '../data/visualAssets.js';
+import { chooseChooserVisual, chooseNavigationCardVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -91,42 +91,52 @@ export default function ChoiceLandingPage({ mode }) {
         </header>
 
         <section className="plan-chooser-grid" aria-label={config.gridLabel}>
-          {cards.map(card => (
-            <article
-              key={card.key}
-              className={`plan-chooser-card${card.highlight ? ' plan-chooser-card--generic' : ''}`}
-            >
-              <img
-                src={choosePlanVisual(card.plan).src}
-                alt=""
-                width="1200"
-                height="675"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="plan-chooser-card-head">
-                <span className="plan-chooser-market">{card.label}</span>
-                <span className="plan-chooser-calories">
-                  {card.plan.calories.toLocaleString('en-GB')} kcal
-                </span>
-              </div>
-              <h2>{card.heading}</h2>
-              <p>{card.description}</p>
-              <div className="plan-chooser-meta">
-                <span>{marketLabel(card.plan.supermarket)}</span>
-                <span>{card.plan.priceEstimate}/week estimate</span>
-                <span>{card.plan.dietType === 'standard' ? 'Standard diet' : cap(card.plan.dietType)}</span>
-              </div>
-              <div className="plan-chooser-actions">
-                <Link className="btn-primary" to={`/plans/${card.plan.slug}`}>
-                  View plan
-                </Link>
-                <Link className="plan-chooser-change" to={card.changeUrl}>
-                  More options
-                </Link>
-              </div>
-            </article>
-          ))}
+          {cards.map(card => {
+            const cardVisual = mode === 'diet'
+              ? chooseSupermarketVisual(card.plan.supermarket)
+              : chooseNavigationCardVisual({
+                  label: card.heading,
+                  eyebrow: card.label,
+                  note: marketLabel(card.plan.supermarket),
+                  seed: `${mode}-${card.key}-${card.plan.slug}`,
+                });
+            return (
+              <article
+                key={card.key}
+                className={`plan-chooser-card${card.highlight ? ' plan-chooser-card--generic' : ''}`}
+              >
+                <img
+                  src={cardVisual.src}
+                  alt=""
+                  width={cardVisual.width || 1200}
+                  height={cardVisual.height || 675}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="plan-chooser-card-head">
+                  <span className="plan-chooser-market">{card.label}</span>
+                  <span className="plan-chooser-calories">
+                    {card.plan.calories.toLocaleString('en-GB')} kcal
+                  </span>
+                </div>
+                <h2>{card.heading}</h2>
+                <p>{card.description}</p>
+                <div className="plan-chooser-meta">
+                  <span>{marketLabel(card.plan.supermarket)}</span>
+                  <span>{card.plan.priceEstimate}/week estimate</span>
+                  <span>{card.plan.dietType === 'standard' ? 'Standard diet' : cap(card.plan.dietType)}</span>
+                </div>
+                <div className="plan-chooser-actions">
+                  <Link className="btn-primary" to={`/plans/${card.plan.slug}`}>
+                    View plan
+                  </Link>
+                  <Link className="plan-chooser-change" to={card.changeUrl}>
+                    More options
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </section>
 
         <section className="choice-index-note">

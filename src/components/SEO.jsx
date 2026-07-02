@@ -21,12 +21,10 @@ export default function SEO({
   jsonLd,
   ogType = 'website',
   ogImage,
-  twitterImage,
   robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
 }) {
   const url = cleanCanonicalUrl(canonical);
   const image = ogImage || `${DOMAIN}/og-preview.png`;
-  const twitterImg = twitterImage || image;
   const structuredData = [
     ORGANIZATION_JSON_LD,
     ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
@@ -51,12 +49,6 @@ export default function SEO({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:type" content="image/png" />
-
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={twitterImg} />
 
       {structuredData.map((item, i) => (
         <script key={i} type="application/ld+json">{JSON.stringify(item)}</script>

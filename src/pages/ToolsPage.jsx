@@ -4,9 +4,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
-import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
-import { SITE_VISUALS } from '../data/visualAssets.js';
 
 const ACTIVITY = {
   sedentary: { label: 'Mostly desk based', factor: 1.2 },
@@ -36,10 +34,7 @@ const MARKET_BASKET_BASE = {
 };
 
 const DEFAULT_FRIDGE_ROWS = [
-  { id: 1, name: 'Chicken breast', quantity: '200g' },
-  { id: 2, name: 'Cooked rice', quantity: '150g' },
-  { id: 3, name: 'Peppers', quantity: '1' },
-  { id: 4, name: 'Spinach', quantity: '2 handfuls' },
+  { id: 1, name: '', quantity: '' },
 ];
 
 const DINNER_TEMPLATES = [
@@ -211,7 +206,7 @@ export default function ToolsPage() {
 
   const [fridgeRows, setFridgeRows] = useState(DEFAULT_FRIDGE_ROWS);
   const [dinnerCalories, setDinnerCalories] = useState(650);
-  const [dinnerOptions, setDinnerOptions] = useState(() => generateDinnerOptions(DEFAULT_FRIDGE_ROWS, 650));
+  const [dinnerOptions, setDinnerOptions] = useState([]);
   const [aiPrompts, setAiPrompts] = useState({});
   const [aiStatus, setAiStatus] = useState({ id: '', message: '', busy: false });
 
@@ -259,6 +254,12 @@ export default function ToolsPage() {
 
   function handleDinnerGenerate(event) {
     event.preventDefault();
+    if (!normaliseFridgeRows(fridgeRows).length) {
+      setDinnerOptions([]);
+      setAiStatus({ id: '', message: 'Add at least one ingredient before building dinner ideas.', busy: false });
+      return;
+    }
+
     const options = generateDinnerOptions(fridgeRows, dinnerCalories);
     setDinnerOptions(options);
     setAiStatus({ id: '', message: 'Built three dinners from your current fridge list.', busy: false });
@@ -326,14 +327,15 @@ export default function ToolsPage() {
         </nav>
 
         <SiteLogo variant="page" className="page-header-logo" />
-        <header className="tools-hero">
-          <span className="offer-kicker">Free meal prep calculators</span>
-          <h1>UK Meal Prep Tools</h1>
-          <p className="content-intro">
-            Build dinner from what is already in your fridge, estimate a daily calorie target,
-            check protein, plan your budget and jump to printable meal plans with shopping lists.
-          </p>
-          <PageHeroVisual visual={SITE_VISUALS.tools} className="tools-hero-visual" priority />
+        <header className="tools-hero tools-hero--compact">
+          <div className="tools-hero-copy">
+            <span className="offer-kicker">Free meal prep calculators</span>
+            <h1>UK Meal Prep Tools</h1>
+            <p className="content-intro">
+              Build dinner from what is already in your fridge, estimate a daily calorie target,
+              check protein, plan your budget and jump to printable meal plans with shopping lists.
+            </p>
+          </div>
         </header>
 
         <section className="fridge-tool-panel" aria-labelledby="fridge-dinner-heading">
@@ -385,7 +387,7 @@ export default function ToolsPage() {
                 max={1200}
                 suffix="kcal"
               />
-              <button type="submit" className="btn-primary">Make 3 dinners</button>
+              <button type="submit" className="btn-primary">Build dinners</button>
             </div>
           </form>
 
@@ -393,62 +395,64 @@ export default function ToolsPage() {
             <p className="fridge-status" role="status">{aiStatus.message}</p>
           )}
 
-          <div className="fridge-options" aria-live="polite">
-            {dinnerOptions.map((option, index) => (
-              <article className="fridge-option-card" key={option.id}>
-                <div className="fridge-option-head">
-                  <span className="lime-tag">Option {index + 1}</span>
-                  <span>{option.kcal} kcal</span>
-                </div>
-                <h3>{option.name}</h3>
-                <p>{option.desc}</p>
-                <div className="fridge-option-meta">
-                  <span>{option.protein}g protein</span>
-                  <span>{option.prep}</span>
-                  <Link to={option.sourcePlan}>Base recipe: {option.sourceLabel}</Link>
-                </div>
-                <details className="fridge-recipe">
-                  <summary>View recipe and ingredients</summary>
-                  <div className="fridge-recipe-grid">
-                    <div>
-                      <strong>Ingredients</strong>
-                      <ul>
-                        {asList(option.ingredients).map(item => <li key={item}>{item}</li>)}
-                      </ul>
-                    </div>
-                    <div>
-                      <strong>Steps</strong>
-                      <ol>
-                        {asList(option.recipe).map(step => <li key={step}>{step}</li>)}
-                      </ol>
-                    </div>
+          {dinnerOptions.length > 0 && (
+            <div className="fridge-options" aria-live="polite">
+              {dinnerOptions.map((option, index) => (
+                <article className="fridge-option-card" key={option.id}>
+                  <div className="fridge-option-head">
+                    <span className="lime-tag">Option {index + 1}</span>
+                    <span>{option.kcal} kcal</span>
                   </div>
-                </details>
-                <div className="ai-edit-box">
-                  <label>
-                    <span>Edit this option with AI</span>
-                    <textarea
-                      value={aiPrompts[option.id] || ''}
-                      onChange={event => updateAiPrompt(option.id, event.target.value)}
-                      placeholder="Example: make it vegetarian and keep it under 550 kcal"
-                      rows={3}
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    onClick={() => editDinnerWithAi(option)}
-                    disabled={aiStatus.busy}
-                  >
-                    {aiStatus.busy && aiStatus.id === option.id ? 'Editing...' : 'Edit with AI'}
-                  </button>
-                  {aiStatus.id === option.id && aiStatus.message && (
-                    <p className="fridge-status" role="status">{aiStatus.message}</p>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
+                  <h3>{option.name}</h3>
+                  <p>{option.desc}</p>
+                  <div className="fridge-option-meta">
+                    <span>{option.protein}g protein</span>
+                    <span>{option.prep}</span>
+                    <Link to={option.sourcePlan}>Base recipe: {option.sourceLabel}</Link>
+                  </div>
+                  <details className="fridge-recipe">
+                    <summary>View recipe and ingredients</summary>
+                    <div className="fridge-recipe-grid">
+                      <div>
+                        <strong>Ingredients</strong>
+                        <ul>
+                          {asList(option.ingredients).map(item => <li key={item}>{item}</li>)}
+                        </ul>
+                      </div>
+                      <div>
+                        <strong>Steps</strong>
+                        <ol>
+                          {asList(option.recipe).map(step => <li key={step}>{step}</li>)}
+                        </ol>
+                      </div>
+                    </div>
+                  </details>
+                  <div className="ai-edit-box">
+                    <label>
+                      <span>Edit this option with AI</span>
+                      <textarea
+                        value={aiPrompts[option.id] || ''}
+                        onChange={event => updateAiPrompt(option.id, event.target.value)}
+                        placeholder="Example: make it vegetarian and keep it under 550 kcal"
+                        rows={3}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="btn-secondary"
+                      onClick={() => editDinnerWithAi(option)}
+                      disabled={aiStatus.busy}
+                    >
+                      {aiStatus.busy && aiStatus.id === option.id ? 'Editing...' : 'Edit with AI'}
+                    </button>
+                    {aiStatus.id === option.id && aiStatus.message && (
+                      <p className="fridge-status" role="status">{aiStatus.message}</p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </section>
 
         <PopularSearches

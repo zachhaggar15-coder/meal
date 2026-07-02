@@ -13,7 +13,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
-import { choosePlanVisual, SITE_VISUALS } from '../data/visualAssets.js';
+import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 
 // ── JSON-LD ───────────────────────────────────────────────────────────────────
 
@@ -344,19 +344,22 @@ export default function Home() {
             <div className="featured-cat" key={cat.heading}>
               <h3 className="featured-cat-heading">{cat.heading}</h3>
               <div className="featured-plan-links">
-                {cat.plans.map(p => (
-                  <Link key={p.slug} to={`/plans/${p.slug}`} className="featured-plan-link">
-                    <img
-                      src={choosePlanVisual({ slug: p.slug, title: p.label }).src}
-                      alt=""
-                      width="1200"
-                      height="675"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <span>{p.label}</span>
-                  </Link>
-                ))}
+                {cat.plans.map(p => {
+                  const cardVisual = chooseFeaturedPlanVisual(cat.heading, p);
+                  return (
+                    <Link key={p.slug} to={`/plans/${p.slug}`} className="featured-plan-link">
+                      <img
+                        src={cardVisual.src}
+                        alt=""
+                        width={cardVisual.width || 1200}
+                        height={cardVisual.height || 675}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span>{p.label}</span>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           ))}
@@ -457,4 +460,19 @@ export default function Home() {
       <Footer />
     </>
   );
+}
+
+function chooseFeaturedPlanVisual(category, plan) {
+  if (category === 'By Supermarket') {
+    const supermarket = ['tesco', 'aldi', 'lidl', 'asda', 'sainsburys', 'morrisons', 'iceland', 'any']
+      .find(item => plan.slug.includes(item));
+    return chooseSupermarketVisual(supermarket);
+  }
+
+  return chooseNavigationCardVisual({
+    label: plan.label,
+    eyebrow: category,
+    note: 'Popular meal plan',
+    seed: `${category}-${plan.slug}`,
+  });
 }

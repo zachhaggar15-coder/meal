@@ -4,7 +4,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
-import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
+import { generateBlogCardImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 
 const CATEGORY_ORDER = [
   {
@@ -180,7 +180,7 @@ export default function Blog() {
                     {hasCustomBlogImage(slug) && (
                       <img
                         className="blog-card-thumb"
-                        src={generateBlogImageUrl(slug)}
+                        src={generateBlogCardImageUrl(slug, post.h1)}
                         alt=""
                         loading="lazy"
                       />

@@ -47,13 +47,14 @@ export default function App() {
 
   return (
     <>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <ClickTracking />
       <ScrollToTop />
       <StripHomeParams />
-      <Navbar onMenuToggle={() => setSidebarOpen(o => !o)} />
+      <Navbar menuOpen={sidebarOpen} onMenuToggle={() => setSidebarOpen(o => !o)} />
       <div className="layout-body">
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="layout-main">
+        <main id="main-content" className="layout-main" tabIndex="-1">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/quiz" element={<Quiz />} />
@@ -78,7 +79,7 @@ export default function App() {
             <Route path="/stickers" element={<Stickers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </div>
+        </main>
       </div>
     </>
   );

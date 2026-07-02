@@ -9,6 +9,111 @@ function visual(file, alt) {
   };
 }
 
+function asset(path, alt, width = 1200, height = 675) {
+  return {
+    src: path,
+    alt,
+    width,
+    height,
+  };
+}
+
+const CARD_THEMES = [
+  { paper: '#f8f3ea', band: '#174f3f', accent: '#0f8b63', line: '#d8c8ae' },
+  { paper: '#f4f7ec', band: '#273f7a', accent: '#f5b82e', line: '#cbd6b9' },
+  { paper: '#fff6df', band: '#005d52', accent: '#c84332', line: '#dcc999' },
+  { paper: '#f2f5f8', band: '#1f3552', accent: '#6aa84f', line: '#c9d2dd' },
+  { paper: '#fbf1f4', band: '#5c2f48', accent: '#e07a5f', line: '#dfc1cc' },
+  { paper: '#f1f7f4', band: '#2b4b36', accent: '#7fb069', line: '#c4d9ca' },
+  { paper: '#f7f0e6', band: '#4a3826', accent: '#c07a2c', line: '#d8c2a6' },
+  { paper: '#eff5fa', band: '#234969', accent: '#7cc6d8', line: '#c3d6e4' },
+];
+
+function cardVisual({ label, eyebrow, note, themeIndex = 0, alt = '' }) {
+  const theme = CARD_THEMES[themeIndex % CARD_THEMES.length];
+  const lines = wrapText(label, 20, 3);
+  const lineHeight = lines.length > 2 ? 82 : 96;
+  const firstY = lines.length > 2 ? 244 : 270;
+  const labelLines = lines
+    .map((line, index) => (
+      `<text x="78" y="${firstY + (index * lineHeight)}" fill="#18130d" font-family="Georgia, Times New Roman, serif" font-size="76" font-weight="400">${escapeSvg(line)}</text>`
+    ))
+    .join('');
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<rect width="1200" height="675" fill="${theme.paper}"/>
+<rect x="34" y="34" width="1132" height="607" fill="none" stroke="${theme.line}" stroke-width="3"/>
+<rect x="34" y="34" width="1132" height="98" fill="${theme.band}"/>
+<circle cx="1010" cy="292" r="134" fill="${theme.accent}" opacity="0.18"/>
+<circle cx="1078" cy="424" r="74" fill="${theme.accent}" opacity="0.12"/>
+<text x="78" y="96" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="800">${escapeSvg(eyebrow)}</text>
+${labelLines}
+<text x="80" y="570" fill="#6e6251" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="700">${escapeSvg(note)}</text>
+<text x="864" y="588" fill="${theme.band}" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900">MealPrep</text>
+</svg>`;
+
+  return asset(`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`, alt);
+}
+
+export const SUPERMARKET_CARD_VISUALS = {
+  any: cardVisual({
+    label: 'Generic UK supermarket',
+    eyebrow: 'Average UK shop',
+    note: 'Flexible basket planning',
+    themeIndex: 0,
+    alt: 'Generic UK supermarket meal plan card',
+  }),
+  aldi: cardVisual({
+    label: 'Aldi',
+    eyebrow: 'Budget staples',
+    note: 'Lower-cost weekly prep',
+    themeIndex: 1,
+    alt: 'Aldi meal plan card',
+  }),
+  lidl: cardVisual({
+    label: 'Lidl',
+    eyebrow: 'Value weekly shop',
+    note: 'Simple familiar staples',
+    themeIndex: 2,
+    alt: 'Lidl meal plan card',
+  }),
+  tesco: cardVisual({
+    label: 'Tesco',
+    eyebrow: 'Flexible range',
+    note: 'Broad swaps and staples',
+    themeIndex: 3,
+    alt: 'Tesco meal plan card',
+  }),
+  asda: cardVisual({
+    label: 'Asda',
+    eyebrow: 'Family staples',
+    note: 'Practical weekly baskets',
+    themeIndex: 4,
+    alt: 'Asda meal plan card',
+  }),
+  sainsburys: cardVisual({
+    label: "Sainsbury's",
+    eyebrow: 'Own-brand choice',
+    note: 'Premium and everyday options',
+    themeIndex: 5,
+    alt: "Sainsbury's meal plan card",
+  }),
+  morrisons: cardVisual({
+    label: 'Morrisons',
+    eyebrow: 'Fresh weekly meals',
+    note: 'Classic UK meal prep',
+    themeIndex: 6,
+    alt: 'Morrisons meal plan card',
+  }),
+  iceland: cardVisual({
+    label: 'Iceland',
+    eyebrow: 'Freezer friendly',
+    note: 'Low-effort batch planning',
+    themeIndex: 7,
+    alt: 'Iceland meal plan card',
+  }),
+};
+
 export const SITE_VISUALS = {
   home: visual(
     'weekly-prep.webp',
@@ -124,6 +229,32 @@ export function choosePlanVisual(plan = {}) {
   return PLAN_CATEGORY_VISUALS.default;
 }
 
+export function chooseSupermarketVisual(supermarket) {
+  return SUPERMARKET_CARD_VISUALS[supermarket] || SITE_VISUALS.supermarket;
+}
+
+export function chooseBlogCardVisual(slug = '', title = '') {
+  const label = title || titleFromSlug(slug);
+  const topic = chooseBlogTopic(slug);
+  return cardVisual({
+    label,
+    eyebrow: topic,
+    note: 'UK meal prep guide',
+    themeIndex: hashText(slug || label),
+    alt: `${label} guide`,
+  });
+}
+
+export function chooseNavigationCardVisual({ label, eyebrow = 'Meal plan', note = 'MealPrep.org.uk', seed = '' }) {
+  return cardVisual({
+    label,
+    eyebrow,
+    note,
+    themeIndex: hashText(seed || label),
+    alt: `${label} card`,
+  });
+}
+
 export function chooseHubVisual(hub = {}) {
   const text = normalise([
     hub.slug,
@@ -213,4 +344,61 @@ function normalise(value) {
 
 function includesAny(text, needles) {
   return needles.some(needle => text.includes(needle));
+}
+
+function chooseBlogTopic(slug = '') {
+  const text = normalise(slug);
+  if (includesAny(text, ['container', 'box', 'tub', 'lid'])) return 'Meal prep kit';
+  if (includesAny(text, ['protein', 'snack', 'breakfast', 'fibre'])) return 'Protein planning';
+  if (includesAny(text, ['supermarket', 'aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland'])) return 'Supermarket guide';
+  if (includesAny(text, ['vegan', 'vegetarian', 'plant', 'pescatarian'])) return 'Diet type guide';
+  if (includesAny(text, ['batch', 'freezer', 'work-lunch', 'one-pan'])) return 'Batch cooking';
+  if (includesAny(text, ['3000', '3500', 'muscle', 'endurance', 'running'])) return 'Training week';
+  if (includesAny(text, ['budget', 'cheap', 'student', 'family'])) return 'Budget planning';
+  return 'Calorie planning';
+}
+
+function titleFromSlug(slug = '') {
+  return String(slug || 'Meal prep guide')
+    .split('-')
+    .filter(Boolean)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function wrapText(value, maxChars, maxLines) {
+  const words = String(value || '').split(/\s+/).filter(Boolean);
+  const lines = [];
+  let current = '';
+
+  for (const word of words) {
+    const next = current ? `${current} ${word}` : word;
+    if (next.length > maxChars && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = next;
+    }
+  }
+
+  if (current) lines.push(current);
+  if (lines.length <= maxLines) return lines;
+
+  const kept = lines.slice(0, maxLines);
+  kept[maxLines - 1] = `${kept[maxLines - 1].replace(/\s+\S+$/, '')}...`;
+  return kept;
+}
+
+function escapeSvg(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function hashText(value) {
+  return String(value || '').split('').reduce((total, char) => (
+    total + char.charCodeAt(0)
+  ), 0);
 }

@@ -8,7 +8,7 @@ import {
   getGoalChoice,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
-import { chooseChooserVisual, choosePlanVisual } from '../data/visualAssets.js';
+import { chooseChooserVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -96,16 +96,17 @@ export default function PlanChooserPage() {
         <section className="plan-chooser-grid" aria-label={`${goalChoice.label} supermarket choices`}>
           {options.map(({ market, plan }) => {
             const exactDefault = plan.calories === goalChoice.defaultCalories;
+            const cardVisual = chooseSupermarketVisual(market.value);
             return (
               <article
                 key={market.value}
                 className={`plan-chooser-card${market.value === 'any' ? ' plan-chooser-card--generic' : ''}`}
               >
                 <img
-                  src={choosePlanVisual(plan).src}
+                  src={cardVisual.src}
                   alt=""
-                  width="1200"
-                  height="675"
+                  width={cardVisual.width}
+                  height={cardVisual.height}
                   loading="lazy"
                   decoding="async"
                 />

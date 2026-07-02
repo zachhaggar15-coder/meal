@@ -137,8 +137,12 @@ export default function Sidebar({ open, onClose }) {
   return (
     <>
       {open && <div className="sidebar-backdrop" onClick={onClose} aria-hidden />}
-      <nav className={`sidebar${open ? ' sidebar--open' : ''}`} aria-label="Site navigation">
+      <nav id="site-sidebar" className={`sidebar${open ? ' sidebar--open' : ''}`} aria-label="Site navigation">
         <div className="sidebar-inner">
+          <button className="sidebar-close-btn" onClick={onClose} type="button">
+            Close menu
+          </button>
+
           <Link to="/quiz" className="sidebar-quiz-cta" onClick={onClose}>
             Find My Plan - Take the Quiz
           </Link>
@@ -216,7 +220,7 @@ export default function Sidebar({ open, onClose }) {
                 type="button"
               >
                 <span>{group.label}</span>
-                <span className="sidebar-arrow">{expanded[group.label] ? '▲' : '▼'}</span>
+                <span className="sidebar-arrow" aria-hidden="true">{expanded[group.label] ? '-' : '+'}</span>
               </button>
               {expanded[group.label] && (
                 <ul className="sidebar-list">

@@ -8,12 +8,19 @@ const NAV_LINKS = [
   { to: '/about', label: 'About' },
 ];
 
-export default function Navbar({ onMenuToggle }) {
+export default function Navbar({ menuOpen = false, onMenuToggle }) {
   return (
     <nav className="site-nav" aria-label="Main navigation">
       <div className="nav-inner">
         <div className="nav-left">
-          <button className="nav-menu-toggle" onClick={onMenuToggle} aria-label="Open navigation menu" type="button">
+          <button
+            className="nav-menu-toggle"
+            onClick={onMenuToggle}
+            aria-controls="site-sidebar"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            type="button"
+          >
             Menu
           </button>
           <Link to="/" className="nav-brand" aria-label="MealPrep home">MealPrep</Link>

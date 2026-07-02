@@ -4,7 +4,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { SUPERMARKET_CHOICES } from '../data/planChooser.js';
-import { SITE_VISUALS } from '../data/visualAssets.js';
+import { chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 
 const jsonLd = [
   {
@@ -69,20 +69,23 @@ export default function SupermarketIndexPage() {
         </header>
 
         <section className="supermarket-index-grid" aria-label="Choose a supermarket">
-          {SUPERMARKET_CHOICES.map(market => (
-            <Link key={market.value} to={`/choose-supermarket/${market.value}`} className="supermarket-index-card">
-              <img
-                src={SITE_VISUALS.supermarket.src}
-                alt=""
-                width={SITE_VISUALS.supermarket.width}
-                height={SITE_VISUALS.supermarket.height}
-                loading="lazy"
-                decoding="async"
-              />
-              <span>{market.label}</span>
-              <small>{market.description}</small>
-            </Link>
-          ))}
+          {SUPERMARKET_CHOICES.map(market => {
+            const cardVisual = chooseSupermarketVisual(market.value);
+            return (
+              <Link key={market.value} to={`/choose-supermarket/${market.value}`} className="supermarket-index-card">
+                <img
+                  src={cardVisual.src}
+                  alt=""
+                  width={cardVisual.width}
+                  height={cardVisual.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span>{market.label}</span>
+                <small>{market.description}</small>
+              </Link>
+            );
+          })}
         </section>
       </div>
       <Footer />
