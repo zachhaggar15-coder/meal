@@ -13,7 +13,7 @@ import {
 } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { chooseHubVisual } from '../data/visualAssets.js';
-import { SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const CARD_LIMIT = 24;
@@ -66,12 +66,7 @@ export default function MealPlanHubPage() {
       description: hub.description,
       url: `https://www.mealprep.org.uk${canonical}`,
       dateModified: hub.modified || '2026-07-02',
-      author: {
-        '@type': 'Organization',
-        name: 'MealPrep.org.uk',
-        url: 'https://www.mealprep.org.uk/about',
-        email: SITE_CONTACT_EMAIL,
-      },
+      author: AUTHOR_JSON_LD,
       publisher: {
         '@type': 'Organization',
         name: 'MealPrep.org.uk',
@@ -138,6 +133,10 @@ export default function MealPlanHubPage() {
           <span className="offer-kicker">{hub.kicker}</span>
           <h1>{hub.h1}</h1>
           <p className="content-intro">{hub.intro}</p>
+          <p className="content-byline">
+            Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
+            {hub.reviewed || '17 June 2026'}.
+          </p>
           <div className="meal-hub-stats" aria-label="Page highlights">
             <span>{matchingPlans.length} matching plans</span>
             {hub.stats.map(stat => <span key={stat}>{stat}</span>)}

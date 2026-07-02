@@ -10,7 +10,7 @@ import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
-import { SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { track } from '../utils/analytics.js';
 
 const MKT_LABEL = {
@@ -83,12 +83,7 @@ export default function PlanPage() {
       url: plan.seo.canonical,
       datePublished: '2026-06-01',
       dateModified: '2026-07-02',
-      author: {
-        '@type': 'Organization',
-        name: 'MealPrep.org.uk',
-        url: 'https://www.mealprep.org.uk/about',
-        email: SITE_CONTACT_EMAIL,
-      },
+      author: AUTHOR_JSON_LD,
       publisher: {
         '@type': 'Organization',
         name: 'MealPrep.org.uk',
@@ -404,6 +399,9 @@ export default function PlanPage() {
         <SiteLogo variant="page" className="page-header-logo" />
         <h1 className="plan-page-h1">{plan.title}</h1>
         <p className="plan-page-intro">{plan.seo.description}</p>
+        <p className="content-byline">
+          Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed: 2 July 2026.
+        </p>
         <PageHeroVisual visual={planVisual} className="plan-page-visual" />
 
         <TrustBox

@@ -8,7 +8,7 @@ import {
   getGoalChoice,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
-import { chooseChooserVisual } from '../data/visualAssets.js';
+import { chooseChooserVisual, choosePlanVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -46,6 +46,15 @@ export default function PlanChooserPage() {
           url: `https://www.mealprep.org.uk/plans/${option.plan.slug}`,
         })),
       },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk/' },
+        { '@type': 'ListItem', position: 2, name: 'Meal Plans', item: 'https://www.mealprep.org.uk/browse' },
+        { '@type': 'ListItem', position: 3, name: title, item: `https://www.mealprep.org.uk${canonical}` },
+      ],
     },
   ];
 
@@ -92,6 +101,14 @@ export default function PlanChooserPage() {
                 key={market.value}
                 className={`plan-chooser-card${market.value === 'any' ? ' plan-chooser-card--generic' : ''}`}
               >
+                <img
+                  src={choosePlanVisual(plan).src}
+                  alt=""
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="plan-chooser-card-head">
                   <span className="plan-chooser-market">{market.label}</span>
                   <span className="plan-chooser-calories">

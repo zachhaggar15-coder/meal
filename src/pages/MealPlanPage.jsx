@@ -11,7 +11,7 @@ import ContextualLinks from '../components/ContextualLinks.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 import { buildShoppingList, scaleIngredientsForPortion } from '../utils/planBuilder.js';
-import { SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 function ContentTable({ headers, rows }) {
   return (
@@ -90,7 +90,7 @@ export default function MealPlanPage() {
       description: data.description,
       datePublished: data.published || '2026-05-28',
       dateModified: data.modified || '2026-05-30',
-      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk/about', email: SITE_CONTACT_EMAIL },
+      author: AUTHOR_JSON_LD,
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk', email: SITE_CONTACT_EMAIL },
       mainEntityOfPage: {
         '@type': 'WebPage',
@@ -223,6 +223,10 @@ export default function MealPlanPage() {
 
         <SiteLogo variant="page" className="page-header-logo" />
         <h1>{data.h1}</h1>
+        <p className="content-byline">
+          Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
+          {data.reviewed || data.modified || '17 June 2026'}.
+        </p>
 
         {examplePlanSection}
         {shoppingListSection}

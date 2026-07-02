@@ -15,7 +15,7 @@ import {
 } from '../data/seoOpportunityPages.js';
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
-import { SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -37,7 +37,7 @@ export default function BlogPost() {
       description: data.description,
       datePublished: data.published || '2026-05-28',
       dateModified: data.modified || '2026-05-30',
-      author: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk/about', email: SITE_CONTACT_EMAIL },
+      author: AUTHOR_JSON_LD,
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk', email: SITE_CONTACT_EMAIL },
       about: [
         'UK meal prep',
@@ -98,6 +98,10 @@ export default function BlogPost() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
+          <p className="content-byline">
+            Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
+            {data.reviewed || data.modified || '17 June 2026'}.
+          </p>
           {hasCustomBlogImage(slug) && (
             <figure className="blog-hero-image">
               <img src={ogImageUrl} alt={`${data.h1} guide`} />

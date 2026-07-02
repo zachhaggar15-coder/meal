@@ -12,7 +12,7 @@ import {
   GOAL_CHOOSER_ITEMS,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
-import { chooseChooserVisual } from '../data/visualAssets.js';
+import { chooseChooserVisual, choosePlanVisual } from '../data/visualAssets.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -96,6 +96,14 @@ export default function ChoiceLandingPage({ mode }) {
               key={card.key}
               className={`plan-chooser-card${card.highlight ? ' plan-chooser-card--generic' : ''}`}
             >
+              <img
+                src={choosePlanVisual(card.plan).src}
+                alt=""
+                width="1200"
+                height="675"
+                loading="lazy"
+                decoding="async"
+              />
               <div className="plan-chooser-card-head">
                 <span className="plan-chooser-market">{card.label}</span>
                 <span className="plan-chooser-calories">

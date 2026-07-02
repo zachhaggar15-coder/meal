@@ -13,7 +13,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
-import { SITE_VISUALS } from '../data/visualAssets.js';
+import { choosePlanVisual, SITE_VISUALS } from '../data/visualAssets.js';
 
 // ── JSON-LD ───────────────────────────────────────────────────────────────────
 
@@ -346,7 +346,15 @@ export default function Home() {
               <div className="featured-plan-links">
                 {cat.plans.map(p => (
                   <Link key={p.slug} to={`/plans/${p.slug}`} className="featured-plan-link">
-                    {p.label}
+                    <img
+                      src={choosePlanVisual({ slug: p.slug, title: p.label }).src}
+                      alt=""
+                      width="1200"
+                      height="675"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span>{p.label}</span>
                   </Link>
                 ))}
               </div>

@@ -3,7 +3,7 @@ import { PLAN_COUNT } from '../data/planSeeds.js';
 
 const NAV_LINKS = [
   { to: '/browse', label: 'Plans' },
-  { to: '/meal-plans/aldi', label: 'Supermarkets' },
+  { to: '/meal-plans', label: 'Supermarkets' },
   { to: '/blog', label: 'Guides' },
   { to: '/about', label: 'About' },
 ];

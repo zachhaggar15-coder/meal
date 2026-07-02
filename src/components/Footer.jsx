@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 
 const FOOTER_LINKS = [
   { to: '/browse', label: 'Plans' },
-  { to: '/meal-plans/aldi', label: 'Supermarkets' },
+  { to: '/meal-plans', label: 'Supermarkets' },
   { to: '/blog', label: 'Guides' },
   { to: '/about', label: 'About' },
+  { to: '/contact', label: 'Contact' },
+  { to: '/privacy', label: 'Privacy' },
   { to: '/tools', label: 'Tools' },
 ];
 
