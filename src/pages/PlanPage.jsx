@@ -6,7 +6,7 @@ import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
-import { buildShoppingList, getPlanBySlug, scalePlanForPeople } from '../utils/planBuilder.js';
+import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -22,6 +22,13 @@ const MKT_LABEL = {
 };
 
 const SERVING_OPTIONS = [1, 2, 3, 4, 5, 6];
+const HOUSEHOLD_MODES = [
+  { value: 'same', label: 'Same Portions' },
+  { value: 'couple', label: 'Couple' },
+  { value: 'family', label: 'Family' },
+  { value: 'custom', label: 'Custom' },
+];
+const MAX_HOUSEHOLD_MEMBERS = 6;
 
 const GOAL_HUB_SLUGS = {
   'weight-loss': 'weight-loss',
@@ -46,6 +53,46 @@ const GOAL_HUB_SLUGS = {
   cutting: 'weight-loss',
 };
 
+function createHouseholdMember(label, portionScale = 1, id = '') {
+  const safeLabel = label || 'Person';
+  return {
+    id: id || `${safeLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Math.round(portionScale * 100)}-${Date.now()}`,
+    label: safeLabel,
+    portionScale,
+  };
+}
+
+function buildSamePortionMembers(count = 1) {
+  const people = Math.min(MAX_HOUSEHOLD_MEMBERS, Math.max(1, Number(count) || 1));
+  return Array.from({ length: people }, (_, index) => createHouseholdMember(`Person ${index + 1}`, 1, `same-${index + 1}`));
+}
+
+function buildHouseholdPreset(mode = 'same') {
+  if (mode === 'couple') {
+    return [
+      createHouseholdMember('Person 1', 1, 'couple-1'),
+      createHouseholdMember('Person 2', 0.75, 'couple-2'),
+    ];
+  }
+
+  if (mode === 'family') {
+    return [
+      createHouseholdMember('Adult 1', 1, 'family-adult-1'),
+      createHouseholdMember('Adult 2', 0.85, 'family-adult-2'),
+      createHouseholdMember('Smaller portion', 0.55, 'family-smaller-1'),
+    ];
+  }
+
+  if (mode === 'custom') {
+    return [
+      createHouseholdMember('Person 1', 1, 'custom-1'),
+      createHouseholdMember('Person 2', 0.75, 'custom-2'),
+    ];
+  }
+
+  return buildSamePortionMembers(1);
+}
+
 export default function PlanPage() {
   const { slug } = useParams();
   const plan = useMemo(() => getPlanBySlug(slug), [slug]);
@@ -61,11 +108,12 @@ export default function PlanPage() {
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
   const [planCopyStatus, setPlanCopyStatus] = useState('');
   const [shareStatus, setShareStatus] = useState('');
-  const [servings, setServings] = useState(1);
+  const [householdMode, setHouseholdMode] = useState('same');
+  const [householdMembers, setHouseholdMembers] = useState(() => buildHouseholdPreset('same'));
   const sourcePlan = editedPlan || plan;
   const displayPlan = useMemo(() => (
-    sourcePlan ? scalePlanForPeople(sourcePlan, servings) : null
-  ), [sourcePlan, servings]);
+    sourcePlan ? scalePlanForHousehold(sourcePlan, householdMembers) : null
+  ), [sourcePlan, householdMembers]);
 
   if (!plan) {
     return (
@@ -186,6 +234,38 @@ export default function PlanPage() {
     setEditNote('');
   }
 
+  function selectHouseholdMode(mode) {
+    setHouseholdMode(mode);
+    setHouseholdMembers(buildHouseholdPreset(mode));
+  }
+
+  function selectSamePortionCount(count) {
+    setHouseholdMode('same');
+    setHouseholdMembers(buildSamePortionMembers(count));
+  }
+
+  function updateHouseholdMember(id, field, value) {
+    setHouseholdMembers(members => members.map(member => (
+      member.id === id ? { ...member, [field]: value } : member
+    )));
+  }
+
+  function addHouseholdMember() {
+    setHouseholdMode('custom');
+    setHouseholdMembers(members => {
+      if (members.length >= MAX_HOUSEHOLD_MEMBERS) return members;
+      return [...members, createHouseholdMember(`Person ${members.length + 1}`, 1)];
+    });
+  }
+
+  function removeHouseholdMember(id) {
+    setHouseholdMode('custom');
+    setHouseholdMembers(members => {
+      if (members.length <= 1) return members;
+      return members.filter(member => member.id !== id);
+    });
+  }
+
   async function copyShoppingList() {
     const text = formatShoppingList(displayPlan);
     try {
@@ -278,8 +358,17 @@ export default function PlanPage() {
         <div className="plan-day-header">
           <h3 className="plan-day-name">{activeDay.day}</h3>
           <div className="plan-day-totals">
-            <span>{activeDay.totals.kcal} kcal per person</span>
-            <span>{activeDay.totals.protein}g protein per person</span>
+            {displayPlan.household?.hasMixedPortions ? (
+              <>
+                <span>{activeDay.totals.kcal} kcal full portion</span>
+                <span>{activeDay.householdTotals.kcal} kcal household</span>
+              </>
+            ) : (
+              <>
+                <span>{activeDay.totals.kcal} kcal per person</span>
+                <span>{activeDay.totals.protein}g protein per person</span>
+              </>
+            )}
           </div>
         </div>
 
@@ -293,6 +382,10 @@ export default function PlanPage() {
               <h4 className="plan-meal-name">{meal.name}</h4>
               {meal.desc && (
                 <p className="plan-meal-desc">{meal.desc}</p>
+              )}
+
+              {displayPlan.household?.hasMixedPortions && (
+                <MealPortionBreakdown portions={meal.householdPortions} />
               )}
 
               {meal.recipe?.length > 0 && (
@@ -367,8 +460,10 @@ export default function PlanPage() {
         </button>
       </div>
       <p className="plan-shopping-note">
-        Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatPeopleLabel(displayPlan.servings)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
-        Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.
+        Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+        {displayPlan.household?.hasMixedPortions
+          ? ' Calories and protein are estimated for each household member from their portion size.'
+          : ' Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.'}
       </p>
       <div className="shopping-list-grid">
         {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
@@ -435,7 +530,16 @@ export default function PlanPage() {
           shareStatus={shareStatus}
         />
 
-        <PlanServingsControl servings={servings} onChange={setServings} />
+        <HouseholdPortionsControl
+          mode={householdMode}
+          members={householdMembers}
+          displayPlan={displayPlan}
+          onModeChange={selectHouseholdMode}
+          onSameCountChange={selectSamePortionCount}
+          onMemberChange={updateHouseholdMember}
+          onAddMember={addHouseholdMember}
+          onRemoveMember={removeHouseholdMember}
+        />
 
         {planDaysSection}
         {shoppingListSection}
@@ -445,6 +549,7 @@ export default function PlanPage() {
           <div className="plan-summary-grid">
             <SummaryItem label="Supermarket"  value={MKT_LABEL[plan.supermarket] || plan.supermarket} />
             <SummaryItem label="Cooking for" value={displayPlan.peopleLabel} />
+            <SummaryItem label="Cook amount" value={`${displayPlan.totalPortionLabel} portions`} />
             <SummaryItem label="Calorie target" value={displayPlan.summary.calorieRange} />
             <SummaryItem label="Weekly budget"  value={`${displayPlan.summary.budgetRange} total`} />
             <SummaryItem label="Prep difficulty" value={plan.effortLabel} />
@@ -619,8 +724,10 @@ export default function PlanPage() {
             </button>
           </div>
           <p className="plan-shopping-note">
-            Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatPeopleLabel(displayPlan.servings)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
-            Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.
+            Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+            {displayPlan.household?.hasMixedPortions
+              ? ' Calories and protein are estimated for each household member from their portion size.'
+              : ' Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.'}
           </p>
           <div className="shopping-list-grid">
             {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
@@ -761,27 +868,121 @@ function PlanActionBar({ onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, s
   );
 }
 
-function PlanServingsControl({ servings, onChange }) {
+function HouseholdPortionsControl({
+  mode,
+  members,
+  displayPlan,
+  onModeChange,
+  onSameCountChange,
+  onMemberChange,
+  onAddMember,
+  onRemoveMember,
+}) {
+  const sameCount = members.length;
+  const showMemberRows = mode !== 'same';
+
   return (
-    <section className="plan-servings-control" aria-labelledby="plan-servings-heading">
-      <div>
-        <h2 id="plan-servings-heading">{toTitleCase('Cooking for')}</h2>
-        <p>Scale ingredients, recipes, shopping list and weekly cost. Calories stay per person.</p>
+    <section className="plan-servings-control plan-household-control" aria-labelledby="plan-household-heading">
+      <div className="plan-household-header">
+        <div>
+          <h2 id="plan-household-heading">{toTitleCase('Household portions')}</h2>
+          <p>Same meals, adjusted portions.</p>
+        </div>
+        <span className="plan-household-total">
+          {displayPlan.totalPortionLabel} cook portions
+        </span>
       </div>
-      <div className="plan-servings-options" role="group" aria-label="People to cook for">
-        {SERVING_OPTIONS.map(option => (
+
+      <div className="plan-household-modes" role="group" aria-label="Household portion type">
+        {HOUSEHOLD_MODES.map(option => (
           <button
-            key={option}
-            className={option === servings ? 'plan-servings-option plan-servings-option--active' : 'plan-servings-option'}
+            key={option.value}
+            className={option.value === mode ? 'plan-household-mode plan-household-mode--active' : 'plan-household-mode'}
             type="button"
-            aria-pressed={option === servings}
-            onClick={() => onChange(option)}
+            aria-pressed={option.value === mode}
+            onClick={() => onModeChange(option.value)}
           >
-            {option}
+            {option.label}
           </button>
         ))}
       </div>
+
+      {mode === 'same' && (
+        <div className="plan-servings-options" role="group" aria-label="People to cook for">
+          {SERVING_OPTIONS.map(option => (
+            <button
+              key={option}
+              className={option === sameCount ? 'plan-servings-option plan-servings-option--active' : 'plan-servings-option'}
+              type="button"
+              aria-pressed={option === sameCount}
+              onClick={() => onSameCountChange(option)}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {showMemberRows && (
+        <div className="plan-household-rows">
+          {members.map((member, index) => (
+            <div className="plan-household-row" key={member.id}>
+              <input
+                className="plan-household-name"
+                aria-label={`Household member ${index + 1} name`}
+                value={member.label}
+                onChange={event => onMemberChange(member.id, 'label', event.target.value)}
+              />
+              <label className="plan-household-slider">
+                <span>Portion</span>
+                <input
+                  type="range"
+                  min="0.25"
+                  max="1.75"
+                  step="0.05"
+                  value={member.portionScale}
+                  onChange={event => onMemberChange(member.id, 'portionScale', Number(event.target.value))}
+                />
+              </label>
+              <output className="plan-household-output">
+                {Math.round(Number(member.portionScale || 1) * 100)}%
+              </output>
+              <button
+                className="plan-household-remove"
+                type="button"
+                onClick={() => onRemoveMember(member.id)}
+                disabled={members.length <= 1}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            className="plan-household-add"
+            type="button"
+            onClick={onAddMember}
+            disabled={members.length >= MAX_HOUSEHOLD_MEMBERS}
+          >
+            Add person
+          </button>
+        </div>
+      )}
     </section>
+  );
+}
+
+function MealPortionBreakdown({ portions = [] }) {
+  if (!portions.length) return null;
+
+  return (
+    <div className="plan-meal-portions" aria-label="Per-person portions">
+      {portions.map(portion => (
+        <span key={portion.id}>
+          <strong>{portion.label}</strong>
+          {portion.portionPercent}% · {portion.kcal} kcal · {portion.protein}g protein
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -998,11 +1199,20 @@ function PrintablePlanSummary({ plan, marketLabel }) {
 
       <div className="print-summary-meta">
         <span>Supermarket: {marketLabel}</span>
-        <span>Cooking for: {plan.peopleLabel || '1 person'}</span>
+        <span>Cooking for: {formatHouseholdLabel(plan)}</span>
+        <span>Cook amount: {plan.totalPortionLabel || '1'} portions</span>
         <span>Calories: {plan.summary?.calorieRange || `~${plan.calories} kcal/day per person`}</span>
         <span>Budget: {plan.summary?.budgetRange || plan.priceEstimate} total</span>
         <span>Diet: {plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType)}</span>
       </div>
+
+      {plan.household?.hasMixedPortions && (
+        <div className="print-household-members">
+          {plan.household.members.map(member => (
+            <span key={member.id}>{member.label}: {member.portionPercent}% portion</span>
+          ))}
+        </div>
+      )}
 
       <h3>7-day meal plan</h3>
       <div className="print-days">
@@ -1010,12 +1220,16 @@ function PrintablePlanSummary({ plan, marketLabel }) {
           <article className="print-day" key={day.day}>
             <div className="print-day-heading">
               <h4>{day.day}</h4>
-              <span>{day.totals.kcal} kcal - {day.totals.protein}g protein</span>
+              {plan.household?.hasMixedPortions ? (
+                <span>{day.totals.kcal} kcal full portion - {day.householdTotals.kcal} kcal household</span>
+              ) : (
+                <span>{day.totals.kcal} kcal - {day.totals.protein}g protein</span>
+              )}
             </div>
             <ul>
               {day.meals.map((meal, index) => (
                 <li key={`${day.day}-${meal.type}-${index}`}>
-                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {meal.protein}g protein per person)
+                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {meal.protein}g protein {plan.household?.hasMixedPortions ? 'full portion' : 'per person'})
                 </li>
               ))}
             </ul>
@@ -1181,19 +1395,22 @@ function formatShoppingList(plan) {
       ...items.map(item => `- ${item}`),
     ].join('\n'));
 
-  const peopleLine = plan.peopleLabel ? `Cooking for: ${plan.peopleLabel}\n` : '';
-  return `${plan.title || 'Meal plan'} shopping list\n${peopleLine}\n${groups.join('\n\n')}`;
+  const householdLines = formatHouseholdTextLines(plan);
+  return `${plan.title || 'Meal plan'} shopping list\n${householdLines.join('\n')}\n\n${groups.join('\n\n')}`;
 }
 
 function formatPlanShareText(plan, url) {
   const dayLines = (plan.plan || []).map(day => {
     const meals = day.meals.map(meal => `${meal.type}: ${meal.name}`).join('; ');
-    return `${day.day}: ${meals} (${day.totals.kcal} kcal, ${day.totals.protein}g protein)`;
+    if (plan.household?.hasMixedPortions) {
+      return `${day.day}: ${meals} (${day.totals.kcal} kcal full portion, ${day.householdTotals.kcal} kcal household)`;
+    }
+    return `${day.day}: ${meals} (${day.totals.kcal} kcal, ${day.totals.protein}g protein per person)`;
   });
 
   return [
     plan.title,
-    plan.peopleLabel ? `Cooking for: ${plan.peopleLabel}` : null,
+    ...formatHouseholdTextLines(plan),
     plan.summary?.calorieRange,
     plan.summary?.budgetRange ? `Budget: ${plan.summary.budgetRange}/week estimate total` : null,
     '',
@@ -1225,9 +1442,19 @@ function catLabel(cat) {
   return { protein: 'Protein', carbs: 'Carbs & Grains', vegetables: 'Vegetables', dairy: 'Dairy & Eggs', extras: 'Extras & Condiments' }[cat] || cat;
 }
 
-function formatPeopleLabel(count) {
-  const value = Number(count) || 1;
-  return value === 1 ? '1 person' : `${value} people`;
+function formatHouseholdLabel(plan) {
+  return plan.householdLabel || plan.peopleLabel || '1 person';
+}
+
+function formatHouseholdTextLines(plan) {
+  const lines = [`Cooking for: ${formatHouseholdLabel(plan)}`];
+  if (plan.totalPortionLabel) {
+    lines.push(`Cook amount: ${plan.totalPortionLabel} portions`);
+  }
+  if (plan.household?.hasMixedPortions) {
+    lines.push(`Portions: ${plan.household.members.map(member => `${member.label} ${member.portionPercent}%`).join(', ')}`);
+  }
+  return lines;
 }
 
 function cap(s) {

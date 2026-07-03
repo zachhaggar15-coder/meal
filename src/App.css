@@ -3250,6 +3250,174 @@ input:focus, select:focus {
   color: #fff;
 }
 
+.plan-household-control {
+  align-items: stretch;
+  display: grid;
+}
+
+.plan-household-header {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.plan-household-total {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  color: #334155;
+  flex: 0 0 auto;
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 7px 10px;
+}
+
+.plan-household-modes {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.plan-household-mode {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #334155;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 900;
+  min-height: 40px;
+  padding: 8px 10px;
+}
+
+.plan-household-mode:hover {
+  background: #eef2ff;
+  border-color: #93c5fd;
+}
+
+.plan-household-mode--active {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
+
+.plan-household-rows {
+  display: grid;
+  gap: 10px;
+}
+
+.plan-household-row {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(116px, 1fr) minmax(160px, 2fr) 58px auto;
+  padding: 10px;
+}
+
+.plan-household-name {
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  color: #111827;
+  font: inherit;
+  font-weight: 800;
+  min-height: 38px;
+  min-width: 0;
+  padding: 8px 10px;
+}
+
+.plan-household-slider {
+  align-items: center;
+  color: #475569;
+  display: grid;
+  font-size: 0.82rem;
+  font-weight: 800;
+  gap: 5px;
+  min-width: 0;
+}
+
+.plan-household-slider input {
+  width: 100%;
+}
+
+.plan-household-output {
+  color: #111827;
+  font-size: 0.88rem;
+  font-weight: 900;
+  text-align: right;
+}
+
+.plan-household-remove,
+.plan-household-add {
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 900;
+  min-height: 38px;
+  padding: 8px 10px;
+}
+
+.plan-household-remove {
+  background: #fff;
+  color: #334155;
+}
+
+.plan-household-remove:disabled,
+.plan-household-add:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.plan-household-add {
+  background: #eff6ff;
+  color: #1d4ed8;
+  justify-self: start;
+}
+
+.plan-meal-portions {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  margin: 12px 0;
+}
+
+.plan-meal-portions span,
+.print-household-members span {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #334155;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  padding: 8px 10px;
+}
+
+.plan-meal-portions strong {
+  color: #111827;
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 2px;
+}
+
+.print-household-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 18px;
+}
+
+.fridge-tool-panel[id],
+.tool-panel[id],
+.tools-print-section[id] {
+  scroll-margin-top: 92px;
+}
+
 .plan-secondary-details {
   border: 1px solid #dbeafe;
   border-radius: 8px;
@@ -8822,6 +8990,32 @@ textarea {
   .plan-servings-option {
     width: 100%;
   }
+
+  .plan-household-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .plan-household-total {
+    align-self: flex-start;
+  }
+
+  .plan-household-modes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .plan-household-row {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-household-output {
+    text-align: left;
+  }
+
+  .plan-household-remove,
+  .plan-household-add {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -8914,5 +9108,10 @@ textarea {
 
   .plan-servings-options {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .plan-household-modes,
+  .plan-meal-portions {
+    grid-template-columns: 1fr;
   }
 }

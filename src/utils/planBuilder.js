@@ -624,16 +624,28 @@ export function normaliseServingCount(value) {
 }
 
 export function scalePlanForPeople(plan, servingCount = 1) {
+  return scalePlanForHousehold(plan, servingCount);
+}
+
+export function scalePlanForHousehold(plan, householdInput = 1) {
   if (!plan) return plan;
 
-  const people = normaliseServingCount(servingCount);
+  const members = normaliseHouseholdMembers(householdInput);
+  const people = members.length;
+  const totalPortions = getHouseholdTotalPortions(members);
+  const hasMixedPortions = members.some(member => Math.abs(member.portionScale - 1) >= 0.03);
   const days = (plan.plan || []).map(day => ({
     ...day,
-    meals: (day.meals || []).map(meal => scaleMealForPeople(meal, people)),
+    meals: (day.meals || []).map(meal => scaleMealForHousehold(meal, members, totalPortions)),
     totals: { ...day.totals },
+    memberTotals: members.map(member => ({
+      ...member,
+      kcal: Math.round((day.totals?.kcal || 0) * member.portionScale),
+      protein: Math.round((day.totals?.protein || 0) * member.portionScale),
+    })),
     householdTotals: {
-      kcal: Math.round((day.totals?.kcal || 0) * people),
-      protein: Math.round((day.totals?.protein || 0) * people),
+      kcal: Math.round((day.totals?.kcal || 0) * totalPortions),
+      protein: Math.round((day.totals?.protein || 0) * totalPortions),
     },
   }));
 
@@ -641,12 +653,26 @@ export function scalePlanForPeople(plan, servingCount = 1) {
     ...plan,
     servings: people,
     peopleLabel: people === 1 ? '1 person' : `${people} people`,
-    priceEstimate: scaleBudgetEstimate(plan.priceEstimate, people),
+    totalPortions,
+    totalPortionLabel: formatPortionCount(totalPortions),
+    householdLabel: hasMixedPortions
+      ? `${people === 1 ? '1 person' : `${people} people`}, ${formatPortionCount(totalPortions)} total portions`
+      : people === 1 ? '1 person' : `${people} people`,
+    household: {
+      members,
+      hasMixedPortions,
+      totalPortions,
+      totalPortionLabel: formatPortionCount(totalPortions),
+    },
+    priceEstimate: scaleBudgetEstimate(plan.priceEstimate, totalPortions),
     summary: {
       ...(plan.summary || {}),
-      calorieRange: `${plan.summary?.calorieRange || `~${plan.calories} kcal/day`} per person`,
-      budgetRange: scaleBudgetEstimate(plan.summary?.budgetRange || plan.priceEstimate, people),
+      calorieRange: hasMixedPortions
+        ? `${plan.summary?.calorieRange || `~${plan.calories} kcal/day`} full portion`
+        : `${plan.summary?.calorieRange || `~${plan.calories} kcal/day`} per person`,
+      budgetRange: scaleBudgetEstimate(plan.summary?.budgetRange || plan.priceEstimate, totalPortions),
       servings: people === 1 ? '1 person' : `${people} people`,
+      totalPortions: formatPortionCount(totalPortions),
     },
     plan: days,
   };
@@ -657,14 +683,65 @@ export function scalePlanForPeople(plan, servingCount = 1) {
   };
 }
 
-function scaleMealForPeople(meal, people) {
+export function normaliseHouseholdMembers(householdInput = 1) {
+  if (Array.isArray(householdInput)) {
+    const members = householdInput
+      .slice(0, 6)
+      .map((member, index) => normaliseHouseholdMember(member, index))
+      .filter(Boolean);
+
+    return members.length ? members : [normaliseHouseholdMember({}, 0)];
+  }
+
+  const count = normaliseServingCount(householdInput);
+  return Array.from({ length: count }, (_, index) => normaliseHouseholdMember({
+    label: count === 1 ? 'Person 1' : `Person ${index + 1}`,
+    portionScale: 1,
+  }, index));
+}
+
+function normaliseHouseholdMember(member = {}, index = 0) {
+  const label = String(member.label || member.name || `Person ${index + 1}`).trim() || `Person ${index + 1}`;
+  const portionScale = normalisePortionScale(member.portionScale ?? member.portion ?? 1);
+
+  return {
+    id: String(member.id || `person-${index + 1}`),
+    label,
+    portionScale,
+    portionPercent: Math.round(portionScale * 100),
+  };
+}
+
+function normalisePortionScale(value) {
+  const parsed = Number.parseFloat(value);
+  if (!Number.isFinite(parsed)) return 1;
+  return Math.round(Math.min(1.75, Math.max(0.25, parsed)) * 100) / 100;
+}
+
+function getHouseholdTotalPortions(members) {
+  const total = members.reduce((sum, member) => sum + member.portionScale, 0);
+  return Math.round(Math.max(0.25, total) * 100) / 100;
+}
+
+function formatPortionCount(value) {
+  const rounded = Math.round(Number(value || 1) * 100) / 100;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2).replace(/0$/, '');
+}
+
+function scaleMealForHousehold(meal, members, totalPortions) {
   const baseIngredients = meal.ingredients || [];
-  const ingredients = scaleIngredientsForPortion(baseIngredients, people);
+  const ingredients = scaleIngredientsForPortion(baseIngredients, totalPortions);
   const recipe = scaleRecipeForPeople(meal.recipe, baseIngredients, ingredients);
 
   return {
     ...meal,
-    servings: people,
+    servings: members.length,
+    totalPortions,
+    householdPortions: members.map(member => ({
+      ...member,
+      kcal: Math.round((meal.kcal || 0) * member.portionScale),
+      protein: Math.round((meal.protein || 0) * member.portionScale),
+    })),
     ingredients,
     portion_size: buildPortionSize(ingredients),
     recipe,

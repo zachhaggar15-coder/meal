@@ -12,7 +12,20 @@ import {
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 
+const TOOL_LINKS = [
+  { to: '/tools#fridge-dinner-builder', label: 'Fridge Dinner Builder' },
+  { to: '/tools#calorie-calculator', label: 'Calorie Calculator' },
+  { to: '/tools#protein-calculator', label: 'Protein Calculator' },
+  { to: '/tools#shopping-budget-estimator', label: 'Shopping Budget Estimator' },
+  { to: '/tools#container-count-calculator', label: 'Container Count Calculator' },
+  { to: '/tools#printable-plans', label: 'Printable Plans' },
+];
+
 const NAV = [
+  {
+    label: 'Planning Tools',
+    items: TOOL_LINKS,
+  },
   {
     label: 'Meal Plan Hubs',
     items: [
@@ -124,13 +137,17 @@ const NAV = [
 
 export default function Sidebar({ open, onClose }) {
   const location = useLocation();
-  const [expanded, setExpanded] = useState({ 'By Goal': true, 'By Supermarket': true });
+  const [expanded, setExpanded] = useState({ 'Planning Tools': true, 'By Goal': true, 'By Supermarket': true });
 
   function toggle(label) {
     setExpanded(prev => ({ ...prev, [label]: !prev[label] }));
   }
 
   function isActive(to) {
+    const [path, hash] = to.split('#');
+    if (hash) {
+      return location.pathname === path && location.hash === `#${hash}`;
+    }
     return location.pathname === to;
   }
 
@@ -185,14 +202,6 @@ export default function Sidebar({ open, onClose }) {
             onClick={onClose}
           >
             Blog
-          </Link>
-
-          <Link
-            to="/tools"
-            className={`sidebar-top-link${location.pathname === '/tools' ? ' sidebar-link--active' : ''}`}
-            onClick={onClose}
-          >
-            Tools
           </Link>
 
           <Link

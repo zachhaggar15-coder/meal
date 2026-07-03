@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
@@ -190,6 +190,7 @@ const jsonLd = [
 ];
 
 export default function ToolsPage() {
+  const location = useLocation();
   const [sex, setSex] = useState('female');
   const [age, setAge] = useState(35);
   const [height, setHeight] = useState(170);
@@ -214,6 +215,19 @@ export default function ToolsPage() {
   const [dinnerOptions, setDinnerOptions] = useState([]);
   const [aiPrompts, setAiPrompts] = useState({});
   const [aiStatus, setAiStatus] = useState({ id: '', message: '', busy: false });
+
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const target = document.getElementById(location.hash.slice(1));
+    if (!target) return;
+
+    window.setTimeout(() => {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    }, 0);
+  }, [location.hash]);
 
   const calorieResult = useMemo(() => {
     const bmr = sex === 'male'
@@ -343,7 +357,7 @@ export default function ToolsPage() {
           </div>
         </header>
 
-        <section className="fridge-tool-panel" aria-labelledby="fridge-dinner-heading">
+        <section id="fridge-dinner-builder" className="fridge-tool-panel" aria-labelledby="fridge-dinner-heading">
           <div className="fridge-tool-copy">
             <span className="offer-kicker">{toTitleCase('Client-side dinner builder')}</span>
             <h2 id="fridge-dinner-heading">{toTitleCase('Turn fridge ingredients into dinner')}</h2>
@@ -467,7 +481,7 @@ export default function ToolsPage() {
         />
 
         <div className="tools-grid">
-          <section className="tool-panel">
+          <section id="calorie-calculator" className="tool-panel">
             <h2>Calorie Target Calculator</h2>
             <div className="tool-fields tool-fields--two">
               <Select label="Sex" value={sex} onChange={setSex} options={[['female', 'Female'], ['male', 'Male']]} />
@@ -489,7 +503,7 @@ export default function ToolsPage() {
             </Link>
           </section>
 
-          <section className="tool-panel">
+          <section id="protein-calculator" className="tool-panel">
             <h2>Protein Target Calculator</h2>
             <div className="tool-fields">
               <NumberField label="Body weight" value={proteinWeight} onChange={setProteinWeight} min={40} max={220} suffix="kg" />
@@ -512,7 +526,7 @@ export default function ToolsPage() {
             </Link>
           </section>
 
-          <section className="tool-panel">
+          <section id="container-count-calculator" className="tool-panel">
             <h2>Container Count Calculator</h2>
             <div className="tool-fields">
               <NumberField label="Prep days" value={prepDays} onChange={setPrepDays} min={1} max={7} suffix="days" />
@@ -531,7 +545,7 @@ export default function ToolsPage() {
             </Link>
           </section>
 
-          <section className="tool-panel">
+          <section id="shopping-budget-estimator" className="tool-panel">
             <h2>Weekly Shopping Budget Estimator</h2>
             <div className="tool-fields">
               <Select label="Supermarket" value={market} onChange={setMarket} options={Object.entries(MARKET_BASKET_BASE).map(([key, item]) => [key, item.label])} />
@@ -555,7 +569,7 @@ export default function ToolsPage() {
           </section>
         </div>
 
-        <section className="tools-print-section">
+        <section id="printable-plans" className="tools-print-section">
           <h2>Print or Save Your Plan as a PDF</h2>
           <p>
             After choosing a plan, use the export PDF section on the plan page to print a weekly
