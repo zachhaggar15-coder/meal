@@ -17,7 +17,7 @@ import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constan
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
-const CARD_LIMIT = 24;
+const CARD_LIMIT = 12;
 
 const MARKET_LABEL = {
   aldi: 'Aldi',

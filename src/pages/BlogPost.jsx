@@ -1,7 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
-import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
@@ -136,9 +135,6 @@ export default function BlogPost() {
             />
           )}
 
-          {/* Early CTA — after the intro, before the main body */}
-          <GeneratorCTA sourcePage={`blog-${slug}`} />
-          <PopularGuides slug={slug} post={data} />
           <ExactPlanLinks links={exactPlanLinks} />
 
           {data.sections.map((section, i) => (
@@ -177,6 +173,8 @@ export default function BlogPost() {
               </div>
             </>
           )}
+
+          <PopularGuides slug={slug} post={data} />
 
           <StickerPromo offer={BUDGET_CONTAINERS} sourcePage={`blog-${slug}-body`} />
 

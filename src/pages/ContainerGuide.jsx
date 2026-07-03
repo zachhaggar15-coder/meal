@@ -186,42 +186,6 @@ export default function ContainerGuide() {
           ))}
         </div>
 
-        <section className="container-intent-section" aria-labelledby="container-intent-heading">
-          <div className="section-head-inline">
-            <div>
-              <h2 id="container-intent-heading">Best container by search intent</h2>
-              <p>
-                Match the buyer need first: cheap plastic tubs, glass meal prep boxes,
-                leakproof lunch containers or a work-lunch setup.
-              </p>
-            </div>
-          </div>
-          <div className="content-table-wrap">
-            <table className="content-table container-intent-table">
-              <thead>
-                <tr>
-                  <th>Search</th>
-                  <th>{toTitleCase('Best choice')}</th>
-                  <th>Why</th>
-                  <th>Guide</th>
-                </tr>
-              </thead>
-              <tbody>
-                {searchIntentRows.map(row => (
-                  <tr key={row.intent}>
-                    <td>{row.intent}</td>
-                    <td>{toTitleCase(row.best)}</td>
-                    <td>{row.why}</td>
-                    <td><Link to={row.path}>Compare</Link></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <ContainerFinder currentTier={guide.slug} />
-
         <section className="conversion-panel" aria-label="Buying guide summary">
           <div>
             <strong>{toTitleCase(guide.priceBand)}</strong>
@@ -307,6 +271,42 @@ export default function ContainerGuide() {
             showDisclosure={false}
           />
         </div>
+
+        <ContainerFinder currentTier={guide.slug} />
+
+        <section className="container-intent-section" aria-labelledby="container-intent-heading">
+          <div className="section-head-inline">
+            <div>
+              <h2 id="container-intent-heading">Best container by search intent</h2>
+              <p>
+                Match the buyer need first: cheap plastic tubs, glass meal prep boxes,
+                leakproof lunch containers or a work-lunch setup.
+              </p>
+            </div>
+          </div>
+          <div className="content-table-wrap">
+            <table className="content-table container-intent-table">
+              <thead>
+                <tr>
+                  <th>Search</th>
+                  <th>{toTitleCase('Best choice')}</th>
+                  <th>Why</th>
+                  <th>Guide</th>
+                </tr>
+              </thead>
+              <tbody>
+                {searchIntentRows.map(row => (
+                  <tr key={row.intent}>
+                    <td>{row.intent}</td>
+                    <td>{toTitleCase(row.best)}</td>
+                    <td>{row.why}</td>
+                    <td><Link to={row.path}>Compare</Link></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
 
         {guide.sections.map(section => (
           <section key={section.h2}>

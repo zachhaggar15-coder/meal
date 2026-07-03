@@ -3157,6 +3157,58 @@ input:focus, select:focus {
   display: none;
 }
 
+.plan-action-bar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 26px;
+}
+
+.plan-action-bar a,
+.plan-action-bar button {
+  background: #fff;
+  border: 1px solid #c7d2fe;
+  border-radius: 999px;
+  color: #3730a3;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 9px 13px;
+  text-decoration: none;
+}
+
+.plan-action-bar a:hover,
+.plan-action-bar button:hover {
+  background: #eef2ff;
+}
+
+.plan-action-bar .plan-action-primary {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.plan-secondary-details {
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+.plan-secondary-details > summary {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 900;
+  padding: 14px 16px;
+}
+
+.plan-secondary-stack {
+  display: grid;
+  gap: 14px;
+  padding: 0 16px 16px;
+}
+
 .plan-quick-facts {
   border: 1px solid #dbeafe;
   border-radius: 8px;
@@ -5493,6 +5545,12 @@ details[open] .faq-question::after { content: '▴'; }
 
 .container-intent-section {
   background: #fff;
+}
+
+.content-page > article {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 880px;
 }
 
 .container-intent-table a {
@@ -8675,6 +8733,21 @@ textarea {
   .affiliate-product-details:not([open]) {
     padding-bottom: 4px;
   }
+
+  .plan-action-bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .plan-action-bar a,
+  .plan-action-bar button {
+    text-align: center;
+    width: 100%;
+  }
+
+  .plan-action-bar .plan-action-primary {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 480px) {
@@ -8759,5 +8832,9 @@ textarea {
   .discovery-priority-list a {
     justify-content: center;
     width: 100%;
+  }
+
+  .plan-action-bar {
+    grid-template-columns: 1fr;
   }
 }

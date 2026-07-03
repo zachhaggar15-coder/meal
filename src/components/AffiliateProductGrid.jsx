@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerProducts.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -10,7 +9,6 @@ export default function AffiliateProductGrid({
   showDisclosure = true,
 }) {
   const products = getContainerProducts(productIds);
-  const showProductDetails = useDesktopDetailsOpen();
 
   if (!products.length) return null;
 
@@ -65,7 +63,7 @@ export default function AffiliateProductGrid({
                 <p><strong>Buy if:</strong> {product.buyIf}</p>
                 <p><strong>Avoid if:</strong> {product.avoidIf}</p>
               </div>
-              <details className="affiliate-product-details" open={showProductDetails}>
+              <details className="affiliate-product-details">
                 <summary>Pros, cons and key features</summary>
                 <div className="affiliate-product-detail-body">
                   <div className="affiliate-pro-con-grid">
@@ -105,19 +103,4 @@ export default function AffiliateProductGrid({
       </div>
     </section>
   );
-}
-
-function useDesktopDetailsOpen() {
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 761px)');
-    const sync = () => setIsDesktop(media.matches);
-
-    sync();
-    media.addEventListener?.('change', sync);
-    return () => media.removeEventListener?.('change', sync);
-  }, []);
-
-  return isDesktop;
 }

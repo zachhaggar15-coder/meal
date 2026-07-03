@@ -243,7 +243,7 @@ export default function PlanPage() {
   }
 
   const planDaysSection = (
-    <section className="plan-days-section">
+    <section id="meal-plan" className="plan-days-section">
       <h2>Your 7-Day Meal Plan</h2>
 
       <div className="plan-day-tabs" role="tablist" aria-label="Select day">
@@ -351,7 +351,7 @@ export default function PlanPage() {
   );
 
   const shoppingListSection = (
-    <section className="plan-shopping-section">
+    <section id="shopping-list" className="plan-shopping-section">
       <div className="plan-shopping-header">
         <h2>Weekly Shopping List</h2>
         <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
@@ -416,6 +416,14 @@ export default function PlanPage() {
           </div>
         )}
 
+        <PlanActionBar
+          onCopyPlan={copyPlanSummary}
+          onSharePlan={sharePlan}
+          onPrintPlan={handlePrintPlan}
+          planCopyStatus={planCopyStatus}
+          shareStatus={shareStatus}
+        />
+
         {planDaysSection}
         {shoppingListSection}
 
@@ -456,34 +464,19 @@ export default function PlanPage() {
           </div>
         </div>
 
-        <PlanQuickFacts plan={plan} />
-        <PlanShareTools
-          onCopyPlan={copyPlanSummary}
-          onSharePlan={sharePlan}
-          planCopyStatus={planCopyStatus}
-          shareStatus={shareStatus}
-        />
-        <SupermarketEvidence plan={plan} />
-        <PlanQualityNotes plan={plan} />
-        <BatchPrepPlan prepPlan={plan.prepPlan} />
+        <details className="plan-secondary-details">
+          <summary>{toTitleCase('Plan details and assumptions')}</summary>
+          <div className="plan-secondary-stack">
+            <SupermarketEvidence plan={plan} />
+            <PlanQualityNotes plan={plan} />
+            <BatchPrepPlan prepPlan={plan.prepPlan} />
+          </div>
+        </details>
 
         {/* Quiz CTA */}
         <div className="plan-quiz-cta">
           <Link to="/quiz" className="btn-quiz-inline">Not Right For You? Take The Quiz →</Link>
         </div>
-
-        <section className="plan-export-section" aria-labelledby="plan-export-heading">
-          <div>
-            <h2 id="plan-export-heading">Export This Meal Plan as a PDF</h2>
-            <p>
-              Print this 7-day meal plan or save it as a PDF. The printable meal plan summary includes
-              every meal, daily calories, protein totals and the full weekly shopping list.
-            </p>
-          </div>
-          <button className="plan-export-btn" onClick={handlePrintPlan} type="button">
-            Export / print PDF
-          </button>
-        </section>
 
         <PrintablePlanSummary
           plan={displayPlan}
@@ -737,24 +730,16 @@ function PlanQuickFacts({ plan }) {
   );
 }
 
-function PlanShareTools({ onCopyPlan, onSharePlan, planCopyStatus, shareStatus }) {
+function PlanActionBar({ onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, shareStatus }) {
   return (
-    <section className="plan-share-section" aria-labelledby="plan-share-heading">
-      <div>
-        <h2 id="plan-share-heading">{toTitleCase('Save or share this plan')}</h2>
-        <p>
-          Copy a clean weekly summary, send the link to yourself, or share it with
-          someone you shop or meal prep with.
-        </p>
-      </div>
-      <div className="plan-share-actions">
-        <button className="plan-share-btn" onClick={onCopyPlan} type="button">
-          {planCopyStatus || 'Copy plan summary'}
-        </button>
-        <button className="plan-share-btn plan-share-btn--primary" onClick={onSharePlan} type="button">
-          {shareStatus || 'Share plan link'}
-        </button>
-      </div>
+    <section className="plan-action-bar" aria-label="Plan actions">
+      <a href="#meal-plan">Meals</a>
+      <a href="#shopping-list">Shopping List</a>
+      <button onClick={onCopyPlan} type="button">{planCopyStatus || 'Copy Summary'}</button>
+      <button onClick={onPrintPlan} type="button">Print PDF</button>
+      <button className="plan-action-primary" onClick={onSharePlan} type="button">
+        {shareStatus || 'Share'}
+      </button>
     </section>
   );
 }
