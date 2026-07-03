@@ -9,6 +9,7 @@ import {
   getContainerProducts,
 } from '../data/containerProducts.js';
 import { SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const HUB_PRODUCT_IDS = [
   'budget-compartment-50-pack',
@@ -165,7 +166,7 @@ export default function ContainerHub() {
 
         <section className="container-guide-hero container-hub-hero">
           <div className="container-guide-copy">
-            <span className="offer-kicker">Container buying guide</span>
+            <span className="offer-kicker">{toTitleCase('Container buying guide')}</span>
             <h1>Best Meal Prep Containers UK</h1>
             <p className="content-intro">
               Compare budget plastic tubs, glass meal prep containers, leakproof lunch boxes
@@ -191,16 +192,16 @@ export default function ContainerHub() {
 
         <div className="container-tier-nav" aria-label="Meal prep container guides">
           <Link to="/meal-prep-containers" className="container-tier-link container-tier-link--active">
-            Best containers
+            {toTitleCase('Best containers')}
           </Link>
           <Link to="/meal-prep-containers/budget" className="container-tier-link">
             Budget
           </Link>
           <Link to="/meal-prep-containers/mid-range" className="container-tier-link">
-            Glass and mid range
+            {toTitleCase('Glass and mid range')}
           </Link>
           <Link to="/meal-prep-containers/premium" className="container-tier-link">
-            Premium
+            {toTitleCase('Premium')}
           </Link>
         </div>
 
@@ -230,9 +231,9 @@ export default function ContainerHub() {
                     <td>{row.answer}</td>
                     <td>
                       {row.link.startsWith('#') ? (
-                        <a href={row.link}>{row.label}</a>
+                        <a href={row.link}>{toTitleCase(row.label)}</a>
                       ) : (
-                        <Link to={row.link}>{row.label}</Link>
+                        <Link to={row.link}>{toTitleCase(row.label)}</Link>
                       )}
                     </td>
                   </tr>
@@ -244,8 +245,8 @@ export default function ContainerHub() {
 
         <section id="free-meal-prep-box" className="container-hub-callout" aria-labelledby="free-box-heading">
           <div>
-            <span className="offer-kicker">Free setup checklist</span>
-            <h2 id="free-box-heading">Looking for a free meal prep box?</h2>
+            <span className="offer-kicker">{toTitleCase('Free setup checklist')}</span>
+            <h2 id="free-box-heading">{toTitleCase('Looking for a free meal prep box?')}</h2>
             <p>
               If you mean a physical box, check the retailer offer carefully. If you mean a
               free meal prep box setup, start with this checklist: five lunch containers,
@@ -257,7 +258,7 @@ export default function ContainerHub() {
         </section>
 
         <section aria-labelledby="setup-heading">
-          <h2 id="setup-heading">How many meal prep boxes should you buy?</h2>
+          <h2 id="setup-heading">{toTitleCase('How many meal prep boxes should you buy?')}</h2>
           <p>
             Do not buy the biggest set first. Buy enough containers for the meals you
             actually prep, then add extras only when the habit is stable.
@@ -285,7 +286,7 @@ export default function ContainerHub() {
         </section>
 
         <section className="container-intent-section" aria-labelledby="container-method-heading">
-          <h2 id="container-method-heading">How we compare meal prep containers</h2>
+          <h2 id="container-method-heading">{toTitleCase('How we compare meal prep containers')}</h2>
           <p>
             This hub is reviewed for practical UK meal-prep use rather than only Amazon star
             ratings. The main question is whether a container set helps someone store, reheat,
@@ -326,7 +327,7 @@ export default function ContainerHub() {
         </div>
 
         <section>
-          <h2>Glass, plastic or premium?</h2>
+          <h2>{toTitleCase('Glass, plastic or premium?')}</h2>
           <p>
             Glass is the best default if you reheat meals often or cook tomato-heavy
             dishes such as chilli, curry, pasta sauce and stew. Plastic is better if

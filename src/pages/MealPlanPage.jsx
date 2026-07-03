@@ -12,6 +12,7 @@ import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 import { buildShoppingList, scaleIngredientsForPortion } from '../utils/planBuilder.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 function ContentTable({ headers, rows }) {
   return (
@@ -326,7 +327,7 @@ export default function MealPlanPage() {
 
         {data.tescoPricing && (
           <>
-            <h2>{data.tescoPricing.heading}</h2>
+            <h2>{toTitleCase(data.tescoPricing.heading)}</h2>
             <p>{data.tescoPricing.intro}</p>
             <div className="metric-grid">
               {data.tescoPricing.metrics.map(metric => (
@@ -370,7 +371,7 @@ export default function MealPlanPage() {
 
         {data.budgetBreakdown && (
           <>
-            <h2>{data.budgetBreakdown.heading}</h2>
+            <h2>{toTitleCase(data.budgetBreakdown.heading)}</h2>
             <p>{data.budgetBreakdown.intro}</p>
             <ContentTable
               headers={['Item', 'Quantity', 'Estimated Tesco price', 'Number of meals supplied']}
@@ -512,7 +513,7 @@ export default function MealPlanPage() {
 
         {data.methodology && (
           <>
-            <h2>{data.methodology.heading}</h2>
+            <h2>{toTitleCase(data.methodology.heading)}</h2>
             <ul className="content-bullets">
               {data.methodology.points.map((point, i) => <li key={i}>{point}</li>)}
             </ul>
@@ -566,12 +567,12 @@ export default function MealPlanPage() {
         <ul className="plan-links">
           {data.related.map(r => (
             <li key={r.slug}>
-              <Link to={`/meal-plan/${r.slug}`}>{r.label}</Link>
+              <Link to={`/meal-plan/${r.slug}`}>{toTitleCase(r.label)}</Link>
             </li>
           ))}
           {data.blogLinks.map(b => (
             <li key={b.path}>
-              <Link to={b.path}>{b.label}</Link>
+              <Link to={b.path}>{toTitleCase(b.label)}</Link>
             </li>
           ))}
           {data.ctaPlacements?.relatedGenerator !== false && (
@@ -581,13 +582,13 @@ export default function MealPlanPage() {
                 data-event="generator_cta_click"
                 data-source-page={slug}
               >
-                Generate a personalised {data.planLabel} plan
+                Generate A Personalised {toTitleCase(data.planLabel)} Plan
               </Link>
             </li>
           )}
           <li>
             <Link to="/stickers" data-event="container_promo_click" data-source-page={slug}>
-              Glass meal prep containers for your portions
+              Glass Meal Prep Containers For Your Portions
             </Link>
           </li>
         </ul>
@@ -605,7 +606,7 @@ function LegacyPlanFamilyBox({ family }) {
   return (
     <aside className="legacy-plan-family" aria-labelledby="legacy-plan-family-heading">
       <div>
-        <h2 id="legacy-plan-family-heading">Current plan family</h2>
+        <h2 id="legacy-plan-family-heading">{toTitleCase('Current plan family')}</h2>
         <p>
           This older exact-match page is now connected to the current hub and generated plan
           library so related calorie, supermarket and shopping-list pages are easier to find.
@@ -613,7 +614,7 @@ function LegacyPlanFamilyBox({ family }) {
       </div>
       <div className="legacy-plan-family-links">
         {family.links.map(link => (
-          <Link key={link.to} to={link.to}>{link.label}</Link>
+          <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
         ))}
       </div>
     </aside>

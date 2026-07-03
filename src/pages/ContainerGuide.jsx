@@ -10,6 +10,7 @@ import {
   getContainerProduct,
   getContainerProducts,
 } from '../data/containerProducts.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const guideOrder = ['budget', 'mid-range', 'premium'];
 
@@ -200,7 +201,7 @@ export default function ContainerGuide() {
               <thead>
                 <tr>
                   <th>Search</th>
-                  <th>Best choice</th>
+                  <th>{toTitleCase('Best choice')}</th>
                   <th>Why</th>
                   <th>Guide</th>
                 </tr>
@@ -209,7 +210,7 @@ export default function ContainerGuide() {
                 {searchIntentRows.map(row => (
                   <tr key={row.intent}>
                     <td>{row.intent}</td>
-                    <td>{row.best}</td>
+                    <td>{toTitleCase(row.best)}</td>
                     <td>{row.why}</td>
                     <td><Link to={row.path}>Compare</Link></td>
                   </tr>
@@ -223,7 +224,7 @@ export default function ContainerGuide() {
 
         <section className="conversion-panel" aria-label="Buying guide summary">
           <div>
-            <strong>{guide.priceBand}</strong>
+            <strong>{toTitleCase(guide.priceBand)}</strong>
             <span>
               Compare six Amazon UK meal prep boxes, tubs, and containers for this price tier.
             </span>
@@ -246,7 +247,7 @@ export default function ContainerGuide() {
         <section className="container-comparison-section" aria-labelledby="container-comparison-heading">
           <div className="section-head-inline">
             <div>
-              <h2 id="container-comparison-heading">Quick comparison</h2>
+                <h2 id="container-comparison-heading">{toTitleCase('Quick comparison')}</h2>
               <p>
                 Shortlist by material, format, layout and buyer need before opening the Amazon UK listing.
               </p>
@@ -309,7 +310,7 @@ export default function ContainerGuide() {
 
         {guide.sections.map(section => (
           <section key={section.h2}>
-            <h2>{section.h2}</h2>
+            <h2>{toTitleCase(section.h2)}</h2>
             {section.paragraphs.map(paragraph => (
               <p key={paragraph}>{paragraph}</p>
             ))}

@@ -9,6 +9,7 @@ import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_COUNT = ALL_PLANS.length;
@@ -328,12 +329,12 @@ export default function BrowsePlans() {
           <div className="browse-hub-index-grid">
             {HUB_INDEX_GROUPS.map(group => (
               <div className="browse-hub-index-group" key={group.label}>
-                <h3>{group.label}</h3>
+                <h3>{toTitleCase(group.label)}</h3>
                 <div className="browse-hub-links">
                   {group.slugs.map(slug => {
                     const page = MEAL_PLAN_HUBS[slug] || COMBO_LANDING_PAGES[slug];
                     return page ? (
-                      <Link key={page.slug} to={page.path}>{page.h1}</Link>
+                      <Link key={page.slug} to={page.path}>{toTitleCase(page.h1)}</Link>
                     ) : null;
                   })}
                 </div>

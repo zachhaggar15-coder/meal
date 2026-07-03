@@ -19,7 +19,7 @@ export default function TrustBox({
   return (
     <aside className="trust-box" aria-label="Editorial and safety note">
       <div>
-        <strong>Editorial note</strong>
+        <strong>Editorial Note</strong>
         <span>Last materially reviewed: {reviewed}</span>
       </div>
       <p>{note}</p>

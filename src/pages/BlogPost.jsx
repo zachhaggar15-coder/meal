@@ -16,6 +16,7 @@ import {
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS } from '../data/offers.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -112,23 +113,16 @@ export default function BlogPost() {
           )}
           {quickAnswer && (
             <aside className="quick-answer-box" aria-label="Quick answer">
-              <strong>Quick answer</strong>
+              <strong>{toTitleCase('Quick answer')}</strong>
               <p>{quickAnswer.answer}</p>
               {quickAnswer.links?.length > 0 && (
                 <div className="quick-answer-links">
                   {quickAnswer.links.map(link => (
-                    <Link key={link.to} to={link.to}>{link.label}</Link>
+                    <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
                   ))}
                 </div>
               )}
             </aside>
-          )}
-          {showTrustBox && (
-            <TrustBox
-              sources={sources}
-              reviewed={data.reviewed || data.modified || '17 June 2026'}
-              note={data.trustNote}
-            />
           )}
           <ContextualLinks blocks={data.contextualLinks} />
 
@@ -149,7 +143,7 @@ export default function BlogPost() {
 
           {data.sections.map((section, i) => (
             <section key={i}>
-              <h2>{section.h2}</h2>
+              <h2>{toTitleCase(section.h2)}</h2>
               {section.paragraphs.map((para, j) => (
                 <p key={j}>{para}</p>
               ))}
@@ -228,7 +222,7 @@ export default function BlogPost() {
             {data.related.map(r => (
               <li key={r.path || r.slug}>
                 <Link to={r.path || `/${r.type === 'blog' ? 'blog' : r.type === 'plan' ? 'plans' : 'meal-plan'}/${r.slug}`}>
-                  {r.label}
+                  {toTitleCase(r.label)}
                 </Link>
               </li>
             ))}
@@ -238,15 +232,22 @@ export default function BlogPost() {
                 data-event="generator_cta_click"
                 data-source-page={`blog-${slug}`}
               >
-                Generate a personalised UK meal plan
+                Generate A Personalised UK Meal Plan
               </Link>
             </li>
             <li>
               <Link to="/stickers" data-event="container_promo_click" data-source-page={`blog-${slug}`}>
-                Glass meal prep containers for batch cooking
+                Glass Meal Prep Containers For Batch Cooking
               </Link>
             </li>
           </ul>
+          {showTrustBox && (
+            <TrustBox
+              sources={sources}
+              reviewed={data.reviewed || data.modified || '17 June 2026'}
+              note={data.trustNote}
+            />
+          )}
         </article>
       </div>
       <Footer />
@@ -260,12 +261,12 @@ function ExactPlanLinks({ links }) {
   return (
     <aside className="exact-plan-links" aria-label="Exact meal plan matches">
       <div>
-        <strong>Exact plan matches</strong>
+        <strong>{toTitleCase('Exact plan matches')}</strong>
         <p>Jump straight from this guide to a practical plan, shopping list or printable week.</p>
       </div>
       <div className="exact-plan-link-list">
         {links.map(link => (
-          <Link key={link.to} to={link.to}>{link.label}</Link>
+          <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
         ))}
       </div>
     </aside>

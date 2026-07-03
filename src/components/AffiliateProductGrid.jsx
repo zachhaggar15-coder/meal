@@ -1,4 +1,5 @@
 import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerProducts.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 export default function AffiliateProductGrid({
   title = 'Recommended meal prep containers',
@@ -14,7 +15,7 @@ export default function AffiliateProductGrid({
   return (
     <section className="affiliate-product-section">
       <div className="affiliate-section-head">
-        <h2>{title}</h2>
+        <h2>{toTitleCase(title)}</h2>
         {intro && <p>{intro}</p>}
       </div>
 

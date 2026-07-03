@@ -12,6 +12,7 @@ import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { track } from '../utils/analytics.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -404,11 +405,6 @@ export default function PlanPage() {
         </p>
         <PageHeroVisual visual={planVisual} className="plan-page-visual" />
 
-        <TrustBox
-          reviewed="2 July 2026"
-          note="Plans are generated from a curated UK meal library, then rendered with deterministic shopping lists, recipes, calorie estimates and supermarket-specific notes. They are general meal-planning information, not medical advice."
-        />
-
         {editNote && (
           <div className="plan-edit-notice">
             <strong>Note:</strong> {editNote}{' '}
@@ -437,7 +433,7 @@ export default function PlanPage() {
 
           {/* Macro bars */}
           <div className="plan-macros">
-            <h3 className="plan-macros-title">Estimated daily macros</h3>
+            <h3 className="plan-macros-title">{toTitleCase('Estimated daily macros')}</h3>
             <div className="macro-bars">
               {[
                 { key: 'protein', label: 'Protein', max: 200 },
@@ -473,7 +469,7 @@ export default function PlanPage() {
 
         {/* Quiz CTA */}
         <div className="plan-quiz-cta">
-          <Link to="/quiz" className="btn-quiz-inline">Not right for you? Take the quiz →</Link>
+          <Link to="/quiz" className="btn-quiz-inline">Not Right For You? Take The Quiz →</Link>
         </div>
 
         <section className="plan-export-section" aria-labelledby="plan-export-heading">
@@ -694,6 +690,11 @@ export default function PlanPage() {
           <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT} plans</Link>
         </div>
 
+        <TrustBox
+          reviewed="2 July 2026"
+          note="Plans are generated from a curated UK meal library, then rendered with deterministic shopping lists, recipes, calorie estimates and supermarket-specific notes. They are general meal-planning information, not medical advice."
+        />
+
         <FeedbackBox />
 
       </div>
@@ -740,7 +741,7 @@ function PlanShareTools({ onCopyPlan, onSharePlan, planCopyStatus, shareStatus }
   return (
     <section className="plan-share-section" aria-labelledby="plan-share-heading">
       <div>
-        <h2 id="plan-share-heading">Save or share this plan</h2>
+        <h2 id="plan-share-heading">{toTitleCase('Save or share this plan')}</h2>
         <p>
           Copy a clean weekly summary, send the link to yourself, or share it with
           someone you shop or meal prep with.
@@ -764,7 +765,7 @@ function SupermarketEvidence({ plan }) {
   return (
     <section className="supermarket-evidence" aria-labelledby="plan-evidence-heading">
       <div>
-        <h2 id="plan-evidence-heading">{evidence.label} shopping evidence notes</h2>
+        <h2 id="plan-evidence-heading">{toTitleCase(`${evidence.label} shopping evidence notes`)}</h2>
         <p>
           These basket notes explain why this plan is shaped around certain
           ingredients and swaps before you open the shopping list.
@@ -801,7 +802,7 @@ function PlanQualityNotes({ plan }) {
     <section className="plan-quality-notes" aria-labelledby="plan-quality-heading">
       <div className="section-head-inline">
         <div>
-          <h2 id="plan-quality-heading">Why this exact plan exists</h2>
+          <h2 id="plan-quality-heading">{toTitleCase('Why this exact plan exists')}</h2>
           <p>
             This page is not only a title-and-macros variant. The calorie target, supermarket,
             diet type, budget and prep style all change the meals, shopping-list assumptions and swaps.
@@ -811,21 +812,21 @@ function PlanQualityNotes({ plan }) {
 
       <div className="plan-quality-grid">
         <article>
-          <h3>Search intent</h3>
+          <h3>{toTitleCase('Search intent')}</h3>
           <p>
             A {market} {plan.goalLabel.toLowerCase()} plan at {calorieText} calories is useful when
             someone wants a printable week before shopping, not just a generic diet article.
           </p>
         </article>
         <article>
-          <h3>Shopping logic</h3>
+          <h3>{toTitleCase('Shopping logic')}</h3>
           <p>
             The list favours repeatable UK supermarket staples, grouped by protein, carbs, vegetables,
             dairy and extras so the basket can be checked before buying.
           </p>
         </article>
         <article>
-          <h3>Practical swaps</h3>
+          <h3>{toTitleCase('Practical swaps')}</h3>
           <p>
             The swap section keeps the page usable if a product is out of stock, too expensive, or not
             right for the reader's diet.
@@ -856,7 +857,7 @@ function PlanQualityNotes({ plan }) {
 
       <div className="plan-quality-links" aria-label="Related plan hubs">
         {hubLinks.map(link => (
-          <Link key={link.to} to={link.to}>{link.label}</Link>
+          <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
         ))}
       </div>
     </section>
@@ -869,7 +870,7 @@ function BatchPrepPlan({ prepPlan }) {
   return (
     <section className="plan-prep-section" aria-labelledby="plan-prep-heading">
       <div>
-        <h2 id="plan-prep-heading">{prepPlan.title}</h2>
+        <h2 id="plan-prep-heading">{toTitleCase(prepPlan.title)}</h2>
         <p>{prepPlan.intro}</p>
       </div>
       <ol className="plan-prep-list">
@@ -929,22 +930,22 @@ function PlanContainerLinks({ plan }) {
   return (
     <section className="plan-container-links" aria-labelledby="plan-container-links-heading">
       <div>
-        <h2 id="plan-container-links-heading">Containers for this meal prep plan</h2>
+        <h2 id="plan-container-links-heading">{toTitleCase('Containers for this meal prep plan')}</h2>
         <p>
           Batch cooking this week? Compare meal prep boxes, tubs and glass containers before you portion
           the shopping list into lunches and dinners.
         </p>
       </div>
       <div className="plan-container-link-list">
-        <Link to="/meal-prep-containers">Best meal prep containers</Link>
-        <Link to={primary}>{primaryLabel}</Link>
+        <Link to="/meal-prep-containers">{toTitleCase('Best meal prep containers')}</Link>
+        <Link to={primary}>{toTitleCase(primaryLabel)}</Link>
         {primary !== '/meal-prep-containers/budget' && (
-          <Link to="/meal-prep-containers/budget">Budget plastic tubs</Link>
+          <Link to="/meal-prep-containers/budget">{toTitleCase('Budget plastic tubs')}</Link>
         )}
         {primary !== '/meal-prep-containers/mid-range' && (
-          <Link to="/meal-prep-containers/mid-range">Mid-range glass boxes</Link>
+          <Link to="/meal-prep-containers/mid-range">{toTitleCase('Mid-range glass boxes')}</Link>
         )}
-        <Link to="/meal-prep-containers/premium">Premium storage sets</Link>
+        <Link to="/meal-prep-containers/premium">{toTitleCase('Premium storage sets')}</Link>
       </div>
     </section>
   );

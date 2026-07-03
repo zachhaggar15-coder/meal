@@ -14,6 +14,7 @@ import {
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { chooseHubVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const CARD_LIMIT = 24;
@@ -163,8 +164,6 @@ export default function MealPlanHubPage() {
           </div>
         </section>
 
-        <TrustBox sources={sources} reviewed={hub.reviewed || '17 June 2026'} />
-
         <PopularSearches
           title="Popular UK searches"
           intro="Related guides and plan hubs for calorie targets, printable PDFs, supermarket shopping and meal prep kit."
@@ -174,7 +173,7 @@ export default function MealPlanHubPage() {
         <section id="top-plans" className="meal-hub-plans">
           <div className="section-head-inline">
             <div>
-              <h2>Top matching plans</h2>
+              <h2>{toTitleCase('Top matching plans')}</h2>
               <p>
                 Start with one of these plans, then use the plan page to print the PDF,
                 copy the shopping list or edit meals.
@@ -204,7 +203,7 @@ export default function MealPlanHubPage() {
 
         {hub.sections.map(section => (
           <section key={section.h2} className="meal-hub-copy-section">
-            <h2>{section.h2}</h2>
+            <h2>{toTitleCase(section.h2)}</h2>
             {section.paragraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
             {section.bullets && (
               <ul className="content-bullets">
@@ -237,14 +236,14 @@ export default function MealPlanHubPage() {
         <section className="meal-hub-supporting-guides" aria-labelledby="meal-hub-supporting-guides-heading">
           <div className="section-head-inline">
             <div>
-              <h2 id="meal-hub-supporting-guides-heading">Supporting guides</h2>
+              <h2 id="meal-hub-supporting-guides-heading">{toTitleCase('Supporting guides')}</h2>
               <p>Use these guides to refine the plan, build the shopping list and choose practical UK ingredients.</p>
             </div>
           </div>
           <div className="meal-hub-supporting-grid">
             {supportingGuides.slice(0, 5).map(guide => (
               <Link key={guide.to} to={guide.to} className="meal-hub-supporting-card">
-                {guide.label}
+                {toTitleCase(guide.label)}
               </Link>
             ))}
           </div>
@@ -252,17 +251,17 @@ export default function MealPlanHubPage() {
 
         <section className="meal-hub-container-cta">
           <div>
-            <h2>Batch cooking these plans?</h2>
+            <h2>{toTitleCase('Batch cooking these plans?')}</h2>
             <p>
               Compare meal prep containers for budget plastic tubs, mid-range glass boxes
               and premium storage sets before you prep the week.
             </p>
           </div>
           <div className="meal-hub-container-links">
-            <Link to="/meal-prep-containers">Best containers</Link>
-            <Link to="/meal-prep-containers/budget">Budget containers</Link>
-            <Link to="/meal-prep-containers/mid-range">Mid-range containers</Link>
-            <Link to="/meal-prep-containers/premium">Premium containers</Link>
+            <Link to="/meal-prep-containers">{toTitleCase('Best containers')}</Link>
+            <Link to="/meal-prep-containers/budget">{toTitleCase('Budget containers')}</Link>
+            <Link to="/meal-prep-containers/mid-range">{toTitleCase('Mid-range containers')}</Link>
+            <Link to="/meal-prep-containers/premium">{toTitleCase('Premium containers')}</Link>
           </div>
         </section>
 
@@ -287,6 +286,7 @@ export default function MealPlanHubPage() {
             ) : null;
           })}
         </ul>
+        <TrustBox sources={sources} reviewed={hub.reviewed || '17 June 2026'} />
       </div>
       <Footer />
     </>

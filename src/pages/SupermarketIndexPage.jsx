@@ -5,6 +5,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { SUPERMARKET_CHOICES } from '../data/planChooser.js';
 import { chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const jsonLd = [
   {
@@ -54,7 +55,7 @@ export default function SupermarketIndexPage() {
 
         <header className="supermarket-index-hero">
           <div>
-            <span className="offer-kicker">Choose supermarket first</span>
+            <span className="offer-kicker">{toTitleCase('Choose supermarket first')}</span>
             <h1>UK Meal Plans by Supermarket</h1>
             <p className="content-intro">
               Start with where you shop, then choose the goal that fits this week:
@@ -81,7 +82,7 @@ export default function SupermarketIndexPage() {
                   loading="lazy"
                   decoding="async"
                 />
-                <span>{market.label}</span>
+                <span>{toTitleCase(market.label)}</span>
                 <small>{market.description}</small>
               </Link>
             );

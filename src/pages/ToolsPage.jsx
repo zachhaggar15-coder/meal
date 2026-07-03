@@ -5,6 +5,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const ACTIVITY = {
   sedentary: { label: 'Mostly desk based', factor: 1.2 },
@@ -329,7 +330,7 @@ export default function ToolsPage() {
         <SiteLogo variant="page" className="page-header-logo" />
         <header className="tools-hero tools-hero--compact">
           <div className="tools-hero-copy">
-            <span className="offer-kicker">Free meal prep calculators</span>
+            <span className="offer-kicker">{toTitleCase('Free meal prep calculators')}</span>
             <h1>UK Meal Prep Tools</h1>
             <p className="content-intro">
               Build dinner from what is already in your fridge, estimate a daily calorie target,
@@ -340,8 +341,8 @@ export default function ToolsPage() {
 
         <section className="fridge-tool-panel" aria-labelledby="fridge-dinner-heading">
           <div className="fridge-tool-copy">
-            <span className="offer-kicker">Client-side dinner builder</span>
-            <h2 id="fridge-dinner-heading">Turn fridge ingredients into dinner</h2>
+            <span className="offer-kicker">{toTitleCase('Client-side dinner builder')}</span>
+            <h2 id="fridge-dinner-heading">{toTitleCase('Turn fridge ingredients into dinner')}</h2>
             <p>
               Add ingredients and rough quantities, choose a calorie target, and the tool makes three dinners from
               rule-based premade recipe patterns. Each option links to a related plan or recipe hub, and you can ask AI
@@ -403,12 +404,12 @@ export default function ToolsPage() {
                     <span className="lime-tag">Option {index + 1}</span>
                     <span>{option.kcal} kcal</span>
                   </div>
-                  <h3>{option.name}</h3>
+                  <h3>{toTitleCase(option.name)}</h3>
                   <p>{option.desc}</p>
                   <div className="fridge-option-meta">
                     <span>{option.protein}g protein</span>
                     <span>{option.prep}</span>
-                    <Link to={option.sourcePlan}>Base recipe: {option.sourceLabel}</Link>
+                    <Link to={option.sourcePlan}>{toTitleCase(`Base recipe: ${option.sourceLabel}`)}</Link>
                   </div>
                   <details className="fridge-recipe">
                     <summary>View recipe and ingredients</summary>

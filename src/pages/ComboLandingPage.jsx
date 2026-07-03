@@ -12,6 +12,7 @@ import {
   getSupermarketEvidence,
 } from '../data/comboLandingPages.js';
 import { chooseComboVisual } from '../data/visualAssets.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -124,24 +125,22 @@ export default function ComboLandingPage({ page }) {
         </header>
 
         <section className="combo-quick-answer" aria-label="Quick answer">
-          <strong>Quick answer</strong>
+          <strong>{toTitleCase('Quick answer')}</strong>
           <p>{page.quickAnswer}</p>
         </section>
 
         <section className="combo-match-card" aria-labelledby="combo-match-heading">
           <div>
-            <h2 id="combo-match-heading">What this page filters for</h2>
+            <h2 id="combo-match-heading">{toTitleCase('What this page filters for')}</h2>
             <p>{matchSummary || 'UK supermarket meal plans with recipes, shopping lists and printable PDFs.'}</p>
           </div>
           <Link to="/browse" className="inline-text-link">Browse all filters</Link>
         </section>
 
-        <TrustBox sources={DEFAULT_SOURCES} reviewed={page.reviewed} />
-
         <section id="matching-plans" className="meal-hub-plans">
           <div className="section-head-inline">
             <div>
-              <h2>Best matching meal plans</h2>
+              <h2>{toTitleCase('Best matching meal plans')}</h2>
               <p>Open a plan to see the 7-day menu, recipes, macros, copyable shopping list and printable PDF summary.</p>
             </div>
           </div>
@@ -167,11 +166,11 @@ export default function ComboLandingPage({ page }) {
 
         <section className="combo-copy-grid">
           <article>
-            <h2>Why this page is useful</h2>
+            <h2>{toTitleCase('Why this page is useful')}</h2>
             <p>{page.whyItWorks}</p>
           </article>
           <article>
-            <h2>Shopping focus</h2>
+            <h2>{toTitleCase('Shopping focus')}</h2>
             <p>{page.shoppingFocus}</p>
           </article>
         </section>
@@ -180,7 +179,7 @@ export default function ComboLandingPage({ page }) {
           <section className="supermarket-evidence" aria-labelledby="combo-evidence-heading">
             <div className="section-head-inline">
               <div>
-                <h2 id="combo-evidence-heading">{evidence.label} shopping evidence notes</h2>
+                <h2 id="combo-evidence-heading">{toTitleCase(`${evidence.label} shopping evidence notes`)}</h2>
                 <p>Use these practical basket notes before opening an exact plan.</p>
               </div>
             </div>
@@ -191,11 +190,11 @@ export default function ComboLandingPage({ page }) {
         )}
 
         <section className="meal-hub-supporting-guides" aria-labelledby="combo-guides-heading">
-          <h2 id="combo-guides-heading">Supporting guides</h2>
+          <h2 id="combo-guides-heading">{toTitleCase('Supporting guides')}</h2>
           <div className="meal-hub-supporting-grid">
             {page.supportingLinks.map(link => (
               <Link key={link.to} to={link.to} className="meal-hub-supporting-card">
-                {link.label}
+                {toTitleCase(link.label)}
               </Link>
             ))}
           </div>
@@ -213,7 +212,7 @@ export default function ComboLandingPage({ page }) {
 
         {relatedPages.length > 0 && (
           <>
-            <h2>Related exact meal-plan pages</h2>
+            <h2>{toTitleCase('Related exact meal-plan pages')}</h2>
             <ul className="plan-links">
               {relatedPages.map(related => (
                 <li key={related.slug}>
@@ -223,6 +222,7 @@ export default function ComboLandingPage({ page }) {
             </ul>
           </>
         )}
+        <TrustBox sources={DEFAULT_SOURCES} reviewed={page.reviewed} />
       </div>
     </>
   );

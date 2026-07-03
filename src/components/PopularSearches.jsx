@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import { Link } from 'react-router-dom';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const DEFAULT_LINKS = [
   { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
@@ -29,12 +30,12 @@ export default function PopularSearches({
   return (
     <section className={['popular-searches', className].filter(Boolean).join(' ')} aria-labelledby={headingId}>
       <div className="popular-searches-head">
-        <h2 id={headingId}>{title}</h2>
+        <h2 id={headingId}>{toTitleCase(title)}</h2>
         <p>{intro}</p>
       </div>
       <div className="popular-searches-links">
         {links.map(link => (
-          <Link key={link.to} to={link.to}>{link.label}</Link>
+          <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
         ))}
       </div>
     </section>

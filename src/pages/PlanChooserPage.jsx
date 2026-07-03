@@ -9,6 +9,7 @@ import {
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -26,7 +27,7 @@ export default function PlanChooserPage() {
     .filter(option => option.plan);
 
   const canonical = `/choose-plan/${goalChoice.value}`;
-  const title = `${goalChoice.label} Meal Plans by Supermarket`;
+  const title = toTitleCase(`${goalChoice.label} Meal Plans by Supermarket`);
   const description = `Choose a generic UK supermarket, Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons or Iceland ${goalChoice.label.toLowerCase()} meal plan.`;
   const chooserVisual = chooseChooserVisual({ goalChoice });
 
@@ -73,13 +74,13 @@ export default function PlanChooserPage() {
           <span aria-hidden="true"> &rsaquo; </span>
           <Link to="/browse">Meal Plans</Link>
           <span aria-hidden="true"> &rsaquo; </span>
-          <span aria-current="page">{goalChoice.label}</span>
+          <span aria-current="page">{toTitleCase(goalChoice.label)}</span>
         </nav>
 
         <SiteLogo variant="page" className="page-header-logo" />
 
         <header className="plan-chooser-hero">
-          <span className="offer-kicker">Choose your supermarket</span>
+          <span className="offer-kicker">{toTitleCase('Choose your supermarket')}</span>
           <h1>{title}</h1>
           <p>
             Pick where you usually shop, or choose Generic UK supermarket for an
@@ -111,12 +112,12 @@ export default function PlanChooserPage() {
                   decoding="async"
                 />
                 <div className="plan-chooser-card-head">
-                  <span className="plan-chooser-market">{market.label}</span>
+                  <span className="plan-chooser-market">{toTitleCase(market.label)}</span>
                   <span className="plan-chooser-calories">
                     {exactDefault ? 'Default' : 'Closest'}: {plan.calories.toLocaleString('en-GB')} kcal
                   </span>
                 </div>
-                <h2>{plan.title}</h2>
+                <h2>{toTitleCase(plan.title)}</h2>
                 <p>{market.description}</p>
                 <div className="plan-chooser-meta">
                   <span>{plan.priceEstimate}/week estimate</span>

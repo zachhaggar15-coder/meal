@@ -13,6 +13,7 @@ import {
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseNavigationCardVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -73,14 +74,14 @@ export default function ChoiceLandingPage({ mode }) {
           <span aria-hidden="true"> &rsaquo; </span>
           <Link to="/browse">Meal Plans</Link>
           <span aria-hidden="true"> &rsaquo; </span>
-          <span aria-current="page">{config.shortTitle}</span>
+          <span aria-current="page">{toTitleCase(config.shortTitle)}</span>
         </nav>
 
         <SiteLogo variant="page" className="page-header-logo" />
 
         <header className="plan-chooser-hero">
-          <span className="offer-kicker">{config.kicker}</span>
-          <h1>{config.title}</h1>
+          <span className="offer-kicker">{toTitleCase(config.kicker)}</span>
+          <h1>{toTitleCase(config.title)}</h1>
           <p>{config.intro}</p>
           <div className="plan-chooser-default">
             <strong>{config.defaultLabel}</strong>
@@ -114,15 +115,15 @@ export default function ChoiceLandingPage({ mode }) {
                   decoding="async"
                 />
                 <div className="plan-chooser-card-head">
-                  <span className="plan-chooser-market">{card.label}</span>
+                  <span className="plan-chooser-market">{toTitleCase(card.label)}</span>
                   <span className="plan-chooser-calories">
                     {card.plan.calories.toLocaleString('en-GB')} kcal
                   </span>
                 </div>
-                <h2>{card.heading}</h2>
+                <h2>{toTitleCase(card.heading)}</h2>
                 <p>{card.description}</p>
                 <div className="plan-chooser-meta">
-                  <span>{marketLabel(card.plan.supermarket)}</span>
+                  <span>{toTitleCase(marketLabel(card.plan.supermarket))}</span>
                   <span>{card.plan.priceEstimate}/week estimate</span>
                   <span>{card.plan.dietType === 'standard' ? 'Standard diet' : cap(card.plan.dietType)}</span>
                 </div>
@@ -140,7 +141,7 @@ export default function ChoiceLandingPage({ mode }) {
         </section>
 
         <section className="choice-index-note">
-          <h2>Want a different combination?</h2>
+          <h2>{toTitleCase('Want a different combination?')}</h2>
           <p>
             Use the full plan browser to combine supermarket, diet, calories, budget and effort
             without landing on a default Aldi or weight loss plan first.

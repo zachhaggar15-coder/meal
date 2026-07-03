@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { toTitleCase } from '../utils/textFormatting.js';
 
 function hasAny(value, needles) {
   return needles.some(needle => value.includes(needle));
@@ -147,8 +148,8 @@ export default function PopularGuides({ slug, post }) {
   return (
     <aside className="popular-guides" aria-labelledby="popular-guides-heading">
       <div className="popular-guides-head">
-        <span className="offer-kicker">Popular next steps</span>
-        <h2 id="popular-guides-heading">Useful guides for this article</h2>
+        <span className="offer-kicker">{toTitleCase('Popular next steps')}</span>
+        <h2 id="popular-guides-heading">{toTitleCase('Useful guides for this article')}</h2>
       </div>
       <div className="popular-guides-grid">
         {guides.map(guide => (
@@ -159,7 +160,7 @@ export default function PopularGuides({ slug, post }) {
             data-event={guide.event}
             data-source-page={`blog-${slug}`}
           >
-            <span>{guide.title}</span>
+            <span>{toTitleCase(guide.title)}</span>
             <small>{guide.description}</small>
           </Link>
         ))}
