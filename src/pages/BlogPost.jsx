@@ -158,28 +158,7 @@ export default function BlogPost() {
                 </ol>
               )}
               {section.table && (
-                <div style={{ overflowX: 'auto', margin: '16px 0' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
-                    {section.table.headers && (
-                      <thead>
-                        <tr>
-                          {section.table.headers.map((h, j) => (
-                            <th key={j} style={{ textAlign: 'left', padding: '8px 12px', borderBottom: '2px solid var(--border)', color: 'var(--accent-dark)' }}>{h}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                    )}
-                    <tbody>
-                      {section.table.rows.map((row, j) => (
-                        <tr key={j} style={{ borderBottom: '1px solid var(--border)' }}>
-                          {row.map((cell, k) => (
-                            <td key={k} style={{ padding: '8px 12px' }}>{cell}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                <ResponsiveBlogTable table={section.table} />
               )}
             </section>
           ))}
@@ -270,5 +249,51 @@ function ExactPlanLinks({ links }) {
         ))}
       </div>
     </aside>
+  );
+}
+
+function ResponsiveBlogTable({ table }) {
+  const headers = table.headers?.length
+    ? table.headers
+    : table.rows[0]?.map((_, index) => `Column ${index + 1}`) || [];
+
+  return (
+    <div className="blog-table-group">
+      <div className="blog-table-cards" aria-label="Table summary">
+        {table.rows.map((row, rowIndex) => (
+          <article className="blog-table-card" key={rowIndex}>
+            {row.map((cell, cellIndex) => (
+              <div className="blog-table-card-row" key={`${rowIndex}-${cellIndex}`}>
+                <strong>{headers[cellIndex]}</strong>
+                <span>{cell}</span>
+              </div>
+            ))}
+          </article>
+        ))}
+      </div>
+
+      <div className="content-table-wrap blog-table-wrap" aria-label="Scrollable comparison table">
+        <table className="content-table blog-table">
+          {table.headers && (
+            <thead>
+              <tr>
+                {table.headers.map((header, index) => (
+                  <th key={index}>{header}</th>
+                ))}
+              </tr>
+            </thead>
+          )}
+          <tbody>
+            {table.rows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, cellIndex) => (
+                  <td key={cellIndex}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }

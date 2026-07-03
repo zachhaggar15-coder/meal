@@ -40,10 +40,12 @@ export default function MealPlanPage() {
   const data = mealPlansData[slug];
 
   const [plan, setPlan] = useState(() => normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+  const [activeDayIdx, setActiveDayIdx] = useState(0);
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
 
   useEffect(() => {
     setPlan(normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+    setActiveDayIdx(0);
   }, [slug, data]);
 
   const shoppingList = useMemo(() => buildShoppingList(plan), [plan]);
@@ -82,6 +84,7 @@ export default function MealPlanPage() {
 
   const ogImageUrl = generateMealPlanImageUrl(slug, data.title, data.targetCalories);
   const planFamily = getLegacyPlanFamily(slug, data);
+  const activeDay = plan[activeDayIdx] || plan[0];
 
   const jsonLd = [
     {
@@ -137,44 +140,66 @@ export default function MealPlanPage() {
         <Link to="/" data-event="generator_cta_click" data-source-page={slug}>free generator</Link> to get a freshly personalised version.
       </p>
 
-      <div className="example-plan">
-        {plan.map((day, i) => (
-          <div key={i} className="plan-day-card">
-            <h3>{day.day}</h3>
-            {day.meals.map((meal, j) => (
-              <div key={j} className="plan-meal">
-                <div className="plan-meal-header">
-                  <span className="meal-type">{meal.type}</span>
-                  <span className="plan-meal-name">{meal.name}</span>
-                  <span className="plan-meal-meta">
-                    {meal.kcal} kcal - {meal.protein}g protein - {meal.prep}
-                  </span>
-                </div>
-                <p className="plan-meal-desc">{meal.desc}</p>
-                {meal.portion_size && (
-                  <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
-                )}
-                {meal.recipe?.length > 0 && (
-                  <details className="plan-meal-recipe">
-                    <summary>Recipe</summary>
-                    <ol>
-                      {meal.recipe.map((stepText, stepIdx) => (
-                        <li key={stepIdx}>{stepText}</li>
-                      ))}
-                    </ol>
-                  </details>
-                )}
-                <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(i, j, newMeal)} />
-              </div>
+      {activeDay && (
+        <>
+          <div className="plan-day-tabs legacy-day-tabs" role="tablist" aria-label="Select day">
+            {plan.map((day, i) => (
+              <button
+                key={day.day}
+                role="tab"
+                aria-selected={activeDayIdx === i}
+                aria-controls={`legacy-day-panel-${i}`}
+                className={`plan-day-tab ${activeDayIdx === i ? 'plan-day-tab--active' : ''}`}
+                onClick={() => setActiveDayIdx(i)}
+                type="button"
+              >
+                {day.day.slice(0, 3)}
+              </button>
             ))}
-            <div className="plan-day-total">
-              Daily total:{' '}
-              <strong>{day.totals.kcal} kcal</strong> -{' '}
-              <strong>{day.totals.protein}g protein</strong>
+          </div>
+
+          <div
+            id={`legacy-day-panel-${activeDayIdx}`}
+            role="tabpanel"
+            className="example-plan legacy-example-plan"
+          >
+            <div className="plan-day-card legacy-plan-day-card">
+              <h3>{activeDay.day}</h3>
+              {activeDay.meals.map((meal, j) => (
+                <div key={j} className="plan-meal">
+                  <div className="plan-meal-header">
+                    <span className="meal-type">{meal.type}</span>
+                    <span className="plan-meal-name">{meal.name}</span>
+                    <span className="plan-meal-meta">
+                      {meal.kcal} kcal - {meal.protein}g protein - {meal.prep}
+                    </span>
+                  </div>
+                  <p className="plan-meal-desc">{meal.desc}</p>
+                  {meal.portion_size && (
+                    <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
+                  )}
+                  {meal.recipe?.length > 0 && (
+                    <details className="plan-meal-recipe">
+                      <summary>Recipe</summary>
+                      <ol>
+                        {meal.recipe.map((stepText, stepIdx) => (
+                          <li key={stepIdx}>{stepText}</li>
+                        ))}
+                      </ol>
+                    </details>
+                  )}
+                  <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(activeDayIdx, j, newMeal)} />
+                </div>
+              ))}
+              <div className="plan-day-total">
+                Daily total:{' '}
+                <strong>{activeDay.totals.kcal} kcal</strong> -{' '}
+                <strong>{activeDay.totals.protein}g protein</strong>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
+        </>
+      )}
 
       {data.ctaPlacements?.afterPlan !== false && (
         <GeneratorCTA sourcePage={slug} calories={data.targetCalories} compact />

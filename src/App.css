@@ -4426,6 +4426,16 @@ details[open] .faq-question::after { content: '▴'; }
 }
 .browse-index-list a:hover { text-decoration: underline; }
 
+.browse-index-more {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.browse-index-more a {
+  font-weight: 800;
+}
+
 /* ---------- Plan chooser page ---------- */
 .plan-chooser-page {
   max-width: 1100px;
@@ -5094,6 +5104,59 @@ details[open] .faq-question::after { content: '▴'; }
 
 .affiliate-product-cta {
   align-self: start;
+}
+
+.affiliate-product-details {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 12px;
+}
+
+.affiliate-product-details summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.affiliate-product-detail-body {
+  margin-top: 12px;
+}
+
+.blog-table-group {
+  margin: 16px 0;
+}
+
+.blog-table-cards {
+  display: none;
+}
+
+.blog-table {
+  width: 100%;
+}
+
+.blog-table-card {
+  background: #fffdf8;
+  border: 1px solid #e4ded1;
+  border-radius: 4px;
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.blog-table-card-row {
+  display: grid;
+  gap: 4px;
+}
+
+.blog-table-card-row strong {
+  color: #777064;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+}
+
+.blog-table-card-row span {
+  color: #17130d;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .container-finder {
@@ -8598,6 +8661,19 @@ textarea {
   .browse-reset {
     justify-content: center;
     width: 100%;
+  }
+
+  .blog-table-cards {
+    display: grid;
+    gap: 12px;
+  }
+
+  .blog-table-wrap {
+    display: none;
+  }
+
+  .affiliate-product-details:not([open]) {
+    padding-bottom: 4px;
   }
 }
 

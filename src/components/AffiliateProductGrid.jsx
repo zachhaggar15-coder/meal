@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerProducts.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -9,6 +10,7 @@ export default function AffiliateProductGrid({
   showDisclosure = true,
 }) {
   const products = getContainerProducts(productIds);
+  const showProductDetails = useDesktopDetailsOpen();
 
   if (!products.length) return null;
 
@@ -63,24 +65,29 @@ export default function AffiliateProductGrid({
                 <p><strong>Buy if:</strong> {product.buyIf}</p>
                 <p><strong>Avoid if:</strong> {product.avoidIf}</p>
               </div>
-              <div className="affiliate-pro-con-grid">
-                <div>
-                  <strong>Pros</strong>
-                  <ul>
-                    {product.pros?.map(item => <li key={item}>{item}</li>)}
+              <details className="affiliate-product-details" open={showProductDetails}>
+                <summary>Pros, cons and key features</summary>
+                <div className="affiliate-product-detail-body">
+                  <div className="affiliate-pro-con-grid">
+                    <div>
+                      <strong>Pros</strong>
+                      <ul>
+                        {product.pros?.map(item => <li key={item}>{item}</li>)}
+                      </ul>
+                    </div>
+                    <div>
+                      <strong>Cons</strong>
+                      <ul>
+                        {product.cons?.map(item => <li key={item}>{item}</li>)}
+                      </ul>
+                    </div>
+                  </div>
+                  <ul className="content-bullets affiliate-product-bullets">
+                    {product.keyFeatures.map(feature => <li key={feature}>{feature}</li>)}
                   </ul>
+                  <p className="affiliate-watchout"><strong>Watch out:</strong> {product.watchOut}</p>
                 </div>
-                <div>
-                  <strong>Cons</strong>
-                  <ul>
-                    {product.cons?.map(item => <li key={item}>{item}</li>)}
-                  </ul>
-                </div>
-              </div>
-              <ul className="content-bullets affiliate-product-bullets">
-                {product.keyFeatures.map(feature => <li key={feature}>{feature}</li>)}
-              </ul>
-              <p className="affiliate-watchout"><strong>Watch out:</strong> {product.watchOut}</p>
+              </details>
               <a
                 href={product.href}
                 target="_blank"
@@ -98,4 +105,19 @@ export default function AffiliateProductGrid({
       </div>
     </section>
   );
+}
+
+function useDesktopDetailsOpen() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 761px)');
+    const sync = () => setIsDesktop(media.matches);
+
+    sync();
+    media.addEventListener?.('change', sync);
+    return () => media.removeEventListener?.('change', sync);
+  }, []);
+
+  return isDesktop;
 }

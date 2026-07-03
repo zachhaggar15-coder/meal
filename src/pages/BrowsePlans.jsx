@@ -13,7 +13,7 @@ import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_COUNT = ALL_PLANS.length;
-const PLAN_INDEX_LIMIT = 80;
+const PLAN_INDEX_LIMIT = 12;
 
 const GOALS = [
   { value: '',                      label: 'All goals' },
@@ -363,6 +363,13 @@ export default function BrowsePlans() {
                       <Link to={`/plans/${plan.slug}`}>{plan.title}</Link>
                     </li>
                   ))}
+                  {group.total > group.plans.length && (
+                    <li className="browse-index-more">
+                      <Link to={`/browse?goal=${group.value}`}>
+                        View all {group.total} {group.label.toLowerCase()} plans
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </details>
             ))}
