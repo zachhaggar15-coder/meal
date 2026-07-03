@@ -5,7 +5,7 @@ export const SUPERMARKET_EVIDENCE = {
     label: 'Generic UK supermarket',
     notes: [
       'Use common UK staples first: oats, rice, potatoes, pasta, eggs, tins, frozen vegetables, yogurt and lean protein.',
-      'Keep branded products optional so the plan still works at Tesco, Aldi, Lidl, Asda, Sainsbury\'s, Morrisons or Iceland.',
+      'Keep branded products optional so the plan still works at Tesco, Aldi, Lidl, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S or Co-op.',
       'Check cupboard items before shopping because sauces, oil, spices, oats and rice are often already at home.',
     ],
   },
@@ -63,6 +63,38 @@ export const SUPERMARKET_EVIDENCE = {
       'Best for freezer-friendly, low-effort and batch-cook plans with vegetables, fish, chicken and ready-to-cook bases.',
       'Use frozen veg and protein to keep weekday cooking quick and reduce missed fresh ingredients.',
       'Pair freezer mains with simple fresh sides if a plan needs more volume or fibre.',
+    ],
+  },
+  waitrose: {
+    label: 'Waitrose',
+    notes: [
+      'Best for quality-focused shops using strong produce, higher-welfare proteins, fish, dairy and prepared vegetables.',
+      'Use Waitrose own-label basics first, then reserve premium ingredients for meals where quality noticeably improves the week.',
+      'Watch the basket total by keeping carbohydrates, tins, oats and freezer staples simple.',
+    ],
+  },
+  ocado: {
+    label: 'Ocado',
+    notes: [
+      'Best for planned online shops, wider range searches, scheduled deliveries and easy repeat baskets.',
+      'Use Ocado plans when you want M&S products, broad branded choice or specialist diet items without visiting multiple stores.',
+      'Check substitutions and delivery cut-offs before relying on a narrow ingredient or exact pack size.',
+    ],
+  },
+  'marks-spencer': {
+    label: 'M&S',
+    notes: [
+      'Best for premium convenience, fresh prepared ingredients, quality proteins and smaller high-value baskets.',
+      'Use M&S plans when the week needs quick assembly meals, salads, fish, cooked grains or prepared veg that save time.',
+      'Balance the shop with simple staples so convenience items do not push the whole plan into a premium basket.',
+    ],
+  },
+  coop: {
+    label: 'Co-op',
+    notes: [
+      'Best for local convenience shops, top-up baskets, simple staples and smaller household meal prep.',
+      'Use flexible recipes because range and pack sizes can vary by store format and local availability.',
+      'Keep the plan built around easy-to-find basics such as eggs, oats, tins, pasta, potatoes, wraps, yogurt and frozen veg where available.',
     ],
   },
 };

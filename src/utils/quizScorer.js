@@ -32,6 +32,20 @@ const RELATED_GOALS = {
 
 const EFFORT_ORDER = ['minimal', 'low', 'standard', 'batch', 'high-variety'];
 const BUDGET_ORDER = ['very-cheap', 'budget', 'moderate', 'flexible'];
+const MARKET_LABELS = {
+  aldi: 'Aldi',
+  lidl: 'Lidl',
+  tesco: 'Tesco',
+  asda: 'Asda',
+  sainsburys: "Sainsbury's",
+  morrisons: 'Morrisons',
+  iceland: 'Iceland',
+  waitrose: 'Waitrose',
+  ocado: 'Ocado',
+  'marks-spencer': 'M&S',
+  coop: 'Co-op',
+  any: 'Generic UK supermarket',
+};
 
 // ── Scoring ───────────────────────────────────────────────────────────────────
 
@@ -150,7 +164,7 @@ function buildMatchReason(seed, answers) {
     parts.push(`matches your ${GOAL_LABELS[seed.goal] || seed.goal} goal`);
   }
   if (answers.supermarket && answers.supermarket !== 'any' && seed.supermarket === answers.supermarket) {
-    parts.push(`uses ${cap(seed.supermarket)}`);
+    parts.push(`uses ${marketLabel(seed.supermarket)}`);
   }
   if (answers.diet && seed.dietType === answers.diet && answers.diet !== 'standard') {
     parts.push(`${seed.dietType} meals throughout`);
@@ -199,4 +213,8 @@ export function getTopMatches(answers, n = 3) {
 
 function cap(s) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+}
+
+function marketLabel(value) {
+  return MARKET_LABELS[value] || cap(value);
 }

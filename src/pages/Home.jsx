@@ -58,7 +58,7 @@ const homeJsonLd = [
         name: 'Can I generate a weekly meal plan using ingredients from UK supermarkets?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Yes. Choose a goal, calorie target and supermarket, then use the quiz or generator to build a 7-day plan with ingredients from Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland or generic UK supermarket staples.",
+          text: "Yes. Choose a goal, calorie target and supermarket, then use the quiz or generator to build a 7-day plan with ingredients from Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op or generic UK supermarket staples.",
         },
       },
       {
@@ -66,7 +66,7 @@ const homeJsonLd = [
         name: 'Which UK supermarkets are covered?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: "Plans cover Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, and Iceland.",
+          text: "Plans cover Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S, and Co-op.",
         },
       },
       {
@@ -260,7 +260,7 @@ export default function Home() {
     <>
       <SEO
         title={`Generate a Weekly UK Meal Plan - ${PLAN_COUNT} Plans + Shopping Lists | MealPrep.org.uk`}
-        description="Generate a weekly meal plan using UK supermarket ingredients, with Aldi, Tesco, Lidl, Asda and Sainsbury's options, calories, PDFs and shopping lists."
+        description="Generate a weekly meal plan using UK supermarket ingredients, with 11 UK supermarket options, calories, PDFs and shopping lists."
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -286,7 +286,7 @@ export default function Home() {
           </div>
           <div className="trust-row">
             <span className="trust-badge"><strong>1,000+</strong> ready-made plans</span>
-            <span className="trust-badge"><strong>7</strong> supermarkets</span>
+            <span className="trust-badge"><strong>11</strong> supermarkets</span>
             <span className="trust-badge"><strong>£31</strong> avg weekly cost</span>
             <span className="trust-badge"><strong>2 min</strong> to your match</span>
           </div>
@@ -389,11 +389,11 @@ export default function Home() {
               },
               {
                 q: 'Can I generate a weekly meal plan using ingredients from UK supermarkets?',
-                a: "Yes. Use the quiz for ready-made 7-day plans or the AI generator for a custom week. Plans can be matched to Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, or generic UK supermarket ingredients.",
+                a: "Yes. Use the quiz for ready-made 7-day plans or the AI generator for a custom week. Plans can be matched to Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op, or generic UK supermarket ingredients.",
               },
               {
                 q: 'Which supermarkets do the plans cover?',
-                a: "Plans cover Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, and Iceland. Plans marked 'Generic UK supermarket' use ingredients available at most UK stores with average UK supermarket pricing.",
+                a: "Plans cover Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S, and Co-op. Plans marked 'Generic UK supermarket' use ingredients available at most UK stores with average UK supermarket pricing.",
               },
               {
                 q: 'Are calorie counts accurate?',
@@ -464,7 +464,7 @@ export default function Home() {
 
 function chooseFeaturedPlanVisual(category, plan) {
   if (category === 'By Supermarket') {
-    const supermarket = ['tesco', 'aldi', 'lidl', 'asda', 'sainsburys', 'morrisons', 'iceland', 'any']
+    const supermarket = ['tesco', 'aldi', 'lidl', 'asda', 'sainsburys', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'coop', 'any']
       .find(item => plan.slug.includes(item));
     return chooseSupermarketVisual(supermarket);
   }

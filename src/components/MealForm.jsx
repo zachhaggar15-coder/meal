@@ -1,6 +1,19 @@
 import { useState } from 'react';
 
-const SUPERMARKETS = ['Tesco', 'Aldi', "Sainsbury's", 'Asda'];
+const SUPERMARKETS = [
+  'Tesco',
+  'Aldi',
+  'Lidl',
+  'Asda',
+  "Sainsbury's",
+  'Morrisons',
+  'Iceland',
+  'Waitrose',
+  'Ocado',
+  'M&S',
+  'Co-op',
+  'Generic UK supermarket',
+];
 const DIETS = ['standard', 'vegetarian', 'vegan'];
 const MEALS_PER_DAY = [3, 4, 5];
 const PLAN_LENGTHS = [

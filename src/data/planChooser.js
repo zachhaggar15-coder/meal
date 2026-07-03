@@ -60,6 +60,30 @@ export const SUPERMARKET_CHOICES = [
     shortLabel: 'Iceland',
     description: 'Best for freezer-friendly, low-effort and batch-cook plans.',
   },
+  {
+    value: 'waitrose',
+    label: 'Waitrose',
+    shortLabel: 'Waitrose',
+    description: 'Best for premium produce, higher-welfare proteins and quality-focused weekly shops.',
+  },
+  {
+    value: 'ocado',
+    label: 'Ocado',
+    shortLabel: 'Ocado',
+    description: 'Best for online grocery planning, scheduled deliveries and wide M&S-backed ranges.',
+  },
+  {
+    value: 'marks-spencer',
+    label: 'M&S',
+    shortLabel: 'M&S',
+    description: 'Best for premium convenience, prepared ingredients and smaller high-quality baskets.',
+  },
+  {
+    value: 'coop',
+    label: 'Co-op',
+    shortLabel: 'Co-op',
+    description: 'Useful for local top-up shops, convenience staples and simple smaller-basket meal prep.',
+  },
 ];
 
 export const DIET_CHOICES = [

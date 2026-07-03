@@ -49,6 +49,10 @@ const STEPS = [
       { value: 'sainsburys', label: "Sainsbury's", icon: '🛒' },
       { value: 'morrisons', label: 'Morrisons', icon: '🛒' },
       { value: 'iceland', label: 'Iceland', icon: '🛒' },
+      { value: 'waitrose', label: 'Waitrose', icon: '🛒' },
+      { value: 'ocado', label: 'Ocado', icon: '🛒' },
+      { value: 'marks-spencer', label: 'M&S', icon: '🛒' },
+      { value: 'coop', label: 'Co-op', icon: '🛒' },
     ],
   },
   {

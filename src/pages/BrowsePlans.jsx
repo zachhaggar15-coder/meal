@@ -49,6 +49,10 @@ const SUPERMARKETS = [
   { value: 'sainsburys', label: "Sainsbury's" },
   { value: 'morrisons',  label: 'Morrisons' },
   { value: 'iceland',    label: 'Iceland' },
+  { value: 'waitrose',   label: 'Waitrose' },
+  { value: 'ocado',      label: 'Ocado' },
+  { value: 'marks-spencer', label: 'M&S' },
+  { value: 'coop',       label: 'Co-op' },
 ];
 
 const DIETS = [
@@ -91,7 +95,9 @@ const EFFORTS = [
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
-  sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland', any: 'Generic UK supermarket',
+  sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland',
+  waitrose: 'Waitrose', ocado: 'Ocado', 'marks-spencer': 'M&S', coop: 'Co-op',
+  any: 'Generic UK supermarket',
 };
 
 const EFFORT_LABEL = {
@@ -118,7 +124,7 @@ const HUB_INDEX_GROUPS = [
   },
   {
     label: 'Supermarket plan hubs',
-    slugs: ['aldi', 'lidl', 'tesco', 'asda', 'sainsburys', 'morrisons', 'iceland', 'generic-uk-supermarket'],
+    slugs: ['aldi', 'lidl', 'tesco', 'asda', 'sainsburys', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'coop', 'generic-uk-supermarket'],
   },
   {
     label: 'Goal and diet hubs',

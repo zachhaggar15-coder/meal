@@ -1867,7 +1867,7 @@ export const expandedBlogPostsData = {
     title: 'Generic UK Supermarket Meal Plan',
     description: 'A generic UK supermarket meal plan for shoppers who use multiple stores, with average-price staples and flexible swaps.',
     h1: 'Generic UK Supermarket Meal Plan',
-    intro: "A generic UK supermarket meal plan is useful when you shop across Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, or local shops. Instead of relying on one store, it uses ingredients that are easy to find almost anywhere.",
+    intro: "A generic UK supermarket meal plan is useful when you shop across Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op, or local shops. Instead of relying on one store, it uses ingredients that are easy to find almost anywhere.",
     sections: [
       {
         h2: 'How a generic plan works',
@@ -2231,7 +2231,7 @@ export const expandedBlogPostsData = {
 
   'best-supermarket-for-high-protein-meal-prep-uk': post({
     title: 'Best Supermarket for High Protein Meal Prep UK',
-    description: 'Compare Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland and generic UK supermarket plans for high protein meal prep.',
+    description: 'Compare Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op and generic UK supermarket plans for high protein meal prep.',
     h1: 'Best Supermarket for High Protein Meal Prep UK',
     intro: 'The best supermarket for high protein meal prep depends on whether you care most about price, variety, convenience or freezer backup. A good high-protein shop starts with repeatable protein sources, then adds carbs, vegetables and sauces you will actually eat.',
     sections: [

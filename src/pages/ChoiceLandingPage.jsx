@@ -201,7 +201,7 @@ function buildDietConfig(slug) {
     shortTitle: choice.label,
     kicker: 'Choose your supermarket',
     canonical: `/choose-diet/${choice.value}`,
-    description: `Choose a ${choice.label.toLowerCase()} meal plan by supermarket, with generic UK supermarket, Aldi, Lidl, Tesco, Asda and more.`,
+    description: `Choose a ${choice.label.toLowerCase()} meal plan by supermarket, with generic UK supermarket, Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S and Co-op.`,
     intro: `${choice.description} Pick the supermarket next so the diet type no longer defaults to Aldi.`,
     defaultLabel: 'Current diet type:',
     defaultValue: choice.label,

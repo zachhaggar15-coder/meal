@@ -3190,6 +3190,66 @@ input:focus, select:focus {
   color: #fff;
 }
 
+.plan-servings-control {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin: 0 0 26px;
+  padding: 14px 16px;
+}
+
+.plan-servings-control h2 {
+  font-size: 0.98rem;
+  font-weight: 900;
+  margin: 0 0 4px;
+}
+
+.plan-servings-control p {
+  color: #475569;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.plan-servings-options {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 6px;
+  grid-template-columns: repeat(6, 36px);
+}
+
+.plan-servings-option {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 900;
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  width: 36px;
+}
+
+.plan-servings-option:hover {
+  background: #eef2ff;
+  border-color: #93c5fd;
+}
+
+.plan-servings-option--active {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
+
 .plan-secondary-details {
   border: 1px solid #dbeafe;
   border-radius: 8px;
@@ -8748,6 +8808,20 @@ textarea {
   .plan-action-bar .plan-action-primary {
     grid-column: 1 / -1;
   }
+
+  .plan-servings-control {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .plan-servings-options {
+    grid-template-columns: repeat(6, minmax(34px, 1fr));
+    width: 100%;
+  }
+
+  .plan-servings-option {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -8836,5 +8910,9 @@ textarea {
 
   .plan-action-bar {
     grid-template-columns: 1fr;
+  }
+
+  .plan-servings-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

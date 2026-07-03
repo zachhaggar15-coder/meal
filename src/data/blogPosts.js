@@ -789,7 +789,7 @@ export const blogPostsData = {
         paragraphs: [
           'The most cost-effective approach for dedicated meal preppers is to use two supermarkets: Aldi or Lidl for the core staples (chicken, eggs, oats, rice, frozen veg, tinned tuna) and Tesco, Asda, or Morrisons for specific items that the discounters do not stock reliably (fresh salmon, certain vegetables, specialist health foods).',
           'This hybrid approach typically brings the weekly total to £30–36 — significantly cheaper than a pure Tesco shop and only slightly more than a pure Aldi shop, with the full range of a larger supermarket when needed.',
-          'Use our free meal plan generator to build a complete week of meals around your preferred supermarket. Select Aldi, Lidl, Tesco, Asda, Morrisons, or Iceland and the generator creates a plan with ingredients available at that store.',
+          'Use our free meal plan generator to build a complete week of meals around your preferred supermarket. Select Aldi, Lidl, Tesco, Asda, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op or a generic UK supermarket and the generator creates a plan around that shop.',
         ],
       },
     ],
@@ -1007,7 +1007,7 @@ export const blogPostsData = {
       {
         h2: 'Getting a Personalised Shopping List',
         paragraphs: [
-          'The basket above is a starting point — but everyone\'s calorie targets, dietary requirements, and preferences differ. Use our free meal plan generator to build a personalised week of meals around your chosen supermarket (Aldi, Tesco, Asda, Morrisons, Lidl, or Iceland) and receive a categorised shopping list tailored to your calorie target. The generator also estimates your total weekly cost.',
+          'The basket above is a starting point — but everyone\'s calorie targets, dietary requirements, and preferences differ. Use our free meal plan generator to build a personalised week of meals around your chosen supermarket, including Aldi, Tesco, Asda, Morrisons, Lidl, Iceland, Waitrose, Ocado, M&S, Co-op or a generic UK shop, and receive a categorised shopping list tailored to your calorie target. The generator also estimates your total weekly cost.',
         ],
       },
     ],

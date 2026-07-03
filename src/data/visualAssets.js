@@ -27,6 +27,10 @@ const CARD_THEMES = [
   { paper: '#f1f7f4', band: '#2b4b36', accent: '#7fb069', line: '#c4d9ca' },
   { paper: '#f7f0e6', band: '#4a3826', accent: '#c07a2c', line: '#d8c2a6' },
   { paper: '#eff5fa', band: '#234969', accent: '#7cc6d8', line: '#c3d6e4' },
+  { paper: '#f7f4fb', band: '#4a315f', accent: '#8e6eb4', line: '#d6c6df' },
+  { paper: '#edf7f7', band: '#164b54', accent: '#e0a93b', line: '#bad7d8' },
+  { paper: '#fff4ef', band: '#5c1f32', accent: '#d45a43', line: '#e3c2b9' },
+  { paper: '#f5f6ed', band: '#31513b', accent: '#c7a542', line: '#cfd5b9' },
 ];
 
 function cardVisual({ label, eyebrow, note, themeIndex = 0, alt = '' }) {
@@ -111,6 +115,34 @@ export const SUPERMARKET_CARD_VISUALS = {
     note: 'Low-effort batch planning',
     themeIndex: 7,
     alt: 'Iceland meal plan card',
+  }),
+  waitrose: cardVisual({
+    label: 'Waitrose',
+    eyebrow: 'Premium produce',
+    note: 'Quality-focused weekly prep',
+    themeIndex: 8,
+    alt: 'Waitrose meal plan card',
+  }),
+  ocado: cardVisual({
+    label: 'Ocado',
+    eyebrow: 'Online grocery',
+    note: 'Delivery-led meal planning',
+    themeIndex: 9,
+    alt: 'Ocado meal plan card',
+  }),
+  'marks-spencer': cardVisual({
+    label: 'M&S',
+    eyebrow: 'Premium convenience',
+    note: 'Prepared and fresh options',
+    themeIndex: 10,
+    alt: 'M&S meal plan card',
+  }),
+  coop: cardVisual({
+    label: 'Co-op',
+    eyebrow: 'Local convenience',
+    note: 'Simple top-up shops',
+    themeIndex: 11,
+    alt: 'Co-op meal plan card',
   }),
 };
 
@@ -269,7 +301,7 @@ export function chooseHubVisual(hub = {}) {
 
   if (text.includes('printable')) return PLAN_CATEGORY_VISUALS.printable;
   if (text.includes('shopping-list') || text.includes('shopping list')) return PLAN_CATEGORY_VISUALS.shoppingList;
-  if (includesAny(text, ['aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'supermarket'])) {
+  if (includesAny(text, ['aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'm&s', 'coop', 'co-op', 'supermarket'])) {
     return PLAN_CATEGORY_VISUALS.shoppingList;
   }
   if (includesAny(text, ['vegan', 'vegetarian', 'plant'])) return PLAN_CATEGORY_VISUALS.plantBased;
@@ -323,7 +355,7 @@ export function chooseBlogVisual(slug = '') {
   if (includesAny(text, ['container', 'box', 'tub', 'lunch-bag', 'lid'])) return PLAN_CATEGORY_VISUALS.batchCooking;
   if (includesAny(text, ['vegan', 'vegetarian', 'plant', 'pescatarian'])) return PLAN_CATEGORY_VISUALS.plantBased;
   if (includesAny(text, ['protein', 'fibre', 'snack', 'breakfast', 'powder'])) return PLAN_CATEGORY_VISUALS.highProtein;
-  if (includesAny(text, ['supermarket', 'aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'shopping'])) {
+  if (includesAny(text, ['supermarket', 'aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'm&s', 'coop', 'co-op', 'shopping'])) {
     return PLAN_CATEGORY_VISUALS.shoppingList;
   }
   if (includesAny(text, ['batch', 'sunday', 'freezer', 'work-lunch', 'microwave', 'one-pan'])) {
@@ -350,7 +382,7 @@ function chooseBlogTopic(slug = '') {
   const text = normalise(slug);
   if (includesAny(text, ['container', 'box', 'tub', 'lid'])) return 'Meal prep kit';
   if (includesAny(text, ['protein', 'snack', 'breakfast', 'fibre'])) return 'Protein planning';
-  if (includesAny(text, ['supermarket', 'aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland'])) return 'Supermarket guide';
+  if (includesAny(text, ['supermarket', 'aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'm&s', 'coop', 'co-op'])) return 'Supermarket guide';
   if (includesAny(text, ['vegan', 'vegetarian', 'plant', 'pescatarian'])) return 'Diet type guide';
   if (includesAny(text, ['batch', 'freezer', 'work-lunch', 'one-pan'])) return 'Batch cooking';
   if (includesAny(text, ['3000', '3500', 'muscle', 'endurance', 'running'])) return 'Training week';

@@ -6,7 +6,7 @@ import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
-import { buildShoppingList, getPlanBySlug } from '../utils/planBuilder.js';
+import { buildShoppingList, getPlanBySlug, scalePlanForPeople } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -17,8 +17,11 @@ import { toTitleCase } from '../utils/textFormatting.js';
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
   sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland',
+  waitrose: 'Waitrose', ocado: 'Ocado', 'marks-spencer': 'M&S', coop: 'Co-op',
   any: 'Generic UK supermarket',
 };
+
+const SERVING_OPTIONS = [1, 2, 3, 4, 5, 6];
 
 const GOAL_HUB_SLUGS = {
   'weight-loss': 'weight-loss',
@@ -58,6 +61,11 @@ export default function PlanPage() {
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
   const [planCopyStatus, setPlanCopyStatus] = useState('');
   const [shareStatus, setShareStatus] = useState('');
+  const [servings, setServings] = useState(1);
+  const sourcePlan = editedPlan || plan;
+  const displayPlan = useMemo(() => (
+    sourcePlan ? scalePlanForPeople(sourcePlan, servings) : null
+  ), [sourcePlan, servings]);
 
   if (!plan) {
     return (
@@ -68,7 +76,6 @@ export default function PlanPage() {
     );
   }
 
-  const displayPlan = editedPlan || plan;
   const activeDay   = displayPlan.plan[activeDayIdx];
   const planVisual  = choosePlanVisual(plan);
   const planImageUrl = planVisual?.src?.startsWith('http')
@@ -132,7 +139,8 @@ export default function PlanPage() {
     setEditError('');
     setEditNote('');
 
-    const meal = displayPlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx];
+    const basePlan = editedPlan || plan;
+    const meal = basePlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx];
 
     try {
       const res = await fetch('/api/edit-meal', {
@@ -148,9 +156,9 @@ export default function PlanPage() {
       const data = await res.json();
 
       if (data.meal) {
-        if (!originalPlan) setOriginalPlan(displayPlan);
+        if (!originalPlan) setOriginalPlan(basePlan);
 
-        const newPlan = JSON.parse(JSON.stringify(displayPlan));
+        const newPlan = JSON.parse(JSON.stringify(basePlan));
         newPlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx] = normaliseEditedMeal(meal, data.meal);
         // Recalculate day totals
         const dayMeals = newPlan.plan[editTarget.dayIdx].meals;
@@ -270,8 +278,8 @@ export default function PlanPage() {
         <div className="plan-day-header">
           <h3 className="plan-day-name">{activeDay.day}</h3>
           <div className="plan-day-totals">
-            <span>{activeDay.totals.kcal} kcal</span>
-            <span>{activeDay.totals.protein}g protein</span>
+            <span>{activeDay.totals.kcal} kcal per person</span>
+            <span>{activeDay.totals.protein}g protein per person</span>
           </div>
         </div>
 
@@ -358,7 +366,10 @@ export default function PlanPage() {
           {shoppingCopyStatus || 'Copy shopping list'}
         </button>
       </div>
-      <p className="plan-shopping-note">Estimated cost: <strong>{plan.priceEstimate}/week</strong> for one person from {MKT_LABEL[plan.supermarket] || plan.supermarket}.</p>
+      <p className="plan-shopping-note">
+        Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatPeopleLabel(displayPlan.servings)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+        Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.
+      </p>
       <div className="shopping-list-grid">
         {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
           items.length > 0 ? (
@@ -424,6 +435,8 @@ export default function PlanPage() {
           shareStatus={shareStatus}
         />
 
+        <PlanServingsControl servings={servings} onChange={setServings} />
+
         {planDaysSection}
         {shoppingListSection}
 
@@ -431,8 +444,9 @@ export default function PlanPage() {
         <div className="plan-summary-card">
           <div className="plan-summary-grid">
             <SummaryItem label="Supermarket"  value={MKT_LABEL[plan.supermarket] || plan.supermarket} />
-            <SummaryItem label="Calorie target" value={plan.summary.calorieRange} />
-            <SummaryItem label="Weekly budget"  value={plan.summary.budgetRange} />
+            <SummaryItem label="Cooking for" value={displayPlan.peopleLabel} />
+            <SummaryItem label="Calorie target" value={displayPlan.summary.calorieRange} />
+            <SummaryItem label="Weekly budget"  value={`${displayPlan.summary.budgetRange} total`} />
             <SummaryItem label="Prep difficulty" value={plan.effortLabel} />
             <SummaryItem label="Best for"       value={plan.summary.bestFor} />
             <SummaryItem label="Diet"
@@ -441,7 +455,7 @@ export default function PlanPage() {
 
           {/* Macro bars */}
           <div className="plan-macros">
-            <h3 className="plan-macros-title">{toTitleCase('Estimated daily macros')}</h3>
+            <h3 className="plan-macros-title">{toTitleCase('Estimated daily macros per person')}</h3>
             <div className="macro-bars">
               {[
                 { key: 'protein', label: 'Protein', max: 200 },
@@ -604,7 +618,10 @@ export default function PlanPage() {
               {shoppingCopyStatus || 'Copy shopping list'}
             </button>
           </div>
-          <p className="plan-shopping-note">Estimated cost: <strong>{plan.priceEstimate}/week</strong> for one person from {MKT_LABEL[plan.supermarket] || plan.supermarket}.</p>
+          <p className="plan-shopping-note">
+            Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatPeopleLabel(displayPlan.servings)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+            Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.
+          </p>
           <div className="shopping-list-grid">
             {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
               items.length > 0 ? (
@@ -740,6 +757,30 @@ function PlanActionBar({ onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, s
       <button className="plan-action-primary" onClick={onSharePlan} type="button">
         {shareStatus || 'Share'}
       </button>
+    </section>
+  );
+}
+
+function PlanServingsControl({ servings, onChange }) {
+  return (
+    <section className="plan-servings-control" aria-labelledby="plan-servings-heading">
+      <div>
+        <h2 id="plan-servings-heading">{toTitleCase('Cooking for')}</h2>
+        <p>Scale ingredients, recipes, shopping list and weekly cost. Calories stay per person.</p>
+      </div>
+      <div className="plan-servings-options" role="group" aria-label="People to cook for">
+        {SERVING_OPTIONS.map(option => (
+          <button
+            key={option}
+            className={option === servings ? 'plan-servings-option plan-servings-option--active' : 'plan-servings-option'}
+            type="button"
+            aria-pressed={option === servings}
+            onClick={() => onChange(option)}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }
@@ -887,6 +928,10 @@ function getMarketAssumption(supermarket) {
     sainsburys: "Sainsbury's pages allow more prepared ingredients, vegetarian options and premium swaps where useful.",
     morrisons: 'Morrisons pages suit fresh-counter options plus standard supermarket staples.',
     iceland: 'Iceland pages lean into freezer-friendly protein, vegetables and low-waste backup meals.',
+    waitrose: 'Waitrose pages suit quality-focused produce, fish, dairy, higher-welfare protein and premium but controlled shops.',
+    ocado: 'Ocado pages suit online baskets, scheduled deliveries, M&S ranges and easy repeat shops.',
+    'marks-spencer': 'M&S pages lean on premium convenience, fresh prepared ingredients and high-quality smaller baskets.',
+    coop: 'Co-op pages suit local top-up shops, smaller baskets and flexible convenience staples.',
     any: 'Generic UK pages use widely available supermarket ingredients and average-price assumptions.',
   };
   return notes[supermarket] || 'The plan uses common UK supermarket ingredients and flexible swaps.';
@@ -953,8 +998,9 @@ function PrintablePlanSummary({ plan, marketLabel }) {
 
       <div className="print-summary-meta">
         <span>Supermarket: {marketLabel}</span>
-        <span>Calories: {plan.summary?.calorieRange || `~${plan.calories} kcal/day`}</span>
-        <span>Budget: {plan.summary?.budgetRange || plan.priceEstimate}</span>
+        <span>Cooking for: {plan.peopleLabel || '1 person'}</span>
+        <span>Calories: {plan.summary?.calorieRange || `~${plan.calories} kcal/day per person`}</span>
+        <span>Budget: {plan.summary?.budgetRange || plan.priceEstimate} total</span>
         <span>Diet: {plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType)}</span>
       </div>
 
@@ -969,7 +1015,7 @@ function PrintablePlanSummary({ plan, marketLabel }) {
             <ul>
               {day.meals.map((meal, index) => (
                 <li key={`${day.day}-${meal.type}-${index}`}>
-                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {meal.protein}g protein)
+                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {meal.protein}g protein per person)
                 </li>
               ))}
             </ul>
@@ -1135,7 +1181,8 @@ function formatShoppingList(plan) {
       ...items.map(item => `- ${item}`),
     ].join('\n'));
 
-  return `${plan.title || 'Meal plan'} shopping list\n\n${groups.join('\n\n')}`;
+  const peopleLine = plan.peopleLabel ? `Cooking for: ${plan.peopleLabel}\n` : '';
+  return `${plan.title || 'Meal plan'} shopping list\n${peopleLine}\n${groups.join('\n\n')}`;
 }
 
 function formatPlanShareText(plan, url) {
@@ -1146,8 +1193,9 @@ function formatPlanShareText(plan, url) {
 
   return [
     plan.title,
+    plan.peopleLabel ? `Cooking for: ${plan.peopleLabel}` : null,
     plan.summary?.calorieRange,
-    plan.summary?.budgetRange ? `Budget: ${plan.summary.budgetRange}/week estimate` : null,
+    plan.summary?.budgetRange ? `Budget: ${plan.summary.budgetRange}/week estimate total` : null,
     '',
     '7-day menu',
     ...dayLines,
@@ -1175,6 +1223,11 @@ async function writeClipboard(text) {
 
 function catLabel(cat) {
   return { protein: 'Protein', carbs: 'Carbs & Grains', vegetables: 'Vegetables', dairy: 'Dairy & Eggs', extras: 'Extras & Condiments' }[cat] || cat;
+}
+
+function formatPeopleLabel(count) {
+  const value = Number(count) || 1;
+  return value === 1 ? '1 person' : `${value} people`;
 }
 
 function cap(s) {

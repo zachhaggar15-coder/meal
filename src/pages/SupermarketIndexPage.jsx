@@ -12,7 +12,7 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Choose a UK Supermarket Meal Plan',
-    description: 'Choose Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland or a generic UK supermarket before selecting your meal plan goal.',
+    description: `Choose ${SUPERMARKET_CHOICES.map(market => market.label).join(', ')} before selecting your meal plan goal.`,
     url: 'https://www.mealprep.org.uk/meal-plans',
     mainEntity: {
       '@type': 'ItemList',

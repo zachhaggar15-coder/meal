@@ -41,6 +41,10 @@ const SUPERMARKET_LABELS = {
   sainsburys: "Sainsbury's",
   morrisons: 'Morrisons',
   iceland: 'Iceland',
+  waitrose: 'Waitrose',
+  ocado: 'Ocado',
+  'marks-spencer': 'M&S',
+  coop: 'Co-op',
   any: 'UK',
 };
 
@@ -596,7 +600,7 @@ export function buildPlan(seed) {
     macrosGrams:   MACRO_GRAMS[seed.emphasis]    || MACRO_GRAMS['lean-protein'],
 
     summary: {
-      supermarkets:    seed.supermarket === 'any' ? 'Generic UK supermarket' : cap(seed.supermarket),
+      supermarkets:    seed.supermarket === 'any' ? 'Generic UK supermarket' : getMarketLabel(seed.supermarket),
       bestFor:         GOAL_BEST_FOR[seed.goal]  || 'General healthy eating',
       prepDifficulty:  EFFORT_LABELS[seed.effort]  || seed.effort,
       calorieRange:    `~${seed.calories} kcal/day`,
@@ -611,6 +615,79 @@ export function buildPlan(seed) {
     shoppingList: buildShoppingList(plan),
     relatedSlugs: getRelatedSlugs(seed),
   };
+}
+
+export function normaliseServingCount(value) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return 1;
+  return Math.min(6, Math.max(1, parsed));
+}
+
+export function scalePlanForPeople(plan, servingCount = 1) {
+  if (!plan) return plan;
+
+  const people = normaliseServingCount(servingCount);
+  const days = (plan.plan || []).map(day => ({
+    ...day,
+    meals: (day.meals || []).map(meal => scaleMealForPeople(meal, people)),
+    totals: { ...day.totals },
+    householdTotals: {
+      kcal: Math.round((day.totals?.kcal || 0) * people),
+      protein: Math.round((day.totals?.protein || 0) * people),
+    },
+  }));
+
+  const scaledPlan = {
+    ...plan,
+    servings: people,
+    peopleLabel: people === 1 ? '1 person' : `${people} people`,
+    priceEstimate: scaleBudgetEstimate(plan.priceEstimate, people),
+    summary: {
+      ...(plan.summary || {}),
+      calorieRange: `${plan.summary?.calorieRange || `~${plan.calories} kcal/day`} per person`,
+      budgetRange: scaleBudgetEstimate(plan.summary?.budgetRange || plan.priceEstimate, people),
+      servings: people === 1 ? '1 person' : `${people} people`,
+    },
+    plan: days,
+  };
+
+  return {
+    ...scaledPlan,
+    shoppingList: buildShoppingList(days),
+  };
+}
+
+function scaleMealForPeople(meal, people) {
+  const baseIngredients = meal.ingredients || [];
+  const ingredients = scaleIngredientsForPortion(baseIngredients, people);
+  const recipe = scaleRecipeForPeople(meal.recipe, baseIngredients, ingredients);
+
+  return {
+    ...meal,
+    servings: people,
+    ingredients,
+    portion_size: buildPortionSize(ingredients),
+    recipe,
+  };
+}
+
+function scaleRecipeForPeople(recipe, baseIngredients, scaledIngredients) {
+  if (!Array.isArray(recipe)) return recipe;
+
+  const oldList = (baseIngredients || []).join(', ');
+  const newList = (scaledIngredients || []).join(', ');
+  if (!oldList || !newList || oldList === newList) return recipe;
+
+  return recipe.map(step => String(step || '').replace(oldList, newList));
+}
+
+function scaleBudgetEstimate(value, people) {
+  const source = String(value || '').trim();
+  if (!source || people <= 1) return source;
+
+  return source.replace(/\d+(?:\.\d+)?/g, amount => (
+    Math.round(Number(amount) * people).toLocaleString('en-GB')
+  ));
 }
 
 function rebalanceMealsToTarget(meals, targetCalories) {

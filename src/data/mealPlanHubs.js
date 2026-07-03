@@ -306,6 +306,30 @@ const SUPERMARKET_AUTHORITY_HUBS = {
     label: 'Iceland',
     budgetNote: 'Iceland is strongest for frozen-friendly meal prep, low-effort plans, freezer portions and predictable budget shops.',
   }),
+  waitrose: createSupermarketHub({
+    key: 'waitrose',
+    label: 'Waitrose',
+    budgetNote: 'Waitrose is strongest for quality-focused shops, premium produce, higher-welfare proteins, fish, dairy and prepared vegetables.',
+    relatedSlugs: ['weight-loss', 'high-protein', 'pescatarian', 'meal-plans-with-shopping-list'],
+  }),
+  ocado: createSupermarketHub({
+    key: 'ocado',
+    label: 'Ocado',
+    budgetNote: 'Ocado is strongest for online planning, scheduled delivery, broad brand choice, M&S ranges and repeatable saved baskets.',
+    relatedSlugs: ['busy-professional', 'high-protein', 'vegetarian', 'meal-plans-with-shopping-list'],
+  }),
+  'marks-spencer': createSupermarketHub({
+    key: 'marks-spencer',
+    label: 'M&S',
+    budgetNote: 'M&S is strongest for premium convenience, prepared ingredients, fresh salads, fish, cooked grains and smaller high-quality baskets.',
+    relatedSlugs: ['busy-professional', 'low-calorie-shopping-list', 'pescatarian', 'meal-plans-with-shopping-list'],
+  }),
+  coop: createSupermarketHub({
+    key: 'coop',
+    label: 'Co-op',
+    budgetNote: 'Co-op is strongest for local convenience shops, top-up baskets, simple staples and smaller meal-prep weeks.',
+    relatedSlugs: ['low-effort', 'busy-professional', 'generic-uk-supermarket', 'meal-plans-with-shopping-list'],
+  }),
 };
 
 const GOAL_AUTHORITY_HUBS = {
@@ -513,7 +537,7 @@ export const MEAL_PLAN_HUBS = {
       {
         h2: 'Choose by supermarket or use generic pricing',
         paragraphs: [
-          'Named supermarket plans are useful if you shop mostly at Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons or Iceland. Generic UK supermarket plans are better if you switch between shops or want average-price assumptions rather than one retailer.',
+          'Named supermarket plans are useful if you shop mostly at Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S or Co-op. Generic UK supermarket plans are better if you switch between shops or want average-price assumptions rather than one retailer.',
           'The shopping lists use common ingredients rather than niche diet products. That makes the plans easier to buy, cook and repeat in normal UK kitchens.',
         ],
       },
@@ -672,7 +696,7 @@ export const MEAL_PLAN_HUBS = {
     h1: 'Generic UK Supermarket Meal Plans',
     kicker: 'Average-price plan hub',
     intro:
-      'Generic UK supermarket plans are useful when you do not want the plan tied to Aldi, Tesco, Asda or another named store. They use common ingredients and average-price assumptions so you can shop where convenient.',
+          'Generic UK supermarket plans are useful when you do not want the plan tied to Aldi, Tesco, Asda, Waitrose, Ocado, M&S or another named store. They use common ingredients and average-price assumptions so you can shop where convenient.',
     match: { supermarkets: ['any'] },
     stats: ['Average UK pricing', 'No named-store default', 'Printable PDFs'],
     sections: [
@@ -680,7 +704,7 @@ export const MEAL_PLAN_HUBS = {
         h2: 'When to use the generic supermarket option',
         paragraphs: [
           'Choose the generic option if you switch supermarkets, use a mix of online shops and local stores, or want a plan that is not built around one retailer.',
-          'The recipes use standard UK supermarket ingredients, so you can still shop at Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons or Iceland.',
+          'The recipes use standard UK supermarket ingredients, so you can still shop at Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S or Co-op.',
         ],
       },
     ],

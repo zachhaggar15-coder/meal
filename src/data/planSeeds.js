@@ -374,6 +374,10 @@ const MARKET_TITLES = {
   sainsburys: "Sainsbury's",
   morrisons: 'Morrisons',
   iceland: 'Iceland',
+  waitrose: 'Waitrose',
+  ocado: 'Ocado',
+  'marks-spencer': 'M&S',
+  coop: 'Co-op',
 };
 
 const DIET_TITLES = {
@@ -679,7 +683,7 @@ export const COVERAGE_FILTER_VALUES = {
     'endurance-athlete',
     'cutting',
   ],
-  supermarkets: ['any', 'aldi', 'lidl', 'tesco', 'asda', 'sainsburys', 'morrisons', 'iceland'],
+  supermarkets: ['any', 'aldi', 'lidl', 'tesco', 'asda', 'sainsburys', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'coop'],
   dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
   calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500, 3000, 3500],
   budgets: ['very-cheap', 'budget', 'moderate', 'flexible'],
@@ -790,9 +794,9 @@ export const COVERAGE_GOAL_PROFILES = {
 };
 
 const COVERAGE_PRIORITY_MARKETS_BY_GOAL = {
-  'budget-bodybuilding': ['sainsburys', 'morrisons', 'tesco', 'asda', 'aldi', 'lidl', 'iceland', 'any'],
-  'cheap-high-protein': ['sainsburys', 'morrisons', 'tesco', 'asda', 'aldi', 'lidl', 'iceland', 'any'],
-  'endurance-athlete': ['morrisons', 'iceland', 'sainsburys', 'tesco', 'asda', 'aldi', 'lidl', 'any'],
+  'budget-bodybuilding': ['sainsburys', 'morrisons', 'tesco', 'asda', 'aldi', 'lidl', 'iceland', 'coop', 'waitrose', 'ocado', 'marks-spencer', 'any'],
+  'cheap-high-protein': ['sainsburys', 'morrisons', 'tesco', 'asda', 'aldi', 'lidl', 'iceland', 'coop', 'waitrose', 'ocado', 'marks-spencer', 'any'],
+  'endurance-athlete': ['morrisons', 'iceland', 'sainsburys', 'tesco', 'asda', 'aldi', 'lidl', 'waitrose', 'ocado', 'marks-spencer', 'coop', 'any'],
 };
 
 const COVERAGE_EFFORT_STYLES = {
@@ -880,13 +884,15 @@ export function isCoverageCombinationFeasible({ goal, supermarket, dietType, cal
 export function getFeasibleBudgetsForCoverage(calories, supermarket) {
   const cals = Number(calories);
   const lowCost = supermarket === 'any' || supermarket === 'aldi' || supermarket === 'lidl' || supermarket === 'iceland';
-  const valueStore = lowCost || supermarket === 'asda';
+  const valueStore = lowCost || supermarket === 'asda' || supermarket === 'morrisons';
+  const premiumStore = supermarket === 'waitrose' || supermarket === 'ocado' || supermarket === 'marks-spencer';
+  const convenienceStore = supermarket === 'coop';
   const budgets = [];
 
-  if (cals <= 1800 || (cals <= 2000 && lowCost)) {
+  if (!premiumStore && !convenienceStore && (cals <= 1800 || (cals <= 2000 && lowCost))) {
     budgets.push('very-cheap');
   }
-  if (cals <= 2500 || (cals <= 3000 && valueStore) || (cals <= 3500 && lowCost)) {
+  if (!premiumStore && (cals <= 2500 || (cals <= 3000 && valueStore) || (cals <= 3500 && lowCost))) {
     budgets.push('budget');
   }
   budgets.push('moderate', 'flexible');

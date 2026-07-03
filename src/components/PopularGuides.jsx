@@ -9,7 +9,7 @@ function hasAny(value, needles) {
 function buildGuides(slug, post) {
   const text = `${slug} ${post?.title || ''} ${post?.h1 || ''}`.toLowerCase();
   const isContainer = post?.affiliateDisclosure || hasAny(text, ['container', 'lunch bag', 'meal prep box', 'meal prep tub']);
-  const isSupermarket = hasAny(text, ['tesco', 'aldi', 'asda', 'sainsbury', 'lidl', 'morrisons', 'iceland', 'supermarket']);
+  const isSupermarket = hasAny(text, ['tesco', 'aldi', 'asda', 'sainsbury', 'lidl', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'm&s', 'coop', 'co-op', 'supermarket']);
   const isCalorie = hasAny(text, ['calorie', 'weight loss', 'fat loss', 'deficit']);
   const isProtein = hasAny(text, ['protein', 'muscle', 'gym']);
 
@@ -58,7 +58,7 @@ function buildGuides(slug, post) {
       {
         to: '/choose-plan/weight-loss',
         title: 'Choose supermarket',
-        description: 'Pick Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, or generic.',
+        description: 'Pick Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op, or generic.',
         event: 'popular_guide_supermarket_click',
       },
       {

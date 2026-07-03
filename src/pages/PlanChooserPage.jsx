@@ -28,7 +28,8 @@ export default function PlanChooserPage() {
 
   const canonical = `/choose-plan/${goalChoice.value}`;
   const title = toTitleCase(`${goalChoice.label} Meal Plans by Supermarket`);
-  const description = `Choose a generic UK supermarket, Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons or Iceland ${goalChoice.label.toLowerCase()} meal plan.`;
+  const marketList = SUPERMARKET_CHOICES.map(market => market.label).join(', ');
+  const description = `Choose a ${goalChoice.label.toLowerCase()} meal plan for ${marketList}, with printable PDFs and shopping lists.`;
   const chooserVisual = chooseChooserVisual({ goalChoice });
 
   const jsonLd = [

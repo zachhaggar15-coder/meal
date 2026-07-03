@@ -32,6 +32,10 @@ const MARKET_BASKET_BASE = {
   sainsburys: { label: "Sainsbury's", base: 48 },
   morrisons: { label: 'Morrisons', base: 45 },
   iceland: { label: 'Iceland', base: 37 },
+  waitrose: { label: 'Waitrose', base: 55 },
+  ocado: { label: 'Ocado', base: 53 },
+  'marks-spencer': { label: 'M&S', base: 57 },
+  coop: { label: 'Co-op', base: 47 },
 };
 
 const DEFAULT_FRIDGE_ROWS = [

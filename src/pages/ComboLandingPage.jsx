@@ -24,6 +24,10 @@ const MARKET_LABEL = {
   sainsburys: "Sainsbury's",
   morrisons: 'Morrisons',
   iceland: 'Iceland',
+  waitrose: 'Waitrose',
+  ocado: 'Ocado',
+  'marks-spencer': 'M&S',
+  coop: 'Co-op',
   any: 'Generic UK supermarket',
 };
 
