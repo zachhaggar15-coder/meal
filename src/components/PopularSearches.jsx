@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const DEFAULT_LINKS = [
-  { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
-  { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
-  { label: 'work lunch meal prep UK', to: '/meal-plans/work-lunch-meal-prep-uk' },
-  { label: 'low calorie foods UK', to: '/blog/best-low-calorie-foods-uk' },
-  { label: 'printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
-  { label: 'lose weight meal plan UK', to: '/meal-plans/weight-loss' },
-  { label: 'cheap protein UK', to: '/blog/best-cheap-high-protein-foods-uk' },
-  { label: 'protein porridge UK', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
-  { label: 'generate weekly meal plan', to: '/quiz' },
-  { label: 'high protein snacks UK', to: '/blog/high-protein-snacks-uk' },
-  { label: 'best meal prep containers UK', to: '/meal-prep-containers' },
-  { label: 'low calorie ready meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },
-  { label: 'cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
-  { label: 'vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
+  { label: 'Aldi 1500 Calorie Meal Plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+  { label: 'Tesco High Protein Meal Plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+  { label: 'Work Lunch Meal Prep UK', to: '/meal-plans/work-lunch-meal-prep-uk' },
+  { label: 'Low Calorie Foods UK', to: '/blog/best-low-calorie-foods-uk' },
+  { label: 'Printable 1500 Calorie Meal Plan', to: '/meal-plans/1500-calorie' },
+  { label: 'Lose Weight Meal Plan UK', to: '/meal-plans/weight-loss' },
+  { label: 'Cheap Protein UK', to: '/blog/best-cheap-high-protein-foods-uk' },
+  { label: 'Protein Porridge UK', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
+  { label: 'Generate Weekly Meal Plan', to: '/quiz' },
+  { label: 'High Protein Snacks UK', to: '/blog/high-protein-snacks-uk' },
+  { label: 'Best Meal Prep Containers UK', to: '/meal-prep-containers' },
+  { label: 'Low Calorie Ready Meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },
+  { label: 'Cheap Student Aldi Meal Prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
+  { label: 'Vegetarian Batch Cooking Meal Plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
 ];
 
 export default function PopularSearches({

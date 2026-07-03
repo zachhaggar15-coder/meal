@@ -300,7 +300,7 @@ export default function Home() {
         />
 
         <SearchOpportunityLinks
-          title="Most requested UK meal prep guides"
+          title="Most Requested UK Meal Prep Guides"
           intro="Quick routes into the pages Search Console is already surfacing: containers, 1500 calorie plans, low-calorie foods, cheap protein and named-supermarket meal prep."
           showDiscovery={false}
           compact
