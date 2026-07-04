@@ -395,6 +395,18 @@ export default function PlanPage() {
                     {meal.recipe.map((stepText, stepIdx) => (
                       <li key={stepIdx}>{stepText}</li>
                     ))}
+                    {displayPlan.household?.hasMixedPortions && meal.householdPortions?.length > 1 && (
+                      <li className="plan-meal-recipe-serve-step">
+                        Divide the finished dish:{' '}
+                        {meal.householdPortions.map((p, i) => (
+                          <span key={p.id}>
+                            {i > 0 ? ', ' : ''}
+                            <strong>{p.label}</strong>
+                            {' '}— {toNiceFraction(p.portionScale / (meal.totalPortions || 1))}
+                          </span>
+                        ))}.
+                      </li>
+                    )}
                   </ol>
                 </details>
               )}
@@ -969,6 +981,20 @@ function HouseholdPortionsControl({
       )}
     </section>
   );
+}
+
+function toNiceFraction(decimal) {
+  const candidates = [
+    [1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [1, 5],
+    [2, 5], [3, 5], [4, 5], [1, 6], [5, 6], [1, 8], [3, 8], [5, 8], [7, 8],
+  ];
+  let best = [1, 1];
+  let bestDiff = Math.abs(decimal - 1);
+  for (const [n, d] of candidates) {
+    const diff = Math.abs(decimal - n / d);
+    if (diff < bestDiff) { bestDiff = diff; best = [n, d]; }
+  }
+  return best[1] === 1 ? 'all' : `${best[0]}/${best[1]}`;
 }
 
 function MealPortionBreakdown({ portions = [] }) {
