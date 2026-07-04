@@ -1439,7 +1439,17 @@ async function writeClipboard(text) {
 }
 
 function catLabel(cat) {
-  return { protein: 'Protein', carbs: 'Carbs & Grains', vegetables: 'Vegetables', dairy: 'Dairy & Eggs', extras: 'Extras & Condiments' }[cat] || cat;
+  return {
+    protein: 'Protein',
+    carbs: 'Carbs & Grains',
+    vegetables: 'Vegetables',
+    dairy: 'Dairy & Eggs',
+    fruit: 'Fruit',
+    herbs: 'Herbs & Spices',
+    condiments: 'Condiments & Oils',
+    tins: 'Tins & Jars',
+    extras: 'Extras',
+  }[cat] || cat;
 }
 
 function formatHouseholdLabel(plan) {

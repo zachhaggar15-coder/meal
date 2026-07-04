@@ -176,23 +176,30 @@ function pickDinnerForLunch(dinners, seed, lunch, usedIds = new Set()) {
 
 // ── Shopping list builder ──────────────────────────────────────────────────────
 
-const PROTEIN_KW  = ['chicken','beef','turkey','pork','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince'];
-const CARB_KW     = ['bread','rice','pasta','oat','potato','tortilla','roll','pitta','noodle','flour','wraps','granola','quinoa','couscous','orzo','soba'];
-const DAIRY_KW    = ['milk','yogurt','cheese','cream','butter','skyr','ricotta','halloumi','cottage','mozzarella'];
-const VEG_KW      = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','leaf','leaves','kale','cucumber','celery','avocado','mushroom','butternut squash','sweet potato','parsnip','pea','edamame','corn','bean sprout','cabbage','leek','asparagus'];
+const PROTEIN_KW    = ['chicken','beef','turkey','pork','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince','falafel'];
+const CARB_KW       = ['bread','rice','pasta','oat','potato','tortilla','roll','pitta','noodle','flour','wraps','granola','quinoa','couscous','orzo','soba'];
+const DAIRY_KW      = ['milk','yogurt','cheese','cream','butter','skyr','ricotta','halloumi','cottage','mozzarella','parmesan','feta','creme fraiche','crème fraîche','mascarpone','kefir'];
+const VEG_KW        = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','leaf','leaves','kale','cucumber','celery','avocado','mushroom','butternut squash','sweet potato','parsnip','pea','edamame','corn','bean sprout','cabbage','leek','asparagus','watercress','rocket','mixed veg','frozen veg','pak choi','bok choy','aubergine','coleslaw','radish','fennel','beetroot','turnip','swede'];
+const FRUIT_KW      = ['banana','apple','orange','mango','berry','strawberry','blueberry','raspberry','grape','peach','pear','plum','melon','pineapple','pomegranate','kiwi','apricot','nectarine','grapefruit','dates','raisins','dried fruit','dried mango','dried apricot'];
+const HERB_KW       = ['garlic','ginger','chilli','cumin','turmeric','paprika','cinnamon','oregano','basil','thyme','rosemary','coriander','parsley','mixed herbs','bay leaf','black pepper','white pepper','cayenne','nutmeg','cardamom','clove','star anise','fenugreek','chive','dill','mint','tarragon','sage','fennel seed','caraway','allspice','za\'atar','harissa','smoked paprika','ground coriander','ground cumin','curry powder','garam masala','five spice','mixed spice'];
+const CONDIMENT_KW  = ['olive oil','vegetable oil','sunflower oil','coconut oil','sesame oil','rapeseed oil','soy sauce','tamari','honey','mayo','mayonnaise','mustard','ketchup','vinegar','dressing','paste','stock','gravy','miso','sriracha','tabasco','worcestershire','fish sauce','oyster sauce','hoisin','teriyaki','tahini','pesto','salsa','relish','chutney','jam','hummus','peanut butter','almond butter','nut butter','hot sauce','sweet chilli','reduced sugar sauce'];
+const TIN_KW        = ['tinned','canned','baked bean','mixed bean','butter bean','cannellini','haricot','flageolet','borlotti'];
 
 function categoriseIngredient(ing) {
   const lower = ing.toLowerCase();
-  if (lower.includes('peanut butter') || lower.includes('almond butter')) return 'extras';
-  if (PROTEIN_KW.some(k => lower.includes(k)))  return 'protein';
-  if (VEG_KW.some(k => lower.includes(k)))      return 'vegetables';
-  if (CARB_KW.some(k => lower.includes(k)))     return 'carbs';
-  if (DAIRY_KW.some(k => lower.includes(k)))    return 'dairy';
+  if (FRUIT_KW.some(k => lower.includes(k)))      return 'fruit';
+  if (PROTEIN_KW.some(k => lower.includes(k)))    return 'protein';
+  if (VEG_KW.some(k => lower.includes(k)))        return 'vegetables';
+  if (DAIRY_KW.some(k => lower.includes(k)))      return 'dairy';
+  if (CARB_KW.some(k => lower.includes(k)))       return 'carbs';
+  if (HERB_KW.some(k => lower.includes(k)))       return 'herbs';
+  if (CONDIMENT_KW.some(k => lower.includes(k)))  return 'condiments';
+  if (TIN_KW.some(k => lower.includes(k)))        return 'tins';
   return 'extras';
 }
 
 export function buildShoppingList(plan) {
-  const grouped = { protein: new Map(), carbs: new Map(), vegetables: new Map(), dairy: new Map(), extras: new Map() };
+  const grouped = { protein: new Map(), carbs: new Map(), vegetables: new Map(), dairy: new Map(), fruit: new Map(), herbs: new Map(), condiments: new Map(), tins: new Map(), extras: new Map() };
 
   for (const day of plan) {
     for (const meal of day.meals) {
