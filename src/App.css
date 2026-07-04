@@ -235,8 +235,8 @@ input:focus, select:focus {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--accent-dark);
-  background: #ecfdf5;
+  color: var(--ink);
+  background: var(--lime);
   padding: 2px 8px;
   border-radius: 999px;
   margin-right: 8px;
@@ -3192,8 +3192,8 @@ input:focus, select:focus {
 
 .plan-servings-control {
   align-items: center;
-  background: #f8fafc;
-  border: 1px solid #dbeafe;
+  background: var(--cream);
+  border: 1px solid var(--line);
   border-radius: 8px;
   display: flex;
   gap: 16px;
@@ -3209,7 +3209,7 @@ input:focus, select:focus {
 }
 
 .plan-servings-control p {
-  color: #475569;
+  color: var(--soft-ink);
   font-size: 0.86rem;
   line-height: 1.45;
   margin: 0;
@@ -3224,10 +3224,10 @@ input:focus, select:focus {
 
 .plan-servings-option {
   align-items: center;
-  background: #fff;
-  border: 1px solid #cbd5e1;
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  color: #334155;
+  color: var(--soft-ink);
   cursor: pointer;
   display: inline-flex;
   font-family: inherit;
@@ -3240,14 +3240,14 @@ input:focus, select:focus {
 }
 
 .plan-servings-option:hover {
-  background: #eef2ff;
-  border-color: #93c5fd;
+  background: var(--lime);
+  border-color: var(--ink);
 }
 
 .plan-servings-option--active {
-  background: #111827;
-  border-color: #111827;
-  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
 .plan-household-control {
@@ -3263,10 +3263,10 @@ input:focus, select:focus {
 }
 
 .plan-household-total {
-  background: #fff;
-  border: 1px solid #cbd5e1;
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  color: #334155;
+  color: var(--soft-ink);
   flex: 0 0 auto;
   font-size: 0.82rem;
   font-weight: 900;
@@ -3280,10 +3280,10 @@ input:focus, select:focus {
 }
 
 .plan-household-mode {
-  background: #fff;
-  border: 1px solid #cbd5e1;
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 8px;
-  color: #334155;
+  color: var(--soft-ink);
   cursor: pointer;
   font-family: inherit;
   font-size: 0.84rem;
@@ -3293,14 +3293,14 @@ input:focus, select:focus {
 }
 
 .plan-household-mode:hover {
-  background: #eef2ff;
-  border-color: #93c5fd;
+  background: var(--lime);
+  border-color: var(--ink);
 }
 
 .plan-household-mode--active {
-  background: #111827;
-  border-color: #111827;
-  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
 }
 
 .plan-household-rows {
@@ -3310,8 +3310,8 @@ input:focus, select:focus {
 
 .plan-household-row {
   align-items: center;
-  background: #fff;
-  border: 1px solid #dbeafe;
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 8px;
   display: grid;
   gap: 10px;
@@ -3320,9 +3320,9 @@ input:focus, select:focus {
 }
 
 .plan-household-name {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--line);
   border-radius: 7px;
-  color: #111827;
+  color: var(--ink);
   font: inherit;
   font-weight: 800;
   min-height: 38px;
@@ -3332,7 +3332,7 @@ input:focus, select:focus {
 
 .plan-household-slider {
   align-items: center;
-  color: #475569;
+  color: var(--soft-ink);
   display: grid;
   font-size: 0.82rem;
   font-weight: 800;
@@ -3345,7 +3345,7 @@ input:focus, select:focus {
 }
 
 .plan-household-output {
-  color: #111827;
+  color: var(--ink);
   font-size: 0.88rem;
   font-weight: 900;
   text-align: right;
@@ -3353,7 +3353,7 @@ input:focus, select:focus {
 
 .plan-household-remove,
 .plan-household-add {
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--line);
   border-radius: 7px;
   cursor: pointer;
   font-family: inherit;
@@ -3364,8 +3364,8 @@ input:focus, select:focus {
 }
 
 .plan-household-remove {
-  background: #fff;
-  color: #334155;
+  background: var(--paper);
+  color: var(--soft-ink);
 }
 
 .plan-household-remove:disabled,
@@ -3375,8 +3375,8 @@ input:focus, select:focus {
 }
 
 .plan-household-add {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: var(--lime);
+  color: var(--ink);
   justify-self: start;
 }
 
@@ -3389,17 +3389,17 @@ input:focus, select:focus {
 
 .plan-meal-portions span,
 .print-household-members span {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--cream);
+  border: 1px solid var(--line);
   border-radius: 8px;
-  color: #334155;
+  color: var(--soft-ink);
   font-size: 0.82rem;
   line-height: 1.35;
   padding: 8px 10px;
 }
 
 .plan-meal-portions strong {
-  color: #111827;
+  color: var(--ink);
   display: block;
   font-size: 0.78rem;
   margin-bottom: 2px;
@@ -3419,7 +3419,7 @@ input:focus, select:focus {
 }
 
 .plan-secondary-details {
-  border: 1px solid #dbeafe;
+  border: 1px solid var(--line);
   border-radius: 8px;
   margin: 24px 0;
 }
@@ -3438,14 +3438,15 @@ input:focus, select:focus {
 }
 
 .plan-quick-facts {
-  border: 1px solid #dbeafe;
+  border: 2px solid var(--ink);
   border-radius: 8px;
-  background: #fff;
+  background: var(--paper);
+  box-shadow: var(--small-shadow);
   margin: 0 0 22px;
   padding: 16px;
 }
 .plan-quick-facts h2 {
-  color: #111827;
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 800;
   margin: 0 0 12px;
@@ -3456,29 +3457,29 @@ input:focus, select:focus {
   gap: 10px;
 }
 .plan-quick-fact {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--line);
   border-radius: 7px;
-  background: #f9fafb;
+  background: var(--cream);
   padding: 10px;
 }
 .plan-quick-fact strong {
   display: block;
-  color: #1d4ed8;
+  color: var(--ink);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   margin-bottom: 4px;
   text-transform: uppercase;
 }
 .plan-quick-fact span {
-  color: #374151;
+  color: var(--soft-ink);
   font-size: 0.86rem;
   line-height: 1.35;
 }
 
 .plan-share-section {
   align-items: center;
-  background: #f8fafc;
-  border: 1px solid #dbeafe;
+  background: var(--cream);
+  border: 1px solid var(--line);
   border-radius: 8px;
   display: grid;
   gap: 16px;
@@ -3487,13 +3488,13 @@ input:focus, select:focus {
   padding: 16px;
 }
 .plan-share-section h2 {
-  color: #111827;
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 800;
   margin: 0 0 6px;
 }
 .plan-share-section p {
-  color: #4b5563;
+  color: var(--soft-ink);
   font-size: 0.88rem;
   line-height: 1.5;
   margin: 0;
@@ -3505,25 +3506,25 @@ input:focus, select:focus {
   justify-content: flex-end;
 }
 .plan-share-btn {
-  background: #fff;
-  border: 1px solid #c7d2fe;
+  background: var(--paper);
+  border: 1px solid var(--line);
   border-radius: 6px;
-  color: #3730a3;
+  color: var(--ink);
   cursor: pointer;
   font-size: 0.84rem;
   font-weight: 700;
   padding: 9px 12px;
 }
 .plan-share-btn:hover {
-  background: #eef2ff;
+  background: var(--cream);
 }
 .plan-share-btn--primary {
-  background: #2563eb;
-  border-color: #2563eb;
-  color: #fff;
+  background: var(--lime);
+  border-color: var(--ink);
+  color: var(--ink);
 }
 .plan-share-btn--primary:hover {
-  background: #1d4ed8;
+  background: var(--lime-dark);
 }
 
 .supermarket-evidence {
@@ -3559,19 +3560,19 @@ input:focus, select:focus {
 .plan-quality-notes {
   margin: 24px 0;
   padding: 18px;
-  border: 1px solid #dbeafe;
+  border: 1px solid var(--line);
   border-radius: 8px;
-  background: #f8fbff;
+  background: var(--paper);
 }
 
 .plan-quality-notes h2 {
-  color: #111827;
+  color: var(--ink);
   font-size: 1.08rem;
   margin: 0 0 8px;
 }
 
 .plan-quality-notes p {
-  color: #4b5563;
+  color: var(--soft-ink);
   font-size: 0.9rem;
   line-height: 1.6;
   margin: 0;
@@ -3586,13 +3587,13 @@ input:focus, select:focus {
 
 .plan-quality-grid article {
   padding: 13px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 8px;
-  background: #fff;
+  background: var(--paper);
 }
 
 .plan-quality-grid h3 {
-  color: #1e3a8a;
+  color: var(--ink);
   font-size: 0.92rem;
   margin: 0 0 6px;
 }
@@ -5035,8 +5036,8 @@ details[open] .faq-question::after { content: '▴'; }
 .blog-category-section { margin: 32px 0; }
 .blog-category-heading { font-size: 1.1rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 14px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
 .blog-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.blog-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s, box-shadow 0.15s; }
-.blog-card:hover { border-color: #93c5fd; box-shadow: 0 2px 12px rgba(37, 99, 235, 0.10); }
+.blog-card { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--lime); border-radius: 10px; padding: 18px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 8px; transition: box-shadow 0.15s; }
+.blog-card:hover { box-shadow: var(--small-shadow, 4px 4px 0 #12130d); }
 .blog-card-thumb {
   display: block;
   width: 100%;
@@ -6195,10 +6196,11 @@ a {
 .site-logo-text,
 .footer-brand {
   color: var(--paper);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 950;
   text-decoration: none;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 .page-header-logo {
