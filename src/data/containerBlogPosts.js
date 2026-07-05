@@ -31,14 +31,42 @@ const guideRelated = [
 export const containerBlogPostsData = {
   'best-meal-prep-containers-uk': {
     published: '2026-06-16',
-    modified: '2026-06-23',
-    title: 'Best Meal Prep Containers UK 2026: Glass, Plastic & Leakproof Picks',
-    description: 'Best meal prep containers UK 2026: compare glass boxes, plastic tubs, leakproof lunch containers, budget meal prep boxes and Amazon UK picks.',
-    h1: 'Best Meal Prep Containers UK 2026: Glass, Plastic & Leakproof Picks',
+    modified: '2026-07-05',
+    title: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
+    description: 'Best meal prep containers UK: leakproof, dishwasher-safe and freezer-safe sets for batch cooking, work lunches and gym bags. Compare glass vs plastic, budget and Amazon UK picks.',
+    h1: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
     intro:
       'The best meal prep containers are the ones that make Sunday cooking easier and weekday eating calmer. For most UK meal preppers, that means enough containers for five lunches, lids that do not leak in a work bag, bases that survive repeated washing, and sizes that fit proper portions.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: containerLinks,
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'Not sure what size to buy? The ' },
+          { label: 'meal prep container size guide', to: '/blog/meal-prep-container-size-guide' },
+          { text: ' explains when to choose 500 ml, 1 litre and larger tubs.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'Compare dedicated guides for ' },
+          { label: 'budget meal prep containers', to: '/meal-prep-containers/budget' },
+          { text: ', ' },
+          { label: 'mid range glass containers', to: '/meal-prep-containers/mid-range' },
+          { text: ', and the full ' },
+          { label: 'meal prep containers hub', to: '/meal-prep-containers' },
+          { text: '.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'If leakproofing matters most, read the ' },
+          { label: 'leakproof meal prep containers guide', to: '/blog/leakproof-meal-prep-containers-uk' },
+          { text: '. For batch cooking and freezer storage, see ' },
+          { label: 'freezer-safe meal prep containers', to: '/blog/freezer-safe-meal-prep-containers' },
+          { text: '.' },
+        ],
+      },
+    ],
     productRecommendations: {
       title: 'Quick picks: best meal prep containers by budget',
       intro: 'Start here if you want the fastest route to a sensible Amazon UK container set.',
@@ -102,18 +130,72 @@ export const containerBlogPostsData = {
         h2: 'Best setup for most UK meal preppers',
         paragraphs: [
           'If you want one practical recommendation, start with a mid range five-pack of rectangular glass containers. Add budget twist-lid tubs later for soups and freezer portions. Upgrade to a premium 10-pack only once you know you are cooking multiple meals every week.',
-          'This staged approach converts well because it matches real behaviour: buy enough to start, remove the pain points, then upgrade when the habit is established.',
+          'This staged approach matches real behaviour: buy enough to start, remove the pain points, then upgrade when the habit is established.',
+        ],
+      },
+      {
+        h2: 'Best budget meal prep containers UK',
+        paragraphs: [
+          'Budget plastic containers are the right starting point for beginners, students, and anyone who needs a lot of tubs for freezer portions. They are inexpensive, available in large multipacks, and practical for lunches, overnight oats, and batch ingredients. The main trade-off is staining after repeated use with curry or tomato dishes, and cheaper lids that can warp over time with regular washing.',
+          'Look for rectangular shapes that stack neatly, lids with a firm press-seal or clip, and a pack large enough to cover five lunches without running short midweek. Check the listed volume before buying in bulk — many budget packs use smaller tubs that photograph larger than they are in practice.',
+        ],
+        bullets: [
+          'Rectangular over round: better fridge stacking and less wasted space.',
+          'Avoid very thin plastic for hot reheated meals — lid fit degrades faster.',
+          'Twist-lid deli tubs outperform flat-lid boxes for soups and saucy dishes.',
+          'Budget plastic works well but expect to replace it every 6–12 months with daily use.',
+        ],
+      },
+      {
+        h2: 'Best glass meal prep containers UK',
+        paragraphs: [
+          'Glass is the better long-term choice for anyone who reheats meals daily. It does not absorb colour from curry, tomato, or chilli, cleans more easily, and tends to hold up better over time than plastic. The trade-offs are weight (heavier to carry to work), fragility if dropped, and a higher upfront cost.',
+          'For most UK meal preppers, a five-pack of rectangular glass containers is the most practical entry point. They cover Monday to Friday lunches and go straight from fridge to microwave. Always check the specific listing for temperature limits and dishwasher guidance — glass bases and lids often have different care instructions.',
+        ],
+        bullets: [
+          'Five-packs cover one person\'s working week — the natural starting point.',
+          'Glass with clip-lock lids handles chilli, curry, and soups more reliably than press-fit lids.',
+          'Check whether lids are dishwasher safe separately from the base.',
+          'A well-maintained glass set used daily outlasts several rounds of budget plastic.',
+        ],
+      },
+      {
+        h2: 'What leakproof, microwave-safe, dishwasher-safe and freezer-safe actually mean',
+        paragraphs: [
+          'These labels appear on almost every container listing, but they are not always as straightforward as they sound. Leakproof means the lid seals well enough to carry liquid meals without dripping in a bag — not that you can submerge the container in water. The quickest test for a new container is to fill it with water, close the lid, and hold it upside down over the sink.',
+          'Microwave-safe means the material will not melt or warp under normal microwave use. You should still vent or remove the lid before heating, and avoid long high-power bursts with dense protein dishes. Glass is generally more comfortable for regular microwave use than plastic.',
+          'Dishwasher-safe most often refers to the base. Many glass bases are dishwasher-safe, but lids with clip mechanisms or silicone seals are frequently top-rack only, or hand-wash recommended. Checking this before purchase matters if you run a dishwasher daily. Freezer-safe means the container handles low temperatures without cracking — always leave headroom for food to expand as it freezes, and cool meals before sealing.',
+        ],
+      },
+      {
+        h2: 'Common mistakes when buying meal prep containers',
+        bullets: [
+          'Buying only one size — a practical system needs small sauce tubs, 1 litre lunch containers, and at least one or two larger batch tubs.',
+          'Prioritising appearance over lid reliability — a container that leaks once in a work bag gets retired quickly regardless of how it looks.',
+          'Staying with budget plastic indefinitely — daily reheated meals with tomato or curry benefit noticeably from a glass upgrade after a few months.',
+          'Ignoring lid dishwasher guidance — clip-lock lids in harsh wash cycles wear out faster than the bases.',
+          'Overfilling freezer containers — liquids expand when frozen and overfilled tubs can crack or pop lids off.',
+          'Not testing leak resistance before commuting — fill with water, close the lid, turn upside down, and shake gently over the sink.',
+        ],
+        paragraphs: [
+          'Build a container system over time rather than buying everything at once. Start with a five-pack for lunches, add twist-lid tubs for soups and sauces when the need arises, and pick up larger batch boxes once weekly cooking is a consistent habit.',
         ],
       },
     ],
     related: [
       ...guideRelated,
       { slug: 'glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Meal Prep Containers', type: 'blog' },
+      { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
+      { slug: 'how-many-meal-prep-containers-do-you-need', label: 'How Many Meal Prep Containers Do You Need?', type: 'blog' },
     ],
     faq: [
-      { q: 'What are the best meal prep containers for most people?', a: 'For most UK buyers, five rectangular glass containers around 900 ml to 1 litre are the best all-round choice. They stack well, reheat well, resist stains, and cover a normal working week of lunches.' },
+      { q: 'What are the best meal prep containers for most people?', a: 'For most UK buyers, five rectangular glass containers around 900 ml to 1 litre are the best all-round choice. They stack well, reheat well, resist stains, and cover a working week of lunches.' },
       { q: 'Are meal prep boxes and meal prep containers the same thing?', a: 'Usually yes. UK shoppers use meal prep boxes, meal prep containers, meal prep tubs, lunch boxes, and food storage containers to describe similar products. Boxes often imply work lunches; tubs often imply batch cooking or freezer storage.' },
-      { q: 'Should I buy glass or plastic meal prep containers?', a: 'Buy plastic if low cost and light weight matter most. Buy glass if reheating, stain resistance, and long-term use matter more. Many people start with plastic and upgrade to glass once they meal prep consistently.' },
+      { q: 'Should I buy glass or plastic meal prep containers?', a: 'Buy plastic if low cost and light weight matter most. Buy glass if reheating, stain resistance, and long-term durability matter more. Many people start with budget plastic and upgrade to glass once weekly meal prep is a consistent habit.' },
+      { q: 'Are meal prep containers dishwasher safe?', a: 'Many are, but check the specific listing rather than assuming. Glass bases are typically dishwasher safe. Lids with clip mechanisms or silicone seals are often top-rack only or hand-wash recommended — following the guidance extends their useful life significantly.' },
+      { q: 'Can I put meal prep containers in the freezer?', a: 'Many glass and plastic containers are freezer safe, but always check the listing. Leave headroom so food can expand as it freezes, cool meals before sealing, and avoid sudden temperature changes with glass containers.' },
+      { q: 'What size meal prep containers should I buy?', a: 'For most adult lunches and dinners, 900 ml to 1 litre is the most useful all-round size. Smaller 400–500 ml tubs are good for snacks, sides, and sauces. See the meal prep container size guide for a breakdown by meal type.' },
+      { q: 'How many meal prep containers do I need for a week?', a: 'For lunches only, at least five, with six to eight being more practical. For lunches and dinners, ten to twelve works well for one person. See the how many containers guide for a household-by-household breakdown.' },
     ],
   },
 
@@ -244,14 +326,23 @@ export const containerBlogPostsData = {
 
   'meal-prep-container-size-guide': {
     published: '2026-06-16',
-    modified: '2026-06-16',
-    title: 'Meal Prep Container Size Guide: 500ml, 750ml, 1 Litre and More',
-    description: 'Meal prep container size guide for UK shoppers: what 500ml, 750ml, 1 litre and larger tubs are best for when batch cooking.',
-    h1: 'Meal Prep Container Size Guide',
+    modified: '2026-07-05',
+    title: 'Meal Prep Container Size Guide UK: 500ml, 750ml and 1 Litre Explained',
+    description: 'Meal prep container size guide for UK shoppers: which sizes to buy first, what 500ml, 750ml and 1 litre are best for, and how many different sizes you actually need.',
+    h1: 'Meal Prep Container Size Guide UK',
     intro:
       'Container size is where many meal preppers go wrong. A tub that looks big online can be too small for a proper lunch, while oversized boxes make portions look mean and waste fridge space. This guide explains which sizes to buy.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: containerLinks,
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For buying advice on which type and material to choose, see the full ' },
+          { label: 'best meal prep containers UK guide', to: '/blog/best-meal-prep-containers-uk' },
+          { text: ', which compares glass, plastic, leakproof, and budget options.' },
+        ],
+      },
+      ...containerLinks,
+    ],
     productRecommendations: {
       title: 'Useful sizes to compare',
       intro: 'These picks cover full lunch boxes, mixed glass storage, and sauce-friendly tubs.',
@@ -299,8 +390,16 @@ export const containerBlogPostsData = {
           'Most people need three sizes: small sauce/snack tubs, standard 1 litre lunch containers, and one or two larger batch containers. More variety looks useful, but too many shapes creates lid clutter.',
         ],
       },
+      {
+        h2: 'Which size should a beginner buy first?',
+        paragraphs: [
+          'If you are new to meal prep and want one size that covers most situations, start with 900 ml to 1 litre rectangular containers. They are large enough for a complete adult lunch or dinner, they stack efficiently, and most standard batch-cook dishes — chicken and rice, chilli, pasta, curry — fit without cramming.',
+          'Add 400–500 ml tubs once the habit is established, specifically for overnight oats, snacks, or sauces. Add 1.5–2 litre tubs only when you regularly cook large batch portions of soup, stew, or rice.',
+        ],
+      },
     ],
     related: [
+      { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'how-many-meal-prep-containers-do-you-need', label: 'How Many Meal Prep Containers Do You Need?', type: 'blog' },
       { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
       ...guideRelated,

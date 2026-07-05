@@ -2598,6 +2598,42 @@ input:focus, select:focus {
 .featured-plan-link:hover { background: #dbeafe; }
 .featured-browse-cta { margin-top: 20px; text-align: center; }
 
+/* Calorie target navigation */
+.calorie-nav-section {
+  padding: 32px 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.calorie-nav-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.calorie-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background: #f1f5f9;
+  border: 1px solid #c7d2fe;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.calorie-nav-card strong {
+  font-size: 1.1rem;
+  color: #1e3a8a;
+}
+.calorie-nav-card span {
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+.calorie-nav-card:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
 /* Home FAQ */
 .home-faq { padding: 40px 24px; max-width: 700px; margin: 0 auto; }
 
@@ -6458,7 +6494,8 @@ a {
 .popular-guides,
 .browse-hub-index,
 .meal-hub-supporting-guides,
-.container-intent-section {
+.container-intent-section,
+.calorie-nav-section {
   margin: 0 auto;
   max-width: 1120px;
   padding: 42px 22px;
@@ -6584,6 +6621,18 @@ a {
 }
 
 .featured-plan-link:hover {
+  border-color: var(--lime);
+  box-shadow: 0 0 0 2px var(--lime);
+}
+
+.calorie-nav-card {
+  background: #1f2118;
+  border-color: #34362b;
+}
+.calorie-nav-card strong { color: var(--lime); }
+.calorie-nav-card span { color: #c5c9a8; }
+.calorie-nav-card:hover {
+  background: #282c1f;
   border-color: var(--lime);
   box-shadow: 0 0 0 2px var(--lime);
 }

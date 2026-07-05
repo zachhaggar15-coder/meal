@@ -469,15 +469,29 @@ const PLAN_2500 = PLAN_2000.map(day => ({
 
 export const mealPlansData = {
   '1500-calorie-meal-plan': {
-    title: '1500 Calorie Meal Plan UK — Lose 0.5kg/week (Free)',
-    description: 'Free 1500 calorie meal plan for UK weight loss. High-protein meals, shopping list, and prep times. Lose ~0.5kg weekly using Tesco, Aldi, Asda ingredients. Generate yours in 30 seconds.',
-    h1: '1500 Calorie Meal Plan UK — Free 7-Day Weight Loss Guide',
+    title: '1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List',
+    description: 'A complete 1500 calorie meal plan for UK adults: 7 days of high-protein meals, a full supermarket shopping list, batch cooking tips, and suitability notes for fat loss.',
+    h1: '1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List',
     planLabel: '1500 Calorie',
     targetCalories: 1500,
     summary: {
       supermarkets: 'Generic UK supermarket',
       bestFor: 'Fat loss, lighter adults, women',
       prepDifficulty: 'Easy (15–25 min)',
+    },
+    suitability: {
+      forWho: [
+        'Women and smaller-framed men whose maintenance intake (TDEE) is roughly 1,800-2,200 calories',
+        'Anyone who found 1,200 calories too restrictive but wants steady, sustainable fat loss',
+        'People who want a simple, protein-led week they can batch cook in advance',
+      ],
+      notForWho: [
+        'Taller, heavier or very active people, who often need 1,800 calories or more to lose fat without feeling exhausted',
+        'Anyone who is pregnant or breastfeeding, or is a teenager still growing',
+        'People with a history of disordered eating, or a medical condition or medication that affects appetite or blood sugar',
+      ],
+      disclaimer:
+        'Calorie needs vary a lot from person to person. 1,500 calories can be too low for larger or highly active adults, and this plan is general information rather than medical or dietary advice. If you are unsure what is right for you, or you have a health condition, check with your GP or a registered dietitian before starting. If you feel persistently tired, dizzy or unwell, eat more.',
     },
     intro: 'A 1,500 calorie meal plan is one of the most popular choices for weight loss in the UK. For most women and smaller-framed men, eating 1,500 calories per day creates a meaningful calorie deficit that supports steady fat loss of around 0.5–1 kg per week — without the hunger and fatigue that come with more extreme restriction. This guide gives you a complete, ready-to-use 7-day plan built around everyday UK supermarket ingredients.',
     whyThisPlan: 'A 1,500 calorie target works well for people whose Total Daily Energy Expenditure (TDEE) sits between 1,800 and 2,200 calories — common for women aged 25–55 with moderate activity levels and lighter men. At 1,500 calories you create a deficit of 300–700 calories per day, which over a week amounts to 2,100–4,900 calories — enough to lose 0.3–0.7 kg of body fat. This plan prioritises protein (90–120 g per day) to keep you feeling full, preserve muscle mass, and support an active lifestyle.',
@@ -493,6 +507,15 @@ export const mealPlansData = {
           { text: '.' },
         ],
       },
+      {
+        parts: [
+          { text: 'Shopping at Aldi? The ' },
+          { label: 'Aldi low calorie meal plan', to: '/meal-plan/aldi-low-calorie-meal-plan' },
+          { text: ' uses the same calorie target with Aldi-specific products. For a plant-based version of this plan, see the ' },
+          { label: 'vegan low calorie meal plan', to: '/meal-plan/vegan-low-calorie-meal-plan' },
+          { text: '.' },
+        ],
+      },
     ],
     tips: [
       'Weigh your portions for the first week to calibrate your eye. A digital kitchen scale costs under £10 and removes all guesswork.',
@@ -500,17 +523,26 @@ export const mealPlansData = {
       'Keep low-calorie snacks visible in the fridge — Greek yogurt, carrot sticks, and cottage cheese are all under 200 kcal.',
       'Drink 2–3 litres of water per day. Thirst is often mistaken for hunger.',
       'If you are hungry, bulk up meals with non-starchy vegetables (spinach, cucumber, courgette) — they add volume for almost no calories.',
+      'On Sunday, cook the turkey chilli and portion it into three or four containers, and cook a large batch of brown rice. Both reheat in under 5 minutes and cover most of the week\'s dinners.',
+      'Store cooked meals in the fridge for up to 3 days. Freeze anything you will not eat within 3 days — soups, chilli, and rice-based dishes all freeze well in airtight containers.',
+      'Defrost frozen portions overnight in the fridge, then reheat until piping hot before eating.',
     ],
     faq: [
-      { q: 'Is 1500 calories a day enough?', a: 'For most adults seeking weight loss, yes. 1,500 calories provides enough energy and nutrients when the diet is high in protein and includes a wide variety of vegetables. Active individuals or those over 90 kg may need to increase to 1,800 calories.' },
+      { q: 'Is 1500 calories a day enough?', a: 'For most adults seeking fat loss, yes. 1,500 calories provides enough energy and nutrients when the diet is high in protein and includes a wide variety of vegetables. Active individuals, larger adults (over 90 kg), or anyone who feels persistently tired should consider increasing to 1,800 calories.' },
       { q: 'How much weight will I lose on 1500 calories?', a: 'Most people lose 0.5–1 kg per week on a 1,500 calorie diet, assuming their TDEE is around 2,000–2,200 calories. Results vary based on starting weight, activity level, and metabolic rate.' },
-      { q: 'Can I swap meals around?', a: 'Absolutely. Each day is planned to hit the 1,500 calorie target, but you can mix and match days or repeat favourite days without issue.' },
+      { q: 'Can I swap meals around?', a: 'Yes. Each day is planned to hit the 1,500 calorie target, but you can mix and match days or repeat favourite days without affecting the overall calorie balance.' },
+      { q: 'How do I batch cook this plan efficiently?', a: 'On Sunday, cook the turkey chilli and portion it into three or four containers. Cook a large batch of brown rice and divide it into portions. Hard-boil six to eight eggs. Pre-portion Greek yogurt into tubs. This reduces most weekday meals to 5–10 minutes of reheating and assembly.' },
+      { q: 'Can I follow a vegetarian version of this plan?', a: 'Yes. Swap chicken and turkey for firm tofu, red lentils, or tinned chickpeas, which reach similar protein levels per serving. Greek yogurt, eggs, and cottage cheese remain as protein sources. See the vegetarian low calorie meal plan for a fully structured 7-day vegetarian version.' },
+      { q: 'How can I make this plan cheaper?', a: 'Buy frozen chicken breast instead of fresh, replace salmon with extra tinned tuna, and choose own-brand oats and rice from Aldi or Lidl. Frozen mixed vegetables are as nutritious as fresh and noticeably cheaper. Avoid pre-washed salad bags when loose leaves or frozen spinach are available for less.' },
+      { q: 'How should I store prepped meals?', a: 'Cooked proteins and assembled meals keep safely in the fridge for up to 3 days. Freeze anything you will not eat within 3 days — this plan\'s chilli, soups, and rice dishes all freeze well in airtight containers. Defrost overnight in the fridge and reheat until piping hot before eating.' },
     ],
     related: [
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Low Calorie Plan' },
-      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Meal Plan' },
-      { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Meal Plan' },
+      { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Plan' },
+      { slug: 'aldi-low-calorie-meal-plan', label: 'Aldi Low Calorie Plan' },
+      { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Low Calorie Plan' },
+      { slug: 'vegan-low-calorie-meal-plan', label: 'Vegan Low Calorie Plan' },
     ],
     blogLinks: [
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
@@ -522,9 +554,9 @@ export const mealPlansData = {
   },
 
   '1800-calorie-meal-plan': {
-    title: '1800 Calorie Meal Plan UK — Sustainable Fat Loss (Free)',
-    description: 'Best 1800 calorie meal plan UK. 120g+ protein daily, simple recipes, full shopping list. Lose weight steadily without hunger. Generate yours free.',
-    h1: '1800 Calorie Meal Plan UK — Free 7-Day High Protein Guide',
+    title: '1800 Calorie Meal Plan UK: 7-Day Balanced Plan with Shopping List',
+    description: '7-day 1800 calorie meal plan for UK adults: balanced meals with 120g+ protein, a full supermarket shopping list, and simple batch-cook prep. Suitable for active adults in a moderate deficit.',
+    h1: '1800 Calorie Meal Plan UK: 7-Day Balanced Plan with Shopping List',
     planLabel: '1800 Calorie',
     targetCalories: 1800,
     summary: {
@@ -680,9 +712,9 @@ export const mealPlansData = {
   'tesco-low-calorie-meal-plan': {
     published: '2026-05-28',
     modified: '2026-06-08',
-    title: 'Tesco Low Calorie Meal Plan UK: 7 Days + Costs',
-    description: '7-day Tesco low calorie meal plan with calories, protein, Tesco price breakdown, cost per meal, Clubcard swaps and weight-loss shopping list.',
-    h1: 'Tesco Low Calorie Meal Plan UK - Budget 7-Day Guide',
+    title: 'Tesco Low Calorie Meal Plan UK: 7-Day Plan with Shopping List',
+    description: '7-day Tesco low calorie meal plan: Tesco own-brand shopping list, Clubcard-friendly swaps, calorie and protein targets, and simple UK ingredients for fat loss.',
+    h1: 'Tesco Low Calorie Meal Plan UK: 7-Day Plan with Shopping List',
     summary: {
       supermarkets: 'Tesco',
       supermarket: 'Tesco',
@@ -889,9 +921,9 @@ export const mealPlansData = {
   },
 
   'aldi-low-calorie-meal-plan': {
-    title: 'Aldi Meal Plan UK — Budget Weight Loss £35/week (Free)',
-    description: 'Best budget meal plan UK. Aldi meal plan at £35-45/week. 1500 calories, high protein. Lose weight on a tight budget. Generate your free plan.',
-    h1: 'Aldi Low Calorie Meal Plan UK — Budget 7-Day Guide',
+    title: 'Aldi Low Calorie Meal Plan UK: 7-Day Budget Plan with Shopping List',
+    description: 'Aldi low calorie meal plan UK: 7-day plan at 1,500 calories per day, high protein, with an Aldi own-brand shopping list for weight loss on a budget.',
+    h1: 'Aldi Low Calorie Meal Plan UK: 7-Day Budget Plan with Shopping List',
     summary: {
       supermarkets: 'Aldi',
       supermarket: 'Aldi',

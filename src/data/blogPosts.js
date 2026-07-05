@@ -87,11 +87,11 @@ export const blogPostsData = {
 
   'best-low-calorie-foods-uk': {
     published: '2026-05-28',
-    modified: '2026-07-02',
+    modified: '2026-07-05',
     reviewed: '2 July 2026',
-    title: 'Low Calorie Foods UK: 80 Filling Tesco, Aldi & Asda Picks',
-    description: 'Best low calorie foods UK: high-protein, high-fibre, ready-to-eat and supermarket staples for weight loss, with 1500 calorie meal plan links.',
-    h1: 'Low Calorie Foods UK: Filling Supermarket Picks',
+    title: 'Best Low-Calorie Foods UK: Filling Options for Meal Prep and Fat Loss',
+    description: 'Best low-calorie foods UK: high-protein, high-fibre and filling options from Aldi, Tesco and Asda. Includes a 1500 calorie plan link, shopping basket guide, and common mistakes to avoid.',
+    h1: 'Best Low-Calorie Foods UK: Filling Options for Meal Prep and Fat Loss',
     intro: 'This is the main UK guide to low calorie foods for realistic weight loss weeks: high-protein staples, high-volume vegetables, fruit, ready-to-eat options and supermarket swaps from Tesco, Aldi, Asda, Sainsbury\'s, Lidl and Morrisons. Use it to build a better basket, then jump into a printable 1500 calorie or 1800 calorie meal plan with a shopping list.',
     sources: [
       {
@@ -126,6 +126,19 @@ export const blogPostsData = {
           { text: ', or open the ' },
           { label: 'low calorie shopping list', to: '/meal-plans/low-calorie-shopping-list' },
           { text: ' for plan pages with grouped baskets.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For a complete week built around these foods, see the ' },
+          { label: '1500 calorie meal plan', to: '/meal-plan/1500-calorie-meal-plan' },
+          { text: ', the ' },
+          { label: 'Aldi low calorie meal plan', to: '/meal-plan/aldi-low-calorie-meal-plan' },
+          { text: ', or the ' },
+          { label: 'vegetarian low calorie meal plan', to: '/meal-plan/vegetarian-low-calorie-meal-plan' },
+          { text: '. For a fully plant-based approach, the ' },
+          { label: 'vegan low calorie meal plan', to: '/meal-plan/vegan-low-calorie-meal-plan' },
+          { text: ' covers the same calorie target without any animal products.' },
         ],
       },
     ],
@@ -247,7 +260,49 @@ export const blogPostsData = {
           'Building a low-calorie diet on a budget is entirely achievable in the UK. These tips help you get the best value from your weekly shop at Tesco, Aldi, Sainsbury\'s, or Asda:',
           'Buy frozen. Frozen vegetables and fruit are nutritionally equivalent to fresh and significantly cheaper. Frozen broccoli, peas, mixed veg, spinach (frozen in blocks), and berries are all excellent choices.',
           'Shop own-brand. Tesco, Aldi, Sainsbury\'s, and Asda all have own-brand versions of key staples — oats, chicken, eggs, yogurt, tinned fish — that are just as nutritious as premium brands at a fraction of the price.',
-          'Use our free meal plan generator to create a personalised weekly plan with a ready-made shopping list, estimated weekly cost, and meals tailored to your preferred supermarket.',
+        ],
+      },
+      {
+        h2: 'Best low-calorie ready meals in UK supermarkets',
+        paragraphs: [
+          'Ready meals can fit into a low-calorie week if you choose well. The most useful options combine low calories with high protein — this keeps meals filling rather than just clocking a low number. See the best low-calorie ready meals UK guide for a full breakdown with protein comparisons.',
+        ],
+        table: {
+          headers: ['Ready meal type', 'What to look for', 'Watch out for'],
+          rows: [
+            ['Canned or chilled soup', 'Under 200 kcal, ideally 10 g+ protein. Tesco, Aldi and M&S all have decent options.', 'High sodium levels — not ideal as a daily staple'],
+            ['Chilled protein bowls', 'Higher-protein ranges from Tesco and Sainsbury\'s Balanced Range. Often 300–400 kcal with 25 g+ protein.', 'Check serving size — some list half the pack as one serving'],
+            ['Lean chilled ready meals', 'Tesco Light Choices, Asda Good For You, and supermarket balanced ranges flag calorie counts clearly.', 'Many are low in calories but also low in protein — not ideal as a main meal'],
+            ['Microwave rice pouches', '~220 kcal per 250 g pouch — useful as a base rather than a meal in itself.', 'Choose wholegrain versions for more fibre and slower energy release'],
+          ],
+        },
+      },
+      {
+        h2: 'Example low-calorie meal prep shopping basket',
+        paragraphs: [
+          'The items below make up an illustrative one-person low-calorie week from a budget UK supermarket. Prices vary by supermarket and change regularly — use this as a guide to what to look for rather than a fixed cost.',
+        ],
+        table: {
+          headers: ['Category', 'Example items', 'Why they work'],
+          rows: [
+            ['Lean protein', 'Chicken breast, tinned tuna, eggs, 0% Greek yogurt', 'High protein on low calories keeps meals filling and supports muscle retention'],
+            ['Vegetables', 'Frozen broccoli, spinach, mixed veg, cherry tomatoes', 'Large volume, very low calories — eat plenty without tracking tightly'],
+            ['Filling carbs', 'Rolled oats, brown rice, sweet potatoes, wholemeal bread', 'Slow-digesting, reduces hunger between meals'],
+            ['Low-calorie snacks', 'Cottage cheese, low-fat yogurt, carrot sticks, apples', 'Under 200 kcal each — keeps appetite in check without derailing the day'],
+          ],
+        },
+      },
+      {
+        h2: 'Common mistakes on low-calorie diets',
+        paragraphs: [
+          'These are the most common reasons a low-calorie approach stalls or becomes unsustainable:',
+        ],
+        bullets: [
+          'Cutting calories too aggressively. The NHS advises a minimum of 1,200 kcal for women and 1,500 kcal for men on a reducing diet. A 1,500–1,800 kcal target is more sustainable and supports better energy levels long-term.',
+          'Eating low-calorie foods that are also low in protein. A chicken salad and a bag of rice cakes may have similar calorie counts, but only one keeps you full. Prioritise protein at every meal.',
+          'Not accounting for drinks. Lattes, juice, smoothies, and energy drinks can add 200–400 kcal with little satiety benefit. Water, black coffee, and tea have negligible calories.',
+          'Relying on willpower rather than planning. Batch-cooking on Sunday and keeping low-calorie snacks visible in the fridge is far more reliable than making good choices when already hungry.',
+          'Treating low-calorie foods as unlimited. While vegetables are very low in calories, sauces, oils, dressings, and toppings can add up quickly — weigh or measure dressings until you have a feel for portions.',
         ],
       },
     ],
@@ -256,11 +311,17 @@ export const blogPostsData = {
       { slug: 'best-low-calorie-ready-meals-uk', label: 'Best Low Calorie Ready Meals UK', type: 'blog' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
       { slug: 'tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List', type: 'blog' },
+      { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'aldi-low-calorie-meal-plan', label: 'Aldi Low Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'vegetarian-low-calorie-meal-plan', label: 'Vegetarian Low Calorie Meal Plan', type: 'meal-plan' },
     ],
     faq: [
       { q: 'Which low calorie foods are most filling?', a: 'The most filling low-calorie foods are those high in protein or fibre: 0% Greek yogurt, chicken breast, eggs, cottage cheese, and non-starchy vegetables like broccoli and spinach. Protein is more satiating per calorie than carbohydrates or fat.' },
       { q: 'What is the best low calorie food for weight loss in the UK?', a: 'Chicken breast, tinned tuna, 0% Greek yogurt, and eggs consistently rank highest for weight loss because they are high in protein, low in calories, very filling, and affordable in UK supermarkets.' },
       { q: 'Are frozen vegetables as nutritious as fresh?', a: 'Yes. Frozen vegetables are typically frozen within hours of harvest and retain almost all their nutritional value. They are nutritionally equivalent to fresh vegetables and often cheaper — frozen broccoli at Aldi or Tesco costs around £1 per kg.' },
+      { q: 'What low-calorie ready meals can I buy in UK supermarkets?', a: 'Tesco Light Choices, Asda Good For You, and Sainsbury\'s Balanced Range all offer low-calorie ready meals. Look for options with at least 20–25 g of protein as well as low calories — these are far more filling than low-calorie meals that are also low in protein.' },
+      { q: 'How much protein should I eat on a 1500 calorie diet?', a: 'Aim for at least 100–120 g of protein per day on a 1,500 calorie plan. This is roughly 27–32% of calories from protein, which helps preserve muscle, keeps you full, and supports the thermic effect of food. Eggs, chicken, tuna, and 0% Greek yogurt are the most efficient sources.' },
+      { q: 'Can vegetarians eat low-calorie and high-protein in the UK?', a: 'Yes. Eggs, 0% Greek yogurt, cottage cheese, tofu, and lentils are all low in calories relative to their protein content and widely available in UK supermarkets. A vegetarian can hit 100 g+ protein per day on 1,500 calories with these foods at the base of each meal.' },
     ],
   },
 
@@ -545,11 +606,11 @@ export const blogPostsData = {
 
   'best-cheap-high-protein-foods-uk': {
     published: '2026-05-28',
-    modified: '2026-07-02',
+    modified: '2026-07-05',
     reviewed: '2 July 2026',
-    title: 'Cheap Protein UK: Best Budget Protein Sources in Supermarkets',
-    description: 'Cheap protein UK guide: eggs, tuna, lentils, Greek yogurt, chicken, tofu and beans ranked for budget meal prep and high-protein shopping.',
-    h1: 'Cheap Protein UK: Budget Protein Sources for Meal Prep',
+    title: 'Best Cheap High-Protein Foods UK: Aldi, Lidl and Tesco Options Compared',
+    description: 'Best cheap high-protein foods UK: eggs, tuna, lentils, chicken and tofu ranked by value across Aldi, Lidl and Tesco. Budget meal prep and vegetarian options included.',
+    h1: 'Best Cheap High-Protein Foods UK: Aldi, Lidl and Tesco Options',
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets, the best cheap protein usually comes from ordinary staples: eggs, tinned fish, Greek yogurt, lentils, beans, tofu, frozen chicken and cottage cheese. This guide ranks the options by usefulness for budget meal prep, not just headline protein grams.',
     sources: [
       {
@@ -583,6 +644,15 @@ export const blogPostsData = {
           { text: ', or open the ' },
           { label: 'budget bodybuilding hub', to: '/meal-plans/budget-bodybuilding' },
           { text: ' if the goal is muscle gain on a tighter shop.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'Ready to use these foods in a plan? The ' },
+          { label: 'Aldi high protein meal plan', to: '/meal-plan/aldi-high-protein-meal-plan' },
+          { text: ' and the ' },
+          { label: 'budget bodybuilding meal plan', to: '/meal-plan/budget-bodybuilding-meal-plan-uk' },
+          { text: ' both build a structured week around the staples in this guide.' },
         ],
       },
     ],
@@ -661,8 +731,58 @@ export const blogPostsData = {
         h2: 'Shopping Tips by Supermarket',
         paragraphs: [
           'Aldi and Lidl consistently win on price for eggs, tinned fish, and own-brand chicken. Aldi\'s Specially Selected range sometimes offers better cuts for special occasions, but the standard own-brand chicken and eggs are just as nutritious as premium alternatives. Tesco Clubcard Prices frequently bring chicken breast and salmon to competitive prices — worth checking weekly. Asda and Morrisons own-brand tinned tuna and sardines match Aldi pricing and are worth buying in bulk.',
-          'Buying frozen over fresh saves 20–40% on chicken, turkey, and prawns with zero nutritional cost. Buying tinned fish by the multipack (4–6 tins) is consistently cheaper per tin than buying individually. Use our free meal plan generator to build a high-protein week around your chosen supermarket.',
+          'Buying frozen over fresh saves 20–40% on chicken, turkey, and prawns with zero nutritional cost. Buying tinned fish by the multipack (4–6 tins) is consistently cheaper per tin than buying individually.',
         ],
+      },
+      {
+        h2: 'Cheap vegetarian high-protein options UK',
+        paragraphs: [
+          'Plant-based eating does not mean low protein. UK supermarkets stock a solid range of vegetarian high-protein foods that compete well with meat on cost-per-gram of protein.',
+        ],
+        table: {
+          headers: ['Food', 'Approx protein per serving', 'Best use', 'Budget note'],
+          rows: [
+            ['Eggs (2 large)', '~12 g', 'Omelettes, breakfasts, stir-fries', 'One of the cheapest protein sources in any UK supermarket'],
+            ['0% Greek yogurt (200 g)', '~20 g', 'Breakfast bowls, snacks, sauces', 'Large tubs at Aldi and Lidl offer best value per 100 g'],
+            ['Low-fat cottage cheese (200 g)', '~24 g', 'Snacks, salads, on toast', 'Often under £1 at Aldi and Lidl'],
+            ['Dried red lentils (80 g dry weight)', '~19 g', 'Soups, dhal, curries, batch cooking', 'One of the cheapest protein sources overall — around 75p per 500 g bag'],
+            ['Tinned chickpeas (240 g drained)', '~17 g', 'Curries, salads, wraps, roasted snacks', 'Under 60p per tin at most UK supermarkets'],
+            ['Firm tofu (200 g)', '~16 g', 'Stir-fries, baked dishes, scrambles', 'Stocked by Lidl, Tesco and Sainsbury\'s; use extra-firm for meal prep'],
+          ],
+        },
+      },
+      {
+        h2: 'Cheap high-protein snacks in UK supermarkets',
+        paragraphs: [
+          'Snacks are where high-protein eating tends to get expensive. Branded protein bars and ready-to-drink shakes cost far more per gram of protein than basic supermarket staples. These options deliver solid protein for less:',
+        ],
+        bullets: [
+          'Boiled eggs (2 eggs): ~12 g protein for around 44p — batch-boil 6–8 at the weekend.',
+          '0% Greek yogurt (150 g pot): ~15 g protein, ~40p from Aldi or Lidl — one of the best-value snacks in a UK supermarket.',
+          'Cottage cheese (150 g): ~18 g protein, ~50p — eat with cucumber and black pepper.',
+          'Tinned tuna pouch (one 100 g portion): ~25 g protein, 50–65p — no draining required with peel-back pouches.',
+          'Edamame (100 g from frozen): ~11 g protein, ~25p per portion — microwave from frozen in 3 minutes.',
+          'Skyr yogurt (150 g): ~17 g protein — Lidl Milbona skyr is among the cheapest branded options.',
+        ],
+      },
+      {
+        h2: 'Example budget high-protein shopping basket',
+        paragraphs: [
+          'The basket below is an illustrative example — supermarket prices vary and change frequently, so check current shelf prices before shopping. These are typical one-person week staples from a budget UK supermarket.',
+        ],
+        table: {
+          headers: ['Item', 'Approx quantity', 'Example meal prep use'],
+          rows: [
+            ['Chicken breast (frozen)', '1 kg', 'Batch-cook Sunday; use for lunches and dinners'],
+            ['Eggs (12 pack)', '12 eggs', 'Breakfasts, snacks, fried rice, omelettes'],
+            ['Tinned tuna in spring water', '4 × 145 g tins', 'Jacket potatoes, wraps, lunchboxes'],
+            ['0% fat Greek yogurt', '2 × 500 g tubs', 'Breakfast bowls, snacks, protein sauces'],
+            ['Dried red lentils', '500 g bag', 'Dhal, soups, curries — batch batch in bulk'],
+            ['Rolled oats', '1 kg bag', 'Overnight oats, porridge, protein oats'],
+            ['Brown rice', '500 g bag', 'Meal prep base for lunches and dinners'],
+            ['Frozen mixed veg', '1 kg bag', 'Side dishes, stir-fries, rice bowls'],
+          ],
+        },
       },
     ],
     related: [
@@ -672,11 +792,16 @@ export const blogPostsData = {
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Low Calorie Plan', type: 'meal-plan' },
       { slug: 'aldi-cheap-hp-1800', label: 'Cheap High-Protein Meal Plan', type: 'plan' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
+      { slug: 'aldi-high-protein-meal-plan', label: 'Aldi High Protein Meal Plan', type: 'meal-plan' },
+      { slug: 'budget-bodybuilding-meal-plan-uk', label: 'Budget Bodybuilding Meal Plan', type: 'meal-plan' },
+      { slug: 'best-supermarket-for-high-protein-meal-prep-uk', label: 'Best Supermarket for High-Protein Meal Prep', type: 'blog' },
     ],
     faq: [
       { q: 'What is the cheapest high protein food in the UK?', a: 'Tinned sardines (around 55p per tin, ~22g protein) and tinned tuna (65–70p per tin, ~25g protein) offer the best protein per penny in UK supermarkets. Eggs (~22p each), dried red lentils (~75p per 500g), and 0% Greek yogurt (~£1.20 per 500g) follow closely.' },
-      { q: 'Can I hit 150g protein per day for under £3?', a: 'Yes. 3 eggs (19g, ~70p) + 1 tin tuna (25g, 65p) + 200g chicken breast (62g, ~70p) + 200g Greek yogurt (20g, 48p) + skimmed milk in oats (7g, 11p) = ~133g protein for £2.64. Adding a tin of sardines bridges the gap to 150g+ for under £3.20 total.' },
+      { q: 'Can I hit 150g protein per day for under £3?', a: 'Yes. 3 eggs (19g, ~70p) + 1 tin tuna (25g, 65p) + 200g chicken breast (62g, ~70p) + 200g Greek yogurt (20g, 48p) + skimmed milk in oats (7g, 11p) = ~133g protein for £2.64. Adding a tin of sardines bridges the gap to 150g+ for under £3.20 total. Prices vary by supermarket and change regularly — check shelf prices before shopping.' },
       { q: 'Is Aldi or Lidl cheaper for protein foods?', a: 'They are broadly similar. Aldi tends to be slightly cheaper on chicken breast and oats; Lidl is competitive on fish and dairy. Both are significantly cheaper than Tesco, Asda, and Sainsbury\'s for the core protein staples.' },
+      { q: 'What are good vegetarian high-protein foods in UK supermarkets?', a: 'Eggs, 0% Greek yogurt, cottage cheese, dried red lentils, tinned chickpeas, and tofu are all widely available in UK supermarkets and provide solid protein at low cost. Red lentils and chickpeas are particularly good value for vegetarians doing batch cooking.' },
+      { q: 'Are protein bars worth buying on a budget?', a: 'Usually not. Branded protein bars cost 80p–£2 per bar for around 20 g of protein — expensive on a per-gram basis compared to eggs, tuna, or Greek yogurt. For budget eating, those foods deliver more protein for less money and with better nutritional profiles overall.' },
     ],
   },
 
@@ -748,10 +873,42 @@ export const blogPostsData = {
 
   'cheapest-uk-supermarket-meal-prep': {
     published: '2026-05-28',
-    title: 'Cheapest UK Supermarket for Meal Prep (2025 Comparison)',
-    description: 'Which UK supermarket is cheapest for meal prep? Full 2025 comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland on a high-protein weekly shop. Generate your plan.',
-    h1: 'Cheapest UK Supermarket for Meal Prep: Full 2025 Comparison',
-    intro: 'With food prices higher than they have been in years, choosing the right supermarket can save a meal prepper £500 or more annually. This guide compares seven major UK supermarkets — Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland — on a standard high-protein meal prep shop, so you know exactly where your money goes furthest.',
+    modified: '2026-07-05',
+    title: 'Best UK Supermarkets for Meal Prep: Aldi vs Lidl vs Tesco vs Asda',
+    description: 'Best UK supermarkets for meal prep: full comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Iceland and Sainsbury\'s on budget, protein, low-cal and convenience. Links to supermarket-specific meal plans.',
+    h1: 'Best UK Supermarkets for Meal Prep: Aldi vs Lidl vs Tesco vs Asda',
+    intro: 'Choosing the right supermarket can make a meaningful difference to your weekly meal prep budget. This guide compares seven major UK supermarkets — Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland — on a standard high-protein meal prep shop, highlighting which wins on budget, which suits specific goals, and where to find dedicated meal plans for each store.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For Aldi-specific plans: the ' },
+          { label: 'Aldi low calorie meal plan', to: '/meal-plan/aldi-low-calorie-meal-plan' },
+          { text: ' and ' },
+          { label: 'Aldi high protein meal plan', to: '/meal-plan/aldi-high-protein-meal-plan' },
+          { text: ' both use Aldi own-brand products throughout.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For Tesco-specific plans: the ' },
+          { label: 'Tesco low calorie meal plan', to: '/meal-plan/tesco-low-calorie-meal-plan' },
+          { text: ' and ' },
+          { label: 'Tesco 1800 calorie plan', to: '/meal-plan/tesco-1800-calorie-meal-plan' },
+          { text: ' include Clubcard-friendly shopping lists.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For further comparisons: ' },
+          { label: 'Aldi vs Lidl for meal prep', to: '/blog/aldi-vs-lidl-meal-prep' },
+          { text: ', ' },
+          { label: 'best supermarket for high-protein meal prep', to: '/blog/best-supermarket-for-high-protein-meal-prep-uk' },
+          { text: ', and the ' },
+          { label: 'Asda meal prep guide', to: '/blog/asda-meal-prep-uk' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
       {
         h2: 'What We Are Comparing',
@@ -788,8 +945,40 @@ export const blogPostsData = {
         h2: 'The Hybrid Strategy: Maximum Savings',
         paragraphs: [
           'The most cost-effective approach for dedicated meal preppers is to use two supermarkets: Aldi or Lidl for the core staples (chicken, eggs, oats, rice, frozen veg, tinned tuna) and Tesco, Asda, or Morrisons for specific items that the discounters do not stock reliably (fresh salmon, certain vegetables, specialist health foods).',
-          'This hybrid approach typically brings the weekly total to £30–36 — significantly cheaper than a pure Tesco shop and only slightly more than a pure Aldi shop, with the full range of a larger supermarket when needed.',
-          'Use our free meal plan generator to build a complete week of meals around your preferred supermarket. Select Aldi, Lidl, Tesco, Asda, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op or a generic UK supermarket and the generator creates a plan around that shop.',
+          'This hybrid approach typically brings the weekly total closer to the budget end while maintaining the full range of a larger supermarket when needed. Prices vary and change frequently — check current shelf prices before shopping.',
+        ],
+      },
+      {
+        h2: 'UK supermarket comparison by meal prep criteria',
+        paragraphs: [
+          'This table summarises how each supermarket performs across the criteria that matter most for meal prep. Ratings are qualitative and reflect general positioning — individual stores and weekly promotions vary.',
+        ],
+        table: {
+          headers: ['Supermarket', 'Budget staples', 'High-protein range', 'Low-cal options', 'Vegetarian choice', 'Online delivery', 'Best for'],
+          rows: [
+            ['Aldi', 'Excellent', 'Good (core staples)', 'Good', 'Limited but improving', 'Limited (click-and-collect only)', 'Cheapest weekly shop'],
+            ['Lidl', 'Excellent', 'Good (core staples)', 'Good', 'Decent', 'Limited (click-and-collect only)', 'Cheapest weekly shop; slightly better fish range than Aldi'],
+            ['Iceland', 'Very good (frozen)', 'Very good (frozen protein)', 'Good for frozen meals', 'Limited', 'Good in most areas', 'Frozen protein, budget families'],
+            ['Asda', 'Good', 'Good', 'Good (Good For You range)', 'Decent', 'Excellent', 'Big four on a budget, online shopping'],
+            ['Tesco', 'Moderate (Clubcard helps)', 'Excellent', 'Excellent', 'Good', 'Excellent', 'Range, convenience, Clubcard savings'],
+            ['Morrisons', 'Moderate', 'Good', 'Moderate', 'Moderate', 'Good', 'Fresh counters, quality fresh protein'],
+            ['Sainsbury\'s', 'Lower', 'Good', 'Good (Balanced Range)', 'Very good', 'Excellent', 'Variety, quality, Nectar card'],
+          ],
+        },
+      },
+      {
+        h2: 'Meal prep plans by UK supermarket',
+        paragraphs: [
+          'Each link below leads to a structured 7-day meal plan with a shopping list tailored to that store\'s own-brand products and price points.',
+        ],
+        bullets: [
+          'Aldi: Aldi low calorie meal plan, Aldi high protein meal plan, and the Aldi meal plans hub.',
+          'Lidl: Lidl meal prep guide and the Lidl meal plans hub.',
+          'Tesco: Tesco low calorie meal plan and Tesco 1800 calorie plan.',
+          'Asda: Asda meal prep guide.',
+          'Morrisons: Morrisons meal prep guide.',
+          'Sainsbury\'s: Sainsbury\'s meal prep guide.',
+          'Iceland: Iceland budget meal plan (great for frozen protein shopping).',
         ],
       },
     ],
@@ -798,11 +987,16 @@ export const blogPostsData = {
       { slug: 'aldi-weight-loss-1800', label: 'Aldi 1800 kcal Meal Plan', type: 'plan' },
       { slug: 'iceland-weight-loss-1800', label: 'Iceland Budget Meal Plan', type: 'plan' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List', type: 'blog' },
+      { slug: 'aldi-low-calorie-meal-plan', label: 'Aldi Low Calorie Meal Plan', type: 'meal-plan' },
+      { slug: 'aldi-high-protein-meal-plan', label: 'Aldi High Protein Meal Plan', type: 'meal-plan' },
+      { slug: 'best-supermarket-for-high-protein-meal-prep-uk', label: 'Best Supermarket for High-Protein Meal Prep', type: 'blog' },
+      { slug: 'aldi-vs-lidl-meal-prep', label: 'Aldi vs Lidl for Meal Prep', type: 'blog' },
     ],
     faq: [
-      { q: 'Which UK supermarket is cheapest for meal prep in 2026?', a: 'Aldi and Lidl are consistently cheapest, with a standard high-protein weekly basket costing £28–32. Iceland is competitive for frozen proteins. Asda is the best of the big four for budget shopping, followed by Tesco with Clubcard. Sainsbury\'s and Morrisons are typically the most expensive.' },
+      { q: 'Which UK supermarket is cheapest for meal prep?', a: 'Aldi and Lidl are consistently the cheapest, with a standard high-protein weekly basket typically costing significantly less than the big four supermarkets. Iceland is competitive for frozen proteins. Asda is the best of the big four for budget shopping, followed by Tesco with Clubcard. Sainsbury\'s and Morrisons are typically the most expensive. Prices vary and change regularly — check current shelf prices.' },
       { q: 'Is Iceland good for meal prep?', a: 'Yes, especially for frozen protein. Iceland\'s frozen chicken breast, salmon fillets, and prawns are very competitively priced and nutritionally equivalent to fresh. The fresh produce range is limited, but for a protein-heavy meal prep strategy, Iceland is excellent value.' },
-      { q: 'Should I shop at Aldi or Lidl for meal prep?', a: 'Both are excellent. Aldi is marginally cheaper on chicken and oats; Lidl has better fish and dairy availability in many stores. Shopping at whichever is closest to you will produce near-identical results — the price difference between the two is typically under £2 per week on a standard basket.' },
+      { q: 'Should I shop at Aldi or Lidl for meal prep?', a: 'Both are excellent. Aldi tends to be marginally cheaper on chicken and oats; Lidl typically has better fish and dairy availability in many stores. Shopping at whichever is closest to you will produce near-identical results — the price difference between the two is small on a standard basket.' },
+      { q: 'Do I need to shop at multiple supermarkets?', a: 'Not necessarily. A pure Aldi or Lidl shop covers most meal prep staples well. The hybrid strategy (discounters for core staples, a larger supermarket for fresh salmon or specialist items) saves a little more, but only makes sense if you pass both on your regular route.' },
     ],
   },
 
@@ -2278,6 +2472,26 @@ export const blogPostsData = {
     description: 'Asda meal prep UK — best own-brand protein, frozen veg, and staples for calorie-controlled eating. Prices, calorie counts, and a weekly plan. Generate a free Asda meal plan.',
     h1: 'Asda Meal Prep UK: Best Products and Budget Weekly Plan',
     intro: "Asda is one of the UK's best value supermarkets for meal prep, competing closely with Aldi and Lidl on everyday staples while offering a broader range and a full online delivery service. The Asda own-brand range is consistently well-priced on the core meal prep foods — chicken, eggs, oats, frozen vegetables, and tinned fish — making it an excellent choice for budget-conscious meal preppers who want more flexibility than the discount supermarkets offer.",
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For a structured Asda week, see the ' },
+          { label: 'Asda 1500 calorie meal plan', to: '/meal-plan/asda-1500-calorie-meal-plan' },
+          { text: ' or browse the full ' },
+          { label: 'Asda meal plans hub', to: '/meal-plans/asda' },
+          { text: '.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For a supermarket comparison, see ' },
+          { label: 'Best UK Supermarkets for Meal Prep', to: '/blog/cheapest-uk-supermarket-meal-prep' },
+          { text: ' or the ' },
+          { label: 'Aldi vs Tesco guide', to: '/blog/aldi-vs-tesco-meal-prep' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
       {
         h2: "Why Asda is a Strong Choice for Meal Prep",
@@ -2459,7 +2673,14 @@ export const blogPostsData = {
     contextualLinks: [
       {
         parts: [
-          { text: 'For product comparisons, see the new ' },
+          { text: 'For specific product picks, see the ' },
+          { label: 'best meal prep containers UK buying guide', to: '/blog/best-meal-prep-containers-uk' },
+          { text: ' — leakproof, dishwasher-safe and freezer-safe sets compared.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For tier-by-tier comparisons, see the ' },
           { label: 'best meal prep containers hub', to: '/meal-prep-containers' },
           { text: ', then compare ' },
           { label: 'budget meal prep containers', to: '/meal-prep-containers/budget' },

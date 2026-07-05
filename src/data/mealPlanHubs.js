@@ -872,9 +872,9 @@ export const MEAL_PLAN_HUBS = {
   'printable-meal-plans': {
     slug: 'printable-meal-plans',
     path: '/meal-plans/printable-meal-plans',
-    title: 'Printable Meal Plans UK - Free PDF Weekly Plans',
+    title: 'Printable Meal Plans UK: Free 7-Day PDF Plans with Shopping Lists',
     description:
-      'Find printable UK meal plans with PDF export, 7-day menus, macros, recipes and weekly shopping lists for weight loss, protein and budget goals.',
+      'Free printable UK meal plans: 7-day PDF summaries, weekly shopping lists, macros and recipes for weight loss, high protein and budget goals. Print or save as PDF.',
     h1: 'Printable Meal Plans UK',
     kicker: 'PDF meal plan hub',
     intro:

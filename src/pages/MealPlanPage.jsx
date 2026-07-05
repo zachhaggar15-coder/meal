@@ -346,6 +346,31 @@ export default function MealPlanPage() {
         <h2>Why Choose a {data.planLabel} Meal Plan?</h2>
         <p>{data.whyThisPlan}</p>
 
+        {data.suitability && (
+          <section className="plan-suitability" aria-label="Who this plan is for">
+            <h2>Who This {data.planLabel} Meal Plan Is For</h2>
+            {data.suitability.forWho?.length > 0 && (
+              <>
+                <h3>A good fit if you are</h3>
+                <ul className="content-bullets">
+                  {data.suitability.forWho.map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+              </>
+            )}
+            {data.suitability.notForWho?.length > 0 && (
+              <>
+                <h3>Probably not the right plan if you are</h3>
+                <ul className="content-bullets">
+                  {data.suitability.notForWho.map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+              </>
+            )}
+            {data.suitability.disclaimer && (
+              <p className="plan-disclaimer"><strong>Important:</strong> {data.suitability.disclaimer}</p>
+            )}
+          </section>
+        )}
+
         <ContextualLinks blocks={data.contextualLinks} />
 
         <LegacyPlanFamilyBox family={planFamily} />

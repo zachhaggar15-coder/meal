@@ -94,10 +94,10 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
   },
   {
     title: 'Supermarket Meal Prep',
-    intro: "Early long-tail rankings around Lidl, Aldi, Tesco and Sainsbury's should point into named-store hubs.",
+    intro: 'Compare UK supermarkets for meal prep, or go straight to named-store meal plans and guides.',
     links: [
+      { to: '/blog/cheapest-uk-supermarket-meal-prep', label: 'Best UK Supermarkets for Meal Prep' },
       { to: '/blog/lidl-meal-prep-uk', label: 'Lidl Meal Prep UK' },
-      { to: '/blog/sainsburys-meal-prep-uk', label: "Sainsbury's Meal Prep UK" },
       { to: '/meal-plans/aldi', label: 'Aldi Meal Plans' },
       { to: '/meal-plans/tesco', label: 'Tesco Meal Plans' },
     ],

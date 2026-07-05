@@ -98,12 +98,12 @@ const FEATURED_CATEGORIES = [
   {
     heading: 'By Supermarket',
     plans: [
-      { slug: 'tesco-weight-loss-1800',   label: 'Tesco Weight Loss 1,800 kcal' },
-      { slug: 'aldi-weight-loss-1800',    label: 'Aldi Weight Loss 1,800 kcal' },
-      { slug: 'lidl-budget-fat-loss-1500',label: 'Lidl Budget Fat Loss' },
-      { slug: 'asda-muscle-gain-2000',    label: 'Asda Muscle Gain 2,000 kcal' },
-      { slug: 'sainsburys-weight-loss-1800', label: "Sainsbury's 1,800 kcal" },
-      { slug: 'iceland-budget-fat-loss-1500', label: 'Iceland Budget Fat Loss' },
+      { slug: 'tesco-low-calorie',    label: 'Tesco Low Calorie Meal Plan',    path: '/meal-plan/tesco-low-calorie-meal-plan' },
+      { slug: 'aldi-low-calorie',     label: 'Aldi Low Calorie Meal Plan',     path: '/meal-plan/aldi-low-calorie-meal-plan' },
+      { slug: 'aldi-high-protein',    label: 'Aldi High Protein Meal Plan',    path: '/meal-plan/aldi-high-protein-meal-plan' },
+      { slug: 'lidl-meal-plans',      label: 'Lidl Meal Plans',                path: '/meal-plans/lidl' },
+      { slug: 'asda-meal-prep',       label: 'Asda Meal Prep Guide',           path: '/blog/asda-meal-prep-uk' },
+      { slug: 'iceland-meal-plans',   label: 'Iceland Meal Plans',             path: '/meal-plans/iceland' },
     ],
   },
   {
@@ -259,8 +259,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title={`Generate a Weekly UK Meal Plan - ${PLAN_COUNT} Plans + Shopping Lists | MealPrep.org.uk`}
-        description="Generate a weekly meal plan using UK supermarket ingredients, with 11 UK supermarket options, calories, PDFs and shopping lists."
+        title={`UK Meal Prep Plans by Supermarket, Calorie & Goal | MealPrep.org.uk`}
+        description={`Browse ${PLAN_COUNT} free UK meal prep plans by supermarket, calorie target and goal — with 7-day menus, shopping lists, macros and PDF export. Aldi, Tesco, Lidl, Asda and more.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -293,6 +293,29 @@ export default function Home() {
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>
 
+        {/* ── Browse by calorie target ─────────────────────────────────── */}
+        <section className="calorie-nav-section">
+          <h2 className="section-title">Browse by calorie target</h2>
+          <div className="calorie-nav-links">
+            <Link to="/meal-plan/1500-calorie-meal-plan" className="calorie-nav-card">
+              <strong>1,500 kcal</strong>
+              <span>Fat loss — most popular target</span>
+            </Link>
+            <Link to="/meal-plan/1800-calorie-meal-plan" className="calorie-nav-card">
+              <strong>1,800 kcal</strong>
+              <span>Moderate deficit — active adults</span>
+            </Link>
+            <Link to="/meal-plan/2000-calorie-meal-plan" className="calorie-nav-card">
+              <strong>2,000 kcal</strong>
+              <span>Maintenance or light deficit</span>
+            </Link>
+            <Link to="/meal-plan/2500-calorie-meal-plan" className="calorie-nav-card">
+              <strong>2,500 kcal</strong>
+              <span>Muscle gain and bulking</span>
+            </Link>
+          </div>
+        </section>
+
         <PopularSearches
           title="Popular UK Meal Plan Searches"
           intro="Start with the highest-demand guides, then jump into a printable plan or shopping list."
@@ -300,10 +323,9 @@ export default function Home() {
         />
 
         <SearchOpportunityLinks
-          title="Most Requested UK Meal Prep Guides"
-          intro="Quick routes into the pages Search Console is already surfacing: containers, 1500 calorie plans, low-calorie foods, cheap protein and named-supermarket meal prep."
+          title="Essential UK Meal Prep Guides"
+          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein and supermarket comparisons."
           showDiscovery={false}
-          compact
         />
 
         {/* ── How it works ─────────────────────────────────────────────────── */}
@@ -347,7 +369,7 @@ export default function Home() {
                 {cat.plans.map(p => {
                   const cardVisual = chooseFeaturedPlanVisual(cat.heading, p);
                   return (
-                    <Link key={p.slug} to={`/plans/${p.slug}`} className="featured-plan-link">
+                    <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="featured-plan-link">
                       <img
                         src={cardVisual.src}
                         alt=""

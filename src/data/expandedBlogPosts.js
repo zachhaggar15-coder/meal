@@ -2234,6 +2234,35 @@ export const expandedBlogPostsData = {
     description: 'Compare Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S, Co-op and generic UK supermarket plans for high protein meal prep.',
     h1: 'Best Supermarket for High Protein Meal Prep UK',
     intro: 'The best supermarket for high protein meal prep depends on whether you care most about price, variety, convenience or freezer backup. A good high-protein shop starts with repeatable protein sources, then adds carbs, vegetables and sauces you will actually eat.',
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'For a structured high-protein week: the ' },
+          { label: 'Aldi high protein meal plan', to: '/meal-plan/aldi-high-protein-meal-plan' },
+          { text: ' and the ' },
+          { label: 'Tesco high protein meal plan', to: '/meal-plan/tesco-high-protein-meal-plan' },
+          { text: ' both include shopping lists and calorie targets.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For budget-focused muscle gain, see the ' },
+          { label: 'budget bodybuilding meal plan', to: '/meal-plan/budget-bodybuilding-meal-plan-uk' },
+          { text: '. For a full supermarket comparison, see ' },
+          { label: 'Best UK Supermarkets for Meal Prep', to: '/blog/cheapest-uk-supermarket-meal-prep' },
+          { text: '.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For food-level guidance, see ' },
+          { label: 'best cheap high-protein foods UK', to: '/blog/best-cheap-high-protein-foods-uk' },
+          { text: ' or browse the ' },
+          { label: 'high protein meal plans hub', to: '/meal-plans/high-protein' },
+          { text: '.' },
+        ],
+      },
+    ],
     sections: [
       {
         h2: 'Best supermarket by use case',
