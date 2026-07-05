@@ -2663,7 +2663,7 @@ export const blogPostsData = {
   'meal-prep-containers-uk': {
     published: '2026-05-30',
     modified: '2026-06-23',
-    title: 'Meal Prep Containers UK 2026: Glass vs Plastic, Sizes and Starter Sets',
+    title: 'Meal Prep Containers UK: Glass vs Plastic, Sizes and Starter Sets',
     description: 'Best meal prep containers UK 2025 — glass vs plastic, what size to buy, which brands are worth it, and where to get them cheap. Full guide for UK meal preppers.',
     h1: 'Meal Prep Containers UK: Glass vs Plastic, Sizes and Starter Sets',
     description: 'Meal prep containers UK guide: compare glass vs plastic, container sizes, starter sets, budget tubs, glass boxes and premium meal prep storage.',
