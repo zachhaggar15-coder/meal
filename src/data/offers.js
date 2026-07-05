@@ -14,6 +14,22 @@ export const MEAL_PREP_STICKERS = {
   disclosure: 'As an Amazon Associate I earn from qualifying purchases. #ad',
 };
 
+export const MID_RANGE_CONTAINERS = {
+  name: 'Harbour Housewares Glass Meal Prep Containers',
+  shortName: 'Glass containers',
+  href: 'https://www.amazon.co.uk/Harbour-Housewares-Glass-Containers-Airtight/dp/B0DXQ8WSRP?tag=amazonaff01d8-21&linkCode=ll2',
+  internalPath: '/meal-prep-containers/mid-range',
+  image: '/meal-containers-ad.jpg',
+  imageAlt: 'Harbour Housewares glass meal prep containers with airtight lids',
+  headline: 'Glass meal prep containers for weekday lunches',
+  body: 'A 5-pack of glass meal prep containers with airtight lids — stain-resistant bases, rectangular shape that stacks neatly in the fridge, and microwave-safe glass. The most practical upgrade from plastic for regular meal preppers.',
+  proofPoints: ['Stain-resistant glass', 'Airtight lids', '5-pack for the week'],
+  cta: 'View on Amazon',
+  eventName: 'mid_range_container_product_click',
+  promoEventName: 'mid_range_container_promo_click',
+  disclosure: 'As an Amazon Associate I earn from qualifying purchases. #ad',
+};
+
 export const BUDGET_CONTAINERS = {
   name: 'Vinsani 3 Compartment Meal Prep Containers',
   shortName: 'Budget containers',

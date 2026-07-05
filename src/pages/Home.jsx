@@ -11,7 +11,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
-import { MEAL_PREP_STICKERS } from '../data/offers.js';
+import { MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 
@@ -372,7 +372,7 @@ export default function Home() {
         </section>
 
         {/* ── Affiliate promo ───────────────────────────────────────────────── */}
-        <StickerPromo offer={MEAL_PREP_STICKERS} />
+        <StickerPromo offer={MID_RANGE_CONTAINERS} />
 
         {/* ── FAQ ──────────────────────────────────────────────────────────── */}
         <section className="home-faq">

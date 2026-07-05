@@ -13,7 +13,7 @@ import {
   SEO_OPPORTUNITY_QUICK_ANSWERS,
 } from '../data/seoOpportunityPages.js';
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
-import { BUDGET_CONTAINERS } from '../data/offers.js';
+import { BUDGET_CONTAINERS, MID_RANGE_CONTAINERS, MEAL_PREP_STICKERS } from '../data/offers.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -176,7 +176,10 @@ export default function BlogPost() {
 
           <PopularGuides slug={slug} post={data} />
 
-          <StickerPromo offer={BUDGET_CONTAINERS} sourcePage={`blog-${slug}-body`} />
+          <StickerPromo
+            offer={data.offer === 'premium' ? MEAL_PREP_STICKERS : data.offer === 'mid-range' || data.affiliateDisclosure ? MID_RANGE_CONTAINERS : BUDGET_CONTAINERS}
+            sourcePage={`blog-${slug}-body`}
+          />
 
           <div className="cta-box cta-box--large">
             <h2>Generate Your Free UK Meal Plan</h2>

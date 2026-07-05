@@ -180,8 +180,8 @@ export const CONTAINER_PRODUCTS = {
     watchOut: 'Some branded glass sets are better for leftovers than identical meal-prep portions.',
   },
   'joyjolt-glass-storage': {
-    name: '[5-Pack] Food Prep & Storage Glass Containers with Lids',
-    shortName: '5-pack glass set',
+    name: 'Borosilicate Glass Food Storage Containers with Clip Lids (5 Pack)',
+    shortName: '5-pack borosilicate set',
     asin: 'B06Y31WGWR',
     priceBand: 'Mid range: \u00a315-\u00a330 target',
     material: 'Borosilicate glass',
@@ -199,7 +199,7 @@ export const CONTAINER_PRODUCTS = {
     watchOut: 'Five packs are less flexible if you also prep breakfasts and snacks.',
   },
   'pyrex-cook-and-go': {
-    name: '[5-Pack] Food Prep & Storage Glass Containers with Lids',
+    name: 'Glass Meal Prep & Food Storage Containers with Lids (5 Pack)',
     shortName: '5-pack glass prep set',
     asin: 'B07JK1LGHQ',
     priceBand: 'Mid range: \u00a315-\u00a330 target',
@@ -298,7 +298,7 @@ export const CONTAINER_PRODUCTS = {
     shortName: 'Rubbermaid Brilliance',
     asin: 'B08B7GLYZC',
     priceBand: 'Premium: \u00a330+ target',
-    material: 'Plastic',
+    material: 'Premium plastic (leak-focused)',
     bestFor: 'Leak-resistant premium leftovers and meal prep',
     href: amazonProductUrl('Rubbermaid-Brilliance-Storage-Container-Set', 'B08B7GLYZC'),
     image: 'https://m.media-amazon.com/images/I/81T0-lmYxPL._AC_SL1500_.jpg',

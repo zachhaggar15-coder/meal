@@ -50,14 +50,6 @@ export default function AffiliateProductGrid({
                   <dt>Set format</dt>
                   <dd>{product.setSize}</dd>
                 </div>
-                <div>
-                  <dt>Layout</dt>
-                  <dd>{product.layout}</dd>
-                </div>
-                <div>
-                  <dt>Storage fit</dt>
-                  <dd>{product.storageFit}</dd>
-                </div>
               </dl>
               <div className="affiliate-product-fit">
                 <p><strong>Buy if:</strong> {product.buyIf}</p>
@@ -66,6 +58,16 @@ export default function AffiliateProductGrid({
               <details className="affiliate-product-details">
                 <summary>Pros, cons and key features</summary>
                 <div className="affiliate-product-detail-body">
+                  <dl className="affiliate-product-facts affiliate-product-detail-facts">
+                    <div>
+                      <dt>Layout</dt>
+                      <dd>{product.layout}</dd>
+                    </div>
+                    <div>
+                      <dt>Storage fit</dt>
+                      <dd>{product.storageFit}</dd>
+                    </div>
+                  </dl>
                   <div className="affiliate-pro-con-grid">
                     <div>
                       <strong>Pros</strong>
@@ -95,7 +97,7 @@ export default function AffiliateProductGrid({
                 data-source-page={sourcePage}
                 data-offer={product.name}
               >
-                Check on Amazon UK
+                See price on Amazon UK
               </a>
             </div>
           </article>

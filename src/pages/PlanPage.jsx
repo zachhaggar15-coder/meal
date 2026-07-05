@@ -7,6 +7,8 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
+import StickerPromo from '../components/StickerPromo.jsx';
+import { MEAL_PREP_STICKERS, BUDGET_CONTAINERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -471,6 +473,12 @@ export default function PlanPage() {
           {shoppingCopyStatus || 'Copy shopping list'}
         </button>
       </div>
+      <p className="plan-shopping-container-note">
+        Need containers for this batch?{' '}
+        <Link to={plan.budget === 'very-cheap' || plan.budget === 'budget' ? '/meal-prep-containers/budget' : '/meal-prep-containers/mid-range'}>
+          Compare meal prep containers →
+        </Link>
+      </p>
       <p className="plan-shopping-note">
         Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
         {displayPlan.household?.hasMixedPortions
@@ -1181,31 +1189,8 @@ function getEffortAssumption(effort) {
 
 function PlanContainerLinks({ plan }) {
   const isBudget = plan.budget === 'very-cheap' || plan.budget === 'budget';
-  const primary = isBudget ? '/meal-prep-containers/budget' : '/meal-prep-containers/mid-range';
-  const primaryLabel = isBudget ? 'Budget meal prep containers' : 'Glass meal prep containers';
-
-  return (
-    <section className="plan-container-links" aria-labelledby="plan-container-links-heading">
-      <div>
-        <h2 id="plan-container-links-heading">{toTitleCase('Containers for this meal prep plan')}</h2>
-        <p>
-          Batch cooking this week? Compare meal prep boxes, tubs and glass containers before you portion
-          the shopping list into lunches and dinners.
-        </p>
-      </div>
-      <div className="plan-container-link-list">
-        <Link to="/meal-prep-containers">{toTitleCase('Best meal prep containers')}</Link>
-        <Link to={primary}>{toTitleCase(primaryLabel)}</Link>
-        {primary !== '/meal-prep-containers/budget' && (
-          <Link to="/meal-prep-containers/budget">{toTitleCase('Budget plastic tubs')}</Link>
-        )}
-        {primary !== '/meal-prep-containers/mid-range' && (
-          <Link to="/meal-prep-containers/mid-range">{toTitleCase('Mid-range glass boxes')}</Link>
-        )}
-        <Link to="/meal-prep-containers/premium">{toTitleCase('Premium storage sets')}</Link>
-      </div>
-    </section>
-  );
+  const offer = isBudget ? BUDGET_CONTAINERS : MEAL_PREP_STICKERS;
+  return <StickerPromo offer={offer} sourcePage={`plan-${plan.slug || 'page'}-containers`} />;
 }
 
 function PrintablePlanSummary({ plan, marketLabel }) {
