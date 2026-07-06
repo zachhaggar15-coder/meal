@@ -214,114 +214,94 @@ const BASE_SHOPPING = {
   },
 };
 
-const PLAN_1500 = [
+export const PLAN_1500 = [
   { day: 'Monday', meals: [
     { type: 'Breakfast', name: 'Overnight Oats with Berries', kcal: 340, protein: 14, prep: '5 min', desc: 'Rolled oats soaked overnight in skimmed milk, topped with frozen berries and a drizzle of honey.', portion_size: '60g oats, 200ml skimmed milk, 80g frozen berries, 1 tsp honey' },
-    { type: 'Lunch', name: 'Tuna & Sweetcorn Jacket Potato', kcal: 420, protein: 35, prep: '10 min', desc: 'Medium baked potato topped with tinned tuna mixed with sweetcorn and a teaspoon of light mayo.', portion_size: '200g baked potato, 100g tinned tuna, 50g sweetcorn' },
-    { type: 'Dinner', name: 'Grilled Chicken with Roasted Mediterranean Veg', kcal: 540, protein: 48, prep: '25 min', desc: 'Chicken breast grilled with courgette, peppers, and cherry tomatoes, served with a small portion of brown rice.', portion_size: '150g chicken breast, 40g brown rice (dry), 200g mixed veg' },
-    { type: 'Snack', name: 'Greek Yogurt with Blueberries', kcal: 200, protein: 15, prep: '2 min', desc: 'Low-fat Greek yogurt topped with fresh or frozen blueberries.', portion_size: '200g Greek yogurt, 80g blueberries' },
-  ], totals: { kcal: 1500, protein: 112 } },
+    { type: 'Lunch', name: 'Tuna & Sweetcorn Jacket Potato', kcal: 345, protein: 32, prep: '10 min', desc: 'Medium baked potato topped with tinned tuna mixed with sweetcorn and a teaspoon of light mayo.', portion_size: '200g baked potato, 100g tinned tuna, 50g sweetcorn' },
+    { type: 'Dinner', name: 'Grilled Chicken with Roasted Mediterranean Veg', kcal: 405, protein: 41, prep: '25 min', desc: 'Chicken breast grilled with courgette, peppers, and cherry tomatoes, served with a small portion of brown rice.', portion_size: '150g chicken breast, 40g brown rice (dry), 200g mixed veg' },
+    { type: 'Snack', name: 'Greek Yogurt with Blueberries', kcal: 180, protein: 21, prep: '2 min', desc: 'Low-fat Greek yogurt topped with fresh or frozen blueberries.', portion_size: '200g Greek yogurt, 80g blueberries' },
+  ], totals: { kcal: 1270, protein: 108 } },
   { day: 'Tuesday', meals: [
-    { type: 'Breakfast', name: 'Scrambled Eggs on Wholemeal Toast', kcal: 350, protein: 22, prep: '10 min', desc: 'Two eggs scrambled with a handful of spinach, served on a slice of wholemeal toast.', portion_size: '2 eggs, 1 slice wholemeal toast (35g), 40g spinach' },
-    { type: 'Lunch', name: 'Homemade Lentil Soup', kcal: 380, protein: 18, prep: '30 min', desc: 'Red lentil and carrot soup seasoned with cumin and coriander, served with a small wholemeal roll.', portion_size: '80g red lentils (dry), 100g carrots, 1 small roll (60g)' },
-    { type: 'Dinner', name: 'Baked Salmon with Broccoli & New Potatoes', kcal: 570, protein: 45, prep: '20 min', desc: 'Salmon fillet baked with lemon and dill, served with steamed broccoli and boiled new potatoes.', portion_size: '150g salmon fillet, 150g new potatoes, 150g broccoli' },
+    { type: 'Breakfast', name: 'Scrambled Eggs on Wholemeal Toast', kcal: 256, protein: 19, prep: '10 min', desc: 'Two eggs scrambled with a handful of spinach, served on a slice of wholemeal toast.', portion_size: '2 eggs, 1 slice wholemeal toast (35g), 40g spinach' },
+    { type: 'Lunch', name: 'Homemade Lentil Soup', kcal: 447, protein: 26, prep: '30 min', desc: 'Red lentil and carrot soup seasoned with cumin and coriander, served with a small wholemeal roll.', portion_size: '80g red lentils (dry), 100g carrots, 1 small roll (60g)' },
+    { type: 'Dinner', name: 'Baked Salmon with Broccoli & New Potatoes', kcal: 440, protein: 37, prep: '20 min', desc: 'Salmon fillet baked with lemon and dill, served with steamed broccoli and boiled new potatoes.', portion_size: '150g salmon fillet, 150g new potatoes, 150g broccoli' },
     { type: 'Snack', name: 'Apple & Almonds', kcal: 200, protein: 5, prep: '1 min', desc: 'One medium apple and 20 g of unsalted almonds.', portion_size: '1 apple (150g), 20g almonds' },
-  ], totals: { kcal: 1500, protein: 90 } },
+  ], totals: { kcal: 1343, protein: 87 } },
   { day: 'Wednesday', meals: [
     { type: 'Breakfast', name: 'Banana & Oat Smoothie', kcal: 370, protein: 14, prep: '5 min', desc: 'Blended banana, 50 g oats, skimmed milk, and a teaspoon of peanut butter.', portion_size: '1 banana, 50g oats, 200ml skimmed milk, 1 tsp peanut butter' },
-    { type: 'Lunch', name: 'Grilled Chicken Caesar Salad', kcal: 400, protein: 40, prep: '10 min', desc: 'Chicken breast strips over romaine lettuce with a light Caesar dressing and Parmesan shavings. No croutons.', portion_size: '120g chicken breast, 80g romaine lettuce, 20ml light dressing' },
-    { type: 'Dinner', name: 'Turkey Mince Chilli with Brown Rice', kcal: 530, protein: 42, prep: '25 min', desc: 'Lean turkey mince cooked with tinned tomatoes, kidney beans, and chilli spices. Served with brown rice.', portion_size: '150g turkey mince, 40g brown rice (dry), 80g kidney beans' },
-    { type: 'Snack', name: 'Carrot Sticks & Hummus', kcal: 200, protein: 6, prep: '2 min', desc: '100 g carrot sticks with 40 g reduced-fat hummus.', portion_size: '100g carrot sticks, 40g hummus' },
-  ], totals: { kcal: 1500, protein: 102 } },
+    { type: 'Lunch', name: 'Grilled Chicken Caesar Salad', kcal: 166, protein: 28, prep: '10 min', desc: 'Chicken breast strips over romaine lettuce with a light Caesar dressing and Parmesan shavings. No croutons.', portion_size: '120g chicken breast, 80g romaine lettuce, 20ml light dressing' },
+    { type: 'Dinner', name: 'Turkey Mince Chilli with Brown Rice', kcal: 405, protein: 40, prep: '25 min', desc: 'Lean turkey mince cooked with tinned tomatoes, kidney beans, and chilli spices. Served with brown rice.', portion_size: '150g turkey mince, 40g brown rice (dry), 80g kidney beans' },
+    { type: 'Snack', name: 'Carrot Sticks & Hummus', kcal: 107, protein: 4, prep: '2 min', desc: '100 g carrot sticks with 40 g reduced-fat hummus.', portion_size: '100g carrot sticks, 40g hummus' },
+  ], totals: { kcal: 1048, protein: 86 } },
   { day: 'Thursday', meals: [
     { type: 'Breakfast', name: 'Porridge with Walnuts & Cinnamon', kcal: 350, protein: 12, prep: '5 min', desc: '50 g oats cooked with skimmed milk, topped with 15 g crushed walnuts and a sprinkle of cinnamon.', portion_size: '50g oats, 250ml skimmed milk, 15g walnuts' },
-    { type: 'Lunch', name: 'Prawn & Avocado Salad', kcal: 390, protein: 28, prep: '10 min', desc: 'King prawns tossed with mixed leaves, half an avocado, cucumber, and lemon dressing.', portion_size: '120g king prawns, ½ avocado (60g), 80g mixed leaves, 100g cucumber' },
-    { type: 'Dinner', name: 'Chicken Tikka with Cauliflower Rice', kcal: 560, protein: 50, prep: '25 min', desc: 'Marinated chicken tikka baked and served over blitzed cauliflower rice with a side of raita.', portion_size: '150g chicken breast, 200g cauliflower rice, 50g raita' },
-    { type: 'Snack', name: 'Low-Fat Cottage Cheese with Cucumber', kcal: 200, protein: 20, prep: '2 min', desc: '150 g cottage cheese with sliced cucumber and a grind of black pepper.', portion_size: '150g cottage cheese, 100g cucumber' },
-  ], totals: { kcal: 1500, protein: 110 } },
+    { type: 'Lunch', name: 'Prawn & Avocado Salad', kcal: 205, protein: 23, prep: '10 min', desc: 'King prawns tossed with mixed leaves, half an avocado, cucumber, and lemon dressing.', portion_size: '120g king prawns, ½ avocado (60g), 80g mixed leaves, 100g cucumber' },
+    { type: 'Dinner', name: 'Chicken Tikka with Cauliflower Rice', kcal: 260, protein: 39, prep: '25 min', desc: 'Marinated chicken tikka baked and served over blitzed cauliflower rice with a side of raita.', portion_size: '150g chicken breast, 200g cauliflower rice, 50g raita' },
+    { type: 'Snack', name: 'Low-Fat Cottage Cheese with Cucumber', kcal: 159, protein: 19, prep: '2 min', desc: '150 g cottage cheese with sliced cucumber and a grind of black pepper.', portion_size: '150g cottage cheese, 100g cucumber' },
+  ], totals: { kcal: 974, protein: 93 } },
   { day: 'Friday', meals: [
-    { type: 'Breakfast', name: 'Poached Eggs & Smoked Salmon on Toast', kcal: 400, protein: 32, prep: '10 min', desc: 'Two poached eggs and 50 g smoked salmon on a slice of wholemeal toast.', portion_size: '2 eggs, 50g smoked salmon, 1 slice wholemeal toast (35g)' },
-    { type: 'Lunch', name: 'Chicken & Vegetable Soup', kcal: 350, protein: 28, prep: '25 min', desc: 'Diced chicken breast simmered with carrots, celery, and leek in a light chicken stock.', portion_size: '120g chicken breast, 80g carrots, 50g celery, 50g leek' },
-    { type: 'Dinner', name: 'Baked Cod with Sweet Potato Wedges', kcal: 550, protein: 40, prep: '25 min', desc: 'Cod fillet baked with herbs and lemon, served with oven-roasted sweet potato wedges and green beans.', portion_size: '150g cod fillet, 150g sweet potato, 100g green beans' },
-    { type: 'Snack', name: 'Protein Yogurt', kcal: 200, protein: 20, prep: '1 min', desc: 'High-protein low-fat yogurt pot (e.g. Arla Protein or Tesco High Protein Yogurt).', portion_size: '1 high-protein yogurt pot (150g)' },
-  ], totals: { kcal: 1500, protein: 120 } },
+    { type: 'Breakfast', name: 'Poached Eggs & Smoked Salmon on Toast', kcal: 311, protein: 30, prep: '10 min', desc: 'Two poached eggs and 50 g smoked salmon on a slice of wholemeal toast.', portion_size: '2 eggs, 50g smoked salmon, 1 slice wholemeal toast (35g)' },
+    { type: 'Lunch', name: 'Chicken & Vegetable Soup', kcal: 196, protein: 29, prep: '25 min', desc: 'Diced chicken breast simmered with carrots, celery, and leek in a light chicken stock.', portion_size: '120g chicken breast, 80g carrots, 50g celery, 50g leek' },
+    { type: 'Dinner', name: 'Baked Cod with Sweet Potato Wedges', kcal: 283, protein: 31, prep: '25 min', desc: 'Cod fillet baked with herbs and lemon, served with oven-roasted sweet potato wedges and green beans.', portion_size: '150g cod fillet, 150g sweet potato, 100g green beans' },
+    { type: 'Snack', name: 'Protein Yogurt', kcal: 113, protein: 23, prep: '1 min', desc: 'High-protein low-fat yogurt pot (e.g. Arla Protein or Tesco High Protein Yogurt).', portion_size: '1 high-protein yogurt pot (150g)' },
+  ], totals: { kcal: 903, protein: 113 } },
   { day: 'Saturday', meals: [
-    { type: 'Breakfast', name: 'Wholemeal Pancakes with Berries', kcal: 380, protein: 18, prep: '15 min', desc: 'Two small wholemeal pancakes made with egg and oat flour, topped with berries and low-fat yogurt.', portion_size: '80g pancake batter (2 pancakes), 80g berries, 50g low-fat yogurt' },
-    { type: 'Lunch', name: 'Turkey & Avocado Wholemeal Wrap', kcal: 400, protein: 32, prep: '5 min', desc: 'Sliced turkey breast, half an avocado, spinach, and tomato in a wholemeal tortilla wrap.', portion_size: '100g turkey breast, ½ avocado (60g), 1 wholemeal wrap (60g)' },
-    { type: 'Dinner', name: 'Grilled Lean Beef Steak with Roasted Veg', kcal: 520, protein: 48, prep: '15 min', desc: 'Lean sirloin steak grilled to your liking, with roasted courgette, peppers, and cherry tomatoes.', portion_size: '150g lean sirloin steak, 200g roasted veg' },
-    { type: 'Snack', name: 'Rice Cakes with Peanut Butter', kcal: 200, protein: 8, prep: '2 min', desc: 'Two plain rice cakes spread with natural peanut butter.', portion_size: '2 rice cakes (20g), 1 tbsp peanut butter (15g)' },
-  ], totals: { kcal: 1500, protein: 106 } },
+    { type: 'Breakfast', name: 'Wholemeal Pancakes with Berries', kcal: 222, protein: 9, prep: '15 min', desc: 'Two small wholemeal pancakes made with egg and oat flour, topped with berries and low-fat yogurt.', portion_size: '80g pancake batter (2 pancakes), 80g berries, 50g low-fat yogurt' },
+    { type: 'Lunch', name: 'Turkey & Avocado Wholemeal Wrap', kcal: 356, protein: 28, prep: '5 min', desc: 'Sliced turkey breast, half an avocado, spinach, and tomato in a wholemeal tortilla wrap.', portion_size: '100g turkey breast, ½ avocado (60g), 1 wholemeal wrap (60g)' },
+    { type: 'Dinner', name: 'Grilled Lean Beef Steak with Roasted Veg', kcal: 305, protein: 37, prep: '15 min', desc: 'Lean sirloin steak grilled to your liking, with roasted courgette, peppers, and cherry tomatoes.', portion_size: '150g lean sirloin steak, 200g roasted veg' },
+    { type: 'Snack', name: 'Rice Cakes with Peanut Butter', kcal: 166, protein: 5, prep: '2 min', desc: 'Two plain rice cakes spread with natural peanut butter.', portion_size: '2 rice cakes (20g), 1 tbsp peanut butter (15g)' },
+  ], totals: { kcal: 1049, protein: 79 } },
   { day: 'Sunday', meals: [
-    { type: 'Breakfast', name: 'Healthy Full English', kcal: 420, protein: 30, prep: '15 min', desc: 'One egg (grilled or poached), two lean bacon rashers (fat trimmed), grilled tomatoes, mushrooms, and one slice of wholemeal toast.', portion_size: '1 egg, 2 lean bacon rashers (60g), 100g tomatoes, 50g mushrooms, 1 slice toast' },
-    { type: 'Lunch', name: 'Leftover Steak Salad', kcal: 300, protein: 28, prep: '5 min', desc: 'Sliced leftover steak over mixed leaves with cherry tomatoes and a balsamic dressing.', portion_size: '100g sliced steak, 80g mixed leaves, 100g cherry tomatoes' },
-    { type: 'Dinner', name: 'Roast Chicken Breast with Root Veg', kcal: 580, protein: 52, prep: '45 min', desc: 'Roast chicken breast with parsnips, carrots, and a small portion of gravy. A proper Sunday roast, lighter style.', portion_size: '175g chicken breast, 100g parsnips, 100g carrots' },
+    { type: 'Breakfast', name: 'Healthy Full English', kcal: 282, protein: 28, prep: '15 min', desc: 'One egg (grilled or poached), two lean bacon rashers (fat trimmed), grilled tomatoes, mushrooms, and one slice of wholemeal toast.', portion_size: '1 egg, 2 lean bacon rashers (60g), 100g tomatoes, 50g mushrooms, 1 slice toast' },
+    { type: 'Lunch', name: 'Leftover Steak Salad', kcal: 200, protein: 23, prep: '5 min', desc: 'Sliced leftover steak over mixed leaves with cherry tomatoes and a balsamic dressing.', portion_size: '100g sliced steak, 80g mixed leaves, 100g cherry tomatoes' },
+    { type: 'Dinner', name: 'Roast Chicken Breast with Root Veg', kcal: 316, protein: 42, prep: '45 min', desc: 'Roast chicken breast with parsnips, carrots, and a small portion of gravy. A proper Sunday roast, lighter style.', portion_size: '175g chicken breast, 100g parsnips, 100g carrots' },
     { type: 'Snack', name: 'Protein Shake', kcal: 200, protein: 25, prep: '2 min', desc: 'One scoop of unflavoured or vanilla protein powder mixed with water or skimmed milk.', portion_size: '30g protein powder, 250ml skimmed milk' },
-  ], totals: { kcal: 1500, protein: 135 } },
+  ], totals: { kcal: 998, protein: 118 } },
 ];
 
-const PLAN_1800 = PLAN_1500.map(day => ({
-  ...day,
-  meals: day.meals.map((m, i) => ({
-    ...m,
-    kcal: i < 3 ? Math.round(m.kcal * 1.18) : m.kcal,
-    desc: m.desc + (i === 0 ? ' Add an extra handful of oats or a banana for more energy.' : i === 1 ? ' Add a wholemeal roll or extra portion of carbs.' : i === 2 ? ' Increase the rice or potato portion by about a third.' : ''),
-  })),
-  totals: { kcal: 1800, protein: Math.round(day.totals.protein * 1.1) },
-}));
-
-const PLAN_2000 = PLAN_1500.map(day => ({
-  ...day,
-  meals: day.meals.map((m, i) => ({
-    ...m,
-    kcal: i < 3 ? Math.round(m.kcal * 1.32) : Math.round(m.kcal * 1.15),
-    desc: m.desc + (i === 2 ? ' Add a drizzle of olive oil and include a larger portion of complex carbs.' : ''),
-  })),
-  totals: { kcal: 2000, protein: Math.round(day.totals.protein * 1.15) },
-}));
-
-const PLAN_HIGH_PROTEIN = [
+export const PLAN_HIGH_PROTEIN = [
   { day: 'Monday', meals: [
-    { type: 'Breakfast', name: 'Greek Yogurt Protein Bowl', kcal: 380, protein: 35, prep: '5 min', desc: '200 g 0% Greek yogurt, one scoop protein powder, mixed berries, and 15 g chia seeds.', portion_size: '200g 0% Greek yogurt, 30g protein powder, 80g mixed berries, 15g chia seeds' },
+    { type: 'Breakfast', name: 'Greek Yogurt Protein Bowl', kcal: 335, protein: 47, prep: '5 min', desc: '200 g 0% Greek yogurt, one scoop protein powder, mixed berries, and 15 g chia seeds.', portion_size: '200g 0% Greek yogurt, 30g protein powder, 80g mixed berries, 15g chia seeds' },
     { type: 'Lunch', name: 'Tuna & Egg White Salad', kcal: 420, protein: 55, prep: '10 min', desc: 'Two tins of tuna with three hard-boiled egg whites, mixed leaves, cucumber, and lemon dressing.', portion_size: '2 tins tuna (290g drained), 3 egg whites, 80g mixed leaves, 100g cucumber' },
-    { type: 'Dinner', name: 'Chicken Breast with Lentils & Greens', kcal: 560, protein: 60, prep: '25 min', desc: 'Two chicken breasts served over 100 g cooked green lentils with a side of steamed broccoli and asparagus.', portion_size: '280g chicken breast, 100g cooked lentils, 150g broccoli, 100g asparagus' },
-    { type: 'Snack', name: 'Cottage Cheese & Cucumber', kcal: 160, protein: 22, prep: '2 min', desc: '200 g low-fat cottage cheese with sliced cucumber and black pepper.', portion_size: '200g cottage cheese, 100g cucumber' },
-  ], totals: { kcal: 1520, protein: 172 } },
+    { type: 'Dinner', name: 'Chicken Breast with Lentils & Greens', kcal: 512, protein: 77, prep: '25 min', desc: 'Two chicken breasts served over 100 g cooked green lentils with a side of steamed broccoli and asparagus.', portion_size: '280g chicken breast, 100g cooked lentils, 150g broccoli, 100g asparagus' },
+    { type: 'Snack', name: 'Cottage Cheese & Cucumber', kcal: 208, protein: 25, prep: '2 min', desc: '200 g low-fat cottage cheese with sliced cucumber and black pepper.', portion_size: '200g cottage cheese, 100g cucumber' },
+  ], totals: { kcal: 1475, protein: 204 } },
   { day: 'Tuesday', meals: [
-    { type: 'Breakfast', name: 'Egg White Omelette with Spinach', kcal: 320, protein: 30, prep: '10 min', desc: 'Five egg whites and one yolk, spinach, mushrooms, and cherry tomatoes cooked as an omelette.', portion_size: '5 egg whites, 1 yolk, 80g spinach, 80g mushrooms, 100g cherry tomatoes' },
-    { type: 'Lunch', name: 'Chicken & Quinoa Power Bowl', kcal: 450, protein: 50, prep: '15 min', desc: 'Grilled chicken breast sliced over 80 g cooked quinoa with edamame, cucumber, and tahini dressing.', portion_size: '140g chicken breast, 80g quinoa (cooked), 50g edamame, 100g cucumber' },
-    { type: 'Dinner', name: 'Baked Salmon with Asparagus', kcal: 540, protein: 52, prep: '20 min', desc: 'Salmon fillet baked with lemon and herbs, served with a bunch of roasted asparagus and a small side of brown rice.', portion_size: '150g salmon fillet, 200g asparagus, 40g brown rice (dry)' },
+    { type: 'Breakfast', name: 'Egg White Omelette with Spinach', kcal: 195, protein: 27, prep: '10 min', desc: 'Five egg whites and one yolk, spinach, mushrooms, and cherry tomatoes cooked as an omelette.', portion_size: '5 egg whites, 1 yolk, 80g spinach, 80g mushrooms, 100g cherry tomatoes' },
+    { type: 'Lunch', name: 'Chicken & Quinoa Power Bowl', kcal: 337, protein: 41, prep: '15 min', desc: 'Grilled chicken breast sliced over 80 g cooked quinoa with edamame, cucumber, and tahini dressing.', portion_size: '140g chicken breast, 80g quinoa (cooked), 50g edamame, 100g cucumber' },
+    { type: 'Dinner', name: 'Baked Salmon with Asparagus', kcal: 455, protein: 37, prep: '20 min', desc: 'Salmon fillet baked with lemon and herbs, served with a bunch of roasted asparagus and a small side of brown rice.', portion_size: '150g salmon fillet, 200g asparagus, 40g brown rice (dry)' },
     { type: 'Snack', name: 'Protein Shake & Almonds', kcal: 250, protein: 28, prep: '2 min', desc: 'One scoop protein powder mixed with water, plus 20 g almonds.', portion_size: '30g protein powder, 300ml water, 20g almonds' },
-  ], totals: { kcal: 1560, protein: 160 } },
+  ], totals: { kcal: 1237, protein: 133 } },
   { day: 'Wednesday', meals: [
-    { type: 'Breakfast', name: 'Overnight Protein Oats', kcal: 370, protein: 32, prep: '5 min', desc: '50 g oats, one scoop vanilla protein powder, skimmed milk, and banana slices.', portion_size: '50g oats, 30g protein powder, 200ml skimmed milk, 1 banana' },
-    { type: 'Lunch', name: 'Turkey & Lentil Soup', kcal: 420, protein: 45, prep: '30 min', desc: 'Ground turkey and red lentil soup with spinach and mild spices.', portion_size: '150g turkey mince, 40g red lentils (dry), 80g spinach' },
-    { type: 'Dinner', name: 'Grilled Chicken Tikka Skewers', kcal: 560, protein: 60, prep: '20 min', desc: 'Marinated chicken tikka skewers grilled and served with cauliflower rice and raita.', portion_size: '200g chicken breast, 250g cauliflower rice, 50g raita' },
+    { type: 'Breakfast', name: 'Overnight Protein Oats', kcal: 475, protein: 38, prep: '5 min', desc: '50 g oats, one scoop vanilla protein powder, skimmed milk, and banana slices.', portion_size: '50g oats, 30g protein powder, 200ml skimmed milk, 1 banana' },
+    { type: 'Lunch', name: 'Turkey & Lentil Soup', kcal: 326, protein: 43, prep: '30 min', desc: 'Ground turkey and red lentil soup with spinach and mild spices.', portion_size: '150g turkey mince, 40g red lentils (dry), 80g spinach' },
+    { type: 'Dinner', name: 'Grilled Chicken Tikka Skewers', kcal: 333, protein: 51, prep: '20 min', desc: 'Marinated chicken tikka skewers grilled and served with cauliflower rice and raita.', portion_size: '200g chicken breast, 250g cauliflower rice, 50g raita' },
     { type: 'Snack', name: 'Greek Yogurt & Walnuts', kcal: 200, protein: 18, prep: '2 min', desc: '150 g 0% Greek yogurt with 15 g walnuts and a teaspoon of honey.', portion_size: '150g 0% Greek yogurt, 15g walnuts, 1 tsp honey' },
-  ], totals: { kcal: 1550, protein: 155 } },
+  ], totals: { kcal: 1334, protein: 150 } },
   { day: 'Thursday', meals: [
     { type: 'Breakfast', name: 'Smoked Salmon Scrambled Eggs', kcal: 380, protein: 38, prep: '10 min', desc: 'Three-egg scramble with 75 g smoked salmon and a handful of spinach.', portion_size: '3 eggs, 75g smoked salmon, 40g spinach' },
-    { type: 'Lunch', name: 'Tuna Nicoise Salad', kcal: 430, protein: 50, prep: '10 min', desc: 'Tinned tuna, one boiled egg, green beans, cherry tomatoes, and olives over mixed leaves.', portion_size: '145g tinned tuna, 1 egg, 80g green beans, 100g cherry tomatoes, 10g olives' },
+    { type: 'Lunch', name: 'Tuna Nicoise Salad', kcal: 308, protein: 47, prep: '10 min', desc: 'Tinned tuna, one boiled egg, green beans, cherry tomatoes, and olives over mixed leaves.', portion_size: '145g tinned tuna, 1 egg, 80g green beans, 100g cherry tomatoes, 10g olives' },
     { type: 'Dinner', name: 'Lean Beef Stir-Fry', kcal: 540, protein: 55, prep: '15 min', desc: '200 g lean beef strips stir-fried with broccoli, peppers, and a low-sodium soy sauce. Small portion of brown rice.', portion_size: '200g lean beef strips, 35g brown rice (dry), 150g broccoli, 100g peppers' },
-    { type: 'Snack', name: 'Edamame Pods', kcal: 180, protein: 17, prep: '5 min', desc: '200 g edamame pods, lightly salted.', portion_size: '200g edamame pods' },
-  ], totals: { kcal: 1530, protein: 160 } },
+    { type: 'Snack', name: 'Edamame Pods', kcal: 242, protein: 22, prep: '5 min', desc: '200 g edamame pods, lightly salted.', portion_size: '200g edamame pods' },
+  ], totals: { kcal: 1470, protein: 162 } },
   { day: 'Friday', meals: [
-    { type: 'Breakfast', name: 'Protein Pancakes', kcal: 360, protein: 35, prep: '15 min', desc: 'Three small pancakes made with one egg, one scoop protein powder, oat flour, and a mashed banana.', portion_size: '1 egg, 30g protein powder, 40g oat flour, 1 banana' },
-    { type: 'Lunch', name: 'Chicken & Chickpea Power Salad', kcal: 440, protein: 48, prep: '10 min', desc: 'Grilled chicken breast, 100 g drained chickpeas, cucumber, spinach, and lemon-garlic dressing.', portion_size: '130g chicken breast, 100g chickpeas (drained), 100g cucumber, 60g spinach' },
-    { type: 'Dinner', name: 'Baked Cod with Lentils', kcal: 530, protein: 56, prep: '25 min', desc: 'Baked cod fillet on a bed of 100 g cooked green lentils with roasted tomatoes and a squeeze of lemon.', portion_size: '150g cod fillet, 100g cooked lentils, 100g roasted tomatoes' },
-    { type: 'Snack', name: 'Cottage Cheese & Pineapple', kcal: 190, protein: 22, prep: '2 min', desc: '200 g low-fat cottage cheese with a few chunks of tinned pineapple in juice.', portion_size: '200g cottage cheese, 50g tinned pineapple in juice' },
-  ], totals: { kcal: 1520, protein: 161 } },
+    { type: 'Breakfast', name: 'Protein Pancakes', kcal: 452, protein: 37, prep: '15 min', desc: 'Three small pancakes made with one egg, one scoop protein powder, oat flour, and a mashed banana.', portion_size: '1 egg, 30g protein powder, 40g oat flour, 1 banana' },
+    { type: 'Lunch', name: 'Chicken & Chickpea Power Salad', kcal: 297, protein: 39, prep: '10 min', desc: 'Grilled chicken breast, 100 g drained chickpeas, cucumber, spinach, and lemon-garlic dressing.', portion_size: '130g chicken breast, 100g chickpeas (drained), 100g cucumber, 60g spinach' },
+    { type: 'Dinner', name: 'Baked Cod with Lentils', kcal: 246, protein: 36, prep: '25 min', desc: 'Baked cod fillet on a bed of 100 g cooked green lentils with roasted tomatoes and a squeeze of lemon.', portion_size: '150g cod fillet, 100g cooked lentils, 100g roasted tomatoes' },
+    { type: 'Snack', name: 'Cottage Cheese & Pineapple', kcal: 226, protein: 24, prep: '2 min', desc: '200 g low-fat cottage cheese with a few chunks of tinned pineapple in juice.', portion_size: '200g cottage cheese, 50g tinned pineapple in juice' },
+  ], totals: { kcal: 1221, protein: 136 } },
   { day: 'Saturday', meals: [
-    { type: 'Breakfast', name: 'High-Protein Full English', kcal: 400, protein: 40, prep: '15 min', desc: 'Two eggs (grilled), two lean turkey rashers, mushrooms, tomatoes, and no toast.', portion_size: '2 eggs, 2 turkey rashers (60g), 100g mushrooms, 100g tomatoes' },
-    { type: 'Lunch', name: 'Prawn & Quinoa Bowl', kcal: 450, protein: 48, prep: '10 min', desc: 'King prawns over 80 g quinoa with avocado, cucumber, and a ginger-soy dressing.', portion_size: '150g king prawns, 80g quinoa (cooked), ½ avocado (60g), 100g cucumber' },
-    { type: 'Dinner', name: 'Turkey Burger with Salad', kcal: 530, protein: 52, prep: '20 min', desc: '200 g lean turkey burger patty in a wholemeal bun with lettuce, tomato, and Greek yogurt sauce.', portion_size: '200g turkey patty, 1 wholemeal bun (60g), 80g salad leaves and tomato' },
-    { type: 'Snack', name: 'Protein Shake', kcal: 180, protein: 25, prep: '2 min', desc: 'One scoop whey protein mixed with water.', portion_size: '30g whey protein, 300ml water' },
-  ], totals: { kcal: 1560, protein: 165 } },
+    { type: 'Breakfast', name: 'High-Protein Full English', kcal: 272, protein: 31, prep: '15 min', desc: 'Two eggs (grilled), two lean turkey rashers, mushrooms, tomatoes, and no toast.', portion_size: '2 eggs, 2 turkey rashers (60g), 100g mushrooms, 100g tomatoes' },
+    { type: 'Lunch', name: 'Prawn & Quinoa Bowl', kcal: 311, protein: 31, prep: '10 min', desc: 'King prawns over 80 g quinoa with avocado, cucumber, and a ginger-soy dressing.', portion_size: '150g king prawns, 80g quinoa (cooked), ½ avocado (60g), 100g cucumber' },
+    { type: 'Dinner', name: 'Turkey Burger with Salad', kcal: 482, protein: 46, prep: '20 min', desc: '200 g lean turkey burger patty in a wholemeal bun with lettuce, tomato, and Greek yogurt sauce.', portion_size: '200g turkey patty, 1 wholemeal bun (60g), 80g salad leaves and tomato' },
+    { type: 'Snack', name: 'Protein Shake', kcal: 114, protein: 23, prep: '2 min', desc: 'One scoop whey protein mixed with water.', portion_size: '30g whey protein, 300ml water' },
+  ], totals: { kcal: 1179, protein: 131 } },
   { day: 'Sunday', meals: [
-    { type: 'Breakfast', name: 'Eggs Florentine (lighter)', kcal: 380, protein: 32, prep: '15 min', desc: 'Two poached eggs on a bed of wilted spinach on wholemeal toast — no hollandaise.', portion_size: '2 eggs, 100g spinach, 1 slice wholemeal toast (35g)' },
-    { type: 'Lunch', name: 'Chicken & Vegetable Stew', kcal: 430, protein: 48, prep: '30 min', desc: 'Diced chicken breast slow-simmered with carrots, celery, and lentils.', portion_size: '150g chicken breast, 80g carrots, 60g celery, 50g lentils (dry)' },
-    { type: 'Dinner', name: 'Roast Chicken & Roasted Veg', kcal: 560, protein: 58, prep: '45 min', desc: 'Roast skinless chicken breast with parsnips, carrots, and green beans. Lean high-protein Sunday roast.', portion_size: '175g skinless chicken breast, 100g parsnips, 100g carrots, 100g green beans' },
-    { type: 'Snack', name: 'Greek Yogurt & Berries', kcal: 180, protein: 18, prep: '2 min', desc: '150 g 0% Greek yogurt with mixed berries.', portion_size: '150g 0% Greek yogurt, 80g mixed berries' },
-  ], totals: { kcal: 1550, protein: 156 } },
+    { type: 'Breakfast', name: 'Eggs Florentine (lighter)', kcal: 269, protein: 21, prep: '15 min', desc: 'Two poached eggs on a bed of wilted spinach on wholemeal toast — no hollandaise.', portion_size: '2 eggs, 100g spinach, 1 slice wholemeal toast (35g)' },
+    { type: 'Lunch', name: 'Chicken & Vegetable Stew', kcal: 275, protein: 39, prep: '30 min', desc: 'Diced chicken breast slow-simmered with carrots, celery, and lentils.', portion_size: '150g chicken breast, 80g carrots, 60g celery, 50g lentils (dry)' },
+    { type: 'Dinner', name: 'Roast Chicken & Roasted Veg', kcal: 347, protein: 44, prep: '45 min', desc: 'Roast skinless chicken breast with parsnips, carrots, and green beans. Lean high-protein Sunday roast.', portion_size: '175g skinless chicken breast, 100g parsnips, 100g carrots, 100g green beans' },
+    { type: 'Snack', name: 'Greek Yogurt & Berries', kcal: 120, protein: 16, prep: '2 min', desc: '150 g 0% Greek yogurt with mixed berries.', portion_size: '150g 0% Greek yogurt, 80g mixed berries' },
+  ], totals: { kcal: 1011, protein: 120 } },
 ];
 
 const PLAN_TESCO = PLAN_1500.map(day => ({
@@ -340,94 +320,94 @@ const PLAN_ALDI = PLAN_1500.map(day => ({
   })),
 }));
 
-const PLAN_VEGAN = [
+export const PLAN_VEGAN = [
   { day: 'Monday', meals: [
-    { type: 'Breakfast', name: 'Oat & Banana Smoothie Bowl', kcal: 360, protein: 14, prep: '5 min', desc: '50 g oats, banana, soy milk, 1 tbsp almond butter, topped with berries and granola.', portion_size: '50g oats, 1 banana, 200ml soy milk, 1 tbsp almond butter (15g), 30g granola' },
-    { type: 'Lunch', name: 'Chickpea & Spinach Salad', kcal: 420, protein: 18, prep: '10 min', desc: 'Tinned chickpeas, baby spinach, cherry tomatoes, cucumber, red onion, and tahini-lemon dressing.', portion_size: '240g chickpeas (drained), 80g spinach, 100g cherry tomatoes, 100g cucumber, 2 tbsp tahini' },
+    { type: 'Breakfast', name: 'Oat & Banana Smoothie Bowl', kcal: 586, protein: 20, prep: '5 min', desc: '50 g oats, banana, soy milk, 1 tbsp almond butter, topped with berries and granola.', portion_size: '50g oats, 1 banana, 200ml soy milk, 1 tbsp almond butter (15g), 30g granola' },
+    { type: 'Lunch', name: 'Chickpea & Spinach Salad', kcal: 503, protein: 27, prep: '10 min', desc: 'Tinned chickpeas, baby spinach, cherry tomatoes, cucumber, red onion, and tahini-lemon dressing.', portion_size: '240g chickpeas (drained), 80g spinach, 100g cherry tomatoes, 100g cucumber, 2 tbsp tahini' },
     { type: 'Dinner', name: 'Tofu Stir-Fry with Brown Rice', kcal: 520, protein: 26, prep: '20 min', desc: 'Firm tofu cubes stir-fried with broccoli, peppers, and low-sodium soy sauce, served on brown rice.', portion_size: '200g firm tofu, 40g brown rice (dry), 150g broccoli, 100g peppers' },
-    { type: 'Snack', name: 'Coconut Yogurt & Berries', kcal: 200, protein: 4, prep: '2 min', desc: '200 g dairy-free coconut or oat yogurt with a handful of mixed berries.', portion_size: '200g dairy-free yogurt, 80g mixed berries' },
-  ], totals: { kcal: 1500, protein: 62 } },
+    { type: 'Snack', name: 'Coconut Yogurt & Berries', kcal: 174, protein: 4, prep: '2 min', desc: '200 g dairy-free coconut or oat yogurt with a handful of mixed berries.', portion_size: '200g dairy-free yogurt, 80g mixed berries' },
+  ], totals: { kcal: 1783, protein: 77 } },
   { day: 'Tuesday', meals: [
     { type: 'Breakfast', name: 'Tofu Scramble on Wholemeal Toast', kcal: 350, protein: 18, prep: '10 min', desc: 'Crumbled firm tofu sautéed with turmeric, spinach, and cherry tomatoes, on wholemeal toast.', portion_size: '150g firm tofu, 1 slice wholemeal toast (35g), 80g spinach, 100g cherry tomatoes' },
-    { type: 'Lunch', name: 'Red Lentil & Vegetable Soup', kcal: 370, protein: 16, prep: '30 min', desc: 'Thick red lentil soup with cumin, turmeric, carrot, and onion, with wholemeal bread.', portion_size: '80g red lentils (dry), 100g carrot, 80g onion, 1 small roll (60g)' },
-    { type: 'Dinner', name: 'Mushroom & Lentil Bolognese', kcal: 530, protein: 22, prep: '25 min', desc: 'Finely chopped mushrooms and green lentils in a rich tomato sauce, served over wholemeal spaghetti.', portion_size: '80g wholemeal spaghetti (dry), 200g mushrooms, 100g cooked lentils' },
-    { type: 'Snack', name: 'Apple & Almond Butter', kcal: 250, protein: 8, prep: '2 min', desc: 'One apple sliced and served with one tablespoon of natural almond butter.', portion_size: '1 apple (180g), 1 tbsp almond butter (15g)' },
-  ], totals: { kcal: 1500, protein: 64 } },
+    { type: 'Lunch', name: 'Red Lentil & Vegetable Soup', kcal: 479, protein: 26, prep: '30 min', desc: 'Thick red lentil soup with cumin, turmeric, carrot, and onion, with wholemeal bread.', portion_size: '80g red lentils (dry), 100g carrot, 80g onion, 1 small roll (60g)' },
+    { type: 'Dinner', name: 'Mushroom & Lentil Bolognese', kcal: 427, protein: 25, prep: '25 min', desc: 'Finely chopped mushrooms and green lentils in a rich tomato sauce, served over wholemeal spaghetti.', portion_size: '80g wholemeal spaghetti (dry), 200g mushrooms, 100g cooked lentils' },
+    { type: 'Snack', name: 'Apple & Almond Butter', kcal: 186, protein: 4, prep: '2 min', desc: 'One apple sliced and served with one tablespoon of natural almond butter.', portion_size: '1 apple (180g), 1 tbsp almond butter (15g)' },
+  ], totals: { kcal: 1442, protein: 73 } },
   { day: 'Wednesday', meals: [
-    { type: 'Breakfast', name: 'Overnight Oats with Nut Butter', kcal: 380, protein: 14, prep: '5 min', desc: '50 g oats soaked in oat milk with a tablespoon of tahini and banana slices.', portion_size: '50g oats, 200ml oat milk, 1 tbsp tahini (15g), 1 banana' },
+    { type: 'Breakfast', name: 'Overnight Oats with Nut Butter', kcal: 476, protein: 13, prep: '5 min', desc: '50 g oats soaked in oat milk with a tablespoon of tahini and banana slices.', portion_size: '50g oats, 200ml oat milk, 1 tbsp tahini (15g), 1 banana' },
     { type: 'Lunch', name: 'Tofu & Quinoa Buddha Bowl', kcal: 450, protein: 20, prep: '15 min', desc: 'Baked marinated tofu over 80 g quinoa with roasted peppers, cucumber, avocado, and tahini dressing.', portion_size: '150g baked tofu, 80g quinoa (cooked), 100g roasted peppers, ½ avocado (60g)' },
-    { type: 'Dinner', name: 'Black Bean & Sweet Potato Curry', kcal: 480, protein: 18, prep: '25 min', desc: 'Black beans and diced sweet potato in a coconut milk curry sauce with spinach and brown rice.', portion_size: '240g black beans (drained), 200g sweet potato, 100ml coconut milk, 40g brown rice (dry)' },
-    { type: 'Snack', name: 'Hummus & Veggie Sticks', kcal: 190, protein: 8, prep: '2 min', desc: '40 g hummus with 100 g carrot and cucumber sticks.', portion_size: '40g hummus, 100g carrot sticks, 100g cucumber' },
-  ], totals: { kcal: 1500, protein: 60 } },
+    { type: 'Dinner', name: 'Black Bean & Sweet Potato Curry', kcal: 771, protein: 26, prep: '25 min', desc: 'Black beans and diced sweet potato in a coconut milk curry sauce with spinach and brown rice.', portion_size: '240g black beans (drained), 200g sweet potato, 100ml coconut milk, 40g brown rice (dry)' },
+    { type: 'Snack', name: 'Hummus & Veggie Sticks', kcal: 119, protein: 5, prep: '2 min', desc: '40 g hummus with 100 g carrot and cucumber sticks.', portion_size: '40g hummus, 100g carrot sticks, 100g cucumber' },
+  ], totals: { kcal: 1816, protein: 64 } },
   { day: 'Thursday', meals: [
-    { type: 'Breakfast', name: 'Smoothie with Hemp Seeds', kcal: 340, protein: 16, prep: '5 min', desc: 'Blended banana, oat milk, 1 scoop plant-based protein powder, 2 tbsp hemp seeds, and berries.', portion_size: '1 banana, 200ml oat milk, 30g plant protein powder, 20g hemp seeds, 80g berries' },
-    { type: 'Lunch', name: 'Black Bean Tacos', kcal: 430, protein: 16, prep: '15 min', desc: 'Spiced black beans in two small wholemeal tortillas with shredded cabbage, salsa, avocado, and dairy-free sour cream.', portion_size: '240g black beans (drained), 2 small tortillas (80g), 80g cabbage, ½ avocado (60g)' },
-    { type: 'Dinner', name: 'Tofu & Lentil Curry', kcal: 530, protein: 28, prep: '25 min', desc: 'Silken tofu with green lentils in a tomato-based curry sauce, served with a small portion of brown rice.', portion_size: '200g silken tofu, 80g cooked lentils, 200ml tomato curry sauce, 40g brown rice (dry)' },
-    { type: 'Snack', name: 'Mixed Nuts & Berries', kcal: 200, protein: 7, prep: '1 min', desc: '30 g mixed unsalted nuts with a small handful of dried berries.', portion_size: '30g mixed nuts, 50g dried berries' },
-  ], totals: { kcal: 1500, protein: 67 } },
+    { type: 'Breakfast', name: 'Smoothie with Hemp Seeds', kcal: 455, protein: 33, prep: '5 min', desc: 'Blended banana, oat milk, 1 scoop plant-based protein powder, 2 tbsp hemp seeds, and berries.', portion_size: '1 banana, 200ml oat milk, 30g plant protein powder, 20g hemp seeds, 80g berries' },
+    { type: 'Lunch', name: 'Black Bean Tacos', kcal: 588, protein: 27, prep: '15 min', desc: 'Spiced black beans in two small wholemeal tortillas with shredded cabbage, salsa, avocado, and dairy-free sour cream.', portion_size: '240g black beans (drained), 2 small tortillas (80g), 80g cabbage, ½ avocado (60g)' },
+    { type: 'Dinner', name: 'Tofu & Lentil Curry', kcal: 459, protein: 23, prep: '25 min', desc: 'Silken tofu with green lentils in a tomato-based curry sauce, served with a small portion of brown rice.', portion_size: '200g silken tofu, 80g cooked lentils, 200ml tomato curry sauce, 40g brown rice (dry)' },
+    { type: 'Snack', name: 'Mixed Nuts & Berries', kcal: 343, protein: 6, prep: '1 min', desc: '30 g mixed unsalted nuts with a small handful of dried berries.', portion_size: '30g mixed nuts, 50g dried berries' },
+  ], totals: { kcal: 1845, protein: 89 } },
   { day: 'Friday', meals: [
     { type: 'Breakfast', name: 'Avocado Toast with Nutritional Yeast', kcal: 400, protein: 12, prep: '10 min', desc: 'Two slices wholemeal toast topped with half an avocado, tomato, and nutritional yeast.', portion_size: '2 slices wholemeal toast (70g), ½ avocado (60g), 100g tomato, 2 tbsp nutritional yeast' },
-    { type: 'Lunch', name: 'Tofu Caesar Salad', kcal: 390, protein: 22, prep: '10 min', desc: 'Crispy baked tofu cubes over romaine lettuce with plant-based Caesar dressing and nutritional yeast.', portion_size: '150g firm tofu, 100g romaine lettuce, 30ml plant-based dressing, 2 tbsp nutritional yeast' },
+    { type: 'Lunch', name: 'Tofu Caesar Salad', kcal: 356, protein: 38, prep: '10 min', desc: 'Crispy baked tofu cubes over romaine lettuce with plant-based Caesar dressing and nutritional yeast.', portion_size: '150g firm tofu, 100g romaine lettuce, 30ml plant-based dressing, 2 tbsp nutritional yeast' },
     { type: 'Dinner', name: 'Vegetarian Chilli (Vegan)', kcal: 510, protein: 24, prep: '25 min', desc: 'Kidney beans, black beans, and lentils in a smoky tomato chilli, served with brown rice.', portion_size: '120g kidney beans, 120g black beans, 80g cooked lentils, 40g brown rice (dry)' },
-    { type: 'Snack', name: 'Tahini & Carrot Sticks', kcal: 200, protein: 8, prep: '2 min', desc: '40 g tahini with 150 g carrot sticks for dipping.', portion_size: '40g tahini, 150g carrot sticks' },
-  ], totals: { kcal: 1500, protein: 66 } },
+    { type: 'Snack', name: 'Tahini & Carrot Sticks', kcal: 300, protein: 8, prep: '2 min', desc: '40 g tahini with 150 g carrot sticks for dipping.', portion_size: '40g tahini, 150g carrot sticks' },
+  ], totals: { kcal: 1566, protein: 82 } },
   { day: 'Saturday', meals: [
-    { type: 'Breakfast', name: 'Tofu Scramble with Mushrooms', kcal: 360, protein: 20, prep: '10 min', desc: 'Crumbled tofu sautéed with mushrooms, spinach, and nutritional yeast for a cheesy flavour.', portion_size: '200g firm tofu, 150g mushrooms, 80g spinach, 2 tbsp nutritional yeast' },
-    { type: 'Lunch', name: 'Lentil & Roasted Veg Bowl', kcal: 420, protein: 18, prep: '30 min', desc: 'Roasted butternut squash, courgette, and peppers over green lentils with tahini dressing.', portion_size: '100g cooked lentils, 150g butternut squash, 100g courgette, 100g peppers' },
-    { type: 'Dinner', name: 'Chickpea & Vegetable Curry', kcal: 530, protein: 20, prep: '25 min', desc: 'Tinned chickpeas with spinach, tomato, and coconut milk in a fragrant curry, with brown rice.', portion_size: '240g chickpeas (drained), 100g spinach, 100ml coconut milk, 40g brown rice (dry)' },
-    { type: 'Snack', name: 'Energy Balls (homemade)', kcal: 190, protein: 8, prep: '15 min', desc: 'Dates, walnuts, and cacao blended and rolled into balls (~3 balls, 30 g).', portion_size: '3 energy balls (30g total: dates, walnuts, cacao)' },
-  ], totals: { kcal: 1500, protein: 66 } },
+    { type: 'Breakfast', name: 'Tofu Scramble with Mushrooms', kcal: 437, protein: 52, prep: '10 min', desc: 'Crumbled tofu sautéed with mushrooms, spinach, and nutritional yeast for a cheesy flavour.', portion_size: '200g firm tofu, 150g mushrooms, 80g spinach, 2 tbsp nutritional yeast' },
+    { type: 'Lunch', name: 'Lentil & Roasted Veg Bowl', kcal: 221, protein: 12, prep: '30 min', desc: 'Roasted butternut squash, courgette, and peppers over green lentils with tahini dressing.', portion_size: '100g cooked lentils, 150g butternut squash, 100g courgette, 100g peppers' },
+    { type: 'Dinner', name: 'Chickpea & Vegetable Curry', kcal: 634, protein: 26, prep: '25 min', desc: 'Tinned chickpeas with spinach, tomato, and coconut milk in a fragrant curry, with brown rice.', portion_size: '240g chickpeas (drained), 100g spinach, 100ml coconut milk, 40g brown rice (dry)' },
+    { type: 'Snack', name: 'Energy Balls (homemade)', kcal: 135, protein: 2, prep: '15 min', desc: 'Dates, walnuts, and cacao blended and rolled into balls (~3 balls, 30 g).', portion_size: '3 energy balls (30g total: dates, walnuts, cacao)' },
+  ], totals: { kcal: 1427, protein: 92 } },
   { day: 'Sunday', meals: [
-    { type: 'Breakfast', name: 'Banana Oat Pancakes', kcal: 380, protein: 12, prep: '15 min', desc: 'Two pancakes made with mashed banana, 50 g oats, soy milk, and a sprinkle of cinnamon.', portion_size: '1 banana, 50g oats, 100ml soy milk' },
-    { type: 'Lunch', name: 'Tomato & Chickpea Salad', kcal: 400, protein: 16, prep: '10 min', desc: 'Cherry tomatoes, basil, chickpeas, rocket, and olive oil-balsamic dressing.', portion_size: '240g chickpeas (drained), 200g cherry tomatoes, 40g rocket, 1 tbsp olive oil' },
-    { type: 'Dinner', name: 'Lentil Bolognese with Wholemeal Pasta', kcal: 520, protein: 24, prep: '30 min', desc: 'Brown lentils in a rich tomato sauce with mushrooms and herbs, served over wholemeal pasta.', portion_size: '80g wholemeal pasta (dry), 120g cooked lentils, 150g mushrooms' },
-    { type: 'Snack', name: 'Peanut Butter & Banana', kcal: 200, protein: 8, prep: '2 min', desc: 'Banana with two tablespoons of natural peanut butter.', portion_size: '1 banana, 2 tbsp peanut butter (30g)' },
-  ], totals: { kcal: 1500, protein: 60 } },
+    { type: 'Breakfast', name: 'Banana Oat Pancakes', kcal: 326, protein: 11, prep: '15 min', desc: 'Two pancakes made with mashed banana, 50 g oats, soy milk, and a sprinkle of cinnamon.', portion_size: '1 banana, 50g oats, 100ml soy milk' },
+    { type: 'Lunch', name: 'Tomato & Chickpea Salad', kcal: 441, protein: 21, prep: '10 min', desc: 'Cherry tomatoes, basil, chickpeas, rocket, and olive oil-balsamic dressing.', portion_size: '240g chickpeas (drained), 200g cherry tomatoes, 40g rocket, 1 tbsp olive oil' },
+    { type: 'Dinner', name: 'Lentil Bolognese with Wholemeal Pasta', kcal: 437, protein: 25, prep: '30 min', desc: 'Brown lentils in a rich tomato sauce with mushrooms and herbs, served over wholemeal pasta.', portion_size: '80g wholemeal pasta (dry), 120g cooked lentils, 150g mushrooms' },
+    { type: 'Snack', name: 'Peanut Butter & Banana', kcal: 281, protein: 9, prep: '2 min', desc: 'Banana with two tablespoons of natural peanut butter.', portion_size: '1 banana, 2 tbsp peanut butter (30g)' },
+  ], totals: { kcal: 1485, protein: 66 } },
 ];
 
-const PLAN_VEGETARIAN = [
+export const PLAN_VEGETARIAN = [
   { day: 'Monday', meals: [
-    { type: 'Breakfast', name: 'Oat & Chia Seed Porridge', kcal: 360, protein: 14, prep: '5 min', desc: '50 g oats cooked with soy milk, 1 tbsp chia seeds, topped with sliced banana and a drizzle of honey.', portion_size: '50g oats, 200ml soy milk, 1 tbsp chia seeds (15g), 1 banana' },
+    { type: 'Breakfast', name: 'Oat & Chia Seed Porridge', kcal: 431, protein: 17, prep: '5 min', desc: '50 g oats cooked with soy milk, 1 tbsp chia seeds, topped with sliced banana and a drizzle of honey.', portion_size: '50g oats, 200ml soy milk, 1 tbsp chia seeds (15g), 1 banana' },
     { type: 'Lunch', name: 'Chickpea & Spinach Salad', kcal: 420, protein: 20, prep: '10 min', desc: 'Tinned chickpeas, baby spinach, cherry tomatoes, cucumber, red onion, and lemon-tahini dressing.', portion_size: '240g chickpeas (drained), 60g baby spinach, 150g cherry tomatoes, 1 tbsp tahini (15g)' },
-    { type: 'Dinner', name: 'Tofu & Vegetable Stir-Fry', kcal: 520, protein: 28, prep: '20 min', desc: 'Firm tofu cubes stir-fried with broccoli, peppers, and soy sauce, served on brown rice.', portion_size: '150g firm tofu, 200g broccoli, 150g peppers, 80g brown rice (dry)' },
-    { type: 'Snack', name: 'Greek Yogurt & Berries', kcal: 200, protein: 15, prep: '2 min', desc: '200 g low-fat Greek yogurt with a handful of mixed berries.', portion_size: '200g low-fat Greek yogurt, 80g mixed berries' },
-  ], totals: { kcal: 1500, protein: 77 } },
+    { type: 'Dinner', name: 'Tofu & Vegetable Stir-Fry', kcal: 622, protein: 36, prep: '20 min', desc: 'Firm tofu cubes stir-fried with broccoli, peppers, and soy sauce, served on brown rice.', portion_size: '150g firm tofu, 200g broccoli, 150g peppers, 80g brown rice (dry)' },
+    { type: 'Snack', name: 'Greek Yogurt & Berries', kcal: 180, protein: 21, prep: '2 min', desc: '200 g low-fat Greek yogurt with a handful of mixed berries.', portion_size: '200g low-fat Greek yogurt, 80g mixed berries' },
+  ], totals: { kcal: 1653, protein: 94 } },
   { day: 'Tuesday', meals: [
-    { type: 'Breakfast', name: 'Scrambled Eggs on Wholemeal Toast', kcal: 350, protein: 22, prep: '10 min', desc: 'Two eggs scrambled with spinach and cherry tomatoes, on a slice of wholemeal toast.', portion_size: '2 eggs, 40g spinach, 100g cherry tomatoes, 1 slice wholemeal toast (40g)' },
-    { type: 'Lunch', name: 'Red Lentil Soup', kcal: 370, protein: 18, prep: '30 min', desc: 'Thick red lentil soup with cumin, turmeric, and a wedge of wholemeal bread.', portion_size: '100g red lentils (dry), 1 slice wholemeal bread (40g)' },
-    { type: 'Dinner', name: 'Mushroom & Lentil Bolognese', kcal: 530, protein: 24, prep: '25 min', desc: 'Finely chopped mushrooms and green lentils in a rich tomato sauce, served over wholemeal spaghetti.', portion_size: '80g wholemeal spaghetti (dry), 100g green lentils (cooked), 200g mushrooms' },
-    { type: 'Snack', name: 'Apple & Peanut Butter', kcal: 250, protein: 7, prep: '2 min', desc: 'One apple sliced and served with one tablespoon of natural peanut butter.', portion_size: '1 apple (180g), 1 tbsp peanut butter (15g)' },
-  ], totals: { kcal: 1500, protein: 71 } },
+    { type: 'Breakfast', name: 'Scrambled Eggs on Wholemeal Toast', kcal: 285, protein: 21, prep: '10 min', desc: 'Two eggs scrambled with spinach and cherry tomatoes, on a slice of wholemeal toast.', portion_size: '2 eggs, 40g spinach, 100g cherry tomatoes, 1 slice wholemeal toast (40g)' },
+    { type: 'Lunch', name: 'Red Lentil Soup', kcal: 412, protein: 28, prep: '30 min', desc: 'Thick red lentil soup with cumin, turmeric, and a wedge of wholemeal bread.', portion_size: '100g red lentils (dry), 1 slice wholemeal bread (40g)' },
+    { type: 'Dinner', name: 'Mushroom & Lentil Bolognese', kcal: 632, protein: 41, prep: '25 min', desc: 'Finely chopped mushrooms and green lentils in a rich tomato sauce, served over wholemeal spaghetti.', portion_size: '80g wholemeal spaghetti (dry), 100g green lentils (cooked), 200g mushrooms' },
+    { type: 'Snack', name: 'Apple & Peanut Butter', kcal: 182, protein: 4, prep: '2 min', desc: 'One apple sliced and served with one tablespoon of natural peanut butter.', portion_size: '1 apple (180g), 1 tbsp peanut butter (15g)' },
+  ], totals: { kcal: 1511, protein: 94 } },
   { day: 'Wednesday', meals: [
-    { type: 'Breakfast', name: 'Overnight Oats with Nut Butter', kcal: 380, protein: 16, prep: '5 min', desc: '50 g oats soaked in oat milk with a tablespoon of almond butter and banana slices.', portion_size: '50g oats, 200ml oat milk, 1 tbsp almond butter (15g), 1 banana' },
-    { type: 'Lunch', name: 'Halloumi & Quinoa Salad', kcal: 450, protein: 26, prep: '15 min', desc: 'Grilled reduced-fat halloumi over 80 g quinoa with roasted peppers, cucumber, and mint dressing.', portion_size: '80g reduced-fat halloumi, 80g quinoa (dry), 150g roasted peppers, 100g cucumber' },
-    { type: 'Dinner', name: 'Egg & Sweet Potato Frittata', kcal: 480, protein: 28, prep: '25 min', desc: 'Four-egg frittata baked with diced sweet potato, spinach, and feta cheese.', portion_size: '4 eggs, 200g sweet potato, 60g spinach, 30g reduced-fat feta' },
-    { type: 'Snack', name: 'Cottage Cheese & Cucumber', kcal: 190, protein: 18, prep: '2 min', desc: '200 g low-fat cottage cheese with sliced cucumber.', portion_size: '200g low-fat cottage cheese, 100g cucumber' },
-  ], totals: { kcal: 1500, protein: 88 } },
+    { type: 'Breakfast', name: 'Overnight Oats with Nut Butter', kcal: 479, protein: 13, prep: '5 min', desc: '50 g oats soaked in oat milk with a tablespoon of almond butter and banana slices.', portion_size: '50g oats, 200ml oat milk, 1 tbsp almond butter (15g), 1 banana' },
+    { type: 'Lunch', name: 'Halloumi & Quinoa Salad', kcal: 577, protein: 31, prep: '15 min', desc: 'Grilled reduced-fat halloumi over 80 g quinoa with roasted peppers, cucumber, and mint dressing.', portion_size: '80g reduced-fat halloumi, 80g quinoa (dry), 150g roasted peppers, 100g cucumber' },
+    { type: 'Dinner', name: 'Egg & Sweet Potato Frittata', kcal: 578, protein: 39, prep: '25 min', desc: 'Four-egg frittata baked with diced sweet potato, spinach, and feta cheese.', portion_size: '4 eggs, 200g sweet potato, 60g spinach, 30g reduced-fat feta' },
+    { type: 'Snack', name: 'Cottage Cheese & Cucumber', kcal: 172, protein: 23, prep: '2 min', desc: '200 g low-fat cottage cheese with sliced cucumber.', portion_size: '200g low-fat cottage cheese, 100g cucumber' },
+  ], totals: { kcal: 1806, protein: 106 } },
   { day: 'Thursday', meals: [
-    { type: 'Breakfast', name: 'Yogurt Parfait', kcal: 340, protein: 20, prep: '5 min', desc: 'Layered 0% Greek yogurt, granola (30 g), and mixed berries.', portion_size: '200g 0% Greek yogurt, 30g granola, 80g mixed berries' },
+    { type: 'Breakfast', name: 'Yogurt Parfait', kcal: 283, protein: 24, prep: '5 min', desc: 'Layered 0% Greek yogurt, granola (30 g), and mixed berries.', portion_size: '200g 0% Greek yogurt, 30g granola, 80g mixed berries' },
     { type: 'Lunch', name: 'Black Bean Tacos', kcal: 430, protein: 22, prep: '15 min', desc: 'Spiced black beans in two small wholemeal tortillas with shredded cabbage, salsa, and low-fat sour cream.', portion_size: '240g black beans (drained), 2 small wholemeal tortillas (60g), 80g shredded cabbage' },
-    { type: 'Dinner', name: 'Paneer & Spinach Curry', kcal: 530, protein: 30, prep: '25 min', desc: 'Low-fat paneer with spinach in a tomato-based curry sauce, served with a small portion of brown rice.', portion_size: '150g low-fat paneer, 150g spinach, 60g brown rice (dry)' },
-    { type: 'Snack', name: 'Hummus & Carrot Sticks', kcal: 200, protein: 7, prep: '2 min', desc: '40 g hummus with 100 g carrot sticks.', portion_size: '40g hummus, 100g carrot sticks' },
-  ], totals: { kcal: 1500, protein: 79 } },
+    { type: 'Dinner', name: 'Paneer & Spinach Curry', kcal: 582, protein: 36, prep: '25 min', desc: 'Low-fat paneer with spinach in a tomato-based curry sauce, served with a small portion of brown rice.', portion_size: '150g low-fat paneer, 150g spinach, 60g brown rice (dry)' },
+    { type: 'Snack', name: 'Hummus & Carrot Sticks', kcal: 107, protein: 4, prep: '2 min', desc: '40 g hummus with 100 g carrot sticks.', portion_size: '40g hummus, 100g carrot sticks' },
+  ], totals: { kcal: 1402, protein: 86 } },
   { day: 'Friday', meals: [
     { type: 'Breakfast', name: 'Avocado & Egg Toast', kcal: 400, protein: 20, prep: '10 min', desc: 'Two slices wholemeal toast topped with half a mashed avocado and one poached egg.', portion_size: '2 slices wholemeal toast (80g), half avocado (75g), 1 egg' },
-    { type: 'Lunch', name: 'Tofu Caesar Salad', kcal: 390, protein: 24, prep: '10 min', desc: 'Crispy baked tofu cubes over romaine lettuce with a light Caesar-style dressing and Parmesan.', portion_size: '150g firm tofu, 100g romaine lettuce, 1 tbsp Caesar dressing, 15g Parmesan' },
+    { type: 'Lunch', name: 'Tofu Caesar Salad', kcal: 341, protein: 31, prep: '10 min', desc: 'Crispy baked tofu cubes over romaine lettuce with a light Caesar-style dressing and Parmesan.', portion_size: '150g firm tofu, 100g romaine lettuce, 1 tbsp Caesar dressing, 15g Parmesan' },
     { type: 'Dinner', name: 'Vegetarian Chilli', kcal: 510, protein: 26, prep: '25 min', desc: 'Kidney beans, black beans, and sweetcorn in a smoky tomato chilli. Served with brown rice.', portion_size: '120g kidney beans (drained), 120g black beans (drained), 80g sweetcorn, 60g brown rice (dry)' },
     { type: 'Snack', name: 'Protein Yogurt & Walnuts', kcal: 200, protein: 14, prep: '2 min', desc: 'Protein yogurt pot with 15 g crushed walnuts.', portion_size: '150g protein yogurt, 15g crushed walnuts' },
-  ], totals: { kcal: 1500, protein: 84 } },
+  ], totals: { kcal: 1451, protein: 91 } },
   { day: 'Saturday', meals: [
     { type: 'Breakfast', name: 'Spinach & Feta Omelette', kcal: 360, protein: 28, prep: '10 min', desc: 'Three-egg omelette with wilted spinach, 30 g reduced-fat feta, and cherry tomatoes.', portion_size: '3 eggs, 60g wilted spinach, 30g reduced-fat feta, 100g cherry tomatoes' },
-    { type: 'Lunch', name: 'Lentil & Roasted Veg Bowl', kcal: 420, protein: 22, prep: '30 min', desc: 'Roasted butternut squash, courgette, and peppers over green lentils with a tahini dressing.', portion_size: '150g butternut squash, 150g courgette, 150g peppers, 120g green lentils (cooked), 1 tbsp tahini' },
-    { type: 'Dinner', name: 'Mushroom Risotto (lighter)', kcal: 530, protein: 18, prep: '35 min', desc: 'Arborio rice cooked with mixed mushrooms, low-fat crème fraîche, and Parmesan. Smaller portion.', portion_size: '70g Arborio rice (dry), 200g mixed mushrooms, 2 tbsp low-fat crème fraîche, 15g Parmesan' },
-    { type: 'Snack', name: 'Edamame Pods', kcal: 190, protein: 16, prep: '5 min', desc: '200 g edamame pods, lightly salted.', portion_size: '200g edamame pods' },
-  ], totals: { kcal: 1500, protein: 84 } },
+    { type: 'Lunch', name: 'Lentil & Roasted Veg Bowl', kcal: 601, protein: 36, prep: '30 min', desc: 'Roasted butternut squash, courgette, and peppers over green lentils with a tahini dressing.', portion_size: '150g butternut squash, 150g courgette, 150g peppers, 120g green lentils (cooked), 1 tbsp tahini' },
+    { type: 'Dinner', name: 'Mushroom Risotto (lighter)', kcal: 401, protein: 18, prep: '35 min', desc: 'Arborio rice cooked with mixed mushrooms, low-fat crème fraîche, and Parmesan. Smaller portion.', portion_size: '70g Arborio rice (dry), 200g mixed mushrooms, 2 tbsp low-fat crème fraîche, 15g Parmesan' },
+    { type: 'Snack', name: 'Edamame Pods', kcal: 242, protein: 22, prep: '5 min', desc: '200 g edamame pods, lightly salted.', portion_size: '200g edamame pods' },
+  ], totals: { kcal: 1604, protein: 104 } },
   { day: 'Sunday', meals: [
-    { type: 'Breakfast', name: 'Banana Protein Pancakes', kcal: 380, protein: 22, prep: '15 min', desc: 'Two pancakes made with mashed banana, two eggs, oat flour, and a sprinkle of cinnamon.', portion_size: '1 banana, 2 eggs, 50g oat flour' },
-    { type: 'Lunch', name: 'Caprese & Chickpea Salad', kcal: 400, protein: 22, prep: '10 min', desc: 'Buffalo mozzarella, tomato, basil, and chickpeas drizzled with olive oil and balsamic glaze.', portion_size: '125g buffalo mozzarella, 200g tomatoes, 120g chickpeas (drained), 1 tbsp olive oil' },
+    { type: 'Breakfast', name: 'Banana Protein Pancakes', kcal: 458, protein: 22, prep: '15 min', desc: 'Two pancakes made with mashed banana, two eggs, oat flour, and a sprinkle of cinnamon.', portion_size: '1 banana, 2 eggs, 50g oat flour' },
+    { type: 'Lunch', name: 'Caprese & Chickpea Salad', kcal: 643, protein: 33, prep: '10 min', desc: 'Buffalo mozzarella, tomato, basil, and chickpeas drizzled with olive oil and balsamic glaze.', portion_size: '125g buffalo mozzarella, 200g tomatoes, 120g chickpeas (drained), 1 tbsp olive oil' },
     { type: 'Dinner', name: 'Nut Roast with Roasted Veg', kcal: 520, protein: 24, prep: '45 min', desc: 'Homemade walnut and lentil nut roast with roasted carrots, parsnips, and a vegetarian gravy.', portion_size: '150g nut roast, 150g carrots, 150g parsnips' },
-    { type: 'Snack', name: 'Greek Yogurt & Honey', kcal: 200, protein: 15, prep: '2 min', desc: '200 g 0% Greek yogurt with a teaspoon of honey and a sprinkle of seeds.', portion_size: '200g 0% Greek yogurt, 1 tsp honey, 1 tsp mixed seeds' },
-  ], totals: { kcal: 1500, protein: 83 } },
+    { type: 'Snack', name: 'Greek Yogurt & Honey', kcal: 163, protein: 21, prep: '2 min', desc: '200 g 0% Greek yogurt with a teaspoon of honey and a sprinkle of seeds.', portion_size: '200g 0% Greek yogurt, 1 tsp honey, 1 tsp mixed seeds' },
+  ], totals: { kcal: 1784, protein: 100 } },
 ];
 
 const mkSupermarketPlan = (plan, store) =>
@@ -444,28 +424,18 @@ const mkSupermarketPlan = (plan, store) =>
     })),
   }));
 
-const PLAN_ALDI_1800   = mkSupermarketPlan(PLAN_1800, 'Aldi');
+const PLAN_ALDI_1800   = mkSupermarketPlan(PLAN_1500, 'Aldi');
 const PLAN_ALDI_HP     = mkSupermarketPlan(PLAN_HIGH_PROTEIN, 'Aldi');
-const PLAN_TESCO_1800  = mkSupermarketPlan(PLAN_1800, 'Tesco');
+const PLAN_TESCO_1800  = mkSupermarketPlan(PLAN_1500, 'Tesco');
 const PLAN_TESCO_HP    = mkSupermarketPlan(PLAN_HIGH_PROTEIN, 'Tesco');
-const PLAN_ASDA        = mkSupermarketPlan(PLAN_1800, 'Asda');
+const PLAN_ASDA        = mkSupermarketPlan(PLAN_1500, 'Asda');
 const PLAN_ASDA_1500   = mkSupermarketPlan(PLAN_1500, 'Asda');
-const PLAN_SAINSBURYS      = mkSupermarketPlan(PLAN_1800, "Sainsbury's");
+const PLAN_SAINSBURYS      = mkSupermarketPlan(PLAN_1500, "Sainsbury's");
 const PLAN_SAINSBURYS_1500 = mkSupermarketPlan(PLAN_1500, "Sainsbury's");
-const PLAN_LIDL            = mkSupermarketPlan(PLAN_1800, 'Lidl');
-const PLAN_MORRISONS       = mkSupermarketPlan(PLAN_1800, 'Morrisons');
+const PLAN_LIDL            = mkSupermarketPlan(PLAN_1500, 'Lidl');
+const PLAN_MORRISONS       = mkSupermarketPlan(PLAN_1500, 'Morrisons');
 const PLAN_MORRISONS_1500  = mkSupermarketPlan(PLAN_1500, 'Morrisons');
 const PLAN_ICELAND     = mkSupermarketPlan(PLAN_1500, 'Iceland');
-
-const PLAN_2500 = PLAN_2000.map(day => ({
-  ...day,
-  meals: day.meals.map(m => ({
-    ...m,
-    kcal: Math.round(m.kcal * 1.25),
-    desc: m.desc + ' Scale portions up by roughly 25% and add healthy fats such as avocado or a drizzle of olive oil.',
-  })),
-  totals: { kcal: 2500, protein: Math.round(day.totals.protein * 1.2) },
-}));
 
 export const mealPlansData = {
   '1500-calorie-meal-plan': {
@@ -600,7 +570,7 @@ export const mealPlansData = {
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
       { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
     ],
-    plan: PLAN_1800,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['1800-calorie-meal-plan'],
     priceEstimate: '£45–55 per week',
   },
@@ -652,7 +622,7 @@ export const mealPlansData = {
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
       { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
     ],
-    plan: PLAN_2000,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['2000-calorie-meal-plan'],
     priceEstimate: '£50–60 per week',
   },
@@ -1463,7 +1433,7 @@ export const mealPlansData = {
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
       { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals' },
     ],
-    plan: PLAN_2500,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['2500-calorie-meal-plan'],
     priceEstimate: '£55–70 per week',
   },
@@ -1568,7 +1538,7 @@ export const mealPlansData = {
       { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals' },
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
     ],
-    plan: PLAN_2000,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['budget-bodybuilding-meal-plan-uk'],
     priceEstimate: '£40–55 per week',
   },
@@ -1603,7 +1573,7 @@ export const mealPlansData = {
       { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals' },
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
     ],
-    plan: PLAN_1800,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['gym-beginner-meal-plan-uk'],
     priceEstimate: '£40–50 per week',
   },
@@ -1679,7 +1649,7 @@ export const mealPlansData = {
       { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals' },
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
     ],
-    plan: PLAN_2500,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['muscle-gain-meal-plan-uk'],
     priceEstimate: '£55–70 per week',
   },
@@ -1749,7 +1719,7 @@ export const mealPlansData = {
       { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals' },
       { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
     ],
-    plan: PLAN_1800,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['low-effort-meal-plan-uk'],
     priceEstimate: '£40–50 per week',
   },
@@ -1784,7 +1754,7 @@ export const mealPlansData = {
       { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
       { path: '/blog/high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals' },
     ],
-    plan: PLAN_1800,
+    plan: PLAN_1500,
     shoppingList: BASE_SHOPPING['busy-professional-meal-plan-uk'],
     priceEstimate: '£40–50 per week',
   },

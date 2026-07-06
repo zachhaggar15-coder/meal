@@ -894,7 +894,7 @@ function formatWholeCount(value) {
   return Math.max(1, Math.round(value));
 }
 
-function isCountUnit(unit) {
+export function isCountUnit(unit) {
   return [
     'biscuit', 'biscuits', 'cake', 'cakes', 'clove', 'cloves', 'cracker', 'crackers',
     'date', 'dates', 'egg', 'eggs', 'fillet', 'fillets', 'leaf', 'leaves', 'pack',
