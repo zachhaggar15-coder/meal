@@ -202,6 +202,7 @@ const ROUTES = uniqueRoutes([
   '/about',
   '/contact',
   '/privacy',
+  '/terms',
   '/meal-plans',
   ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
   ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
@@ -279,7 +280,7 @@ async function prerender() {
     if (route === '/quiz') return ['0.9', 'monthly'];
     if (route === '/tools') return ['0.8', 'monthly'];
     if (route === '/meal-plans') return ['0.9', 'weekly'];
-    if (route === '/about' || route === '/contact' || route === '/privacy') return ['0.6', 'monthly'];
+    if (route === '/about' || route === '/contact' || route === '/privacy' || route === '/terms') return ['0.6', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
     if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
     if (SEO_PRIORITY_ROUTE_SET.has(route)) return ['0.9', 'weekly'];

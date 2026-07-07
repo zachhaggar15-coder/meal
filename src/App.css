@@ -2004,10 +2004,6 @@ input:focus, select:focus {
 
 /* ── Navbar menu toggle ── */
 .nav-menu-toggle {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
@@ -2015,7 +2011,6 @@ input:focus, select:focus {
   padding: 6px 8px;
   color: var(--text);
   line-height: 1;
-  z-index: 101;
   border-radius: 6px;
   transition: background 0.15s;
 }
@@ -6639,9 +6634,10 @@ a {
 
 .quiz-page,
 .quiz-results-page {
-  align-items: flex-start;
+  align-items: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   min-height: auto;
   padding: 48px 22px 72px;
 }
@@ -7267,6 +7263,11 @@ body {
   font-size: 1rem;
   font-weight: 500;
   text-transform: none;
+}
+
+.nav-menu-toggle {
+  color: var(--editorial-ink);
+  border-color: var(--editorial-ink);
 }
 
 .nav-links {
@@ -8751,6 +8752,32 @@ textarea {
 
 .content-table {
   min-width: 620px;
+}
+
+.container-intent-table {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .container-intent-table {
+    font-size: 0.78rem;
+  }
+
+  .container-intent-table th,
+  .container-intent-table td {
+    padding: 8px 6px;
+  }
+}
+
+@media (max-width: 420px) {
+  .container-intent-table {
+    font-size: 0.68rem;
+  }
+
+  .container-intent-table th,
+  .container-intent-table td {
+    padding: 6px 4px;
+  }
 }
 
 @media (max-width: 900px) {

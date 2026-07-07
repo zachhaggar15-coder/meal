@@ -297,7 +297,7 @@ export default function ContainerGuide() {
               <tbody>
                 {searchIntentRows.map(row => (
                   <tr key={row.intent}>
-                    <td>{row.intent}</td>
+                    <td>{toTitleCase(row.intent)}</td>
                     <td>{toTitleCase(row.best)}</td>
                     <td>{row.why}</td>
                     <td><Link to={row.path}>Compare</Link></td>

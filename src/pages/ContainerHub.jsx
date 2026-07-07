@@ -227,7 +227,7 @@ export default function ContainerHub() {
               <tbody>
                 {queryRows.map(row => (
                   <tr key={row.query}>
-                    <td>{row.query}</td>
+                    <td>{toTitleCase(row.query)}</td>
                     <td>{row.answer}</td>
                     <td>
                       {row.link.startsWith('#') ? (

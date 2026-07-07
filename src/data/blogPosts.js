@@ -2044,9 +2044,9 @@ export const blogPostsData = {
           'These are the highest-impact vegan protein sources available at Tesco, Aldi, Sainsbury\'s, and Asda:',
         ],
         bullets: [
-          'Firm tofu: 8–10 g protein per 100 g, ~80 kcal. Tesco, Sainsbury\'s, and Asda sell 280–400 g blocks for £1.50–2.50. Freeze, then thaw for a chewier texture that absorbs marinades better.',
+          'Firm tofu: ~15 g protein per 100 g, ~145 kcal. Tesco, Sainsbury\'s, and Asda sell 280–400 g blocks for £1.50–2.50. Freeze, then thaw for a chewier texture that absorbs marinades better.',
           'Edamame beans (frozen): 11 g protein per 100 g, ~120 kcal. Available frozen at Tesco and Sainsbury\'s for ~£2 per 500 g. Outstanding vegan protein-to-calorie ratio.',
-          'Lentils (red or green, dried): 9 g protein per 100 g cooked, ~116 kcal. Aldi sells 500 g dried red lentils for 75p — one of the cheapest protein sources available.',
+          'Lentils (red or green, cooked): 9 g protein per 100 g, ~116 kcal. Aldi sells 500 g dried red lentils for 75p — one of the cheapest protein sources available.',
           'Chickpeas (tinned): 7 g protein per 100 g drained. 4 × 400 g tins at Aldi for ~£2.20. Bulk any curry or salad.',
           'Black beans (tinned): 8.9 g protein per 100 g. Excellent for chilli, burrito bowls, and salads.',
           'Soy mince / textured vegetable protein (TVP): 15–17 g protein per 100 g dry. Available at most supermarkets for £1–2 per 300 g. Rehydrates in boiling water and takes on flavours well.',
@@ -2079,7 +2079,7 @@ export const blogPostsData = {
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
     ],
     faq: [
-      { q: 'How do vegans get enough protein in the UK?', a: 'The best UK vegan protein sources are: tempeh (19g/100g), seitan (25g/100g), edamame (11g/100g), firm tofu (8–10g/100g), dried red lentils (9g/100g cooked), textured vegetable protein (15–17g/100g dry), pumpkin seeds (19g/100g), and hemp seeds (32g/100g). Combining these across the day provides all essential amino acids.' },
+      { q: 'How do vegans get enough protein in the UK?', a: 'The best UK vegan protein sources are: tempeh (19g/100g), seitan (25g/100g), edamame (11g/100g), firm tofu (~15g/100g), red lentils (9g/100g cooked), textured vegetable protein (15–17g/100g dry), pumpkin seeds (19g/100g), and hemp seeds (32g/100g). Combining these across the day provides all essential amino acids.' },
       { q: 'Can you build muscle on a vegan diet?', a: 'Yes, though it requires more planning than an omnivorous diet. Vegan athletes should target 1.8–2.2g of protein per kg of body weight (slightly higher than omnivores to account for lower bioavailability), prioritise leucine-rich plant sources (tofu, tempeh, edamame), and consider a vegan protein supplement to reach targets easily.' },
       { q: 'What supplements do vegans need in the UK?', a: 'The three essential supplements for UK vegans are: Vitamin B12 (1,000 mcg daily — not found in plant foods), Vitamin D (10–25 mcg daily, especially October–April when UK sunlight is insufficient), and long-chain omega-3 EPA/DHA from algae-based supplements (since ALA from flaxseed converts poorly to EPA/DHA).' },
     ],
@@ -2104,8 +2104,8 @@ export const blogPostsData = {
           'Skyr (Icelandic-style yogurt): 11 g protein per 100 g. Lidl Milbona range is excellent value at ~£1–1.50 per 450 g.',
           'Reduced-fat feta: 14 g protein per 100 g. Great in omelettes and salads.',
           'Edamame beans (frozen): 11 g protein per 100 g. Best plant protein in any supermarket.',
-          'Lentils (red or green, dried): 9 g protein per 100 g cooked.',
-          'Tofu (firm): 8–10 g protein per 100 g. Widely available, versatile, and absorbs flavours well.',
+          'Lentils (red or green): 9 g protein per 100 g cooked.',
+          'Tofu (firm): ~15 g protein per 100 g. Widely available, versatile, and absorbs flavours well.',
           'Reduced-fat halloumi: 20 g protein per 100 g. Slightly higher calorie than Greek yogurt but excellent for adding variety to meal prep.',
           'Whey protein powder: 20–25 g protein per scoop. Stir into yogurt or oats for an easy protein boost.',
         ],
@@ -2281,7 +2281,8 @@ export const blogPostsData = {
 
   'batch-cooking-for-beginners-uk': {
     published: '2026-05-30',
-    title: 'Batch Cooking for Beginners UK: 5 Meals in 2 Hours (2025)',
+    modified: '2026-07-06',
+    title: 'Batch Cooking for Beginners UK: 5 Meals in 2 Hours',
     description: 'Batch cooking for beginners UK — a step-by-step 2-hour Sunday cook that produces 5 days of healthy, high-protein meals. Shopping list, timings, and storage tips included.',
     h1: 'Batch Cooking for Beginners UK: 5 High-Protein Meals in 2 Hours',
     intro: 'Batch cooking is the single most effective habit for eating well during a busy week. Two hours on a Sunday produces five days of ready-to-eat meals that cost a fraction of takeaways and meal deals — eliminating the daily temptation of unhealthy options when you are tired and hungry. This guide walks a complete beginner through a structured Sunday batch-cook session that produces five high-protein lunches and dinners for under £30.',
@@ -2348,7 +2349,8 @@ export const blogPostsData = {
 
   'intermittent-fasting-meal-plan-uk': {
     published: '2026-05-30',
-    title: 'Intermittent Fasting Meal Plan UK: 16:8 Guide & Food Ideas (2025)',
+    modified: '2026-07-06',
+    title: 'Intermittent Fasting Meal Plan UK: 16:8 Guide & Food Ideas',
     description: 'Intermittent fasting meal plan UK — how to do 16:8 IF, what to eat during your eating window, and whether it actually works for weight loss. Generate a free IF-compatible meal plan.',
     h1: 'Intermittent Fasting Meal Plan UK: 16:8 Guide and What to Eat',
     intro: 'Intermittent fasting (IF) has become one of the most popular dietary approaches in the UK, with 16:8 (16 hours fasting, 8 hours eating) being the most widely used protocol. The research on its effectiveness for weight loss is solid — but largely because it is a convenient way to create a calorie deficit, not because fasting has unique metabolic benefits beyond what a calorie deficit achieves. This guide explains 16:8 practically for UK adults, including what to eat, when to eat, and how to combine it with meal prep.',
@@ -2662,12 +2664,10 @@ export const blogPostsData = {
 
   'meal-prep-containers-uk': {
     published: '2026-05-30',
-    modified: '2026-06-23',
+    modified: '2026-07-06',
     title: 'Meal Prep Containers UK: Glass vs Plastic, Sizes and Starter Sets',
-    description: 'Best meal prep containers UK 2025 — glass vs plastic, what size to buy, which brands are worth it, and where to get them cheap. Full guide for UK meal preppers.',
     h1: 'Meal Prep Containers UK: Glass vs Plastic, Sizes and Starter Sets',
     description: 'Meal prep containers UK guide: compare glass vs plastic, container sizes, starter sets, budget tubs, glass boxes and premium meal prep storage.',
-    intro: 'The right containers make meal prep dramatically more practical — they need to stack neatly, seal airtight, survive the microwave and dishwasher, and keep food fresh for 5 days. The wrong ones warp, stain, leak, or stop sealing after a few uses. This guide covers everything UK meal preppers need to know: the glass versus plastic debate, what sizes to buy, and where to get the best value in 2025.',
     intro: 'The right containers make meal prep dramatically more practical: they need to stack neatly, seal well, suit reheating, survive repeat washing and keep food fresh. The wrong ones warp, stain, leak, or stop sealing after a few uses. This guide covers the glass versus plastic debate, what sizes to buy and how to build a sensible starter set.',
     affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
     contextualLinks: [

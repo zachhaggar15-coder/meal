@@ -40,9 +40,9 @@ export const NUTRITION_TABLE = {
   'granola':                { kcal100: 450, pro100: 10 },
   'low-sugar granola':      { kcal100: 420, pro100: 12 },
   'sweet potato':           { kcal100: 86, pro100: 1.6 },
-  'new potatoes':           { kcal100: 79, pro100: 1.9 },
+  'new potatoes':           { kcal100: 72, pro100: 1.9 }, // corrected 2026-07-06: CoFID "new/salad potatoes, raw" ~69-72kcal
   'potato':                 { kcal100: 87, pro100: 1.9 },
-  'potato baked':           { kcal100: 93, pro100: 2.1 },
+  'potato baked':           { kcal100: 93, pro100: 2.6 }, // corrected 2026-07-06: USDA baked potato (flesh+skin)
   'parsnip':                { kcal100: 65, pro100: 1.6 },
   'butternut squash':       { kcal100: 45, pro100: 1 },
   'cauliflower':            { kcal100: 25, pro100: 1.9 },
@@ -56,7 +56,7 @@ export const NUTRITION_TABLE = {
   'rice cakes':             { kcal100: 387, pro100: 8, gramsEach: 9 },
   'oatcakes':               { kcal100: 430, pro100: 10, gramsEach: 13 },
   'oat biscuits':           { kcal100: 470, pro100: 7, gramsEach: 15 },
-  'rye crackers':           { kcal100: 300, pro100: 8, gramsEach: 10 },
+  'rye crackers':           { kcal100: 340, pro100: 8, gramsEach: 10 }, // corrected 2026-07-06: Ryvita Original official label ~350kcal/100g
 
   // ── Dairy & alternatives ─────────────────────────────────────────────────
   'semi-skimmed milk':      { kcal100: 47, pro100: 3.6 }, // verified 2026-07-06
@@ -69,19 +69,19 @@ export const NUTRITION_TABLE = {
   'low-fat yogurt':         { kcal100: 56, pro100: 4.8 },
   'low-fat natural yogurt': { kcal100: 56, pro100: 4.8 },
   'dairy-free yogurt':      { kcal100: 70, pro100: 1.5 },
-  'high-protein yogurt pot':{ kcal100: 75, pro100: 15, gramsEach: 150 },
-  'protein yogurt':         { kcal100: 75, pro100: 15 },
+  'high-protein yogurt pot':{ kcal100: 75, pro100: 11.5, gramsEach: 150 }, // corrected 2026-07-06: Arla Protein/Milbona branded pots ~10-12.5g/100g
+  'protein yogurt':         { kcal100: 75, pro100: 11.5 },
   'skyr':                   { kcal100: 63, pro100: 11 },
   'plain kefir':            { kcal100: 41, pro100: 3.4 },
   'cottage cheese':         { kcal100: 98, pro100: 12 },
   'low-fat cottage cheese': { kcal100: 80, pro100: 11 },
-  'reduced-fat cheddar':    { kcal100: 260, pro100: 27 },
-  'parmesan':               { kcal100: 420, pro100: 38 },
+  'reduced-fat cheddar':    { kcal100: 280, pro100: 29 }, // corrected 2026-07-06: Cathedral City/Pilgrims Choice reduced-fat cheddar ~274-315kcal, 28-30g
+  'parmesan':               { kcal100: 420, pro100: 33 }, // corrected 2026-07-06: Parmigiano Reggiano Consortium official figure
   'halloumi':               { kcal100: 320, pro100: 22 },
-  'reduced-fat halloumi':   { kcal100: 280, pro100: 22 },
-  'light cream cheese':     { kcal100: 155, pro100: 6 },
-  'ricotta cheese':         { kcal100: 150, pro100: 8 },
-  'light mozzarella':       { kcal100: 220, pro100: 24 },
+  'reduced-fat halloumi':   { kcal100: 245, pro100: 22 }, // corrected 2026-07-06: Sainsbury's Light Halloumi ~244kcal
+  'light cream cheese':     { kcal100: 155, pro100: 3.2 }, // corrected 2026-07-06: Philadelphia Light official panel
+  'ricotta cheese':         { kcal100: 150, pro100: 10 }, // corrected 2026-07-06: whole/part-skim ricotta average ~10-11g protein
+  'light mozzarella':       { kcal100: 250, pro100: 24 }, // corrected 2026-07-06: generic low-fat mozzarella ~254kcal
   'buffalo mozzarella':     { kcal100: 280, pro100: 18 },
   'reduced-fat feta':       { kcal100: 200, pro100: 16 },
   'low-fat paneer':         { kcal100: 220, pro100: 18 },
@@ -94,9 +94,9 @@ export const NUTRITION_TABLE = {
   // ── Meat, fish & meat-free protein (raw weight unless marked cooked) ─────
   'chicken breast':         { kcal100: 120, pro100: 22.5 }, // verified 2026-07-06 (USDA raw)
   'chicken breast cooked':  { kcal100: 165, pro100: 31 },   // verified 2026-07-06 (USDA cooked)
-  'chicken thighs':         { kcal100: 145, pro100: 19 },
+  'chicken thighs':         { kcal100: 115, pro100: 20 }, // corrected 2026-07-06: was ~25% high vs CoFID raw dark meat
   'chicken tikka':          { kcal100: 170, pro100: 25 },
-  'turkey mince lean':      { kcal100: 120, pro100: 21 },
+  'turkey mince lean':      { kcal100: 132, pro100: 21 }, // corrected 2026-07-06: Sainsbury's/Tesco UK extra-lean turkey mince labels ~130-138kcal
   'turkey breast slices':   { kcal100: 104, pro100: 22 },
   'turkey breast':          { kcal100: 104, pro100: 22 },
   'turkey sausages':        { kcal100: 180, pro100: 16, gramsEach: 50 },
@@ -104,28 +104,28 @@ export const NUTRITION_TABLE = {
   'turkey patty':           { kcal100: 160, pro100: 20 },
   'lean beef mince':        { kcal100: 137, pro100: 21 },
   'lean beef strips':       { kcal100: 150, pro100: 22 },
-  'lean sirloin steak':     { kcal100: 150, pro100: 22 },
+  'lean sirloin steak':     { kcal100: 140, pro100: 22 }, // corrected 2026-07-06: nudged toward CoFID lean sirloin (~135)
   'lean stewing beef':      { kcal100: 150, pro100: 22 },
-  'steak':                  { kcal100: 170, pro100: 21 },
-  'lean beef jerky':        { kcal100: 250, pro100: 33 },
+  'steak':                  { kcal100: 135, pro100: 22 }, // corrected 2026-07-06: was ~25-30% high vs CoFID lean beef steak cuts
+  'lean beef jerky':        { kcal100: 410, pro100: 33 }, // corrected 2026-07-06: was ~39% low vs USDA beef jerky
   'lean lamb mince':        { kcal100: 200, pro100: 20 },
   'lean lamb shoulder':     { kcal100: 200, pro100: 20 },
   'pork tenderloin':        { kcal100: 110, pro100: 22 },
-  'pork loin':              { kcal100: 140, pro100: 21 },
-  'back bacon rashers':     { kcal100: 150, pro100: 24, gramsEach: 30 },
-  'lean bacon rashers':     { kcal100: 150, pro100: 24, gramsEach: 30 },
-  'salmon fillet':          { kcal100: 180, pro100: 20, gramsEach: 150 },
-  'smoked salmon':          { kcal100: 130, pro100: 25 },
-  'smoked mackerel fillet': { kcal100: 220, pro100: 19, gramsEach: 80 },
+  'pork loin':              { kcal100: 130, pro100: 21 }, // corrected 2026-07-06: nudged toward CoFID pork steaks (~120)
+  'back bacon rashers':     { kcal100: 213, pro100: 26, gramsEach: 30 }, // corrected 2026-07-06: was ~30% low vs CoFID grilled back bacon
+  'lean bacon rashers':     { kcal100: 213, pro100: 26, gramsEach: 30 },
+  'salmon fillet':          { kcal100: 195, pro100: 20, gramsEach: 150 }, // corrected 2026-07-06: nudged toward USDA raw farmed salmon (~208)
+  'smoked salmon':          { kcal100: 184, pro100: 23 }, // corrected 2026-07-06: was ~29% low vs CoFID cold-smoked
+  'smoked mackerel fillet': { kcal100: 301, pro100: 21, gramsEach: 80 }, // corrected 2026-07-06: was ~27% low vs CoFID smoked mackerel
   'mackerel fillet':        { kcal100: 205, pro100: 19, gramsEach: 80 },
   'tinned mackerel in brine': { kcal100: 190, pro100: 19 },
   'tinned sardines':        { kcal100: 175, pro100: 21 },
   'smoked haddock fillet':  { kcal100: 100, pro100: 23, gramsEach: 150 },
   'cod fillet':             { kcal100: 82, pro100: 18, gramsEach: 150 },
-  'tuna steak':             { kcal100: 130, pro100: 28 },
+  'tuna steak':             { kcal100: 120, pro100: 26 }, // corrected 2026-07-06: nudged toward USDA raw tuna (species-dependent)
   'tinned tuna in spring water': { kcal100: 116, pro100: 26, gramsEach: 145 },
-  'king prawns':            { kcal100: 71, pro100: 17 },
-  'quorn mince':            { kcal100: 90, pro100: 12 },
+  'king prawns':            { kcal100: 71, pro100: 18 }, // corrected 2026-07-06: Waitrose UK label matches kcal exactly; protein nudged toward brand range (20-24g)
+  'quorn mince':            { kcal100: 103, pro100: 16 }, // corrected 2026-07-06: Quorn official UK product page
   'falafel':                { kcal100: 230, pro100: 8, gramsEach: 45 },
   'firm tofu':              { kcal100: 145, pro100: 15.5 },
   'silken tofu':            { kcal100: 55, pro100: 5.5 },
@@ -139,9 +139,9 @@ export const NUTRITION_TABLE = {
   'cannellini beans':       { kcal100: 95, pro100: 6.5 },
   'mixed beans':            { kcal100: 100, pro100: 7 },
   'edamame beans':          { kcal100: 121, pro100: 11 },
-  'red lentils dry':        { kcal100: 320, pro100: 24 },
-  'green lentils dry':      { kcal100: 310, pro100: 24 },
-  'lentils cooked':         { kcal100: 105, pro100: 8 },
+  'red lentils dry':        { kcal100: 340, pro100: 24.6 }, // corrected 2026-07-06: USDA raw lentils
+  'green lentils dry':      { kcal100: 340, pro100: 24.6 }, // corrected 2026-07-06: USDA raw lentils (no distinct green-lentil source found)
+  'lentils cooked':         { kcal100: 114, pro100: 9 }, // corrected 2026-07-06: USDA boiled lentils
   'sweetcorn':              { kcal100: 86, pro100: 3.2 },
   'nut roast':              { kcal100: 220, pro100: 10 },
 
@@ -200,7 +200,7 @@ export const NUTRITION_TABLE = {
   'mixed leaves':           { kcal100: 15, pro100: 1.2 },
   'rocket':                 { kcal100: 25, pro100: 2.6 },
   'cabbage':                { kcal100: 25, pro100: 1.3 },
-  'leek':                   { kcal100: 22, pro100: 1.5 },
+  'leek':                   { kcal100: 61, pro100: 1.5 }, // corrected 2026-07-06: was understated ~65% vs USDA/multiple sources
   'beansprouts':            { kcal100: 30, pro100: 3 },
   'frozen peas':            { kcal100: 79, pro100: 5.4 },
   'mixed veg':              { kcal100: 40, pro100: 2.2 },
@@ -211,13 +211,13 @@ export const NUTRITION_TABLE = {
   'olive oil':              { kcal100: 884, pro100: 0, gramsPerTbsp: 13.5, gramsPerTsp: 4.5 }, // verified 2026-07-06 (119kcal/tbsp)
   'sesame oil':             { kcal100: 884, pro100: 0, gramsPerTbsp: 13.5, gramsPerTsp: 4.5 },
   'soy sauce':              { kcal100: 60, pro100: 8 },
-  'tamari':                 { kcal100: 60, pro100: 8 },
+  'tamari':                 { kcal100: 60, pro100: 10.5 }, // corrected 2026-07-06: USDA — tamari is more protein-dense than soy sauce
   'hoisin sauce':           { kcal100: 220, pro100: 3 },
   'teriyaki sauce':         { kcal100: 90, pro100: 3 },
   'sweet chilli sauce':     { kcal100: 200, pro100: 0.5 },
   'salsa':                  { kcal100: 35, pro100: 1.2 },
   'mustard':                { kcal100: 66, pro100: 4 },
-  'light mayo':             { kcal100: 190, pro100: 1 },
+  'light mayo':             { kcal100: 265, pro100: 1 }, // corrected 2026-07-06: Hellmann's Light Mayo UK label
   'green pesto':            { kcal100: 380, pro100: 4 },
   'honey':                  { kcal100: 304, pro100: 0.3, gramsPerTsp: 7, gramsPerTbsp: 21 }, // verified 2026-07-06
   'maple syrup':            { kcal100: 260, pro100: 0.1, gramsPerTsp: 7, gramsPerTbsp: 21 },
@@ -225,7 +225,7 @@ export const NUTRITION_TABLE = {
   'light dressing':         { kcal100: 50, pro100: 1 },
   'lemon dressing':         { kcal100: 90, pro100: 1.5 },
   'mustard dressing':       { kcal100: 90, pro100: 1.5 },
-  'tahini dressing':        { kcal100: 200, pro100: 4 },
+  'tahini dressing':        { kcal100: 235, pro100: 9 }, // corrected 2026-07-06: Al'Fez UK tahini dressing label
   'balsamic dressing':      { kcal100: 90, pro100: 0.5 },
   'plant-based dressing':   { kcal100: 90, pro100: 1.5 },
   'caesar dressing':        { kcal100: 300, pro100: 2 },
@@ -234,7 +234,7 @@ export const NUTRITION_TABLE = {
   'raita':                  { kcal100: 60, pro100: 3 },
   'curry paste':            { kcal100: 250, pro100: 5 },
   'tikka paste':            { kcal100: 250, pro100: 5 },
-  'tomato curry sauce':     { kcal100: 60, pro100: 1.5 },
+  'tomato curry sauce':     { kcal100: 78, pro100: 1.5 }, // corrected 2026-07-06: Sharwood's UK jarred curry sauce labels (Jalfrezi/Rogan Josh/Balti)
   'miso paste':             { kcal100: 200, pro100: 12 },
   'coconut milk':           { kcal100: 190, pro100: 2 },
   'coconut milk light':     { kcal100: 95, pro100: 1 },
@@ -242,9 +242,9 @@ export const NUTRITION_TABLE = {
   'tinned pineapple in juice': { kcal100: 60, pro100: 0.5 },
   'pancake batter':         { kcal100: 200, pro100: 7 },
   'energy balls':           { kcal100: 450, pro100: 6 },
-  'vegetable stock':        { kcal100: 3, pro100: 0.2 },
-  'chicken stock':          { kcal100: 3, pro100: 0.2 },
-  'beef stock':             { kcal100: 5, pro100: 0.3 },
+  'vegetable stock':        { kcal100: 6, pro100: 0.3 }, // corrected 2026-07-06: Knorr/Oxo UK made-up stock labels
+  'chicken stock':          { kcal100: 6, pro100: 0.4 }, // corrected 2026-07-06: consistent with Knorr/Oxo made-up stock labels
+  'beef stock':             { kcal100: 7, pro100: 0.4 }, // corrected 2026-07-06: consistent with Knorr/Oxo made-up stock labels
   'water':                  { kcal100: 0, pro100: 0 },
   'garlic powder':          { kcal100: 330, pro100: 17 },
   'curry powder':           { kcal100: 300, pro100: 12 },
