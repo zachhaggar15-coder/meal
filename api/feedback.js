@@ -1,7 +1,7 @@
 // Vercel serverless function: POST /api/feedback
 // Sends site feedback through a private webhook or Resend.
 
-const DEFAULT_FEEDBACK_TO = 'dojostack@protonmail.com';
+const DEFAULT_FEEDBACK_TO = 'mealprep.org.uk@proton.me';
 const DEFAULT_FEEDBACK_FROM = 'MealPrep Feedback <onboarding@resend.dev>';
 const MAX_FEEDBACK_LENGTH = 4000;
 
@@ -54,8 +54,12 @@ export default async function handler(req, res) {
     return acceptFeedbackFallback(res, payload, 'provider_missing');
   }
 
-  const from = resolveFeedbackFrom(process.env.FEEDBACK_FROM_EMAIL);
-  const to = cleanEmailHeader(process.env.FEEDBACK_TO_EMAIL, DEFAULT_FEEDBACK_TO);
+  const from = resolveFeedbackFrom(process.env.MEALPREP_FROM_EMAIL || process.env.FEEDBACK_FROM_EMAIL);
+  const to = cleanEmailHeader(
+    process.env.MEALPREP_FEEDBACK_TO_EMAIL || process.env.FEEDBACK_TO_EMAIL,
+    DEFAULT_FEEDBACK_TO,
+  );
+  const replyTo = cleanEmailHeader(process.env.MEALPREP_REPLY_TO_EMAIL, DEFAULT_FEEDBACK_TO);
   const recipients = parseEmailRecipients(to);
   const text = [
     'New MealPrep.org.uk feedback',
@@ -83,6 +87,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from,
         to: recipients,
+        reply_to: replyTo,
         subject,
         text,
         html,

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import WaitlistSection from '../components/WaitlistSection.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
@@ -645,6 +646,7 @@ export default function MealPlanPage() {
 
         <FeedbackBox />
       </div>
+      <WaitlistSection sourcePage="meal-plan" />
       <Footer />
     </>
   );

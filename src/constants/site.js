@@ -2,7 +2,7 @@ export const SITE_NAME = 'MealPrep.org.uk';
 export const SITE_URL = 'https://www.mealprep.org.uk';
 export const SITE_DESCRIPTION =
   'Free UK meal plans by goal, supermarket, calories, budget, and diet.';
-export const SITE_CONTACT_EMAIL = 'dojostack@protonmail.com';
+export const SITE_CONTACT_EMAIL = 'mealprep.org.uk@proton.me';
 export const SITE_AUTHOR_NAME = 'MealPrep.org.uk editorial team';
 export const SITE_AUTHOR_URL = `${SITE_URL}/about`;
 

@@ -25,6 +25,7 @@ import Privacy from './pages/Privacy.jsx';
 import Terms from './pages/Terms.jsx';
 import SupermarketIndexPage from './pages/SupermarketIndexPage.jsx';
 import NotFound from './pages/NotFound.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -79,6 +80,7 @@ export default function App() {
             <Route path="/meal-prep-containers" element={<ContainerHub />} />
             <Route path="/meal-prep-containers/:tier" element={<ContainerGuide />} />
             <Route path="/stickers" element={<Stickers />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

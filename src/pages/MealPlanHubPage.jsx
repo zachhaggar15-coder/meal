@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import WaitlistSection from '../components/WaitlistSection.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
@@ -292,6 +293,7 @@ export default function MealPlanHubPage() {
         </ul>
         <TrustBox sources={sources} reviewed={hub.reviewed || '17 June 2026'} />
       </div>
+      <WaitlistSection sourcePage="meal-plan-hub" />
       <Footer />
     </>
   );

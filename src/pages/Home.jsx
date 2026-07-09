@@ -6,6 +6,7 @@ import ShoppingList from '../components/ShoppingList.jsx';
 import EditPlanBox from '../components/EditPlanBox.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
+import WaitlistSection from '../components/WaitlistSection.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
@@ -479,6 +480,7 @@ export default function Home() {
         </section>
 
       </div>
+      <WaitlistSection sourcePage="home" />
       <Footer />
     </>
   );
