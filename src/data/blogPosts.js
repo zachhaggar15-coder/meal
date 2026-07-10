@@ -1,5 +1,6 @@
 import { containerBlogPostsData } from './containerBlogPosts.js';
 import { expandedBlogPostsData } from './expandedBlogPosts.js';
+import { blogPostsBatch4Data } from './blogPostsBatch4.js';
 
 // Static content for SEO blog posts.
 // Each entry keyed by URL slug.
@@ -7,6 +8,7 @@ import { expandedBlogPostsData } from './expandedBlogPosts.js';
 export const blogPostsData = {
   ...containerBlogPostsData,
   ...expandedBlogPostsData,
+  ...blogPostsBatch4Data,
   'how-to-build-a-calorie-deficit': {
     published: '2026-05-28',
     title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',
@@ -2337,6 +2339,8 @@ export const blogPostsData = {
     related: [
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
+      { slug: 'air-fryer-meal-prep-uk', label: 'Air Fryer Meal Prep UK', type: 'blog' },
+      { slug: 'chicken-and-rice-meal-prep-uk', label: 'Chicken and Rice Meal Prep UK', type: 'blog' },
       { slug: 'aldi-weight-loss-1800', label: '1800 kcal Meal Plan', type: 'plan' },
       { slug: 'aldi-busy-professional-1800', label: 'Aldi Busy Professional Plan', type: 'plan' },
     ],

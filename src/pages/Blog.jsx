@@ -42,6 +42,7 @@ const CATEGORY_ORDER = [
       'high-protein-vegetarian-meal-prep-uk',
       'cheap-protein-sources-uk-supermarkets',
       'protein-porridge-and-yogurt-breakfasts-uk',
+      'overnight-oats-meal-prep-uk',
       'low-calorie-high-volume-foods-uk',
       'best-fibre-foods-for-weight-loss-uk',
       'protein-meal-prep-without-powder-uk',
@@ -64,6 +65,8 @@ const CATEGORY_ORDER = [
       'one-pan-meal-prep-uk',
       'meal-prep-shopping-list-template-uk',
       'how-to-store-meal-prep-safely-uk',
+      'air-fryer-meal-prep-uk',
+      'chicken-and-rice-meal-prep-uk',
     ],
   },
   {

@@ -889,6 +889,7 @@ export const expandedBlogPostsData = {
     related: [
       { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
       { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
+      { slug: 'overnight-oats-meal-prep-uk', label: 'Overnight Oats Meal Prep UK', type: 'blog' },
       ...proteinRelated,
     ],
     faq: [

@@ -249,6 +249,8 @@ export const containerBlogPostsData = {
     ],
     related: [
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
+      { slug: 'best-glass-meal-prep-containers-uk', label: 'Best Glass Meal Prep Containers UK', type: 'blog' },
+      { slug: 'plastic-meal-prep-containers-uk', label: 'Plastic Meal Prep Containers UK', type: 'blog' },
       ...guideRelated,
     ],
     faq: [
@@ -315,6 +317,8 @@ export const containerBlogPostsData = {
     related: [
       { slug: 'meal-prep-tubs-for-batch-cooking', label: 'Meal Prep Tubs for Batch Cooking', type: 'blog' },
       { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
+      { slug: 'meal-prep-container-lids-leaking', label: 'Why Do My Meal Prep Container Lids Leak?', type: 'blog' },
+      { slug: 'meal-prep-containers-for-soup-uk', label: 'Best Meal Prep Containers for Soup UK', type: 'blog' },
       ...guideRelated,
     ],
     faq: [
@@ -467,6 +471,7 @@ export const containerBlogPostsData = {
     related: [
       { slug: 'leakproof-meal-prep-containers-uk', label: 'Leakproof Meal Prep Containers UK', type: 'blog' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
+      { slug: 'best-lunch-bags-for-meal-prep-uk', label: 'Best Lunch Bags for Meal Prep UK', type: 'blog' },
       ...guideRelated,
     ],
     faq: [
@@ -600,6 +605,7 @@ export const containerBlogPostsData = {
     related: [
       { slug: 'glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Meal Prep Containers', type: 'blog' },
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
+      { slug: 'microwave-safe-meal-prep-containers-uk', label: 'Microwave-Safe Meal Prep Containers UK', type: 'blog' },
       ...guideRelated,
     ],
     faq: [
