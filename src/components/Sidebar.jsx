@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import {
@@ -142,6 +142,15 @@ export default function Sidebar({ open, onClose }) {
   function toggle(label) {
     setExpanded(prev => ({ ...prev, [label]: !prev[label] }));
   }
+
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [open, onClose]);
 
   function isActive(to) {
     const [path, hash] = to.split('#');

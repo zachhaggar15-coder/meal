@@ -330,8 +330,9 @@ input:focus, select:focus {
   gap: 16px;
 }
 
-.shop-group h4 {
+.shop-group h3 {
   margin: 0 0 6px;
+  font-size: 1em;
   text-transform: capitalize;
   color: var(--accent-dark);
 }
@@ -2038,7 +2039,8 @@ input:focus, select:focus {
 }
 
 .meal-prompt-input:focus {
-  outline: none;
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
   border-color: var(--accent);
 }
 

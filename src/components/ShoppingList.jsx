@@ -56,7 +56,7 @@ export default function ShoppingList({ list, price }) {
       <div className="shop-grid">
         {groups.map(([group, items]) => (
           <div key={group} className="shop-group">
-            <h4>{group}</h4>
+            <h3>{group}</h3>
             <ul>
               {items.map((item, i) =>
                 typeof item === 'object' && item !== null ? (

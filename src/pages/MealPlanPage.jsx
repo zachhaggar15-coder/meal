@@ -223,7 +223,7 @@ export default function MealPlanPage() {
       <div className="shop-grid">
         {Object.entries(shoppingList).filter(([, items]) => items.length > 0).map(([group, items]) => (
           <div key={group} className="shop-group">
-            <h4>{group.charAt(0).toUpperCase() + group.slice(1)}</h4>
+            <h3>{group.charAt(0).toUpperCase() + group.slice(1)}</h3>
             <ul>{items.map((item, i) => <li key={i}>{item}</li>)}</ul>
           </div>
         ))}
@@ -506,7 +506,7 @@ export default function MealPlanPage() {
         <div className="shop-grid">
           {Object.entries(shoppingList).filter(([, items]) => items.length > 0).map(([group, items]) => (
             <div key={group} className="shop-group">
-              <h4>{group.charAt(0).toUpperCase() + group.slice(1)}</h4>
+              <h3>{group.charAt(0).toUpperCase() + group.slice(1)}</h3>
               <ul>{items.map((item, i) => <li key={i}>{item}</li>)}</ul>
             </div>
           ))}
