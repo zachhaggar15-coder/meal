@@ -370,7 +370,7 @@ export default function Quiz() {
                       ))}
                     </div>
 
-                    {macroError && <p className="quiz-macro-error">{macroError}</p>}
+                    {macroError && <p className="quiz-macro-error" role="alert">{macroError}</p>}
 
                     <button className="quiz-submit-btn" type="submit">
                       See My Meal Plans →

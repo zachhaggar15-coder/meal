@@ -219,9 +219,9 @@ export default function ContainerHub() {
             <table className="content-table container-intent-table">
               <thead>
                 <tr>
-                  <th>Search</th>
-                  <th>Best answer</th>
-                  <th>Next step</th>
+                  <th scope="col">Search</th>
+                  <th scope="col">Best answer</th>
+                  <th scope="col">Next step</th>
                 </tr>
               </thead>
               <tbody>
@@ -267,9 +267,9 @@ export default function ContainerHub() {
             <table className="content-table">
               <thead>
                 <tr>
-                  <th>Prep style</th>
-                  <th>Starter setup</th>
-                  <th>Useful extra</th>
+                  <th scope="col">Prep style</th>
+                  <th scope="col">Starter setup</th>
+                  <th scope="col">Useful extra</th>
                 </tr>
               </thead>
               <tbody>
@@ -296,8 +296,8 @@ export default function ContainerHub() {
             <table className="content-table container-intent-table">
               <thead>
                 <tr>
-                  <th>Criterion</th>
-                  <th>What we look for</th>
+                  <th scope="col">Criterion</th>
+                  <th scope="col">What we look for</th>
                 </tr>
               </thead>
               <tbody>

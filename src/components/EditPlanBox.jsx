@@ -31,7 +31,7 @@ export default function EditPlanBox({ onEdit, loading, error }) {
           rows={3}
           disabled={loading}
         />
-        {error && <p className="edit-plan-error">{error}</p>}
+        {error && <p className="edit-plan-error" role="alert">{error}</p>}
         <button className="submit" type="submit" disabled={loading || !instruction.trim()}>
           {loading ? 'Updating plan…' : 'Update Plan'}
         </button>

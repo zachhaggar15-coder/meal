@@ -138,7 +138,7 @@ export default function AdminDashboard() {
                   <p className="admin-note">Email addresses are partially masked here. Use CSV export for the full list.</p>
                   <table className="content-table">
                     <thead>
-                      <tr><th>Email</th><th>Name</th><th>Supermarket</th><th>Goal</th><th>Joined</th></tr>
+                      <tr><th scope="col">Email</th><th scope="col">Name</th><th scope="col">Supermarket</th><th scope="col">Goal</th><th scope="col">Joined</th></tr>
                     </thead>
                     <tbody>
                       {stats.recent.map((r, i) => (

@@ -142,6 +142,8 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
                   onChange={e => { setEmail(e.target.value); if (status === 'error') setStatus('idle'); }}
                   placeholder="you@example.com"
                   disabled={sending}
+                  aria-invalid={status === 'error'}
+                  aria-describedby={status === 'error' ? `${uid}-email-error` : undefined}
                 />
               </div>
 
@@ -204,7 +206,7 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
               </button>
 
               {status === 'error' && (
-                <p className="waitlist-error" role="alert">{message}</p>
+                <p className="waitlist-error" role="alert" id={`${uid}-email-error`}>{message}</p>
               )}
 
               <p className="waitlist-privacy">

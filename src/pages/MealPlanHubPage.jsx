@@ -221,7 +221,7 @@ export default function MealPlanHubPage() {
                   {section.table.headers && (
                     <thead>
                       <tr>
-                        {section.table.headers.map(header => <th key={header}>{header}</th>)}
+                        {section.table.headers.map(header => <th key={header} scope="col">{header}</th>)}
                       </tr>
                     </thead>
                   )}

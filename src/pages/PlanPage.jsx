@@ -453,7 +453,7 @@ export default function PlanPage() {
                       Cancel
                     </button>
                   </div>
-                  {editError && <p className="plan-meal-edit-error">{editError}</p>}
+                  {editError && <p className="plan-meal-edit-error" role="alert">{editError}</p>}
                   <p className="plan-meal-edit-hint">
                     Try: "make it vegetarian", "remove eggs", "make it cheaper", "increase protein"
                   </p>
@@ -1101,9 +1101,9 @@ function PlanQualityNotes({ plan }) {
         <table className="content-table plan-quality-table">
           <thead>
             <tr>
-              <th>Decision</th>
-              <th>This plan uses</th>
-              <th>Why it matters</th>
+              <th scope="col">Decision</th>
+              <th scope="col">This plan uses</th>
+              <th scope="col">Why it matters</th>
             </tr>
           </thead>
           <tbody>

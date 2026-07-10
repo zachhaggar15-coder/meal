@@ -9221,7 +9221,7 @@ textarea {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #2563eb;
+  color: #1d4ed8;
   background: #e7efff;
   border-radius: 999px;
   padding: 5px 12px;
@@ -9300,7 +9300,7 @@ textarea {
   margin-bottom: 6px;
 }
 .waitlist-req { color: #dc2626; }
-.waitlist-optional { color: #999183; font-weight: 400; font-size: 0.78rem; }
+.waitlist-optional { color: #777064; font-weight: 400; font-size: 0.78rem; }
 .waitlist-field input,
 .waitlist-field select {
   width: 100%;
@@ -9452,4 +9452,19 @@ textarea {
 .admin-note { font-size: 0.82rem; color: #777064; }
 @media (max-width: 640px) {
   .admin-breakdowns { grid-template-columns: 1fr; }
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────────────
+   Respect the OS-level "reduce motion" preference (vestibular disorders etc).
+   Only applies when the user has explicitly requested it — no change for
+   anyone else. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

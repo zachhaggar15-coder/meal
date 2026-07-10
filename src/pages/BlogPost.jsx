@@ -279,7 +279,7 @@ function ResponsiveBlogTable({ table }) {
             <thead>
               <tr>
                 {table.headers.map((header, index) => (
-                  <th key={index}>{header}</th>
+                  <th key={index} scope="col">{header}</th>
                 ))}
               </tr>
             </thead>

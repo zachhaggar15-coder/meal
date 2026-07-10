@@ -114,7 +114,7 @@ export default function MealPromptBox({ meal, onSwap }) {
                 disabled={loading}
                 autoFocus
               />
-              {error && <p className="edit-plan-error">{error}</p>}
+              {error && <p className="edit-plan-error" role="alert">{error}</p>}
               <button
                 className="submit meal-prompt-submit"
                 type="submit"

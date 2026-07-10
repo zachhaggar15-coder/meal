@@ -222,13 +222,13 @@ export default function ContainerGuide() {
             <table className="content-table container-comparison-table">
               <thead>
                 <tr>
-                  <th>Pick</th>
-                  <th>Best for</th>
-                  <th>Material</th>
-                  <th>Format</th>
-                  <th>Layout</th>
-                  <th>Watch-out</th>
-                  <th>Amazon</th>
+                  <th scope="col">Pick</th>
+                  <th scope="col">Best for</th>
+                  <th scope="col">Material</th>
+                  <th scope="col">Format</th>
+                  <th scope="col">Layout</th>
+                  <th scope="col">Watch-out</th>
+                  <th scope="col">Amazon</th>
                 </tr>
               </thead>
               <tbody>
@@ -288,10 +288,10 @@ export default function ContainerGuide() {
             <table className="content-table container-intent-table">
               <thead>
                 <tr>
-                  <th>Search</th>
-                  <th>{toTitleCase('Best choice')}</th>
-                  <th>Why</th>
-                  <th>Guide</th>
+                  <th scope="col">Search</th>
+                  <th scope="col">{toTitleCase('Best choice')}</th>
+                  <th scope="col">Why</th>
+                  <th scope="col">Guide</th>
                 </tr>
               </thead>
               <tbody>

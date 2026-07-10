@@ -21,7 +21,7 @@ function ContentTable({ headers, rows }) {
       <table className="content-table">
         <thead>
           <tr>
-            {headers.map(header => <th key={header}>{header}</th>)}
+            {headers.map(header => <th key={header} scope="col">{header}</th>)}
           </tr>
         </thead>
         <tbody>
@@ -264,58 +264,58 @@ export default function MealPlanPage() {
           <table className="plan-summary-table">
             <tbody>
               <tr>
-                <th>Calories</th>
+                <th scope="row">Calories</th>
                 <td>~{data.targetCalories.toLocaleString()}/day</td>
               </tr>
               {avgProtein && (
                 <tr>
-                  <th>Protein</th>
+                  <th scope="row">Protein</th>
                   <td>~{avgProtein}g/day</td>
                 </tr>
               )}
               <tr>
-                <th>Weekly cost</th>
+                <th scope="row">Weekly cost</th>
                 <td>{data.priceEstimate}</td>
               </tr>
               {data.summary?.costPerDay && (
                 <tr>
-                  <th>Cost per day</th>
+                  <th scope="row">Cost per day</th>
                   <td>{data.summary.costPerDay}</td>
                 </tr>
               )}
               {data.summary?.costPerMeal && (
                 <tr>
-                  <th>Cost per meal</th>
+                  <th scope="row">Cost per meal</th>
                   <td>{data.summary.costPerMeal}</td>
                 </tr>
               )}
               {data.summary?.costPerGramProtein && (
                 <tr>
-                  <th>Cost per g protein</th>
+                  <th scope="row">Cost per g protein</th>
                   <td>{data.summary.costPerGramProtein}</td>
                 </tr>
               )}
               {data.summary?.updated && (
                 <tr>
-                  <th>Updated</th>
+                  <th scope="row">Updated</th>
                   <td>{data.summary.updated}</td>
                 </tr>
               )}
               {data.summary?.supermarkets && (
                 <tr>
-                  <th>Supermarkets</th>
+                  <th scope="row">Supermarkets</th>
                   <td>{data.summary.supermarkets}</td>
                 </tr>
               )}
               {data.summary?.bestFor && (
                 <tr>
-                  <th>Best for</th>
+                  <th scope="row">Best for</th>
                   <td>{data.summary.bestFor}</td>
                 </tr>
               )}
               {data.summary?.prepDifficulty && (
                 <tr>
-                  <th>Prep difficulty</th>
+                  <th scope="row">Prep difficulty</th>
                   <td>{data.summary.prepDifficulty}</td>
                 </tr>
               )}
