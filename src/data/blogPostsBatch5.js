@@ -4,6 +4,7 @@
 // guides (two people, students, high-protein pasta). Where a real product is
 // mentioned, it is linked via toolRecommendations to src/data/mealPrepProducts.js,
 // which only contains ASINs verified against live Amazon UK listings.
+import { AFFILIATE_DISCLOSURE } from './mealPrepProducts.js';
 
 const PUBLISHED = '2026-07-11';
 
@@ -29,10 +30,20 @@ function post(data) {
   };
 }
 
+// For any post with toolRecommendations: sets the required Amazon Associates
+// disclosure by default, matching the containerPost() convention used
+// elsewhere for productRecommendations.
+function toolPost(data) {
+  return post({
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    ...data,
+  });
+}
+
 export const blogPostsBatch5Data = {
 
   // ── 1. Slow cooker ────────────────────────────────────────────────────────
-  'slow-cooker-meal-prep-uk': post({
+  'slow-cooker-meal-prep-uk': toolPost({
     title: 'Slow Cooker Meal Prep UK: Batch Cook a Week Without Watching the Hob',
     description: 'Slow cooker meal prep UK: what to batch cook, low vs high settings explained, and how to portion and freeze slow cooker meals for the week.',
     h1: 'Slow Cooker Meal Prep UK',
@@ -108,7 +119,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 2. Rice cooker ────────────────────────────────────────────────────────
-  'rice-cooker-meal-prep-uk': post({
+  'rice-cooker-meal-prep-uk': toolPost({
     title: 'Rice Cooker Meal Prep UK: Batch Cooking Rice the Easy Way',
     description: 'Rice cooker meal prep UK: how much rice to batch cook for a week, which rice types work best, and how to cool and store rice safely.',
     h1: 'Rice Cooker Meal Prep UK',
@@ -181,7 +192,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 3. Kitchen scales ─────────────────────────────────────────────────────
-  'best-kitchen-scales-for-meal-prep-uk': post({
+  'best-kitchen-scales-for-meal-prep-uk': toolPost({
     title: 'Best Kitchen Scales for Meal Prep UK: Why Weighing Beats Guessing',
     description: 'Best kitchen scales for meal prep UK: why weighing food matters for calorie and protein targets, cooked vs raw weight explained, and what to buy.',
     h1: 'Best Kitchen Scales for Meal Prep UK',
@@ -248,7 +259,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 4. Blender ────────────────────────────────────────────────────────────
-  'best-blender-for-meal-prep-smoothies-uk': post({
+  'best-blender-for-meal-prep-smoothies-uk': toolPost({
     title: 'Best Blender for Meal Prep Smoothies and Shakes UK',
     description: 'Best blender for meal prep smoothies UK: single-serve vs jug blenders, how to batch-prep smoothie bags for the freezer, and boosting protein.',
     h1: 'Best Blender for Meal Prep Smoothies and Shakes UK',
@@ -312,7 +323,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 5. Freezer bags ───────────────────────────────────────────────────────
-  'best-freezer-bags-for-meal-prep-uk': post({
+  'best-freezer-bags-for-meal-prep-uk': toolPost({
     title: 'Best Freezer Bags for Meal Prep UK: Flat-Freezing for Space and Speed',
     description: 'Best freezer bags for meal prep UK: how flat-freezing in bags saves space over rigid containers, reusable silicone options, and what freezes well in a bag.',
     h1: 'Best Freezer Bags for Meal Prep UK',
@@ -377,7 +388,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 6. Cookbooks ──────────────────────────────────────────────────────────
-  'best-meal-prep-cookbooks-uk': post({
+  'best-meal-prep-cookbooks-uk': toolPost({
     title: 'Best Meal Prep Cookbooks UK',
     description: 'Best meal prep cookbooks UK: real, currently available titles for batch cooking, freezer meals and family-friendly meal prep, with practical notes on each.',
     h1: 'Best Meal Prep Cookbooks UK',
@@ -486,7 +497,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 8. Student meal prep ──────────────────────────────────────────────────
-  'student-meal-prep-uk': post({
+  'student-meal-prep-uk': toolPost({
     title: 'Student Meal Prep UK: Cheap, Simple Meals for Halls and Shared Kitchens',
     description: 'Student meal prep UK: what equipment you actually need in halls, cheap staple ingredients, and a simple weekly routine for shared or small kitchens.',
     h1: 'Student Meal Prep UK',
@@ -551,7 +562,7 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 9. Vacuum sealer ──────────────────────────────────────────────────────
-  'vacuum-sealer-meal-prep-uk': post({
+  'vacuum-sealer-meal-prep-uk': toolPost({
     title: 'Vacuum Sealer Meal Prep UK: Is It Worth It for Batch Cooking?',
     description: 'Vacuum sealer meal prep UK: what a vacuum sealer actually does, how it compares to freezer bags and containers, and whether it is worth the cost.',
     h1: 'Vacuum Sealer Meal Prep UK',
