@@ -52,6 +52,7 @@ const CATEGORY_ORDER = [
   {
     label: 'Meal Prep & Batch Cooking',
     slugs: [
+      'summer-meals-uk',
       'meal-prep-for-beginners-uk',
       'batch-cooking-for-beginners-uk',
       'how-to-meal-plan-for-weight-loss',

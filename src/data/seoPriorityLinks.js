@@ -93,6 +93,16 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     ],
   },
   {
+    title: 'Summer Meals and Cold Lunches',
+    intro: 'Seasonal recipe-led content for summer meals, no-reheat lunches, overnight oats and high-protein work lunches.',
+    links: [
+      { to: '/blog/summer-meals-uk', label: 'Summer Meals UK' },
+      { to: '/blog/meal-prep-without-a-microwave-uk', label: 'No Microwave Meal Prep' },
+      { to: '/blog/overnight-oats-meal-prep-uk', label: 'Overnight Oats Meal Prep' },
+      { to: '/blog/high-protein-lunches-for-work-uk', label: 'High Protein Work Lunches' },
+    ],
+  },
+  {
     title: 'Supermarket Meal Prep',
     intro: 'Compare UK supermarkets for meal prep, or go straight to named-store meal plans and guides.',
     links: [

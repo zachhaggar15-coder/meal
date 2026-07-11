@@ -12,6 +12,7 @@ const DEFAULT_LINKS = [
   { label: 'Cheap Protein UK', to: '/blog/best-cheap-high-protein-foods-uk' },
   { label: 'Protein Porridge UK', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
   { label: 'Generate Weekly Meal Plan', to: '/quiz' },
+  { label: 'Summer Meals UK', to: '/blog/summer-meals-uk' },
   { label: 'High Protein Snacks UK', to: '/blog/high-protein-snacks-uk' },
   { label: 'Best Meal Prep Containers UK', to: '/meal-prep-containers' },
   { label: 'Low Calorie Ready Meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },

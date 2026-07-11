@@ -5939,6 +5939,154 @@ details[open] .faq-question::after { content: '▴'; }
   background: #dbeafe;
 }
 
+.recipe-collection {
+  margin: 30px 0 34px;
+}
+
+.recipe-collection-head {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.recipe-collection-head h2 {
+  margin: 0;
+}
+
+.recipe-collection-head p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.recipe-card-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.recipe-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.recipe-card-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.recipe-card h3 {
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.35;
+  margin: 0 0 6px;
+}
+
+.recipe-card h4 {
+  color: var(--accent-dark);
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.recipe-card p {
+  margin: 0;
+}
+
+.recipe-card-meta {
+  display: grid;
+  gap: 6px;
+  min-width: 112px;
+}
+
+.recipe-card-meta span {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  color: #78350f;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.25;
+  padding: 7px 8px;
+  text-align: center;
+}
+
+.recipe-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+
+.recipe-facts div {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 10px;
+}
+
+.recipe-facts dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.recipe-facts dd {
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 3px 0 0;
+}
+
+.recipe-card-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 16px;
+}
+
+.recipe-card-body ul,
+.recipe-card-body ol {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.recipe-card-body li {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 5px;
+}
+
+.recipe-storage-note {
+  background: #ecfeff;
+  border: 1px solid #a5f3fc;
+  border-radius: 8px;
+  color: #155e75;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin-top: 14px !important;
+  padding: 10px 12px;
+}
+
+@media (max-width: 640px) {
+  .recipe-card-top,
+  .recipe-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-card-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recipe-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
 .trust-box {
   display: grid;
   gap: 8px;

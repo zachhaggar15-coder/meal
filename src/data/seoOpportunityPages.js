@@ -107,6 +107,14 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     'You can meal prep high protein without powder by using eggs, Greek yogurt, cottage cheese, chicken, tuna, tofu, beans, lentils, prawns, fish and lean mince across the week.',
     HIGH_PROTEIN_LINKS,
   ),
+  'summer-meals-uk': qa(
+    'Good summer meals for UK meal prep are fresh, cold-friendly and simple to assemble: chicken potato boxes, tuna pasta salad, couscous bowls, prawn noodle salad, overnight oats, salmon potato salad and burger-style salad bowls.',
+    [
+      { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+      { label: 'Overnight oats meal prep', to: '/blog/overnight-oats-meal-prep-uk' },
+      { label: 'No microwave meal prep', to: '/blog/meal-prep-without-a-microwave-uk' },
+    ],
+  ),
   'meal-prep-for-beginners-uk': qa(
     'Beginner meal prep should start with repeatable breakfasts, two lunch options, two dinner bases and a simple shopping list. Do not try to cook seven totally different days at once.',
     SHOPPING_LINKS,
@@ -246,6 +254,11 @@ export const SEO_EXACT_PLAN_LINKS = {
     { label: 'High protein vegetarian meal prep', to: '/meal-plans/high-protein-vegetarian-meal-prep' },
     { label: 'Aldi high protein meal plan', to: '/meal-plans/aldi-high-protein-meal-plan' },
     { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
+  ],
+  'summer-meals-uk': [
+    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
+    { label: 'High protein meal plans', to: '/meal-plans/high-protein' },
+    { label: 'Printable meal plans', to: '/meal-plans/printable-meal-plans' },
   ],
   'meal-prep-for-beginners-uk': [
     { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },

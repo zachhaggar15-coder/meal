@@ -78,6 +78,33 @@ export default function BlogPost() {
     });
   }
 
+  if (data.recipes?.length) {
+    jsonLd.push(...data.recipes.map(recipe => ({
+      '@context': 'https://schema.org',
+      '@type': 'Recipe',
+      name: recipe.name,
+      description: recipe.description,
+      author: AUTHOR_JSON_LD,
+      datePublished: data.published || '2026-05-28',
+      dateModified: data.modified || '2026-05-30',
+      image: ogImageUrl,
+      recipeYield: recipe.servings,
+      prepTime: recipe.prepTime,
+      cookTime: recipe.cookTime,
+      totalTime: recipe.totalTime,
+      recipeIngredient: recipe.ingredients,
+      recipeInstructions: recipe.method.map(step => ({
+        '@type': 'HowToStep',
+        text: step,
+      })),
+      nutrition: {
+        '@type': 'NutritionInformation',
+        calories: recipe.calories,
+        proteinContent: recipe.protein,
+      },
+    })));
+  }
+
   return (
     <>
       <SEO
@@ -147,6 +174,8 @@ export default function BlogPost() {
           )}
 
           <ExactPlanLinks links={exactPlanLinks} />
+
+          <RecipeCollection recipes={data.recipes} slug={slug} />
 
           {data.sections.map((section, i) => (
             <section key={i}>
@@ -243,6 +272,68 @@ export default function BlogPost() {
       </div>
       <Footer />
     </>
+  );
+}
+
+function RecipeCollection({ recipes, slug }) {
+  if (!recipes?.length) return null;
+
+  return (
+    <section className="recipe-collection" aria-labelledby={`${slug}-recipes-heading`}>
+      <div className="recipe-collection-head">
+        <span className="offer-kicker">{toTitleCase('Recipe section')}</span>
+        <h2 id={`${slug}-recipes-heading`}>{toTitleCase('Summery recipes to make this week')}</h2>
+        <p>
+          These are light, practical UK summer meal prep ideas with supermarket ingredients,
+          simple methods and storage notes for warmer weeks.
+        </p>
+      </div>
+      <div className="recipe-card-grid">
+        {recipes.map(recipe => (
+          <article className="recipe-card" key={recipe.name}>
+            <div className="recipe-card-top">
+              <div>
+                <h3>{toTitleCase(recipe.name)}</h3>
+                <p>{recipe.description}</p>
+              </div>
+              <div className="recipe-card-meta" aria-label={`${recipe.name} nutrition summary`}>
+                <span>{recipe.calories}</span>
+                <span>{recipe.protein}</span>
+              </div>
+            </div>
+            <dl className="recipe-facts">
+              <div>
+                <dt>Serves</dt>
+                <dd>{recipe.servings}</dd>
+              </div>
+              <div>
+                <dt>Total</dt>
+                <dd>{recipe.totalLabel}</dd>
+              </div>
+              <div>
+                <dt>Best</dt>
+                <dd>{recipe.bestServed}</dd>
+              </div>
+            </dl>
+            <div className="recipe-card-body">
+              <div>
+                <h4>{toTitleCase('Ingredients')}</h4>
+                <ul>
+                  {recipe.ingredients.map(item => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div>
+                <h4>{toTitleCase('Method')}</h4>
+                <ol>
+                  {recipe.method.map(step => <li key={step}>{step}</li>)}
+                </ol>
+              </div>
+            </div>
+            <p className="recipe-storage-note">{recipe.storage}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
