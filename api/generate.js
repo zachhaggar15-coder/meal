@@ -4,21 +4,14 @@
 
 import {
   cleanMeta,
-  createInMemoryRateLimiter,
-  getRequestIp,
   parseBody,
   readNumber,
-  truncateText,
 } from '../server/http.js';
 import {
   parseJsonObject,
   validateGeneratedPlan,
 } from '../server/ai-validation.js';
-
-const rateLimited = createInMemoryRateLimiter({
-  windowMs: 10 * 60 * 1000,
-  max: 8,
-});
+import { applyApiGuards } from './_guards.js';
 
 const ALLOWED_DIETS = new Set(['standard', 'vegetarian', 'vegan', 'pescatarian']);
 const ALLOWED_COOK_TIMES = new Set(['15', '30', '45', 'any']);
@@ -28,10 +21,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  const ip = getRequestIp(req);
-  if (rateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many generation attempts. Please try again in a few minutes.' });
-  }
+  const allowed = await applyApiGuards(req, res, {
+    route: 'generate',
+    maxBodyBytes: 12 * 1024,
+    rateLimit: { limit: 6, windowMs: 15 * 60 * 1000 },
+  });
+  if (!allowed) return;
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
@@ -43,28 +38,21 @@ export default async function handler(req, res) {
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
   const body = parseBody(req.body);
-  const days = readNumber(body.days, { fallback: 7, min: 1, max: 7 });
-  const calories = readNumber(body.calories, { fallback: 1800, min: 800, max: 4000 });
-  const meals = readNumber(body.meals, { fallback: 3, min: 3, max: 5 });
-  const diet = ALLOWED_DIETS.has(body.diet) ? body.diet : 'standard';
-  const supermarket = truncateText(body.supermarket || 'Tesco', 80) || 'Tesco';
-  const cookTime = ALLOWED_COOK_TIMES.has(String(body.cookTime)) ? String(body.cookTime) : '30';
-  const include = cleanMeta(body.include, 300);
-  const avoid = cleanMeta(body.avoid, 300);
-  const snacks = Boolean(body.snacks);
-  const shoppingList = body.shoppingList !== false;
+  const input = {
+    days: readNumber(body.days, { fallback: 7, min: 1, max: 7 }),
+    calories: readNumber(body.calories, { fallback: 1800, min: 800, max: 4000 }),
+    meals: readNumber(body.meals, { fallback: 3, min: 3, max: 5 }),
+    diet: ALLOWED_DIETS.has(body.diet) ? body.diet : 'standard',
+    supermarket: cleanMeta(body.supermarket || 'Tesco', 80) || 'Tesco',
+    cookTime: ALLOWED_COOK_TIMES.has(String(body.cookTime)) ? String(body.cookTime) : '30',
+    include: cleanMeta(body.include, 300),
+    avoid: cleanMeta(body.avoid, 300),
+    snacks: Boolean(body.snacks),
+    shoppingList: body.shoppingList !== false,
+  };
 
   const prompt = buildPrompt({
-    days: Number(days),
-    calories,
-    meals,
-    diet,
-    supermarket,
-    cookTime,
-    include,
-    avoid,
-    snacks,
-    shoppingList
+    ...input,
   });
 
   // SSE headers — keep the connection open and disable proxy buffering
@@ -86,7 +74,7 @@ export default async function handler(req, res) {
         model,
         response_format: { type: 'json_object' },
         temperature: 0.7,
-        max_tokens: Math.min(8000, Number(days) * Number(meals) * 500 + 2000),
+        max_tokens: Math.min(8000, input.days * input.meals * 500 + 2000),
         stream: true,
         messages: [
           {

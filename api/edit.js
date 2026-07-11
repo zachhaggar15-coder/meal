@@ -3,8 +3,6 @@
 
 import {
   cleanMeta,
-  createInMemoryRateLimiter,
-  getRequestIp,
   jsonSize,
   parseBody,
 } from '../server/http.js';
@@ -12,11 +10,8 @@ import {
   parseJsonObject,
   validateGeneratedPlan,
 } from '../server/ai-validation.js';
+import { applyApiGuards } from './_guards.js';
 
-const rateLimited = createInMemoryRateLimiter({
-  windowMs: 10 * 60 * 1000,
-  max: 12,
-});
 const MAX_PLAN_JSON_SIZE = 160000;
 const MAX_INSTRUCTION_LENGTH = 500;
 
@@ -25,11 +20,19 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
 
-  const ip = getRequestIp(req);
-  if (rateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many edit attempts. Please try again in a few minutes.' });
+  const allowed = await applyApiGuards(req, res, {
+    route: 'edit',
+    maxBodyBytes: 160 * 1024,
+    rateLimit: { limit: 12, windowMs: 15 * 60 * 1000 },
+  });
+  if (!allowed) return;
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'Server is missing OPENAI_API_KEY.' });
   }
 
+  const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
   const body = parseBody(req.body);
   const { plan } = body;
   const instruction = cleanMeta(body.instruction, MAX_INSTRUCTION_LENGTH);
@@ -41,13 +44,6 @@ export default async function handler(req, res) {
   if (jsonSize(plan) > MAX_PLAN_JSON_SIZE || !validateGeneratedPlan(plan)) {
     return res.status(400).json({ error: 'Plan payload is too large or invalid.' });
   }
-
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'Server is missing OPENAI_API_KEY.' });
-  }
-
-  const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
   const prompt = `You are editing an existing meal plan. Here is the current plan in JSON format:
 

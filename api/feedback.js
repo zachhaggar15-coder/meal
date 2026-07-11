@@ -1,6 +1,8 @@
 // Vercel serverless function: POST /api/feedback
 // Sends site feedback through a private webhook or Resend.
 
+import { applyApiGuards } from './_guards.js';
+
 const DEFAULT_FEEDBACK_TO = 'mealprep.org.uk@proton.me';
 const DEFAULT_FEEDBACK_FROM = 'MealPrep Feedback <onboarding@resend.dev>';
 const MAX_FEEDBACK_LENGTH = 4000;
@@ -9,6 +11,13 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
+
+  const allowed = await applyApiGuards(req, res, {
+    route: 'feedback',
+    maxBodyBytes: 8 * 1024,
+    rateLimit: { limit: 3, windowMs: 60 * 60 * 1000 },
+  });
+  if (!allowed) return;
 
   const body = parseBody(req.body);
   const feedback = typeof body.feedback === 'string' ? body.feedback.trim() : '';

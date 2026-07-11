@@ -8,6 +8,7 @@
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist/ssr && node prerender.js",
     "check:plans": "node scripts/check-plans.js",
     "check:nutrition": "node scripts/check-nutrition.js",
+    "test:security": "node scripts/api-guards.test.js",
     "preview": "vite preview",
     "start": "vercel dev"
   },
@@ -18,7 +19,7 @@
     "react-router-dom": "^7.14.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.4.0"
+    "@vitejs/plugin-react": "^6.0.3",
+    "vite": "^8.1.4"
   }
 }
