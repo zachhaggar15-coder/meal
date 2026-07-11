@@ -1463,6 +1463,17 @@ export const blogPostsData = {
     description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Generate a free meal plan.',
     h1: 'Meal Prep for Beginners UK — How to Start and Save Money on Food',
     intro: "Meal prep is the single most effective habit for eating healthily and saving money in the UK. Spending two to three hours cooking on a Sunday gives you a full week of ready-to-eat meals, eliminating the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
+    affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
+    productRecommendations: {
+      title: 'Containers to start with',
+      intro: 'A budget plastic set and a glass set, so you can start cheap or start upgraded.',
+      productIds: ['budget-compartment-50-pack', 'harbour-housewares-glass-5-pack'],
+    },
+    toolRecommendations: {
+      title: 'A kitchen scale is the other worthwhile investment',
+      intro: 'Weighing portions removes the guesswork mentioned above.',
+      productIds: ['salter-arc-scale'],
+    },
     sections: [
       {
         h2: 'What is Meal Prep and Why Does It Work?',
@@ -2292,6 +2303,17 @@ export const blogPostsData = {
     description: 'Batch cooking for beginners UK — a step-by-step 2-hour Sunday cook that produces 5 days of healthy, high-protein meals. Shopping list, timings, and storage tips included.',
     h1: 'Batch Cooking for Beginners UK: 5 High-Protein Meals in 2 Hours',
     intro: 'Batch cooking is the single most effective habit for eating well during a busy week. Two hours on a Sunday produces five days of ready-to-eat meals that cost a fraction of takeaways and meal deals — eliminating the daily temptation of unhealthy options when you are tired and hungry. This guide walks a complete beginner through a structured Sunday batch-cook session that produces five high-protein lunches and dinners for under £30.',
+    affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
+    productRecommendations: {
+      title: 'Containers for the session above',
+      intro: 'The glass and budget plastic sets mentioned in the equipment list.',
+      productIds: ['harbour-housewares-glass-5-pack', 'budget-compartment-50-pack'],
+    },
+    toolRecommendations: {
+      title: 'A rice cooker speeds this up further',
+      intro: 'Useful if you would rather not watch a pan of rice while everything else is going.',
+      productIds: ['russell-hobbs-rice-cooker'],
+    },
     sections: [
       {
         h2: 'Why Batch Cooking Works',
@@ -2740,23 +2762,13 @@ export const blogPostsData = {
       {
         h2: 'Where to Buy Meal Prep Containers in the UK',
         paragraphs: [
-          'The best value meal prep containers in the UK:',
+          'The best place to buy depends on whether you want range, low cost, or a container you can inspect in person before buying. See the product picks above for specific Amazon UK sets.',
         ],
         bullets: [
-          'Amazon: the widest selection and most competitive prices. Search for "glass meal prep containers 1 litre" or "glass food storage containers UK". Sets of 5 × 1-litre glass containers cost £15–25 from reputable sellers. Ikea 365+ glass containers are highly rated.',
-          'Ikea (IKEA 365+ range): rectangular glass containers with bamboo lids, stack neatly, dishwasher and microwave safe. Available in store or online from ~£4 per container. The most popular choice among experienced UK meal preppers.',
-          'Tesco: sells own-brand plastic meal prep containers in a 5-pack for £6–8. Good starter option. Glass versions available but pricier at £15–20 for a 5-pack.',
-          'Wilko: excellent value plastic containers in various sizes. Check the food storage section in store.',
-          'Home Bargains / B&M: frequently stock multipacks of plastic or basic glass containers for £5–10. Worth checking if you have one nearby.',
-        ],
-        paragraphs: [
-          'The best place to buy depends on whether you want range, low cost, or a container you can inspect in person before buying.',
-        ],
-        bullets: [
-          'Amazon UK: widest range for comparing budget tubs, glass meal prep boxes, leakproof lids and larger storage systems. Check dimensions, recent reviews and current availability before buying.',
-          'Supermarkets: useful for starter plastic sets when you need containers quickly. Compare lid fit, capacity and whether the exact item is marked microwave, freezer and dishwasher safe.',
-          'Homeware stores: useful if you want to inspect glass weight, lid clips and stackability in person before committing to a set.',
-          'Discount stores: can be good for cheap plastic multipacks, but inspect the seals and food-safe markings carefully.',
+          'Amazon UK: widest range for comparing budget tubs, glass meal prep boxes, leakproof lids and larger storage systems. Sets of 5 x 1-litre glass containers typically cost around £15-25 from reputable sellers. Check dimensions, recent reviews and current availability before buying.',
+          'Supermarkets (Tesco, Asda, Sainsbury\'s): useful for starter plastic sets when you need containers quickly, typically £6-8 for a 5-pack. Compare lid fit, capacity and whether the exact item is marked microwave, freezer and dishwasher safe.',
+          'Ikea (365+ range): rectangular glass containers with bamboo lids that stack neatly and are dishwasher and microwave safe, sold individually so you can build a set gradually.',
+          'Homeware and discount stores (Wilko, Home Bargains, B&M): useful if you want to inspect glass weight, lid clips and stackability in person, or find cheap plastic multipacks. Check seals and food-safe markings carefully before buying.',
         ],
       },
       {
@@ -2771,12 +2783,8 @@ export const blogPostsData = {
       {
         h2: 'Recommended UK Meal Prep Container Starter Set',
         paragraphs: [
-          'For a complete starter setup, aim for five lunch-sized rectangular containers, two or three smaller tubs for snacks or sauces, and one or two larger containers for freezer portions or batch bases.',
-          'If you are on a tight budget, start with plastic tubs and upgrade the containers you use most often. If you already reheat meals every week, glass is usually the better first buy.',
-        ],
-        oldParagraphs: [
-          'For a complete meal prep setup: 5 × 1-litre glass rectangular containers for lunches and dinners (£20–25 from Amazon or Ikea); 5 × 400 ml glass jars with lids for overnight oats and yogurt bowls (£10–15); 3 × 600 ml containers for snacks and sides (£8–12). Total investment: £35–50. This covers all meal prep storage needs for one person for years.',
-          'If on a tight budget, start with a £8 5-pack of plastic containers from Tesco or Wilko. Once you have established the habit, upgrade to glass at your own pace.',
+          'For a complete starter setup, aim for five 1-litre glass rectangular containers for lunches and dinners (around £20-25), five 400ml jars with lids for overnight oats and yogurt bowls (around £10-15), and three 600ml containers for snacks and sides (around £8-12). Total investment: roughly £35-50, covering all meal prep storage needs for one person for years.',
+          'If you are on a tight budget, start with an £8 5-pack of plastic containers from Tesco or Wilko instead and upgrade to glass once the habit is established.',
         ],
       },
     ],
@@ -2790,11 +2798,6 @@ export const blogPostsData = {
       { q: 'Are glass or plastic meal prep containers better?', a: 'Glass is better for long-term use: it does not stain, does not absorb odours, lasts indefinitely if not dropped, and is safer for reheating. Plastic is cheaper (£8–15 for a 5-pack vs £20–25 for glass), lighter, and will not break if dropped. For anyone meal prepping consistently, glass is worth the upfront investment.' },
       { q: 'What size meal prep containers do I need?', a: 'For one-person meal prep: 5 × 1-litre rectangular containers for lunches and dinners, 5 × 400ml jars for overnight oats and yogurt bowls, and 3 × 600ml containers for snacks. This covers all meal prep storage needs. Rectangular containers stack far more efficiently in the fridge than round ones.' },
       { q: 'Where can I buy cheap meal prep containers in the UK?', a: 'Amazon is the best value for glass containers — sets of 5 × 1-litre glass containers cost £15–25 from reputable sellers. Ikea 365+ glass containers are popular and available in store. Tesco sells own-brand plastic containers in a 5-pack for £6–8. Wilko and Home Bargains often have good deals on both plastic and basic glass options.' },
-    ],
-    faq: [
-      { q: 'Are glass or plastic meal prep containers better?', a: 'Glass is better for frequent reheating, stain resistance and long-term use. Plastic is better for low cost, lighter commuting and bulk freezer portions. Many people start with plastic and upgrade their main lunch containers to glass later.' },
-      { q: 'What size meal prep containers do I need?', a: 'For one-person meal prep, start with five rectangular lunch containers around 900ml to 1 litre, plus a few smaller tubs for sauces, snacks and overnight oats. Rectangular containers stack more efficiently than round tubs for complete meals.' },
-      { q: 'Where can I buy cheap meal prep containers in the UK?', a: 'Compare Amazon UK, supermarkets, homeware stores and discount stores. Check the exact capacity, lid design, recent reviews and whether the item is marked microwave, freezer and dishwasher safe before buying.' },
     ],
   },
 };

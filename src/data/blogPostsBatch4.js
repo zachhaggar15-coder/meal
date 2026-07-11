@@ -72,6 +72,11 @@ export const blogPostsBatch4Data = {
         { label: 'See the mid range container guide', to: '/meal-prep-containers/mid-range' },
       ],
     },
+    productRecommendations: {
+      title: 'Glass container picks from the table above',
+      intro: 'Three of the real products compared in this guide.',
+      productIds: ['harbour-housewares-glass-5-pack', 'prep-naturals-glass-5-pack', 'rubbermaid-brilliance-glass'],
+    },
     sections: [
       {
         h2: 'Borosilicate vs soda-lime glass',
@@ -142,6 +147,11 @@ export const blogPostsBatch4Data = {
         { label: 'Compare glass vs plastic in full', to: '/blog/glass-vs-plastic-meal-prep-containers' },
         { label: 'See the budget container guide', to: '/meal-prep-containers/budget' },
       ],
+    },
+    productRecommendations: {
+      title: 'Plastic container picks from the table above',
+      intro: 'Three of the real products compared in this guide.',
+      productIds: ['budget-compartment-50-pack', 'bentgo-prep-10-pack', 'freshware-3-compartment'],
     },
     sections: [
       {
