@@ -46,6 +46,7 @@ const CATEGORY_ORDER = [
       'low-calorie-high-volume-foods-uk',
       'best-fibre-foods-for-weight-loss-uk',
       'protein-meal-prep-without-powder-uk',
+      'high-protein-pasta-meal-prep-uk',
     ],
   },
   {
@@ -67,6 +68,20 @@ const CATEGORY_ORDER = [
       'how-to-store-meal-prep-safely-uk',
       'air-fryer-meal-prep-uk',
       'chicken-and-rice-meal-prep-uk',
+      'meal-prep-for-two-people-uk',
+      'student-meal-prep-uk',
+    ],
+  },
+  {
+    label: 'Meal Prep Tools & Equipment',
+    slugs: [
+      'slow-cooker-meal-prep-uk',
+      'rice-cooker-meal-prep-uk',
+      'best-kitchen-scales-for-meal-prep-uk',
+      'best-blender-for-meal-prep-smoothies-uk',
+      'best-freezer-bags-for-meal-prep-uk',
+      'vacuum-sealer-meal-prep-uk',
+      'best-meal-prep-cookbooks-uk',
     ],
   },
   {

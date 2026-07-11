@@ -5,6 +5,7 @@ import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
+import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import TrustBox from '../components/TrustBox.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
@@ -131,6 +132,16 @@ export default function BlogPost() {
               intro={data.productRecommendations.intro}
               productIds={data.productRecommendations.productIds}
               sourcePage={`blog-${slug}-recommendations`}
+              showDisclosure={false}
+            />
+          )}
+
+          {data.toolRecommendations && (
+            <ProductPicks
+              title={data.toolRecommendations.title}
+              intro={data.toolRecommendations.intro}
+              productIds={data.toolRecommendations.productIds}
+              sourcePage={`blog-${slug}-tools`}
               showDisclosure={false}
             />
           )}

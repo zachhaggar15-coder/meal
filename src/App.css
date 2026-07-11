@@ -5398,6 +5398,49 @@ details[open] .faq-question::after { content: '▴'; }
   gap: 18px;
 }
 
+.product-picks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.product-pick-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.product-pick-category {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  min-height: 24px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.product-pick-card h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 1.02rem;
+}
+
+.product-pick-summary {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 .affiliate-product-card {
   display: grid;
   grid-template-columns: 170px minmax(0, 1fr);

@@ -642,6 +642,7 @@ export const blogPostsBatch4Data = {
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
+      { slug: 'rice-cooker-meal-prep-uk', label: 'Rice Cooker Meal Prep UK', type: 'blog' },
     ],
     faq: [
       { q: 'Is it safe to reheat chicken and rice meal prep?', a: 'Yes, provided the rice was cooled quickly after cooking, refrigerated promptly, and reheated only once until steaming hot throughout. Avoid reheating the same portion more than once.' },
@@ -722,6 +723,7 @@ export const blogPostsBatch4Data = {
     related: [
       { slug: 'protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge and Yogurt Breakfasts UK', type: 'blog' },
       { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
+      { slug: 'best-blender-for-meal-prep-smoothies-uk', label: 'Best Blender for Meal Prep Smoothies UK', type: 'blog' },
       { slug: 'protein-meal-prep-without-powder-uk', label: 'Protein Meal Prep Without Powder UK', type: 'blog' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
     ],

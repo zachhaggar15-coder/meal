@@ -1,6 +1,7 @@
 import { containerBlogPostsData } from './containerBlogPosts.js';
 import { expandedBlogPostsData } from './expandedBlogPosts.js';
 import { blogPostsBatch4Data } from './blogPostsBatch4.js';
+import { blogPostsBatch5Data } from './blogPostsBatch5.js';
 
 // Static content for SEO blog posts.
 // Each entry keyed by URL slug.
@@ -9,6 +10,7 @@ export const blogPostsData = {
   ...containerBlogPostsData,
   ...expandedBlogPostsData,
   ...blogPostsBatch4Data,
+  ...blogPostsBatch5Data,
   'how-to-build-a-calorie-deficit': {
     published: '2026-05-28',
     title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',
@@ -79,6 +81,7 @@ export const blogPostsData = {
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan', type: 'meal-plan' },
       { slug: 'how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss', type: 'blog' },
       { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
+      { slug: 'best-kitchen-scales-for-meal-prep-uk', label: 'Best Kitchen Scales for Meal Prep UK', type: 'blog' },
     ],
     faq: [
       { q: 'What is a safe calorie deficit for weight loss?', a: 'A deficit of 300–500 calories per day is considered safe and sustainable for most adults, producing 0.3–0.5 kg of fat loss per week. The NHS recommends a maximum deficit of 600 calories per day.' },
@@ -1212,6 +1215,7 @@ export const blogPostsData = {
       { slug: 'aldi-cheap-student-1800', label: 'Cheap Student Meal Plan', type: 'plan' },
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High-Protein Foods', type: 'blog' },
       { slug: 'aldi-weight-loss-1800', label: 'Aldi 1800 kcal Meal Plan', type: 'plan' },
+      { slug: 'student-meal-prep-uk', label: 'Student Meal Prep UK', type: 'blog' },
     ],
     faq: [
       { q: 'How much does a week of healthy meal prep cost in the UK?', a: 'A full week of high-protein, calorie-controlled meal prep for one person costs £23–26 at Aldi or Lidl, £28–35 at Asda or Tesco (with loyalty discounts). Adding a fresh salmon fillet or turkey mince for variety adds £2–3. Cost per meal works out to approximately 70–90p.' },
@@ -2341,6 +2345,8 @@ export const blogPostsData = {
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
       { slug: 'air-fryer-meal-prep-uk', label: 'Air Fryer Meal Prep UK', type: 'blog' },
       { slug: 'chicken-and-rice-meal-prep-uk', label: 'Chicken and Rice Meal Prep UK', type: 'blog' },
+      { slug: 'slow-cooker-meal-prep-uk', label: 'Slow Cooker Meal Prep UK', type: 'blog' },
+      { slug: 'best-meal-prep-cookbooks-uk', label: 'Best Meal Prep Cookbooks UK', type: 'blog' },
       { slug: 'aldi-weight-loss-1800', label: '1800 kcal Meal Plan', type: 'plan' },
       { slug: 'aldi-busy-professional-1800', label: 'Aldi Busy Professional Plan', type: 'plan' },
     ],

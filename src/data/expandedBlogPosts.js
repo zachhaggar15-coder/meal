@@ -1154,6 +1154,8 @@ export const expandedBlogPostsData = {
     related: [
       { slug: 'freezer-safe-meal-prep-containers', label: 'Freezer Safe Meal Prep Containers', type: 'blog' },
       { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely', type: 'blog' },
+      { slug: 'best-freezer-bags-for-meal-prep-uk', label: 'Best Freezer Bags for Meal Prep UK', type: 'blog' },
+      { slug: 'vacuum-sealer-meal-prep-uk', label: 'Vacuum Sealer Meal Prep UK', type: 'blog' },
       ...mealPrepRelated,
     ],
     faq: [
