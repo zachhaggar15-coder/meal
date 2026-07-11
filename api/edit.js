@@ -1,9 +1,45 @@
 // Vercel serverless function: POST /api/edit
 // Receives the current plan JSON + a freetext instruction and returns an updated plan.
 
+import {
+  cleanMeta,
+  createInMemoryRateLimiter,
+  getRequestIp,
+  jsonSize,
+  parseBody,
+} from '../server/http.js';
+import {
+  parseJsonObject,
+  validateGeneratedPlan,
+} from '../server/ai-validation.js';
+
+const rateLimited = createInMemoryRateLimiter({
+  windowMs: 10 * 60 * 1000,
+  max: 12,
+});
+const MAX_PLAN_JSON_SIZE = 160000;
+const MAX_INSTRUCTION_LENGTH = 500;
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+  }
+
+  const ip = getRequestIp(req);
+  if (rateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many edit attempts. Please try again in a few minutes.' });
+  }
+
+  const body = parseBody(req.body);
+  const { plan } = body;
+  const instruction = cleanMeta(body.instruction, MAX_INSTRUCTION_LENGTH);
+
+  if (!plan || !instruction) {
+    return res.status(400).json({ error: 'Missing plan or instruction.' });
+  }
+
+  if (jsonSize(plan) > MAX_PLAN_JSON_SIZE || !validateGeneratedPlan(plan)) {
+    return res.status(400).json({ error: 'Plan payload is too large or invalid.' });
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -12,18 +48,13 @@ export default async function handler(req, res) {
   }
 
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
-  const { plan, instruction } = req.body || {};
-
-  if (!plan || !instruction?.trim()) {
-    return res.status(400).json({ error: 'Missing plan or instruction.' });
-  }
 
   const prompt = `You are editing an existing meal plan. Here is the current plan in JSON format:
 
 ${JSON.stringify(plan, null, 2)}
 
 The user wants to make the following change:
-"${instruction.trim()}"
+"${instruction}"
 
 Rules:
 - Make ONLY the changes needed to satisfy the request. Do not change anything else.
@@ -71,16 +102,13 @@ Rules:
       return res.status(502).json({ error: 'OpenAI response was empty.' });
     }
 
-    let parsed;
-    try {
-      parsed = JSON.parse(content);
-    } catch {
-      const cleaned = content.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-      try {
-        parsed = JSON.parse(cleaned);
-      } catch {
-        return res.status(502).json({ error: 'Could not parse the updated plan. Please try again.' });
-      }
+    const parsed = parseJsonObject(content);
+    if (!parsed) {
+      return res.status(502).json({ error: 'Could not parse the updated plan. Please try again.' });
+    }
+
+    if (!validateGeneratedPlan(parsed)) {
+      return res.status(502).json({ error: 'The updated plan was incomplete. Please try again.' });
     }
 
     return res.status(200).json(parsed);

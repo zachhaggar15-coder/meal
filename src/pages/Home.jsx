@@ -15,6 +15,7 @@ import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
+import { track } from '../utils/analytics.js';
 
 // ── JSON-LD ───────────────────────────────────────────────────────────────────
 
@@ -244,6 +245,13 @@ export default function Home() {
             setProgress(pct);
           } else if (event.type === 'done') {
             setPlan(event.plan);
+            track.planGenerated({
+              days: values.days,
+              calories: values.calories,
+              meals: values.meals,
+              diet: values.diet,
+              supermarket: values.supermarket,
+            });
             break outer;
           } else if (event.type === 'error') {
             throw new Error(event.error);
@@ -252,6 +260,7 @@ export default function Home() {
       }
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.');
+      track.planGenerationFailed({ reason: err.message || 'unknown' });
     } finally {
       setLoading(false);
     }

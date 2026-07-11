@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { track } from '../utils/analytics.js';
+import {
+  QUIZ_DRAFT_KEY,
+  QUIZ_DRAFT_MAX_AGE_MS,
+  QUIZ_LAST_ANSWERS_KEY,
+} from '../utils/quizStorage.js';
 
 const STEPS = [
   {
@@ -113,13 +119,15 @@ const DEFAULT_MACROS = { protein: '160', carbs: '180', fats: '60', fibre: '30' }
 
 export default function Quiz() {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [macros, setMacros] = useState(DEFAULT_MACROS);
-  const [macroMode, setMacroMode] = useState(null);
+  const [initialDraft] = useState(() => readQuizDraft());
+  const [step, setStep] = useState(() => initialDraft?.step || 0);
+  const [answers, setAnswers] = useState(() => initialDraft?.answers || {});
+  const [macros, setMacros] = useState(() => initialDraft?.macros || DEFAULT_MACROS);
+  const [macroMode, setMacroMode] = useState(() => initialDraft?.macroMode || null);
   const [macroError, setMacroError] = useState('');
-  const [customCalories, setCustomCalories] = useState('');
+  const [customCalories, setCustomCalories] = useState(() => initialDraft?.customCalories || '');
   const [customCalorieError, setCustomCalorieError] = useState('');
+  const startTrackedRef = useRef(false);
 
   const current = STEPS[step];
   const progress = Math.round(((step + 1) / STEPS.length) * 100);
@@ -127,6 +135,24 @@ export default function Quiz() {
     answers.calories === 'custom' ||
     (answers.calories && !current.options.some(opt => opt.value === answers.calories))
   );
+
+  useEffect(() => {
+    if (!startTrackedRef.current) {
+      track.quizStarted();
+      startTrackedRef.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    writeJson(QUIZ_DRAFT_KEY, {
+      step,
+      answers,
+      macros,
+      macroMode,
+      customCalories,
+      savedAt: Date.now(),
+    });
+  }, [answers, customCalories, macroMode, macros, step]);
 
   function handleSelect(value) {
     if (current.id === 'calories' && value === 'custom') {
@@ -200,12 +226,33 @@ export default function Quiz() {
   }
 
   function submitQuiz(finalAnswers) {
+    writeJson(QUIZ_LAST_ANSWERS_KEY, {
+      answers: finalAnswers,
+      savedAt: Date.now(),
+    });
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(QUIZ_DRAFT_KEY);
+    }
+    track.quizCompleted();
     const encoded = btoa(JSON.stringify(finalAnswers));
     navigate(`/quiz/results?q=${encoded}`);
   }
 
   function goBack() {
     if (step > 0) setStep(s => s - 1);
+  }
+
+  function startOver() {
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(QUIZ_DRAFT_KEY);
+    }
+    setStep(0);
+    setAnswers({});
+    setMacros(DEFAULT_MACROS);
+    setMacroMode(null);
+    setMacroError('');
+    setCustomCalories('');
+    setCustomCalorieError('');
   }
 
   const jsonLd = [{
@@ -389,10 +436,38 @@ export default function Quiz() {
               <button className="quiz-back-btn" onClick={goBack} type="button">
                 ← Back
               </button>
+              <button className="quiz-back-btn" onClick={startOver} type="button">
+                Start over
+              </button>
             </div>
           )}
         </div>
       </div>
     </>
   );
+}
+
+function readQuizDraft() {
+  const saved = readJson(QUIZ_DRAFT_KEY);
+  if (!saved?.savedAt || Date.now() - saved.savedAt > QUIZ_DRAFT_MAX_AGE_MS) return null;
+  const step = Math.min(STEPS.length - 1, Math.max(0, Number(saved.step) || 0));
+  return { ...saved, step };
+}
+
+function readJson(key) {
+  if (typeof window === 'undefined') return null;
+  try {
+    return JSON.parse(window.localStorage.getItem(key) || 'null');
+  } catch {
+    return null;
+  }
+}
+
+function writeJson(key, value) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // The quiz remains usable without local storage.
+  }
 }

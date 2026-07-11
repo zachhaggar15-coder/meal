@@ -111,6 +111,8 @@ export default function PlanPage() {
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
   const [planCopyStatus, setPlanCopyStatus] = useState('');
   const [shareStatus, setShareStatus] = useState('');
+  const [planEmailStatus, setPlanEmailStatus] = useState('idle');
+  const [planEmailMessage, setPlanEmailMessage] = useState('');
   const [householdMode, setHouseholdMode] = useState('same');
   const [householdMembers, setHouseholdMembers] = useState(() => buildHouseholdPreset('same'));
   const sourcePlan = editedPlan || plan;
@@ -192,6 +194,7 @@ export default function PlanPage() {
 
     const basePlan = editedPlan || plan;
     const meal = basePlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx];
+    track.mealEditSubmitted(plan.slug);
 
     try {
       const res = await fetch('/api/edit-meal', {
@@ -223,9 +226,11 @@ export default function PlanPage() {
         setEditNote('Plan updated. Calorie and macro values are estimates after AI editing.');
         setEditTarget(null);
         setEditPrompt('');
+        track.mealEditCompleted(plan.slug);
       }
     } catch (err) {
       setEditError('Edit failed. Please try again.');
+      track.mealEditFailed(plan.slug);
     } finally {
       setEditLoading(false);
     }
@@ -330,7 +335,42 @@ export default function PlanPage() {
   }
 
   function handlePrintPlan() {
+    track.printClicked();
     window.print();
+  }
+
+  async function handleEmailPlan({ email, website }) {
+    if (planEmailStatus === 'sending') return;
+
+    setPlanEmailStatus('sending');
+    setPlanEmailMessage('');
+    track.planEmailSubmitted(plan.slug);
+
+    try {
+      const res = await fetch('/api/email-plan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          website,
+          planSlug: plan.slug,
+          householdMembers,
+          source: typeof window !== 'undefined' ? window.location.href : plan.seo.canonical,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.error || 'Could not send the plan.');
+      }
+
+      setPlanEmailStatus('sent');
+      setPlanEmailMessage('Sent. Check your inbox for the plan and shopping list.');
+      track.planEmailSent(plan.slug);
+    } catch (err) {
+      setPlanEmailStatus('error');
+      setPlanEmailMessage(err.message || 'Could not send the plan right now.');
+      track.planEmailFailed(plan.slug, err.message || 'unknown');
+    }
   }
 
   const planDaysSection = (
@@ -549,6 +589,13 @@ export default function PlanPage() {
           onPrintPlan={handlePrintPlan}
           planCopyStatus={planCopyStatus}
           shareStatus={shareStatus}
+        />
+
+        <PlanEmailCapture
+          plan={plan}
+          status={planEmailStatus}
+          message={planEmailMessage}
+          onSubmit={handleEmailPlan}
         />
 
         <HouseholdPortionsControl
@@ -886,6 +933,70 @@ function PlanActionBar({ onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, s
       <button className="plan-action-primary" onClick={onSharePlan} type="button">
         {shareStatus || 'Share'}
       </button>
+    </section>
+  );
+}
+
+function PlanEmailCapture({ plan, status, message, onSubmit }) {
+  const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
+  const sending = status === 'sending';
+  const sent = status === 'sent';
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    if (!email.trim() || sending) return;
+    onSubmit({ email: email.trim(), website });
+  }
+
+  return (
+    <section className="plan-email-capture" aria-labelledby="plan-email-heading">
+      <div>
+        <span className="offer-kicker">Save this plan</span>
+        <h2 id="plan-email-heading">Email this plan to yourself</h2>
+        <p>
+          Get the 7-day menu, shopping list and printable plan link in your inbox.
+        </p>
+      </div>
+      {sent ? (
+        <p className="plan-email-status plan-email-status--sent" role="status">{message}</p>
+      ) : (
+        <form className="plan-email-form" onSubmit={handleSubmit}>
+          <label>
+            <span>Email address</span>
+            <input
+              type="email"
+              value={email}
+              onChange={event => setEmail(event.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+              required
+              disabled={sending}
+            />
+          </label>
+          <label className="plan-email-honeypot" aria-hidden="true">
+            Website
+            <input
+              type="text"
+              value={website}
+              onChange={event => setWebsite(event.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </label>
+          <button className="btn-primary" type="submit" disabled={sending || !email.trim()}>
+            {sending ? 'Sending...' : 'Email plan'}
+          </button>
+          {message && (
+            <p className={`plan-email-status plan-email-status--${status}`} role="status">
+              {message}
+            </p>
+          )}
+        </form>
+      )}
+      <p className="plan-email-note">
+        Current selection: {plan.title}
+      </p>
     </section>
   );
 }

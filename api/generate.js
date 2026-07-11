@@ -2,9 +2,35 @@
 // Streams the OpenAI response as SSE events so the frontend can show real progress.
 // The OpenAI API key NEVER leaves the server.
 
+import {
+  cleanMeta,
+  createInMemoryRateLimiter,
+  getRequestIp,
+  parseBody,
+  readNumber,
+  truncateText,
+} from '../server/http.js';
+import {
+  parseJsonObject,
+  validateGeneratedPlan,
+} from '../server/ai-validation.js';
+
+const rateLimited = createInMemoryRateLimiter({
+  windowMs: 10 * 60 * 1000,
+  max: 8,
+});
+
+const ALLOWED_DIETS = new Set(['standard', 'vegetarian', 'vegan', 'pescatarian']);
+const ALLOWED_COOK_TIMES = new Set(['15', '30', '45', 'any']);
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+  }
+
+  const ip = getRequestIp(req);
+  if (rateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many generation attempts. Please try again in a few minutes.' });
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -16,18 +42,17 @@ export default async function handler(req, res) {
 
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
-  const {
-    days = 7,
-    calories = 1800,
-    meals = 3,
-    diet = 'standard',
-    supermarket = 'Tesco',
-    cookTime = '30',
-    include = '',
-    avoid = '',
-    snacks = false,
-    shoppingList = true
-  } = req.body || {};
+  const body = parseBody(req.body);
+  const days = readNumber(body.days, { fallback: 7, min: 1, max: 7 });
+  const calories = readNumber(body.calories, { fallback: 1800, min: 800, max: 4000 });
+  const meals = readNumber(body.meals, { fallback: 3, min: 3, max: 5 });
+  const diet = ALLOWED_DIETS.has(body.diet) ? body.diet : 'standard';
+  const supermarket = truncateText(body.supermarket || 'Tesco', 80) || 'Tesco';
+  const cookTime = ALLOWED_COOK_TIMES.has(String(body.cookTime)) ? String(body.cookTime) : '30';
+  const include = cleanMeta(body.include, 300);
+  const avoid = cleanMeta(body.avoid, 300);
+  const snacks = Boolean(body.snacks);
+  const shoppingList = body.shoppingList !== false;
 
   const prompt = buildPrompt({
     days: Number(days),
@@ -102,19 +127,17 @@ export default async function handler(req, res) {
         if (raw === '[DONE]') {
           let parsed;
           try {
-            parsed = JSON.parse(fullContent);
+            parsed = parseJsonObject(fullContent);
           } catch {
-            const cleaned = fullContent
-              .replace(/^```json\s*/i, '')
-              .replace(/^```\s*/i, '')
-              .replace(/```\s*$/i, '')
-              .trim();
-            try {
-              parsed = JSON.parse(cleaned);
-            } catch {
-              sendEvent({ type: 'error', error: 'Could not parse the meal plan. Please try generating again.' });
-              return res.end();
-            }
+            parsed = null;
+          }
+          if (!parsed) {
+            sendEvent({ type: 'error', error: 'Could not parse the meal plan. Please try generating again.' });
+            return res.end();
+          }
+          if (!validateGeneratedPlan(parsed)) {
+            sendEvent({ type: 'error', error: 'The generated plan was incomplete. Please try again.' });
+            return res.end();
           }
           sendEvent({ type: 'done', plan: parsed });
           return res.end();

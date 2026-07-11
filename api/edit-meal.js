@@ -1,9 +1,45 @@
 // Vercel serverless function: POST /api/edit-meal
 // Receives a single meal object + freetext prompt, returns { meal: updatedMeal }.
 
+import {
+  cleanMeta,
+  createInMemoryRateLimiter,
+  getRequestIp,
+  jsonSize,
+  parseBody,
+} from '../server/http.js';
+import {
+  parseJsonObject,
+  validateEditedMealPayload,
+} from '../server/ai-validation.js';
+
+const rateLimited = createInMemoryRateLimiter({
+  windowMs: 10 * 60 * 1000,
+  max: 18,
+});
+const MAX_MEAL_JSON_SIZE = 16000;
+const MAX_PROMPT_LENGTH = 400;
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+  }
+
+  const ip = getRequestIp(req);
+  if (rateLimited(ip)) {
+    return res.status(429).json({ error: 'Too many meal edit attempts. Please try again in a few minutes.' });
+  }
+
+  const body = parseBody(req.body);
+  const { meal } = body;
+  const prompt = cleanMeta(body.prompt, MAX_PROMPT_LENGTH);
+
+  if (!meal || !prompt) {
+    return res.status(400).json({ error: 'Missing meal or prompt.' });
+  }
+
+  if (jsonSize(meal) > MAX_MEAL_JSON_SIZE || typeof meal.name !== 'string') {
+    return res.status(400).json({ error: 'Meal payload is too large or invalid.' });
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
@@ -12,17 +48,12 @@ export default async function handler(req, res) {
   }
 
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
-  const { meal, prompt } = req.body || {};
-
-  if (!meal || !prompt?.trim()) {
-    return res.status(400).json({ error: 'Missing meal or prompt.' });
-  }
 
   const userPrompt = `You are editing a single meal in a UK meal plan. Here is the current meal as JSON:
 
 ${JSON.stringify(meal, null, 2)}
 
-The user wants to make this change: "${prompt.trim()}"
+The user wants to make this change: "${prompt}"
 
 Rules:
 - Return a JSON object with a single key "meal" whose value is the updated meal.
@@ -69,18 +100,13 @@ Rules:
       return res.status(502).json({ error: 'OpenAI response was empty.' });
     }
 
-    let parsed;
-    try {
-      parsed = JSON.parse(content);
-    } catch {
-      const cleaned = content.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-      try { parsed = JSON.parse(cleaned); } catch {
-        return res.status(502).json({ error: 'Could not parse the updated meal. Please try again.' });
-      }
+    const parsed = parseJsonObject(content);
+    if (!parsed) {
+      return res.status(502).json({ error: 'Could not parse the updated meal. Please try again.' });
     }
 
-    if (!parsed?.meal) {
-      return res.status(502).json({ error: 'Unexpected response format. Please try again.' });
+    if (!validateEditedMealPayload(parsed)) {
+      return res.status(502).json({ error: 'The updated meal was incomplete. Please try again.' });
     }
 
     return res.status(200).json({ meal: parsed.meal });

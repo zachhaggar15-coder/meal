@@ -145,6 +145,13 @@ input:focus, select:focus {
   font-size: 0.9rem;
 }
 
+.route-loading {
+  color: #64748b;
+  font-size: 0.95rem;
+  padding: 32px 20px;
+  text-align: center;
+}
+
 /* ---------- Edit plan box ---------- */
 
 .edit-plan-box {
@@ -3006,6 +3013,52 @@ input:focus, select:focus {
 .quiz-results-title { font-size: 1.8rem; font-weight: 800; color: #1a1a1a; margin: 0 0 8px; }
 .quiz-results-sub { color: #6b7280; margin: 0; }
 
+.quiz-adjustments {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin: 0 0 18px;
+  padding: 16px;
+}
+
+.quiz-adjustments h2 {
+  font-size: 1rem;
+  margin: 0 0 6px;
+}
+
+.quiz-adjustments p {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0 0 14px;
+}
+
+.quiz-adjustment-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quiz-adjustment-field {
+  display: grid;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.quiz-adjustment-field select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+  padding: 9px 10px;
+}
+
+.quiz-adjustment-field select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  outline: none;
+}
+
 /* Result cards */
 .result-card {
   background: #fff;
@@ -3221,6 +3274,79 @@ input:focus, select:focus {
   background: #2563eb;
   border-color: #2563eb;
   color: #fff;
+}
+
+.plan-email-capture {
+  align-items: start;
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  margin: 0 0 26px;
+  padding: 18px;
+}
+
+.plan-email-capture h2 {
+  font-size: 1.15rem;
+  margin: 4px 0 8px;
+}
+
+.plan-email-capture p {
+  color: #4a5568;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.plan-email-form {
+  display: grid;
+  gap: 10px;
+}
+
+.plan-email-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.plan-email-form input {
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  font: inherit;
+  padding: 11px 12px;
+}
+
+.plan-email-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  outline: none;
+}
+
+.plan-email-honeypot {
+  left: -9999px;
+  position: absolute;
+}
+
+.plan-email-status {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.plan-email-status--sent {
+  color: #166534;
+}
+
+.plan-email-status--error {
+  color: #b91c1c;
+}
+
+.plan-email-note {
+  border-top: 1px solid #e0e7ff;
+  font-size: 0.82rem;
+  grid-column: 1 / -1;
+  padding-top: 12px;
 }
 
 .plan-servings-control {
@@ -9466,5 +9592,15 @@ textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .plan-email-capture {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-adjustment-grid {
+    grid-template-columns: 1fr;
   }
 }

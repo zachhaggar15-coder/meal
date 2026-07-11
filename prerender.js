@@ -235,7 +235,7 @@ async function prerender() {
 
   for (const route of ROUTES) {
     try {
-      const { html, helmet } = render(route);
+      const { html, helmet } = await render(route);
 
       const headTags = [
         helmet?.title?.toString(),

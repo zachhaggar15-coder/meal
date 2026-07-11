@@ -1,9 +1,11 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { track } from '../utils/analytics.js';
+import { QUIZ_LAST_ANSWERS_KEY } from '../utils/quizStorage.js';
 
 const EFFORT_LABELS = {
   'minimal':      'Minimal prep',
@@ -29,19 +31,68 @@ const MKT_LABELS = {
   'any': 'Generic UK supermarket',
 };
 
+const GOAL_OPTIONS = [
+  ['weight-loss', 'Weight loss'],
+  ['budget-fat-loss', 'Budget fat loss'],
+  ['high-protein-low-cal', 'High protein, low cal'],
+  ['muscle-gain', 'Muscle gain'],
+  ['gym-beginner', 'Gym beginner'],
+  ['budget-bodybuilding', 'Budget bodybuilding'],
+  ['cheap-student', 'Cheap student'],
+  ['cheap-high-protein', 'Cheap high protein'],
+  ['low-effort', 'Low effort'],
+  ['busy-professional', 'Busy professional'],
+];
+
+const DIET_OPTIONS = [
+  ['standard', 'No preference'],
+  ['vegetarian', 'Vegetarian'],
+  ['vegan', 'Vegan'],
+  ['pescatarian', 'Pescatarian'],
+];
+
+const MARKET_OPTIONS = Object.entries(MKT_LABELS);
+const CALORIE_OPTIONS = [
+  ['unsure', 'Not sure'],
+  ['1400', '1,400 kcal'],
+  ['1500', '1,500 kcal'],
+  ['1600', '1,600 kcal'],
+  ['1800', '1,800 kcal'],
+  ['2000', '2,000 kcal'],
+  ['2200', '2,200 kcal'],
+  ['2500', '2,500 kcal'],
+  ['3000', '3,000 kcal'],
+  ['3500', '3,500 kcal'],
+];
+const BUDGET_OPTIONS = [['very-cheap', 'Very cheap'], ['budget', 'Budget'], ['moderate', 'Moderate'], ['flexible', 'Flexible']];
+const EFFORT_OPTIONS = Object.entries(EFFORT_LABELS);
+
 export default function QuizResults() {
   const [params] = useSearchParams();
+  const paramString = params.toString();
 
-  const answers = useMemo(() => {
-    try {
-      const q = params.get('q');
-      return q ? JSON.parse(atob(q)) : {};
-    } catch {
-      return {};
-    }
-  }, [params]);
+  const initialAnswers = useMemo(() => (
+    readAnswersFromParams(params) || readSavedAnswers() || {}
+  ), [paramString]);
+
+  const [answers, setAnswers] = useState(initialAnswers);
+
+  useEffect(() => {
+    setAnswers(initialAnswers);
+  }, [initialAnswers]);
 
   const matches = useMemo(() => getTopMatches(answers, 3), [answers]);
+
+  function updateAnswer(field, value) {
+    setAnswers(prev => {
+      const next = { ...prev };
+      if (value) next[field] = value;
+      else delete next[field];
+      writeSavedAnswers(next);
+      return next;
+    });
+    track.quizAdjusted(field);
+  }
 
   if (!matches.length) {
     return (
@@ -72,6 +123,8 @@ export default function QuizResults() {
         </div>
 
         {/* Best match — featured */}
+        <QuizAdjustments answers={answers} onChange={updateAnswer} />
+
         <div className="result-card result-card--best">
           <div className="result-card-badge result-card-badge--best">{best.matchLabel}</div>
           <div className="result-card-score">{best.score}% match</div>
@@ -126,6 +179,39 @@ export default function QuizResults() {
   );
 }
 
+function QuizAdjustments({ answers, onChange }) {
+  return (
+    <section className="quiz-adjustments" aria-labelledby="quiz-adjustments-heading">
+      <div>
+        <h2 id="quiz-adjustments-heading">Fine tune your matches</h2>
+        <p>Adjust the main filters and the top plans update immediately.</p>
+      </div>
+      <div className="quiz-adjustment-grid">
+        <AdjustmentSelect label="Goal" value={answers.goal || ''} options={GOAL_OPTIONS} onChange={value => onChange('goal', value)} />
+        <AdjustmentSelect label="Diet" value={answers.diet || ''} options={DIET_OPTIONS} onChange={value => onChange('diet', value)} />
+        <AdjustmentSelect label="Supermarket" value={answers.supermarket || ''} options={MARKET_OPTIONS} onChange={value => onChange('supermarket', value)} />
+        <AdjustmentSelect label="Calories" value={answers.calories || ''} options={CALORIE_OPTIONS} onChange={value => onChange('calories', value)} />
+        <AdjustmentSelect label="Budget" value={answers.budget || ''} options={BUDGET_OPTIONS} onChange={value => onChange('budget', value)} />
+        <AdjustmentSelect label="Effort" value={answers.effort || ''} options={EFFORT_OPTIONS} onChange={value => onChange('effort', value)} />
+      </div>
+    </section>
+  );
+}
+
+function AdjustmentSelect({ label, value, options, onChange }) {
+  return (
+    <label className="quiz-adjustment-field">
+      <span>{label}</span>
+      <select value={value} onChange={event => onChange(event.target.value)}>
+        <option value="">Any</option>
+        {options.map(([key, labelText]) => (
+          <option key={key} value={key}>{labelText}</option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 function MacroBars({ macros }) {
   const maxByMacro = { protein: 220, carbs: 320, fats: 120, fibre: 50 };
 
@@ -150,4 +236,35 @@ function MacroBars({ macros }) {
       ))}
     </div>
   );
+}
+
+function readAnswersFromParams(params) {
+  try {
+    const q = params.get('q');
+    return q ? JSON.parse(atob(q)) : null;
+  } catch {
+    return null;
+  }
+}
+
+function readSavedAnswers() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(QUIZ_LAST_ANSWERS_KEY) || 'null');
+    return saved?.answers || null;
+  } catch {
+    return null;
+  }
+}
+
+function writeSavedAnswers(answers) {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(QUIZ_LAST_ANSWERS_KEY, JSON.stringify({
+      answers,
+      savedAt: Date.now(),
+    }));
+  } catch {
+    // Results still work without local storage.
+  }
 }
