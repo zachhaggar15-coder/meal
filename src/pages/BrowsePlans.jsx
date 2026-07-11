@@ -6,13 +6,18 @@ import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
+import { PLAN_COUNT } from '../data/planSeeds.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
+// ALL_PLANS intentionally includes the large synthetic "coverage" pool (see
+// planSeeds.js) so filtering can match granular goal/supermarket/diet/calorie
+// combinations beyond the curated, indexed set. PLAN_COUNT (imported above)
+// is the honest count of real, indexed plans and is used only for headline
+// marketing/SEO text ("Browse X plans") — never for filtering.
 const ALL_PLANS = getAllPlanMeta();
-const PLAN_COUNT = ALL_PLANS.length;
 const PLAN_INDEX_LIMIT = 12;
 
 const GOALS = [
@@ -250,7 +255,7 @@ export default function BrowsePlans() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>Browse All UK Meal Plans</h1>
           <p className="browse-sub">
-            {ALL_PLANS.length} plans covering every goal, supermarket, and diet.
+            {PLAN_COUNT} plans covering every goal, supermarket, and diet.
             {' '}<Link to="/quiz" className="browse-quiz-link">Take the quiz to get matched →</Link>
           </p>
         </div>
