@@ -190,7 +190,7 @@ CRITICAL CALORIE RULES — failure to follow these will make the output unusable
 1. Every individual meal's "calories" field must reflect its ACTUAL calorie content for the portion described.
 2. "daily_totals.calories" MUST equal the SUM of all meal calories for that day.
 3. Each day's total must be within 50 kcal of ${calories}. Do not round to a convenient number.
-4. Do not write placeholder zeros. Every calories field must be a realistic non-zero number.
+4. Do not write placeholder zeros. Every calories, protein, carbs, fats and fibre field must be a realistic number for the portion described.
 
 CRITICAL RECIPE QUALITY RULES — failure to follow these will make the output unusable:
 5. Every named dish must include ALL of its authentic cooking components in the "ingredients" list.
@@ -221,6 +221,9 @@ Output format MUST be valid JSON matching exactly:
           "name": "",
           "calories": 0,
           "protein": 0,
+          "carbs": 0,
+          "fats": 0,
+          "fibre": 0,
           "prep_time": "",
           "description": "up to 20 words describing taste and texture, e.g. 'Rich and warming with a gentle heat, great for batch cooking.'",
           "portion_size": "e.g. 50g oats, 200ml skimmed milk, 1 banana",
@@ -236,7 +239,7 @@ Output format MUST be valid JSON matching exactly:
           ]
         }
       ],
-      "daily_totals": { "calories": 0, "protein": 0 }
+      "daily_totals": { "calories": 0, "protein": 0, "carbs": 0, "fats": 0, "fibre": 0 }
     }
   ],
   "shopping_list": {
@@ -263,6 +266,7 @@ Output format MUST be valid JSON matching exactly:
 CRITICAL — ingredients array is REQUIRED on every meal. List EVERY ingredient used to cook the dish (protein, carbs, vegetables, oil, spices, sauces, aromatics, condiments), each with a precise quantity. Do not omit any flavouring or cooking ingredient — this list drives the shopping list.
 CRITICAL — portion_size is REQUIRED on every meal. Comma-separated list of main ingredients with exact gram/ml weights. Format: "150g chicken breast, 40g brown rice (dry), 200g broccoli".
 CRITICAL — recipe array is REQUIRED on every meal. Use 3-5 practical steps that a beginner can follow and that match the listed ingredients.
+CRITICAL — macro fields are grams per portion. daily_totals must equal the sum of the meal-level protein, carbs, fats and fibre fields for that day.
 Rules for shopping_list items: each item must have "name", "amount" (total needed for the whole plan), and "packs" (e.g. "2 × 500g packs"). The "pantry" category covers ALL spices, pastes, sauces, oils, stock, and condiments — these must never be omitted or left empty when meals require them.
 
 Return ONLY valid JSON. No markdown, no commentary.`;

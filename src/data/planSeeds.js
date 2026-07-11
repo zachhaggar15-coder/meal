@@ -436,10 +436,10 @@ const EXPANSION_STYLES = {
   ],
   'muscle-gain': [
     { slug: 'clean-bulk', label: 'Clean Bulk', effort: 'standard', emphasis: 'lean-protein' },
-    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'performance-protein' },
     { slug: 'meal-prep', label: 'Meal Prep', effort: 'batch', emphasis: 'batch-cooking' },
     { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
-    { slug: 'budget-bulk', label: 'Budget Bulk', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'budget-bulk', label: 'Budget Bulk', effort: 'standard', emphasis: 'performance-protein' },
   ],
   'budget-fat-loss': [
     { slug: 'budget-smart', label: 'Best-Value', effort: 'standard', emphasis: 'low-cal-swaps' },
@@ -498,15 +498,15 @@ const EXPANSION_STYLES = {
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
   ],
   'budget-bodybuilding': [
-    { slug: 'lean-bulk', label: 'Lean Bulk', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'lean-bulk', label: 'Lean Bulk', effort: 'standard', emphasis: 'performance-protein' },
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
     { slug: 'budget-protein', label: 'Protein-Focused', effort: 'standard', emphasis: 'lean-protein' },
-    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
-    { slug: 'high-calorie', label: 'Higher-Calorie', effort: 'standard', emphasis: 'batch-cooking' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'performance-protein' },
+    { slug: 'high-calorie', label: 'Higher-Calorie', effort: 'standard', emphasis: 'high-carb-fuel' },
   ],
   'gym-beginner': [
     { slug: 'simple-gym', label: 'Simple Gym', effort: 'standard', emphasis: 'lean-protein' },
-    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'performance-protein' },
     { slug: 'meal-prep', label: 'Meal Prep', effort: 'batch', emphasis: 'batch-cooking' },
     { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'lean-protein' },
     { slug: 'budget-smart', label: 'Budget-Smart', effort: 'standard', emphasis: 'low-cal-swaps' },
@@ -514,7 +514,7 @@ const EXPANSION_STYLES = {
   'cheap-high-protein': [
     { slug: 'best-value', label: 'Best-Value', effort: 'standard', emphasis: 'lean-protein' },
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
-    { slug: 'lean-protein', label: 'Lean Protein', effort: 'standard', emphasis: 'lean-protein' },
+    { slug: 'lean-protein', label: 'Lean Protein', effort: 'standard', emphasis: 'performance-protein' },
     { slug: 'simple-prep', label: 'Simple Prep', effort: 'low', emphasis: 'minimal-effort' },
     { slug: 'tinned-and-frozen', label: 'Tinned & Frozen', effort: 'minimal', emphasis: 'frozen-friendly' },
   ],
@@ -540,17 +540,17 @@ const EXPANSION_STYLES = {
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
   ],
   'endurance-athlete': [
-    { slug: 'long-run-fuel', label: 'Long-Run Fuel', effort: 'standard', emphasis: 'whole-food' },
-    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
-    { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'lean-protein' },
-    { slug: 'higher-carb', label: 'Higher-Carb', effort: 'standard', emphasis: 'whole-food' },
+    { slug: 'long-run-fuel', label: 'Long-Run Fuel', effort: 'standard', emphasis: 'high-carb-fuel' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'performance-protein' },
+    { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'performance-protein' },
+    { slug: 'higher-carb', label: 'Higher-Carb', effort: 'standard', emphasis: 'high-carb-fuel' },
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
   ],
   'body-recomp': [
     { slug: 'lean-recomp', label: 'Lean', effort: 'standard', emphasis: 'recomp-protein' },
-    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'recomp-protein' },
+    { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'performance-protein' },
     { slug: 'batch-cook', label: 'Batch Cook', effort: 'batch', emphasis: 'batch-cooking' },
-    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'recomp-protein' },
+    { slug: 'high-protein', label: 'High-Protein', effort: 'standard', emphasis: 'performance-protein' },
     { slug: 'high-variety', label: 'High-Variety', effort: 'high-variety', emphasis: 'high-variety' },
   ],
   cutting: [
@@ -609,8 +609,10 @@ const DEEP_EXPANSION_STYLE_LIBRARY = {
   'family-friendly': { slug: 'family-friendly', label: 'Family-Friendly', effort: 'standard', emphasis: 'high-variety' },
   'low-fuss': { slug: 'low-fuss', label: 'Low-Fuss', effort: 'minimal', emphasis: 'minimal-effort' },
   'budget-smart': { slug: 'budget-smart', label: 'Budget-Smart', effort: 'standard', emphasis: 'low-cal-swaps' },
-  'training-day': { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'whole-food' },
-  recovery: { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'lean-protein' },
+  'performance-protein': { slug: 'performance-protein', label: 'High-Protein High-Carb', effort: 'standard', emphasis: 'performance-protein' },
+  'high-carb-fuel': { slug: 'high-carb-fuel', label: 'High-Carb Fuel', effort: 'standard', emphasis: 'high-carb-fuel' },
+  'training-day': { slug: 'training-day', label: 'Training Day', effort: 'standard', emphasis: 'performance-protein' },
+  recovery: { slug: 'recovery', label: 'Recovery', effort: 'standard', emphasis: 'performance-protein' },
   'omega-three': { slug: 'omega-three', label: 'Omega-3', effort: 'standard', emphasis: 'whole-food' },
   'calcium-rich': { slug: 'calcium-rich', label: 'Calcium-Rich', effort: 'standard', emphasis: 'whole-food' },
   'lower-sugar': { slug: 'lower-sugar', label: 'Lower-Sugar', effort: 'standard', emphasis: 'whole-food' },
@@ -634,7 +636,7 @@ const DEFAULT_DEEP_STYLE_SLUGS = [
 const DEEP_STYLE_SLUGS_BY_GOAL = {
   'weight-loss': ['five-a-day', 'high-fibre', 'balanced-plate', 'lower-sugar', 'batch-friendly', 'quick-shop', 'work-lunch'],
   'high-protein-low-cal': ['higher-protein', 'desk-lunch', 'high-fibre', 'batch-friendly', 'low-fuss', 'balanced-plate'],
-  'muscle-gain': ['higher-protein', 'training-day', 'recovery', 'wholegrain', 'batch-friendly', 'quick-shop'],
+  'muscle-gain': ['performance-protein', 'training-day', 'high-carb-fuel', 'higher-protein', 'recovery', 'wholegrain', 'batch-friendly', 'quick-shop'],
   'budget-fat-loss': ['budget-smart', 'tinned-and-frozen', 'cook-once', 'freezer-friendly', 'low-fuss', 'high-fibre'],
   'cheap-student': ['budget-smart', 'tinned-and-frozen', 'low-fuss', 'cook-once', 'quick-shop', 'higher-protein'],
   'busy-professional': ['desk-lunch', 'work-lunch', 'quick-shop', 'sunday-prep', 'batch-friendly', 'low-fuss'],
@@ -643,14 +645,14 @@ const DEEP_STYLE_SLUGS_BY_GOAL = {
   'vegan-low-cal': ['plant-forward', 'high-fibre', 'five-a-day', 'batch-friendly', 'wholegrain', 'lower-sugar'],
   'high-protein-vegetarian': ['higher-protein', 'plant-forward', 'batch-friendly', 'wholegrain', 'desk-lunch', 'recovery'],
   pescatarian: ['omega-three', 'higher-protein', 'balanced-plate', 'batch-friendly', 'quick-shop', 'work-lunch'],
-  'budget-bodybuilding': ['higher-protein', 'budget-smart', 'training-day', 'batch-friendly', 'tinned-and-frozen', 'wholegrain'],
-  'gym-beginner': ['higher-protein', 'training-day', 'balanced-plate', 'batch-friendly', 'quick-shop', 'recovery'],
-  'cheap-high-protein': ['higher-protein', 'budget-smart', 'tinned-and-frozen', 'cook-once', 'low-fuss', 'desk-lunch'],
+  'budget-bodybuilding': ['performance-protein', 'high-carb-fuel', 'higher-protein', 'budget-smart', 'training-day', 'batch-friendly', 'tinned-and-frozen', 'wholegrain'],
+  'gym-beginner': ['performance-protein', 'higher-protein', 'training-day', 'balanced-plate', 'batch-friendly', 'quick-shop', 'recovery'],
+  'cheap-high-protein': ['performance-protein', 'higher-protein', 'budget-smart', 'tinned-and-frozen', 'cook-once', 'low-fuss', 'desk-lunch'],
   maintenance: ['balanced-plate', 'five-a-day', 'wholegrain', 'family-friendly', 'cook-once', 'quick-shop'],
   'anti-inflammatory': ['omega-three', 'plant-forward', 'high-fibre', 'five-a-day', 'balanced-plate', 'wholegrain'],
   'menopause-nutrition': ['calcium-rich', 'higher-protein', 'high-fibre', 'balanced-plate', 'batch-friendly', 'five-a-day'],
-  'endurance-athlete': ['training-day', 'recovery', 'wholegrain', 'batch-friendly', 'quick-shop', 'balanced-plate'],
-  'body-recomp': ['higher-protein', 'training-day', 'desk-lunch', 'batch-friendly', 'balanced-plate', 'recovery'],
+  'endurance-athlete': ['high-carb-fuel', 'performance-protein', 'training-day', 'recovery', 'wholegrain', 'batch-friendly', 'quick-shop', 'balanced-plate'],
+  'body-recomp': ['performance-protein', 'higher-protein', 'training-day', 'desk-lunch', 'batch-friendly', 'balanced-plate', 'recovery'],
   cutting: ['higher-protein', 'high-fibre', 'lower-sugar', 'desk-lunch', 'batch-friendly', 'low-fuss'],
 };
 
@@ -709,22 +711,22 @@ export const COVERAGE_GOAL_PROFILES = {
   'muscle-gain': {
     calories: [2000, 2200, 2500, 3000, 3500],
     dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
-    emphasis: 'lean-protein',
+    emphasis: 'performance-protein',
   },
   'body-recomp': {
     calories: [1500, 1600, 1800, 2000, 2200, 2500],
     dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
-    emphasis: 'recomp-protein',
+    emphasis: 'performance-protein',
   },
   'gym-beginner': {
     calories: [1500, 1600, 1800, 2000, 2200, 2500],
     dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
-    emphasis: 'lean-protein',
+    emphasis: 'performance-protein',
   },
   'budget-bodybuilding': {
     calories: [2000, 2200, 2500, 3000, 3500],
     dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
-    emphasis: 'lean-protein',
+    emphasis: 'performance-protein',
   },
   'cheap-student': {
     calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500],
@@ -734,7 +736,7 @@ export const COVERAGE_GOAL_PROFILES = {
   'cheap-high-protein': {
     calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500],
     dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
-    emphasis: 'lean-protein',
+    emphasis: 'performance-protein',
   },
   'low-effort': {
     calories: [1400, 1500, 1600, 1800, 2000, 2200, 2500, 3000, 3500],
@@ -784,7 +786,7 @@ export const COVERAGE_GOAL_PROFILES = {
   'endurance-athlete': {
     calories: [2000, 2200, 2500, 3000, 3500],
     dietTypes: ['standard', 'vegetarian', 'vegan', 'pescatarian'],
-    emphasis: 'whole-food',
+    emphasis: 'high-carb-fuel',
   },
   cutting: {
     calories: [1400, 1500, 1600, 1800, 2000],
@@ -983,4 +985,8 @@ export const COVERAGE_PLAN_SEEDS = buildCoverageSeeds(INDEXABLE_PLAN_SEED_POOL);
 
 export const INDEXABLE_PLAN_SEEDS = INDEXABLE_PLAN_SEED_POOL;
 export const PLAN_SEEDS = [...INDEXABLE_PLAN_SEED_POOL, ...COVERAGE_PLAN_SEEDS];
-export const PLAN_COUNT = PLAN_SEEDS.length;
+// PLAN_COUNT is shown to users ("Browse X free UK meal plans") and must reflect
+// real, indexed, prerendered pages — not PLAN_SEEDS.length, which also includes
+// the much larger synthetic COVERAGE_PLAN_SEEDS pool used internally for
+// quiz-matching coverage and was never meant to be a public-facing number.
+export const PLAN_COUNT = INDEXABLE_PLAN_SEEDS.length;

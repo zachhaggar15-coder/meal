@@ -24,7 +24,7 @@ export default function Footer() {
         <span className="footer-copy">&copy; {new Date().getFullYear()}</span>
       </div>
       <p className="footer-disclaimer">
-        General meal-planning information only. Calories and protein are estimates; speak to a qualified professional for clinical dietary needs.
+        General meal-planning information only. Calories and macros are estimates; speak to a qualified professional for clinical dietary needs.
       </p>
     </footer>
   );

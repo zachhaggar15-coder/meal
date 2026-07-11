@@ -1,5 +1,7 @@
 import { MEALS } from '../data/mealLibrary.js';
 import { PLAN_SEEDS } from '../data/planSeeds.js';
+import { isCountUnit } from './countUnits.js';
+import { averageDailyMacros, computeMealNutrition, scaleNutrition } from './nutrition.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -58,6 +60,8 @@ export const EFFORT_LABELS = {
 
 export const MACRO_PROFILES = {
   'lean-protein':   { protein: 90, carbs: 50, fats: 35, fibre: 55 },
+  'performance-protein': { protein: 82, carbs: 82, fats: 45, fibre: 58 },
+  'high-carb-fuel': { protein: 58, carbs: 92, fats: 38, fibre: 62 },
   'whole-food':     { protein: 65, carbs: 60, fats: 50, fibre: 80 },
   'batch-cooking':  { protein: 75, carbs: 65, fats: 45, fibre: 60 },
   'minimal-effort': { protein: 60, carbs: 65, fats: 50, fibre: 50 },
@@ -71,6 +75,8 @@ export const MACRO_PROFILES = {
 // Quiz custom macro matching and plan displays use these concrete values.
 export const MACRO_GRAMS = {
   'lean-protein':   { protein: 160, carbs: 150, fats: 55, fibre: 30 },
+  'performance-protein': { protein: 170, carbs: 230, fats: 60, fibre: 35 },
+  'high-carb-fuel': { protein: 125, carbs: 280, fats: 65, fibre: 40 },
   'whole-food':     { protein: 100, carbs: 220, fats: 65, fibre: 42 },
   'batch-cooking':  { protein: 130, carbs: 200, fats: 60, fibre: 35 },
   'minimal-effort': { protein: 90,  carbs: 210, fats: 70, fibre: 25 },
@@ -107,6 +113,7 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 const PLAN_SEED_BY_SLUG = new Map(PLAN_SEEDS.map(seed => [seed.slug, seed]));
 const PLAN_SEEDS_BY_GOAL = groupSeedsBy(PLAN_SEEDS, 'goal');
 const PLAN_SEEDS_BY_SUPERMARKET = groupSeedsBy(PLAN_SEEDS, 'supermarket');
+const MEAL_NUTRITION_CACHE = new Map();
 
 // ── Diet filtering ─────────────────────────────────────────────────────────────
 
@@ -515,17 +522,76 @@ function joinNames(names) {
   return `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
 }
 
-export function buildPlan(seed) {
+function rankMealPool(meals, seed) {
+  if (!Array.isArray(meals) || meals.length <= 1) return meals || [];
+
+  return [...meals].sort((a, b) => {
+    const scoreDiff = scoreMealForSeed(b, seed) - scoreMealForSeed(a, seed);
+    if (Math.abs(scoreDiff) > 0.001) return scoreDiff;
+    return String(a.id || a.name).localeCompare(String(b.id || b.name));
+  });
+}
+
+function scoreMealForSeed(meal, seed) {
+  const nutrition = getMealNutrition(meal);
+  const kcal = Math.max(1, nutrition.kcal || meal.cal || 1);
+  const protein = nutrition.protein || meal.pro || 0;
+  const carbs = nutrition.carbs || 0;
+  const fats = nutrition.fats || 0;
+  const fibre = nutrition.fibre || 0;
+  const tags = new Set(meal.tags || []);
+  const proteinDensity = (protein / kcal) * 1000;
+  const carbDensity = (carbs / kcal) * 1000;
+  const fibreDensity = (fibre / kcal) * 1000;
+  const emphasis = seed.emphasis || '';
+  const goal = seed.goal || '';
+
+  let score = 0;
+
+  if (emphasis === 'performance-protein') {
+    score += proteinDensity * 2.2 + carbDensity * 1.5 + fibreDensity * 0.35 - fats * 0.15;
+  } else if (emphasis === 'high-carb-fuel') {
+    score += carbDensity * 2.4 + fibreDensity * 0.5 + proteinDensity * 0.8 - fats * 0.1;
+  } else if (emphasis === 'lean-protein' || emphasis === 'recomp-protein') {
+    score += proteinDensity * 2.6 + fibreDensity * 0.35 - fats * 0.18;
+  } else if (emphasis === 'whole-food') {
+    score += carbDensity * 1.2 + fibreDensity * 1.3 + proteinDensity * 0.8;
+  } else if (emphasis === 'low-cal-swaps') {
+    score += proteinDensity * 1.4 + fibreDensity * 1.5 - fats * 0.2;
+  } else {
+    score += proteinDensity + carbDensity * 0.8 + fibreDensity * 0.6;
+  }
+
+  if (tags.has('high-protein')) score += 16;
+  if (tags.has('batch-friendly') && seed.effort === 'batch') score += 10;
+  if (tags.has('easy') && (seed.effort === 'minimal' || seed.effort === 'low')) score += 8;
+  if ((goal.includes('muscle') || goal.includes('bodybuilding') || goal.includes('endurance')) && carbs >= 45) score += 10;
+  if ((goal.includes('protein') || goal.includes('recomp') || goal.includes('cutting')) && protein >= 30) score += 10;
+  if (seed.calories <= 1600 && kcal > 750) score -= 18;
+  if (seed.calories >= 2500 && kcal < 250) score -= 8;
+
+  return score;
+}
+
+function getMealNutrition(meal) {
+  const key = meal?.id || meal?.name;
+  if (key && MEAL_NUTRITION_CACHE.has(key)) return MEAL_NUTRITION_CACHE.get(key);
+  const nutrition = computeMealNutrition(meal?.ingredients || []);
+  if (key) MEAL_NUTRITION_CACHE.set(key, nutrition);
+  return nutrition;
+}
+
+export function buildPlanDays(seed) {
   const eligible = getEligibleMeals(seed.dietType);
   const breakfasts = eligible.filter(m => m.type === 'breakfast');
   const lunches    = eligible.filter(m => m.type === 'lunch');
   const dinners    = eligible.filter(m => m.type === 'dinner');
   const snacks     = eligible.filter(m => m.type === 'snack');
   const batchPlan  = isBatchPlan(seed);
-  const breakfastPool = batchPlan ? batchFriendlyMeals(breakfasts) : breakfasts;
-  const lunchPool     = batchPlan ? batchFriendlyMeals(lunches) : lunches;
-  const dinnerPool    = batchPlan ? batchFriendlyMeals(dinners) : dinners;
-  const snackPool     = batchPlan ? easyBatchSnacks(snacks) : snacks;
+  const breakfastPool = rankMealPool(batchPlan ? batchFriendlyMeals(breakfasts) : breakfasts, seed);
+  const lunchPool     = rankMealPool(batchPlan ? batchFriendlyMeals(lunches) : lunches, seed);
+  const dinnerPool    = rankMealPool(batchPlan ? batchFriendlyMeals(dinners) : dinners, seed);
+  const snackPool     = rankMealPool(batchPlan ? easyBatchSnacks(snacks) : snacks, seed);
 
   // Use mealSetIndex as a large prime-multiplied offset so sets diverge quickly
   const base = seed.mealSetIndex * 37;
@@ -534,7 +600,7 @@ export function buildPlan(seed) {
   // This mirrors real UK meal-prep behaviour and keeps the week feeling coherent.
   const bPrimary = pick(breakfastPool, base);
   let bSecondary = pick(breakfastPool, base + 13);
-  if (bSecondary.id === bPrimary.id) bSecondary = pick(breakfasts, base + 7);
+  if (bSecondary.id === bPrimary.id) bSecondary = pick(breakfastPool, base + 7);
 
   const batchLunch = batchPlan ? pick(lunchPool, base + 3) : null;
   const batchWeekendLunch = batchPlan ? pickDifferent(lunchPool, base + 17, new Set([batchLunch?.id])) : null;
@@ -546,24 +612,24 @@ export function buildPlan(seed) {
   const plan = DAYS.map((day, di) => {
     const s = base + di * 11;
     const b = di < 5 ? bPrimary : bSecondary; // Mon–Fri primary, Sat–Sun secondary
-    const l = batchPlan && di < 5 ? batchLunch : batchPlan ? batchWeekendLunch : pick(lunches, s + 3);
+    const l = batchPlan && di < 5 ? batchLunch : batchPlan ? batchWeekendLunch : pick(lunchPool, s + 3);
     const d = batchPlan && di < 5
       ? (di % 2 === 0 ? batchDinnerA : batchDinnerB)
       : batchPlan
         ? pickDinnerForLunch(dinnerPool, s + 7, l)
-        : pickDinnerForLunch(dinners, s + 7, l);
+        : pickDinnerForLunch(dinnerPool, s + 7, l);
 
     const mealList = [b, l, d].filter(Boolean);
 
     // Add snack(s) based on calorie target
-    if (seed.calories >= 1800 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snacks, s + 13));
-    if (seed.calories >= 2000 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snacks, s + 19));
-    if (seed.calories >= 3000 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snacks, s + 29));
-    if (seed.calories >= 3500 && snacks.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snacks, s + 41));
+    if (seed.calories >= 1800 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snackPool, s + 13));
+    if (seed.calories >= 2000 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snackPool, s + 19));
+    if (seed.calories >= 3000 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snackPool, s + 29));
+    if (seed.calories >= 3500 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snackPool, s + 41));
 
     const adjustedMeals = rebalanceMealsToTarget(mealList, seed.calories);
 
-    const meals = adjustedMeals.map(({ meal: m, kcal, protein, portionScale }) => {
+    const meals = adjustedMeals.map(({ meal: m, kcal, protein, carbs, fats, fibre, portionScale }) => {
       const ingredients = scaleIngredientsForPortion(m.ingredients, portionScale);
       const displayMeal = { ...m, ingredients };
 
@@ -572,8 +638,11 @@ export function buildPlan(seed) {
         name:       m.name,
         kcal,
         protein,
+        carbs,
+        fats,
+        fibre,
         prep:       `${m.prepMins} min`,
-        desc:       buildMealDesc(displayMeal, kcal, protein),
+        desc:       buildMealDesc(displayMeal, kcal, protein, carbs),
         ingredients,
         portion_size: buildPortionSize(ingredients),
         recipe:     buildRecipeSteps(displayMeal),
@@ -583,10 +652,33 @@ export function buildPlan(seed) {
     const totals = {
       kcal:    meals.reduce((sum, m) => sum + m.kcal, 0),
       protein: meals.reduce((sum, m) => sum + m.protein, 0),
+      carbs:   meals.reduce((sum, m) => sum + m.carbs, 0),
+      fats:    meals.reduce((sum, m) => sum + m.fats, 0),
+      fibre:   meals.reduce((sum, m) => sum + m.fibre, 0),
     };
 
     return { day, meals, totals };
   });
+  return {
+    plan,
+    averageMacros: averageDailyMacros(plan),
+  };
+}
+
+const PLAN_MACRO_CACHE = new Map();
+
+export function getSeedMacroGrams(seed) {
+  if (!seed?.slug) return MACRO_GRAMS['lean-protein'];
+  const cached = PLAN_MACRO_CACHE.get(seed.slug);
+  if (cached) return cached;
+
+  const { averageMacros } = buildPlanDays(seed);
+  PLAN_MACRO_CACHE.set(seed.slug, averageMacros);
+  return averageMacros;
+}
+
+export function buildPlan(seed) {
+  const { plan, averageMacros } = buildPlanDays(seed);
   const prepPlan = buildBatchPrepPlan(seed, plan);
 
   return {
@@ -603,8 +695,8 @@ export function buildPlan(seed) {
 
     effortLabel:   EFFORT_LABELS[seed.effort]  || seed.effort,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
-    macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
-    macrosGrams:   MACRO_GRAMS[seed.emphasis]    || MACRO_GRAMS['lean-protein'],
+    macros:        buildMacroProfilePercentages(averageMacros),
+    macrosGrams:   averageMacros,
 
     summary: {
       supermarkets:    seed.supermarket === 'any' ? 'Generic UK supermarket' : getMarketLabel(seed.supermarket),
@@ -621,6 +713,23 @@ export function buildPlan(seed) {
     plan,
     shoppingList: buildShoppingList(plan),
     relatedSlugs: getRelatedSlugs(seed),
+  };
+}
+
+function buildMacroProfilePercentages(macros) {
+  const proteinKcal = Number(macros.protein || 0) * 4;
+  const carbsKcal = Number(macros.carbs || 0) * 4;
+  const fatsKcal = Number(macros.fats || 0) * 9;
+  const fibreKcal = Number(macros.fibre || 0) * 2;
+  const total = proteinKcal + carbsKcal + fatsKcal + fibreKcal;
+
+  if (!total) return MACRO_PROFILES['lean-protein'];
+
+  return {
+    protein: Math.round((proteinKcal / total) * 100),
+    carbs: Math.round((carbsKcal / total) * 100),
+    fats: Math.round((fatsKcal / total) * 100),
+    fibre: Math.round((fibreKcal / total) * 100),
   };
 }
 
@@ -649,10 +758,16 @@ export function scalePlanForHousehold(plan, householdInput = 1) {
       ...member,
       kcal: Math.round((day.totals?.kcal || 0) * member.portionScale),
       protein: Math.round((day.totals?.protein || 0) * member.portionScale),
+      carbs: Math.round((day.totals?.carbs || 0) * member.portionScale),
+      fats: Math.round((day.totals?.fats || 0) * member.portionScale),
+      fibre: Math.round((day.totals?.fibre || 0) * member.portionScale),
     })),
     householdTotals: {
       kcal: Math.round((day.totals?.kcal || 0) * totalPortions),
       protein: Math.round((day.totals?.protein || 0) * totalPortions),
+      carbs: Math.round((day.totals?.carbs || 0) * totalPortions),
+      fats: Math.round((day.totals?.fats || 0) * totalPortions),
+      fibre: Math.round((day.totals?.fibre || 0) * totalPortions),
     },
   }));
 
@@ -748,6 +863,9 @@ function scaleMealForHousehold(meal, members, totalPortions) {
       ...member,
       kcal: Math.round((meal.kcal || 0) * member.portionScale),
       protein: Math.round((meal.protein || 0) * member.portionScale),
+      carbs: Math.round((meal.carbs || 0) * member.portionScale),
+      fats: Math.round((meal.fats || 0) * member.portionScale),
+      fibre: Math.round((meal.fibre || 0) * member.portionScale),
     })),
     ingredients,
     portion_size: buildPortionSize(ingredients),
@@ -775,24 +893,31 @@ function scaleBudgetEstimate(value, people) {
 }
 
 function rebalanceMealsToTarget(meals, targetCalories) {
-  const baseTotal = meals.reduce((sum, meal) => sum + (meal.cal || 0), 0);
+  const enrichedMeals = meals.map(meal => ({
+    meal,
+    nutrition: getMealNutrition(meal),
+  }));
+  const baseTotal = enrichedMeals.reduce((sum, item) => (
+    sum + (item.nutrition.kcal || item.meal.cal || 0)
+  ), 0);
+
   if (!baseTotal || !targetCalories) {
-    return meals.map(meal => ({
+    return enrichedMeals.map(({ meal, nutrition }) => ({
       meal,
-      kcal: meal.cal,
-      protein: meal.pro,
+      ...scaleNutrition(nutrition, 1, nutrition.kcal || meal.cal),
       portionScale: 1,
     }));
   }
 
   const portionScale = targetCalories / baseTotal;
-  const rawCalories = meals.map(meal => (meal.cal || 0) * portionScale);
+  const rawCalories = enrichedMeals.map(({ meal, nutrition }) => (
+    (nutrition.kcal || meal.cal || 0) * portionScale
+  ));
   const roundedCalories = distributeRoundedTotal(rawCalories, targetCalories);
 
-  return meals.map((meal, index) => ({
+  return enrichedMeals.map(({ meal, nutrition }, index) => ({
     meal,
-    kcal: roundedCalories[index],
-    protein: Math.max(1, Math.round((meal.pro || 0) * portionScale)),
+    ...scaleNutrition(nutrition, portionScale, roundedCalories[index]),
     portionScale,
   }));
 }
@@ -894,15 +1019,7 @@ function formatWholeCount(value) {
   return Math.max(1, Math.round(value));
 }
 
-export function isCountUnit(unit) {
-  return [
-    'biscuit', 'biscuits', 'cake', 'cakes', 'clove', 'cloves', 'cracker', 'crackers',
-    'date', 'dates', 'egg', 'eggs', 'fillet', 'fillets', 'leaf', 'leaves', 'pack',
-    'packs', 'pitta', 'pittas', 'rasher', 'rashers', 'roll', 'rolls', 'sausage',
-    'sausages', 'scoop', 'scoops', 'slice', 'slices', 'stick', 'sticks', 'stalk',
-    'stalks', 'tin', 'tins', 'tortilla', 'tortillas', 'wrap', 'wraps',
-  ].includes(unit.toLowerCase());
-}
+export { isCountUnit } from './countUnits.js';
 
 function formatCountUnit(unit, count) {
   const lowerUnit = unit.toLowerCase();
@@ -947,12 +1064,13 @@ function formatNumber(value) {
   return String(Number(value.toFixed(2))).replace(/\.0$/, '');
 }
 
-function buildMealDesc(meal, kcal, protein) {
+function buildMealDesc(meal, kcal, protein, carbs = null) {
   const mainIngs = (meal.ingredients || [])
     .slice(0, 3)
     .map(i => i.replace(/\s+\d[\d.]*.*$/i, '').toLowerCase())
     .join(', ');
-  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${kcal} kcal, ${protein}g protein.`;
+  const carbText = Number.isFinite(carbs) ? `, ${carbs}g carbs` : '';
+  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${kcal} kcal, ${protein}g protein${carbText}.`;
 }
 
 function buildRecipeSteps(meal) {

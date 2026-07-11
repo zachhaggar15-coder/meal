@@ -53,12 +53,12 @@ The user wants to make this change: "${prompt}"
 
 Rules:
 - Return a JSON object with a single key "meal" whose value is the updated meal.
-- Keep every field that exists in the input (type, name, kcal, protein, prep, desc, ingredients, portion_size, recipe).
-- Update name, kcal, protein, prep, desc, ingredients, portion_size, and recipe to reflect the new dish.
+- Keep every field that exists in the input (type, name, kcal, protein, carbs, fats, fibre, prep, desc, ingredients, portion_size, recipe).
+- Update name, kcal, protein, carbs, fats, fibre, prep, desc, ingredients, portion_size, and recipe to reflect the new dish.
 - ingredients must be a flat array of strings, each with a precise quantity (e.g. "Chicken breast 150g").
 - portion_size must be a comma-separated string of the main ingredients with gram/ml weights.
 - recipe must be an array of 3-5 short, followable cooking steps that match the updated ingredients and portion_size.
-- kcal and protein must be realistic integer estimates for the new dish.
+- kcal, protein, carbs, fats and fibre must be realistic integer estimates for the new dish.
 - Keep the same meal type (Breakfast, Lunch, Dinner, Snack).
 - Use only ingredients readily available at UK supermarkets.
 - Return ONLY valid JSON. No markdown, no commentary.`;

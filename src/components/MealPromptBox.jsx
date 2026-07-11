@@ -23,6 +23,9 @@ export default function MealPromptBox({ meal, onSwap }) {
           description: meal.desc || meal.description || '',
           calories: meal.kcal || meal.calories || 0,
           protein: meal.protein || 0,
+          carbs: meal.carbs || meal.carbohydrates || 0,
+          fats: meal.fats || meal.fat || 0,
+          fibre: meal.fibre || meal.fiber || 0,
           prep_time: meal.prep_time || meal.prep || '',
           portion_size: meal.portion_size || '',
           ingredients: normalisePromptIngredients(meal),
@@ -31,6 +34,9 @@ export default function MealPromptBox({ meal, onSwap }) {
         daily_totals: {
           calories: meal.kcal || meal.calories || 0,
           protein: meal.protein || 0,
+          carbs: meal.carbs || meal.carbohydrates || 0,
+          fats: meal.fats || meal.fat || 0,
+          fibre: meal.fibre || meal.fiber || 0,
         },
       }],
     };
@@ -74,11 +80,11 @@ export default function MealPromptBox({ meal, onSwap }) {
           {result ? (
             <div className="meal-prompt-result">
               <p className="meal-prompt-result-name">{result.name}</p>
-              {(result.calories || result.protein) && (
+              {(result.calories || hasAnyMacro(result)) && (
                 <p className="meal-prompt-result-meta">
                   {result.calories ? `${result.calories} kcal` : ''}
-                  {result.calories && result.protein ? ' · ' : ''}
-                  {result.protein ? `${result.protein}g protein` : ''}
+                  {result.calories && hasAnyMacro(result) ? ' · ' : ''}
+                  {hasAnyMacro(result) ? formatCoreMacros(result) : ''}
                 </p>
               )}
               {result.description && <p className="meal-prompt-result-desc">{result.description}</p>}
@@ -128,6 +134,28 @@ export default function MealPromptBox({ meal, onSwap }) {
       )}
     </div>
   );
+}
+
+function macroValue(source = {}, key) {
+  const aliases = {
+    carbs: ['carbs', 'carbohydrates'],
+    fats: ['fats', 'fat'],
+    fibre: ['fibre', 'fiber'],
+  };
+  const keys = aliases[key] || [key];
+  for (const candidate of keys) {
+    const value = Number(source?.[candidate]);
+    if (Number.isFinite(value)) return Math.round(value);
+  }
+  return 0;
+}
+
+function hasAnyMacro(source = {}) {
+  return ['protein', 'carbs', 'fats', 'fibre'].some(key => macroValue(source, key) > 0);
+}
+
+function formatCoreMacros(source = {}) {
+  return `${macroValue(source, 'protein')}g protein · ${macroValue(source, 'carbs')}g carbs`;
 }
 
 function normalisePromptIngredients(meal) {

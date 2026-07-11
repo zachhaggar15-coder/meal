@@ -54,8 +54,8 @@ The user wants to make the following change:
 
 Rules:
 - Make ONLY the changes needed to satisfy the request. Do not change anything else.
-- If a meal is changed, update that meal's calories and protein to reflect the new food.
-- After any changes, recalculate daily_totals.calories and daily_totals.protein so they equal the exact sum of all meals in that day.
+- If a meal is changed, update that meal's calories, protein, carbs, fats and fibre to reflect the new food.
+- After any changes, recalculate daily_totals.calories, daily_totals.protein, daily_totals.carbs, daily_totals.fats and daily_totals.fibre so they equal the exact sum of all meals in that day.
 - Keep the same JSON structure as the input — do not add or remove keys.
 - Every meal must have a "portion_size" field with exact gram/ml weights (e.g. "150g chicken breast, 40g brown rice (dry), 200g broccoli"). If a meal is changed, update its portion_size to match the new dish.
 - Every meal must have an "ingredients" array listing EVERY ingredient used in the dish (protein, carbs, vegetables, oil, spices, sauces, aromatics, condiments), each with a precise quantity. If a meal is changed, replace its ingredients array completely to match the new dish — including all flavourings and cooking ingredients, not just the main protein and carb.

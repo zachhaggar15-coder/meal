@@ -105,6 +105,19 @@ const EFFORT_LABEL = {
   batch: 'Batch cook', 'high-variety': 'High variety',
 };
 
+const MACRO_SEARCH_TERMS = {
+  'performance-protein': 'high protein high carb high carbohydrate 220g carbs 230g carbs 160g protein 170g protein performance protein muscle gain bodybuilding gym training fuel lean bulk',
+  'high-carb-fuel': 'high carb high carbohydrate 220g carbs 250g carbs 280g carbs endurance running training fuel carb load performance',
+  'lean-protein': 'high protein lean protein low calorie low carb cutting fat loss 150g protein 160g protein',
+  'recomp-protein': 'high protein body recomp recomposition training protein muscle retention',
+  'whole-food': 'whole food high fibre balanced carbs vegetables minimally processed',
+  'batch-cooking': 'batch cooking meal prep repeat meals high protein prep ahead',
+  'minimal-effort': 'minimal effort easy quick no fuss simple meals',
+  'budget-focus': 'cheap budget low cost value own brand',
+  'plant-protein': 'plant protein vegan vegetarian high protein beans tofu lentils',
+  'low-cal-swaps': 'low calorie high fibre lighter swaps fat loss',
+};
+
 const PLAN_INDEX_GROUPS = GOALS
   .filter(g => g.value)
   .map(g => {
@@ -438,7 +451,24 @@ function planMatchesFilters(plan, filters) {
   if (filters.budget && plan.budget !== filters.budget) return false;
   if (filters.effort && plan.effort !== filters.effort) return false;
 
-  const q = String(filters.search || '').trim().toLowerCase();
+  const q = normaliseSearchText(filters.search);
   if (!q) return true;
-  return plan.title.toLowerCase().includes(q) || plan.goalLabel.toLowerCase().includes(q);
+
+  const haystack = normaliseSearchText([
+    plan.title,
+    plan.goalLabel,
+    plan.goal,
+    plan.dietType,
+    plan.emphasis,
+    MACRO_SEARCH_TERMS[plan.emphasis],
+  ].filter(Boolean).join(' '));
+
+  return q.split(/\s+/).every(term => haystack.includes(term));
+}
+
+function normaliseSearchText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }

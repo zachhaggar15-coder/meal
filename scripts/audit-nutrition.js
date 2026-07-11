@@ -16,6 +16,9 @@ for (const meal of MEALS) {
     kcalDiffPct: percentDiff(meal.cal, computed.kcal),
     storedProtein: meal.pro,
     computedProtein: computed.protein,
+    computedCarbs: computed.carbs,
+    computedFats: computed.fats,
+    computedFibre: computed.fibre,
     unmatched: computed.unmatched,
   });
 }
@@ -35,6 +38,9 @@ for (const [planName, days] of Object.entries(legacyPlans)) {
         kcalDiffPct: percentDiff(meal.kcal, computed.kcal),
         storedProtein: meal.protein,
         computedProtein: computed.protein,
+        computedCarbs: computed.carbs,
+        computedFats: computed.fats,
+        computedFibre: computed.fibre,
         unmatched: computed.unmatched,
       });
     }
@@ -57,7 +63,7 @@ for (const r of unparsedRows) {
 
 console.log('\n--- Largest calorie diffs (stored vs. computed) ---');
 for (const r of computedRows.slice(0, 40)) {
-  console.log(`${r.kcalDiffPct >= 0 ? '+' : ''}${r.kcalDiffPct}%\t[${r.file}] ${r.name}: stored ${r.storedKcal}kcal, computed ${r.computedKcal}kcal (protein stored ${r.storedProtein}g, computed ${r.computedProtein}g)`);
+  console.log(`${r.kcalDiffPct >= 0 ? '+' : ''}${r.kcalDiffPct}%\t[${r.file}] ${r.name}: stored ${r.storedKcal}kcal, computed ${r.computedKcal}kcal (protein stored ${r.storedProtein}g, computed ${r.computedProtein}g, carbs ${r.computedCarbs}g, fats ${r.computedFats}g, fibre ${r.computedFibre}g)`);
 }
 
 const outPath = new URL('./output/nutrition-audit.json', import.meta.url);

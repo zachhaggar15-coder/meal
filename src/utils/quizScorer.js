@@ -1,5 +1,5 @@
 import { PLAN_SEEDS } from '../data/planSeeds.js';
-import { GOAL_LABELS, BUDGET_ESTIMATES, MACRO_PROFILES, MACRO_GRAMS } from './planBuilder.js';
+import { GOAL_LABELS, BUDGET_ESTIMATES, MACRO_PROFILES, MACRO_GRAMS, getSeedMacroGrams } from './planBuilder.js';
 
 // ── Weights ───────────────────────────────────────────────────────────────────
 const W_GOAL        = 30;
@@ -8,8 +8,12 @@ const W_SUPERMARKET = 20;
 const W_CALORIES    = 15;
 const W_BUDGET      = 5;
 const W_EFFORT      = 5;
-const W_MACROS      = 5;
-const W_TOTAL       = W_GOAL + W_DIET + W_SUPERMARKET + W_CALORIES + W_BUDGET + W_EFFORT + W_MACROS;
+const W_BASE_TOTAL  = W_GOAL + W_DIET + W_SUPERMARKET + W_CALORIES + W_BUDGET + W_EFFORT;
+const MACRO_EXACT_POOL_LIMIT = 800;
+const CUSTOM_MACRO_WEIGHT = 0.42;
+const PRESET_MACRO_WEIGHT = 0.12;
+const DEFAULT_MACRO_PROFILE = MACRO_PROFILES['lean-protein'];
+const DEFAULT_MACRO_GRAMS = MACRO_GRAMS['lean-protein'];
 
 // Goals that are "related" — partial credit when user picks one and plan has another
 const RELATED_GOALS = {
@@ -49,7 +53,7 @@ const MARKET_LABELS = {
 
 // ── Scoring ───────────────────────────────────────────────────────────────────
 
-function scorePlan(seed, answers) {
+function scoreBasePlan(seed, answers) {
   let score = 0;
 
   // ── Goal (30pts) ──
@@ -127,18 +131,66 @@ function scorePlan(seed, answers) {
     score += Math.round(W_EFFORT * 0.5);
   }
 
-  // ── Macro preference (5pts bonus) ──
-  if (answers.macros) {
-    const plan = answers.macroMode === 'custom-grams'
-      ? MACRO_GRAMS[seed.emphasis] || MACRO_GRAMS['lean-protein']
-      : MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'];
-    const sim = cosineSimilarity(answers.macros, plan);
-    score += Math.round(sim * W_MACROS);
-  } else {
-    score += Math.round(W_MACROS * 0.5);
+  return Math.min(100, Math.round((score / W_BASE_TOTAL) * 100));
+}
+
+function scorePlan(seed, answers, actualMacros = null) {
+  const baseScore = scoreBasePlan(seed, answers);
+  if (!answers.macros) return baseScore;
+
+  const macroWeight = answers.macroMode === 'custom-grams'
+    ? CUSTOM_MACRO_WEIGHT
+    : PRESET_MACRO_WEIGHT;
+  const planMacros = actualMacros || getFallbackMacros(seed, answers);
+  const macroScore = answers.macroMode === 'custom-grams'
+    ? macroTargetScore(answers.macros, planMacros)
+    : Math.round(cosineSimilarity(answers.macros, planMacros) * 100);
+
+  return Math.min(100, Math.round((baseScore * (1 - macroWeight)) + (macroScore * macroWeight)));
+}
+
+function getFallbackMacros(seed, answers) {
+  if (answers.macroMode === 'custom-grams') {
+    return MACRO_GRAMS[seed.emphasis] || DEFAULT_MACRO_GRAMS;
+  }
+  return MACRO_PROFILES[seed.emphasis] || DEFAULT_MACRO_PROFILE;
+}
+
+function macroTargetScore(target, plan) {
+  const weights = { protein: 0.35, carbs: 0.35, fats: 0.15, fibre: 0.15 };
+  const tolerances = { protein: 70, carbs: 90, fats: 45, fibre: 25 };
+  let score = 0;
+  let totalWeight = 0;
+
+  for (const key of Object.keys(weights)) {
+    const targetValue = Number(target?.[key] || 0);
+    const planValue = Number(plan?.[key] || 0);
+    if (!Number.isFinite(targetValue) || targetValue <= 0) continue;
+
+    const diff = Math.abs(planValue - targetValue);
+    const keyScore = Math.max(0, 100 - ((diff / tolerances[key]) * 100));
+    score += keyScore * weights[key];
+    totalWeight += weights[key];
   }
 
-  return Math.min(100, Math.round((score / W_TOTAL) * 100));
+  return totalWeight ? Math.round(score / totalWeight) : 0;
+}
+
+function roughMacroPriority(seed, answers, baseScore, roughMacroScore) {
+  const target = answers.macros || {};
+  let boost = 0;
+
+  if (target.carbs >= 210 && ['performance-protein', 'high-carb-fuel'].includes(seed.emphasis)) {
+    boost += 8;
+  }
+  if (target.carbs >= 260 && seed.emphasis === 'high-carb-fuel') {
+    boost += 8;
+  }
+  if (target.protein >= 140 && ['performance-protein', 'lean-protein', 'recomp-protein'].includes(seed.emphasis)) {
+    boost += 6;
+  }
+
+  return (baseScore * (1 - CUSTOM_MACRO_WEIGHT)) + (roughMacroScore * CUSTOM_MACRO_WEIGHT) + boost;
 }
 
 function cosineSimilarity(a, b) {
@@ -158,7 +210,7 @@ function matchLabel(score) {
   return 'Possible Match';
 }
 
-function buildMatchReason(seed, answers) {
+function buildMatchReason(seed, answers, macrosGrams = null) {
   const parts = [];
   if (answers.goal && seed.goal === answers.goal) {
     parts.push(`matches your ${GOAL_LABELS[seed.goal] || seed.goal} goal`);
@@ -173,6 +225,12 @@ function buildMatchReason(seed, answers) {
     const diff = Math.abs(seed.calories - parseInt(answers.calories, 10));
     if (diff <= 300) parts.push(`~${seed.calories} kcal target`);
   }
+  if (answers.macros && answers.macroMode === 'custom-grams' && macrosGrams) {
+    const macroBits = [];
+    if (Number.isFinite(macrosGrams.protein)) macroBits.push(`${macrosGrams.protein}g protein`);
+    if (Number.isFinite(macrosGrams.carbs)) macroBits.push(`${macrosGrams.carbs}g carbs`);
+    if (macroBits.length) parts.push(`averages about ${macroBits.join(' and ')}`);
+  }
   if (parts.length === 0) return 'Closest match across your preferences.';
   return `This plan ${parts.join(', ')}.`;
 }
@@ -185,14 +243,16 @@ export function getTopMatches(answers, n = 3) {
   if (answers.diet === 'vegetarian' && !answers.goal) enrichedAnswers.goal = 'vegetarian-low-cal';
   if (answers.diet === 'vegan'       && !answers.goal) enrichedAnswers.goal = 'vegan-low-cal';
 
-  const scored = PLAN_SEEDS.map(seed => ({
-    seed,
-    score: scorePlan(seed, enrichedAnswers),
-  }));
+  const useExactMacroMatch = enrichedAnswers.macros && enrichedAnswers.macroMode === 'custom-grams';
+  const scored = useExactMacroMatch
+    ? scoreExactMacroCandidates(enrichedAnswers)
+    : PLAN_SEEDS
+        .map(seed => ({ seed, score: scorePlan(seed, enrichedAnswers) }))
+        .sort((a, b) => b.score - a.score);
 
-  scored.sort((a, b) => b.score - a.score);
-
-  return scored.slice(0, n).map(({ seed, score }) => ({
+  return scored.slice(0, n).map(({ seed, score, macrosGrams }) => {
+    const actualMacros = macrosGrams || getSeedMacroGrams(seed);
+    return {
     slug:          seed.slug,
     title:         seed.title,
     goal:          seed.goal,
@@ -204,11 +264,47 @@ export function getTopMatches(answers, n = 3) {
     effort:        seed.effort,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
-    macrosGrams:   MACRO_GRAMS[seed.emphasis] || MACRO_GRAMS['lean-protein'],
+    macrosGrams:   actualMacros,
     score,
     matchLabel:    matchLabel(score),
-    matchReason:   buildMatchReason(seed, enrichedAnswers),
-  }));
+    matchReason:   buildMatchReason(seed, enrichedAnswers, actualMacros),
+    };
+  });
+}
+
+function scoreExactMacroCandidates(answers) {
+  const roughScored = PLAN_SEEDS.map(seed => {
+    const baseScore = scoreBasePlan(seed, answers);
+    const roughMacroScore = macroTargetScore(answers.macros, getFallbackMacros(seed, answers));
+    return {
+      seed,
+      baseScore,
+      roughMacroScore,
+      priority: roughMacroPriority(seed, answers, baseScore, roughMacroScore),
+    };
+  }).sort((a, b) => (
+    b.priority - a.priority ||
+    b.baseScore - a.baseScore ||
+    b.roughMacroScore - a.roughMacroScore
+  ));
+
+  return roughScored
+    .slice(0, MACRO_EXACT_POOL_LIMIT)
+    .map(({ seed }) => {
+      const macrosGrams = getSeedMacroGrams(seed);
+      const macroScore = macroTargetScore(answers.macros, macrosGrams);
+      return {
+        seed,
+        macrosGrams,
+        macroScore,
+        score: scorePlan(seed, answers, macrosGrams),
+      };
+    })
+    .sort((a, b) => (
+      b.score - a.score ||
+      b.macroScore - a.macroScore ||
+      String(a.seed.slug).localeCompare(String(b.seed.slug))
+    ));
 }
 
 function cap(s) {

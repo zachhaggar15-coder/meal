@@ -39,6 +39,9 @@ export function validateGeneratedMeal(meal) {
 
   const calories = Number(meal.calories ?? meal.kcal);
   const protein = Number(meal.protein);
+  const carbs = meal.carbs ?? meal.carbohydrates;
+  const fats = meal.fats ?? meal.fat;
+  const fibre = meal.fibre ?? meal.fiber;
 
   return (
     typeof meal.type === 'string' &&
@@ -50,6 +53,9 @@ export function validateGeneratedMeal(meal) {
     Number.isFinite(protein) &&
     protein >= 0 &&
     protein < 250 &&
+    validateOptionalMacro(carbs, 600) &&
+    validateOptionalMacro(fats, 250) &&
+    validateOptionalMacro(fibre, 150) &&
     hasUsefulIngredients(meal.ingredients) &&
     typeof meal.portion_size === 'string' &&
     meal.portion_size.trim().length > 0 &&
@@ -68,6 +74,9 @@ export function validateEditedMeal(meal) {
 
   const calories = Number(meal.kcal ?? meal.calories);
   const protein = Number(meal.protein);
+  const carbs = meal.carbs ?? meal.carbohydrates;
+  const fats = meal.fats ?? meal.fat;
+  const fibre = meal.fibre ?? meal.fiber;
 
   return (
     typeof meal.name === 'string' &&
@@ -79,6 +88,9 @@ export function validateEditedMeal(meal) {
     Number.isFinite(protein) &&
     protein >= 0 &&
     protein < 250 &&
+    validateOptionalMacro(carbs, 600) &&
+    validateOptionalMacro(fats, 250) &&
+    validateOptionalMacro(fibre, 150) &&
     Array.isArray(meal.ingredients) &&
     meal.ingredients.length > 0 &&
     meal.ingredients.every(item => typeof item === 'string' && item.trim()) &&
@@ -105,12 +117,24 @@ function validateTotals(totals) {
   if (!totals || typeof totals !== 'object') return true;
   const calories = Number(totals.calories ?? totals.kcal);
   const protein = Number(totals.protein);
+  const carbs = totals.carbs ?? totals.carbohydrates;
+  const fats = totals.fats ?? totals.fat;
+  const fibre = totals.fibre ?? totals.fiber;
   return (
     Number.isFinite(calories) &&
     calories > 0 &&
     calories < 6000 &&
     Number.isFinite(protein) &&
     protein >= 0 &&
-    protein < 600
+    protein < 600 &&
+    validateOptionalMacro(carbs, 1200) &&
+    validateOptionalMacro(fats, 500) &&
+    validateOptionalMacro(fibre, 250)
   );
+}
+
+function validateOptionalMacro(value, max) {
+  if (value === null || value === undefined || value === '') return true;
+  const numeric = Number(value);
+  return Number.isFinite(numeric) && numeric >= 0 && numeric < max;
 }

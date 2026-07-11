@@ -6,10 +6,10 @@ export const SITE_CONTACT_EMAIL = 'mealprep.org.uk@proton.me';
 export const SITE_AUTHOR_NAME = 'MealPrep.org.uk editorial team';
 export const SITE_AUTHOR_URL = `${SITE_URL}/about`;
 
-export const SITE_LOGO_PATH = '/mealprep-logo.png';
+export const SITE_LOGO_PATH = '/mealprep-logo.webp';
 export const SITE_LOGO_URL = `${SITE_URL}${SITE_LOGO_PATH}`;
-export const SITE_LOGO_WIDTH = 1254;
-export const SITE_LOGO_HEIGHT = 1254;
+export const SITE_LOGO_WIDTH = 600;
+export const SITE_LOGO_HEIGHT = 600;
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 
 export const ORGANIZATION_JSON_LD = {

@@ -1,16 +1,13 @@
-// Nutrition reference data used to compute (and audit) the kcal/protein
+// Nutrition reference data used to compute (and audit) the calories and macro
 // figures shown for every recipe on the site.
 //
 // Methodology: values are per 100g (or 100ml for liquids) unless noted, based
 // on UK CoFID (McCance & Widdowson's Composition of Foods) where available,
-// cross-checked against USDA FoodData Central. The ~15 highest-frequency
-// staples (oats, chicken breast, rice, milk, eggs, banana, bread, honey,
-// olive oil, Greek yogurt) were independently verified against both sources
-// via web search on 2026-07-06 — see the inline notes on those entries. The
-// remaining, lower-frequency ingredients use standard published values
-// without individual external verification, consistent with the site's
-// existing disclaimer that figures are "estimates based on standard UK
-// nutritional data."
+// cross-checked against USDA FoodData Central. Macro coverage was broadened
+// across the full ingredient table on 2026-07-11 using the CoFID 2021
+// Proximates workbook as the primary source, with USDA FDC or typical UK label
+// values used where a close CoFID row was not available. Figures remain
+// estimates based on standard UK nutritional data.
 //
 // `gramsEach` gives the typical weight of one count-unit (an egg, a slice, a
 // clove) so "Eggs 3" or "Onion 1" can be converted to grams and priced off
@@ -258,6 +255,252 @@ export const NUTRITION_TABLE = {
   'turmeric':               { kcal100: 310, pro100: 8 },
   'cinnamon':               { kcal100: 250, pro100: 4 },
   'mixed herbs':            { kcal100: 300, pro100: 12 },
+};
+
+// Full macro fields layered over the legacy kcal/protein table.
+//
+// Primary source: UK CoFID 2021 Proximates sheet (Public Health England /
+// McCance & Widdowson). Fallback/cross-check source: USDA FoodData Central for
+// generic foods where CoFID has no close UK row, plus typical UK label averages
+// for branded-style foods such as protein yogurt and protein powder.
+//
+// Values are per 100g/ml. kcal/protein stay in NUTRITION_TABLE so existing
+// calorie regression checks remain stable; these fields add fat, carbohydrate
+// and fibre without replacing the already-audited kcal/protein figures.
+const NUTRITION_MACRO_OVERRIDES = {
+  'rolled oats': { fat100: 6.5, carb100: 60, fibre100: 10.1 },
+  'oat flour': { fat100: 6.5, carb100: 60, fibre100: 10 },
+  'bran flakes': { fat100: 2.2, carb100: 73.3, fibre100: 12.8 },
+  weetabix: { fat100: 2, carb100: 72.7, fibre100: 7.3 },
+  'brown rice dry': { fat100: 1.5, carb100: 77, fibre100: 1.8 },
+  'brown rice cooked': { fat100: 0.9, carb100: 23, fibre100: 1.8 },
+  'arborio rice dry': { fat100: 1, carb100: 85.2, fibre100: 0.9 },
+  'wholemeal pasta dry': { fat100: 2.5, carb100: 64, fibre100: 8 },
+  'wholemeal pasta cooked': { fat100: 1, carb100: 24, fibre100: 3.2 },
+  'orzo pasta dry': { fat100: 1.6, carb100: 75.6, fibre100: 3.7 },
+  'wholewheat noodles dry': { fat100: 2, carb100: 72.6, fibre100: 3.9 },
+  'soba noodles dry': { fat100: 2.7, carb100: 71, fibre100: 4 },
+  'rice noodles dry': { fat100: 0.6, carb100: 80, fibre100: 1.6 },
+  'quinoa dry': { fat100: 5, carb100: 55.7, fibre100: 7 },
+  'quinoa cooked': { fat100: 1.9, carb100: 21.3, fibre100: 2.8 },
+  'wholemeal couscous dry': { fat100: 2.1, carb100: 79.2, fibre100: 3.6 },
+  'wholemeal flour': { fat100: 2.2, carb100: 61, fibre100: 10.7 },
+  granola: { fat100: 15, carb100: 64, fibre100: 7 },
+  'low-sugar granola': { fat100: 12, carb100: 62, fibre100: 9 },
+  'sweet potato': { fat100: 0.3, carb100: 21.3, fibre100: 2.4 },
+  'new potatoes': { fat100: 0.1, carb100: 16.1, fibre100: 1 },
+  potato: { fat100: 0.1, carb100: 20.1, fibre100: 1.8 },
+  'potato baked': { fat100: 0.1, carb100: 21.2, fibre100: 2.2 },
+  parsnip: { fat100: 1.1, carb100: 12.5, fibre100: 4.6 },
+  'butternut squash': { fat100: 0.1, carb100: 8.3, fibre100: 1.6 },
+  cauliflower: { fat100: 0.4, carb100: 4.4, fibre100: 1.8 },
+  'wholemeal bread': { fat100: 2.5, carb100: 42, fibre100: 6 },
+  'sourdough bread': { fat100: 1.5, carb100: 51, fibre100: 2.8 },
+  'rye bread': { fat100: 3.3, carb100: 48, fibre100: 5.8 },
+  'wholemeal bagel': { fat100: 1.8, carb100: 49, fibre100: 5 },
+  'wholemeal roll': { fat100: 3.3, carb100: 46.1, fibre100: 4.4 },
+  'wholemeal tortilla': { fat100: 5.7, carb100: 53.9, fibre100: 1.9 },
+  'wholemeal pitta': { fat100: 1.3, carb100: 55.1, fibre100: 2.4 },
+  'rice cakes': { fat100: 2.8, carb100: 81, fibre100: 3.1 },
+  oatcakes: { fat100: 20, carb100: 62.8, fibre100: 8.8 },
+  'oat biscuits': { fat100: 19, carb100: 65, fibre100: 4 },
+  'rye crackers': { fat100: 1.3, carb100: 74, fibre100: 15 },
+
+  'semi-skimmed milk': { fat100: 1.7, carb100: 4.8, fibre100: 0 },
+  'skimmed milk': { fat100: 0.1, carb100: 4.9, fibre100: 0 },
+  'oat milk': { fat100: 1.5, carb100: 6.5, fibre100: 0.8 },
+  'soy milk': { fat100: 1.8, carb100: 2.5, fibre100: 0.6 },
+  'low-fat greek yogurt': { fat100: 2, carb100: 4, fibre100: 0 },
+  '0% greek yogurt': { fat100: 0.2, carb100: 3.8, fibre100: 0 },
+  'greek yogurt': { fat100: 2, carb100: 4, fibre100: 0 },
+  'low-fat yogurt': { fat100: 1, carb100: 7.8, fibre100: 0 },
+  'low-fat natural yogurt': { fat100: 1, carb100: 7.8, fibre100: 0 },
+  'dairy-free yogurt': { fat100: 2.2, carb100: 9, fibre100: 0.5 },
+  'high-protein yogurt pot': { fat100: 0.3, carb100: 5.5, fibre100: 0 },
+  'protein yogurt': { fat100: 0.3, carb100: 5.5, fibre100: 0 },
+  skyr: { fat100: 0.2, carb100: 4, fibre100: 0 },
+  'plain kefir': { fat100: 1.5, carb100: 4.7, fibre100: 0 },
+  'cottage cheese': { fat100: 4.3, carb100: 3.4, fibre100: 0 },
+  'low-fat cottage cheese': { fat100: 1.5, carb100: 3.3, fibre100: 0 },
+  'reduced-fat cheddar': { fat100: 18, carb100: 0.8, fibre100: 0 },
+  parmesan: { fat100: 29.7, carb100: 0.9, fibre100: 0 },
+  halloumi: { fat100: 23.5, carb100: 1.7, fibre100: 0 },
+  'reduced-fat halloumi': { fat100: 16, carb100: 2, fibre100: 0 },
+  'light cream cheese': { fat100: 11, carb100: 5, fibre100: 0 },
+  'ricotta cheese': { fat100: 11, carb100: 2, fibre100: 0 },
+  'light mozzarella': { fat100: 12, carb100: 1.5, fibre100: 0 },
+  'buffalo mozzarella': { fat100: 20.3, carb100: 0, fibre100: 0 },
+  'reduced-fat feta': { fat100: 13, carb100: 1.5, fibre100: 0 },
+  'low-fat paneer': { fat100: 15, carb100: 1, fibre100: 0 },
+  'low-fat crème fraîche': { fat100: 15, carb100: 4.4, fibre100: 0 },
+  butter: { fat100: 82.2, carb100: 0.6, fibre100: 0 },
+  egg: { fat100: 9.5, carb100: 0.7, fibre100: 0 },
+  'egg white': { fat100: 0, carb100: 0, fibre100: 0 },
+  'egg yolk': { fat100: 31.3, carb100: 0, fibre100: 0 },
+
+  'chicken breast': { fat100: 2.6, carb100: 0, fibre100: 0 },
+  'chicken breast cooked': { fat100: 3.6, carb100: 0, fibre100: 0 },
+  'chicken thighs': { fat100: 3.9, carb100: 0, fibre100: 0 },
+  'chicken tikka': { fat100: 6, carb100: 2.5, fibre100: 0.5 },
+  'turkey mince lean': { fat100: 4.2, carb100: 0, fibre100: 0 },
+  'turkey breast slices': { fat100: 1.9, carb100: 1.2, fibre100: 0 },
+  'turkey breast': { fat100: 0.8, carb100: 0, fibre100: 0 },
+  'turkey sausages': { fat100: 10, carb100: 4, fibre100: 0.5 },
+  'turkey rashers': { fat100: 2.5, carb100: 1.5, fibre100: 0 },
+  'turkey patty': { fat100: 8, carb100: 3, fibre100: 0.5 },
+  'lean beef mince': { fat100: 4.2, carb100: 0, fibre100: 0 },
+  'lean beef strips': { fat100: 6, carb100: 0, fibre100: 0 },
+  'lean sirloin steak': { fat100: 5.8, carb100: 0, fibre100: 0 },
+  'lean stewing beef': { fat100: 6.5, carb100: 0, fibre100: 0 },
+  steak: { fat100: 5.2, carb100: 0, fibre100: 0 },
+  'lean beef jerky': { fat100: 11, carb100: 34, fibre100: 1.8 },
+  'lean lamb mince': { fat100: 12, carb100: 0, fibre100: 0 },
+  'lean lamb shoulder': { fat100: 12, carb100: 0, fibre100: 0 },
+  'pork tenderloin': { fat100: 2.7, carb100: 0, fibre100: 0 },
+  'pork loin': { fat100: 5, carb100: 0, fibre100: 0 },
+  'back bacon rashers': { fat100: 13, carb100: 0, fibre100: 0 },
+  'lean bacon rashers': { fat100: 13, carb100: 0, fibre100: 0 },
+  'salmon fillet': { fat100: 13, carb100: 0, fibre100: 0 },
+  'smoked salmon': { fat100: 9, carb100: 0, fibre100: 0 },
+  'smoked mackerel fillet': { fat100: 24, carb100: 0, fibre100: 0 },
+  'mackerel fillet': { fat100: 13.9, carb100: 0, fibre100: 0 },
+  'tinned mackerel in brine': { fat100: 12, carb100: 0, fibre100: 0 },
+  'tinned sardines': { fat100: 9, carb100: 0, fibre100: 0 },
+  'smoked haddock fillet': { fat100: 0.6, carb100: 0, fibre100: 0 },
+  'cod fillet': { fat100: 0.7, carb100: 0, fibre100: 0 },
+  'tuna steak': { fat100: 1, carb100: 0, fibre100: 0 },
+  'tinned tuna in spring water': { fat100: 1, carb100: 0, fibre100: 0 },
+  'king prawns': { fat100: 0.9, carb100: 0, fibre100: 0 },
+  'quorn mince': { fat100: 2, carb100: 7.5, fibre100: 5.5 },
+  falafel: { fat100: 13, carb100: 20, fibre100: 5 },
+  'firm tofu': { fat100: 8.5, carb100: 2, fibre100: 1 },
+  'silken tofu': { fat100: 3, carb100: 1.5, fibre100: 0.5 },
+  'nutritional yeast': { fat100: 5, carb100: 26, fibre100: 20 },
+  'protein powder': { fat100: 6, carb100: 8, fibre100: 2 },
+  'pea protein powder': { fat100: 6, carb100: 6, fibre100: 3 },
+  hummus: { fat100: 9.6, carb100: 14.3, fibre100: 6 },
+  'tinned chickpeas': { fat100: 2.3, carb100: 16.8, fibre100: 4.4 },
+  'kidney beans': { fat100: 0.6, carb100: 14, fibre100: 6 },
+  'black beans': { fat100: 0.5, carb100: 16.5, fibre100: 6.9 },
+  'cannellini beans': { fat100: 0.5, carb100: 15.5, fibre100: 6.3 },
+  'mixed beans': { fat100: 0.6, carb100: 15, fibre100: 6 },
+  'edamame beans': { fat100: 5.2, carb100: 8.9, fibre100: 5.2 },
+  'red lentils dry': { fat100: 1.1, carb100: 52.7, fibre100: 10.7 },
+  'green lentils dry': { fat100: 1.1, carb100: 52.7, fibre100: 10.7 },
+  'lentils cooked': { fat100: 0.4, carb100: 15.8, fibre100: 7.9 },
+  sweetcorn: { fat100: 1.2, carb100: 18.4, fibre100: 2.4 },
+  'nut roast': { fat100: 12, carb100: 18, fibre100: 4 },
+
+  almonds: { fat100: 49.9, carb100: 5.3, fibre100: 7.4 },
+  walnuts: { fat100: 65, carb100: 7, fibre100: 6.7 },
+  peanuts: { fat100: 49, carb100: 12, fibre100: 8.5 },
+  'mixed nuts': { fat100: 55, carb100: 12, fibre100: 8 },
+  'mixed seeds': { fat100: 47, carb100: 18, fibre100: 9 },
+  'pumpkin seeds': { fat100: 49, carb100: 11, fibre100: 6 },
+  'sesame seeds': { fat100: 50, carb100: 12, fibre100: 12 },
+  'chia seeds': { fat100: 31, carb100: 7.7, fibre100: 34 },
+  'hemp seeds': { fat100: 49, carb100: 8.7, fibre100: 4 },
+  'peanut butter': { fat100: 50, carb100: 20, fibre100: 6 },
+  'almond butter': { fat100: 56, carb100: 19, fibre100: 10 },
+  tahini: { fat100: 54, carb100: 17, fibre100: 9 },
+  'dark chocolate 70%': { fat100: 43, carb100: 34, fibre100: 11 },
+  'dark chocolate chips': { fat100: 25, carb100: 63, fibre100: 7 },
+  'medjool dates': { fat100: 0.2, carb100: 75, fibre100: 6.7 },
+  raisins: { fat100: 0.5, carb100: 79, fibre100: 3.7 },
+  'dried cranberries': { fat100: 1, carb100: 82, fibre100: 5 },
+  'dried berries': { fat100: 1, carb100: 80, fibre100: 6 },
+
+  banana: { fat100: 0.3, carb100: 22.8, fibre100: 2.6 },
+  apple: { fat100: 0.2, carb100: 14, fibre100: 2.4 },
+  avocado: { fat100: 14.7, carb100: 1.9, fibre100: 6.7 },
+  mango: { fat100: 0.4, carb100: 15, fibre100: 1.6 },
+  blueberries: { fat100: 0.3, carb100: 9.1, fibre100: 2.4 },
+  'mixed berries': { fat100: 0.4, carb100: 10, fibre100: 2.5 },
+  'pomegranate seeds': { fat100: 1.2, carb100: 18.7, fibre100: 4 },
+  olives: { fat100: 15, carb100: 3.8, fibre100: 3.3 },
+  lemon: { fat100: 0.3, carb100: 9.3, fibre100: 2.8 },
+  'lemon juice': { fat100: 0.2, carb100: 6.9, fibre100: 0.3 },
+  'lime juice': { fat100: 0.1, carb100: 8.4, fibre100: 0.4 },
+  tomatoes: { fat100: 0.2, carb100: 3.9, fibre100: 1.2 },
+  'cherry tomatoes': { fat100: 0.2, carb100: 3.9, fibre100: 1.2 },
+  cucumber: { fat100: 0.1, carb100: 2.2, fibre100: 0.7 },
+  carrot: { fat100: 0.2, carb100: 10, fibre100: 2.8 },
+  celery: { fat100: 0.2, carb100: 3, fibre100: 1.6 },
+  onion: { fat100: 0.1, carb100: 9.3, fibre100: 1.7 },
+  'spring onion': { fat100: 0.2, carb100: 7.3, fibre100: 2.6 },
+  garlic: { fat100: 0.5, carb100: 33, fibre100: 2.1 },
+  ginger: { fat100: 0.8, carb100: 17.8, fibre100: 2 },
+  peppers: { fat100: 0.3, carb100: 6, fibre100: 2.1 },
+  broccoli: { fat100: 0.4, carb100: 6.6, fibre100: 2.6 },
+  courgette: { fat100: 0.3, carb100: 3.1, fibre100: 1 },
+  spinach: { fat100: 0.4, carb100: 3.6, fibre100: 2.2 },
+  'baby spinach': { fat100: 0.4, carb100: 3.6, fibre100: 2.2 },
+  mushrooms: { fat100: 0.3, carb100: 3.3, fibre100: 1 },
+  'green beans': { fat100: 0.2, carb100: 7, fibre100: 3.4 },
+  asparagus: { fat100: 0.1, carb100: 3.9, fibre100: 2.1 },
+  'pak choi': { fat100: 0.2, carb100: 2.2, fibre100: 1 },
+  watercress: { fat100: 0.1, carb100: 1.3, fibre100: 0.5 },
+  lettuce: { fat100: 0.2, carb100: 2.9, fibre100: 1.3 },
+  'mixed leaves': { fat100: 0.2, carb100: 2.5, fibre100: 1.5 },
+  rocket: { fat100: 0.7, carb100: 3.7, fibre100: 1.6 },
+  cabbage: { fat100: 0.1, carb100: 5.8, fibre100: 2.5 },
+  leek: { fat100: 0.3, carb100: 14.2, fibre100: 1.8 },
+  beansprouts: { fat100: 0.2, carb100: 5.9, fibre100: 1.8 },
+  'frozen peas': { fat100: 0.7, carb100: 10.7, fibre100: 3.9 },
+  'mixed veg': { fat100: 0.4, carb100: 7, fibre100: 2.8 },
+  edamame: { fat100: 5.2, carb100: 8.9, fibre100: 5.2 },
+  toast: { fat100: 2.5, carb100: 42, fibre100: 6 },
+
+  'olive oil': { fat100: 100, carb100: 0, fibre100: 0 },
+  'sesame oil': { fat100: 100, carb100: 0, fibre100: 0 },
+  'soy sauce': { fat100: 0.1, carb100: 5.6, fibre100: 0.8 },
+  tamari: { fat100: 0.1, carb100: 5.6, fibre100: 0.8 },
+  'hoisin sauce': { fat100: 3, carb100: 44, fibre100: 1.5 },
+  'teriyaki sauce': { fat100: 0.3, carb100: 18, fibre100: 0.3 },
+  'sweet chilli sauce': { fat100: 0, carb100: 50, fibre100: 0.5 },
+  salsa: { fat100: 0.2, carb100: 7, fibre100: 1.5 },
+  mustard: { fat100: 3.3, carb100: 6, fibre100: 4 },
+  'light mayo': { fat100: 25, carb100: 8, fibre100: 0 },
+  'green pesto': { fat100: 35, carb100: 6, fibre100: 2 },
+  honey: { fat100: 0, carb100: 82, fibre100: 0 },
+  'maple syrup': { fat100: 0, carb100: 67, fibre100: 0 },
+  'balsamic glaze': { fat100: 0.5, carb100: 55, fibre100: 0 },
+  'light dressing': { fat100: 2, carb100: 7, fibre100: 0 },
+  'lemon dressing': { fat100: 6, carb100: 6, fibre100: 0 },
+  'mustard dressing': { fat100: 6, carb100: 6, fibre100: 0 },
+  'tahini dressing': { fat100: 19, carb100: 9, fibre100: 2 },
+  'balsamic dressing': { fat100: 6, carb100: 7, fibre100: 0 },
+  'plant-based dressing': { fat100: 6, carb100: 7, fibre100: 0 },
+  'caesar dressing': { fat100: 30, carb100: 4, fibre100: 0 },
+  'light caesar dressing': { fat100: 9, carb100: 8, fibre100: 0 },
+  'mint yogurt sauce': { fat100: 2, carb100: 5, fibre100: 0 },
+  raita: { fat100: 2, carb100: 5, fibre100: 0 },
+  'curry paste': { fat100: 21.3, carb100: 11.3, fibre100: 3 },
+  'tikka paste': { fat100: 21, carb100: 12, fibre100: 3 },
+  'tomato curry sauce': { fat100: 3, carb100: 10, fibre100: 1.5 },
+  'miso paste': { fat100: 6, carb100: 26, fibre100: 5 },
+  'coconut milk': { fat100: 19, carb100: 3, fibre100: 0.5 },
+  'coconut milk light': { fat100: 9, carb100: 2.8, fibre100: 0.3 },
+  'reduced-sugar baked beans': { fat100: 0.4, carb100: 12, fibre100: 4.2 },
+  'tinned pineapple in juice': { fat100: 0.1, carb100: 14.7, fibre100: 1.2 },
+  'pancake batter': { fat100: 5, carb100: 32, fibre100: 1 },
+  'energy balls': { fat100: 18, carb100: 60, fibre100: 6 },
+  'vegetable stock': { fat100: 0, carb100: 0.8, fibre100: 0 },
+  'chicken stock': { fat100: 0, carb100: 0.8, fibre100: 0 },
+  'beef stock': { fat100: 0, carb100: 0.9, fibre100: 0 },
+  water: { fat100: 0, carb100: 0, fibre100: 0 },
+  'garlic powder': { fat100: 0.7, carb100: 73, fibre100: 9 },
+  'curry powder': { fat100: 14, carb100: 56, fibre100: 33 },
+  'garam masala': { fat100: 12, carb100: 55, fibre100: 25 },
+  'ras el hanout': { fat100: 12, carb100: 55, fibre100: 25 },
+  'fajita spice': { fat100: 8, carb100: 60, fibre100: 18 },
+  'chilli powder': { fat100: 14, carb100: 50, fibre100: 35 },
+  paprika: { fat100: 13, carb100: 54, fibre100: 35 },
+  'smoked paprika': { fat100: 13, carb100: 54, fibre100: 35 },
+  cumin: { fat100: 22, carb100: 44, fibre100: 11 },
+  turmeric: { fat100: 3.3, carb100: 67, fibre100: 22.7 },
+  cinnamon: { fat100: 1.2, carb100: 80, fibre100: 53 },
+  'mixed herbs': { fat100: 7, carb100: 50, fibre100: 37 },
 };
 
 // Raw parsed ingredient names (see src/utils/ingredientParser.js) mapped to a
@@ -527,30 +770,109 @@ export const NUTRITION_SYNONYMS = {
   'basil': 'mixed herbs', 'parsley': 'mixed herbs', 'coriander': 'mixed herbs',
 };
 
-const NEGLIGIBLE_ESTIMATE = { kcal: 3, pro: 0 };
+const NEGLIGIBLE_ESTIMATE = { kcal: 3, protein: 0, carbs: 0, fats: 0, fibre: 0 };
 const UNIT_TO_GRAMS = { g: 1, kg: 1000, ml: 1, l: 1000, tbsp: 15, tsp: 5 };
 
 function lookupEntry(name, qualifier) {
   const key = (qualifier && NUTRITION_SYNONYMS[`${name}|${qualifier}`])
     || NUTRITION_SYNONYMS[name]
     || (NUTRITION_TABLE[name] ? name : null);
-  return key ? NUTRITION_TABLE[key] : null;
+  return key ? completeNutritionEntry(key, NUTRITION_TABLE[key]) : null;
 }
 
-// Computes { kcal, protein, matched } for a single parsed ingredient (see
+function completeNutritionEntry(key, entry) {
+  if (!entry) return null;
+  const override = NUTRITION_MACRO_OVERRIDES[key] || {};
+  const fallback = inferMissingMacros(key, entry, override);
+
+  return {
+    ...entry,
+    fat100: numberOr(override.fat100, fallback.fat100),
+    carb100: numberOr(override.carb100, fallback.carb100),
+    fibre100: numberOr(override.fibre100, fallback.fibre100),
+  };
+}
+
+function numberOr(value, fallback) {
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function inferMissingMacros(key, entry, override) {
+  const kcal = Number(entry.kcal100 || 0);
+  const protein = Number(entry.pro100 || 0);
+  const keyText = String(key || '').toLowerCase();
+
+  if (Number.isFinite(override.fat100) && Number.isFinite(override.carb100)) {
+    return {
+      fat100: override.fat100,
+      carb100: override.carb100,
+      fibre100: Number.isFinite(override.fibre100) ? override.fibre100 : 0,
+    };
+  }
+
+  if (
+    keyText.includes('oil') ||
+    keyText.includes('butter') ||
+    keyText.includes('ghee')
+  ) {
+    return { fat100: round1(kcal / 9), carb100: 0, fibre100: 0 };
+  }
+
+  if (isZeroCarbProtein(keyText)) {
+    return {
+      fat100: round1(Math.max(0, (kcal - protein * 4) / 9)),
+      carb100: 0,
+      fibre100: 0,
+    };
+  }
+
+  const assumedFat = Number.isFinite(override.fat100)
+    ? override.fat100
+    : inferDefaultFat(keyText);
+  const carbs = Math.max(0, (kcal - (protein * 4) - (assumedFat * 9)) / 4);
+
+  return {
+    fat100: round1(assumedFat),
+    carb100: round1(carbs),
+    fibre100: Number.isFinite(override.fibre100) ? override.fibre100 : 0,
+  };
+}
+
+function isZeroCarbProtein(keyText) {
+  return [
+    'chicken', 'turkey', 'beef', 'steak', 'lamb', 'pork', 'bacon',
+    'salmon', 'mackerel', 'sardine', 'haddock', 'cod', 'tuna', 'prawn',
+    'egg white', 'egg yolk',
+  ].some(term => keyText.includes(term));
+}
+
+function inferDefaultFat(keyText) {
+  if (keyText.includes('nut') || keyText.includes('seed') || keyText.includes('tahini')) return 45;
+  if (keyText.includes('cheese') || keyText.includes('halloumi') || keyText.includes('paneer')) return 12;
+  if (keyText.includes('yogurt') || keyText.includes('milk') || keyText.includes('skyr')) return 1;
+  if (keyText.includes('sauce') || keyText.includes('dressing') || keyText.includes('paste')) return 5;
+  if (keyText.includes('bread') || keyText.includes('pasta') || keyText.includes('rice') || keyText.includes('oat')) return 2;
+  return 1;
+}
+
+function round1(value) {
+  return Math.round(Number(value || 0) * 10) / 10;
+}
+
+// Computes calories and macros for a single parsed ingredient (see
 // parseIngredientLine in src/utils/ingredientParser.js). `matched: false`
 // means no nutrition-table entry was found — callers should surface these
 // rather than silently treating them as zero-calorie.
 export function computeIngredientNutrition(parsed) {
   if (parsed.kind === 'negligible') {
-    return { kcal: NEGLIGIBLE_ESTIMATE.kcal, protein: NEGLIGIBLE_ESTIMATE.pro, matched: true };
+    return { ...NEGLIGIBLE_ESTIMATE, matched: true };
   }
   if (parsed.kind === 'unparsed' || !parsed.name) {
-    return { kcal: 0, protein: 0, matched: false };
+    return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false };
   }
 
   const entry = lookupEntry(parsed.name, parsed.qualifier);
-  if (!entry) return { kcal: 0, protein: 0, matched: false };
+  if (!entry) return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false };
 
   let grams = null;
   if (parsed.kind === 'measured') {
@@ -562,11 +884,14 @@ export function computeIngredientNutrition(parsed) {
     if (gramsEach) grams = parsed.qty * gramsEach;
   }
 
-  if (grams === null) return { kcal: 0, protein: 0, matched: false };
+  if (grams === null) return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false };
 
   return {
     kcal: (entry.kcal100 * grams) / 100,
     protein: (entry.pro100 * grams) / 100,
+    carbs: (entry.carb100 * grams) / 100,
+    fats: (entry.fat100 * grams) / 100,
+    fibre: (entry.fibre100 * grams) / 100,
     matched: true,
   };
 }

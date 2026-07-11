@@ -1,4 +1,4 @@
-import { isCountUnit } from './planBuilder.js';
+import { isCountUnit } from './countUnits.js';
 
 // Ingredient strings appear in two orders across the data: "Rolled oats 80g"
 // (src/data/mealLibrary.js) and "90g oats" (src/data/mealPlans.js portion_size

@@ -26,7 +26,7 @@ function buildShoppingText(list, price) {
 function buildPlanText(weeklyPlan) {
   return weeklyPlan.map(day => {
     const meals = day.meals.map(m => {
-      let line = `  ${m.type}: ${m.name} — ${m.calories || 0} kcal, ${m.protein || 0}g protein`;
+      let line = `  ${m.type}: ${m.name} — ${m.calories || 0} kcal, ${formatFullMacros(m, ', ')}`;
       if (m.prep_time) line += `, ${m.prep_time}`;
       if (m.portion_size) line += `\n    Portion: ${m.portion_size}`;
       const recipe = getMealRecipe(m);
@@ -36,7 +36,7 @@ function buildPlanText(weeklyPlan) {
       return line;
     }).join('\n');
     const totals = day.daily_totals
-      ? `\n  Total: ${day.daily_totals.calories || 0} kcal · ${day.daily_totals.protein || 0}g protein`
+      ? `\n  Total: ${day.daily_totals.calories || 0} kcal · ${formatFullMacros(day.daily_totals)}`
       : '';
     return `${day.day || 'Day'}\n${meals}${totals}`;
   }).join('\n\n');
@@ -133,7 +133,7 @@ export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
                   </div>
                   <div className="meal-meta">
                     {meal.calories ? `${meal.calories} kcal` : ''}
-                    {meal.protein ? ` · ${meal.protein}g protein` : ''}
+                    {hasAnyMacro(meal) ? ` · ${formatCoreMacros(meal)}` : ''}
                     {meal.prep_time ? ` · ${meal.prep_time}` : ''}
                   </div>
                 </div>
@@ -162,13 +162,44 @@ export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
             <div className="daily-totals">
               Daily total:{' '}
               {day.daily_totals.calories || 0} kcal ·{' '}
-              {day.daily_totals.protein || 0}g protein
+              {formatFullMacros(day.daily_totals)}
             </div>
           )}
         </div>
       ))}
     </section>
   );
+}
+
+function macroValue(source = {}, key) {
+  const aliases = {
+    carbs: ['carbs', 'carbohydrates'],
+    fats: ['fats', 'fat'],
+    fibre: ['fibre', 'fiber'],
+  };
+  const keys = aliases[key] || [key];
+  for (const candidate of keys) {
+    const value = Number(source?.[candidate]);
+    if (Number.isFinite(value)) return Math.round(value);
+  }
+  return 0;
+}
+
+function hasAnyMacro(source = {}) {
+  return ['protein', 'carbs', 'fats', 'fibre'].some(key => macroValue(source, key) > 0);
+}
+
+function formatCoreMacros(source = {}) {
+  return `${macroValue(source, 'protein')}g protein · ${macroValue(source, 'carbs')}g carbs`;
+}
+
+function formatFullMacros(source = {}, separator = ' · ') {
+  return [
+    `${macroValue(source, 'protein')}g protein`,
+    `${macroValue(source, 'carbs')}g carbs`,
+    `${macroValue(source, 'fats')}g fat`,
+    `${macroValue(source, 'fibre')}g fibre`,
+  ].join(separator);
 }
 
 function getMealRecipe(meal) {

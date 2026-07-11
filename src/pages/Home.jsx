@@ -269,8 +269,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title={`UK Meal Prep Plans by Supermarket, Calorie & Goal | MealPrep.org.uk`}
-        description={`Browse ${PLAN_COUNT} free UK meal prep plans by supermarket, calorie target and goal — with 7-day menus, shopping lists, macros and PDF export. Aldi, Tesco, Lidl, Asda and more.`}
+        title={`UK Meal Prep Plans: Supermarket & Calorie | MealPrep.org.uk`}
+        description={`Browse ${PLAN_COUNT} free UK meal prep plans by supermarket, calorie target and goal — 7-day menus, shopping lists, macros and PDF export.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -382,7 +382,7 @@ export default function Home() {
                     <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="featured-plan-link">
                       <img
                         src={cardVisual.src}
-                        alt=""
+                        alt={`${p.label} meal plan`}
                         width={cardVisual.width || 1200}
                         height={cardVisual.height || 675}
                         loading="lazy"

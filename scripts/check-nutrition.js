@@ -9,6 +9,7 @@ import { computeMealNutrition, percentDiff } from './lib/nutritionAudit.js';
 const KCAL_DIFF_TOLERANCE = 12;
 
 const errors = [];
+const MACRO_KEYS = ['kcal', 'protein', 'carbs', 'fats', 'fibre'];
 
 function checkMeal(file, id, ingredients, storedKcal) {
   if (storedKcal == null) return;
@@ -17,6 +18,18 @@ function checkMeal(file, id, ingredients, storedKcal) {
     errors.push(`[${file}] ${id}: unrecognised ingredient(s) — ${computed.unmatched.join(' | ')}`);
     return;
   }
+
+  const invalidMacro = MACRO_KEYS.find(key => !Number.isFinite(computed[key]) || computed[key] < 0);
+  if (invalidMacro) {
+    errors.push(`[${file}] ${id}: invalid computed ${invalidMacro} value (${computed[invalidMacro]})`);
+    return;
+  }
+
+  const macroKcal = (computed.protein * 4) + (computed.carbs * 4) + (computed.fats * 9) + (computed.fibre * 2);
+  if (computed.kcal >= 100 && Math.abs(macroKcal - computed.kcal) / computed.kcal > 0.35) {
+    errors.push(`[${file}] ${id}: macro energy ${Math.round(macroKcal)}kcal is too far from computed ${computed.kcal}kcal`);
+  }
+
   const diff = percentDiff(storedKcal, computed.kcal);
   if (Math.abs(diff) > KCAL_DIFF_TOLERANCE) {
     errors.push(`[${file}] ${id}: stored ${storedKcal}kcal vs. computed ${computed.kcal}kcal (${diff}% diff, exceeds ${KCAL_DIFF_TOLERANCE}%)`);
@@ -44,4 +57,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Nutrition sanity check passed for ${MEALS.length} library meals and ${Object.keys(legacyPlans).length} legacy plans.`);
+console.log(`Nutrition sanity check passed for ${MEALS.length} library meals and ${Object.keys(legacyPlans).length} legacy plans, including calories, protein, carbs, fats and fibre.`);

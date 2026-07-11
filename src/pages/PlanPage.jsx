@@ -219,6 +219,9 @@ export default function PlanPage() {
         newPlan.plan[editTarget.dayIdx].totals = {
           kcal:    dayMeals.reduce((s, m) => s + (m.kcal || 0), 0),
           protein: dayMeals.reduce((s, m) => s + (m.protein || 0), 0),
+          carbs:   dayMeals.reduce((s, m) => s + (m.carbs || 0), 0),
+          fats:    dayMeals.reduce((s, m) => s + (m.fats || 0), 0),
+          fibre:   dayMeals.reduce((s, m) => s + (m.fibre || 0), 0),
         };
         newPlan.shoppingList = buildShoppingList(newPlan.plan);
 
@@ -404,12 +407,13 @@ export default function PlanPage() {
             {displayPlan.household?.hasMixedPortions ? (
               <>
                 <span>{activeDay.totals.kcal} kcal full portion</span>
+                <span>{formatCoreMacros(activeDay.totals)} full portion</span>
                 <span>{activeDay.householdTotals.kcal} kcal household</span>
               </>
             ) : (
               <>
                 <span>{activeDay.totals.kcal} kcal per person</span>
-                <span>{activeDay.totals.protein}g protein per person</span>
+                <span>{formatCoreMacros(activeDay.totals)} per person</span>
               </>
             )}
           </div>
@@ -420,7 +424,7 @@ export default function PlanPage() {
             <div className="plan-meal-card" key={mi}>
               <div className="plan-meal-header">
                 <span className="plan-meal-type">{meal.type}</span>
-                <span className="plan-meal-macros">{meal.kcal} kcal · {meal.protein}g protein · {meal.prep}</span>
+                <span className="plan-meal-macros">{formatMealMacroLine(meal)}</span>
               </div>
               <h4 className="plan-meal-name">{meal.name}</h4>
               {meal.desc && (
@@ -523,8 +527,8 @@ export default function PlanPage() {
       <p className="plan-shopping-note">
         Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
         {displayPlan.household?.hasMixedPortions
-          ? ' Calories and protein are estimated for each household member from their portion size.'
-          : ' Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.'}
+          ? ' Calories and macros are estimated for each household member from their portion size.'
+          : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
       </p>
       <div className="shopping-list-grid">
         {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
@@ -703,7 +707,7 @@ export default function PlanPage() {
               <h3 className="plan-day-name">{activeDay.day}</h3>
               <div className="plan-day-totals">
                 <span>{activeDay.totals.kcal} kcal</span>
-                <span>{activeDay.totals.protein}g protein</span>
+                <span>{formatCoreMacros(activeDay.totals)}</span>
               </div>
             </div>
 
@@ -712,7 +716,7 @@ export default function PlanPage() {
                 <div className="plan-meal-card" key={mi}>
                   <div className="plan-meal-header">
                     <span className="plan-meal-type">{meal.type}</span>
-                    <span className="plan-meal-macros">{meal.kcal} kcal · {meal.protein}g protein · {meal.prep}</span>
+                    <span className="plan-meal-macros">{formatMealMacroLine(meal)}</span>
                   </div>
                   <h4 className="plan-meal-name">{meal.name}</h4>
                   {meal.desc && (
@@ -794,8 +798,8 @@ export default function PlanPage() {
           <p className="plan-shopping-note">
             Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
             {displayPlan.household?.hasMixedPortions
-              ? ' Calories and protein are estimated for each household member from their portion size.'
-              : ' Calories and protein stay shown per person; ingredients and shopping quantities are scaled for the household.'}
+              ? ' Calories and macros are estimated for each household member from their portion size.'
+              : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
           </p>
           <div className="shopping-list-grid">
             {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
@@ -1126,7 +1130,7 @@ function MealPortionBreakdown({ portions = [] }) {
       {portions.map(portion => (
         <span key={portion.id}>
           <strong>{portion.label}</strong>
-          {portion.portionPercent}% · {portion.kcal} kcal · {portion.protein}g protein
+          {portion.portionPercent}% · {portion.kcal} kcal · {formatCoreMacros(portion)}
         </span>
       ))}
     </div>
@@ -1317,7 +1321,7 @@ function PrintablePlanSummary({ plan, marketLabel }) {
         <h2>{plan.title}</h2>
         <p>
           A 7-day UK meal plan summary for saving as a PDF or printing, including every meal,
-          daily calories, protein totals and the weekly shopping list.
+          daily macros and the weekly shopping list.
         </p>
       </header>
 
@@ -1345,15 +1349,15 @@ function PrintablePlanSummary({ plan, marketLabel }) {
             <div className="print-day-heading">
               <h4>{day.day}</h4>
               {plan.household?.hasMixedPortions ? (
-                <span>{day.totals.kcal} kcal full portion - {day.householdTotals.kcal} kcal household</span>
+                <span>{day.totals.kcal} kcal full portion - {formatCoreMacros(day.totals)} full portion - {day.householdTotals.kcal} kcal household</span>
               ) : (
-                <span>{day.totals.kcal} kcal - {day.totals.protein}g protein</span>
+                <span>{day.totals.kcal} kcal - {formatFullMacros(day.totals, ', ')}</span>
               )}
             </div>
             <ul>
               {day.meals.map((meal, index) => (
                 <li key={`${day.day}-${meal.type}-${index}`}>
-                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {meal.protein}g protein {plan.household?.hasMixedPortions ? 'full portion' : 'per person'})
+                  <strong>{meal.type}:</strong> {meal.name} ({meal.kcal} kcal, {formatFullMacros(meal, ', ')} {plan.household?.hasMixedPortions ? 'full portion' : 'per person'})
                 </li>
               ))}
             </ul>
@@ -1384,6 +1388,9 @@ function normaliseEditedMeal(currentMeal, returnedMeal = {}) {
     ...merged,
     kcal: toInteger(merged.kcal ?? merged.calories ?? currentMeal.kcal),
     protein: toInteger(merged.protein ?? currentMeal.protein),
+    carbs: toInteger(merged.carbs ?? merged.carbohydrates ?? currentMeal.carbs),
+    fats: toInteger(merged.fats ?? merged.fat ?? currentMeal.fats),
+    fibre: toInteger(merged.fibre ?? merged.fiber ?? currentMeal.fibre),
     ingredients,
     portion_size: portionSize,
   };
@@ -1511,6 +1518,28 @@ function toInteger(value) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function toMacroNumber(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.round(parsed) : 0;
+}
+
+function formatCoreMacros(source = {}) {
+  return `${toMacroNumber(source.protein)}g protein · ${toMacroNumber(source.carbs)}g carbs`;
+}
+
+function formatFullMacros(source = {}, separator = ' · ') {
+  return [
+    `${toMacroNumber(source.protein)}g protein`,
+    `${toMacroNumber(source.carbs)}g carbs`,
+    `${toMacroNumber(source.fats)}g fat`,
+    `${toMacroNumber(source.fibre)}g fibre`,
+  ].join(separator);
+}
+
+function formatMealMacroLine(meal = {}) {
+  return `${toMacroNumber(meal.kcal)} kcal · ${formatCoreMacros(meal)} · ${meal.prep}`;
+}
+
 function formatShoppingList(plan) {
   const groups = Object.entries(plan.shoppingList || {})
     .filter(([, items]) => items?.length)
@@ -1527,9 +1556,9 @@ function formatPlanShareText(plan, url) {
   const dayLines = (plan.plan || []).map(day => {
     const meals = day.meals.map(meal => `${meal.type}: ${meal.name}`).join('; ');
     if (plan.household?.hasMixedPortions) {
-      return `${day.day}: ${meals} (${day.totals.kcal} kcal full portion, ${day.householdTotals.kcal} kcal household)`;
+      return `${day.day}: ${meals} (${day.totals.kcal} kcal full portion, ${formatCoreMacros(day.totals)} full portion, ${day.householdTotals.kcal} kcal household)`;
     }
-    return `${day.day}: ${meals} (${day.totals.kcal} kcal, ${day.totals.protein}g protein per person)`;
+    return `${day.day}: ${meals} (${day.totals.kcal} kcal, ${formatFullMacros(day.totals, ', ')} per person)`;
   });
 
   return [

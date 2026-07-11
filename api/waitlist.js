@@ -158,7 +158,7 @@ async function sendWelcomeEmail({ email, firstName, row, restUrl, authHeaders })
     '- Shopping list',
     '- Estimated cost',
     '- Recipes',
-    '- Calories and protein',
+    '- Calories and macros',
     '- Simple meal prep instructions',
     '',
     "At the moment, we're simply measuring demand.",
@@ -184,7 +184,7 @@ async function sendWelcomeEmail({ email, firstName, row, restUrl, authHeaders })
         <li>Shopping list</li>
         <li>Estimated cost</li>
         <li>Recipes</li>
-        <li>Calories and protein</li>
+        <li>Calories and macros</li>
         <li>Simple meal prep instructions</li>
       </ul>
       <p>At the moment, we're simply measuring demand. Nothing is being sold today and you won't be charged.</p>

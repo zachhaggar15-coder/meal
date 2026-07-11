@@ -95,8 +95,8 @@ export default async function handler(req, res) {
 function buildPlanEmailText({ plan, planUrl }) {
   const dayLines = (plan.plan || []).flatMap(day => [
     '',
-    `${day.day} - ${day.totals?.kcal || plan.calories} kcal, ${day.totals?.protein || 0}g protein`,
-    ...(day.meals || []).map(meal => `- ${meal.type}: ${meal.name} (${meal.kcal} kcal, ${meal.protein}g protein)`),
+    `${day.day} - ${day.totals?.kcal || plan.calories} kcal, ${formatFullMacros(day.totals, ', ')}`,
+    ...(day.meals || []).map(meal => `- ${meal.type}: ${meal.name} (${meal.kcal} kcal, ${formatFullMacros(meal, ', ')})`),
   ]);
 
   const shoppingLines = Object.entries(plan.shoppingList || {}).flatMap(([category, items]) => (
@@ -127,10 +127,10 @@ function buildPlanEmailHtml({ plan, planUrl }) {
   const dayHtml = (plan.plan || []).map(day => `
     <section style="border-top:1px solid #eee5d8;padding-top:16px;margin-top:16px;">
       <h2 style="font-size:18px;margin:0 0 8px;color:#17130d;">${escapeHtml(day.day)}</h2>
-      <p style="margin:0 0 10px;color:#4a463d;">${escapeHtml(day.totals?.kcal || plan.calories)} kcal, ${escapeHtml(day.totals?.protein || 0)}g protein</p>
+      <p style="margin:0 0 10px;color:#4a463d;">${escapeHtml(day.totals?.kcal || plan.calories)} kcal, ${escapeHtml(formatFullMacros(day.totals, ', '))}</p>
       <ul style="margin:0;padding-left:20px;color:#312d26;line-height:1.55;">
         ${(day.meals || []).map(meal => `
-          <li><strong>${escapeHtml(meal.type)}:</strong> ${escapeHtml(meal.name)} (${escapeHtml(meal.kcal)} kcal, ${escapeHtml(meal.protein)}g protein)</li>
+          <li><strong>${escapeHtml(meal.type)}:</strong> ${escapeHtml(meal.name)} (${escapeHtml(meal.kcal)} kcal, ${escapeHtml(formatFullMacros(meal, ', '))})</li>
         `).join('')}
       </ul>
     </section>
@@ -150,7 +150,7 @@ function buildPlanEmailHtml({ plan, planUrl }) {
     preview: `Your ${plan.summary?.calorieRange || '7-day'} meal plan from MealPrep.org.uk`,
     bodyHtml: `
       <p style="margin:0 0 16px;color:#4a463d;line-height:1.6;">
-        Here is your plan, including meals, calories, protein and the shopping list.
+        Here is your plan, including meals, calories, macros and the shopping list.
       </p>
       <p style="margin:0 0 18px;">
         <a href="${escapeHtml(planUrl)}" style="display:inline-block;background:#2563eb;color:#fff;text-decoration:none;border-radius:8px;padding:12px 16px;font-weight:700;">Open full plan</a>
@@ -184,4 +184,18 @@ function categoryLabel(category) {
     tins: 'Tins and jars',
     extras: 'Extras',
   }[category] || category;
+}
+
+function toMacroNumber(value) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.round(parsed) : 0;
+}
+
+function formatFullMacros(source = {}, separator = ' · ') {
+  return [
+    `${toMacroNumber(source.protein)}g protein`,
+    `${toMacroNumber(source.carbs)}g carbs`,
+    `${toMacroNumber(source.fats)}g fat`,
+    `${toMacroNumber(source.fibre)}g fibre`,
+  ].join(separator);
 }
