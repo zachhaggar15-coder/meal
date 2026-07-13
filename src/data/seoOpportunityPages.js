@@ -6,6 +6,7 @@ const LOW_CALORIE_LINKS = [
 ];
 
 const HIGH_PROTEIN_LINKS = [
+  { label: 'Cheap protein UK', to: '/blog/best-cheap-high-protein-foods-uk' },
   { label: 'High protein meal plans UK', to: '/meal-plans/high-protein' },
   { label: 'High protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
   { label: 'High protein snacks UK', to: '/blog/high-protein-snacks-uk' },

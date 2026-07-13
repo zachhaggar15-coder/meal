@@ -1073,11 +1073,11 @@ export const expandedBlogPostsData = {
   }),
 
   'cheap-protein-sources-uk-supermarkets': post({
-    modified: '2026-06-23',
-    title: 'Cheap Protein UK: Supermarket Protein Sources Ranked',
-    description: 'Cheap protein UK guide with eggs, tuna, chicken, lentils, Greek yogurt, cottage cheese, tofu and frozen fish for budget meal prep.',
-    h1: 'Cheap Protein Sources in UK Supermarkets',
-    intro: 'Cheap protein does not have to mean expensive powders, branded snacks, or steak. The best value options in UK supermarkets are usually simple staples that are easy to repeat in breakfasts, lunches and batch-cooked dinners.',
+    modified: '2026-07-13',
+    title: 'Cheap Protein Sources UK: Supermarket Staples Ranked',
+    description: 'Cheap protein sources UK guide: compare eggs, tuna, chicken, lentils, Greek yogurt, cottage cheese, tofu and frozen fish for budget meal prep.',
+    h1: 'Cheap Protein Sources UK: Supermarket Staples Ranked',
+    intro: 'Cheap protein does not have to mean expensive powders, branded snacks, or steak. The best value options in UK supermarkets are simple staples that are easy to repeat in breakfasts, lunches and batch-cooked dinners.',
     contextualLinks: [
       {
         parts: [
@@ -1140,7 +1140,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High Protein Foods UK', type: 'blog' },
+      { slug: 'best-cheap-high-protein-foods-uk', label: 'Cheap Protein UK', type: 'blog' },
       { slug: 'aldi-high-protein-shopping-list-uk', label: 'Aldi High Protein Shopping List', type: 'blog' },
       ...proteinRelated,
     ],

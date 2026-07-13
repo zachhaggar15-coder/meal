@@ -611,11 +611,11 @@ export const blogPostsData = {
 
   'best-cheap-high-protein-foods-uk': {
     published: '2026-05-28',
-    modified: '2026-07-05',
-    reviewed: '2 July 2026',
-    title: 'Best Cheap High-Protein Foods UK: Aldi, Lidl and Tesco Options Compared',
-    description: 'Best cheap high-protein foods UK: eggs, tuna, lentils, chicken and tofu ranked by value across Aldi, Lidl and Tesco. Budget meal prep and vegetarian options included.',
-    h1: 'Best Cheap High-Protein Foods UK: Aldi, Lidl and Tesco Options',
+    modified: '2026-07-13',
+    reviewed: '13 July 2026',
+    title: 'Cheap Protein UK: Best High-Protein Foods by Value',
+    description: 'Cheap protein UK guide: eggs, tuna, lentils, chicken, Greek yogurt, tofu and cottage cheese ranked by value for budget meal prep.',
+    h1: 'Cheap Protein UK: Best High-Protein Foods by Value',
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets, the best cheap protein usually comes from ordinary staples: eggs, tinned fish, Greek yogurt, lentils, beans, tofu, frozen chicken and cottage cheese. This guide ranks the options by usefulness for budget meal prep, not just headline protein grams.',
     sources: [
       {
@@ -631,11 +631,11 @@ export const blogPostsData = {
     contextualLinks: [
       {
         parts: [
-          { text: 'Turn these cheap protein staples into a week with the ' },
+          { text: 'Compare more supermarket staples in the ' },
+          { label: 'cheap protein sources UK guide', to: '/blog/cheap-protein-sources-uk-supermarkets' },
+          { text: ', then turn the basket into a week with the ' },
           { label: 'high protein meal plans hub', to: '/meal-plans/high-protein' },
-          { text: ', compare the ' },
-          { label: 'high protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
-          { text: ', or use ' },
+          { text: ' or use ' },
           { label: 'protein porridge breakfasts', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
           { text: '.' },
         ],

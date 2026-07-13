@@ -87,8 +87,8 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     title: 'Cheap Protein and High Protein',
     intro: 'Builds authority around cheap protein, high-protein snacks and supermarket protein planning.',
     links: [
-      { to: '/blog/best-cheap-high-protein-foods-uk', label: 'Cheap High Protein Foods UK' },
-      { to: '/blog/cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources' },
+      { to: '/blog/best-cheap-high-protein-foods-uk', label: 'Cheap Protein UK' },
+      { to: '/blog/cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK' },
       { to: '/blog/high-protein-snacks-uk', label: 'High Protein Snacks UK' },
       { to: '/meal-plans/high-protein', label: 'High Protein Meal Plans' },
     ],

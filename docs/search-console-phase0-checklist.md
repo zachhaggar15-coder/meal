@@ -25,6 +25,7 @@ Request indexing for these priority URLs:
 - `https://www.mealprep.org.uk/blog/what-does-1500-calories-look-like-uk`
 - `https://www.mealprep.org.uk/blog/high-protein-snacks-uk`
 - `https://www.mealprep.org.uk/blog/best-cheap-high-protein-foods-uk`
+- `https://www.mealprep.org.uk/blog/cheap-protein-sources-uk-supermarkets`
 - `https://www.mealprep.org.uk/blog/best-meal-prep-containers-uk`
 - `https://www.mealprep.org.uk/blog/meal-prep-containers-uk`
 - `https://www.mealprep.org.uk/meal-prep-containers`
