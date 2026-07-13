@@ -387,7 +387,7 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
     titleLabel: 'Low Calorie Shopping List',
     match: { goals: ['weight-loss', 'budget-fat-loss', 'high-protein-low-cal', 'vegetarian-low-cal', 'vegan-low-cal', 'cutting'], calories: [1400, 1500, 1600, 1800] },
     intro: 'A low calorie shopping list should make the week easier, not smaller. These plans focus on lean protein, high-volume vegetables, fruit, filling carbohydrates and simple sauces.',
-    relatedSlugs: ['1500-calorie', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list'],
+    relatedSlugs: ['low-calorie', '1500-calorie', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list'],
   }),
   'high-protein-shopping-list': createShoppingListHub({
     key: 'high-protein-shopping-list',
@@ -493,7 +493,80 @@ export const MEAL_PLAN_HUBS = {
         a: 'Yes. Open any matching plan and use the export or print PDF section to save the full week, recipes, calories, macros and shopping list.',
       },
     ],
-    relatedSlugs: ['free-online-diet-plans-uk', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list', 'printable-meal-plans'],
+    relatedSlugs: ['free-online-diet-plans-uk', 'low-calorie', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list', 'printable-meal-plans'],
+  },
+  'low-calorie': {
+    slug: 'low-calorie',
+    path: '/meal-plans/low-calorie',
+    title: 'Low Calorie Meal Plans UK - Free Weekly Plans + Shopping Lists',
+    description:
+      'Browse free low calorie weekly meal plans for UK supermarkets, with 7-day menus, 1400-1800 calorie options, macros, PDFs and shopping lists.',
+    h1: 'Low Calorie Meal Plans UK',
+    kicker: 'Low calorie weekly plan hub',
+    intro:
+      'Low calorie meal plans work best when they still feel like proper meals. Use this hub to compare free UK weekly plans with 1400, 1500, 1600 and 1800 calorie options, supermarket filters, printable PDFs and shopping lists.',
+    match: {
+      calories: [1400, 1500, 1600, 1800],
+      goals: ['weight-loss', 'budget-fat-loss', 'high-protein-low-cal', 'vegetarian-low-cal', 'vegan-low-cal', 'cutting'],
+    },
+    stats: ['Low calorie weekly plans', '1400-1800 kcal options', 'Shopping lists and PDFs'],
+    modified: '2026-07-13',
+    reviewed: '13 July 2026',
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Quick answer: what is a good low calorie weekly meal plan?',
+        paragraphs: [
+          'A good low calorie weekly meal plan usually gives you breakfast, lunch, dinner and a planned snack rather than tiny meals. It should include protein at each meal, vegetables or fruit for volume, filling carbohydrates and a shopping list you can actually use.',
+          'For many UK shoppers, the strongest starting point is a 1500 or 1600 calorie plan. More active users may prefer 1800 calories, while 1400 calorie plans need extra care around hunger, protein and energy.',
+        ],
+        table: {
+          headers: ['Search intent', 'Best starting page', 'Why'],
+          rows: [
+            ['Low calorie weekly meal plan', 'This low calorie hub', 'Compares weekly plans across calories and supermarkets'],
+            ['1500 calorie meal plan', '1500 calorie hub', 'Most direct lower-calorie printable target'],
+            ['Weight loss meal plan', 'Weight loss hub', 'Adds goal-specific fat-loss structure'],
+            ['Low calorie shopping list', 'Low calorie shopping-list hub', 'Starts from the basket rather than the plan'],
+          ],
+        },
+      },
+      {
+        h2: 'How to choose the right low calorie plan',
+        paragraphs: [
+          'Choose the calorie target first, then supermarket, diet type and effort level. Standard plans give more variety, batch-cook plans reduce weekday decisions, and high-protein low-calorie plans are useful when hunger is the main barrier.',
+          'If a plan looks close but not perfect, open the full plan page and adjust meals rather than restarting. Swapping one protein, carb or vegetable is usually easier than rebuilding the whole week.',
+        ],
+      },
+      {
+        h2: 'What to look for in a low calorie shopping list',
+        paragraphs: [
+          'The best low calorie shopping lists repeat useful staples: eggs, chicken, tuna, tofu, beans, lentils, skyr or Greek yogurt, oats, potatoes, rice, wraps, frozen vegetables, salad, fruit and a few low-calorie sauces.',
+          'Avoid plans that are low calorie only because the portions are tiny. A practical week needs enough protein, fibre and volume to make the target repeatable.',
+        ],
+      },
+    ],
+    supportingGuides: [
+      GUIDE_LINKS.lowCalorieFoods,
+      GUIDE_LINKS.lowCalorieReadyMeals,
+      GUIDE_LINKS.cheapProtein,
+      GUIDE_LINKS.printable,
+      GUIDE_LINKS.shoppingList,
+    ],
+    faq: [
+      {
+        q: 'Are these low calorie meal plans free?',
+        a: 'Yes. The matching plans are free to browse and include recipes, macros, grouped shopping lists and printable PDF export.',
+      },
+      {
+        q: 'Which low calorie meal plan should I start with?',
+        a: 'Start with 1500 or 1600 calories if you want a lower-calorie week, or 1800 calories if you are more active or need a steadier deficit. Choose a supermarket you already use.',
+      },
+      {
+        q: 'Do low calorie plans include enough protein?',
+        a: 'The best options prioritise protein at each meal. Use high-protein low-calorie plans if hunger, gym training or muscle retention is a priority.',
+      },
+    ],
+    relatedSlugs: ['1500-calorie', 'weight-loss', 'low-calorie-shopping-list', 'high-protein', 'printable-meal-plans'],
   },
   'free-online-diet-plans-uk': {
     slug: 'free-online-diet-plans-uk',
@@ -556,7 +629,7 @@ export const MEAL_PLAN_HUBS = {
         a: 'No. They are general meal-planning information only. Speak to a qualified professional if you have medical needs, a history of disordered eating or a specialist nutrition requirement.',
       },
     ],
-    relatedSlugs: ['1500-calorie', 'weight-loss', 'high-protein', 'generic-uk-supermarket', 'meal-plans-with-shopping-list'],
+    relatedSlugs: ['1500-calorie', 'low-calorie', 'weight-loss', 'high-protein', 'generic-uk-supermarket', 'meal-plans-with-shopping-list'],
   },
   'high-protein': {
     slug: 'high-protein',
@@ -783,13 +856,13 @@ export const MEAL_PLAN_HUBS = {
   'weight-loss': {
     slug: 'weight-loss',
     path: '/meal-plans/weight-loss',
-    title: 'Lose Weight Meal Plan UK - Free 7-Day Plans + Shopping Lists',
+    title: 'Weight Loss Meal Plan UK - Free 7-Day Plans + Shopping Lists',
     description:
-      'Browse free UK lose weight meal plans by supermarket, calories and diet, with printable PDFs, macros, recipes and weekly shopping lists.',
-    h1: 'Lose Weight Meal Plan UK',
+      'Browse free UK weight loss meal plans by supermarket, calories and diet, with printable PDFs, macros, recipes and weekly shopping lists.',
+    h1: 'Weight Loss Meal Plan UK',
     kicker: 'Fat loss plan hub',
     intro:
-      'A good lose weight meal plan is not the most extreme one. It is the one you can shop for, cook and repeat. These UK plans focus on calorie control, protein, fibre and realistic supermarket meals.',
+      'A good weight loss meal plan is not the most extreme one. It is the one you can shop for, cook and repeat. These UK plans focus on calorie control, protein, fibre and realistic supermarket meals.',
     match: { goals: ['weight-loss', 'budget-fat-loss', 'high-protein-low-cal', 'vegetarian-low-cal', 'vegan-low-cal', 'cutting'] },
     stats: ['Calorie-controlled plans', 'Supermarket filters', 'Free PDF export'],
     reviewed: '23 June 2026',
@@ -798,7 +871,7 @@ export const MEAL_PLAN_HUBS = {
       {
         h2: 'Quick answer: which UK meal plan helps you lose weight?',
         paragraphs: [
-          'The best lose weight meal plan UK shoppers can start with is usually a 1500, 1600 or 1800 calorie plan that includes protein at every meal, filling carbs, fruit, vegetables and a shopping list for the supermarket you actually use.',
+          'The best weight loss meal plan UK shoppers can start with is usually a 1500, 1600 or 1800 calorie plan that includes protein at every meal, filling carbs, fruit, vegetables and a shopping list for the supermarket you actually use.',
           'Pick the lowest calorie target you can repeat without constant hunger. High-protein and high-fibre versions are useful when appetite is the main barrier, while budget versions help when the weekly shop needs to stay predictable.',
         ],
         table: {
@@ -812,7 +885,7 @@ export const MEAL_PLAN_HUBS = {
         },
       },
       {
-        h2: 'How to choose a lose weight meal plan',
+        h2: 'How to choose a weight loss meal plan',
         paragraphs: [
           'Start with your calorie target, then choose a supermarket and diet type. If you are unsure, compare a 1500 calorie plan with an 1800 calorie plan before choosing a more specialised option.',
           'Use the shopping list before you start the week. A plan is much easier to follow when the protein, breakfast staples, lunch ingredients and snacks are already in the kitchen.',
@@ -822,8 +895,8 @@ export const MEAL_PLAN_HUBS = {
     supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.cheapProtein, GUIDE_LINKS.proteinPorridge, GUIDE_LINKS.shoppingList],
     faq: [
       {
-        q: 'What is the best lose weight meal plan UK?',
-        a: 'For many people, the best starting point is a 1500, 1600 or 1800 calorie plan with protein at every meal, high-fibre foods, realistic portions and a supermarket shopping list.',
+        q: 'What is the best weight loss meal plan UK?',
+        a: 'For many people, the best weight loss meal plan UK starting point is a 1500, 1600 or 1800 calorie plan with protein at every meal, high-fibre foods, realistic portions and a supermarket shopping list.',
       },
       {
         q: 'Which weight loss meal plan should I start with?',
@@ -834,7 +907,7 @@ export const MEAL_PLAN_HUBS = {
         a: 'Yes. The plans are free to browse, print and save as PDF, with no account required.',
       },
     ],
-    relatedSlugs: ['free-online-diet-plans-uk', '1500-calorie', 'high-protein', 'tesco-weight-loss', 'aldi'],
+    relatedSlugs: ['free-online-diet-plans-uk', 'low-calorie', '1500-calorie', 'high-protein', 'tesco-weight-loss', 'aldi'],
   },
   'tesco-weight-loss': {
     slug: 'tesco-weight-loss',

@@ -86,8 +86,14 @@ function buildGuides(slug, post) {
         event: 'popular_guide_hub_click',
       },
       {
+        to: '/meal-plans/low-calorie',
+        title: 'Low calorie meal plans',
+        description: 'Weekly low-calorie UK plans with PDFs and shopping lists.',
+        event: 'popular_guide_hub_click',
+      },
+      {
         to: '/meal-plans/weight-loss',
-        title: 'Lose weight meal plan',
+        title: 'Weight loss meal plan',
         description: 'Browse UK plans by calories, supermarket and diet type.',
         event: 'popular_guide_hub_click',
       },

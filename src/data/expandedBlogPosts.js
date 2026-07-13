@@ -494,8 +494,8 @@ export const expandedBlogPostsData = {
   }),
 
   'what-does-1500-calories-look-like-uk': post({
-    title: 'What Does 1500 Calories Look Like? UK Meal Examples',
-    description: 'See what 1500 calories looks like in the UK, with realistic breakfast, lunch, dinner, snack and supermarket examples plus printable plan links.',
+    title: 'What Does 1500 Calories Look Like? UK Breakfast, Lunch, Dinner + Snack',
+    description: 'See what 1500 calories looks like in the UK: realistic breakfast, lunch, dinner, snack, supermarket examples and printable plan links.',
     h1: 'What Does 1500 Calories Look Like?',
     intro: '1500 calories should not look like black coffee, lettuce and a tiny dinner. A realistic UK 1500 calorie day usually includes three proper meals and a snack, with enough protein and high-volume foods to make the day repeatable.',
     reviewed: '17 June 2026',

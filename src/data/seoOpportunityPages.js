@@ -1,4 +1,5 @@
 const LOW_CALORIE_LINKS = [
+  { label: 'Low calorie meal plans UK', to: '/meal-plans/low-calorie' },
   { label: 'Printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
   { label: 'Low calorie shopping list', to: '/meal-plans/low-calorie-shopping-list' },
   { label: 'Low calorie ready meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },
@@ -19,6 +20,7 @@ const SHOPPING_LINKS = [
 const CONTAINER_LINKS = [
   { label: 'Best meal prep containers UK', to: '/meal-prep-containers' },
   { label: 'Glass meal prep containers', to: '/meal-prep-containers/mid-range' },
+  { label: 'Meal prep tubs', to: '/blog/meal-prep-tubs-for-batch-cooking' },
   { label: 'Budget meal prep tubs', to: '/meal-prep-containers/budget' },
 ];
 

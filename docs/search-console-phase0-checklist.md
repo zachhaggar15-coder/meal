@@ -15,6 +15,7 @@ Request indexing for these priority URLs:
 - `https://www.mealprep.org.uk/about`
 - `https://www.mealprep.org.uk/browse`
 - `https://www.mealprep.org.uk/meal-plans/free-online-diet-plans-uk`
+- `https://www.mealprep.org.uk/meal-plans/low-calorie`
 - `https://www.mealprep.org.uk/meal-plans/1500-calorie`
 - `https://www.mealprep.org.uk/meal-plans/weight-loss`
 - `https://www.mealprep.org.uk/meal-plans/high-protein`

@@ -26,7 +26,10 @@ export default function PlanChooserPage() {
     }))
     .filter(option => option.plan);
 
-  const canonical = `/choose-plan/${goalChoice.value}`;
+  const canonical = goalChoice.value === 'weight-loss'
+    ? '/meal-plans/weight-loss'
+    : `/choose-plan/${goalChoice.value}`;
+  const pageUrl = `/choose-plan/${goalChoice.value}`;
   const title = toTitleCase(`${goalChoice.label} Meal Plans by Supermarket`);
   const marketList = SUPERMARKET_CHOICES.map(market => market.label).join(', ');
   const description = `Choose a ${goalChoice.label.toLowerCase()} meal plan for ${marketList}, with printable PDFs and shopping lists.`;
@@ -38,7 +41,7 @@ export default function PlanChooserPage() {
       '@type': 'CollectionPage',
       name: title,
       description,
-      url: `https://www.mealprep.org.uk${canonical}`,
+      url: `https://www.mealprep.org.uk${pageUrl}`,
       mainEntity: {
         '@type': 'ItemList',
         itemListElement: options.map((option, index) => ({
@@ -55,7 +58,7 @@ export default function PlanChooserPage() {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk/' },
         { '@type': 'ListItem', position: 2, name: 'Meal Plans', item: 'https://www.mealprep.org.uk/browse' },
-        { '@type': 'ListItem', position: 3, name: title, item: `https://www.mealprep.org.uk${canonical}` },
+        { '@type': 'ListItem', position: 3, name: title, item: `https://www.mealprep.org.uk${pageUrl}` },
       ],
     },
   ];

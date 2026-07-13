@@ -30,7 +30,8 @@ const NAV = [
     label: 'Meal Plan Hubs',
     items: [
       { to: '/meal-plans/free-online-diet-plans-uk', label: 'Free Online Diet Plans' },
-      { to: '/meal-plans/weight-loss', label: 'Lose Weight Meal Plan UK' },
+      { to: '/meal-plans/weight-loss', label: 'Weight Loss Meal Plan UK' },
+      { to: '/meal-plans/low-calorie', label: 'Low Calorie Meal Plans UK' },
       { to: '/meal-plans/1200-calorie', label: '1200 Calorie Plans' },
       { to: '/meal-plans/1400-calorie', label: '1400 Calorie Plans' },
       { to: '/meal-plans/1500-calorie', label: '1500 Calorie Plans' },

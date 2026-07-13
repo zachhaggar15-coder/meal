@@ -146,7 +146,7 @@ const HUB_INDEX_GROUPS = [
   },
   {
     label: 'Goal and diet hubs',
-    slugs: ['free-online-diet-plans-uk', 'weight-loss', 'high-protein', 'vegetarian', 'vegan', 'pescatarian', 'muscle-gain', 'menopause', 'endurance', 'cheap-student', 'budget-bodybuilding'],
+    slugs: ['free-online-diet-plans-uk', 'weight-loss', 'low-calorie', 'high-protein', 'vegetarian', 'vegan', 'pescatarian', 'muscle-gain', 'menopause', 'endurance', 'cheap-student', 'budget-bodybuilding'],
   },
   {
     label: 'Shopping-list hubs',

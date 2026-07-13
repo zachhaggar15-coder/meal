@@ -46,6 +46,12 @@ const queryRows = [
     label: 'Work lunch guide',
   },
   {
+    query: 'meal prep tubs',
+    answer: 'Use larger plastic or twist-lid tubs for batch-cooked bases, soups, freezer portions and overnight oats.',
+    link: '/blog/meal-prep-tubs-for-batch-cooking',
+    label: 'Batch tub guide',
+  },
+  {
     query: 'cheap meal prep tubs',
     answer: 'Budget plastic multipacks give the lowest cost per usable tub for freezer portions and batch cooking.',
     link: '/meal-prep-containers/budget',
@@ -149,8 +155,8 @@ export default function ContainerHub() {
   return (
     <>
       <SEO
-        title="Best Meal Prep Containers UK 2026: Glass vs Plastic, Sizes & Budget Picks"
-        description="Compare the best meal prep containers UK: glass vs plastic boxes, 900ml-1L sizes, budget tubs, leakproof work lunch boxes and starter sets."
+        title="Best Meal Prep Containers UK: 6 Picks by Size, Budget & Use"
+        description="Compare UK meal prep containers by job: best overall glass, cheapest tubs, work lunch boxes, freezer portions and 900ml-1L sizes."
         canonical="/meal-prep-containers"
         ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
         jsonLd={jsonLd}
@@ -356,6 +362,7 @@ export default function ContainerHub() {
           <li><Link to="/blog/best-meal-prep-containers-uk">Best meal prep containers UK buying guide</Link></li>
           <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
           <li><Link to="/blog/leakproof-meal-prep-containers-uk">Leakproof meal prep containers UK</Link></li>
+          <li><Link to="/blog/meal-prep-tubs-for-batch-cooking">Meal prep tubs for batch cooking</Link></li>
           <li><Link to="/blog/meal-prep-container-size-guide">Meal prep container size guide</Link></li>
           <li><Link to="/blog/how-many-meal-prep-containers-do-you-need">How many meal prep containers do you need?</Link></li>
         </ul>

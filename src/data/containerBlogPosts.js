@@ -31,10 +31,10 @@ const guideRelated = [
 export const containerBlogPostsData = {
   'best-meal-prep-containers-uk': {
     published: '2026-06-16',
-    modified: '2026-07-05',
-    title: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
-    description: 'Best meal prep containers UK: leakproof, dishwasher-safe and freezer-safe sets for batch cooking, work lunches and gym bags. Compare glass vs plastic, budget and Amazon UK picks.',
-    h1: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
+    modified: '2026-07-13',
+    title: 'Best Meal Prep Containers UK Buying Guide: Glass, Plastic and Tubs',
+    description: 'Best meal prep containers UK buying guide: compare glass boxes, cheap plastic tubs, work lunch containers, freezer portions and leakproof picks.',
+    h1: 'Best Meal Prep Containers UK Buying Guide',
     intro:
       'The best meal prep containers are the ones that make Sunday cooking easier and weekday eating calmer. For most UK meal preppers, that means enough containers for five lunches, lids that do not leak in a work bag, bases that survive repeated washing, and sizes that fit proper portions.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
@@ -677,12 +677,12 @@ export const containerBlogPostsData = {
 
   'meal-prep-tubs-for-batch-cooking': {
     published: '2026-06-16',
-    modified: '2026-06-16',
-    title: 'Best Meal Prep Tubs for Batch Cooking UK',
-    description: 'Best meal prep tubs for batch cooking in the UK, including plastic tubs, twist-lid containers, glass storage and freezer portions.',
-    h1: 'Best Meal Prep Tubs for Batch Cooking UK',
+    modified: '2026-07-13',
+    title: 'Meal Prep Tubs UK: Best Batch-Cooking & Freezer Containers',
+    description: 'Meal prep tubs UK guide for batch cooking, freezer portions, soup, overnight oats, plastic tubs, twist-lid containers and glass storage.',
+    h1: 'Meal Prep Tubs UK: Batch-Cooking and Freezer Containers',
     intro:
-      'Meal prep tubs are the practical side of batch cooking. They are less about a polished lunch box and more about getting chilli, soup, oats, rice, sauces, cooked chicken, roasted vegetables, and freezer portions stored safely.',
+      'Meal prep tubs are the practical side of batch cooking. They are less about a polished lunch box and more about getting chilli, soup, oats, rice, sauces, cooked chicken, roasted vegetables, and freezer portions stored safely in containers that match the job.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
     contextualLinks: containerLinks,
     productRecommendations: {

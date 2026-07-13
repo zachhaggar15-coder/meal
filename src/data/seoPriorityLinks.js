@@ -77,8 +77,9 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     intro: 'Existing impressions need better hub paths from low-calorie guides into printable plans and shopping lists.',
     links: [
       { to: '/blog/best-low-calorie-foods-uk', label: 'Low Calorie Foods UK' },
+      { to: '/meal-plans/low-calorie', label: 'Low Calorie Meal Plans UK' },
       { to: '/meal-plans/low-calorie-shopping-list', label: 'Low Calorie Shopping List' },
-      { to: '/meal-plans/weight-loss', label: 'Lose Weight Meal Plans UK' },
+      { to: '/meal-plans/weight-loss', label: 'Weight Loss Meal Plan UK' },
       { to: '/plans/aldi-budget-fat-loss-1500-v2-high-fibre', label: 'High-Fibre Budget Fat Loss Plan' },
     ],
   },
