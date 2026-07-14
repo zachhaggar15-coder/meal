@@ -441,12 +441,15 @@ export const mealPlansData = {
   '1500-calorie-meal-plan': {
     title: '1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List',
     description: 'A complete 1500 calorie meal plan for UK adults: 7 days of high-protein meals, a full supermarket shopping list, batch cooking tips, and suitability notes for fat loss.',
+    modified: '2026-07-14',
+    reviewed: '14 July 2026',
     h1: '1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List',
     planLabel: '1500 Calorie',
     targetCalories: 1500,
     summary: {
       supermarkets: 'Generic UK supermarket',
       bestFor: 'Fat loss, lighter adults, women',
+      updated: '14 July 2026',
       prepDifficulty: 'Easy (15–25 min)',
     },
     suitability: {
@@ -466,6 +469,13 @@ export const mealPlansData = {
     intro: 'A 1,500 calorie meal plan is one of the most popular choices for weight loss in the UK. For people whose TDEE is meaningfully above 1,500 calories, it can create a steady calorie deficit without the hunger and fatigue that come with more extreme restriction. This guide gives you a complete, ready-to-use 7-day plan built around everyday UK supermarket ingredients.',
     whyThisPlan: 'A 1,500 calorie target works well for people whose Total Daily Energy Expenditure (TDEE) sits between 1,800 and 2,200 calories — common for women aged 25–55 with moderate activity levels and lighter men. At 1,500 calories you create a deficit of 300–700 calories per day, which over a week amounts to 2,100–4,900 calories — enough to lose 0.3–0.7 kg of body fat. This plan prioritises protein (90–120 g per day) to keep you feeling full, preserve muscle mass, and support an active lifestyle.',
     contextualLinks: [
+      {
+        parts: [
+          { text: 'Use this page when you want the full 7-day 1500 calorie meal plan with meals, portions and a shopping list. If you only want to picture the daily structure first, read ' },
+          { label: 'what 1500 calories looks like', to: '/blog/what-does-1500-calories-look-like-uk' },
+          { text: ', then come back here for the complete week.' },
+        ],
+      },
       {
         parts: [
           { text: 'Shopping mainly at Tesco? Use the ' },
@@ -515,6 +525,7 @@ export const mealPlansData = {
       { slug: 'vegan-low-calorie-meal-plan', label: 'Vegan Low Calorie Plan' },
     ],
     blogLinks: [
+      { path: '/blog/what-does-1500-calories-look-like-uk', label: 'What 1500 Calories Looks Like' },
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
       { path: '/blog/how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss' },
     ],

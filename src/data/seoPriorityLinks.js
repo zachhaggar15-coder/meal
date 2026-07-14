@@ -66,10 +66,10 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     title: '1500 Calorie Meal Plans',
     intro: 'Plan a simple lower-calorie week with printable options, shopping lists and realistic UK meals.',
     links: [
-      { to: '/meal-plans/1500-calorie', label: 'Printable 1500 Calorie Meal Plans' },
+      { to: '/meal-plan/1500-calorie-meal-plan', label: 'Full 1500 Calorie Meal Plan' },
+      { to: '/meal-plans/1500-calorie', label: 'Printable 1500 Calorie Plan Hub' },
       { to: '/blog/what-does-1500-calories-look-like-uk', label: 'What 1500 Calories Looks Like' },
       { to: '/blog/1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories' },
-      { to: '/plans/asda-weight-loss-1500', label: 'Asda 1500 Calorie Plan' },
     ],
   },
   {

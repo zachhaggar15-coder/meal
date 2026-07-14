@@ -495,10 +495,11 @@ export const expandedBlogPostsData = {
 
   'what-does-1500-calories-look-like-uk': post({
     title: 'What Does 1500 Calories Look Like? UK Breakfast, Lunch, Dinner + Snack',
-    description: 'See what 1500 calories looks like in the UK: realistic breakfast, lunch, dinner, snack, supermarket examples and printable plan links.',
+    description: 'See what 1500 calories looks like in the UK: realistic breakfast, lunch, dinner and snack examples, plus the full 7-day 1500 calorie meal plan to use next.',
     h1: 'What Does 1500 Calories Look Like?',
-    intro: '1500 calories should not look like black coffee, lettuce and a tiny dinner. A realistic UK 1500 calorie day usually includes three proper meals and a snack, with enough protein and high-volume foods to make the day repeatable.',
-    reviewed: '17 June 2026',
+    intro: '1500 calories should not look like black coffee, lettuce and a tiny dinner. This guide is a visual explainer for the shape of a realistic UK 1500 calorie day; if you want the full weekly menu, use the linked 7-day meal plan.',
+    modified: '2026-07-14',
+    reviewed: '14 July 2026',
     sources: [
       {
         label: 'NHS Eatwell Guide',
@@ -512,8 +513,8 @@ export const expandedBlogPostsData = {
     contextualLinks: [
       {
         parts: [
-          { text: 'For complete printable weeks, use the ' },
-          { label: '1500 calorie meal plan UK hub', to: '/meal-plans/1500-calorie' },
+          { text: 'For the complete weekly menu, use the ' },
+          { label: '1500 calorie meal plan UK', to: '/meal-plan/1500-calorie-meal-plan' },
           { text: ', or compare filling foods in the ' },
           { label: 'low calorie foods UK guide', to: '/blog/best-low-calorie-foods-uk' },
           { text: '.' },
@@ -551,6 +552,12 @@ export const expandedBlogPostsData = {
         },
       },
       {
+        h2: 'When to use the full 1500 calorie meal plan',
+        paragraphs: [
+          'Use this article when you want to understand what a 1500 calorie day looks like. Use the full 1500 calorie meal plan when you want a ready-made 7-day week with meals, portions, macros and a shopping list.',
+        ],
+      },
+      {
         h2: 'What 1500 calories should not look like',
         paragraphs: [
           'It should not require skipping breakfast, eating no carbohydrates or saving nearly all calories for dinner. Those patterns can work for a day, but they are hard to repeat and often lead to evening snacking.',
@@ -566,7 +573,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
-      { path: '/meal-plans/1500-calorie', label: 'Printable 1500 Calorie Meal Plan', type: 'guide' },
+      { path: '/meal-plan/1500-calorie-meal-plan', label: 'Full 1500 Calorie Meal Plan UK', type: 'guide' },
       { slug: 'best-low-calorie-foods-uk', label: 'Low Calorie Foods UK', type: 'blog' },
       { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
       { slug: '1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories', type: 'blog' },
@@ -574,7 +581,7 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Is 1500 calories enough food?', a: 'It depends on body size, activity, health status and goals. For some adults it is a moderate deficit; for others it is too low. Use it as general information, not medical advice.' },
       { q: 'Can 1500 calories include snacks?', a: 'Yes. Most realistic 1500 calorie days include at least one snack. The key is choosing snacks that add protein, fruit, fibre or useful volume rather than spending calories without filling you up.' },
-      { q: 'Can I print a 1500 calorie meal plan?', a: 'Yes. The 1500 calorie meal plan hub links to printable plans with weekly recipes, calories, macros and shopping lists.' },
+      { q: 'Can I print a 1500 calorie meal plan?', a: 'Yes. The full 1500 calorie meal plan includes a weekly menu, calories, macros and shopping list that can be printed or saved.' },
     ],
   }),
 

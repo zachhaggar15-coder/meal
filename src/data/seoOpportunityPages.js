@@ -1,6 +1,6 @@
 const LOW_CALORIE_LINKS = [
   { label: 'Low calorie meal plans UK', to: '/meal-plans/low-calorie' },
-  { label: 'Printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
+  { label: 'Full 1500 calorie meal plan', to: '/meal-plan/1500-calorie-meal-plan' },
   { label: 'Low calorie shopping list', to: '/meal-plans/low-calorie-shopping-list' },
   { label: 'Low calorie ready meals UK', to: '/blog/best-low-calorie-ready-meals-uk' },
 ];
@@ -184,7 +184,7 @@ export const SEO_EXACT_PLAN_LINKS = {
     { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
   ],
   'what-does-1500-calories-look-like-uk': [
-    { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
+    { label: 'Full 1500 calorie meal plan UK', to: '/meal-plan/1500-calorie-meal-plan' },
     { label: 'Tesco 1500 calorie meal plan', to: '/meal-plans/tesco-1500-calorie-meal-plan' },
     { label: 'Aldi Weight Loss 1500 kcal plan', to: '/plans/aldi-weight-loss-1500' },
   ],
