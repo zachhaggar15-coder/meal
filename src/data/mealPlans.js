@@ -463,7 +463,7 @@ export const mealPlansData = {
       disclaimer:
         'Calorie needs vary a lot from person to person. 1,500 calories can be too low for larger or highly active adults, and this plan is general information rather than medical or dietary advice. If you are unsure what is right for you, or you have a health condition, check with your GP or a registered dietitian before starting. If you feel persistently tired, dizzy or unwell, eat more.',
     },
-    intro: 'A 1,500 calorie meal plan is one of the most popular choices for weight loss in the UK. For most women and smaller-framed men, eating 1,500 calories per day creates a meaningful calorie deficit that supports steady fat loss of around 0.5–1 kg per week — without the hunger and fatigue that come with more extreme restriction. This guide gives you a complete, ready-to-use 7-day plan built around everyday UK supermarket ingredients.',
+    intro: 'A 1,500 calorie meal plan is one of the most popular choices for weight loss in the UK. For people whose TDEE is meaningfully above 1,500 calories, it can create a steady calorie deficit without the hunger and fatigue that come with more extreme restriction. This guide gives you a complete, ready-to-use 7-day plan built around everyday UK supermarket ingredients.',
     whyThisPlan: 'A 1,500 calorie target works well for people whose Total Daily Energy Expenditure (TDEE) sits between 1,800 and 2,200 calories — common for women aged 25–55 with moderate activity levels and lighter men. At 1,500 calories you create a deficit of 300–700 calories per day, which over a week amounts to 2,100–4,900 calories — enough to lose 0.3–0.7 kg of body fat. This plan prioritises protein (90–120 g per day) to keep you feeling full, preserve muscle mass, and support an active lifestyle.',
     contextualLinks: [
       {
@@ -493,18 +493,18 @@ export const mealPlansData = {
       'Keep low-calorie snacks visible in the fridge — Greek yogurt, carrot sticks, and cottage cheese are all under 200 kcal.',
       'Drink 2–3 litres of water per day. Thirst is often mistaken for hunger.',
       'If you are hungry, bulk up meals with non-starchy vegetables (spinach, cucumber, courgette) — they add volume for almost no calories.',
-      'On Sunday, cook the turkey chilli and portion it into three or four containers, and cook a large batch of brown rice. Both reheat in under 5 minutes and cover most of the week\'s dinners.',
-      'Store cooked meals in the fridge for up to 3 days. Freeze anything you will not eat within 3 days — soups, chilli, and rice-based dishes all freeze well in airtight containers.',
+      'On Sunday, cook the turkey chilli and portion it into containers, then cook rice for the first day or two rather than relying on a large chilled batch all week.',
+      'Eat cooked leftovers kept in the fridge within 2 days. Freeze later portions promptly; cooked rice should be cooled quickly, refrigerated promptly, used within about 24 hours, and reheated once until piping hot.',
       'Defrost frozen portions overnight in the fridge, then reheat until piping hot before eating.',
     ],
     faq: [
-      { q: 'Is 1500 calories a day enough?', a: 'For most adults seeking fat loss, yes. 1,500 calories provides enough energy and nutrients when the diet is high in protein and includes a wide variety of vegetables. Active individuals, larger adults (over 90 kg), or anyone who feels persistently tired should consider increasing to 1,800 calories.' },
-      { q: 'How much weight will I lose on 1500 calories?', a: 'Most people lose 0.5–1 kg per week on a 1,500 calorie diet, assuming their TDEE is around 2,000–2,200 calories. Results vary based on starting weight, activity level, and metabolic rate.' },
+      { q: 'Is 1500 calories a day enough?', a: 'It depends on your TDEE, body size, activity and health status. 1,500 calories can work for some adults when the diet is high in protein and includes a wide variety of vegetables, but active individuals, larger adults, pregnant or breastfeeding people, teenagers, and anyone who feels persistently tired should choose a higher target or seek advice.' },
+      { q: 'How much weight will I lose on 1500 calories?', a: 'If your TDEE is around 2,000–2,200 calories, a 1,500 calorie target creates a 500–700 calorie deficit. Actual weekly loss varies based on starting weight, activity level, adherence, water weight and metabolic rate.' },
       { q: 'Can I swap meals around?', a: 'Yes. Each day is planned to hit the 1,500 calorie target, but you can mix and match days or repeat favourite days without affecting the overall calorie balance.' },
-      { q: 'How do I batch cook this plan efficiently?', a: 'On Sunday, cook the turkey chilli and portion it into three or four containers. Cook a large batch of brown rice and divide it into portions. Hard-boil six to eight eggs. Pre-portion Greek yogurt into tubs. This reduces most weekday meals to 5–10 minutes of reheating and assembly.' },
+      { q: 'How do I batch cook this plan efficiently?', a: 'On Sunday, cook the turkey chilli and portion it into containers, freezing later portions. Cook rice for the first day or two, or cool it quickly and use chilled rice within about 24 hours. Hard-boil a small batch of eggs and pre-portion Greek yogurt into tubs.' },
       { q: 'Can I follow a vegetarian version of this plan?', a: 'Yes. Swap chicken and turkey for firm tofu, red lentils, or tinned chickpeas, which reach similar protein levels per serving. Greek yogurt, eggs, and cottage cheese remain as protein sources. See the vegetarian low calorie meal plan for a fully structured 7-day vegetarian version.' },
       { q: 'How can I make this plan cheaper?', a: 'Buy frozen chicken breast instead of fresh, replace salmon with extra tinned tuna, and choose own-brand oats and rice from Aldi or Lidl. Frozen mixed vegetables are as nutritious as fresh and noticeably cheaper. Avoid pre-washed salad bags when loose leaves or frozen spinach are available for less.' },
-      { q: 'How should I store prepped meals?', a: 'Cooked proteins and assembled meals keep safely in the fridge for up to 3 days. Freeze anything you will not eat within 3 days — this plan\'s chilli, soups, and rice dishes all freeze well in airtight containers. Defrost overnight in the fridge and reheat until piping hot before eating.' },
+      { q: 'How should I store prepped meals?', a: 'Eat cooked leftovers kept in the fridge within 2 days. Freeze later portions promptly, defrost overnight in the fridge, and reheat until piping hot before eating. For cooked rice, cool quickly, refrigerate promptly, use within about 24 hours, and reheat once.' },
     ],
     related: [
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan' },
@@ -638,8 +638,8 @@ export const mealPlansData = {
     },
     planLabel: 'High Protein Low Calorie',
     targetCalories: 1550,
-    intro: 'A high protein low calorie meal plan is the gold standard approach for losing fat while preserving — or even building — lean muscle mass. By keeping calories in a deficit while eating 140–170 g of protein per day, you force your body to burn fat for energy rather than breaking down muscle. This 7-day UK plan delivers 150+ g of protein daily from lean, widely available sources such as chicken breast, tinned tuna, eggs, Greek yogurt, and cottage cheese — all affordable and easy to find in any major UK supermarket.',
-    whyThisPlan: 'Protein has the highest thermic effect of any macronutrient — your body burns roughly 25–30% of protein calories just by digesting it. It is also the most satiating macronutrient, meaning gram for gram it keeps you fuller than carbohydrate or fat. Research from the British Journal of Nutrition shows that increasing protein to 25–30% of total calories significantly reduces appetite and late-night snacking. This plan targets approximately 1.8–2.2 g of protein per kg of body weight — at the high end of the recommended range for people losing weight while exercising.',
+    intro: 'A high protein low calorie meal plan is a common approach for losing fat while preserving — or even building — lean muscle mass. By keeping calories in a deficit while eating 140–170 g of protein per day, the plan supports muscle retention while fat loss comes from the calorie deficit. This 7-day UK plan delivers 150+ g of protein daily from lean, widely available sources such as chicken breast, tinned tuna, eggs, Greek yogurt, and cottage cheese — all affordable and easy to find in most major UK supermarkets.',
+    whyThisPlan: 'Protein has the highest thermic effect of any macronutrient — your body burns roughly 25–30% of protein calories just by digesting it. It is also the most satiating macronutrient, meaning gram for gram it keeps you fuller than carbohydrate or fat. Research from the British Journal of Nutrition shows that increasing protein to 25–30% of total calories can significantly reduce appetite and late-night snacking in some groups. This plan targets approximately 1.8–2.2 g of protein per kg of body weight — a higher sports-nutrition range for people losing weight while exercising.',
     contextualLinks: [
       {
         parts: [
@@ -662,7 +662,7 @@ export const mealPlansData = {
     ],
     faq: [
       { q: 'How much protein do I need per day to lose fat without losing muscle?', a: 'Most research suggests 1.6–2.2 g of protein per kg of body weight. For an 80 kg person, that is 128–176 g per day. This plan targets the higher end to maximise muscle preservation.' },
-      { q: 'Is high protein safe for kidneys?', a: 'For healthy adults with no pre-existing kidney conditions, high protein diets are considered safe. If you have kidney disease, consult your GP before increasing protein intake.' },
+      { q: 'Is high protein safe for kidneys?', a: 'For healthy adults with no known kidney disease, higher-protein meal plans are not usually treated as a special kidney concern, but this is still general information. If you have kidney disease, reduced kidney function, diabetes, pregnancy, or clinical dietary needs, ask your GP or dietitian before increasing protein.' },
       { q: 'Can I follow this plan if I do not eat meat?', a: 'Yes, though it requires more planning. High-protein vegetarian sources include eggs, Greek yogurt, cottage cheese, tofu, edamame, and protein powder. See our vegetarian plan for more ideas.' },
     ],
     related: [
@@ -872,7 +872,7 @@ export const mealPlansData = {
       'Greek yogurt (not plant-based) is the easiest high-protein snack on a lacto-vegetarian diet. 200 g of 0% fat Greek yogurt contains about 20 g of protein for around 130 kcal.',
     ],
     faq: [
-      { q: 'Can I get enough protein on a vegetarian diet?', a: 'Yes. Eggs, Greek yogurt, cottage cheese, tofu, lentils, chickpeas, and edamame are all excellent protein sources. This plan delivers 75–90 g of protein per day, which is sufficient for most adults losing weight.' },
+      { q: 'Can I get enough protein on a vegetarian diet?', a: 'Yes. Eggs, Greek yogurt, cottage cheese, tofu, lentils, chickpeas, and edamame are all excellent protein sources. This plan delivers 75–90 g of protein per day, which can be enough for many adults losing weight, depending on body size and activity.' },
       { q: 'Is this plan vegan-friendly?', a: 'Not as written — it includes eggs, dairy, and sometimes halloumi or paneer. However, you can swap these for plant-based alternatives (silken tofu for eggs, soy yogurt for Greek yogurt) to make it vegan.' },
       { q: 'Will I be hungry on 1500 calories as a vegetarian?', a: 'Hunger depends on food choices more than total calories. This plan is built around high-protein, high-fibre meals that keep you full. If you are regularly hungry, try adding more non-starchy vegetables and ensuring each meal includes at least 20 g of protein.' },
     ],
@@ -947,7 +947,7 @@ export const mealPlansData = {
       'Hemp seeds and pumpkin seeds are excellent plant-based protein sources. Add to smoothies, salads, and porridge for a protein boost.',
     ],
     faq: [
-      { q: 'Can I get enough protein on a vegan diet?', a: 'Yes. Tofu, legumes, nuts, seeds, and plant-based protein powder are all excellent vegan protein sources. This plan delivers 60–70 g of protein per day, which is sufficient for most adults losing weight.' },
+      { q: 'Can I get enough protein on a vegan diet?', a: 'Yes. Tofu, legumes, nuts, seeds, and plant-based protein powder are all useful vegan protein sources. This plan delivers 60–70 g of protein per day, which can be enough for some adults losing weight, depending on body size and activity.' },
       { q: 'What is the difference between vegan and vegetarian plans?', a: 'The vegetarian plan includes eggs, dairy, and sometimes cheese. The vegan plan excludes all animal products, using tofu, legumes, nuts, and plant-based milk instead.' },
       { q: 'Will I be hungry on 1500 calories as a vegan?', a: 'Hunger depends on food choices more than total calories. This plan is built around high-protein, high-fibre meals that keep you full. If regularly hungry, add more non-starchy vegetables and ensure each meal includes at least 15 g of plant-based protein.' },
     ],
@@ -980,7 +980,7 @@ export const mealPlansData = {
     intro: 'Aldi is consistently one of the cheapest UK supermarkets for lean, high-protein eating — and 1,800 calories a day is one of the most widely recommended targets for sustainable weight loss. This 7-day plan combines both: a moderate calorie deficit with high-protein meals built exclusively around Aldi own-brand products. Estimated weekly cost is £35–45 for one person, making this one of the most affordable structured meal plans available in the UK.',
     whyThisPlan: 'Shopping at Aldi means consistently low prices without loyalty schemes, weekly vouchers, or app-based discounts — what you see is what you pay. At 1,800 calories and 100–130 g of protein daily, this plan creates enough of a deficit for steady fat loss of 0.2–0.5 kg per week while keeping hunger well under control. The meals are built around Aldi\'s best-value proteins: chicken breast fillets, tinned tuna, free range eggs, and Milbona Greek style yogurt.',
     tips: [
-      'Aldi Harvest Morn Rolled Oats (1 kg) cost around 85p — one of the cheapest breakfasts available. Batch-soak overnight oats for the whole week on Sunday.',
+      'Aldi Harvest Morn Rolled Oats (1 kg) cost around 85p — one of the cheapest breakfasts available. Batch-soak a couple of overnight oat jars at a time, then refresh the batch midweek.',
       'Aldi frozen vegetables are excellent quality at very low prices. Frozen broccoli, peas, and mixed veg are nutritionally identical to fresh and far more convenient.',
       'Aldi chicken breast is competitively priced all year round. Buy in 1 kg+ packs and batch-cook at the start of the week to cover lunches instantly.',
       'The Milbona 0% fat Greek style yogurt is outstanding value — check the label carefully as Aldi stocks both 0% and full-fat versions in similar packaging.',
@@ -1093,7 +1093,7 @@ export const mealPlansData = {
     ],
     faq: [
       { q: 'How much protein per day does this Tesco plan provide?', a: '140–170 g per day, spread across four eating occasions. This is at the higher end of recommendations for fat loss with muscle preservation.' },
-      { q: 'Is the Tesco high protein plan suitable for weight loss?', a: 'Yes — at 1,500–1,600 calories, this plan creates a significant deficit for most adults while the high protein intake preserves lean muscle mass and reduces hunger.' },
+      { q: 'Is the Tesco high protein plan suitable for weight loss?', a: 'It can be, if 1,500–1,600 calories creates an appropriate deficit for your TDEE. The high-protein structure is designed to support fullness and lean muscle retention while dieting.' },
       { q: 'Can I get Tesco Click + Collect for this plan?', a: 'Yes — all ingredients are available through Tesco online with Click + Collect or home delivery. Using the Tesco website makes it easy to check Clubcard Prices before ordering.' },
     ],
     related: [
@@ -1152,8 +1152,8 @@ export const mealPlansData = {
     h1: 'Asda 1500 Calorie Meal Plan UK — Budget 7-Day Weight Loss Guide',
     planLabel: 'Asda 1500 Calorie',
     targetCalories: 1500,
-    intro: "At 1,500 calories a day, most adults in a calorie deficit will lose 0.5–1 kg per week — making it one of the most popular weight loss targets in the UK. This plan is built entirely around Asda's affordable own-brand range, keeping your weekly shop to an estimated £35–45. Every meal uses ingredients you can find in a standard Asda superstore, and the plan prioritises protein and fibre to keep hunger at bay.",
-    whyThisPlan: "Asda is particularly good value for the protein-heavy staples that make 1,500 calories feel achievable rather than restrictive. Chicken breast, eggs, tinned tuna, and low-fat Greek yogurt form the backbone of the plan — all available at Asda at highly competitive prices. With 90–120 g of protein per day, you'll feel fuller for longer and lose fat rather than muscle.",
+    intro: "At 1,500 calories a day, people whose TDEE is meaningfully higher can create a steady calorie deficit, which makes it one of the most popular weight loss targets in the UK. This plan is built around Asda's affordable own-brand range, keeping your weekly shop to an estimated £35–45. Every meal uses ingredients you can find in many standard Asda superstores, and the plan prioritises protein and fibre to keep hunger at bay.",
+    whyThisPlan: "Asda is particularly good value for the protein-heavy staples that make 1,500 calories feel achievable rather than restrictive. Chicken breast, eggs, tinned tuna, and low-fat Greek yogurt form the backbone of the plan — all commonly available at Asda at competitive prices. With 90–120 g of protein per day, the plan is designed to support fullness and muscle retention during fat loss.",
     tips: [
       'At 1,500 calories, volume matters — fill your plate with non-starchy vegetables (spinach, broccoli, cucumber) to eat more for almost no calorie cost.',
       'Asda frozen broccoli and mixed veg are around 75–95p per kg. Buying frozen instead of fresh saves money and reduces food waste significantly.',
@@ -1229,12 +1229,12 @@ export const mealPlansData = {
       prepDifficulty: 'Easy (15–25 min)',
     },
     intro: "Sainsbury's is one of the UK's most popular supermarkets for healthy eating — its own-brand range covers every staple you need for a calorie-controlled diet at competitive prices, with Nectar Prices reducing the weekly cost further. This 7-day plan targets 1,500 calories and 85–105 g of protein per day using Sainsbury's own-brand products. Estimated weekly cost is £38–48, reducing to around £35–42 when Nectar Prices apply to chicken, eggs, and Greek yogurt.",
-    whyThisPlan: "A 1,500 calorie target is well-suited to most women and lighter adults seeking to lose 0.5–1 kg per week. Sainsbury's own-brand Lean Chicken Breast, Low Fat Greek Style Yogurt, and Tinned Tuna provide excellent value protein sources. The Nectar card gives you access to Sainsbury's best prices on key staples — if you do not already have one, it is free to sign up online and immediately unlocks savings on this plan's core ingredients.",
+    whyThisPlan: "A 1,500 calorie target can suit some women and lighter adults whose TDEE is meaningfully above that level. Sainsbury's own-brand Lean Chicken Breast, Low Fat Greek Style Yogurt, and Tinned Tuna provide useful protein sources. The Nectar card can reduce prices on key staples — if you do not already have one, it is free to sign up online and may unlock savings on this plan's core ingredients.",
     tips: [
       "Sign up for a free Sainsbury's Nectar card to unlock Nectar Prices on chicken, eggs, Greek yogurt, and other core ingredients — this can reduce the weekly cost by £5–8.",
       "Sainsbury's frozen vegetables are high quality and very affordable. Frozen spinach, broccoli florets, and mixed vegetables are all excellent substitutes for fresh at a fraction of the price.",
       "Sainsbury's own-brand Low Fat Cottage Cheese is an underrated protein source at around £1.20 for 300 g — 23 g of protein for under 130 kcal per serving.",
-      "Batch-cook Sainsbury's chicken breast at the weekend. Poach 1 kg in lightly salted water, refrigerate, and use across three days of lunches.",
+      "Batch-cook Sainsbury's chicken breast at the weekend. Poach 1 kg in lightly salted water, refrigerate what you will eat within 2 days, and freeze later portions.",
       "Use the Sainsbury's SmartShop app to scan items as you shop — it helps you stay on budget and avoid unplanned purchases that inflate the weekly cost.",
     ],
     faq: [
@@ -1482,14 +1482,14 @@ export const mealPlansData = {
     intro: 'Getting enough protein on a vegetarian diet while keeping calories in a deficit is one of the most common nutrition challenges in the UK. This 7-day plan solves it by building every meal around a protein-first approach — eggs, 0% fat Greek yogurt, cottage cheese, tofu, lentils, chickpeas, and edamame. It delivers 100–130 g of protein per day at around 1,500 calories, with an estimated weekly shop of £35–45 at any major UK supermarket.',
     whyThisPlan: 'Most vegetarian meal plans underdeliver on protein because they focus on vegetables and grains rather than planning around protein anchors. This plan takes the opposite approach: decide the protein source first, then build the rest of the meal around it. Eggs provide 6 g of protein each at around 78 kcal; 0% fat Greek yogurt delivers 10 g per 100 g at 57 kcal; and cottage cheese offers 12 g per 100 g. Combined with tofu and legumes, hitting 100–130 g of vegetarian protein per day at 1,500 calories is entirely achievable.',
     tips: [
-      'Hard-boil a batch of eight to ten eggs at the start of the week. They keep in the fridge for five days and are the fastest 78-kcal protein boost available.',
+      'Hard-boil a smaller batch of eggs at the start of the week, keep them chilled, and use them within 2 days for this plan or cook a second batch midweek.',
       '0% fat Greek yogurt is the most calorie-efficient protein source on a vegetarian plan. A 200 g serving provides 20 g of protein for around 115 kcal.',
       'Press tofu before cooking for better texture — wrap it in a clean tea towel, place a weight on top, and leave for 20–30 minutes. Marinate and pan-fry or bake for a satisfying protein anchor.',
       'Nutritional yeast adds a cheesy, umami flavour to vegetarian dishes and is rich in B vitamins. Find it in most major UK supermarkets for around £3–4 per bag.',
       'Edamame (frozen) is one of the highest-protein vegetables available — 11 g per 100 g. Add to salads, stir-fries, or eat as a snack with a little sea salt.',
     ],
     faq: [
-      { q: 'How much protein can I get on a vegetarian diet?', a: 'More than you might expect. This plan delivers 100–130 g per day from eggs, dairy, tofu, and legumes — sufficient for most adults at 1,500 calories to preserve muscle while losing fat.' },
+      { q: 'How much protein can I get on a vegetarian diet?', a: 'More than you might expect. This plan delivers 100–130 g per day from eggs, dairy, tofu, and legumes — enough for many active adults at 1,500 calories to support muscle retention while losing fat.' },
       { q: 'Is this plan vegan-friendly?', a: 'Not as written — it uses eggs, dairy (Greek yogurt, cottage cheese), and sometimes halloumi. To make it vegan, substitute silken tofu for eggs, soy or oat yogurt for Greek yogurt, and use more lentils and chickpeas.' },
       { q: 'Which UK supermarket is best for vegetarian high-protein foods?', a: "Tesco and Sainsbury's have the widest range of high-protein vegetarian products including protein yogurt, cottage cheese varieties, and tofu. Aldi and Lidl are cheapest for eggs, Greek yogurt, and pulses." },
     ],
@@ -1664,7 +1664,7 @@ export const mealPlansData = {
     whyThisPlan: 'Cost per gram of protein is the key metric for budget high-protein eating. Tinned tuna provides 24 g of protein for around 60–70p per can — about 3p per gram of protein. Eggs deliver 6 g of protein for under 30p each. Chicken breast provides 31 g per 100 g for around 55–70p per 100 g. These three foods alone can cover most of your protein needs for the week at very low cost, supplemented by Greek yogurt and cottage cheese for variety and additional protein density.',
     tips: [
       'Stock up on tinned tuna in spring water — buy 8–10 cans at once to have protein available for any meal without needing to cook.',
-      'Hard-boil a dozen eggs at the start of the week. They keep in the fridge for five days and are the fastest, cheapest protein snack available.',
+      'Hard-boil a smaller batch of eggs at the start of the week, keep them chilled, and use them within 2 days for this plan or cook a second batch midweek.',
       'Chicken breast bought in 1 kg+ packs is significantly cheaper per serving than smaller packs. Batch-cook the whole kilogram on Sunday.',
       'Low-fat cottage cheese is consistently one of the cheapest protein-dense foods in UK supermarkets at around 80–90p per 300 g pot (36 g of protein).',
       'Red lentils (500 g for around 80p) provide both protein and fibre — far more per pound spent than any meat. Add them to soups, curries, and stews to reduce cost without reducing nutrition.',
@@ -1733,7 +1733,7 @@ export const mealPlansData = {
     intro: "Working full-time makes it harder to eat well — long hours, work lunches, and the temptation of convenience food all chip away at the best intentions. This 7-day meal plan is designed specifically for busy UK professionals: high-protein meals that take under 20 minutes on weeknights, lunches you can prep in 10 minutes on Sunday, and a shopping list that covers the whole week in a single supermarket trip. Estimated cost is £40–50 per week.",
     whyThisPlan: "The secret to eating well as a busy professional is batch cooking on Sunday. Two hours of prep at the weekend — cooking chicken breast, boiling eggs, portioning yogurt and fruit, cooking a large pot of rice or lentils — removes all the daily friction that leads to poor food choices. This plan is built around this principle: weekend prep, fast weekday execution, and grab-and-go lunches that hit 35–45 g of protein each.",
     tips: [
-      'Spend two hours on Sunday batch-cooking: roast or poach 1 kg of chicken breast, hard-boil eight eggs, cook a large pot of brown rice, and portion your oats into jars for overnight oats. This gives you five days of quick lunches and breakfasts.',
+      'Spend two hours on Sunday batch-cooking: roast or poach 1 kg of chicken breast, hard-boil a small batch of eggs, cook rice for the first day or two, and portion your oats into jars for the next couple of breakfasts. Chill the first couple of days and freeze later portions rather than keeping a full week of cooked food in the fridge.',
       'Keep smoked salmon in the fridge. It opens straight onto scrambled eggs, a salad, or wholemeal toast with zero cooking — a lifesaver for rushed weekday mornings.',
       'Wholemeal wraps with pre-cooked chicken, pre-washed spinach, and Greek yogurt take three minutes to assemble and hit 40 g of protein. Prep the components in advance.',
       'Use the Tesco, Aldi, or Asda app to order your weekly shop for Click + Collect or delivery. Set up a recurring basket for your staples — chicken, eggs, oats, yogurt — to save planning time each week.',

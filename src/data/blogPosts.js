@@ -40,7 +40,7 @@ export const blogPostsData = {
         paragraphs: [
           'The sweet spot for most people is a deficit of 300–500 calories per day. This produces a rate of weight loss of 0.3–0.5 kg per week — meaningful progress without the downsides of aggressive restriction.',
           'A smaller deficit of 100–200 calories per day may feel more sustainable but produces very slow results and can be easily undone by a single large meal. A larger deficit of 750–1,000 calories per day accelerates weight loss but significantly increases the risk of muscle loss, fatigue, and nutrient deficiencies.',
-          'The NHS recommends a deficit of no more than 600 calories per day for safe, sustainable weight loss. For most women, this means eating no fewer than 1,400 calories per day; for most men, no fewer than 1,600 calories per day.',
+          'NHS weight-loss guidance uses a reduction of around 600 calories per day as a practical example for steady weight loss. For average daily intakes, that equates to about 1,400 calories per day for women and about 1,900 for men, but individual needs vary with body size, activity, age and health status.',
         ],
       },
       {
@@ -84,7 +84,7 @@ export const blogPostsData = {
       { slug: 'best-kitchen-scales-for-meal-prep-uk', label: 'Best Kitchen Scales for Meal Prep UK', type: 'blog' },
     ],
     faq: [
-      { q: 'What is a safe calorie deficit for weight loss?', a: 'A deficit of 300–500 calories per day is considered safe and sustainable for most adults, producing 0.3–0.5 kg of fat loss per week. The NHS recommends a maximum deficit of 600 calories per day.' },
+      { q: 'What is a safe calorie deficit for weight loss?', a: 'A deficit of 300–500 calories per day is usually a sensible starting point for many adults, producing roughly 0.3–0.5 kg of fat loss per week. NHS weight-loss guidance uses a reduction of around 600 calories per day as a practical example for steady weight loss.' },
       { q: 'How do I calculate my TDEE?', a: 'Use the Mifflin-St Jeor equation to calculate your BMR, then multiply by an activity factor (1.2 for sedentary, 1.375 for lightly active, 1.55 for moderately active, 1.725 for very active). The result is your Total Daily Energy Expenditure.' },
       { q: 'Can I create a calorie deficit through exercise alone?', a: 'Technically yes, but it is very difficult in practice — a 30-minute run burns only 300–350 kcal. Combining a modest reduction in food intake with moderate exercise is far more effective than relying on exercise alone.' },
     ],
@@ -303,7 +303,7 @@ export const blogPostsData = {
           'These are the most common reasons a low-calorie approach stalls or becomes unsustainable:',
         ],
         bullets: [
-          'Cutting calories too aggressively. The NHS advises a minimum of 1,200 kcal for women and 1,500 kcal for men on a reducing diet. A 1,500–1,800 kcal target is more sustainable and supports better energy levels long-term.',
+          'Cutting calories too aggressively. NHS weight-loss guidance uses average daily targets of about 1,400 kcal for women and 1,900 kcal for men after a 600-calorie reduction, but your right target depends on body size, activity and health status. A 1,500–1,800 kcal target is more sustainable for many people than very low-calorie dieting.',
           'Eating low-calorie foods that are also low in protein. A chicken salad and a bag of rice cakes may have similar calorie counts, but only one keeps you full. Prioritise protein at every meal.',
           'Not accounting for drinks. Lattes, juice, smoothies, and energy drinks can add 200–400 kcal with little satiety benefit. Water, black coffee, and tea have negligible calories.',
           'Relying on willpower rather than planning. Batch-cooking on Sunday and keeping low-calorie snacks visible in the fridge is far more reliable than making good choices when already hungry.',
@@ -340,7 +340,7 @@ export const blogPostsData = {
       {
         h2: 'Why High Protein Matters for Weight Loss',
         paragraphs: [
-          'Protein has three key advantages over carbohydrates and fat when it comes to weight loss. First, it has the highest thermic effect — your body burns approximately 25–30% of protein calories just digesting it, compared to 6–8% for carbs and 2–3% for fat. Second, protein is significantly more satiating than the other macronutrients, reducing hunger and late-night cravings. Third, it preserves lean muscle mass during a calorie deficit, which keeps your metabolism higher and ensures the weight you lose is fat rather than muscle.',
+          'Protein has three key advantages over carbohydrates and fat when it comes to weight loss. First, it has the highest thermic effect — your body burns approximately 25–30% of protein calories just digesting it, compared to 6–8% for carbs and 2–3% for fat. Second, protein is significantly more satiating than the other macronutrients, reducing hunger and late-night cravings. Third, it supports lean muscle retention during a calorie deficit, which helps more of the weight you lose come from fat rather than muscle.',
           'Research published in the American Journal of Clinical Nutrition found that increasing protein to 30% of total calories reduced overall calorie intake by an average of 441 calories per day without conscious restriction. On a low-calorie diet, aiming for 1.6–2.2 g of protein per kg of body weight covers most adults well.',
         ],
       },
@@ -574,7 +574,7 @@ export const blogPostsData = {
       {
         h2: 'Step 4: Batch Cook at the Weekend',
         paragraphs: [
-          'The biggest barrier to sticking to a meal plan during the week is time. Batch cooking — preparing several meals or components in advance on a Sunday — solves this problem. Typical batch-cook items include: cooked chicken breast (stays fresh for 4 days); hard-boiled eggs (5 days); cooked brown rice or quinoa (4 days); roasted vegetables (4–5 days); and soup or chilli in large batches (5 days, or freeze).',
+          'The biggest barrier to sticking to a meal plan during the week is time. Batch cooking — preparing several meals or components in advance on a Sunday — solves this problem. Typical batch-cook items include cooked chicken breast, eggs, grains, roasted vegetables, soup and chilli. Keep cooked leftovers in the fridge for the first couple of days, freeze later-week portions, and treat cooked rice as stricter: cool it quickly, refrigerate promptly, and use it within about 24 hours.',
           'A two-hour Sunday batch cook can provide all lunches for the week and simplify dinner preparation significantly. Even just pre-cooking your protein and grains for the week removes the main obstacle to healthy eating on busy weeknights.',
         ],
       },
@@ -604,7 +604,7 @@ export const blogPostsData = {
     ],
     faq: [
       { q: 'How many meals a day should I plan for weight loss?', a: 'Three main meals (breakfast, lunch, dinner) with one or two snacks works well for most people. This structure distributes protein across the day and prevents the extreme hunger that leads to overeating. Meal frequency itself does not directly affect weight loss — total daily calories do.' },
-      { q: 'How long does meal prep last in the fridge?', a: 'Properly stored cooked meals last 4–5 days in a sealed container at below 5°C. Batch cooking on Sunday covers Monday through Friday. Freeze anything you will not eat by Thursday — cooked chicken, rice, and stews all freeze well.' },
+      { q: 'How long does meal prep last in the fridge?', a: 'For UK food-safety guidance, eat cooked leftovers kept in the fridge within 2 days, and use cooked rice within about 24 hours. A Sunday cook can still cover a working week if you refrigerate the first couple of days and freeze later portions.' },
       { q: 'How much does meal planning save per week?', a: 'Replacing five bought lunches (£5–7 each) with home-prepared equivalents (£1.20–1.80 each) saves £15–25 per week — over £1,000 per year. Planning dinners reduces food waste and impulse takeaway spending by an estimated £20–40 per month.' },
     ],
   },
@@ -696,7 +696,7 @@ export const blogPostsData = {
       {
         h2: 'Why Protein Matters on a Budget Diet',
         paragraphs: [
-          'Protein is the most important macronutrient for body composition. It preserves muscle mass during a calorie deficit, keeps you full for longer than carbohydrates or fat, and has the highest thermic effect — meaning your body burns roughly 25–30% of protein calories just digesting it. For weight loss or muscle gain, aiming for 1.6–2.2 g of protein per kilogram of bodyweight is backed by strong research evidence.',
+          'Protein is the most important macronutrient for body composition. It helps preserve muscle mass during a calorie deficit, keeps you full for longer than carbohydrates or fat, and has the highest thermic effect — meaning your body burns roughly 25–30% of protein calories just digesting it. For weight loss or muscle gain, aiming for roughly 1.6–2.2 g of protein per kilogram of bodyweight is a common sports-nutrition planning range, but individual needs vary.',
           'The challenge is that many high-protein foods — premium steak, smoked salmon, protein bars — are expensive. But UK supermarkets stock a surprising range of genuinely cheap protein sources that rival expensive options on a per-gram basis. The key is knowing which items to look for.',
         ],
       },
@@ -1074,7 +1074,7 @@ export const blogPostsData = {
     ],
     faq: [
       { q: 'Should I eat 1500 or 1800 calories to lose weight?', a: 'It depends on your TDEE. A 1,500 calorie target suits lighter or less active adults whose TDEE is around 1,900–2,100 kcal. A 1,800 calorie target is more appropriate for most moderately active adults. Both create a meaningful deficit — the key is which feels sustainable for you long-term.' },
-      { q: 'Is 1200 calories too low to lose weight safely?', a: '1,200 calories is below the NHS minimum recommendation for most adults (1,400 kcal for women, 1,600 kcal for men). While it will produce rapid weight loss, it is very difficult to sustain, often leads to muscle loss and nutrient deficiencies, and frequently results in weight regain when stopped.' },
+      { q: 'Is 1200 calories too low to lose weight safely?', a: 'For many adults, 1,200 calories is lower than the NHS-style average reducing targets of about 1,400 kcal for women and 1,900 kcal for men. It may produce rapid weight loss, but it is difficult to sustain and can increase the risk of muscle loss, nutrient gaps and rebound weight gain.' },
       { q: 'How quickly will I lose weight on 1500 calories?', a: 'For a woman with a TDEE of 2,100 kcal, eating 1,500 calories creates a 600-calorie deficit — resulting in roughly 0.5 kg of fat loss per week, or 2 kg per month. Men with higher TDEEs will lose weight faster at the same calorie target.' },
     ],
   },
@@ -1095,15 +1095,15 @@ export const blogPostsData = {
       {
         h2: 'The Research-Backed Protein Targets',
         paragraphs: [
-          'Current evidence supports a protein intake of 1.6–2.2 g per kilogram of bodyweight per day for people dieting while trying to preserve muscle mass. The higher end of this range (2.0–2.4 g/kg) is most relevant for people who do resistance training — lifting weights or performing bodyweight exercises regularly — as they have a greater stimulus for muscle protein synthesis.',
+          'For active people dieting while trying to preserve muscle mass, many sports-nutrition plans use about 1.6–2.2 g of protein per kilogram of bodyweight per day. The higher end is most relevant for people who do resistance training — lifting weights or performing bodyweight exercises regularly — while general health protein needs are lower.',
           'For a 70 kg woman dieting at 1,800 calories per day: 1.6 g/kg = 112 g protein per day (minimum); 2.2 g/kg = 154 g protein per day (optimal). For a 90 kg man dieting at 2,200 calories per day: 1.6 g/kg = 144 g protein; 2.2 g/kg = 198 g protein. These ranges may seem high if you are used to general health recommendations (which are lower), but they are specifically designed for body recomposition — not just survival.',
         ],
       },
       {
         h2: 'Is It Possible to Eat Too Much Protein?',
         paragraphs: [
-          'For healthy adults without pre-existing kidney disease, the evidence does not support concerns about high protein intake causing harm. Studies in healthy adults consuming up to 3.4 g/kg per day found no adverse kidney, bone, or liver effects. The practical concern is that very high protein intakes leave less room for carbohydrates and fats, which can make the diet less enjoyable and harder to sustain.',
-          'A sensible upper target is 2.2–2.4 g per kilogram of bodyweight. Above this level, additional protein provides minimal additional muscle preservation benefit and simply displaces other foods without adding value.',
+          'For people without kidney disease, higher-protein diets are not usually treated as a kidney-safety concern, but that does not make very high intakes automatically better. People with kidney disease, reduced kidney function, diabetes, pregnancy, eating-disorder history, or clinical dietary needs should get individual advice before increasing protein.',
+          'A sensible planning ceiling for most readers is the lowest intake that supports satiety and training, often around 1.6–2.2 g per kilogram rather than pushing above it. Above that level, additional protein often displaces carbohydrates, fats and fibre-rich foods without adding much practical value.',
         ],
       },
       {
@@ -1142,7 +1142,7 @@ export const blogPostsData = {
       { slug: 'aldi-budget-bodybuilding-2000', label: 'Budget Bodybuilding Meal Plan', type: 'plan' },
     ],
     faq: [
-      { q: 'How much protein should I eat per day to lose fat?', a: 'For fat loss while preserving muscle, 1.6–2.2 g of protein per kg of body weight per day is recommended. A 75 kg person needs 120–165 g of protein daily. Higher intakes (2.0–2.4 g/kg) are appropriate when also doing resistance training.' },
+      { q: 'How much protein should I eat per day to lose fat?', a: 'For fat loss while preserving muscle, many active adults use 1.6–2.2 g of protein per kg of body weight per day. A 75 kg person would plan roughly 120–165 g daily. Use the higher end mainly when also doing regular resistance training.' },
       { q: 'Does eating more protein really help with weight loss?', a: 'Yes. Multiple randomised controlled trials show that increasing protein to 30% of total calories reduces daily calorie intake by an average of 400–440 calories without conscious restriction — because protein is significantly more satiating than carbohydrates or fat.' },
       { q: 'When is the best time to eat protein?', a: 'Total daily protein intake matters more than timing. Distributing protein across 3–4 meals (30–50g per meal) optimises muscle protein synthesis throughout the day. Consuming 30–40g within two hours of resistance training is beneficial for muscle repair and growth.' },
     ],
@@ -1265,7 +1265,7 @@ export const blogPostsData = {
           'A calorie deficit is the difference between your TDEE and your chosen eating target. The size of the deficit determines how fast you lose weight — but larger deficits are not always better.',
           'A deficit of 300–500 calories per day is considered moderate and sustainable. This produces weight loss of approximately 0.3–0.5 kg per week, or 1.5–2 kg per month. This pace is sustainable for most people because it is aggressive enough to produce visible results while not so extreme that it causes constant hunger, fatigue, or nutrient deficiencies.',
           'A smaller deficit of 100–200 calories per day may feel more sustainable but produces very slow results (0.1–0.2 kg per week) that are easily undone by a single high-calorie day. Conversely, a deficit of 750–1,000+ calories per day accelerates weight loss but significantly increases the risk of muscle loss, nutrient deficiencies, extreme hunger, and metabolic adaptation — making the diet unsustainable and counterproductive long-term.',
-          'The NHS recommends a deficit of no more than 600 calories per day for safe, sustainable weight loss. This translates to a maximum daily reduction of about 600 kcal below TDEE, meaning no fewer than approximately 1,400 kcal per day for most women and 1,600 kcal per day for most men.',
+          'NHS weight-loss guidance uses a reduction of around 600 calories per day as a practical example for steady weight loss. For average intakes, that translates to about 1,400 kcal per day for women and about 1,900 kcal per day for men, but it is not a personalised medical prescription.',
         ],
       },
       {
@@ -1275,7 +1275,7 @@ export const blogPostsData = {
           '1,740 kcal per day (500 calorie deficit) → 0.5 kg per week → 2 kg per month',
           '1,890 kcal per day (350 calorie deficit) → 0.35 kg per week → 1.4 kg per month',
           '1,990 kcal per day (250 calorie deficit) → 0.25 kg per week → 1 kg per month',
-          'Faster weight loss is tempting, but a deficit larger than 500 kcal per day should only be pursued under medical supervision. For sustainable weight loss that you can maintain long-term, aim for the middle ground: a 300–500 calorie deficit that produces 0.3–0.5 kg of weight loss per week.',
+          'Faster weight loss is tempting, but larger deficits get harder to sustain and can increase the risk of muscle loss, fatigue and nutrient gaps. For sustainable weight loss that you can maintain long-term, aim for the middle ground: a 300–500 calorie deficit that produces roughly 0.3–0.5 kg of weight loss per week.',
         ],
       },
       {
@@ -1367,14 +1367,14 @@ export const blogPostsData = {
       {
         h2: 'How Fast Can You Safely Lose Weight?',
         paragraphs: [
-          'The maximum safe rate of fat loss recommended by NHS guidelines is approximately 0.5–1 kg per week. This requires a calorie deficit of 500–1,000 calories per day. At this pace, a person can lose 2–4 kg per month — visible, meaningful progress.',
+          'NHS weight-loss guidance suggests aiming to lose around 0.5–1 kg per week. In practice, many people do better starting with a moderate deficit and adjusting from their actual weight trend rather than jumping straight to the most aggressive end of that range.',
           'Faster weight loss is possible but comes at a cost. Losing more than 1 kg per week almost always involves significant muscle loss alongside fat, which slows your metabolism and makes it harder to maintain the weight loss. It also typically requires extreme calorie restriction (below 1,200 kcal/day) which leads to nutrient deficiencies, fatigue, and severe hunger that causes most people to abandon the diet within weeks.',
-          'The most effective "fast" weight loss is therefore the maximum sustainable rate: a 500–750 calorie deficit per day, achieved primarily through a high-protein diet that prevents muscle loss and manages hunger.',
+          'The most effective "fast" weight loss is therefore the fastest rate you can sustain without feeling drained: often a moderate calorie deficit, enough protein to support muscle retention, and meals that manage hunger.',
         ],
         bullets: [
           '0.5 kg/week: 500 calorie daily deficit — safe, sustainable, achievable for almost anyone.',
-          '0.75 kg/week: 750 calorie daily deficit — aggressive but manageable with high protein intake.',
-          '1 kg/week: 1,000 calorie daily deficit — the NHS maximum; challenging to sustain long-term.',
+          '0.75 kg/week: often requires a larger daily deficit and is more demanding to sustain.',
+          '1 kg/week: the upper end of the NHS weekly-loss range; challenging to sustain long-term and not automatically appropriate for every body size.',
           'Over 1 kg/week: Involves muscle loss; not recommended without medical supervision.',
         ],
       },
@@ -1451,8 +1451,8 @@ export const blogPostsData = {
       { slug: 'aldi-high-protein-low-cal-1500', label: 'High Protein Low Cal Meal Plan', type: 'plan' },
     ],
     faq: [
-      { q: 'How fast is it safe to lose weight in the UK?', a: 'The NHS recommends losing no more than 0.5–1 kg per week. This requires a daily deficit of 500–1,000 calories. Faster weight loss is possible but typically involves significant muscle loss alongside fat, which slows metabolism and makes the loss harder to maintain.' },
-      { q: 'What is the fastest way to lose weight without losing muscle?', a: 'The most effective combination is a moderate calorie deficit (500–750 kcal below TDEE) + high protein intake (2.0–2.4 g/kg body weight) + consistent resistance training 3–4 times per week. Protein preserves muscle while the deficit burns fat.' },
+      { q: 'How fast is it safe to lose weight in the UK?', a: 'NHS guidance suggests aiming for around 0.5–1 kg per week. The right daily deficit depends on your TDEE, body size, activity and health status; faster loss is harder to sustain and can increase muscle-loss risk.' },
+      { q: 'What is the fastest way to lose weight without losing muscle?', a: 'A practical combination is a moderate calorie deficit, enough protein to support muscle retention, and consistent resistance training 3–4 times per week. Many active adults use about 1.6–2.2 g/kg protein rather than pushing higher by default.' },
       { q: 'Do crash diets work for fast weight loss?', a: 'Crash diets (under 1,200 kcal/day) do produce rapid initial weight loss but most of it is water and muscle rather than fat. The rapid weight loss is almost always followed by rapid weight regain when the diet ends. A 500-calorie daily deficit with high protein produces slower but real and sustainable fat loss.' },
     ],
   },
@@ -1462,7 +1462,7 @@ export const blogPostsData = {
     title: 'Meal Prep for Beginners UK: How to Start & Save £100',
     description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Generate a free meal plan.',
     h1: 'Meal Prep for Beginners UK — How to Start and Save Money on Food',
-    intro: "Meal prep is the single most effective habit for eating healthily and saving money in the UK. Spending two to three hours cooking on a Sunday gives you a full week of ready-to-eat meals, eliminating the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
+    intro: "Meal prep is the single most effective habit for eating healthily and saving money in the UK. Spending two to three hours cooking on a Sunday can set up the week, with the first couple of days kept chilled and later portions frozen, reducing the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
     affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
     productRecommendations: {
       title: 'Containers to start with',
@@ -1498,15 +1498,15 @@ export const blogPostsData = {
       {
         h2: 'The Best Foods to Meal Prep as a Beginner',
         paragraphs: [
-          'Some foods meal prep far better than others. The best beginner meal prep foods are those that reheat well, last 4–5 days refrigerated, and are calorie- and protein-dense relative to their cost. Start with these staples and you will have the foundation for almost any meal.',
+          'Some foods meal prep far better than others. The best beginner meal prep foods are those that reheat well, freeze well for later-week portions, and are calorie- and protein-dense relative to their cost. Start with these staples and you will have the foundation for almost any meal.',
         ],
         bullets: [
-          'Chicken breast — batch-poach or roast 1 kg at 200°C for 25 minutes. Use in salads, wraps, rice bowls, or pasta across the week. Lasts 4 days in the fridge.',
-          'Brown rice — cook 500 g dry weight (makes about 1.2 kg cooked). Portion into 150–200 g servings. Lasts 4 days refrigerated, reheats in 2 minutes.',
+          'Chicken breast — batch-poach or roast 1 kg at 200°C for 25 minutes. Use chilled portions within 2 days and freeze later-week portions.',
+          'Brown rice — cook 500 g dry weight (makes about 1.2 kg cooked). Cool quickly, portion into 150–200 g servings, refrigerate promptly, and use chilled rice within about 24 hours.',
           'Oats — rolled oats prepared as overnight oats the night before take 2 minutes. No cooking required — mix oats, milk, and Greek yogurt in a jar before bed.',
-          'Boiled eggs — hard-boil 8–10 eggs at once. Store in the shell in the fridge for up to a week. Peeled eggs last 5 days in a sealed container.',
+          'Boiled eggs — hard-boil a smaller batch and keep chilled; for this plan, use within 2 days or cook a second batch midweek.',
           'Roasted vegetables — toss mixed peppers, courgette, broccoli, and sweet potato in olive oil spray and roast at 200°C for 25 minutes. Add to any meal throughout the week.',
-          'Lentil or bean dishes — dahl, chilli, or bean stew keeps 5 days in the fridge and improves with time. Cheap, high-protein, and filling.',
+          'Lentil or bean dishes — dahl, chilli, or bean stew keeps well for the next couple of days; freeze later portions. Cheap, high-protein, and filling.',
         ],
       },
       {
@@ -1527,16 +1527,16 @@ export const blogPostsData = {
       {
         h2: 'How Long Does Meal-Prepped Food Last?',
         paragraphs: [
-          'Properly stored in sealed containers in the fridge at or below 5°C, most cooked meal prep food lasts 4–5 days. This means a Sunday cook covers Monday through Thursday or Friday — perfect for a working week.',
-          'If you want to prep further ahead, most cooked proteins, grains, and vegetables freeze excellently. Portion chicken and rice into individual containers and freeze on Sunday; defrost in the fridge overnight on Wednesday for Thursday or Friday meals. This strategy lets you batch cook less frequently and always have a meal available.',
+          'For UK food-safety guidance, cooked leftovers kept in the fridge should be eaten within 2 days, while cooked rice is best cooled quickly, refrigerated promptly, and used within about 24 hours. A Sunday cook can still cover the working week if you chill the first couple of days and freeze later portions straight after cooking.',
+          'Most cooked proteins, grains, soups and vegetables freeze well. Portion chicken, stews and vegetable mixes into individual containers and freeze on Sunday; defrost in the fridge overnight for later-week meals. This strategy lets you batch cook less frequently without relying on long fridge storage.',
         ],
         bullets: [
-          'Cooked chicken breast: 4 days fridge, 3 months freezer.',
-          'Cooked brown rice: 4 days fridge, 1 month freezer (reheat from frozen with a splash of water).',
-          'Roasted vegetables: 4 days fridge, 2 months freezer.',
-          'Hard-boiled eggs (in shell): 7 days fridge. Do not freeze.',
-          'Overnight oats: 3–4 days fridge. Do not freeze.',
-          'Bean/lentil stew or chilli: 5 days fridge, 3 months freezer.',
+          'Cooked chicken breast: eat refrigerated portions within 2 days, freeze later portions.',
+          'Cooked brown rice: cool quickly, refrigerate promptly, use chilled rice within about 24 hours, and reheat once until steaming hot.',
+          'Roasted vegetables: eat within 2 days or freeze later portions.',
+          'Hard-boiled eggs: keep chilled and use within 2 days for this plan, or cook a second batch midweek.',
+          'Overnight oats: keep sealed and chilled, and use within 2 days for best quality.',
+          'Bean/lentil stew or chilli: eat within 2 days or freeze later portions.',
         ],
       },
       {
@@ -2130,7 +2130,7 @@ export const blogPostsData = {
       {
         h2: 'A Sample Vegetarian Meal Prep Week',
         paragraphs: [
-          'Sunday batch-cook plan (under 2 hours): Prepare 5 overnight oat jars (oats + skimmed milk + Greek yogurt + mixed berries). Hard-boil 10 eggs. Make a large roasted vegetable and chickpea tray bake (courgette, peppers, red onion, tinned chickpeas, olive oil, cumin — roast 35 min at 200°C, makes 5 portions). Cook 400 g dry brown rice. Slice and marinate firm tofu.',
+          'Sunday batch-cook plan (under 2 hours): Prepare overnight oat jars for the next couple of breakfasts. Hard-boil a small batch of eggs. Make a roasted vegetable and chickpea tray bake (courgette, peppers, red onion, tinned chickpeas, olive oil, cumin — roast 35 min at 200°C, makes several portions). Cook rice for the first day or two, or cool and freeze later portions promptly. Slice and marinate firm tofu.',
           'Daily structure: Breakfast — overnight oats with Greek yogurt and berries (~30 g protein, 400 kcal). Lunch — tray bake with 2 boiled eggs and a large salad (~35 g protein, 450 kcal). Dinner — scrambled tofu with brown rice, spinach, and turmeric (~28 g protein, 500 kcal). Snack — cottage cheese with cucumber and oatcakes (~22 g protein, 200 kcal). Total: ~115 g protein, ~1,550 kcal.',
         ],
       },
@@ -2256,7 +2256,7 @@ export const blogPostsData = {
       {
         h2: 'Protein: The Most Important Cutting Variable',
         paragraphs: [
-          'Protein intake during a cut should be higher than during maintenance or building — not lower. The research supports 2.0–2.4 g of protein per kg of body weight during a calorie deficit to maximise muscle retention. For an 85 kg man, that means 170–200 g of protein per day.',
+          'Protein intake during a cut is often higher than during maintenance or building — not lower. Many active adults use about 1.6–2.2 g of protein per kg of body weight during a calorie deficit to support muscle retention. For an 85 kg man, that means roughly 135–185 g of protein per day.',
           'This high protein intake serves two purposes: it signals the body to preserve muscle tissue even when energy is scarce, and it is the most satiating macronutrient — making the deficit far easier to sustain. At 1,600–2,000 kcal per day with 170+ g of protein, there is limited room for fat and carbohydrate — which is why cutting diets tend to be lean and precise.',
         ],
       },
@@ -2290,9 +2290,9 @@ export const blogPostsData = {
       { slug: '1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories', type: 'blog' },
     ],
     faq: [
-      { q: 'How many calories should I eat on a cutting phase?', a: 'A cutting deficit of 500–700 kcal per day below your TDEE is appropriate. For most men this means 1,800–2,200 kcal/day; for most women, 1,300–1,600 kcal/day. Protein should be 2.0–2.4g/kg body weight — higher than maintenance to maximise muscle retention during the deficit.' },
+      { q: 'How many calories should I eat on a cutting phase?', a: 'A cutting deficit of around 300–700 kcal per day below your TDEE is a common range, with the larger end harder to sustain. Protein is often set around 1.6–2.2g/kg body weight for active adults trying to retain muscle during the deficit.' },
       { q: 'How long should a cutting phase last?', a: 'Most people cut effectively for 8–16 weeks before diet fatigue, metabolic adaptation, or reduced training performance makes a diet break necessary. After a cut, 2–4 weeks at maintenance calories (a "reverse diet") before bulking again helps restore hormonal balance and training capacity.' },
-      { q: 'Will I lose muscle on a cut?', a: 'Some muscle loss is possible but largely preventable. The keys are: high protein intake (2.0–2.4g/kg/day), continuing resistance training throughout the cut, avoiding a deficit larger than 700–750 kcal/day, and not reducing training weight too aggressively. With these in place, most people retain the majority of their muscle during a 8–16 week cut.' },
+      { q: 'Will I lose muscle on a cut?', a: 'Some muscle loss is possible but largely preventable. The keys are enough protein, continuing resistance training throughout the cut, avoiding an unsustainably large deficit, and not reducing training weight too aggressively. With these in place, many people retain most of their muscle during an 8–16 week cut.' },
     ],
   },
 
@@ -2300,9 +2300,9 @@ export const blogPostsData = {
     published: '2026-05-30',
     modified: '2026-07-06',
     title: 'Batch Cooking for Beginners UK: 5 Meals in 2 Hours',
-    description: 'Batch cooking for beginners UK — a step-by-step 2-hour Sunday cook that produces 5 days of healthy, high-protein meals. Shopping list, timings, and storage tips included.',
+    description: 'Batch cooking for beginners UK — a step-by-step 2-hour Sunday cook that sets up five healthy, high-protein meals with fridge and freezer storage. Shopping list, timings, and storage tips included.',
     h1: 'Batch Cooking for Beginners UK: 5 High-Protein Meals in 2 Hours',
-    intro: 'Batch cooking is the single most effective habit for eating well during a busy week. Two hours on a Sunday produces five days of ready-to-eat meals that cost a fraction of takeaways and meal deals — eliminating the daily temptation of unhealthy options when you are tired and hungry. This guide walks a complete beginner through a structured Sunday batch-cook session that produces five high-protein lunches and dinners for under £30.',
+    intro: 'Batch cooking is the single most effective habit for eating well during a busy week. Two hours on a Sunday can set up five ready-to-eat meals that cost a fraction of takeaways and meal deals — with the first couple of days kept chilled and later portions frozen. This guide walks a complete beginner through a structured Sunday batch-cook session that produces five high-protein lunches and dinners for under £30.',
     affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
     productRecommendations: {
       title: 'Containers for the session above',
@@ -2350,8 +2350,8 @@ export const blogPostsData = {
       {
         h2: 'Storage and Food Safety',
         paragraphs: [
-          'Properly stored in sealed containers at or below 5°C, the meals above last 4–5 days. Sunday cook covers Monday through Friday — a full working week. Cool food to room temperature before sealing and refrigerating (no longer than 1 hour out of the oven or hob). Do not refrigerate food that is still steaming — this raises the internal fridge temperature and risks other food.',
-          'Freeze what you will not eat by Thursday. Cooked chicken and rice freeze well — portion into individual containers and freeze on Sunday for use later in the week or the following week. Defrost in the fridge overnight.',
+          'For UK food-safety guidance, cooked leftovers kept in the fridge should be eaten within 2 days. Cooked rice is stricter: cool it quickly, refrigerate promptly, use it within about 24 hours, and reheat it once until steaming hot. Do not leave food sitting at room temperature for more than 1–2 hours.',
+          'Freeze later-week portions straight after cooking and cooling. Cooked chicken, stews and many vegetable mixes freeze well; portion into individual containers on Sunday for use later in the week or the following week. Defrost in the fridge overnight.',
         ],
       },
       {
@@ -2373,8 +2373,8 @@ export const blogPostsData = {
       { slug: 'aldi-busy-professional-1800', label: 'Aldi Busy Professional Plan', type: 'plan' },
     ],
     faq: [
-      { q: 'How long does batch-cooked food last in the fridge?', a: 'Properly stored in sealed containers at below 5°C: cooked chicken breast lasts 4 days, brown rice lasts 4 days, roasted vegetables last 4–5 days, hard-boiled eggs (in shell) last 7 days, overnight oats last 3–4 days, and bean/lentil stew lasts 5 days. Freeze anything you will not eat by Thursday.' },
-      { q: 'What is the best food to batch cook?', a: 'The best batch-cook foods reheat well and last 4–5 days: chicken breast (bake at 200°C for 25–30 min, use cold or reheated), brown rice (cook in bulk, portion immediately), hard-boiled eggs (store in shell), roasted vegetables (peppers, broccoli, courgette, sweet potato), and lentil or bean stews and soups.' },
+      { q: 'How long does batch-cooked food last in the fridge?', a: 'For UK food-safety guidance, eat cooked leftovers kept in the fridge within 2 days, and use cooked rice within about 24 hours. Freeze later-week portions rather than holding a full working week in the fridge.' },
+      { q: 'What is the best food to batch cook?', a: 'The best batch-cook foods reheat well and freeze well: chicken breast, stews, chilli, soups, roasted vegetables, lentils and bean dishes. Cook rice in smaller batches or cool it quickly and use chilled rice within about 24 hours.' },
       { q: 'How much does a week of batch cooking cost?', a: 'A batch cook based on chicken, rice, eggs, frozen veg, and tinned chickpeas costs approximately £10–15 for the protein and carb components at Aldi. Including dairy (Greek yogurt, cottage cheese) and fresh vegetables brings a full week to £23–28 — covering all main meals for under £1 per meal.' },
     ],
   },
@@ -2774,7 +2774,7 @@ export const blogPostsData = {
       {
         h2: 'Container Features to Look For',
         paragraphs: [
-          'Airtight seal: the most important feature for keeping food fresh for 5 days. Test by filling with water and inverting — a good lid will not leak. Clip-lock lids or silicone seal rings provide the most reliable seal.',
+          'Airtight seal: the most important feature for short fridge storage and freezer prep. Test by filling with water and inverting — a good lid will not leak. Clip-lock lids or silicone seal rings provide the most reliable seal.',
           'Microwave safe: essential for reheating at work. Most glass containers are microwave safe without the lid. Check the bottom of plastic containers for the microwave symbol (wavy lines). Remove metal clips or inserts before microwaving.',
           'Stackable: particularly important for fridge storage. Rectangular containers stack far more efficiently than round ones — rectangular is always the better choice for meal prep.',
           'Dishwasher safe: a non-negotiable for anyone doing consistent meal prep. Hand-washing 10 containers per week is time-consuming. All glass containers and most quality plastic containers are dishwasher safe.',

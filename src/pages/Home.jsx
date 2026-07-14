@@ -284,7 +284,7 @@ export default function Home() {
             Eat well this week without the guesswork.
           </h1>
           <p className="home-hero-sub">
-            A quiet, considered meal planner. Tell us your goal, budget and supermarket; we return a ready-made 7-day plan and a shopping list, priced to the pound.
+            A quiet, considered meal planner. Tell us your goal, budget and supermarket; we return a ready-made 7-day plan and a shopping list with practical UK cost estimates.
           </p>
           <div className="home-hero-actions">
             <Link to="/quiz" className="btn-hero-primary">
@@ -297,7 +297,7 @@ export default function Home() {
           <div className="trust-row">
             <span className="trust-badge"><strong>1,000+</strong> ready-made plans</span>
             <span className="trust-badge"><strong>11</strong> supermarkets</span>
-            <span className="trust-badge"><strong>£31</strong> avg weekly cost</span>
+            <span className="trust-badge"><strong>£31</strong> typical estimate</span>
             <span className="trust-badge"><strong>2 min</strong> to your match</span>
           </div>
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />

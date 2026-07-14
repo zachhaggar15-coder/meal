@@ -49,7 +49,7 @@ export const blogPostsBatch5Data = {
     h1: 'Slow Cooker Meal Prep UK',
     intro: 'A slow cooker turns a couple of hours of hands-off cooking into most of a week of meals, which makes it one of the most efficient tools for batch cooking. This guide covers what actually works well slow-cooked, how the settings translate to timing, and how to portion the result for the fridge and freezer.',
     quickAnswer: {
-      answer: 'Stews, curries, chilli, pulled meat, ragu and bean-based dishes all batch cook well in a slow cooker. Cook on low for 6-8 hours or high for 3-4 hours, cool the finished batch before portioning, then split into meal-sized containers for the fridge (3-4 days) or freezer (up to 3 months).',
+      answer: 'Stews, curries, chilli, pulled meat, ragu and bean-based dishes all batch cook well in a slow cooker. Cook on low for 6-8 hours or high for 3-4 hours, cool the finished batch promptly, then split into meal-sized containers for the first couple of fridge days and the freezer for later portions.',
       links: [
         { label: 'Read the batch cooking basics guide', to: '/blog/batch-cooking-for-beginners-uk' },
         { label: 'See freezer meal prep for beginners', to: '/blog/freezer-meal-prep-for-beginners-uk' },
@@ -89,7 +89,7 @@ export const blogPostsBatch5Data = {
       {
         h2: 'Portioning and freezing after slow cooking',
         paragraphs: [
-          'Let the finished batch cool for around 30-45 minutes at room temperature before portioning, rather than leaving a full pot to cool slowly overnight, which increases the time food spends in the temperature range bacteria multiply fastest in. Divide into meal-sized containers once cooled, then refrigerate what you will eat within 3-4 days and freeze the rest.',
+          'Let the finished batch cool quickly before portioning, rather than leaving a full pot to cool slowly overnight, which increases the time food spends in the temperature range bacteria multiply fastest in. Divide into meal-sized containers, refrigerate what you will eat within 2 days, and freeze the rest.',
           'Leave headspace in any container you are freezing, since liquid-heavy dishes like stews and curries expand as they freeze.',
         ],
       },
@@ -114,18 +114,18 @@ export const blogPostsBatch5Data = {
     faq: [
       { q: 'Can you leave a slow cooker on all day while at work?', a: 'Yes, this is one of the main reasons people use a slow cooker for meal prep. On the low setting, most dishes are designed to run for 6-8 hours safely.' },
       { q: 'Do you need to brown meat before slow cooking it?', a: 'No, but it adds noticeable flavour depth. If you are short on time, skipping it still produces a good result, just slightly less rich.' },
-      { q: 'How long does slow cooker food keep in the fridge?', a: 'Generally 3-4 days once cooled and refrigerated promptly. For longer storage, portion and freeze the rest straight after cooking.' },
+      { q: 'How long does slow cooker food keep in the fridge?', a: 'For UK food-safety guidance, eat cooked leftovers kept in the fridge within 2 days. For longer storage, portion and freeze the rest straight after cooking and cooling.' },
     ],
   }),
 
   // ── 2. Rice cooker ────────────────────────────────────────────────────────
   'rice-cooker-meal-prep-uk': toolPost({
     title: 'Rice Cooker Meal Prep UK: Batch Cooking Rice the Easy Way',
-    description: 'Rice cooker meal prep UK: how much rice to batch cook for a week, which rice types work best, and how to cool and store rice safely.',
+    description: 'Rice cooker meal prep UK: how much rice to cook for meal prep, which rice types work best, and how to cool and store rice safely.',
     h1: 'Rice Cooker Meal Prep UK',
     intro: 'A dedicated rice cooker removes the guesswork of cooking rice on the hob, produces a consistent result every time, and frees up a hob ring while you cook everything else. This guide covers how much to batch, which rice types behave differently, and the food safety side that matters more with rice than almost any other meal prep staple.',
     quickAnswer: {
-      answer: 'A rice cooker with a 1-1.5kg capacity is enough for a week of rice for one to two people. Cook the full batch in one go, spread it out to cool quickly rather than leaving it in the cooker, then refrigerate within an hour and use within 24 hours for the safest results.',
+      answer: 'A rice cooker with a 1-1.5kg capacity is more than enough for one or two days of rice for one to two people. Cook only what you will use soon, spread it out to cool quickly rather than leaving it in the cooker, then refrigerate within an hour and use within 24 hours for the safest results.',
       links: [
         { label: 'Read chicken and rice meal prep in full', to: '/blog/chicken-and-rice-meal-prep-uk' },
         { label: 'See the batch cooking basics guide', to: '/blog/batch-cooking-for-beginners-uk' },
@@ -139,9 +139,9 @@ export const blogPostsBatch5Data = {
         ],
       },
       {
-        h2: 'How much rice to batch cook for a week',
+        h2: 'How much rice to batch cook',
         paragraphs: [
-          'A realistic portion is around 60-75g of uncooked rice per meal, which expands to roughly 150-180g cooked. For five meals across a week, that means batching around 300-375g of uncooked rice in one go, well within the capacity of most standard rice cookers.',
+          'A realistic portion is around 60-75g of uncooked rice per meal, which expands to roughly 150-180g cooked. For food safety and texture, cook one or two days at a time, or cool and freeze later portions promptly rather than keeping a week of cooked rice in the fridge.',
         ],
       },
       {
@@ -390,9 +390,9 @@ export const blogPostsBatch5Data = {
   // ── 6. Cookbooks ──────────────────────────────────────────────────────────
   'best-meal-prep-cookbooks-uk': toolPost({
     title: 'Best Meal Prep Cookbooks UK',
-    description: 'Best meal prep cookbooks UK: real, currently available titles for batch cooking, freezer meals and family-friendly meal prep, with practical notes on each.',
+    description: 'Best meal prep cookbooks UK: real UK titles for batch cooking, freezer meals and family-friendly meal prep, with practical notes on each. Check live availability before buying.',
     h1: 'Best Meal Prep Cookbooks UK',
-    intro: 'A good meal prep cookbook does more than provide recipes; it teaches a system for cooking once and eating multiple times. These are genuine, currently available UK titles rather than a generic list, with notes on who each one actually suits.',
+    intro: 'A good meal prep cookbook does more than provide recipes; it teaches a system for cooking once and eating multiple times. These are genuine UK titles rather than a generic list, with notes on who each one actually suits; check current availability before buying.',
     quickAnswer: {
       answer: 'For UK batch cooking built around a clear system, The Batch Lady\'s books are the most purpose-built option. For a broader "cook once, eat twice" approach to weeknight cooking, Nadiya Hussain\'s Cook Once, Eat Twice is a strong choice with wide supermarket ingredient availability.',
       links: [
@@ -428,7 +428,7 @@ export const blogPostsBatch5Data = {
     ],
     toolRecommendations: {
       title: 'Meal prep cookbooks worth considering',
-      intro: 'Real, currently available UK titles.',
+      intro: 'Known UK titles; check current availability before buying.',
       productIds: ['batch-lady-grab-and-cook', 'nadiya-cook-once-eat-twice', 'batch-lady-healthy-family'],
     },
     related: [

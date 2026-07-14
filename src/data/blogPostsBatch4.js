@@ -304,12 +304,12 @@ export const blogPostsBatch4Data = {
       {
         h2: 'Best container types for soup',
         paragraphs: [
-          'For fridge storage eaten within a few days, round deli-style tubs with twist lids are a practical, inexpensive choice. For longer freezer storage, rigid rectangular containers stack more efficiently and are less likely to crack under freezer pressure than very thin tubs.',
+          'For fridge storage eaten within the next couple of days, round deli-style tubs with twist lids are a practical, inexpensive choice. For longer freezer storage, rigid rectangular containers stack more efficiently and are less likely to crack under freezer pressure than very thin tubs.',
         ],
         table: {
           headers: ['Container type', 'Best for', 'Watch-out'],
           rows: [
-            ['Twist-lid deli tubs', 'Fridge storage, 3-5 days', 'Round shape uses more fridge space'],
+            ['Twist-lid deli tubs', 'Short fridge storage', 'Round shape uses more fridge space'],
             ['Four-corner clip-lock rectangular', 'Commuting with soup for lunch', 'Costs more than basic tubs'],
             ['Freezer-safe rigid rectangular', 'Batch freezing multiple portions', 'Needs headspace left for expansion'],
             ['Silicone freezer pouches', 'Flat-freezing for space efficiency', 'Less practical for reheating in a microwave'],
@@ -319,7 +319,7 @@ export const blogPostsBatch4Data = {
       {
         h2: 'Freezing soup without cracking the container',
         paragraphs: [
-          'Liquid expands as it freezes, and a fully-filled rigid container is one of the most common reasons meal preppers end up with a cracked tub or a forced-open lid in the freezer. Leave at least 2cm of headspace at the top of any container you plan to freeze soup in, and let soup cool to room temperature before sealing and freezing.',
+          'Liquid expands as it freezes, and a fully-filled rigid container is one of the most common reasons meal preppers end up with a cracked tub or a forced-open lid in the freezer. Leave at least 2cm of headspace at the top of any container you plan to freeze soup in, cool the soup quickly until it is no longer steaming, then seal and freeze.',
           'Portioning soup into single-meal amounts before freezing, rather than one large batch, makes defrosting faster and reduces the temptation to microwave a container that is still partly frozen in the middle.',
         ],
       },
@@ -338,7 +338,7 @@ export const blogPostsBatch4Data = {
     ],
     faq: [
       { q: 'Can you freeze soup in a normal meal prep container?', a: 'Yes, as long as the container is freezer safe and you leave headspace for the liquid to expand. Thin, fully-filled containers are the most common cause of cracking.' },
-      { q: 'How long does soup keep in the fridge after meal prep?', a: 'Most cooked soup keeps safely in the fridge for 3 to 4 days in a sealed container. For longer storage, freeze individual portions instead.' },
+      { q: 'How long does soup keep in the fridge after meal prep?', a: 'For UK food-safety guidance, eat cooked soup kept in the fridge within 2 days. For later in the week, freeze individual portions instead.' },
       { q: 'Why does my soup container leak even with the lid on?', a: 'This is usually a simple snap-on lid rather than a proper seal, or overfilling the container so the lid cannot close flush. A twist-lid or clip-lock container generally resolves it.' },
     ],
   }),
@@ -350,7 +350,7 @@ export const blogPostsBatch4Data = {
     h1: 'Best Meal Prep Containers for Salads UK',
     intro: 'A soggy meal prep salad by Thursday is almost never a container problem on its own — it is usually a layering and moisture problem that the wrong container makes worse. This guide covers both: which container shape actually helps, and the layering method that keeps salad crisp for most of the week.',
     quickAnswer: {
-      answer: 'Use a wide, shallow rectangular container rather than a deep round tub, and store dressing separately or at the very bottom under sturdy ingredients. Layered correctly in the right container, most salads stay crisp for 3 to 4 days.',
+      answer: 'Use a wide, shallow rectangular container rather than a deep round tub, and store dressing separately or at the very bottom under sturdy ingredients. Layered correctly in the right container, robust salads can stay crisp for the next couple of days; add delicate leaves fresh.',
       links: [
         { label: 'See the full container size guide', to: '/blog/meal-prep-container-size-guide' },
         { label: 'Browse low-calorie, high-volume foods', to: '/blog/low-calorie-high-volume-foods-uk' },
@@ -386,7 +386,7 @@ export const blogPostsBatch4Data = {
       {
         h2: 'How long meal prep salads actually keep',
         paragraphs: [
-          'Correctly layered and stored in an airtight container, most robust salads (kale, romaine, cabbage-based slaws) keep well for 3 to 4 days. Delicate leaves like spinach or rocket hold up for less time, closer to 2 to 3 days, and are better added fresh on the day if you are prepping for a full week.',
+          'Correctly layered and stored in an airtight container, most robust salads (kale, romaine, cabbage-based slaws) keep best for the next couple of days. Delicate leaves like spinach or rocket hold up for less time and are better added fresh on the day if you are prepping components for a full week.',
         ],
       },
     ],
@@ -399,7 +399,7 @@ export const blogPostsBatch4Data = {
     faq: [
       { q: 'Should salad dressing go in a separate pot?', a: 'For delicate leaf-heavy salads, yes. For sturdier salads (grain-based, cabbage-based), dressing at the bottom of a layered container works well if you are eating within a few days.' },
       { q: 'What is the best container shape for meal prep salads?', a: 'Wide and shallow rather than deep and round, so ingredients sit in a thinner layer with less weight pressing on delicate leaves.' },
-      { q: 'Can you meal prep salads for a full 5-day week?', a: 'Sturdy salads (kale, cabbage, romaine, grain-based) generally can. Delicate leaves like spinach or rocket are better added fresh on the day rather than prepped a full week ahead.' },
+      { q: 'Can you meal prep salads for a full 5-day week?', a: 'You can prep salad components for a full week, but do not rely on a fully dressed leaf salad staying crisp for five days. Keep sturdy ingredients separate and add delicate leaves or dressing on the day.' },
     ],
   }),
 
@@ -656,19 +656,19 @@ export const blogPostsBatch4Data = {
     ],
     faq: [
       { q: 'Is it safe to reheat chicken and rice meal prep?', a: 'Yes, provided the rice was cooled quickly after cooking, refrigerated promptly, and reheated only once until steaming hot throughout. Avoid reheating the same portion more than once.' },
-      { q: 'How long does chicken and rice meal prep last in the fridge?', a: 'Generally up to 3-4 days for the chicken, but rice is safest used within about 24 hours of cooking due to how bacterial spores can behave in cooked rice left too long.' },
+      { q: 'How long does chicken and rice meal prep last in the fridge?', a: 'For UK food-safety guidance, eat cooked chicken leftovers within 2 days, and use cooked rice within about 24 hours after cooling and refrigerating it promptly.' },
       { q: 'How do I stop chicken and rice meal prep tasting boring?', a: 'Cook the chicken and rice plain in bulk, then vary the sauce, spice mix or vegetables at the point of eating rather than cooking identical flavoured portions for the whole week.' },
     ],
   }),
 
   // ── 10. Overnight oats meal prep ──────────────────────────────────────────
   'overnight-oats-meal-prep-uk': post({
-    title: 'Overnight Oats Meal Prep UK: The Jar Method for a Whole Week',
-    description: 'Overnight oats meal prep UK: the basic ratio, how to batch a week of jars at once, protein-boosting without relying only on powder, and how long they keep.',
+    title: 'Overnight Oats Meal Prep UK: The Jar Method',
+    description: 'Overnight oats meal prep UK: the basic ratio, how to batch a few jars at once, protein-boosting without relying only on powder, and how long they keep.',
     h1: 'Overnight Oats Meal Prep UK',
-    intro: 'Overnight oats are one of the few meal prep breakfasts that genuinely improve with a day or two of sitting rather than degrading, which makes them one of the easiest things to batch a full week at once. This guide covers the basic ratio, how to batch multiple jars efficiently, and how to boost protein without relying entirely on protein powder.',
+    intro: 'Overnight oats are one of the few meal prep breakfasts that genuinely improve with a day or two of sitting rather than degrading, which makes them easy to batch in small runs. This guide covers the basic ratio, how to prep multiple jars efficiently, and how to boost protein without relying entirely on protein powder.',
     quickAnswer: {
-      answer: 'A reliable starting ratio is 40g rolled oats to 100-120ml milk or yogurt-milk mix per jar, left in the fridge overnight. Batch a full week by multiplying the ratio across identical jars in one go, and add fruit or crunchy toppings fresh on the day rather than overnight, since they lose texture if left soaking too long.',
+      answer: 'A reliable starting ratio is 40g rolled oats to 100-120ml milk or yogurt-milk mix per jar, left in the fridge overnight. Prep two or three jars at a time by multiplying the ratio across identical jars, and add fruit or crunchy toppings fresh on the day rather than overnight, since they lose texture if left soaking too long.',
       links: [
         { label: 'See protein without powder options', to: '/blog/protein-meal-prep-without-powder-uk' },
         { label: 'Compare with porridge and yogurt breakfasts', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
@@ -682,12 +682,12 @@ export const blogPostsBatch4Data = {
         ],
       },
       {
-        h2: 'Batching a full week of jars',
+        h2: 'Batching multiple jars',
         paragraphs: [
-          'The efficient way to prep five jars is to make one large mixed batch of oats and liquid in a jug, stir thoroughly, then divide it evenly across jars rather than measuring each jar individually. This takes a similar amount of time to making one jar but produces five.',
+          'The efficient way to prep two or three jars is to make one mixed batch of oats and liquid in a jug, stir thoroughly, then divide it evenly across jars rather than measuring each jar individually. Refresh the batch midweek if you want oats most mornings.',
         ],
         numbered: [
-          'Mix oats and liquid for all portions together in one large jug or bowl',
+          'Mix oats and liquid for two or three portions together in one large jug or bowl',
           'Stir in any base flavourings that keep well overnight (cocoa powder, cinnamon, vanilla)',
           'Divide evenly across jars with lids',
           'Refrigerate overnight',
@@ -713,7 +713,7 @@ export const blogPostsBatch4Data = {
       {
         h2: 'Flavour variations',
         paragraphs: [
-          'Keeping the base ratio the same and rotating flavours is what actually makes overnight oats sustainable across a full week rather than something you get bored of by Tuesday.',
+          'Keeping the base ratio the same and rotating flavours is what actually makes overnight oats sustainable across the week rather than something you get bored of by Tuesday.',
         ],
         bullets: [
           'Cocoa and banana: cocoa powder stirred in overnight, sliced banana added fresh',
@@ -726,7 +726,7 @@ export const blogPostsBatch4Data = {
       {
         h2: 'How long overnight oats keep',
         paragraphs: [
-          'Made with the ratio above and stored sealed in the fridge, overnight oats typically keep well for 3 to 4 days. Add fresh fruit, nuts and seeds on the day you eat each jar rather than at batching time, since soft fruit can turn mushy and nuts can lose their crunch if left soaking for days.',
+          'Made with the ratio above and stored sealed in the fridge, overnight oats are best prepped for the next couple of days. Add fresh fruit, nuts and seeds on the day you eat each jar rather than at batching time, since soft fruit can turn mushy and nuts can lose their crunch if left soaking for days.',
         ],
       },
     ],
@@ -738,7 +738,7 @@ export const blogPostsBatch4Data = {
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
     ],
     faq: [
-      { q: 'How long do overnight oats last in the fridge?', a: 'Typically 3-4 days when stored sealed in the fridge, made with the standard oats-to-liquid ratio. Add fresh toppings like fruit and nuts on the day you eat each portion.' },
+      { q: 'How long do overnight oats last in the fridge?', a: 'For best quality, prep sealed overnight oats for the next couple of days and add fresh toppings like fruit and nuts on the day you eat each portion.' },
       { q: 'Can you make overnight oats without yogurt?', a: 'Yes. Milk or a plant milk alone works fine; yogurt is optional and mainly adds extra protein and a thicker, tangier texture.' },
       { q: 'Do you need protein powder for high protein overnight oats?', a: 'No. Greek yogurt, blended cottage cheese, chia seeds and nut butter can all meaningfully boost protein without using powder.' },
     ],

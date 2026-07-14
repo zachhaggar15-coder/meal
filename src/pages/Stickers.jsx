@@ -28,7 +28,7 @@ export default function Stickers() {
     <>
       <SEO
         title="Glass Meal Prep Containers UK | 10-Pack Airtight Storage"
-        description="Airtight borosilicate glass food containers for UK batch cooking. Fridge, freezer, and microwave safe — 10-pack to cover a full week of portions."
+        description="Airtight borosilicate glass food containers for UK batch cooking. Fridge, freezer, and microwave safe — 10-pack for short fridge storage and freezer portions."
         canonical="/stickers"
         ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
         jsonLd={containerJsonLd}
@@ -100,7 +100,7 @@ export default function Stickers() {
         <h2 id="why-glass">Why Use Glass Containers for Meal Prep?</h2>
         <ul className="content-bullets">
           <li>No plastic chemicals leaching into reheated food — safe for everyday use.</li>
-          <li>Airtight lids keep meals fresh in the fridge for 4–5 days.</li>
+          <li>Airtight lids support short fridge storage and freezer portions.</li>
           <li>Go straight from freezer to microwave without switching dishes.</li>
           <li>See exactly what&apos;s inside each container without opening it.</li>
           <li>Durable enough to last years — cheaper than disposable alternatives long-term.</li>
@@ -125,8 +125,8 @@ export default function Stickers() {
               <h2>BOROHOUSE 10-Pack Glass Storage Containers</h2>
               <ul className="content-bullets">
                 <li>Borosilicate glass — oven, microwave, dishwasher, freezer, and fridge safe</li>
-                <li>Snap-lock airtight lids to keep portions fresh all week</li>
-                <li>10-pack covers a full week of breakfast, lunch, dinner, and snacks</li>
+                <li>Snap-lock airtight lids for short fridge storage and freezer portions</li>
+                <li>10-pack supports a fridge-and-freezer meal prep rotation</li>
                 <li>Stackable design to keep your fridge and freezer tidy</li>
               </ul>
               <a

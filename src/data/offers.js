@@ -6,7 +6,7 @@ export const MEAL_PREP_STICKERS = {
   image: '/meal-containers-ad.webp',
   imageAlt: 'BOROHOUSE 10-pack glass food storage containers',
   headline: 'Glass meal prep containers for organised portions',
-  body: 'Airtight borosilicate glass containers for batch-cooked meals — fridge, freezer, and microwave safe. 10-pack to cover a full week of portions.',
+  body: 'Airtight borosilicate glass containers for batch-cooked meals — fridge, freezer, and microwave safe. 10-pack for short fridge storage and freezer portions.',
   proofPoints: ['Airtight lids', 'Microwave-safe', 'Stackable'],
   cta: 'View on Amazon',
   eventName: 'container_product_click',
