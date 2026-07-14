@@ -2,7 +2,7 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-07-14T10:38:34.328Z",
+  "generatedAt": "2026-07-14T10:58:12.088Z",
   "range": {
     "current": {
       "startDate": "2026-06-14",
