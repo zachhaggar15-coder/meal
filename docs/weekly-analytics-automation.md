@@ -27,12 +27,18 @@ Add these repository secrets before enabling the weekly job:
 - `RESEND_API_KEY`: Resend API key for emailing the report after a successful
   run.
 
-Optional email secrets:
+Optional email configuration:
 
-- `WEEKLY_ANALYTICS_REPORT_EMAIL_TO`: recipient for the weekly report. Defaults
-  to `zach.haggar15@gmail.com` if omitted.
-- `MEALPREP_REPORT_FROM_EMAIL`: verified sender for report emails. Falls back
+- `WEEKLY_ANALYTICS_REPORT_EMAIL_TO`: repository variable for the weekly report
+  recipient. Defaults to `dojostack@protonmail.com`, which is the only address
+  Resend currently allows in testing mode for this account.
+- `MEALPREP_REPORT_FROM_EMAIL`: secret for a verified sender address. Falls back
   to `MEALPREP_FROM_EMAIL`, then Resend's onboarding sender.
+
+To send the report to another address such as `zach.haggar15@gmail.com`, first
+verify a sending domain in Resend, set `MEALPREP_REPORT_FROM_EMAIL` to an email
+on that domain, then set the `WEEKLY_ANALYTICS_REPORT_EMAIL_TO` repository
+variable to the new recipient.
 
 The service account must have access to the GA4 property and Search Console
 property. Enable both APIs in the same Google Cloud project:
@@ -97,4 +103,6 @@ commit. It sends:
 - links to the GitHub report, workflow run and generated commit
 
 If `RESEND_API_KEY` is missing or invalid, the workflow will fail at the email
-step so the missing notification setup is visible.
+step so the missing notification setup is visible. If Resend returns a 403 saying
+it can only send testing emails to `dojostack@protonmail.com`, keep that
+recipient until the sending domain is verified in Resend.

@@ -18,7 +18,7 @@ const dryRun = args.has('--dry-run');
 loadDotEnv(path.join(rootDir, '.env'));
 
 main().catch(error => {
-  console.error(error.message || error);
+  console.error(formatFatalError(error));
   process.exitCode = 1;
 });
 
@@ -89,8 +89,21 @@ function resolveReportRecipient() {
   return (
     process.env.WEEKLY_ANALYTICS_REPORT_EMAIL_TO ||
     process.env.MEALPREP_REPORT_EMAIL_TO ||
-    'zach.haggar15@gmail.com'
+    'dojostack@protonmail.com'
   );
+}
+
+function formatFatalError(error) {
+  const message = String(error?.message || error);
+  if (message.includes('You can only send testing emails')) {
+    return [
+      message,
+      '',
+      'Resend is still in testing mode for this account.',
+      'Use dojostack@protonmail.com as WEEKLY_ANALYTICS_REPORT_EMAIL_TO, or verify a sending domain in Resend before sending to another recipient.',
+    ].join('\n');
+  }
+  return message;
 }
 
 function extractReportSummary(report) {
