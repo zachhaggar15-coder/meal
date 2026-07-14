@@ -1,0 +1,52 @@
+name: Weekly Analytics Improvements
+
+on:
+  schedule:
+    - cron: '24 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-weekly-insights:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate weekly analytics improvements
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          WEEKLY_ANALYTICS_DAYS: ${{ vars.WEEKLY_ANALYTICS_DAYS || '28' }}
+          WEEKLY_ANALYTICS_MIN_IMPRESSIONS: ${{ vars.WEEKLY_ANALYTICS_MIN_IMPRESSIONS || '25' }}
+        run: npm run analytics:weekly
+
+      - name: Validate generated site
+        run: |
+          npm run check:nutrition
+          npm run check:plans
+          npm run build
+
+      - name: Commit weekly generated updates
+        run: |
+          git config user.name "mealprep-analytics-bot"
+          git config user.email "mealprep-analytics-bot@users.noreply.github.com"
+          git add src/data/weeklySeoInsights.js docs/search-console-weekly-tracker.csv docs/weekly-analytics-report.md
+          if git diff --cached --quiet; then
+            echo "No weekly analytics changes to commit."
+            exit 0
+          fi
+          git commit -m "Refresh weekly analytics insights"
+          git push

@@ -4,6 +4,7 @@ import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
+import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
@@ -267,6 +268,8 @@ export default function BrowsePlans() {
           intro="Use these shortcuts for the highest-demand calorie, protein, shopping-list and container guides."
           className="popular-searches--browse"
         />
+
+        <WeeklyTrendingLinks />
 
         {/* Search + filters */}
         <div className="browse-filters">

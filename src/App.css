@@ -6276,6 +6276,71 @@ details[open] .faq-question::after { content: '▴'; }
   background: #eff6ff;
 }
 
+.weekly-trending-links {
+  width: min(1120px, calc(100% - 32px));
+  margin: 48px auto;
+  padding: 32px;
+  border: 1px solid rgba(39, 64, 51, 0.12);
+  border-radius: 8px;
+  background: #fbfcf8;
+}
+
+.weekly-trending-head {
+  max-width: 720px;
+  margin-bottom: 20px;
+}
+
+.weekly-trending-head h2 {
+  margin: 0 0 8px;
+  color: #233525;
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  letter-spacing: 0;
+}
+
+.weekly-trending-head p {
+  margin: 0;
+  color: #536257;
+  line-height: 1.6;
+}
+
+.weekly-trending-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.weekly-trending-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 112px;
+  padding: 18px;
+  border: 1px solid rgba(39, 64, 51, 0.12);
+  border-radius: 8px;
+  background: #ffffff;
+  color: #233525;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.weekly-trending-card strong {
+  color: #1f3323;
+  line-height: 1.25;
+}
+
+.weekly-trending-card span {
+  color: #68786c;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.weekly-trending-card:hover,
+.weekly-trending-card:focus-visible {
+  border-color: rgba(92, 141, 72, 0.34);
+  box-shadow: 0 12px 28px rgba(31, 51, 35, 0.08);
+  transform: translateY(-2px);
+}
+
 .discovery-priority-links {
   display: grid;
   gap: 10px;

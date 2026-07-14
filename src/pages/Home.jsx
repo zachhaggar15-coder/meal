@@ -11,6 +11,7 @@ import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
+import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
@@ -331,6 +332,8 @@ export default function Home() {
           intro="Start with the highest-demand guides, then jump into a printable plan or shopping list."
           className="popular-searches--home"
         />
+
+        <WeeklyTrendingLinks compact />
 
         <SearchOpportunityLinks
           title="Essential UK Meal Prep Guides"
