@@ -1,6 +1,6 @@
 # Weekly Analytics SEO Report
 
-Generated: 2026-07-14T10:58:12.088Z
+Generated: 2026-07-14T11:05:33.515Z
 Current range: 2026-06-14 to 2026-07-11
 Previous range: 2026-05-17 to 2026-06-13
 Source: GA4 and Google Search Console
