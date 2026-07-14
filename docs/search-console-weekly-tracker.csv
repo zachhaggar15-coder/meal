@@ -1,1 +1,8 @@
-date,query,page,impressions,clicks,ctr,avg_position,28_day_impression_delta,28_day_click_delta,action_taken,next_action
+date,query,page,impressions,clicks,ctr,avg_position,28_day_impression_delta,28_day_click_delta,opportunity_class,consideration_level,route_verified,cooldown,action_taken,next_action
+2026-07-11,what does 1500 calories look like,/blog/what-does-1500-calories-look-like-uk,65,1,1.54%,14.2,65,1,near_page_one,minor,yes,yes,report_only,Monitor for now because this page is inside the recent-edit cooldown window.
+2026-07-11,1500 calorie meal plan,/meal-plan/1500-calorie-meal-plan,73,0,0%,75.6,13,0,monitor,minor,yes,yes,added_to_public_weekly_links,Monitor for now because this page is inside the recent-edit cooldown window.
+2026-07-11,1500 calorie diet,/meal-plan/1500-calorie-meal-plan,65,0,0%,61,4,0,monitor,minor,yes,yes,added_to_public_weekly_links,Monitor for now because this page is inside the recent-edit cooldown window.
+2026-07-11,1500 calories a day,/meal-plan/1500-calorie-meal-plan,61,0,0%,51.5,14,0,monitor,minor,yes,yes,added_to_public_weekly_links,Monitor for now because this page is inside the recent-edit cooldown window.
+2026-07-11,1500 calorie meal,/meal-plan/1500-calorie-meal-plan,53,0,0%,76.6,8,0,monitor,minor,yes,yes,added_to_public_weekly_links,Monitor for now because this page is inside the recent-edit cooldown window.
+2026-07-11,1500 calorie meal,/blog/what-does-1500-calories-look-like-uk,50,0,0%,54.3,50,0,monitor,minor,yes,yes,report_only,Monitor for now because this page is inside the recent-edit cooldown window.
+2026-07-11,meal prep containers,/blog/best-meal-prep-containers-uk,83,1,1.2%,32.7,83,1,monitor,minor,yes,yes,report_only,Monitor for now because this page is inside the recent-edit cooldown window.

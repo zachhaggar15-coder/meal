@@ -2,15 +2,64 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  generatedAt: null,
-  range: {
-    current: {
-      startDate: null,
-      endDate: null,
-    },
+  "generatedAt": "2026-07-14T10:38:34.328Z",
+  "range": {
+    "current": {
+      "startDate": "2026-06-14",
+      "endDate": "2026-07-11"
+    }
   },
-  source: 'not-configured',
-  trendingLinks: [],
+  "source": "google-analytics-and-search-console",
+  "trendingLinks": [
+    {
+      "to": "/meal-plans/1800-calorie",
+      "label": "1,800 Calorie Meal Plans UK",
+      "description": "Browse related plans, shopping-list ideas and UK supermarket options.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/blog/1200-calorie-meal-plan-uk",
+      "label": "1200 Calorie Meal Plan UK",
+      "description": "A practical guide for planning, shopping or prepping meals in the UK.",
+      "category": "Guide"
+    },
+    {
+      "to": "/blog/1400-calorie-meal-plan-uk",
+      "label": "1400 Calorie Meal Plan UK",
+      "description": "A practical guide for planning, shopping or prepping meals in the UK.",
+      "category": "Guide"
+    },
+    {
+      "to": "/meal-plan/1500-calorie-meal-plan",
+      "label": "1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List",
+      "description": "Use this ready-made plan as a starting point, then compare related alternatives.",
+      "category": "Ready-made plan"
+    },
+    {
+      "to": "/meal-plan/1800-calorie-meal-plan",
+      "label": "1800 Calorie Meal Plan UK: 7-Day Balanced Plan with Shopping List",
+      "description": "Use this ready-made plan as a starting point, then compare related alternatives.",
+      "category": "Ready-made plan"
+    },
+    {
+      "to": "/meal-plans/2000-calorie",
+      "label": "2,000 Calorie Meal Plans UK",
+      "description": "Browse related plans, shopping-list ideas and UK supermarket options.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/meal-plan/2500-calorie-meal-plan",
+      "label": "2500 Calorie Meal Plan UK — Free 7-Day Active & Muscle Gain Guide",
+      "description": "Use this ready-made plan as a starting point, then compare related alternatives.",
+      "category": "Ready-made plan"
+    },
+    {
+      "to": "/meal-plans/aldi",
+      "label": "aldi",
+      "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
+      "category": "Guide"
+    }
+  ]
 };
 
 export const WEEKLY_TRENDING_LINKS = WEEKLY_SEO_INSIGHTS.trendingLinks;
