@@ -55,3 +55,12 @@ jobs:
           fi
           git commit -m "Refresh weekly analytics insights"
           git push
+
+      - name: Email weekly analytics report
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          WEEKLY_ANALYTICS_REPORT_EMAIL_TO: ${{ secrets.WEEKLY_ANALYTICS_REPORT_EMAIL_TO }}
+          MEALPREP_REPORT_FROM_EMAIL: ${{ secrets.MEALPREP_REPORT_FROM_EMAIL }}
+          MEALPREP_FROM_EMAIL: ${{ secrets.MEALPREP_FROM_EMAIL }}
+          MEALPREP_REPLY_TO_EMAIL: ${{ secrets.MEALPREP_REPLY_TO_EMAIL }}
+        run: node scripts/email-weekly-analytics-report.js

@@ -10,6 +10,7 @@
     "check:nutrition": "node scripts/check-nutrition.js",
     "analytics:weekly": "node scripts/weekly-analytics-improvements.js",
     "analytics:weekly:sample": "node scripts/weekly-analytics-improvements.js --sample --dry-run",
+    "analytics:weekly:email:dry-run": "node scripts/email-weekly-analytics-report.js --dry-run",
     "test:security": "node scripts/api-guards.test.js",
     "preview": "vite preview",
     "start": "vercel dev"
