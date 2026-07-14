@@ -4,7 +4,7 @@ import { toTitleCase } from '../utils/textFormatting.js';
 
 export default function WeeklyTrendingLinks({
   title = 'Popular this week',
-  intro = 'Current search and site analytics are pointing readers toward these UK meal prep guides.',
+  intro = 'Guides and meal-planning routes readers are finding useful right now.',
   compact = false,
   className = '',
 }) {
@@ -21,9 +21,9 @@ export default function WeeklyTrendingLinks({
 
       <div className="weekly-trending-grid">
         {links.map(link => (
-          <Link key={`${link.to}-${link.sourceQuery || link.label}`} to={link.to} className="weekly-trending-card">
+          <Link key={`${link.to}-${link.label}`} to={link.to} className="weekly-trending-card">
             <strong>{toTitleCase(link.label)}</strong>
-            <span>{link.reason ? toTitleCase(link.reason) : 'Current Reader Demand'}</span>
+            <span>{link.description ? toTitleCase(link.description) : 'Useful For Planning This Week'}</span>
           </Link>
         ))}
       </div>

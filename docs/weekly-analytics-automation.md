@@ -4,12 +4,14 @@ This repo already sends browser analytics through GA4 in `src/utils/analytics.js
 The weekly automation reads those reports back out, combines them with Search
 Console query/page data, and writes three low-risk updates:
 
-- `src/data/weeklySeoInsights.js` for the visible "Popular this week" links.
+- `src/data/weeklySeoInsights.js` for public-safe "Popular this week" links.
 - `docs/search-console-weekly-tracker.csv` for the running query/page tracker.
-- `docs/weekly-analytics-report.md` for the latest improvement checklist.
+- `docs/weekly-analytics-report.md` and `docs/seo-reports/YYYY-MM-DD.md` for
+  the latest human-reviewed improvement checklist.
 
 The scheduled workflow commits those generated files after the normal nutrition,
-plan and build checks pass. It does not rewrite article copy automatically.
+plan and build checks pass. It does not rewrite article copy, metadata, routes,
+meal plans, blog posts or long-form content automatically.
 
 ## Required GitHub Secrets
 
@@ -50,9 +52,23 @@ npm run build
 The default Search Console opportunity window is:
 
 - last 28 available days
-- minimum 25 impressions
-- average position 8 to 40
+- minimum 50 impressions for minor consideration
+- 100 impressions for stronger consideration
+- 250 impressions for priority consideration
+- average position 4 to 40
 - CTR below a simple expected CTR curve for that position
 
 Override these with `WEEKLY_ANALYTICS_DAYS`, `WEEKLY_ANALYTICS_MIN_IMPRESSIONS`,
-`WEEKLY_ANALYTICS_MIN_POSITION`, and `WEEKLY_ANALYTICS_MAX_POSITION`.
+`WEEKLY_ANALYTICS_STRONG_IMPRESSIONS`, `WEEKLY_ANALYTICS_PRIORITY_IMPRESSIONS`,
+`WEEKLY_ANALYTICS_MIN_POSITION`, `WEEKLY_ANALYTICS_MAX_POSITION`, and
+`WEEKLY_ANALYTICS_COOLDOWN_DAYS`.
+
+## Safety Rules
+
+- The scheduled workflow only stages generated insight/report files.
+- Raw analytics metrics stay in docs reports and the tracker, not the frontend
+  `weeklySeoInsights.js` module.
+- Routes must exist in the same source inventory used by prerendering before
+  they can appear in generated frontend links or report recommendations.
+- Editorial changes are report-only recommendations until a human approves a
+  separate improvement pass.

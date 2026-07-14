@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -30,7 +32,10 @@ jobs:
           SEARCH_CONSOLE_SITE_URL: ${{ secrets.SEARCH_CONSOLE_SITE_URL }}
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           WEEKLY_ANALYTICS_DAYS: ${{ vars.WEEKLY_ANALYTICS_DAYS || '28' }}
-          WEEKLY_ANALYTICS_MIN_IMPRESSIONS: ${{ vars.WEEKLY_ANALYTICS_MIN_IMPRESSIONS || '25' }}
+          WEEKLY_ANALYTICS_MIN_IMPRESSIONS: ${{ vars.WEEKLY_ANALYTICS_MIN_IMPRESSIONS || '50' }}
+          WEEKLY_ANALYTICS_STRONG_IMPRESSIONS: ${{ vars.WEEKLY_ANALYTICS_STRONG_IMPRESSIONS || '100' }}
+          WEEKLY_ANALYTICS_PRIORITY_IMPRESSIONS: ${{ vars.WEEKLY_ANALYTICS_PRIORITY_IMPRESSIONS || '250' }}
+          WEEKLY_ANALYTICS_COOLDOWN_DAYS: ${{ vars.WEEKLY_ANALYTICS_COOLDOWN_DAYS || '28' }}
         run: npm run analytics:weekly
 
       - name: Validate generated site
@@ -43,7 +48,7 @@ jobs:
         run: |
           git config user.name "mealprep-analytics-bot"
           git config user.email "mealprep-analytics-bot@users.noreply.github.com"
-          git add src/data/weeklySeoInsights.js docs/search-console-weekly-tracker.csv docs/weekly-analytics-report.md
+          git add src/data/weeklySeoInsights.js docs/search-console-weekly-tracker.csv docs/weekly-analytics-report.md docs/seo-reports
           if git diff --cached --quiet; then
             echo "No weekly analytics changes to commit."
             exit 0

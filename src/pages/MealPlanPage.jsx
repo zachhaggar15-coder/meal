@@ -660,8 +660,8 @@ function LegacyPlanFamilyBox({ family }) {
       <div>
         <h2 id="legacy-plan-family-heading">{toTitleCase('Current plan family')}</h2>
         <p>
-          This older exact-match page is now connected to the current hub and generated plan
-          library so related calorie, supermarket and shopping-list pages are easier to find.
+          Looking for a different version? Compare related calorie, supermarket and
+          shopping-list pages below.
         </p>
       </div>
       <div className="legacy-plan-family-links">

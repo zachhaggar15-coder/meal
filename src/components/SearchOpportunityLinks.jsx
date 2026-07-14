@@ -6,8 +6,8 @@ import {
 import { toTitleCase } from '../utils/textFormatting.js';
 
 export default function SearchOpportunityLinks({
-  title = 'Search Console priority pages',
-  intro = 'These links give important discovered pages and high-impression clusters clearer crawl paths from central pages.',
+  title = 'Useful UK meal prep routes',
+  intro = 'Start with practical guides, calorie plans, shopping-list routes and container comparisons that help you choose what to prep next.',
   showDiscovery = true,
   compact = false,
 }) {
@@ -36,9 +36,9 @@ export default function SearchOpportunityLinks({
 
       {showDiscovery && (
         <div className="discovery-priority-links">
-          <h3>{toTitleCase('Discovered-not-indexed sample links')}</h3>
+          <h3>{toTitleCase('More plan options')}</h3>
           <p>
-            The pages below now have explicit internal links from the browse graph instead of relying on sitemap discovery alone.
+            Compare related calorie, supermarket and goal-based plans without starting your search again.
           </p>
           <div className="discovery-priority-list">
             {DISCOVERY_PRIORITY_LINKS.map(link => (
