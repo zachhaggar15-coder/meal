@@ -10070,3 +10070,36 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Keep meal-plan day navigation compact instead of letting one day wrap into
+   a large empty framed area on narrow content columns. */
+.plan-day-tabs {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin: 20px 0 24px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0 0 10px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.plan-day-tab {
+  flex: 0 0 auto;
+  min-width: 62px;
+  padding: 10px 16px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .plan-day-tab {
+    min-width: 72px;
+  }
+}
