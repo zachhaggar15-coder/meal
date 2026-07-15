@@ -666,7 +666,7 @@ function LegacyPlanFamilyBox({ family }) {
       </div>
       <div className="legacy-plan-family-links">
         {family.links.map(link => (
-          <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
+          <Link key={`${link.to}-${link.label}`} to={link.to}>{toTitleCase(link.label)}</Link>
         ))}
       </div>
     </aside>
