@@ -10103,3 +10103,48 @@ textarea {
     min-width: 72px;
   }
 }
+
+.legacy-shopping-primary {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+}
+
+.legacy-shopping-primary .plan-shopping-header {
+  align-items: end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.legacy-shopping-primary .plan-shopping-header h2 {
+  max-width: 620px;
+}
+
+.legacy-shopping-primary > p {
+  margin: 0;
+  max-width: 840px;
+}
+
+.legacy-shopping-primary .shop-grid {
+  column-gap: 22px;
+  columns: 210px 4;
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.legacy-shopping-primary .shop-grid .shop-group {
+  break-inside: avoid;
+  display: inline-block;
+  margin: 0 0 22px;
+  width: 100%;
+}
+
+@media (max-width: 760px) {
+  .legacy-shopping-primary .shop-grid {
+    columns: 1;
+  }
+}
