@@ -4,7 +4,9 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
+import { BUDGET_CONTAINERS, MEAL_PREP_STICKERS, MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
+import { CONTAINER_TIER_COPY, getContainerRecommendation } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const ACTIVITY = {
@@ -204,6 +206,9 @@ export default function ToolsPage() {
   const [prepDays, setPrepDays] = useState(5);
   const [mealsPerDay, setMealsPerDay] = useState(2);
   const [spareContainers, setSpareContainers] = useState(2);
+  const [containerUseCase, setContainerUseCase] = useState('work');
+  const [containerMaterial, setContainerMaterial] = useState('either');
+  const [containerBudget, setContainerBudget] = useState('mid');
 
   const [market, setMarket] = useState('any');
   const [people, setPeople] = useState(1);
@@ -248,6 +253,20 @@ export default function ToolsPage() {
   }, [proteinGoal, proteinWeight]);
 
   const containerResult = Math.max(1, (prepDays * mealsPerDay) + spareContainers);
+  const containerTier = getContainerRecommendation({
+    containerCount: containerResult,
+    budget: containerBudget,
+    useCase: containerUseCase,
+    material: containerMaterial,
+    reheating: containerUseCase === 'microwave',
+    alreadyPreps: prepDays >= 5 && mealsPerDay >= 2,
+  });
+  const containerCopy = CONTAINER_TIER_COPY[containerTier];
+  const containerOffer = containerTier === 'budget'
+    ? BUDGET_CONTAINERS
+    : containerTier === 'premium'
+      ? MEAL_PREP_STICKERS
+      : MID_RANGE_CONTAINERS;
   const budgetResult = useMemo(() => {
     const base = MARKET_BASKET_BASE[market].base;
     const dayFactor = shopDays / 7;
@@ -527,22 +546,66 @@ export default function ToolsPage() {
           </section>
 
           <section id="container-count-calculator" className="tool-panel">
-            <h2>Container Count Calculator</h2>
+            <h2>Container Count Recommender</h2>
             <div className="tool-fields">
               <NumberField label="Prep days" value={prepDays} onChange={setPrepDays} min={1} max={7} suffix="days" />
               <NumberField label="Meals per day" value={mealsPerDay} onChange={setMealsPerDay} min={1} max={4} suffix="meals" />
               <NumberField label="Spares" value={spareContainers} onChange={setSpareContainers} min={0} max={10} suffix="extra" />
+              <Select
+                label="Main use"
+                value={containerUseCase}
+                onChange={setContainerUseCase}
+                options={[
+                  ['work', 'Work lunches'],
+                  ['microwave', 'Reheating meals'],
+                  ['freezer', 'Freezer batches'],
+                  ['commute', 'Commuting'],
+                ]}
+              />
+              <Select
+                label="Material"
+                value={containerMaterial}
+                onChange={setContainerMaterial}
+                options={[
+                  ['either', 'Either'],
+                  ['plastic', 'Plastic'],
+                  ['glass', 'Glass'],
+                ]}
+              />
+              <Select
+                label="Budget"
+                value={containerBudget}
+                onChange={setContainerBudget}
+                options={[
+                  ['low', 'Lowest cost'],
+                  ['mid', 'Best value'],
+                  ['premium', 'Buy once'],
+                ]}
+              />
             </div>
             <ResultBlock
               title={`${containerResult} containers`}
               lines={[
-                'Add one or two spares for snacks, freezer portions or a missed wash cycle.',
-                containerResult >= 14 ? 'A larger divided set or glass bundle is likely to be easier.' : 'A compact plastic or glass set should cover this prep style.',
+                `${containerCopy.label}: ${containerCopy.fit}`,
+                containerCopy.setup,
               ]}
             />
-            <Link className="btn-primary" to="/meal-prep-containers">
-              Compare containers
-            </Link>
+            <div className="tool-action-row">
+              <a
+                className="btn-primary"
+                href={containerOffer.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow sponsored"
+                data-event={containerOffer.eventName}
+                data-source-page="tools-container-recommender"
+                data-offer={containerOffer.name}
+              >
+                View matched pick on Amazon UK
+              </a>
+              <Link className="btn-secondary" to={containerCopy.guidePath}>
+                {containerCopy.guideLabel}
+              </Link>
+            </div>
           </section>
 
           <section id="shopping-budget-estimator" className="tool-panel">

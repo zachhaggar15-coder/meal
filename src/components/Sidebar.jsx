@@ -17,7 +17,7 @@ const TOOL_LINKS = [
   { to: '/tools#calorie-calculator', label: 'Calorie Calculator' },
   { to: '/tools#protein-calculator', label: 'Protein Calculator' },
   { to: '/tools#shopping-budget-estimator', label: 'Shopping Budget Estimator' },
-  { to: '/tools#container-count-calculator', label: 'Container Count Calculator' },
+  { to: '/tools#container-count-calculator', label: 'Container Count Recommender' },
   { to: '/tools#printable-plans', label: 'Printable Plans' },
 ];
 

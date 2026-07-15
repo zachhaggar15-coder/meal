@@ -1,4 +1,5 @@
 import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerProducts.js';
+import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 export default function AffiliateProductGrid({
@@ -49,6 +50,14 @@ export default function AffiliateProductGrid({
                 <div>
                   <dt>Set format</dt>
                   <dd>{product.setSize}</dd>
+                </div>
+                <div>
+                  <dt>Size note</dt>
+                  <dd>{product.layout}</dd>
+                </div>
+                <div>
+                  <dt>Last checked</dt>
+                  <dd>{product.lastChecked || CONTAINER_LAST_CHECKED}</dd>
                 </div>
               </dl>
               <div className="affiliate-product-fit">

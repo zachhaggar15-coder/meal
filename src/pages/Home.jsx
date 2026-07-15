@@ -8,6 +8,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
+import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
@@ -285,7 +286,7 @@ export default function Home() {
             Eat well this week without the guesswork.
           </h1>
           <p className="home-hero-sub">
-            A quiet, considered meal planner. Tell us your goal, budget and supermarket; we return a ready-made 7-day plan and a shopping list with practical UK cost estimates.
+            A quiet, considered meal planner. Tell us your goal, budget and supermarket; we return a ready-made 7-day plan, shopping list, and practical container setup for the week.
           </p>
           <div className="home-hero-actions">
             <Link to="/quiz" className="btn-hero-primary">
@@ -299,7 +300,7 @@ export default function Home() {
             <span className="trust-badge"><strong>1,000+</strong> ready-made plans</span>
             <span className="trust-badge"><strong>11</strong> supermarkets</span>
             <span className="trust-badge"><strong>£31</strong> typical estimate</span>
-            <span className="trust-badge"><strong>2 min</strong> to your match</span>
+            <span className="trust-badge"><strong>Box count</strong> after planning</span>
           </div>
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>
@@ -407,7 +408,34 @@ export default function Home() {
         </section>
 
         {/* ── Affiliate promo ───────────────────────────────────────────────── */}
-        <StickerPromo offer={MID_RANGE_CONTAINERS} />
+        <section className="home-prep-flow" aria-labelledby="home-prep-flow-heading">
+          <div className="section-head-inline">
+            <div>
+              <span className="offer-kicker">Plan, shop, portion</span>
+              <h2 id="home-prep-flow-heading">Make the plan easier to actually use</h2>
+              <p>
+                The useful bit is not only choosing meals. It is knowing what to buy,
+                how much to cook, and what to portion it into before Monday starts.
+              </p>
+            </div>
+          </div>
+          <div className="home-prep-flow-grid">
+            <Link to="/quiz" className="home-prep-flow-step">
+              <strong>1. Match a plan</strong>
+              <span>Pick a supermarket, calorie target, budget, and prep style.</span>
+            </Link>
+            <Link to="/tools#container-count-calculator" className="home-prep-flow-step">
+              <strong>2. Count the boxes</strong>
+              <span>Estimate lunches, dinners, snack tubs, and freezer spares.</span>
+            </Link>
+            <Link to="/meal-prep-containers" className="home-prep-flow-step">
+              <strong>3. Compare containers</strong>
+              <span>Choose budget plastic, weekday glass, or a larger batch system.</span>
+            </Link>
+          </div>
+        </section>
+
+        <StickerPromo offer={MID_RANGE_CONTAINERS} sourcePage="home-prep-flow" />
 
         {/* ── FAQ ──────────────────────────────────────────────────────────── */}
         <section className="home-faq">
@@ -482,6 +510,11 @@ export default function Home() {
             <div ref={planRef}>
               <MealPlan plan={plan} />
               {plan.shopping_list && <ShoppingList list={plan.shopping_list} />}
+              <ContainerSetupRecommendation
+                plan={plan}
+                formValues={lastValues}
+                sourcePage="generated-plan"
+              />
               <EditPlanBox
                 onEdit={handleEdit}
                 loading={editLoading}

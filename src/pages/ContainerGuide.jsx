@@ -10,6 +10,7 @@ import {
   getContainerProduct,
   getContainerProducts,
 } from '../data/containerProducts.js';
+import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const guideOrder = ['budget', 'mid-range', 'premium'];
@@ -228,6 +229,7 @@ export default function ContainerGuide() {
                   <th scope="col">Format</th>
                   <th scope="col">Layout</th>
                   <th scope="col">Watch-out</th>
+                  <th scope="col">Checked</th>
                   <th scope="col">Amazon</th>
                 </tr>
               </thead>
@@ -243,6 +245,7 @@ export default function ContainerGuide() {
                     <td>{product.setSize}</td>
                     <td>{product.layout}</td>
                     <td>{product.watchOut}</td>
+                    <td>{product.lastChecked || CONTAINER_LAST_CHECKED}</td>
                     <td>
                       <a
                         href={product.href}

@@ -9,6 +9,7 @@ import {
   getContainerProducts,
 } from '../data/containerProducts.js';
 import { SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const HUB_PRODUCT_IDS = [
@@ -73,6 +74,14 @@ const methodRows = [
   ['Reheating', 'Glass is favoured for tomato-heavy meals, curries and frequent microwave use.'],
   ['Stacking', 'Identical rectangles usually beat novelty shapes because they save fridge and cupboard space.'],
   ['Value', 'A cheap set only scores well when the tubs match a real weekly plan and are not awkward to reuse.'],
+  ['Freshness', `Amazon UK product links were last checked on ${CONTAINER_LAST_CHECKED}; live prices and availability can still change.`],
+];
+
+const trustRows = [
+  ['What we compare', 'Capacity, lid reliability, reheating fit, stacking, material, and whether the set matches a real weekly plan.'],
+  ['What we avoid', 'Oversized mixed sets that create lid clutter, tiny boxes sold as full-meal tubs, and claims that depend on a live Amazon price.'],
+  ['Size rule', 'Use roughly 900ml to 1 litre for full lunches, smaller tubs for snacks and sauces, and larger tubs for freezer batches.'],
+  ['Buying order', 'Start with one working-week setup, then upgrade only when stained tubs, weak lids, or freezer overflow become the real problem.'],
 ];
 
 const faqs = [
@@ -315,6 +324,26 @@ export default function ContainerHub() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <section className="container-trust-panel" aria-labelledby="container-trust-heading">
+          <div>
+            <span className="offer-kicker">Recommendation standards</span>
+            <h2 id="container-trust-heading">{toTitleCase('Useful before commercial')}</h2>
+            <p>
+              The buying path should help you avoid wasting money. Amazon buttons are clearly
+              labelled as sponsored, and the internal guide links stay available if you want to
+              compare before clicking out.
+            </p>
+          </div>
+          <div className="container-trust-grid">
+            {trustRows.map(row => (
+              <div key={row[0]} className="container-trust-item">
+                <strong>{row[0]}</strong>
+                <span>{row[1]}</span>
+              </div>
+            ))}
           </div>
         </section>
 

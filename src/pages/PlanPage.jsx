@@ -8,8 +8,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
-import StickerPromo from '../components/StickerPromo.jsx';
-import { MEAL_PREP_STICKERS, BUDGET_CONTAINERS } from '../data/offers.js';
+import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -615,6 +614,10 @@ export default function PlanPage() {
 
         {planDaysSection}
         {shoppingListSection}
+        <ContainerSetupRecommendation
+          plan={displayPlan}
+          sourcePage={`plan-${plan.slug || 'page'}-containers`}
+        />
 
         {/* Summary card */}
         <div className="plan-summary-card">
@@ -816,8 +819,6 @@ export default function PlanPage() {
         </section>
           </>
         )}
-
-        <PlanContainerLinks plan={plan} />
 
         {/* Swaps & suggestions */}
         <section className="plan-swaps-section">
@@ -1302,12 +1303,6 @@ function getEffortAssumption(effort) {
   if (effort === 'low') return 'Low-effort plans keep daily cooking short while preserving enough variety.';
   if (effort === 'high-variety') return 'High-variety plans trade extra decisions for less repetition.';
   return 'Standard-prep plans balance variety, fresh meals and realistic weekday cooking.';
-}
-
-function PlanContainerLinks({ plan }) {
-  const isBudget = plan.budget === 'very-cheap' || plan.budget === 'budget';
-  const offer = isBudget ? BUDGET_CONTAINERS : MEAL_PREP_STICKERS;
-  return <StickerPromo offer={offer} sourcePage={`plan-${plan.slug || 'page'}-containers`} />;
 }
 
 function PrintablePlanSummary({ plan, marketLabel }) {
