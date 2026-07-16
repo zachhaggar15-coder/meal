@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerFinder from '../components/ContainerFinder.jsx';
+import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import {
   AFFILIATE_DISCLOSURE,
   CONTAINER_GUIDES,
@@ -61,8 +62,14 @@ export default function ContainerGuide() {
 
   const products = getContainerProducts(guide.productIds);
   const heroProduct = getContainerProduct(guide.heroProductId);
-  const heroImage = heroProduct?.image || guide.heroImage;
   const canonical = `/meal-prep-containers/${guide.slug}`;
+  const quickComparisonPicks = products.slice(0, 3).map(product => ({
+    product,
+    searchedFor: guide.h1,
+    sizeLabel: product.badge,
+    sizeFocus: `${product.setSize} - ${product.layout}`,
+    fit: product.bestFor,
+  }));
 
   const jsonLd = [
     {
@@ -135,45 +142,15 @@ export default function ContainerGuide() {
 
         <SiteLogo variant="page" className="page-header-logo" />
 
-        <section className="container-guide-hero">
-          <div className="container-guide-copy">
-            <span className="offer-kicker">Sponsored #ad - {guide.kicker}</span>
-            <h1>{guide.h1}</h1>
-            <p className="content-intro">{guide.intro}</p>
-            <div className="container-guide-actions">
-              {heroProduct && (
-                <a
-                  href={heroProduct.href}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow sponsored"
-                  className="btn-primary"
-                  data-event="container_product_click"
-                  data-source-page={`${guide.slug}-hero`}
-                  data-offer={heroProduct.name}
-                >
-                  Check top pick on Amazon UK
-                </a>
-              )}
-              <a href="#comparison" className="btn-secondary">
-                Compare all 6 picks
-              </a>
-            </div>
-            <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
-          </div>
-          {heroProduct && (
-            <a
-              href={heroProduct.href}
-              target="_blank"
-              rel="noopener noreferrer nofollow sponsored"
-              className="container-guide-image"
-              data-event="container_product_click"
-              data-source-page={`${guide.slug}-hero-image`}
-              data-offer={heroProduct.name}
-            >
-              <img src={heroImage} alt={`${heroProduct.name} for meal prep`} />
-            </a>
-          )}
-        </section>
+        <ContainerQuickComparison
+          eyebrow={`Sponsored #ad - ${guide.kicker}`}
+          title={guide.h1}
+          intro={`Quickly compare ${guideLabel(guide.slug).toLowerCase()} picks by size, material and use. The full buying notes continue below.`}
+          picks={quickComparisonPicks}
+          fastPick={heroProduct ? `Start with ${heroProduct.shortName} if you want the main ${guideLabel(guide.slug).toLowerCase()} recommendation, then scroll for all six picks and buying notes.` : null}
+          headingLevel="h1"
+          sourcePage={`${guide.slug}-quick-comparison`}
+        />
 
         <div className="container-tier-nav" aria-label="Meal prep container price bands">
           {guideOrder.map(slug => (
@@ -272,12 +249,13 @@ export default function ContainerGuide() {
             productIds={guide.productIds}
             sourcePage={`${guide.slug}-guide`}
             showDisclosure={false}
+            showQuickComparison={false}
           />
         </div>
 
         <ContainerFinder currentTier={guide.slug} />
 
-        <section className="container-intent-section" aria-labelledby="container-intent-heading">
+        <section className="container-search-match" aria-labelledby="container-intent-heading">
           <div className="section-head-inline">
             <div>
               <h2 id="container-intent-heading">Best container by search intent</h2>
@@ -287,27 +265,15 @@ export default function ContainerGuide() {
               </p>
             </div>
           </div>
-          <div className="content-table-wrap">
-            <table className="content-table container-intent-table">
-              <thead>
-                <tr>
-                  <th scope="col">Search</th>
-                  <th scope="col">{toTitleCase('Best choice')}</th>
-                  <th scope="col">Why</th>
-                  <th scope="col">Guide</th>
-                </tr>
-              </thead>
-              <tbody>
-                {searchIntentRows.map(row => (
-                  <tr key={row.intent}>
-                    <td>{toTitleCase(row.intent)}</td>
-                    <td>{toTitleCase(row.best)}</td>
-                    <td>{row.why}</td>
-                    <td><Link to={row.path}>Compare</Link></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="container-search-grid">
+            {searchIntentRows.map(row => (
+              <article key={row.intent} className="container-search-card">
+                <span>Search</span>
+                <h3>{toTitleCase(row.intent)}</h3>
+                <p><strong>{toTitleCase(row.best)}:</strong> {row.why}</p>
+                <Link to={row.path}>Compare</Link>
+              </article>
+            ))}
           </div>
         </section>
 

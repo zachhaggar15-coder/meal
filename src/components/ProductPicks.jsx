@@ -10,6 +10,7 @@ export default function ProductPicks({
   productIds = [],
   sourcePage = 'blog-tool-recommendation',
   showDisclosure = true,
+  showQuickComparison = true,
 }) {
   const products = getMealPrepProducts(productIds);
 
@@ -24,6 +25,49 @@ export default function ProductPicks({
 
       {showDisclosure && (
         <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
+      )}
+
+      {showQuickComparison && products.length > 1 && (
+        <div className="product-quick-compare" aria-label={`${title} quick comparison`}>
+          <div className="product-quick-head">
+            <span className="offer-kicker">Quick comparison</span>
+            <h3>{toTitleCase(title)}: compare first</h3>
+            <p>See the main difference before reading the full product notes.</p>
+          </div>
+          <div className="product-quick-grid">
+            {products.slice(0, 3).map(product => (
+              <article key={product.id} className="product-quick-card">
+                <span className="container-search-chip">You searched: {title}</span>
+                <h4>{product.name}</h4>
+                <dl>
+                  <div>
+                    <dt>Type</dt>
+                    <dd>{product.category}</dd>
+                  </div>
+                  <div>
+                    <dt>Price</dt>
+                    <dd>{product.priceBand}</dd>
+                  </div>
+                  <div>
+                    <dt>Best for</dt>
+                    <dd>{product.bestFor}</dd>
+                  </div>
+                </dl>
+                <a
+                  href={product.href}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow sponsored"
+                  className="btn-primary"
+                  data-event="mealprep_product_click"
+                  data-source-page={`${sourcePage}-quick-comparison`}
+                  data-offer={product.name}
+                >
+                  See Amazon price
+                </a>
+              </article>
+            ))}
+          </div>
+        </div>
       )}
 
       <div className="product-picks-grid">

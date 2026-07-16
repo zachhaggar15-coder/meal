@@ -4,8 +4,8 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerFinder from '../components/ContainerFinder.jsx';
+import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import {
-  AFFILIATE_DISCLOSURE,
   getContainerProducts,
 } from '../data/containerProducts.js';
 import { SITE_CONTACT_EMAIL } from '../constants/site.js';
@@ -19,6 +19,33 @@ const HUB_PRODUCT_IDS = [
   'deli-twist-lid-tubs',
   'borohouse-10-pack-glass',
   'rubbermaid-brilliance-glass',
+];
+
+const TOP_COMPARISON_PICKS = [
+  {
+    id: 'budget-compartment-50-pack',
+    searchedFor: 'Cheap meal prep tubs',
+    sizeLabel: 'Most boxes',
+    sizeFocus: '20 reusable plastic containers',
+    fit: 'Best if you batch cook lunches, freeze portions, or want the lowest cost per tub.',
+    guidePath: '/meal-prep-containers/budget',
+  },
+  {
+    id: 'harbour-housewares-glass-5-pack',
+    searchedFor: 'Best 900ml-1L lunch boxes',
+    sizeLabel: 'Work-week set',
+    sizeFocus: '5 glass lunch boxes',
+    fit: 'Best if you prep Monday-Friday lunches and reheat meals at work.',
+    guidePath: '/meal-prep-containers/mid-range',
+  },
+  {
+    id: 'borohouse-10-pack-glass',
+    searchedFor: 'Larger meal prep container set',
+    sizeLabel: 'Full-week setup',
+    sizeFocus: '10-piece glass storage set',
+    fit: 'Best if you prep lunches, dinners, leftovers, and freezer portions together.',
+    guidePath: '/meal-prep-containers/premium',
+  },
 ];
 
 const queryRows = [
@@ -164,8 +191,8 @@ export default function ContainerHub() {
   return (
     <>
       <SEO
-        title="Best Meal Prep Containers UK: 6 Picks by Size, Budget & Use"
-        description="Compare UK meal prep containers by job: best overall glass, cheapest tubs, work lunch boxes, freezer portions and 900ml-1L sizes."
+        title="Meal Prep Containers UK: Compare 3 Sizes First"
+        description="Compare three common UK meal prep container setups first: cheap plastic multipacks, five glass lunch boxes and larger 10-piece glass sets."
         canonical="/meal-prep-containers"
         ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
         jsonLd={jsonLd}
@@ -179,31 +206,15 @@ export default function ContainerHub() {
 
         <SiteLogo variant="page" className="page-header-logo" />
 
-        <section className="container-guide-hero container-hub-hero">
-          <div className="container-guide-copy">
-            <span className="offer-kicker">{toTitleCase('Container buying guide')}</span>
-            <h1>Best Meal Prep Containers UK</h1>
-            <p className="content-intro">
-              Compare budget plastic tubs, glass meal prep containers, leakproof lunch boxes
-              and premium sets before you buy. If you only want one sensible starting point,
-              choose five rectangular glass containers around 900ml to 1 litre.
-            </p>
-            <div className="container-guide-actions">
-              <a href="#comparison" className="btn-primary">Compare top picks</a>
-              <a href="#chooser" className="btn-secondary">Use the container chooser</a>
-              <Link to="/" className="btn-secondary">Generate a free meal plan</Link>
-            </div>
-            <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
-          </div>
-          <div className="container-hub-answer" aria-label="Quick answer">
-            <strong>Quick answer</strong>
-            <p>
-              Best overall: mid-range glass. Best cheap option: plastic multipacks.
-              Best for commuting: leak-focused boxes with strong lids. Best first setup:
-              five lunch boxes plus a few small sauce tubs.
-            </p>
-          </div>
-        </section>
+        <ContainerQuickComparison
+          eyebrow="Direct comparison"
+          title="Meal Prep Containers UK: Compare 3 Sizes First"
+          intro="Pick the container size that matches the job: lots of cheap tubs, five glass work lunches, or a larger full-week setup."
+          picks={TOP_COMPARISON_PICKS}
+          fastPick="Most people should start with the 5-pack glass option. Go plastic for low cost, or 10-piece glass if you prep lunches and dinners."
+          headingLevel="h1"
+          sourcePage="container-direct-comparison"
+        />
 
         <div className="container-tier-nav" aria-label="Meal prep container guides">
           <Link to="/meal-prep-containers" className="container-tier-link container-tier-link--active">
@@ -220,41 +231,29 @@ export default function ContainerHub() {
           </Link>
         </div>
 
-        <section className="container-intent-section" aria-labelledby="container-query-heading">
+        <section className="container-search-match" aria-labelledby="container-query-heading">
           <div className="section-head-inline">
             <div>
               <h2 id="container-query-heading">Best container by search</h2>
               <p>
-                Match the search intent before choosing a product. A cheap freezer tub,
-                a work lunch box and a glass reheating container are not the same job.
+                Tap the phrase that looks closest to what you searched for, then compare
+                only the container type that fits that job.
               </p>
             </div>
           </div>
-          <div className="content-table-wrap">
-            <table className="content-table container-intent-table">
-              <thead>
-                <tr>
-                  <th scope="col">Search</th>
-                  <th scope="col">Best answer</th>
-                  <th scope="col">Next step</th>
-                </tr>
-              </thead>
-              <tbody>
-                {queryRows.map(row => (
-                  <tr key={row.query}>
-                    <td>{toTitleCase(row.query)}</td>
-                    <td>{row.answer}</td>
-                    <td>
-                      {row.link.startsWith('#') ? (
-                        <a href={row.link}>{toTitleCase(row.label)}</a>
-                      ) : (
-                        <Link to={row.link}>{toTitleCase(row.label)}</Link>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="container-search-grid">
+            {queryRows.map(row => (
+              <article key={row.query} className="container-search-card">
+                <span>Search</span>
+                <h3>{toTitleCase(row.query)}</h3>
+                <p>{row.answer}</p>
+                {row.link.startsWith('#') ? (
+                  <a href={row.link}>{toTitleCase(row.label)}</a>
+                ) : (
+                  <Link to={row.link}>{toTitleCase(row.label)}</Link>
+                )}
+              </article>
+            ))}
           </div>
         </section>
 
@@ -358,6 +357,7 @@ export default function ContainerHub() {
             productIds={HUB_PRODUCT_IDS}
             sourcePage="container-hub"
             showDisclosure={false}
+            showQuickComparison={false}
           />
         </div>
 

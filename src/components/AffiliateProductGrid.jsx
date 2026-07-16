@@ -1,6 +1,7 @@
 import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerProducts.js';
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import ContainerQuickComparison from './ContainerQuickComparison.jsx';
 
 export default function AffiliateProductGrid({
   title = 'Recommended meal prep containers',
@@ -8,6 +9,7 @@ export default function AffiliateProductGrid({
   productIds = [],
   sourcePage = 'container-guide',
   showDisclosure = true,
+  showQuickComparison = true,
 }) {
   const products = getContainerProducts(productIds);
 
@@ -22,6 +24,24 @@ export default function AffiliateProductGrid({
 
       {showDisclosure && (
         <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
+      )}
+
+      {showQuickComparison && products.length > 1 && (
+        <ContainerQuickComparison
+          eyebrow="Quick comparison"
+          title={`${toTitleCase(title)}: quick comparison`}
+          intro={`Compare ${Math.min(products.length, 3)} options first, then scroll for the longer buying notes.`}
+          picks={products.slice(0, 3).map(product => ({
+            product,
+            searchedFor: title,
+            sizeLabel: product.badge,
+            sizeFocus: `${product.setSize} - ${product.layout}`,
+            fit: product.bestFor,
+          }))}
+          headingLevel="h3"
+          sourcePage={`${sourcePage}-quick-comparison`}
+          showDisclosure={false}
+        />
       )}
 
       <div className="affiliate-product-grid">
