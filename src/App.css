@@ -10374,6 +10374,32 @@ textarea {
   margin: 0;
 }
 
+.container-guide-nav {
+  background: #fffdf8;
+  border: 1px solid #dfcfb3;
+  border-radius: 8px;
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 22px;
+  padding: 14px;
+}
+
+.container-guide-nav-group {
+  display: grid;
+  gap: 8px;
+}
+
+.container-guide-nav-group > span {
+  color: #6f6250;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.container-guide-nav .container-tier-nav {
+  margin: 0;
+}
+
 .content-page .container-snapshot-strip {
   display: grid;
   gap: 8px;
@@ -10783,6 +10809,10 @@ textarea {
 
   .content-page .container-direct-head :is(h1, h2, h3) {
     font-size: 1.8rem;
+  }
+
+  .container-guide-nav {
+    padding: 12px;
   }
 
   .content-page .container-snapshot-strip {

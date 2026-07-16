@@ -559,6 +559,369 @@ export function getContainerProduct(productId) {
   return { id: productId, ...product, ...(CONTAINER_PRODUCT_DETAILS[productId] || {}) };
 }
 
+const LONG_TAIL_CONTAINER_GUIDES = {
+  glass: {
+    slug: 'glass',
+    path: '/meal-prep-containers/glass',
+    title: 'Glass Meal Prep Containers UK - Best Sets for Lunches and Reheating',
+    description:
+      'Compare glass meal prep containers UK: five-pack lunch boxes, mixed glass storage sets and larger freezer-friendly glass systems with Amazon UK picks.',
+    h1: 'Glass Meal Prep Containers UK',
+    kicker: 'Glass container guide',
+    priceBand: 'Glass and borosilicate picks',
+    summaryText:
+      'Compare six glass-focused Amazon UK picks for work lunches, reheating, stain resistance and fuller weekly prep.',
+    heroProductId: 'harbour-housewares-glass-5-pack',
+    heroImage: '/meal-containers-ad.jpg',
+    intro:
+      'Glass meal prep containers are the cleanest upgrade when plastic tubs are staining, smelling, or feeling flimsy after repeated reheating. Start with five lunch-sized boxes if you mainly prep work lunches, then move to a larger glass set when you prep lunches, dinners and leftovers together.',
+    productIds: [
+      'harbour-housewares-glass-5-pack',
+      'prep-naturals-glass-5-pack',
+      'joyjolt-glass-storage',
+      'm-mcirco-glass-5-pack',
+      'verones-divided-glass',
+      'borohouse-10-pack-glass',
+    ],
+    sections: [
+      {
+        h2: 'Who should buy glass meal prep containers?',
+        paragraphs: [
+          'Choose glass if you regularly reheat curry, chilli, pasta sauce, tomato dishes or stews. Glass bases resist stains and odours better than plastic, and they feel better to eat from when lunch is part of your everyday routine.',
+          'The trade-off is weight. If you carry several meals on foot, buy one glass work-lunch set and keep plastic or silicone bags for freezer overflow.',
+        ],
+      },
+      {
+        h2: 'Best glass size for UK meal prep',
+        paragraphs: [
+          'For most lunches, aim for roughly 900ml to 1 litre. Smaller glass tubs are useful for snacks, sauces and overnight oats, but they are not reliable full-meal containers.',
+          'Mixed glass sets are useful when you want leftovers and batch sauces covered too, but five identical lunch boxes are easier to stack and repeat every week.',
+        ],
+      },
+      {
+        h2: 'Glass container verdict',
+        paragraphs: [
+          'Start with a five-pack rectangular glass set for work lunches. Choose a larger 10-piece glass system only when you already prep lunches, dinners and freezer portions in the same week.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Are glass meal prep containers worth it?',
+        a: 'Yes, if you reheat food often or cook tomato-heavy meals. Glass costs more and weighs more than plastic, but it usually lasts longer and stains less.',
+      },
+      {
+        q: 'Can glass meal prep containers go in the microwave?',
+        a: 'Most glass bases are microwave suitable, but lids usually need to be removed. Always follow the live Amazon listing and product instructions before reheating.',
+      },
+      {
+        q: 'How many glass meal prep containers do I need?',
+        a: 'Five lunch-sized glass boxes is the best starting point for one person. Ten pieces is better if you prep lunches, dinners and leftovers together.',
+      },
+    ],
+  },
+  plastic: {
+    slug: 'plastic',
+    path: '/meal-prep-containers/plastic',
+    title: 'Plastic Meal Prep Containers UK - Cheap Tubs, 10 Packs and Bulk Sets',
+    description:
+      'Compare plastic meal prep containers UK: cheap tubs, 10-packs, divided lunch boxes and bulk freezer sets with Amazon UK affiliate picks.',
+    h1: 'Plastic Meal Prep Containers UK',
+    kicker: 'Plastic container guide',
+    priceBand: 'Budget plastic and bulk packs',
+    summaryText:
+      'Compare plastic Amazon UK picks for low cost, light commuting, divided portions and high-volume freezer prep.',
+    heroProductId: 'budget-compartment-50-pack',
+    heroImage: '/budget-containers-ad.jpg',
+    intro:
+      'Plastic meal prep containers are the practical route when you need lots of boxes quickly. They are light, cheap and easy to stack, which makes them useful for beginners, students, family batch cooking and freezer portions.',
+    productIds: [
+      'budget-compartment-50-pack',
+      'bentgo-prep-10-pack',
+      'sistema-klip-it',
+      'freshware-3-compartment',
+      'amazon-basics-plastic-set',
+      'deli-twist-lid-tubs',
+    ],
+    sections: [
+      {
+        h2: 'Who should buy plastic meal prep containers?',
+        paragraphs: [
+          'Plastic is best when cost per tub matters more than premium feel. It works well for beginner meal prep, work lunches carried in a bag, freezer portions and kitchens that need many spare tubs.',
+          'Avoid relying only on plastic if you reheat tomato sauce, curry or turmeric-heavy meals every day. Those dishes can stain cheaper bases over time.',
+        ],
+      },
+      {
+        h2: 'Divided or one-compartment plastic boxes?',
+        paragraphs: [
+          'Choose divided boxes for protein, carbs and vegetables when you want simple portion control. Choose one-compartment boxes for pasta, chilli, curry, salads and one-pot meals.',
+          'Bulk multipacks are useful if you freeze meals or cook for more than one person, but they need cupboard space and can create lid clutter if the sizes are too mixed.',
+        ],
+      },
+      {
+        h2: 'Plastic container verdict',
+        paragraphs: [
+          'Buy plastic when you want volume, low weight and low upfront cost. Upgrade only the meals you reheat most often to glass once the habit is established.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Are plastic meal prep containers safe?',
+        a: 'Use containers sold as food-safe and follow the listing guidance for microwave, freezer and dishwasher use. Remove lids when required and replace tubs that warp or crack.',
+      },
+      {
+        q: 'Are plastic meal prep tubs leakproof?',
+        a: 'Some are leak-resistant, but cheap press-on lids are not as reliable as clip-lock or twist-lid designs for soup, chilli and sauce-heavy meals.',
+      },
+      {
+        q: 'Should I buy 10, 20 or 50 plastic containers?',
+        a: 'Ten is enough for one person testing meal prep. Twenty suits lunches and freezer rotation. Very large packs are best for family batch cooking or shared households.',
+      },
+    ],
+  },
+  leakproof: {
+    slug: 'leakproof',
+    path: '/meal-prep-containers/leakproof',
+    title: 'Leakproof Meal Prep Containers UK - Best Lunch Boxes for Saucy Meals',
+    description:
+      'Compare leakproof meal prep containers UK for commuting, soup, chilli, curry and saucy work lunches with Amazon UK picks and lid-fit notes.',
+    h1: 'Leakproof Meal Prep Containers UK',
+    kicker: 'Leakproof buying guide',
+    priceBand: 'Leak-resistant lunch boxes',
+    summaryText:
+      'Compare containers with stronger lid designs for commuting, sauces, soup-style meals and bag-friendly lunches.',
+    heroProductId: 'rubbermaid-brilliance-glass',
+    heroImage: '/meal-containers-ad.jpg',
+    intro:
+      'Leakproof meal prep containers matter most when food travels. If you carry chilli, curry, salad dressing, soup-style meals or overnight oats, lid reliability is more important than a big box count.',
+    productIds: [
+      'rubbermaid-brilliance-glass',
+      'harbour-housewares-glass-5-pack',
+      'prep-naturals-glass-5-pack',
+      'oxo-smart-seal-glass',
+      'deli-twist-lid-tubs',
+      'black-blum-stainless-set',
+    ],
+    sections: [
+      {
+        h2: 'Who should buy leakproof containers?',
+        paragraphs: [
+          'Choose this page if you commute with food, carry meals in a gym bag, pack salad dressing or prep saucy meals. A stronger lid can matter more than material.',
+          'For soup and liquid-heavy meals, test any new container with water over the sink before trusting it in a work bag.',
+        ],
+      },
+      {
+        h2: 'What makes a container leak resistant?',
+        paragraphs: [
+          'Look for clip-lock lids, twist lids, silicone seals and clear listing claims about leak resistance. Press-on budget lids are fine for dry meals, but they are not the safest choice for sauces.',
+          'Glass bases help with reheating and stain resistance, while premium plastic can be lighter for commuting.',
+        ],
+      },
+      {
+        h2: 'Leakproof verdict',
+        paragraphs: [
+          'Buy fewer, better-sealed containers for travel meals. Keep cheap tubs for dry freezer portions and use the stronger lid set for anything that could spill.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Are leakproof meal prep containers really leakproof?',
+        a: 'Treat leakproof as leak-resistant until you have tested the container. Fill it with water, close it, shake gently and check the seal before commuting.',
+      },
+      {
+        q: 'Are glass containers better for leakproof lunches?',
+        a: 'Glass is better for reheating and stain resistance, but the lid design decides leak resistance. A good plastic clip-lock lid can beat a weak glass lid.',
+      },
+      {
+        q: 'What containers are best for soup?',
+        a: 'Use twist-lid tubs, premium clip-lock containers or products that explicitly mention liquid storage. Avoid shallow divided lunch boxes for soup.',
+      },
+    ],
+  },
+  'freezer-safe': {
+    slug: 'freezer-safe',
+    path: '/meal-prep-containers/freezer-safe',
+    title: 'Freezer Safe Meal Prep Containers UK - Best Tubs for Batch Cooking',
+    description:
+      'Compare freezer safe meal prep containers UK: plastic tubs, glass sets and bulk multipacks for batch cooking, leftovers and freezer rotation.',
+    h1: 'Freezer Safe Meal Prep Containers UK',
+    kicker: 'Freezer container guide',
+    priceBand: 'Freezer and batch-cooking picks',
+    summaryText:
+      'Compare freezer-friendly container sets for bulk cooking, leftovers, sauces and weekly portion rotation.',
+    heroProductId: 'deli-twist-lid-tubs',
+    heroImage: '/budget-containers-ad.jpg',
+    intro:
+      'Freezer-safe meal prep containers are best when you cook in batches and rotate portions through the week. The right set should stack neatly, label easily and avoid wasting freezer space.',
+    productIds: [
+      'deli-twist-lid-tubs',
+      'budget-compartment-50-pack',
+      'borohouse-10-pack-glass',
+      'harbour-housewares-glass-5-pack',
+      'pyrex-freshlock-large-set',
+      'rubbermaid-brilliance-glass',
+    ],
+    sections: [
+      {
+        h2: 'Who should buy freezer-safe containers?',
+        paragraphs: [
+          'Choose freezer-focused containers if you batch cook chilli, curry, stew, soup, mince, rice or family portions. You need enough boxes to freeze meals without blocking your lunch routine.',
+          'A large multipack makes sense when the freezer is the main storage location. For reheating straight from chilled meals, glass may be the better everyday set.',
+        ],
+      },
+      {
+        h2: 'What to look for in freezer containers',
+        paragraphs: [
+          'Choose stackable shapes with lids that do not pop off when food expands. Leave headroom for liquids and label dates so freezer portions do not become mystery meals.',
+          'Rectangular boxes save space better than round tubs, but twist-lid tubs can be better for sauces, soup-style portions and overnight oats.',
+        ],
+      },
+      {
+        h2: 'Freezer-safe verdict',
+        paragraphs: [
+          'Use cheap plastic or twist-lid tubs for freezer volume, then keep a smaller glass set for the meals you reheat and eat most often.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Can glass meal prep containers go in the freezer?',
+        a: 'Many glass containers can go in the freezer, but you should follow the product instructions, avoid overfilling liquids and let hot food cool before freezing.',
+      },
+      {
+        q: 'Are plastic containers better for freezer meal prep?',
+        a: 'Plastic is lighter and cheaper for large freezer batches. Glass is better if you want to reheat and eat from the same container.',
+      },
+      {
+        q: 'How many freezer containers do I need?',
+        a: 'For one person, ten containers is a useful freezer rotation. Families or bulk cooks may need twenty or more, especially if freezing lunches and dinners.',
+      },
+    ],
+  },
+  'work-lunch': {
+    slug: 'work-lunch',
+    path: '/meal-prep-containers/work-lunch',
+    title: 'Meal Prep Boxes for Work UK - Best Lunch Containers to Compare',
+    description:
+      'Compare meal prep boxes for work UK: glass lunch containers, light plastic boxes and premium commute-friendly sets with Amazon UK picks.',
+    h1: 'Meal Prep Boxes for Work UK',
+    kicker: 'Work lunch guide',
+    priceBand: 'Work lunch containers',
+    summaryText:
+      'Compare lunch-friendly containers for office reheating, commuting, fridge stacking and five-day work prep.',
+    heroProductId: 'harbour-housewares-glass-5-pack',
+    heroImage: '/meal-containers-ad.jpg',
+    intro:
+      'Meal prep boxes for work should be easy to carry, easy to stack in a fridge and simple to reheat. The best starting point is usually five rectangular lunch containers around 900ml to 1 litre.',
+    productIds: [
+      'harbour-housewares-glass-5-pack',
+      'prep-naturals-glass-5-pack',
+      'bentgo-prep-10-pack',
+      'sistema-klip-it',
+      'black-blum-stainless-set',
+      'joyjolt-glass-storage',
+    ],
+    sections: [
+      {
+        h2: 'What makes a good work lunch box?',
+        paragraphs: [
+          'A good work lunch box fits one full meal without forcing tiny portions, stacks neatly in a shared fridge and has a lid you trust in your bag.',
+          'Glass is better when you microwave lunch at work. Plastic is better when weight matters or you carry several meals at once.',
+        ],
+      },
+      {
+        h2: 'Best size for work lunches',
+        paragraphs: [
+          'Aim for roughly 900ml to 1 litre for most lunches. Smaller containers are useful for snacks, sauces and fruit, but they are not a full lunch for most people.',
+          'If you prep five lunches on Sunday, matching boxes save more time than mixed sets because lids are easier to pair and fridge stacks stay tidy.',
+        ],
+      },
+      {
+        h2: 'Work lunch verdict',
+        paragraphs: [
+          'Start with five matching rectangular containers. Choose glass if the office microwave matters, or plastic if your commute is long and weight matters more.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'What size meal prep box is best for work?',
+        a: 'Most people should start around 900ml to 1 litre. That size suits rice bowls, pasta, curry, chilli, salads and leftovers without making portions too small.',
+      },
+      {
+        q: 'Are glass lunch boxes too heavy for work?',
+        a: 'One glass lunch box is usually manageable, but several glass containers can be heavy. Use plastic if you carry multiple meals on foot.',
+      },
+      {
+        q: 'How many work lunch containers should I buy?',
+        a: 'Five matching lunch containers is the cleanest starting point for a Monday to Friday routine. Add small sauce tubs later if you need them.',
+      },
+    ],
+  },
+  'large-sets': {
+    slug: 'large-sets',
+    path: '/meal-prep-containers/large-sets',
+    title: 'Large Meal Prep Container Sets UK - 10 Pack, 20 Pack and Bulk Boxes',
+    description:
+      'Compare large meal prep container sets UK: 10-pack glass systems, 20-pack plastic boxes and bulk multipacks for serious weekly prep.',
+    h1: 'Large Meal Prep Container Sets UK',
+    kicker: 'Large set guide',
+    priceBand: '10 pack, 20 pack and bulk sets',
+    summaryText:
+      'Compare larger Amazon UK container sets for lunches, dinners, family prep and freezer rotation.',
+    heroProductId: 'borohouse-10-pack-glass',
+    heroImage: '/meal-containers-ad.jpg',
+    intro:
+      'Large meal prep container sets are for people who already cook in bulk. They make sense when five lunch boxes are not enough and you need coverage for dinners, leftovers, snacks or freezer portions too.',
+    productIds: [
+      'borohouse-10-pack-glass',
+      'budget-compartment-50-pack',
+      'deli-twist-lid-tubs',
+      'pyrex-freshlock-large-set',
+      'verones-divided-glass',
+      'joseph-joseph-nest-lock',
+    ],
+    sections: [
+      {
+        h2: 'Who should buy a large container set?',
+        paragraphs: [
+          'Choose a large set if you prep lunches and dinners, batch cook for a household, or freeze several portions every week. If you only prep work lunches, a five-pack is usually cleaner and cheaper.',
+          'Large sets can solve the problem of never having the right box available, but they can also create cupboard clutter if sizes are too mixed.',
+        ],
+      },
+      {
+        h2: '10 pack, 20 pack or bulk multipack?',
+        paragraphs: [
+          'A 10-pack glass set is the best premium route for lunches, dinners and leftovers. A 20-pack plastic set is better for low-cost weekday prep. A very large multipack is best for freezer rotation or shared households.',
+          'Before buying a large set, check whether the containers are identical, mixed sizes or counted as pieces including lids.',
+        ],
+      },
+      {
+        h2: 'Large set verdict',
+        paragraphs: [
+          'Buy a large set only when you know the weekly routine needs it. Otherwise, start with five lunch containers and add freezer tubs as the habit grows.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is a 10-pack meal prep container set enough?',
+        a: 'A 10-pack is enough for most single-person lunch and dinner prep. Families and freezer-heavy batch cooks may need more.',
+      },
+      {
+        q: 'Are large glass container sets worth it?',
+        a: 'They are worth it if you prep every week and reheat often. They are not ideal if cupboard space is tight or you only need work lunches.',
+      },
+      {
+        q: 'Do container set counts include lids?',
+        a: 'Some listings count lids as pieces, so a 20-piece set may mean ten containers and ten lids. Always check the live Amazon listing before buying.',
+      },
+    ],
+  },
+};
+
 export const CONTAINER_GUIDES = {
   budget: {
     slug: 'budget',
@@ -734,7 +1097,35 @@ export const CONTAINER_GUIDES = {
       },
     ],
   },
+  ...LONG_TAIL_CONTAINER_GUIDES,
 };
+
+export const CONTAINER_GUIDE_GROUPS = [
+  {
+    label: 'Price bands',
+    guides: [
+      { slug: 'budget', label: 'Budget' },
+      { slug: 'mid-range', label: 'Mid range' },
+      { slug: 'premium', label: 'Premium' },
+    ],
+  },
+  {
+    label: 'Materials',
+    guides: [
+      { slug: 'glass', label: 'Glass' },
+      { slug: 'plastic', label: 'Plastic' },
+    ],
+  },
+  {
+    label: 'Buyer needs',
+    guides: [
+      { slug: 'leakproof', label: 'Leakproof' },
+      { slug: 'freezer-safe', label: 'Freezer safe' },
+      { slug: 'work-lunch', label: 'Work lunches' },
+      { slug: 'large-sets', label: 'Large sets' },
+    ],
+  },
+];
 
 export const CONTAINER_GUIDE_SLUGS = Object.keys(CONTAINER_GUIDES);
 

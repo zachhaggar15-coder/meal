@@ -6,6 +6,12 @@ const TIER_LABEL = {
   budget: 'Budget containers',
   'mid-range': 'Mid-range containers',
   premium: 'Premium containers',
+  glass: 'Glass containers',
+  plastic: 'Plastic containers',
+  leakproof: 'Leakproof containers',
+  'freezer-safe': 'Freezer-safe containers',
+  'work-lunch': 'Work lunch boxes',
+  'large-sets': 'Large container sets',
 };
 
 export default function ContainerFinder({ currentTier = 'mid-range' }) {
@@ -16,9 +22,13 @@ export default function ContainerFinder({ currentTier = 'mid-range' }) {
 
   const recommendation = useMemo(() => {
     if (budget === 'low') return 'budget';
-    if (budget === 'premium' && (useCase === 'commute' || meals >= 12)) return 'premium';
-    if (material === 'glass' || useCase === 'freezer' || useCase === 'microwave') return 'mid-range';
-    if (useCase === 'commute' && meals >= 10) return 'premium';
+    if (meals >= 16) return 'large-sets';
+    if (useCase === 'freezer') return 'freezer-safe';
+    if (useCase === 'commute') return 'leakproof';
+    if (useCase === 'work') return 'work-lunch';
+    if (material === 'glass' || useCase === 'microwave') return 'glass';
+    if (material === 'plastic') return 'plastic';
+    if (budget === 'premium') return 'premium';
     return 'mid-range';
   }, [budget, material, meals, useCase]);
 

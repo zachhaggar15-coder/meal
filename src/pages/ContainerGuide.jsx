@@ -4,9 +4,11 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerFinder from '../components/ContainerFinder.jsx';
+import ContainerGuideNav from '../components/ContainerGuideNav.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import {
   AFFILIATE_DISCLOSURE,
+  CONTAINER_GUIDE_GROUPS,
   CONTAINER_GUIDES,
   getContainerProduct,
   getContainerProducts,
@@ -14,44 +16,57 @@ import {
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
-const guideOrder = ['budget', 'mid-range', 'premium'];
+const guideLabels = CONTAINER_GUIDE_GROUPS
+  .flatMap(group => group.guides)
+  .reduce((labels, guide) => ({ ...labels, [guide.slug]: guide.label }), {});
 
 const searchIntentRows = [
   {
     intent: 'Best meal prep containers UK',
-    best: 'Mid range glass containers',
+    best: 'Quick size comparison',
     why: 'Best balance of reheating, stain resistance, lid quality and sensible price.',
-    path: '/meal-prep-containers/mid-range',
-  },
-  {
-    intent: 'Budget meal prep tubs',
-    best: 'Plastic multipacks',
-    why: 'Lowest cost per box for batch cooking, freezer portions and beginner meal prep.',
-    path: '/meal-prep-containers/budget',
+    path: '/meal-prep-containers',
   },
   {
     intent: 'Glass meal prep containers',
     best: 'Five-pack rectangular glass sets',
-    why: 'Good for work lunches, curry, chilli, pasta and repeat microwave reheating.',
-    path: '/meal-prep-containers/mid-range',
+    why: 'Best for reheating, stain resistance and everyday work lunches.',
+    path: '/meal-prep-containers/glass',
   },
   {
-    intent: 'Leakproof lunch boxes',
-    best: 'Premium clip-lock or twist-lock sets',
+    intent: 'Plastic meal prep containers',
+    best: 'Plastic multipacks',
+    why: 'Lowest cost per box for batch cooking, freezer portions and beginner meal prep.',
+    path: '/meal-prep-containers/plastic',
+  },
+  {
+    intent: 'Leakproof meal prep containers',
+    best: 'Clip-lock or twist-lid sets',
     why: 'Better fit for commuting, soup, chilli, salad dressing and saucy meals.',
-    path: '/meal-prep-containers/premium',
+    path: '/meal-prep-containers/leakproof',
+  },
+  {
+    intent: 'Freezer safe meal prep containers',
+    best: 'Bulk tubs and freezer-friendly glass',
+    why: 'Best for batch cooking, leftovers and freezer rotation.',
+    path: '/meal-prep-containers/freezer-safe',
   },
   {
     intent: 'Meal prep boxes for work',
     best: 'Rectangular lunch containers',
     why: 'Easy to stack, pack and portion for five weekday lunches.',
-    path: '/meal-prep-containers/mid-range',
+    path: '/meal-prep-containers/work-lunch',
+  },
+  {
+    intent: 'Large meal prep container set',
+    best: '10 pack, 20 pack or bulk sets',
+    why: 'Best when five lunch boxes are not enough for dinners, family prep or freezer batches.',
+    path: '/meal-prep-containers/large-sets',
   },
 ];
 
 function guideLabel(slug) {
-  if (slug === 'mid-range') return 'Mid range';
-  return slug.charAt(0).toUpperCase() + slug.slice(1);
+  return guideLabels[slug] || slug.charAt(0).toUpperCase() + slug.slice(1);
 }
 
 export default function ContainerGuide() {
@@ -152,23 +167,13 @@ export default function ContainerGuide() {
           sourcePage={`${guide.slug}-quick-comparison`}
         />
 
-        <div className="container-tier-nav" aria-label="Meal prep container price bands">
-          {guideOrder.map(slug => (
-            <Link
-              key={slug}
-              to={`/meal-prep-containers/${slug}`}
-              className={slug === guide.slug ? 'container-tier-link container-tier-link--active' : 'container-tier-link'}
-            >
-              {guideLabel(slug)}
-            </Link>
-          ))}
-        </div>
+        <ContainerGuideNav currentSlug={guide.slug} />
 
         <section className="conversion-panel" aria-label="Buying guide summary">
           <div>
             <strong>{toTitleCase(guide.priceBand)}</strong>
             <span>
-              Compare six Amazon UK meal prep boxes, tubs, and containers for this price tier.
+              {guide.summaryText || `Compare ${products.length} Amazon UK meal prep boxes, tubs, and containers for this guide.`}
             </span>
           </div>
           {heroProduct && (
@@ -189,7 +194,7 @@ export default function ContainerGuide() {
         <section className="container-comparison-section" aria-labelledby="container-comparison-heading">
           <div className="section-head-inline">
             <div>
-                <h2 id="container-comparison-heading">{toTitleCase('Quick comparison')}</h2>
+              <h2 id="container-comparison-heading">{toTitleCase('Quick comparison')}</h2>
               <p>
                 Shortlist by material, format, layout and buyer need before opening the Amazon UK listing.
               </p>
@@ -299,9 +304,14 @@ export default function ContainerGuide() {
         <h2>Related Container Guides</h2>
         <ul className="plan-links">
           <li><Link to="/meal-prep-containers">Best meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/glass">Glass meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/plastic">Plastic meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/leakproof">Leakproof meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/freezer-safe">Freezer safe meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/work-lunch">Meal prep boxes for work UK</Link></li>
+          <li><Link to="/meal-prep-containers/large-sets">Large meal prep container sets UK</Link></li>
           <li><Link to="/blog/best-meal-prep-containers-uk">Detailed container buying guide</Link></li>
           <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
-          <li><Link to="/blog/leakproof-meal-prep-containers-uk">Leakproof meal prep containers UK</Link></li>
           <li><Link to="/blog/meal-prep-container-size-guide">Meal prep container size guide</Link></li>
         </ul>
       </div>

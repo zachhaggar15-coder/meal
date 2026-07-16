@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerFinder from '../components/ContainerFinder.jsx';
+import ContainerGuideNav from '../components/ContainerGuideNav.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import {
   getContainerProducts,
@@ -51,33 +52,45 @@ const TOP_COMPARISON_PICKS = [
 const queryRows = [
   {
     query: 'best meal prep containers',
-    answer: 'Start with a mid-range rectangular glass set unless low cost or commuting weight matters more.',
-    link: '/meal-prep-containers/mid-range',
-    label: 'Compare glass picks',
-  },
-  {
-    query: 'meal prep containers',
-    answer: 'Choose by job: plastic tubs for budget batches, glass boxes for reheating, premium sets for stronger lids.',
+    answer: 'Start with the three-size comparison: cheap plastic, five glass lunches or a larger full-week set.',
     link: '#comparison',
     label: 'See top picks',
   },
   {
-    query: 'free meal prep box',
-    answer: 'Use the free checklist here first, then buy only the boxes you actually need for your weekly plan.',
-    link: '#free-meal-prep-box',
-    label: 'Use checklist',
+    query: 'glass meal prep containers',
+    answer: 'Choose a five-pack glass set for reheating, stain resistance and weekday work lunches.',
+    link: '/meal-prep-containers/glass',
+    label: 'Glass guide',
+  },
+  {
+    query: 'plastic meal prep containers',
+    answer: 'Choose plastic multipacks when low cost, light commuting and freezer volume matter most.',
+    link: '/meal-prep-containers/plastic',
+    label: 'Plastic guide',
+  },
+  {
+    query: 'leakproof meal prep containers',
+    answer: 'Choose clip-lock, twist-lid or premium sealed boxes for saucy meals and commuting.',
+    link: '/meal-prep-containers/leakproof',
+    label: 'Leakproof guide',
+  },
+  {
+    query: 'freezer safe meal prep containers',
+    answer: 'Use stackable tubs or larger glass systems for batch cooking, leftovers and freezer rotation.',
+    link: '/meal-prep-containers/freezer-safe',
+    label: 'Freezer guide',
   },
   {
     query: 'meal prep boxes for work',
     answer: 'Pick rectangular 900ml to 1 litre containers that stack neatly and seal well in a bag.',
-    link: '/blog/meal-prep-boxes-for-work-lunches',
+    link: '/meal-prep-containers/work-lunch',
     label: 'Work lunch guide',
   },
   {
-    query: 'meal prep tubs',
-    answer: 'Use larger plastic or twist-lid tubs for batch-cooked bases, soups, freezer portions and overnight oats.',
-    link: '/blog/meal-prep-tubs-for-batch-cooking',
-    label: 'Batch tub guide',
+    query: 'large meal prep container set',
+    answer: 'Compare 10-pack, 20-pack and bulk sets when five lunch boxes are not enough.',
+    link: '/meal-prep-containers/large-sets',
+    label: 'Large set guide',
   },
   {
     query: 'cheap meal prep tubs',
@@ -216,20 +229,7 @@ export default function ContainerHub() {
           sourcePage="container-direct-comparison"
         />
 
-        <div className="container-tier-nav" aria-label="Meal prep container guides">
-          <Link to="/meal-prep-containers" className="container-tier-link container-tier-link--active">
-            {toTitleCase('Best containers')}
-          </Link>
-          <Link to="/meal-prep-containers/budget" className="container-tier-link">
-            Budget
-          </Link>
-          <Link to="/meal-prep-containers/mid-range" className="container-tier-link">
-            {toTitleCase('Glass and mid range')}
-          </Link>
-          <Link to="/meal-prep-containers/premium" className="container-tier-link">
-            {toTitleCase('Premium')}
-          </Link>
-        </div>
+        <ContainerGuideNav currentSlug="hub" />
 
         <section className="container-search-match" aria-labelledby="container-query-heading">
           <div className="section-head-inline">
@@ -388,6 +388,12 @@ export default function ContainerHub() {
 
         <h2>Related Container Guides</h2>
         <ul className="plan-links">
+          <li><Link to="/meal-prep-containers/glass">Glass meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/plastic">Plastic meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/leakproof">Leakproof meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/freezer-safe">Freezer safe meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/work-lunch">Meal prep boxes for work UK</Link></li>
+          <li><Link to="/meal-prep-containers/large-sets">Large meal prep container sets UK</Link></li>
           <li><Link to="/blog/best-meal-prep-containers-uk">Best meal prep containers UK buying guide</Link></li>
           <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
           <li><Link to="/blog/leakproof-meal-prep-containers-uk">Leakproof meal prep containers UK</Link></li>
