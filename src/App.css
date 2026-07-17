@@ -749,6 +749,19 @@ input:focus, select:focus {
   justify-content: center;
 }
 
+.not-found-page,
+.not-found-content,
+.not-found-heading,
+.not-found-sub,
+.not-found-page .site-logo,
+.not-found-page .site-logo-text {
+  color: var(--ink);
+}
+
+.not-found-sub {
+  color: #3f4036;
+}
+
 /* ---------- Meal prompt result actions ---------- */
 
 .meal-prompt-result-actions {
