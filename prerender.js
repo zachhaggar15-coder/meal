@@ -203,6 +203,8 @@ const ROUTES = uniqueRoutes([
   '/contact',
   '/privacy',
   '/terms',
+  '/404',
+  '/admin',
   '/meal-plans',
   ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
   ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
@@ -221,7 +223,8 @@ const ROUTES = uniqueRoutes([
   ...SEO_PRIORITY_ROUTES,
 ]);
 
-const SITEMAP_ROUTES = ROUTES.filter(route => route !== '/quiz/results');
+const NOINDEX_ROUTES = new Set(['/quiz/results', '/404', '/admin']);
+const SITEMAP_ROUTES = ROUTES.filter(route => !NOINDEX_ROUTES.has(route));
 
 async function prerender() {
   const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf-8');
@@ -260,9 +263,13 @@ async function prerender() {
   }
 
   fs.rmSync(path.join(dist, 'ssr'), { recursive: true, force: true });
+  const notFoundPage = path.join(dist, '404', 'index.html');
+  if (fs.existsSync(notFoundPage)) {
+    fs.copyFileSync(notFoundPage, path.join(dist, '404.html'));
+  }
   console.log(`\nPrerender complete: ${ok} written, ${failed} failed. Total: ${ROUTES.length} routes.\n`);
 
-  // ── Generate sitemap.xml ────────────────────────────────────────────────────
+  // ── Generate sitemap index and grouped child sitemaps ───────────────────────
   const today = new Date().toISOString().split('T')[0];
 
   function urlEntry(loc, priority, changefreq = 'monthly') {
@@ -293,15 +300,44 @@ async function prerender() {
     return ['0.5', 'monthly'];
   }
 
-  const sitemapEntries = SITEMAP_ROUTES.map(route => {
-    const [priority, changefreq] = routePriority(route);
-    return urlEntry(route, priority, changefreq);
-  });
+  function routeGroup(route) {
+    if (route.startsWith('/plans/')) return 'plans';
+    if (route === '/blog' || route.startsWith('/blog/')) return 'blog';
+    if (
+      route === '/meal-plans' ||
+      route.startsWith('/meal-plans/') ||
+      route.startsWith('/meal-plan/') ||
+      route.startsWith('/choose-')
+    ) return 'meal-plans';
+    return 'core';
+  }
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries.join('\n')}\n</urlset>\n`;
+  const sitemapGroups = [
+    { key: 'core', filename: 'sitemap-core.xml' },
+    { key: 'plans', filename: 'sitemap-plans.xml' },
+    { key: 'meal-plans', filename: 'sitemap-meal-plans.xml' },
+    { key: 'blog', filename: 'sitemap-blog.xml' },
+  ].map(group => ({
+    ...group,
+    routes: SITEMAP_ROUTES.filter(route => routeGroup(route) === group.key),
+  })).filter(group => group.routes.length);
 
-  fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap);
-  console.log(`Sitemap written: ${sitemapEntries.length} URLs → dist/sitemap.xml\n`);
+  for (const group of sitemapGroups) {
+    const entries = group.routes.map(route => {
+      const [priority, changefreq] = routePriority(route);
+      return urlEntry(route, priority, changefreq);
+    });
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>\n`;
+    fs.writeFileSync(path.join(dist, group.filename), sitemap);
+  }
+
+  const sitemapIndexEntries = sitemapGroups.map(group => (
+    `  <sitemap>\n    <loc>https://www.mealprep.org.uk/${group.filename}</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>`
+  ));
+  const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapIndexEntries.join('\n')}\n</sitemapindex>\n`;
+
+  fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemapIndex);
+  console.log(`Sitemap index written: ${SITEMAP_ROUTES.length} URLs across ${sitemapGroups.length} files → dist/sitemap.xml\n`);
 }
 
 prerender().catch(err => {

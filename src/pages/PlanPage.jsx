@@ -15,6 +15,7 @@ import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { track } from '../utils/analytics.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import NotFound from './NotFound.jsx';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -120,12 +121,7 @@ export default function PlanPage() {
   ), [sourcePlan, householdMembers]);
 
   if (!plan) {
-    return (
-      <div className="content-page">
-        <h1>Plan not found</h1>
-        <p><Link to="/browse">Browse all {PLAN_COUNT} meal plans</Link></p>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const activeDay   = displayPlan.plan[activeDayIdx];
@@ -135,33 +131,7 @@ export default function PlanPage() {
     : `https://www.mealprep.org.uk${planVisual?.src || '/og-preview.png'}`;
 
   const jsonLd = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: plan.title,
-      description: plan.seo.description,
-      url: plan.seo.canonical,
-      datePublished: '2026-06-01',
-      dateModified: '2026-07-02',
-      author: AUTHOR_JSON_LD,
-      publisher: {
-        '@type': 'Organization',
-        name: 'MealPrep.org.uk',
-        url: 'https://www.mealprep.org.uk',
-        email: SITE_CONTACT_EMAIL,
-      },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id': plan.seo.canonical,
-      },
-      image: planImageUrl,
-      about: [
-        `${plan.goalLabel} meal plan`,
-        `${MKT_LABEL[plan.supermarket] || plan.supermarket} meal prep`,
-        `${plan.calories.toLocaleString('en-GB')} calorie meal plan`,
-      ],
-      citation: DEFAULT_SOURCES.map(source => source.url),
-    },
+    buildPlanRecipeJsonLd(plan, planImageUrl),
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
@@ -553,6 +523,7 @@ export default function PlanPage() {
         jsonLd={jsonLd}
         ogTitle={plan.seo.ogTitle}
         ogDescription={plan.seo.ogDescription}
+        ogImage={planImageUrl}
       />
 
       <div className="content-page plan-page">
@@ -1241,6 +1212,172 @@ function PlanQualityNotes({ plan }) {
       </div>
     </section>
   );
+}
+
+function buildPlanRecipeJsonLd(plan, planImageUrl) {
+  const days = plan.plan || [];
+  const meals = days.flatMap((day, dayIndex) => (
+    (day.meals || []).map((meal, mealIndex) => ({ day, dayIndex, meal, mealIndex }))
+  ));
+  const averageDailyMinutes = Math.max(
+    15,
+    Math.round(meals.reduce((sum, item) => sum + readMealMinutes(item.meal), 0) / Math.max(1, days.length)),
+  );
+  const timing = splitPrepCookMinutes(averageDailyMinutes);
+  const market = MKT_LABEL[plan.supermarket] || plan.supermarket;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    '@id': `${plan.seo.canonical}#recipe`,
+    name: plan.title,
+    description: plan.seo.description,
+    url: plan.seo.canonical,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': plan.seo.canonical,
+    },
+    image: [planImageUrl],
+    datePublished: '2026-06-01',
+    dateModified: '2026-07-02',
+    author: AUTHOR_JSON_LD,
+    publisher: {
+      '@type': 'Organization',
+      name: 'MealPrep.org.uk',
+      url: 'https://www.mealprep.org.uk',
+      email: SITE_CONTACT_EMAIL,
+    },
+    recipeCategory: 'Meal prep',
+    recipeCuisine: 'British',
+    recipeYield: '1 person for 7 days',
+    keywords: [
+      `${plan.goalLabel} meal plan`,
+      `${market} meal prep`,
+      `${plan.calories.toLocaleString('en-GB')} calorie meal plan`,
+      plan.dietType !== 'standard' ? `${plan.dietType} meal plan` : null,
+    ].filter(Boolean).join(', '),
+    prepTime: formatIsoDuration(timing.prep),
+    cookTime: formatIsoDuration(timing.cook),
+    totalTime: formatIsoDuration(averageDailyMinutes),
+    recipeIngredient: flattenShoppingIngredients(plan.shoppingList).slice(0, 120),
+    recipeInstructions: buildPlanInstructionSections(days),
+    nutrition: buildNutritionJsonLd({
+      kcal: plan.calories,
+      protein: plan.macrosGrams?.protein,
+      carbs: plan.macrosGrams?.carbs,
+      fats: plan.macrosGrams?.fats,
+      fibre: plan.macrosGrams?.fibre,
+    }),
+    hasPart: meals.map(item => buildMealRecipeJsonLd(plan, item, planImageUrl)),
+    citation: DEFAULT_SOURCES.map(source => source.url),
+    about: [
+      `${plan.goalLabel} meal plan`,
+      `${market} meal prep`,
+      `${plan.calories.toLocaleString('en-GB')} calorie meal plan`,
+    ],
+  };
+}
+
+function buildMealRecipeJsonLd(plan, { day, dayIndex, meal, mealIndex }, planImageUrl) {
+  const minutes = readMealMinutes(meal);
+  const timing = splitPrepCookMinutes(minutes);
+
+  return {
+    '@type': 'Recipe',
+    '@id': `${plan.seo.canonical}#recipe-${dayIndex + 1}-${mealIndex + 1}`,
+    name: `${meal.name} (${day.day} ${meal.type})`,
+    description: meal.desc || `${meal.name} from ${plan.title}.`,
+    image: [planImageUrl],
+    recipeCategory: meal.type,
+    recipeYield: '1 serving',
+    prepTime: formatIsoDuration(timing.prep),
+    cookTime: formatIsoDuration(timing.cook),
+    totalTime: formatIsoDuration(minutes),
+    recipeIngredient: getMealIngredients(meal),
+    recipeInstructions: buildMealInstructionItems(meal),
+    nutrition: buildNutritionJsonLd(meal),
+    isPartOf: { '@id': `${plan.seo.canonical}#recipe` },
+  };
+}
+
+function buildPlanInstructionSections(days) {
+  return days.map((day, dayIndex) => ({
+    '@type': 'HowToSection',
+    name: day.day,
+    position: dayIndex + 1,
+    itemListElement: (day.meals || []).map((meal, mealIndex) => ({
+      '@type': 'HowToStep',
+      position: mealIndex + 1,
+      name: `${meal.type}: ${meal.name}`,
+      text: buildMealInstructionText(meal),
+    })),
+  }));
+}
+
+function buildMealInstructionItems(meal) {
+  const steps = Array.isArray(meal.recipe) && meal.recipe.length
+    ? meal.recipe
+    : [buildMealInstructionText(meal)];
+
+  return steps.map((step, index) => ({
+    '@type': 'HowToStep',
+    position: index + 1,
+    text: String(step || '').trim(),
+  })).filter(step => step.text);
+}
+
+function buildMealInstructionText(meal) {
+  const recipeText = Array.isArray(meal.recipe) && meal.recipe.length
+    ? meal.recipe.join(' ')
+    : meal.desc;
+  return [
+    recipeText || `Prepare ${meal.name} using the listed ingredients.`,
+    `${toMacroNumber(meal.kcal)} kcal and ${toMacroNumber(meal.protein)}g protein.`,
+    meal.prep ? `Ready in ${meal.prep}.` : null,
+  ].filter(Boolean).join(' ');
+}
+
+function buildNutritionJsonLd(source = {}) {
+  return {
+    '@type': 'NutritionInformation',
+    calories: `${toMacroNumber(source.kcal)} calories`,
+    proteinContent: `${toMacroNumber(source.protein)} g`,
+    carbohydrateContent: source.carbs !== undefined ? `${toMacroNumber(source.carbs)} g` : undefined,
+    fatContent: source.fats !== undefined ? `${toMacroNumber(source.fats)} g` : undefined,
+    fiberContent: source.fibre !== undefined ? `${toMacroNumber(source.fibre)} g` : undefined,
+  };
+}
+
+function flattenShoppingIngredients(shoppingList = {}) {
+  return uniqueStrings(Object.values(shoppingList).flat());
+}
+
+function getMealIngredients(meal) {
+  return uniqueStrings(meal.ingredients || meal.portion_size?.split(',') || [meal.name]);
+}
+
+function uniqueStrings(values = []) {
+  return [...new Set(values.map(value => String(value || '').trim()).filter(Boolean))];
+}
+
+function readMealMinutes(meal = {}) {
+  if (Number.isFinite(Number(meal.prepMins))) return Math.max(1, Number(meal.prepMins));
+  const match = String(meal.prep || '').match(/\d+/);
+  return match ? Math.max(1, Number(match[0])) : 15;
+}
+
+function splitPrepCookMinutes(totalMinutes) {
+  const total = Math.max(1, Math.round(Number(totalMinutes) || 15));
+  if (total <= 5) return { prep: total, cook: 0 };
+  const prep = Math.min(10, Math.max(5, Math.round(total * 0.35)));
+  return { prep, cook: Math.max(0, total - prep) };
+}
+
+function formatIsoDuration(minutes) {
+  const total = Math.max(0, Math.round(Number(minutes) || 0));
+  const hours = Math.floor(total / 60);
+  const mins = total % 60;
+  return `PT${hours ? `${hours}H` : ''}${mins ? `${mins}M` : hours ? '' : '0M'}`;
 }
 
 function BatchPrepPlan({ prepPlan }) {

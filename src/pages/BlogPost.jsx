@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
@@ -8,6 +8,7 @@ import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import TrustBox from '../components/TrustBox.jsx';
+import NotFound from './NotFound.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import {
   SEO_EXACT_PLAN_LINKS,
@@ -22,7 +23,7 @@ export default function BlogPost() {
   const { slug } = useParams();
   const data = blogPostsData[slug];
 
-  if (!data) return <Navigate to="/" replace />;
+  if (!data) return <NotFound />;
 
   const ogImageUrl = generateBlogImageUrl(slug, data.title);
   const sources = data.sources || [];

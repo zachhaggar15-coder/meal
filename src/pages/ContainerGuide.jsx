@@ -1,10 +1,11 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerFinder from '../components/ContainerFinder.jsx';
 import ContainerGuideNav from '../components/ContainerGuideNav.jsx';
+import NotFound from './NotFound.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import {
   AFFILIATE_DISCLOSURE,
@@ -73,7 +74,7 @@ export default function ContainerGuide() {
   const { tier } = useParams();
   const guide = CONTAINER_GUIDES[tier];
 
-  if (!guide) return <Navigate to="/meal-prep-containers/mid-range" replace />;
+  if (!guide) return <NotFound />;
 
   const products = getContainerProducts(guide.productIds);
   const heroProduct = getContainerProduct(guide.heroProductId);

@@ -344,32 +344,89 @@ function buildShoppingKey(ing) {
 
 // ── SEO metadata ──────────────────────────────────────────────────────────────
 
+const PLAN_TITLE_SUFFIX = ' | MealPrep.org.uk';
+const PLAN_TITLE_MAX_LENGTH = 56;
+const PLAN_DESCRIPTION_MAX_LENGTH = 150;
+
+const COMPACT_GOAL_LABELS = {
+  'weight-loss': 'Weight Loss',
+  'high-protein-low-cal': 'High Protein',
+  'muscle-gain': 'Muscle Gain',
+  'budget-fat-loss': 'Budget Fat Loss',
+  'cheap-student': 'Student Budget',
+  'busy-professional': 'Work Lunch',
+  'low-effort': 'Low Effort',
+  'vegetarian-low-cal': 'Vegetarian Low Cal',
+  'vegan-low-cal': 'Vegan Low Cal',
+  'high-protein-vegetarian': 'High Protein Veg',
+  pescatarian: 'Pescatarian',
+  'budget-bodybuilding': 'Budget Bodybuilding',
+  'gym-beginner': 'Gym Beginner',
+  'cheap-high-protein': 'Cheap High Protein',
+  maintenance: 'Maintenance',
+  'anti-inflammatory': 'Anti-Inflammatory',
+  'menopause-nutrition': 'Menopause',
+  'endurance-athlete': 'Endurance',
+  'body-recomp': 'Body Recomp',
+  cutting: 'Cutting',
+};
+
 function buildSeo(seed) {
   const mkt = getMarketLabel(seed.supermarket);
   const gl = GOAL_LABELS[seed.goal] || seed.goal;
   const cal = seed.calories;
+  const planTitle = buildCtrPlanTitle(seed, mkt, gl, cal);
+  const planDescription = buildCtrPlanDescription(seed, mkt, gl, cal);
+
   return {
-    title: `${buildCtrPlanTitle(seed, mkt, gl, cal)} | MealPrep.org.uk`,
-    description: buildCtrPlanDescription(seed, mkt, gl, cal),
+    title: `${planTitle}${PLAN_TITLE_SUFFIX}`,
+    description: planDescription,
     canonical: `https://www.mealprep.org.uk/plans/${seed.slug}`,
-    ogTitle: buildCtrPlanTitle(seed, mkt, gl, cal),
-    ogDescription: buildCtrPlanDescription(seed, mkt, gl, cal),
+    ogTitle: planTitle,
+    ogDescription: planDescription,
   };
 }
 
 function buildCtrPlanTitle(seed, marketLabel, goalLabel, calories) {
-  const diet = seed.dietType !== 'standard' && !goalLabel.toLowerCase().includes(seed.dietType)
-    ? `${cap(seed.dietType)} `
-    : '';
+  const topic = buildCompactPlanTopic(seed, goalLabel);
   const market = marketLabel === 'UK' ? 'UK' : marketLabel;
-  return `${market} ${diet}${calories.toLocaleString('en-GB')} Calorie ${goalLabel} Meal Plan - PDF + Shopping List`;
+  const caloriesText = calories.toLocaleString('en-GB');
+  const candidates = [
+    `${market} ${caloriesText} kcal ${topic} Plan`,
+    `${market} ${topic} Plan`,
+    `${caloriesText} kcal ${topic} Plan`,
+    `${topic} Meal Plan`,
+  ];
+
+  return pickFirstWithinLimit(candidates, PLAN_TITLE_MAX_LENGTH, PLAN_TITLE_SUFFIX);
 }
 
 function buildCtrPlanDescription(seed, marketLabel, goalLabel, calories) {
-  const diet = seed.dietType === 'standard' ? 'UK' : `${seed.dietType} UK`;
   const budget = BUDGET_ESTIMATES[seed.budget];
-  const marketPhrase = marketLabel === 'UK' ? 'UK supermarkets' : marketLabel;
-  return `Free printable ${diet} ${goalLabel.toLowerCase()} meal plan for ${marketPhrase}: 7 days at ~${calories.toLocaleString('en-GB')} kcal/day, ${budget}/week estimate, macros and shopping list.`;
+  const marketPhrase = marketLabel === 'UK' ? 'UK supermarket' : marketLabel;
+  const topic = buildCompactPlanTopic(seed, goalLabel).toLowerCase();
+  const caloriesText = calories.toLocaleString('en-GB');
+  const candidates = [
+    `Free ${marketPhrase} ${topic} meal plan: 7 days at ~${caloriesText} kcal/day with recipes, macros, PDF print view and shopping list. Budget ${budget}/week.`,
+    `Free ${marketPhrase} ${topic} meal plan: 7 days at ~${caloriesText} kcal/day with recipes, macros and a shopping list.`,
+    `${marketPhrase} ${topic} meal plan for ~${caloriesText} kcal/day, with recipes, macros and a weekly shopping list.`,
+    `Free ${topic} meal plan: ~${caloriesText} kcal/day, recipes, macros and shopping list.`,
+  ];
+
+  return pickFirstWithinLimit(candidates, PLAN_DESCRIPTION_MAX_LENGTH);
+}
+
+function buildCompactPlanTopic(seed, goalLabel) {
+  const goal = COMPACT_GOAL_LABELS[seed.goal] || goalLabel;
+  const lowerGoal = goal.toLowerCase();
+  const diet = seed.dietType !== 'standard' && !lowerGoal.includes(seed.dietType)
+    ? `${cap(seed.dietType)} `
+    : '';
+  return `${diet}${goal}`.trim();
+}
+
+function pickFirstWithinLimit(candidates, maxLength, suffix = '') {
+  return candidates.find(candidate => `${candidate}${suffix}`.length <= maxLength) || candidates[candidates.length - 1];
 }
 
 function getMarketLabel(supermarket) {

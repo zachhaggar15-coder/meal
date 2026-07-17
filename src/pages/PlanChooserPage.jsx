@@ -1,7 +1,8 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   buildBrowsePlanUrl,
@@ -17,7 +18,7 @@ export default function PlanChooserPage() {
   const { goal } = useParams();
   const goalChoice = getGoalChoice(goal);
 
-  if (!goalChoice) return <Navigate to="/browse" replace />;
+  if (!goalChoice) return <NotFound />;
 
   const options = SUPERMARKET_CHOICES
     .map(market => ({

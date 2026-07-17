@@ -1,4 +1,4 @@
-import { chooseBlogCardVisual, chooseBlogVisual } from '../data/visualAssets.js';
+import { chooseBlogCardVisual, chooseBlogVisual, choosePlanVisual } from '../data/visualAssets.js';
 
 const DOMAIN = 'https://www.mealprep.org.uk';
 const STATIC_OG = `${DOMAIN}/og-preview.png`;
@@ -33,7 +33,10 @@ function imageAsset(path) {
   return absoluteAsset(path);
 }
 
-export const generateMealPlanImageUrl = () => STATIC_OG;
+export const generateMealPlanImageUrl = (slug, title, calories) => {
+  const visual = choosePlanVisual({ slug, title, calories });
+  return visual?.src ? imageAsset(visual.src) : STATIC_OG;
+};
 export const generateBlogImageUrl = slug => {
   if (BLOG_OG_IMAGES[slug]) return absoluteAsset(BLOG_OG_IMAGES[slug]);
   const fallback = chooseBlogVisual(slug);

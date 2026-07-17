@@ -153,6 +153,8 @@ export default function Sidebar({ open, onClose }) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
 
+  if (!open) return null;
+
   function isActive(to) {
     const [path, hash] = to.split('#');
     if (hash) {
@@ -163,8 +165,8 @@ export default function Sidebar({ open, onClose }) {
 
   return (
     <>
-      {open && <div className="sidebar-backdrop" onClick={onClose} aria-hidden />}
-      <nav id="site-sidebar" className={`sidebar${open ? ' sidebar--open' : ''}`} aria-label="Site navigation">
+      <div className="sidebar-backdrop" onClick={onClose} aria-hidden />
+      <nav id="site-sidebar" className="sidebar sidebar--open" aria-label="Site navigation">
         <div className="sidebar-inner">
           <button className="sidebar-close-btn" onClick={onClose} type="button">
             Close menu

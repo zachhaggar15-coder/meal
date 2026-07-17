@@ -1,7 +1,8 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   buildBrowsePlanUrl,
@@ -21,7 +22,7 @@ export default function ChoiceLandingPage({ mode }) {
   const params = useParams();
   const config = getModeConfig(mode, params);
 
-  if (!config?.choice) return <Navigate to="/browse" replace />;
+  if (!config?.choice) return <NotFound />;
 
   const cards = config.cards
     .map(card => ({

@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
@@ -7,6 +7,7 @@ import PopularSearches from '../components/PopularSearches.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import ComboLandingPage from './ComboLandingPage.jsx';
+import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   filterPlansForHub,
@@ -56,7 +57,7 @@ export default function MealPlanHubPage() {
   const comboPage = COMBO_LANDING_PAGES[slug];
 
   if (!hub && comboPage) return <ComboLandingPage page={comboPage} />;
-  if (!hub) return <Navigate to="/browse" replace />;
+  if (!hub) return <NotFound />;
 
   const matchingPlans = filterPlansForHub(ALL_PLANS, hub);
   const shownPlans = matchingPlans.slice(0, CARD_LIMIT);

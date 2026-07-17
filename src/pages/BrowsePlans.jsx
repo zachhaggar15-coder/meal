@@ -19,7 +19,7 @@ import { toTitleCase } from '../utils/textFormatting.js';
 // is the honest count of real, indexed plans and is used only for headline
 // marketing/SEO text ("Browse X plans") — never for filtering.
 const ALL_PLANS = getAllPlanMeta();
-const PLAN_INDEX_LIMIT = 12;
+const PLAN_INDEX_LIMIT = 3;
 
 const GOALS = [
   { value: '',                      label: 'All goals' },
@@ -370,7 +370,7 @@ export default function BrowsePlans() {
           </div>
         </section>
 
-        <SearchOpportunityLinks />
+        <SearchOpportunityLinks compact showDiscovery={false} />
 
         <section className="browse-index" aria-labelledby="browse-index-heading">
           <div className="browse-index-header">

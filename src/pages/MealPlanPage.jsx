@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
@@ -9,6 +9,7 @@ import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
+import NotFound from './NotFound.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 import { buildShoppingList, scaleIngredientsForPortion } from '../utils/planBuilder.js';
@@ -51,7 +52,7 @@ export default function MealPlanPage() {
 
   const shoppingList = useMemo(() => buildShoppingList(plan), [plan]);
 
-  if (!data) return <Navigate to="/" replace />;
+  if (!data) return <NotFound />;
 
   function handleSwap(dayIdx, mealIdx, newMeal) {
     setPlan(prev => prev.map((day, di) => {
