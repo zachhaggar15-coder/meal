@@ -11807,3 +11807,32 @@ textarea {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 }
+
+/* Contrast hardening for the current editorial theme */
+.featured-plans .section-title,
+.site-footer .footer-col h2 {
+  color: var(--editorial-ink);
+}
+
+.site-footer .footer-lead p,
+.site-footer .footer-col a,
+.site-footer .footer-copy {
+  color: var(--editorial-muted);
+}
+
+.site-footer .footer-col a:hover {
+  color: var(--editorial-ink);
+  text-decoration: underline;
+}
+
+.submit,
+.sticker-promo-btn,
+.conversion-panel-btn {
+  color: var(--editorial-ink);
+}
+
+.submit:hover,
+.sticker-promo-btn:hover,
+.conversion-panel-btn:hover {
+  color: var(--editorial-paper);
+}
