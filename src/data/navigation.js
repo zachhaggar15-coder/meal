@@ -278,6 +278,14 @@ const STATIC_SEARCH_ENTRIES = [
     keywords: 'blog guides articles nutrition beginner calorie deficit high protein',
     priority: 70,
   },
+  {
+    title: 'MealPrep Feedback',
+    to: '/feedback',
+    type: 'Feedback',
+    description: 'Send site feedback, report confusing pages or suggest improvements.',
+    keywords: 'feedback suggestion problem bug issue contact improve report',
+    priority: 68,
+  },
 ];
 
 export const SITE_SEARCH_INDEX = buildSiteSearchIndex();

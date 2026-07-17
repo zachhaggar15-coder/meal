@@ -1,8 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
+import SiteSearch from './SiteSearch.jsx';
+
+const TOP_TABS = [
+  { to: '/', label: 'Home', match: path => path === '/' },
+  { to: '/quiz', label: 'Quiz', match: path => path === '/quiz' || path === '/quiz/results' },
+  { to: '/meal-prep-containers', label: 'Meal prep containers', match: path => path.startsWith('/meal-prep-containers') },
+  { to: '/tools', label: 'Tools', match: path => path === '/tools' },
+  { to: '/feedback', label: 'Feedback', match: path => path === '/feedback' },
+];
 
 export default function Navbar({ menuOpen = false, onMenuToggle }) {
   const location = useLocation();
-  const quizActive = location.pathname === '/quiz' || location.pathname === '/quiz/results';
 
   return (
     <nav className="site-nav" aria-label="Main navigation">
@@ -21,14 +29,24 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
           <Link to="/" className="nav-brand" aria-label="MealPrep home">MealPrep</Link>
         </div>
 
+        <div className="nav-tabs" aria-label="Quick links">
+          {TOP_TABS.map(tab => {
+            const active = tab.match(location.pathname);
+            return (
+              <Link
+                key={tab.to}
+                to={tab.to}
+                className={active ? 'nav-tab nav-tab--active' : 'nav-tab'}
+                aria-current={active ? 'page' : undefined}
+              >
+                {tab.label}
+              </Link>
+            );
+          })}
+        </div>
+
         <div className="nav-right">
-          <Link
-            to="/quiz"
-            className={quizActive ? 'nav-quiz-btn nav-quiz-btn--active' : 'nav-quiz-btn'}
-            aria-current={quizActive ? 'page' : undefined}
-          >
-            Find my plan
-          </Link>
+          <SiteSearch id="top-site-search" className="site-search--top" maxResults={6} />
         </div>
       </div>
     </nav>

@@ -4,7 +4,6 @@ import {
   MOBILE_NAV_GROUPS,
   PLAN_COUNT,
 } from '../data/navigation.js';
-import SiteSearch from './SiteSearch.jsx';
 
 const DEFAULT_EXPANDED = MOBILE_NAV_GROUPS.reduce((state, group) => ({
   ...state,
@@ -50,16 +49,6 @@ export default function Sidebar({ open, onClose }) {
             <button className="sidebar-close-btn" onClick={onClose} type="button">
               Close
             </button>
-          </div>
-
-          <div className="sidebar-search-wrap">
-            <SiteSearch
-              id="sidebar-site-search"
-              className="site-search--sidebar"
-              placeholder="Search plans, guides, tools..."
-              maxResults={8}
-              onNavigate={onClose}
-            />
           </div>
 
           <div className="sidebar-priority-actions" aria-label="Recommended actions">

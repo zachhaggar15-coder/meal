@@ -11592,28 +11592,218 @@ textarea {
   }
 }
 
-/* Restore desktop side navigation */
+/* Top utility nav and desktop sidebar */
 .site-nav .nav-links,
 .site-nav .site-search--nav {
   display: none !important;
 }
 
+.site-nav {
+  background: rgba(248, 246, 239, 0.98);
+  border-bottom: 1px solid var(--editorial-line);
+}
+
+.nav-inner {
+  gap: 18px;
+  max-width: none;
+  min-height: 64px;
+  padding: 8px 24px;
+}
+
+.nav-tabs {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nav-tab {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: var(--editorial-ink);
+  display: inline-flex;
+  font-size: 0.84rem;
+  font-weight: 850;
+  line-height: 1;
+  min-height: 38px;
+  padding: 9px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-tab:hover,
+.nav-tab--active {
+  background: var(--lime);
+  border-color: var(--editorial-ink);
+  color: var(--editorial-ink);
+}
+
+.nav-right {
+  flex: 0 1 430px;
+  margin-left: auto;
+}
+
+.site-search--top {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  width: 100%;
+}
+
+.site-search--top .site-search-results {
+  left: auto;
+  min-width: min(430px, calc(100vw - 32px));
+  right: 0;
+}
+
+.sidebar-search-wrap {
+  display: none;
+}
+
+.feedback-page {
+  max-width: 920px;
+}
+
+.feedback-page-header {
+  margin-bottom: 24px;
+}
+
+.feedback-page-header h1 {
+  color: var(--editorial-ink);
+  font-size: clamp(2.3rem, 5vw, 4.8rem);
+  line-height: 0.98;
+  margin: 12px 0 16px;
+  max-width: 760px;
+}
+
+.feedback-page-header p {
+  color: var(--editorial-muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 680px;
+}
+
+.feedback-box--standalone {
+  margin-top: 0;
+}
+
 @media (min-width: 1000px) {
-  .nav-inner {
-    max-width: none;
+  .layout-body {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
   }
 
-  .nav-right {
+  .layout-main {
+    min-width: 0;
+  }
+
+  .layout-main > .page,
+  .layout-main > .content-page,
+  .layout-main > .browse-page,
+  .layout-main > .plan-page,
+  .layout-main > .meal-plan-hub-page,
+  .layout-main > .choice-page,
+  .layout-main > .plan-chooser-page,
+  .layout-main > .container-hub-page,
+  .layout-main > .container-guide-page,
+  .layout-main > .blog-page,
+  .layout-main > .blog-post-page,
+  .layout-main > .stickers-page,
+  .layout-main > .not-found-page {
     margin-left: auto;
+    margin-right: auto;
   }
 
   .sidebar,
   .sidebar:not(.sidebar--open),
   .sidebar.sidebar--open {
+    background: var(--editorial-paper);
+    border-right: 1px solid var(--editorial-line);
+    box-shadow: none;
     display: block !important;
+    height: calc(100vh - 64px);
+    left: auto;
+    max-width: none;
+    overflow-y: auto;
+    position: sticky;
+    top: 64px;
+    transform: none;
+    width: 270px;
+    z-index: 20;
   }
 
+  .sidebar:not(.sidebar--open) .sidebar-inner {
+    visibility: visible;
+  }
+
+  .sidebar-backdrop {
+    display: none !important;
+  }
+
+  .nav-menu-toggle,
   .sidebar-close-btn {
     display: none !important;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1320px) {
+  .home-hero,
+  .supermarket-index-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    text-align: left;
+  }
+
+  .home-hero::before,
+  .home-hero-h1,
+  .home-hero-sub,
+  .home-hero-actions,
+  .trust-row,
+  .home-hero-visual {
+    grid-column: 1;
+  }
+
+  .home-hero-visual {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 1120px) {
+  .nav-inner {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .nav-tabs {
+    order: 3;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    width: 100%;
+  }
+
+  .nav-right {
+    flex-basis: min(460px, 62vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .nav-inner {
+    padding: 8px 14px;
+  }
+
+  .nav-left {
+    width: auto;
+  }
+
+  .nav-right {
+    flex-basis: 100%;
+    margin-left: 0;
+    order: 4;
+  }
+
+  .site-search--top {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }

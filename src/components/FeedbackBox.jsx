@@ -6,7 +6,13 @@ async function safeJson(res) {
   try { return await res.json(); } catch { return {}; }
 }
 
-export default function FeedbackBox({ className = '' }) {
+export default function FeedbackBox({
+  className = '',
+  title = 'Feedback',
+  description = 'Seen something off with this plan? Send a quick note and we will review it.',
+  label = 'What should we improve?',
+  placeholder = 'Missing ingredient, confusing recipe, better swap idea...',
+}) {
   const feedbackId = useId();
   const honeypotId = useId();
   const [feedback, setFeedback] = useState('');
@@ -37,6 +43,9 @@ export default function FeedbackBox({ className = '' }) {
       });
       const data = await safeJson(res);
       if (!res.ok) {
+        if (res.status === 404 && isLocalPreview()) {
+          throw new Error('Feedback can only be submitted when the local server is running with Vercel dev or after deployment.');
+        }
         throw new Error(data?.error || 'Could not send feedback. Please try again.');
       }
 
@@ -59,15 +68,15 @@ export default function FeedbackBox({ className = '' }) {
     >
       <div className="plan-feedback-copy">
         <h2 className="plan-feedback-heading" id={`${feedbackId}-heading`}>
-          Feedback
+          {title}
         </h2>
         <p className="plan-feedback-text">
-          Seen something off with this plan? Send a quick note and we will review it.
+          {description}
         </p>
       </div>
       <form className="feedback-form" onSubmit={handleSubmit}>
         <label className="feedback-label" htmlFor={`${feedbackId}-input`}>
-          What should we improve?
+          {label}
         </label>
         <textarea
           id={`${feedbackId}-input`}
@@ -81,7 +90,7 @@ export default function FeedbackBox({ className = '' }) {
             }
           }}
           maxLength={MAX_FEEDBACK_LENGTH}
-          placeholder="Missing ingredient, confusing recipe, better swap idea..."
+          placeholder={placeholder}
           rows={4}
           disabled={sending}
           required
@@ -109,4 +118,9 @@ export default function FeedbackBox({ className = '' }) {
       </form>
     </section>
   );
+}
+
+function isLocalPreview() {
+  if (typeof window === 'undefined') return false;
+  return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
 }
