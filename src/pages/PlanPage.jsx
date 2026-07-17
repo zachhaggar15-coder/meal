@@ -544,7 +544,6 @@ export default function PlanPage() {
         <p className="content-byline">
           Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed: 2 July 2026.
         </p>
-        <PageHeroVisual visual={planVisual} className="plan-page-visual" />
 
         {editNote && (
           <div className="plan-edit-notice">
@@ -565,13 +564,6 @@ export default function PlanPage() {
           shareStatus={shareStatus}
         />
 
-        <PlanEmailCapture
-          plan={plan}
-          status={planEmailStatus}
-          message={planEmailMessage}
-          onSubmit={handleEmailPlan}
-        />
-
         <HouseholdPortionsControl
           mode={householdMode}
           members={householdMembers}
@@ -585,6 +577,13 @@ export default function PlanPage() {
 
         {planDaysSection}
         {shoppingListSection}
+        <PlanEmailCapture
+          plan={plan}
+          status={planEmailStatus}
+          message={planEmailMessage}
+          onSubmit={handleEmailPlan}
+        />
+        <PageHeroVisual visual={planVisual} className="plan-page-visual plan-page-visual--after-plan" />
         <ContainerSetupRecommendation
           plan={displayPlan}
           sourcePage={`plan-${plan.slug || 'page'}-containers`}

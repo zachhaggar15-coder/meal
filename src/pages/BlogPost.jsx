@@ -131,14 +131,6 @@ export default function BlogPost() {
             Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
             {data.reviewed || data.modified || '17 June 2026'}.
           </p>
-          {hasCustomBlogImage(slug) && (
-            <figure className="blog-hero-image">
-              <img src={ogImageUrl} alt={`${data.h1} guide`} />
-            </figure>
-          )}
-          {data.affiliateDisclosure && (
-            <p className="affiliate-disclosure">{data.affiliateDisclosure}</p>
-          )}
           {quickAnswer && (
             <aside className="quick-answer-box" aria-label="Quick answer">
               <strong>{toTitleCase('Quick answer')}</strong>
@@ -151,6 +143,16 @@ export default function BlogPost() {
                 </div>
               )}
             </aside>
+          )}
+          <ExactPlanLinks links={exactPlanLinks} />
+
+          {hasCustomBlogImage(slug) && (
+            <figure className="blog-hero-image blog-hero-image--after-answer">
+              <img src={ogImageUrl} alt={`${data.h1} guide`} />
+            </figure>
+          )}
+          {data.affiliateDisclosure && (
+            <p className="affiliate-disclosure">{data.affiliateDisclosure}</p>
           )}
           <ContextualLinks blocks={data.contextualLinks} />
 
@@ -173,8 +175,6 @@ export default function BlogPost() {
               showDisclosure={false}
             />
           )}
-
-          <ExactPlanLinks links={exactPlanLinks} />
 
           <RecipeCollection recipes={data.recipes} slug={slug} />
 

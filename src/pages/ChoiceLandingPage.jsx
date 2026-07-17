@@ -89,7 +89,6 @@ export default function ChoiceLandingPage({ mode }) {
             <span>{config.defaultValue}</span>
             <Link to={config.changeUrl}>Change filters</Link>
           </div>
-          <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual" priority />
         </header>
 
         <section className="plan-chooser-grid" aria-label={config.gridLabel}>
@@ -140,6 +139,8 @@ export default function ChoiceLandingPage({ mode }) {
             );
           })}
         </section>
+
+        <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual plan-chooser-visual--after-grid" priority />
 
         <section className="choice-index-note">
           <h2>{toTitleCase('Want a different combination?')}</h2>

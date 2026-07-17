@@ -261,18 +261,8 @@ export default function BrowsePlans() {
           </p>
         </div>
 
-        <PageHeroVisual visual={SITE_VISUALS.browse} className="browse-hero-visual" priority />
-
-        <PopularSearches
-          title="Popular UK searches"
-          intro="Use these shortcuts for the highest-demand calorie, protein, shopping-list and container guides."
-          className="popular-searches--browse"
-        />
-
-        <WeeklyTrendingLinks />
-
         {/* Search + filters */}
-        <div className="browse-filters">
+        <div className="browse-filters" id="browse-filters">
           <input
             className="browse-search"
             type="search"
@@ -347,6 +337,16 @@ export default function BrowsePlans() {
             </button>
           </div>
         )}
+
+        <PageHeroVisual visual={SITE_VISUALS.browse} className="browse-hero-visual browse-hero-visual--after-results" priority />
+
+        <PopularSearches
+          title="Popular UK searches"
+          intro="Use these shortcuts for the highest-demand calorie, protein, shopping-list and container guides."
+          className="popular-searches--browse"
+        />
+
+        <WeeklyTrendingLinks />
 
         <section className="browse-hub-index" aria-labelledby="browse-hub-index-heading">
           <div className="browse-index-header">

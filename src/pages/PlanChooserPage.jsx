@@ -96,7 +96,6 @@ export default function PlanChooserPage() {
             <span>{goalChoice.defaultCalories.toLocaleString('en-GB')} kcal/day</span>
             <Link to={buildBrowsePlanUrl({ goal: goalChoice.value })}>Change calories</Link>
           </div>
-          <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual" priority />
         </header>
 
         <section className="plan-chooser-grid" aria-label={`${goalChoice.label} supermarket choices`}>
@@ -143,6 +142,8 @@ export default function PlanChooserPage() {
             );
           })}
         </section>
+
+        <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual plan-chooser-visual--after-grid" priority />
       </div>
     </>
   );

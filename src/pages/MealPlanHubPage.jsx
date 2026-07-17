@@ -152,7 +152,6 @@ export default function MealPlanHubPage() {
             <a className="btn-primary" href="#top-plans">Compare top plans</a>
             <Link className="btn-secondary" to="/quiz">Find my best match</Link>
           </div>
-          <PageHeroVisual visual={hubVisual} className="meal-hub-hero-visual" priority />
         </header>
 
         <section className="meal-hub-snippet" aria-label="What this hub includes">
@@ -169,12 +168,6 @@ export default function MealPlanHubPage() {
             <span>Free UK meal plan pages that can be printed or saved as PDF</span>
           </div>
         </section>
-
-        <PopularSearches
-          title="Popular UK searches"
-          intro="Related guides and plan hubs for calorie targets, printable PDFs, supermarket shopping and meal prep kit."
-          className="popular-searches--hub"
-        />
 
         <section id="top-plans" className="meal-hub-plans">
           <div className="section-head-inline">
@@ -206,6 +199,14 @@ export default function MealPlanHubPage() {
             ))}
           </div>
         </section>
+
+        <PageHeroVisual visual={hubVisual} className="meal-hub-hero-visual meal-hub-hero-visual--after-plans" priority />
+
+        <PopularSearches
+          title="Popular UK searches"
+          intro="Related guides and plan hubs for calorie targets, printable PDFs, supermarket shopping and meal prep kit."
+          className="popular-searches--hub"
+        />
 
         {hub.sections.map(section => (
           <section key={section.h2} className="meal-hub-copy-section">
