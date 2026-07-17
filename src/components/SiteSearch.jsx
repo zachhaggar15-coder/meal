@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { searchSite } from '../data/navigation.js';
+import { trackEvent } from '../utils/analytics.js';
 
 export default function SiteSearch({
   id = 'site-search',
@@ -19,6 +20,18 @@ export default function SiteSearch({
   function handleSubmit(event) {
     event.preventDefault();
     const firstResult = trimmedQuery.length > 1 ? results[0] : null;
+    const destination = firstResult
+      ? firstResult.to
+      : trimmedQuery
+        ? `/browse?search=${encodeURIComponent(trimmedQuery)}`
+        : '/browse';
+
+    trackEvent('site_search_submitted', {
+      query: cleanSearchQuery(trimmedQuery),
+      result_count: results.length,
+      destination,
+      search_surface: id,
+    });
 
     if (firstResult) {
       navigate(firstResult.to);
@@ -32,7 +45,14 @@ export default function SiteSearch({
     onNavigate?.();
   }
 
-  function handleResultClick() {
+  function handleResultClick(result) {
+    trackEvent('site_search_result_click', {
+      query: cleanSearchQuery(trimmedQuery),
+      result_title: result.title,
+      result_type: result.type,
+      destination: result.to,
+      search_surface: id,
+    });
     setFocused(false);
     onNavigate?.();
   }
@@ -64,7 +84,7 @@ export default function SiteSearch({
                 className="site-search-result"
                 role="option"
                 onMouseDown={event => event.preventDefault()}
-                onClick={handleResultClick}
+                onClick={() => handleResultClick(result)}
               >
                 <span className="site-search-result-type">{result.type}</span>
                 <strong>{result.title}</strong>
@@ -77,7 +97,11 @@ export default function SiteSearch({
               className="site-search-result"
               role="option"
               onMouseDown={event => event.preventDefault()}
-              onClick={handleResultClick}
+              onClick={() => handleResultClick({
+                title: `Search plans for ${trimmedQuery}`,
+                type: 'Browse',
+                to: `/browse?search=${encodeURIComponent(trimmedQuery)}`,
+              })}
             >
               <span className="site-search-result-type">Browse</span>
               <strong>Search plans for "{trimmedQuery}"</strong>
@@ -88,4 +112,8 @@ export default function SiteSearch({
       )}
     </form>
   );
+}
+
+function cleanSearchQuery(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, 100);
 }

@@ -37,9 +37,16 @@ export default function Privacy() {
         <section>
           <h2>Analytics</h2>
           <p>
-            We use privacy-conscious site analytics to understand which pages are useful and where
-            people find broken or confusing journeys. Analytics data is used in aggregate to improve
-            pages, navigation and search visibility.
+            We use optional, privacy-conscious site analytics to understand which pages are useful
+            and where people find broken or confusing journeys. Analytics data is used in aggregate
+            to improve pages, navigation and search visibility.
+          </p>
+          <p>
+            If analytics are accepted, we may record anonymous session events such as page views,
+            button and link clicks, internal searches, scroll depth, headings or sections that enter
+            the viewport, approximate time spent on a page, referrer type, device category and
+            viewport size. We do not use this behaviour log to store email addresses, payment
+            details, sensitive health information or typed meal-plan form answers.
           </p>
         </section>
 

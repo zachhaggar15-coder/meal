@@ -12,6 +12,7 @@ import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { trackEvent } from '../utils/analytics.js';
 
 // ALL_PLANS intentionally includes the large synthetic "coverage" pool (see
 // planSeeds.js) so filtering can match granular goal/supermarket/diet/calorie
@@ -204,6 +205,26 @@ export default function BrowsePlans() {
   const filtered = useMemo(() => (
     ALL_PLANS.filter(plan => planMatchesFilters(plan, filters))
   ), [filters]);
+
+  useEffect(() => {
+    const hasIntent = search || goal || supermarket || diet || calories || budget || effort;
+    if (!hasIntent) return undefined;
+
+    const timer = window.setTimeout(() => {
+      trackEvent('browse_filters_changed', {
+        search: cleanBrowseSearch(search),
+        goal,
+        supermarket,
+        diet,
+        calories,
+        budget,
+        effort,
+        result_count: filtered.length,
+      });
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, [search, goal, supermarket, diet, calories, budget, effort, filtered.length]);
 
   const goalOptions = useMemo(() => withOptionCounts(GOALS, 'goal', filters), [filters]);
   const supermarketOptions = useMemo(() => withOptionCounts(SUPERMARKETS, 'supermarket', filters), [filters]);
@@ -479,4 +500,8 @@ function normaliseSearchText(value) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+}
+
+function cleanBrowseSearch(value) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, 100);
 }

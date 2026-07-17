@@ -91,3 +91,11 @@ You need Node.js 18+ installed.
 - Add a per-day calorie/macro chart.
 
 Keep it simple though — this is an MVP.
+
+## Admin analytics
+
+The private `/admin` dashboard now includes first-party behaviour analytics:
+click logs, time on page, scroll depth, content seen, search/filter usage,
+session journeys, and exploration beyond entry intent.
+
+Setup and access instructions live in `docs/behaviour-analytics.md`.

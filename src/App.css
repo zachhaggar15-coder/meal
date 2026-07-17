@@ -11336,3 +11336,245 @@ textarea {
     padding-right: 10px;
   }
 }
+
+/* First-party analytics consent */
+.analytics-consent {
+  align-items: center;
+  background: #fffdf8;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  bottom: 16px;
+  box-shadow: var(--hard-shadow, 6px 6px 0 #12130d);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  left: 50%;
+  max-width: min(980px, calc(100vw - 24px));
+  padding: 14px;
+  position: fixed;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 400;
+}
+
+.analytics-consent-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.analytics-consent-copy strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.analytics-consent-copy span {
+  color: #48483d;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.analytics-consent-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.analytics-consent-actions a {
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.analytics-consent-actions .btn-primary,
+.analytics-consent-actions .btn-secondary {
+  border-radius: 8px;
+  font-size: 0.8rem;
+  min-height: 38px;
+  padding: 8px 12px;
+}
+
+/* Expanded admin analytics */
+.admin-page {
+  max-width: 1180px;
+}
+
+.admin-panel {
+  background: #fffdf8;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: var(--small-shadow, 4px 4px 0 #12130d);
+  margin: 18px 0 28px;
+  padding: 18px;
+}
+
+.admin-section-head {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.admin-section-head h2,
+.admin-section-head h3 {
+  margin: 0;
+}
+
+.admin-section-head p {
+  color: #5d604f;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.admin-stats-grid--wide {
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+}
+
+.admin-stat-detail {
+  color: #5d604f;
+  font-size: 0.75rem;
+}
+
+.admin-breakdowns--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-table-section {
+  margin-top: 22px;
+}
+
+.admin-grid-two {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-data-table {
+  font-size: 0.82rem;
+}
+
+.admin-data-table td {
+  max-width: 280px;
+  overflow-wrap: anywhere;
+}
+
+.admin-journey-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-journey {
+  background: #ffffff;
+  border: 1px solid #d9d0b7;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-journey summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 72px minmax(0, 1fr) auto auto;
+  list-style: none;
+  padding: 10px 12px;
+}
+
+.admin-journey summary::-webkit-details-marker {
+  display: none;
+}
+
+.admin-journey summary:hover {
+  background: #f6ffd6;
+}
+
+.admin-journey-score {
+  background: #12130d;
+  border-radius: 999px;
+  color: #fffdf8;
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 4px 8px;
+  text-align: center;
+}
+
+.admin-journey-body {
+  border-top: 1px solid #d9d0b7;
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+}
+
+.admin-journey-body dl {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  margin: 0;
+}
+
+.admin-journey-body dl div {
+  display: grid;
+  gap: 2px;
+}
+
+.admin-journey-body dt {
+  color: #686a57;
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.admin-journey-body dd {
+  font-size: 0.86rem;
+  margin: 0;
+}
+
+.admin-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.admin-pill-row span {
+  background: #eef6ff;
+  border: 1px solid #b9d7f2;
+  border-radius: 999px;
+  color: #143d66;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 4px 8px;
+}
+
+.admin-timeline {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.admin-timeline li {
+  color: #303026;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.admin-timeline strong {
+  color: #12130d;
+  margin-right: 6px;
+}
+
+@media (max-width: 900px) {
+  .analytics-consent,
+  .admin-grid-two,
+  .admin-breakdowns--three {
+    grid-template-columns: 1fr;
+  }
+
+  .analytics-consent-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-journey summary {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+}

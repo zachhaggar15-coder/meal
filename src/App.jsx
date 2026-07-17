@@ -1,6 +1,8 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
+import AnalyticsConsentBanner from './components/AnalyticsConsentBanner.jsx';
+import BehaviorAnalytics from './components/BehaviorAnalytics.jsx';
 import ClickTracking from './components/ClickTracking.jsx';
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx';
@@ -60,6 +62,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
+      <BehaviorAnalytics />
       <ClickTracking />
       <AnalyticsRouteTracker />
       <ScrollToTop />
@@ -98,6 +101,7 @@ export default function App() {
           </Suspense>
         </main>
       </div>
+      <AnalyticsConsentBanner />
     </>
   );
 }
