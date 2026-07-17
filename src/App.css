@@ -11966,3 +11966,87 @@ textarea {
     grid-template-columns: 58px minmax(90px, 1fr) 42px;
   }
 }
+
+/* Restore the older mobile nav shape: one compact header row, with the
+   detailed navigation kept in the menu instead of duplicated horizontally. */
+.nav-mobile-quiz-btn {
+  display: none;
+}
+
+@media (max-width: 999px) {
+  .site-nav {
+    overflow: visible;
+  }
+
+  .nav-inner {
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 12px;
+    min-height: 64px;
+    padding: 8px 14px;
+  }
+
+  .nav-left {
+    align-items: center;
+    display: flex;
+    flex: 1 1 auto;
+    gap: 12px;
+    min-width: 0;
+    width: auto;
+  }
+
+  .nav-brand {
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-tabs,
+  .nav-right .site-search--top {
+    display: none !important;
+  }
+
+  .nav-right {
+    flex: 0 0 auto;
+    margin-left: auto;
+    min-width: auto;
+    order: 0;
+  }
+
+  .nav-mobile-quiz-btn {
+    align-items: center;
+    background: var(--lime);
+    border: 1px solid var(--editorial-ink);
+    border-radius: 999px;
+    color: var(--editorial-ink) !important;
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 850;
+    justify-content: center;
+    line-height: 1;
+    min-height: 40px;
+    padding: 9px 12px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-inner {
+    gap: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-menu-toggle {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-mobile-quiz-btn {
+    font-size: 0.74rem;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

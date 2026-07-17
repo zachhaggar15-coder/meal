@@ -46,6 +46,7 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
         </div>
 
         <div className="nav-right">
+          <Link to="/quiz" className="nav-mobile-quiz-btn">Find my plan</Link>
           <SiteSearch id="top-site-search" className="site-search--top" maxResults={6} />
         </div>
       </div>
