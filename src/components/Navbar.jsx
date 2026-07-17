@@ -4,7 +4,12 @@ import SiteSearch from './SiteSearch.jsx';
 const TOP_TABS = [
   { to: '/', label: 'Home', match: path => path === '/' },
   { to: '/quiz', label: 'Quiz', match: path => path === '/quiz' || path === '/quiz/results' },
-  { to: '/meal-prep-containers', label: 'Meal prep containers', match: path => path.startsWith('/meal-prep-containers') },
+  {
+    to: '/meal-prep-containers',
+    label: 'Meal prep containers',
+    compactLabel: 'Containers',
+    match: path => path.startsWith('/meal-prep-containers'),
+  },
   { to: '/tools', label: 'Tools', match: path => path === '/tools' },
   { to: '/feedback', label: 'Feedback', match: path => path === '/feedback' },
 ];
@@ -39,7 +44,12 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
                 className={active ? 'nav-tab nav-tab--active' : 'nav-tab'}
                 aria-current={active ? 'page' : undefined}
               >
-                {tab.label}
+                {tab.compactLabel ? (
+                  <>
+                    <span className="nav-tab-label--full">{tab.label}</span>
+                    <span className="nav-tab-label--compact">{tab.compactLabel}</span>
+                  </>
+                ) : tab.label}
               </Link>
             );
           })}

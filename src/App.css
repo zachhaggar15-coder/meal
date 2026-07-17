@@ -11973,6 +11973,74 @@ textarea {
   display: none;
 }
 
+.nav-tab-label--compact {
+  display: none;
+}
+
+/* Keep every desktop quick link readable as the header closes up. */
+@media (min-width: 1000px) and (max-width: 1280px) {
+  .nav-inner {
+    flex-wrap: nowrap;
+    gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .nav-tabs {
+    flex: 1 1 auto;
+    order: 0;
+    overflow: hidden;
+    width: auto;
+  }
+
+  .nav-tab {
+    flex: 0 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .nav-tab-label--full {
+    display: none;
+  }
+
+  .nav-tab-label--compact {
+    display: inline;
+  }
+
+  .nav-right {
+    flex: 0 1 300px;
+  }
+
+  .site-search--top {
+    grid-template-columns: minmax(150px, 1fr) auto;
+  }
+}
+
+/* Give the two primary ways into the plan finder enough visual weight. */
+.home-hero .btn-hero-primary,
+.home-hero .btn-hero-secondary {
+  font-size: 1rem;
+  min-height: 52px;
+  padding: 14px 24px;
+}
+
+.home-hero .btn-hero-primary {
+  background: var(--lime) !important;
+  color: var(--editorial-ink) !important;
+}
+
+.home-hero .btn-hero-secondary {
+  background: var(--editorial-paper) !important;
+  border-color: var(--editorial-ink);
+  color: var(--editorial-ink) !important;
+}
+
+.home-hero .btn-hero-primary:hover,
+.home-hero .btn-hero-secondary:hover {
+  background: var(--editorial-ink) !important;
+  color: var(--editorial-paper) !important;
+}
+
 @media (max-width: 999px) {
   .site-nav {
     overflow: visible;
