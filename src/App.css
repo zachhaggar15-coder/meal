@@ -11836,3 +11836,133 @@ textarea {
 .conversion-panel-btn:hover {
   color: var(--editorial-paper);
 }
+
+/* Quiz results sit inside the wider editorial shell, so the cards need
+   their own compact result layout instead of inheriting article spacing. */
+.quiz-results-page .result-card {
+  margin-left: auto;
+  margin-right: auto;
+  width: min(100%, 980px);
+}
+
+.quiz-results-page .result-card-title {
+  border: 0;
+  color: var(--editorial-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  font-weight: 400;
+  line-height: 1.16;
+  margin: 10px 0;
+  padding: 0;
+  text-transform: none;
+}
+
+.quiz-results-page .result-card-title--sm {
+  font-size: 1.08rem;
+}
+
+.quiz-results-page .result-card-reason {
+  margin-bottom: 14px;
+  max-width: 62ch;
+}
+
+.quiz-results-page .result-card--best {
+  align-items: start;
+  display: grid;
+  gap: 10px 30px;
+  grid-template-areas:
+    "badge score"
+    "title macros"
+    "reason macros"
+    "meta macros"
+    "cta macros";
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  padding: 28px;
+}
+
+.quiz-results-page .result-card--best .result-card-badge {
+  grid-area: badge;
+  margin: 0;
+  width: max-content;
+}
+
+.quiz-results-page .result-card--best .result-card-score {
+  color: var(--editorial-ink);
+  grid-area: score;
+  justify-self: end;
+  margin: 0;
+}
+
+.quiz-results-page .result-card--best .result-card-title {
+  grid-area: title;
+  margin-top: 6px;
+}
+
+.quiz-results-page .result-card--best .result-card-reason {
+  grid-area: reason;
+  margin: 0;
+}
+
+.quiz-results-page .result-card--best .result-card-meta {
+  grid-area: meta;
+  margin: 4px 0 0;
+}
+
+.quiz-results-page .result-card--best .macro-bars {
+  gap: 9px;
+  grid-area: macros;
+  margin: 6px 0 0;
+  width: 100%;
+}
+
+.quiz-results-page .result-card--best .macro-bar-row {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 64px minmax(110px, 1fr) 44px;
+}
+
+.quiz-results-page .result-card--best .macro-bar-label,
+.quiz-results-page .result-card--best .macro-bar-pct {
+  color: var(--editorial-muted);
+  font-size: 0.78rem;
+}
+
+.quiz-results-page .result-card--best .macro-bar-track {
+  background: var(--editorial-soft);
+  border: 1px solid var(--editorial-line);
+  height: 8px;
+}
+
+.quiz-results-page .result-card--best .macro-bar-fill {
+  background: var(--editorial-ink);
+}
+
+.quiz-results-page .result-card--best .result-card-cta {
+  grid-area: cta;
+  justify-self: start;
+  margin-top: 8px;
+}
+
+@media (max-width: 760px) {
+  .quiz-results-page .result-card--best {
+    gap: 10px;
+    grid-template-areas:
+      "badge"
+      "score"
+      "title"
+      "reason"
+      "meta"
+      "macros"
+      "cta";
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .quiz-results-page .result-card--best .result-card-score {
+    justify-self: start;
+  }
+
+  .quiz-results-page .result-card--best .macro-bar-row {
+    grid-template-columns: 58px minmax(90px, 1fr) 42px;
+  }
+}
