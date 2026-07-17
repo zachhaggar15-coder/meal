@@ -28,8 +28,6 @@ export default function Sidebar({ open, onClose }) {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
 
-  if (!open) return null;
-
   function isActive(to) {
     const [path, hash] = to.split('#');
     if (hash) {
@@ -40,8 +38,12 @@ export default function Sidebar({ open, onClose }) {
 
   return (
     <>
-      <div className="sidebar-backdrop" onClick={onClose} aria-hidden />
-      <nav id="site-sidebar" className="sidebar sidebar--open" aria-label="Site navigation">
+      {open && <div className="sidebar-backdrop" onClick={onClose} aria-hidden />}
+      <nav
+        id="site-sidebar"
+        className={open ? 'sidebar sidebar--open' : 'sidebar'}
+        aria-label="Site navigation"
+      >
         <div className="sidebar-inner">
           <div className="sidebar-head">
             <Link to="/" className="sidebar-brand" onClick={onClose}>MealPrep</Link>

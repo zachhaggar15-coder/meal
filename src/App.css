@@ -11578,3 +11578,29 @@ textarea {
     grid-template-columns: 72px minmax(0, 1fr);
   }
 }
+
+/* Restore desktop side navigation */
+.site-nav .nav-links,
+.site-nav .site-search--nav {
+  display: none !important;
+}
+
+@media (min-width: 1000px) {
+  .nav-inner {
+    max-width: none;
+  }
+
+  .nav-right {
+    margin-left: auto;
+  }
+
+  .sidebar,
+  .sidebar:not(.sidebar--open),
+  .sidebar.sidebar--open {
+    display: block !important;
+  }
+
+  .sidebar-close-btn {
+    display: none !important;
+  }
+}
