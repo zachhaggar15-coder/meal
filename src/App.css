@@ -12041,6 +12041,20 @@ textarea {
   color: var(--editorial-paper) !important;
 }
 
+/* The editorial footer sits on a light ground, so all of its copy needs ink contrast. */
+.site-footer .footer-brand,
+.site-footer .footer-lead p,
+.site-footer .footer-col h2,
+.site-footer .footer-col a,
+.site-footer .footer-disclaimer,
+.site-footer .footer-copy {
+  color: var(--editorial-ink);
+}
+
+.site-footer .footer-col a:hover {
+  color: var(--editorial-ink);
+}
+
 @media (max-width: 999px) {
   .site-nav {
     overflow: visible;
