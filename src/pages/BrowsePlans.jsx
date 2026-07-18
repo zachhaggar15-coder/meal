@@ -389,7 +389,7 @@ export default function BrowsePlans() {
           </div>
         </section>
 
-        <SearchOpportunityLinks compact showDiscovery={false} />
+        <SearchOpportunityLinks compact />
 
         <section className="browse-index" aria-labelledby="browse-index-heading">
           <div className="browse-index-header">

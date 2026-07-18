@@ -49,6 +49,76 @@ export const DISCOVERY_PRIORITY_LINKS = [
     label: 'Aldi Pescatarian Menopause Batch-Cook Plan',
     note: 'A batch-cook pescatarian plan with steady meals across the week.',
   },
+  {
+    to: '/blog/air-fryer-meal-prep-uk',
+    label: 'Air Fryer Meal Prep UK',
+    note: 'Fast air-fryer meal prep ideas for crisp lunches, easy dinners and lower-effort batch cooking.',
+  },
+  {
+    to: '/blog/chicken-and-rice-meal-prep-uk',
+    label: 'Chicken and Rice Meal Prep UK',
+    note: 'A practical guide to chicken and rice prep with safer storage, flavour swaps and portion ideas.',
+  },
+  {
+    to: '/plans/lidl-budget-fat-loss-1800-v2',
+    label: 'Lidl Budget Fat-Loss 1800 Calorie Plan',
+    note: 'A Lidl lower-cost fat-loss plan with a moderate 1,800 kcal target.',
+  },
+  {
+    to: '/plans/aldi-anti-inflammatory-1800',
+    label: 'Aldi Anti-Inflammatory 1800 Calorie Plan',
+    note: 'Aldi meals built around plant-forward staples, oily fish options and steady energy.',
+  },
+  {
+    to: '/plans/tesco-high-protein-low-cal-pesc-1800',
+    label: 'Tesco Pescatarian High-Protein Low-Calorie Plan',
+    note: 'A Tesco pescatarian plan for higher protein at a controlled 1,800 kcal target.',
+  },
+  {
+    to: '/meal-plan/2000-calorie-meal-plan',
+    label: '2000 Calorie Meal Plan UK',
+    note: 'A legacy 2,000 calorie guide for maintenance, active fat loss or balanced weekly planning.',
+  },
+  {
+    to: '/meal-plan/busy-professional-meal-plan-uk',
+    label: 'Busy Professional Meal Plan UK',
+    note: 'A quick healthy-eating guide for working weeks with limited cooking time.',
+  },
+  {
+    to: '/plans/lidl-high-protein-low-cal-1500-desk-lunch-v3',
+    label: 'Lidl Desk Lunch High-Protein Low-Calorie Plan',
+    note: 'A 1,500 kcal Lidl desk-lunch plan for workdays and simple packed meals.',
+  },
+  {
+    to: '/plans/any-endurance-2000-long-run-fuel',
+    label: 'Long-Run Fuel Endurance Plan',
+    note: 'A generic UK endurance plan for longer runs, steady carbohydrates and practical prep.',
+  },
+  {
+    to: '/plans/tesco-veg-low-cal-easy-1800',
+    label: 'Tesco Easy Vegetarian Low-Calorie Plan',
+    note: 'A Tesco vegetarian plan for easier prep at a 1,800 kcal target.',
+  },
+  {
+    to: '/plans/tesco-vegan-low-cal-1800',
+    label: 'Tesco Vegan Low-Calorie 1800 Calorie Plan',
+    note: 'A vegan Tesco plan with plant-based meals and a moderate calorie target.',
+  },
+  {
+    to: '/meal-plan/gym-beginner-meal-plan-uk',
+    label: 'Gym Beginner Meal Plan UK',
+    note: 'A legacy starter guide for new gym routines, protein planning and simple weekly meals.',
+  },
+  {
+    to: '/meal-plan/low-effort-meal-plan-uk',
+    label: 'Low Effort Meal Plan UK',
+    note: 'A practical guide for healthy eating with fewer cooking steps and repeatable meals.',
+  },
+  {
+    to: '/meal-plan/iceland-budget-meal-plan',
+    label: 'Iceland Budget Meal Plan UK',
+    note: 'A budget-focused Iceland guide for frozen staples and low-cost weekly planning.',
+  },
 ];
 
 export const SEARCH_OPPORTUNITY_CLUSTERS = [
