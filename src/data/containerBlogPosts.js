@@ -31,10 +31,10 @@ const guideRelated = [
 export const containerBlogPostsData = {
   'best-meal-prep-containers-uk': {
     published: '2026-06-16',
-    modified: '2026-07-13',
-    title: 'Best Meal Prep Containers UK Buying Guide: Glass, Plastic and Tubs',
-    description: 'Best meal prep containers UK buying guide: compare glass boxes, cheap plastic tubs, work lunch containers, freezer portions and leakproof picks.',
-    h1: 'Best Meal Prep Containers UK Buying Guide',
+    modified: '2026-07-05',
+    title: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
+    description: 'Best meal prep containers UK: leakproof, dishwasher-safe and freezer-safe sets for batch cooking, work lunches and gym bags. Compare glass vs plastic, budget and Amazon UK picks.',
+    h1: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
     intro:
       'The best meal prep containers are the ones that make Sunday cooking easier and weekday eating calmer. For most UK meal preppers, that means enough containers for five lunches, lids that do not leak in a work bag, bases that survive repeated washing, and sizes that fit proper portions.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
