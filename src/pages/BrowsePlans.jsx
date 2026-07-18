@@ -14,11 +14,9 @@ import { SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { trackEvent } from '../utils/analytics.js';
 
-// ALL_PLANS intentionally includes the large synthetic "coverage" pool (see
-// planSeeds.js) so filtering can match granular goal/supermarket/diet/calorie
-// combinations beyond the curated, indexed set. PLAN_COUNT (imported above)
-// is the honest count of real, indexed plans and is used only for headline
-// marketing/SEO text ("Browse X plans") — never for filtering.
+// Browse only links to indexed, prerendered plan pages. The larger synthetic
+// coverage pool is kept out of public links so Google and users never land on
+// plan URLs that the static build does not serve as detail pages.
 const ALL_PLANS = getAllPlanMeta();
 const PLAN_INDEX_LIMIT = 3;
 

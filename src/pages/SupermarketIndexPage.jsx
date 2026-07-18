@@ -3,7 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
-import { SUPERMARKET_CHOICES } from '../data/planChooser.js';
+import { INDEXED_SUPERMARKET_CHOICES } from '../data/planChooser.js';
 import { chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -12,11 +12,11 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Choose a UK Supermarket Meal Plan',
-    description: `Choose ${SUPERMARKET_CHOICES.map(market => market.label).join(', ')} before selecting your meal plan goal.`,
+    description: `Choose ${INDEXED_SUPERMARKET_CHOICES.map(market => market.label).join(', ')} before selecting your meal plan goal.`,
     url: 'https://www.mealprep.org.uk/meal-plans',
     mainEntity: {
       '@type': 'ItemList',
-      itemListElement: SUPERMARKET_CHOICES.map((market, index) => ({
+      itemListElement: INDEXED_SUPERMARKET_CHOICES.map((market, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         name: `${market.label} meal plans`,
@@ -70,7 +70,7 @@ export default function SupermarketIndexPage() {
         </header>
 
         <section className="supermarket-index-grid" aria-label="Choose a supermarket">
-          {SUPERMARKET_CHOICES.map(market => {
+          {INDEXED_SUPERMARKET_CHOICES.map(market => {
             const cardVisual = chooseSupermarketVisual(market.value);
             return (
               <Link key={market.value} to={`/choose-supermarket/${market.value}`} className="supermarket-index-card">

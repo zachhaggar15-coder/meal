@@ -1,3 +1,5 @@
+import { INDEXABLE_PLAN_SEEDS } from './planSeeds.js';
+
 export const GOAL_CHOOSER_ITEMS = [
   { value: 'weight-loss', label: 'Weight Loss', defaultCalories: 1500 },
   { value: 'budget-fat-loss', label: 'Budget Fat Loss', defaultCalories: 1500 },
@@ -86,6 +88,14 @@ export const SUPERMARKET_CHOICES = [
   },
 ];
 
+const INDEXED_SUPERMARKET_VALUES = new Set(
+  INDEXABLE_PLAN_SEEDS.map(seed => seed.supermarket),
+);
+
+export const INDEXED_SUPERMARKET_CHOICES = SUPERMARKET_CHOICES.filter(choice => (
+  INDEXED_SUPERMARKET_VALUES.has(choice.value)
+));
+
 export const DIET_CHOICES = [
   {
     value: 'vegetarian',
@@ -135,7 +145,7 @@ export const CALORIE_CHOICES = [
 ];
 
 export const GOAL_CHOOSER_SLUGS = GOAL_CHOOSER_ITEMS.map(item => item.value);
-export const SUPERMARKET_CHOOSER_SLUGS = SUPERMARKET_CHOICES.map(item => item.value);
+export const SUPERMARKET_CHOOSER_SLUGS = INDEXED_SUPERMARKET_CHOICES.map(item => item.value);
 export const DIET_CHOOSER_SLUGS = DIET_CHOICES.map(item => item.value);
 export const CALORIE_CHOOSER_SLUGS = CALORIE_CHOICES.map(item => item.value);
 
@@ -145,6 +155,10 @@ export function getGoalChoice(goal) {
 
 export function getSupermarketChoice(supermarket) {
   return SUPERMARKET_CHOICES.find(item => item.value === supermarket) || null;
+}
+
+export function getIndexedSupermarketChoice(supermarket) {
+  return INDEXED_SUPERMARKET_CHOICES.find(item => item.value === supermarket) || null;
 }
 
 export function getDietChoice(diet) {

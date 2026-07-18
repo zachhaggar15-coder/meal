@@ -7,7 +7,7 @@ import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   buildBrowsePlanUrl,
   getGoalChoice,
-  SUPERMARKET_CHOICES,
+  INDEXED_SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
@@ -20,7 +20,7 @@ export default function PlanChooserPage() {
 
   if (!goalChoice) return <NotFound />;
 
-  const options = SUPERMARKET_CHOICES
+  const options = INDEXED_SUPERMARKET_CHOICES
     .map(market => ({
       market,
       plan: chooseBestPlan(goalChoice.value, market.value, goalChoice.defaultCalories),
@@ -32,7 +32,7 @@ export default function PlanChooserPage() {
     : `/choose-plan/${goalChoice.value}`;
   const pageUrl = `/choose-plan/${goalChoice.value}`;
   const title = toTitleCase(`${goalChoice.label} Meal Plans by Supermarket`);
-  const marketList = SUPERMARKET_CHOICES.map(market => market.label).join(', ');
+  const marketList = options.map(option => option.market.label).join(', ');
   const description = `Choose a ${goalChoice.label.toLowerCase()} meal plan for ${marketList}, with printable PDFs and shopping lists.`;
   const chooserVisual = chooseChooserVisual({ goalChoice });
 

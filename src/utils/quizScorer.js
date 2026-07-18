@@ -1,4 +1,4 @@
-import { PLAN_SEEDS } from '../data/planSeeds.js';
+import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
 import { GOAL_LABELS, BUDGET_ESTIMATES, MACRO_PROFILES, MACRO_GRAMS, getSeedMacroGrams } from './planBuilder.js';
 
 // ── Weights ───────────────────────────────────────────────────────────────────
@@ -246,7 +246,7 @@ export function getTopMatches(answers, n = 3) {
   const useExactMacroMatch = enrichedAnswers.macros && enrichedAnswers.macroMode === 'custom-grams';
   const scored = useExactMacroMatch
     ? scoreExactMacroCandidates(enrichedAnswers)
-    : PLAN_SEEDS
+    : INDEXABLE_PLAN_SEEDS
         .map(seed => ({ seed, score: scorePlan(seed, enrichedAnswers) }))
         .sort((a, b) => b.score - a.score);
 
@@ -273,7 +273,7 @@ export function getTopMatches(answers, n = 3) {
 }
 
 function scoreExactMacroCandidates(answers) {
-  const roughScored = PLAN_SEEDS.map(seed => {
+  const roughScored = INDEXABLE_PLAN_SEEDS.map(seed => {
     const baseScore = scoreBasePlan(seed, answers);
     const roughMacroScore = macroTargetScore(answers.macros, getFallbackMacros(seed, answers));
     return {

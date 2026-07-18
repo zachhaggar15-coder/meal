@@ -11,7 +11,7 @@ import {
   CALORIE_CHOICES,
   DIET_CHOICES,
   GOAL_CHOOSER_ITEMS,
-  SUPERMARKET_CHOICES,
+  INDEXED_SUPERMARKET_CHOICES,
 } from './planChooser.js';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 
@@ -80,7 +80,7 @@ export const GOAL_NAV_LINKS = GOAL_CHOOSER_ITEMS.map(item => ({
   description: `Compare ${item.label.toLowerCase()} plans by supermarket.`,
 }));
 
-export const SUPERMARKET_NAV_LINKS = SUPERMARKET_CHOICES.map(item => ({
+export const SUPERMARKET_NAV_LINKS = INDEXED_SUPERMARKET_CHOICES.map(item => ({
   to: buildSupermarketChooserPath(item.value),
   label: item.label,
   description: item.description,

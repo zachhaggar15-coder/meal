@@ -1,5 +1,5 @@
 import { MEALS } from '../data/mealLibrary.js';
-import { PLAN_SEEDS } from '../data/planSeeds.js';
+import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
 import { isCountUnit } from './countUnits.js';
 import { averageDailyMacros, computeMealNutrition, scaleNutrition } from './nutrition.js';
 
@@ -110,9 +110,10 @@ const GOAL_BEST_FOR = {
 };
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const PLAN_SEED_BY_SLUG = new Map(PLAN_SEEDS.map(seed => [seed.slug, seed]));
-const PLAN_SEEDS_BY_GOAL = groupSeedsBy(PLAN_SEEDS, 'goal');
-const PLAN_SEEDS_BY_SUPERMARKET = groupSeedsBy(PLAN_SEEDS, 'supermarket');
+const PLAN_SEED_BY_SLUG = new Map(INDEXABLE_PLAN_SEEDS.map(seed => [seed.slug, seed]));
+const INDEXABLE_PLAN_SLUGS = new Set(INDEXABLE_PLAN_SEEDS.map(seed => seed.slug));
+const PLAN_SEEDS_BY_GOAL = groupSeedsBy(INDEXABLE_PLAN_SEEDS, 'goal');
+const PLAN_SEEDS_BY_SUPERMARKET = groupSeedsBy(INDEXABLE_PLAN_SEEDS, 'supermarket');
 const MEAL_NUTRITION_CACHE = new Map();
 
 // ── Diet filtering ─────────────────────────────────────────────────────────────
@@ -1222,7 +1223,7 @@ export function getPlanBySlug(slug) {
 }
 
 export function getAllPlanMeta() {
-  return PLAN_SEEDS.map(seed => ({
+  return INDEXABLE_PLAN_SEEDS.map(seed => ({
     slug:          seed.slug,
     title:         seed.title,
     goal:          seed.goal,
@@ -1236,6 +1237,10 @@ export function getAllPlanMeta() {
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
   }));
+}
+
+export function isIndexedPlanSlug(slug) {
+  return INDEXABLE_PLAN_SLUGS.has(slug);
 }
 
 function cap(s) {

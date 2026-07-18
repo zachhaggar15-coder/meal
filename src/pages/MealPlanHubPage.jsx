@@ -59,7 +59,7 @@ export default function MealPlanHubPage() {
   if (!hub && comboPage) return <ComboLandingPage page={comboPage} />;
   if (!hub) return <NotFound />;
 
-  const matchingPlans = filterPlansForHub(ALL_PLANS, hub);
+  const { plans: matchingPlans, usedFallback: usingFallbackPlans } = getHubPlanMatches(hub);
   const shownPlans = matchingPlans.slice(0, CARD_LIMIT);
   const canonical = `/meal-plans/${hub.slug}`;
   const sources = hub.sources || DEFAULT_SOURCES;
@@ -145,7 +145,11 @@ export default function MealPlanHubPage() {
             {hub.reviewed || '17 June 2026'}.
           </p>
           <div className="meal-hub-stats" aria-label="Page highlights">
-            <span>{matchingPlans.length} matching plans</span>
+            <span>
+              {usingFallbackPlans
+                ? `${matchingPlans.length} adaptable UK plans`
+                : `${matchingPlans.length} matching plans`}
+            </span>
             {hub.stats.map(stat => <span key={stat}>{stat}</span>)}
           </div>
           <div className="meal-hub-actions">
@@ -174,8 +178,9 @@ export default function MealPlanHubPage() {
             <div>
               <h2>{toTitleCase('Top matching plans')}</h2>
               <p>
-                Start with one of these plans, then use the plan page to print the PDF,
-                copy the shopping list or edit meals.
+                {usingFallbackPlans
+                  ? `Exact ${MARKET_LABEL[hub.match?.supermarkets?.[0]] || 'store-specific'} plan pages are not in the indexed plan library yet, so start with these stable generic UK plans and adapt the shop.`
+                  : 'Start with one of these plans, then use the plan page to print the PDF, copy the shopping list or edit meals.'}
               </p>
             </div>
             <Link to="/browse" className="inline-text-link">Browse all plans</Link>
@@ -303,4 +308,26 @@ export default function MealPlanHubPage() {
 
 function cap(value) {
   return value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
+}
+
+function getHubPlanMatches(hub) {
+  const directPlans = filterPlansForHub(ALL_PLANS, hub);
+  const supermarket = hub.match?.supermarkets?.[0];
+
+  if (directPlans.length || !supermarket) {
+    return { plans: directPlans, usedFallback: false };
+  }
+
+  const genericHub = {
+    ...hub,
+    match: {
+      ...hub.match,
+      supermarkets: ['any'],
+    },
+  };
+
+  return {
+    plans: filterPlansForHub(ALL_PLANS, genericHub),
+    usedFallback: true,
+  };
 }

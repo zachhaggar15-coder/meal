@@ -9,8 +9,9 @@ import {
   CALORIE_CHOICES,
   getCalorieChoice,
   getDietChoice,
-  getSupermarketChoice,
+  getIndexedSupermarketChoice,
   GOAL_CHOOSER_ITEMS,
+  INDEXED_SUPERMARKET_CHOICES,
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseNavigationCardVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
@@ -163,7 +164,7 @@ function getModeConfig(mode, params) {
 }
 
 function buildSupermarketConfig(slug) {
-  const choice = getSupermarketChoice(slug);
+  const choice = getIndexedSupermarketChoice(slug);
   if (!choice) return null;
 
   const title = `${choice.label} Meal Plans by Goal`;
@@ -203,13 +204,13 @@ function buildDietConfig(slug) {
     shortTitle: choice.label,
     kicker: 'Choose your supermarket',
     canonical: `/choose-diet/${choice.value}`,
-    description: `Choose a ${choice.label.toLowerCase()} meal plan by supermarket, with generic UK supermarket, Aldi, Lidl, Tesco, Asda, Sainsbury's, Morrisons, Iceland, Waitrose, Ocado, M&S and Co-op.`,
+    description: `Choose a ${choice.label.toLowerCase()} meal plan by supermarket, with ${formatChoiceList(INDEXED_SUPERMARKET_CHOICES.map(market => market.label))}.`,
     intro: `${choice.description} Pick the supermarket next so the diet type no longer defaults to Aldi.`,
     defaultLabel: 'Current diet type:',
     defaultValue: choice.label,
     changeUrl: buildBrowsePlanUrl({ diet: choice.dietType, goal: choice.defaultGoal }),
     gridLabel: `${choice.label} supermarket choices`,
-    cards: SUPERMARKET_CHOICES.map(market => ({
+    cards: INDEXED_SUPERMARKET_CHOICES.map(market => ({
       key: market.value,
       label: market.label,
       heading: `${market.shortLabel || market.label} ${choice.shortLabel} plan`,
@@ -291,6 +292,12 @@ function scorePlan(plan, defaultCalories, filters) {
 function marketLabel(value) {
   const market = SUPERMARKET_CHOICES.find(item => item.value === value);
   return market?.label || cap(value);
+}
+
+function formatChoiceList(values = []) {
+  const labels = values.filter(Boolean);
+  if (labels.length <= 1) return labels[0] || 'indexed UK supermarkets';
+  return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`;
 }
 
 function cap(value) {

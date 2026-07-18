@@ -987,6 +987,6 @@ export const INDEXABLE_PLAN_SEEDS = INDEXABLE_PLAN_SEED_POOL;
 export const PLAN_SEEDS = [...INDEXABLE_PLAN_SEED_POOL, ...COVERAGE_PLAN_SEEDS];
 // PLAN_COUNT is shown to users ("Browse X free UK meal plans") and must reflect
 // real, indexed, prerendered pages — not PLAN_SEEDS.length, which also includes
-// the much larger synthetic COVERAGE_PLAN_SEEDS pool used internally for
-// quiz-matching coverage and was never meant to be a public-facing number.
+// the much larger synthetic COVERAGE_PLAN_SEEDS pool used for coverage checks
+// and was never meant to be a public-facing number.
 export const PLAN_COUNT = INDEXABLE_PLAN_SEEDS.length;
