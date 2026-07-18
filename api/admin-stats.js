@@ -71,7 +71,7 @@ export default async function handler(req, res) {
   }
 
   const expected = process.env.ADMIN_DASHBOARD_TOKEN;
-  const provided = req.headers['x-admin-token'] || req.query?.token || '';
+  const provided = adminTokenFromHeaders(req);
   if (!expected || !safeEqual(String(provided), String(expected))) {
     return res.status(401).json({ error: 'Unauthorized.' });
   }
@@ -545,10 +545,11 @@ function toCsv(rows, cols) {
   return lines.join('\r\n');
 }
 
-function escCsv(value) {
+export function escCsv(value) {
   const raw = value && typeof value === 'object' ? JSON.stringify(value) : value;
   const text = raw === null || raw === undefined ? '' : String(raw);
-  return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+  const safeText = /^[=+\-@\t\r]/.test(text) ? `'${text}` : text;
+  return /[",\n\r]/.test(safeText) ? `"${safeText.replace(/"/g, '""')}"` : safeText;
 }
 
 function unique(values) {
@@ -585,6 +586,11 @@ function iso(value) {
 
 function shortSession(sessionId) {
   return String(sessionId || '').replace(/^sess_/, '').slice(0, 10);
+}
+
+export function adminTokenFromHeaders(req) {
+  const value = req.headers?.['x-admin-token'] ?? req.headers?.['X-Admin-Token'];
+  return Array.isArray(value) ? value[0] || '' : String(value || '');
 }
 
 // Length-safe, timing-safe-ish string compare.

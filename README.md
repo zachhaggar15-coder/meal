@@ -51,7 +51,7 @@ You need Node.js 18+ installed.
    Then edit `.env`:
 
    ```
-   OPENAI_API_KEY=sk-your-real-key-here
+   OPENAI_API_KEY=your_openai_api_key_here
    OPENAI_MODEL=gpt-4o-mini
    ```
 

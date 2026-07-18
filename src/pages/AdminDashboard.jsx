@@ -73,6 +73,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [exporting, setExporting] = useState('');
 
   useEffect(() => {
     const saved = typeof window !== 'undefined' ? sessionStorage.getItem(TOKEN_KEY) : '';
@@ -114,9 +115,34 @@ export default function AdminDashboard() {
     setToken('');
   }
 
-  function downloadCsv(format) {
-    const url = `/api/admin-stats?format=${encodeURIComponent(format)}&token=${encodeURIComponent(token.trim())}`;
-    window.open(url, '_blank');
+  async function downloadCsv(format) {
+    setExporting(format);
+    setError('');
+    try {
+      const res = await fetch(`/api/admin-stats?format=${encodeURIComponent(format)}`, {
+        headers: { 'x-admin-token': token.trim() },
+      });
+      if (res.status === 401) throw new Error('Invalid token.');
+      if (!res.ok) throw new Error('Could not export CSV.');
+
+      const blob = await res.blob();
+      const filename = filenameFromContentDisposition(
+        res.headers.get('Content-Disposition'),
+        `${format}.csv`,
+      );
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(downloadUrl);
+    } catch (err) {
+      setError(err.message || 'Could not export CSV.');
+    } finally {
+      setExporting('');
+    }
   }
 
   return (
@@ -152,17 +178,18 @@ export default function AdminDashboard() {
               <button className="btn-secondary" onClick={() => load(token.trim())} disabled={loading}>
                 {loading ? 'Refreshing...' : 'Refresh'}
               </button>
-              <button className="btn-secondary" onClick={() => downloadCsv('analytics-events-csv')}>
-                Export event log
+              <button className="btn-secondary" onClick={() => downloadCsv('analytics-events-csv')} disabled={Boolean(exporting)}>
+                {exporting === 'analytics-events-csv' ? 'Exporting...' : 'Export event log'}
               </button>
-              <button className="btn-secondary" onClick={() => downloadCsv('analytics-sessions-csv')}>
-                Export sessions
+              <button className="btn-secondary" onClick={() => downloadCsv('analytics-sessions-csv')} disabled={Boolean(exporting)}>
+                {exporting === 'analytics-sessions-csv' ? 'Exporting...' : 'Export sessions'}
               </button>
-              <button className="btn-secondary" onClick={() => downloadCsv('csv')}>
-                Export waitlist
+              <button className="btn-secondary" onClick={() => downloadCsv('csv')} disabled={Boolean(exporting)}>
+                {exporting === 'csv' ? 'Exporting...' : 'Export waitlist'}
               </button>
               <button className="btn-secondary" onClick={logout}>Log out</button>
             </div>
+            {error && <p className="waitlist-error" role="alert">{error}</p>}
 
             {stats?.analytics && <AnalyticsSection analytics={stats.analytics} />}
             {stats && <WaitlistSection stats={stats} />}
@@ -388,4 +415,9 @@ function dateOnly(value) {
 function truncate(value, maxLength) {
   const text = String(value || '');
   return text.length > maxLength ? `${text.slice(0, Math.max(0, maxLength - 1))}...` : text;
+}
+
+function filenameFromContentDisposition(header, fallback) {
+  const match = String(header || '').match(/filename="([^"]+)"/i);
+  return match?.[1] || fallback;
 }

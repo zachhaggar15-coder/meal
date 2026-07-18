@@ -5,6 +5,7 @@ import {
   assertSerializedSize,
   assertText,
 } from '../api/_guards.js';
+import { adminTokenFromHeaders, escCsv } from '../api/admin-stats.js';
 
 function makeReq({ body = {}, headers = {}, ip = '203.0.113.10', ua = 'guard-test' } = {}) {
   return {
@@ -85,6 +86,11 @@ async function run() {
   assert.equal(assertText('hello\nworld', 'instruction', 20), 'hello world');
   assert.throws(() => assertText('x'.repeat(21), 'instruction', 20), /instruction must be 20 characters or fewer/);
   assert.throws(() => assertSerializedSize({ text: 'x'.repeat(200) }, 'plan', 50), /plan is too large/);
+
+  assert.equal(adminTokenFromHeaders({ headers: { 'x-admin-token': 'secret' }, query: { token: 'leaky' } }), 'secret');
+  assert.equal(adminTokenFromHeaders({ headers: {}, query: { token: 'leaky' } }), '');
+  assert.equal(escCsv('=1+1'), '\'=1+1');
+  assert.equal(escCsv('hello, world'), '"hello, world"');
 }
 
 run().catch((err) => {
