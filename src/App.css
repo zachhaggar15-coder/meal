@@ -12064,6 +12064,7 @@ textarea {
 @media (max-width: 999px) {
   .site-nav {
     overflow: visible;
+    position: static;
   }
 
   .nav-inner {
