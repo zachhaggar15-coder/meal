@@ -11978,7 +11978,7 @@ textarea {
 }
 
 /* Keep every desktop quick link readable as the header closes up. */
-@media (min-width: 1000px) and (max-width: 1280px) {
+@media (min-width: 1000px) and (max-width: 1400px) {
   .nav-inner {
     flex-wrap: nowrap;
     gap: 12px;
