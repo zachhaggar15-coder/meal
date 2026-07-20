@@ -3,6 +3,11 @@
   "framework": "vite",
   "redirects": [
     {
+      "source": "/blog/meal-prep-containers-uk",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
+    },
+    {
       "source": "/plans/aldi-budget-bodybuilding-2000-tinned-and-frozen-pescatarian-v3",
       "destination": "/plans/aldi-budget-bodybuilding-2000-training-day-pescatarian-v3",
       "permanent": true

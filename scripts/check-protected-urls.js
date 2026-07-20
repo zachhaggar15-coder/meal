@@ -48,9 +48,12 @@ for (const url of protectedUrls.mustRedirect) {
 }
 
 // A redirect pointing at a page that no longer exists sends traffic to a 404.
+// Checked for every internal destination, not just /plans/ — content merges
+// redirect between blog posts too.
 for (const rule of redirects) {
   const { destination } = rule;
-  if (destination.startsWith('/plans/') && !isBuilt(destination)) {
+  const isInternalPage = destination.startsWith('/') && !destination.startsWith('//');
+  if (isInternalPage && destination !== '/' && !isBuilt(destination)) {
     errors.push(`redirect ${rule.source} -> ${destination} targets a page that is not in dist/`);
   }
 }

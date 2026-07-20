@@ -67,7 +67,6 @@ const CATEGORY_ORDER = [
       'batch-cooking-for-beginners-uk',
       'how-to-meal-plan-for-weight-loss',
       'cheap-meal-prep-shopping-list-uk',
-      'meal-prep-containers-uk',
       'intermittent-fasting-meal-plan-uk',
       'sunday-meal-prep-routine-uk',
       'five-day-work-lunch-meal-prep-uk',

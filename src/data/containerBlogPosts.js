@@ -181,6 +181,18 @@ export const containerBlogPostsData = {
           'Build a container system over time rather than buying everything at once. Start with a five-pack for lunches, add twist-lid tubs for soups and sauces when the need arises, and pick up larger batch boxes once weekly cooking is a consistent habit.',
         ],
       },
+      {
+        h2: 'Where to buy meal prep containers in the UK',
+        paragraphs: [
+          'Where you buy matters less than what you buy, but the options differ enough on price, range and whether you can inspect lids in person that it is worth knowing the trade-offs.',
+        ],
+        bullets: [
+          'Amazon UK: the widest range for comparing budget tubs, glass boxes, leakproof lids and larger storage systems. Sets of five 1-litre glass containers typically cost around £15-25 from established sellers. Check dimensions, recent reviews and current availability before ordering.',
+          'Supermarkets (Tesco, Asda, Sainsbury\'s): useful for a starter plastic set when you need containers this week, usually around £6-8 for a five-pack. Check the base for microwave, freezer and dishwasher markings, since these vary between own-brand lines.',
+          'Ikea (365+ range): rectangular glass containers that stack neatly and are dishwasher and microwave safe. Sold individually, so a set can be built up gradually rather than bought in one go.',
+          'Homeware and discount stores (Home Bargains, B&M): worth visiting if you want to feel the glass weight, test lid clips and check stackability in person before committing. Inspect seals and food-safe markings carefully.',
+        ],
+      },
     ],
     related: [
       ...guideRelated,
@@ -196,6 +208,7 @@ export const containerBlogPostsData = {
       { q: 'Can I put meal prep containers in the freezer?', a: 'Many glass and plastic containers are freezer safe, but always check the listing. Leave headroom so food can expand as it freezes, cool meals before sealing, and avoid sudden temperature changes with glass containers.' },
       { q: 'What size meal prep containers should I buy?', a: 'For most adult lunches and dinners, 900 ml to 1 litre is the most useful all-round size. Smaller 400–500 ml tubs are good for snacks, sides, and sauces. See the meal prep container size guide for a breakdown by meal type.' },
       { q: 'How many meal prep containers do I need for a week?', a: 'For lunches only, at least five, with six to eight being more practical. For lunches and dinners, ten to twelve works well for one person. See the how many containers guide for a household-by-household breakdown.' },
+      { q: 'Where can I buy cheap meal prep containers in the UK?', a: 'Supermarket own-brand plastic sets are usually the cheapest immediate option at around £6-8 for a five-pack. Amazon UK is generally better value for glass, with five 1-litre containers around £15-25. Home Bargains and B&M are worth a look if you want to check lid quality in person first.' },
     ],
   },
 

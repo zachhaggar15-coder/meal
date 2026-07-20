@@ -130,10 +130,6 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     'A cheap meal prep shopping list should repeat low-cost staples: oats, rice, pasta, potatoes, eggs, tuna, beans, lentils, frozen vegetables, yogurt and simple sauces.',
     SHOPPING_LINKS,
   ),
-  'meal-prep-containers-uk': qa(
-    'For most UK meal preppers, the best setup is five lunch-sized rectangular containers plus a few smaller tubs for snacks and sauces. Choose plastic for cost, glass for reheating and premium sets for long-term use.',
-    CONTAINER_LINKS,
-  ),
   'best-meal-prep-containers-uk': qa(
     'The best meal prep containers UK shoppers should compare are budget plastic tubs, mid-range glass lunch boxes and premium leakproof sets. The right choice depends on reheating, commuting and batch-cooking volume.',
     CONTAINER_LINKS,

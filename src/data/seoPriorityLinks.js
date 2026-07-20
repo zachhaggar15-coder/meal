@@ -128,7 +128,7 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     links: [
       { to: '/meal-prep-containers', label: 'Best Meal Prep Containers UK' },
       { to: '/blog/best-meal-prep-containers-uk', label: 'Best Containers Buying Guide' },
-      { to: '/blog/meal-prep-containers-uk', label: 'Glass vs Plastic and Sizes' },
+      { to: '/blog/glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Containers' },
       { to: '/meal-prep-containers/mid-range', label: 'Glass Meal Prep Containers' },
     ],
   },

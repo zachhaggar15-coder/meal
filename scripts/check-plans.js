@@ -133,9 +133,13 @@ const redirectSources = new Set((redirectConfig.redirects || []).map(rule => rul
 // purpose. If it were derived from them it would drift in lockstep and never
 // catch anything — the whole point is that it is an independent record of what
 // Google already indexed.
+// Only /plans/ URLs can be satisfied by a seed; anything else (blog posts, for
+// example) has to be satisfied by a redirect, which check-protected-urls.js
+// verifies against the built output.
+const resolvesAsPlan = url => url.startsWith('/plans/') && indexableSlugs.has(url.slice('/plans/'.length));
+
 for (const url of protectedUrls.mustResolve) {
-  const slug = url.slice('/plans/'.length);
-  if (!indexableSlugs.has(slug) && !redirectSources.has(url)) {
+  if (!resolvesAsPlan(url) && !redirectSources.has(url)) {
     errors.push(
       `${url} is a protected URL (previously indexed by Google) but no longer ` +
       'resolves and has no redirect. Restore the seed or add a redirect to vercel.json.',
@@ -144,7 +148,7 @@ for (const url of protectedUrls.mustResolve) {
 }
 
 for (const url of protectedUrls.mustRedirect) {
-  if (!redirectSources.has(url) && !indexableSlugs.has(url.slice('/plans/'.length))) {
+  if (!redirectSources.has(url) && !resolvesAsPlan(url)) {
     errors.push(`${url} lost its redirect and does not resolve as a page either`);
   }
 }
