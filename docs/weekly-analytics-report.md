@@ -1,9 +1,9 @@
 # Weekly Analytics SEO Report
 
-Generated: 2026-07-20T02:14:45.939Z
+Generated: 2026-07-20T09:39:24.797Z
 Current range: 2026-06-20 to 2026-07-17
 Previous range: 2026-05-23 to 2026-06-19
-Source: sample data
+Source: GA4 and Google Search Console
 
 ## Automation Boundary
 
@@ -13,60 +13,66 @@ Source: sample data
 
 ## Warnings
 
-- Skipped 1 analytics rows because their routes were not in the verified route inventory.
+- Skipped 66 analytics rows because their routes were not in the verified route inventory.
 
 ## Automated Data Observations
 
-- Public "Popular this week" links generated: 6
-- Verified route rows analysed: 4
-- Unverified route rows skipped: 1
+- Public "Popular this week" links generated: 8
+- Verified route rows analysed: 402
+- Unverified route rows skipped: 66
 - Cooldown window: 28 days
 - Impression thresholds: 50 minor, 100 strong, 250 priority
 
 ## Public Links Written
 
+- 1,500 kcal meal plans -> /choose-calories/1500 (Plan finder)
+- 1,800 Calorie Meal Plans UK -> /meal-plans/1800-calorie (Meal plans)
+- 1200 Calorie Meal Plan UK -> /blog/1200-calorie-meal-plan-uk (Guide)
+- 1400 Calorie Meal Plan UK -> /blog/1400-calorie-meal-plan-uk (Guide)
 - 1500 calorie -> /meal-plans/1500-calorie (Guide)
-- Browse UK meal plans -> /browse (Meal plans)
-- cheap protein sources uk supermarkets -> /blog/cheap-protein-sources-uk-supermarkets (Guide)
-- high protein lunches for work uk -> /blog/high-protein-lunches-for-work-uk (Guide)
-- meal prep containers -> /meal-prep-containers (Guide)
-- MealPrep.org.uk -> / (Guide)
+- 1500 calorie meal plan -> /meal-plan/1500-calorie-meal-plan (Guide)
+- 1500 vs 1800 vs 2000 calories -> /blog/1500-vs-1800-vs-2000-calories (Guide)
+- 1800 Calorie Meal Plan UK: 7-Day Balanced Plan with Shopping List -> /meal-plan/1800-calorie-meal-plan (Ready-made plan)
 
 ## Top Page Opportunities
 
 | Page | Query | Class | Intent | Impressions | Clicks | CTR | Position | Cooldown | Recommended action |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- |
-| /blog/cheap-protein-sources-uk-supermarkets | cheap protein sources uk | near_page_one | price_value | 740 | 19 | 2.57% | 9.8 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
-| /meal-prep-containers | best meal prep containers uk | near_page_one | product_equipment | 620 | 4 | 0.65% | 12.4 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
-| /meal-plans/1500-calorie | 1500 calorie meal plan uk | near_page_one | calorie | 410 | 8 | 1.95% | 10.7 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
-| /blog/high-protein-lunches-for-work-uk | high protein lunch ideas uk | near_page_one | protein | 160 | 5 | 3.13% | 8.9 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| /blog/best-meal-prep-containers-uk | best meal prep containers | near_page_one | product_equipment | 2173 | 3 | 0.14% | 9.5 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| /blog/meal-prep-containers-uk | best meal prep containers | near_page_one | product_equipment | 759 | 1 | 0.13% | 10.2 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| /blog/what-does-1500-calories-look-like-uk | what does 1500 calories look like | near_page_one | calorie | 97 | 1 | 1.03% | 13.3 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| /blog/best-low-calorie-foods-uk | best low calorie ready meals | monitor | calorie | 57 | 0 | 0% | 32.2 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| /blog/best-meal-prep-containers-uk | meal prep containers | monitor | product_equipment | 96 | 1 | 1.04% | 35.4 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
 
 ## Top Query Opportunities
 
 | Query | Page | Class | Intent | Impressions | Clicks | CTR | Position | Cooldown | Recommended action |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- |
-| cheap protein sources uk | /blog/cheap-protein-sources-uk-supermarkets | near_page_one | price_value | 740 | 19 | 2.57% | 9.8 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
-| best meal prep containers uk | /meal-prep-containers | near_page_one | product_equipment | 620 | 4 | 0.65% | 12.4 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
-| 1500 calorie meal plan uk | /meal-plans/1500-calorie | near_page_one | calorie | 410 | 8 | 1.95% | 10.7 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
-| high protein lunch ideas uk | /blog/high-protein-lunches-for-work-uk | near_page_one | protein | 160 | 5 | 3.13% | 8.9 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| best meal prep containers | /blog/best-meal-prep-containers-uk | near_page_one | product_equipment | 2173 | 3 | 0.14% | 9.5 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| best meal prep containers | /blog/meal-prep-containers-uk | near_page_one | product_equipment | 759 | 1 | 0.13% | 10.2 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| what does 1500 calories look like | /blog/what-does-1500-calories-look-like-uk | near_page_one | calorie | 97 | 1 | 1.03% | 13.3 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| best low calorie ready meals | /blog/best-low-calorie-foods-uk | monitor | calorie | 57 | 0 | 0% | 32.2 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
+| meal prep containers | /blog/best-meal-prep-containers-uk | monitor | product_equipment | 96 | 1 | 1.04% | 35.4 | yes | Monitor for now because this page is inside the recent-edit cooldown window. |
 
 ## Pages Gaining Traction
 
 | Page | Clicks | Impressions | Avg position | Delta impressions | Delta clicks |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| /blog/cheap-protein-sources-uk-supermarkets | 19 | 740 | 9.8 | 230 | 8 |
-| /blog/high-protein-lunches-for-work-uk | 5 | 160 | 8.9 | 160 | 5 |
-| /meal-plans/1500-calorie | 8 | 410 | 10.7 | 30 | 1 |
-| /meal-prep-containers | 4 | 620 | 12.4 | 30 | 1 |
+| /blog/best-meal-prep-containers-uk | 5 | 2312 | 10.8 | 2312 | 5 |
+| /blog/meal-prep-containers-uk | 2 | 818 | 11.4 | 763 | 2 |
+| /blog/what-does-1500-calories-look-like-uk | 2 | 630 | 33.4 | 630 | 2 |
+| /meal-plans/1500-calorie | 0 | 105 | 59.8 | 92 | 0 |
+| /plans/any-budget-fat-loss-1500-budget-smart-v3 | 0 | 96 | 72 | 92 | 0 |
 
 ## Pages Losing Traction
 
 | Page | Clicks | Impressions | Avg position | Delta impressions | Delta clicks |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| /meal-plans/1500-calorie | 8 | 410 | 10.7 | 30 | 1 |
-| /meal-prep-containers | 4 | 620 | 12.4 | 30 | 1 |
-| /blog/high-protein-lunches-for-work-uk | 5 | 160 | 8.9 | 160 | 5 |
-| /blog/cheap-protein-sources-uk-supermarkets | 19 | 740 | 9.8 | 230 | 8 |
+| /meal-plan/1500-calorie-meal-plan | 2 | 452 | 57.1 | -449 | 2 |
+| /meal-plan/2500-calorie-meal-plan | 0 | 23 | 56.3 | -58 | 0 |
+| / | 0 | 8 | 44.4 | -45 | 0 |
+| /meal-plan/1800-calorie-meal-plan | 0 | 82 | 40.3 | -19 | 0 |
+| /meal-plan/asda-1800-calorie-meal-plan | 0 | 1 | 18 | -2 | 0 |
 
 ## High-Performing Pages To Learn From
 
@@ -74,46 +80,52 @@ Source: sample data
 
 | Page | Clicks | Impressions | Avg position | Delta impressions | Delta clicks |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| /blog/cheap-protein-sources-uk-supermarkets | 19 | 740 | 9.8 | 230 | 8 |
-| /meal-plans/1500-calorie | 8 | 410 | 10.7 | 30 | 1 |
-| /blog/high-protein-lunches-for-work-uk | 5 | 160 | 8.9 | 160 | 5 |
-| /meal-prep-containers | 4 | 620 | 12.4 | 30 | 1 |
+| /blog/best-meal-prep-containers-uk | 5 | 2312 | 10.8 | 2312 | 5 |
+| /blog/meal-prep-containers-uk | 2 | 818 | 11.4 | 763 | 2 |
+| /blog/what-does-1500-calories-look-like-uk | 2 | 630 | 33.4 | 630 | 2 |
+| /meal-plan/1500-calorie-meal-plan | 2 | 452 | 57.1 | -449 | 2 |
+| /blog/best-cheap-high-protein-foods-uk | 1 | 24 | 23.5 | 22 | 1 |
 
 ### Top 5 By Impressions
 
 | Page | Clicks | Impressions | Avg position | Delta impressions | Delta clicks |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| /blog/cheap-protein-sources-uk-supermarkets | 19 | 740 | 9.8 | 230 | 8 |
-| /meal-prep-containers | 4 | 620 | 12.4 | 30 | 1 |
-| /meal-plans/1500-calorie | 8 | 410 | 10.7 | 30 | 1 |
-| /blog/high-protein-lunches-for-work-uk | 5 | 160 | 8.9 | 160 | 5 |
+| /blog/best-meal-prep-containers-uk | 5 | 2312 | 10.8 | 2312 | 5 |
+| /blog/meal-prep-containers-uk | 2 | 818 | 11.4 | 763 | 2 |
+| /blog/what-does-1500-calories-look-like-uk | 2 | 630 | 33.4 | 630 | 2 |
+| /meal-plan/1500-calorie-meal-plan | 2 | 452 | 57.1 | -449 | 2 |
+| /meal-plans/1500-calorie | 0 | 105 | 59.8 | 92 | 0 |
 
 ### Strongest Positions With Meaningful Impressions
 
 | Page | Clicks | Impressions | Avg position | Delta impressions | Delta clicks |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| /blog/high-protein-lunches-for-work-uk | 5 | 160 | 8.9 | 160 | 5 |
-| /blog/cheap-protein-sources-uk-supermarkets | 19 | 740 | 9.8 | 230 | 8 |
-| /meal-plans/1500-calorie | 8 | 410 | 10.7 | 30 | 1 |
-| /meal-prep-containers | 4 | 620 | 12.4 | 30 | 1 |
+| /blog/best-meal-prep-containers-uk | 5 | 2312 | 10.8 | 2312 | 5 |
+| /blog/what-does-1500-calories-look-like-uk | 2 | 630 | 33.4 | 630 | 2 |
+| /meal-plan/1800-calorie-meal-plan | 0 | 82 | 40.3 | -19 | 0 |
+| /blog/best-low-calorie-foods-uk | 0 | 75 | 29.1 | 29 | 0 |
+| /blog/meal-prep-containers-uk | 2 | 818 | 11.4 | 763 | 2 |
 
 ### Best GA4 Engagement Where Available
 
 | Page | Clicks | Impressions | Avg position | Views | Engagement |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| /blog/cheap-protein-sources-uk-supermarkets | 19 | 740 | 9.8 | 330 | 64% |
-| /meal-prep-containers | 4 | 620 | 12.4 | 420 | 52% |
+| /meal-plans/aldi-1500-calorie-meal-plan | 0 | 48 | 46.9 | 10 | 100% |
+| /meal-plans/lidl | 1 | 6 | 8.7 | 6 | 100% |
+| /blog/meal-prep-tubs-for-batch-cooking | 0 | 4 | 9.5 | 2 | 100% |
+| /blog/protein-porridge-and-yogurt-breakfasts-uk | 0 | 1 | 32 | 2 | 100% |
+| /choose-calories/1500 | 0 | 4 | 70.5 | 2 | 100% |
 
 ## Cannibalisation Risks
 
-- No obvious multi-page intent overlap crossed the current threshold.
+- Intent "prep containers": /blog/best-meal-prep-containers-uk (2269 impressions); /blog/meal-prep-containers-uk (759 impressions)
 
 ## Do Not Edit This Week
 
-- /blog/cheap-protein-sources-uk-supermarkets: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
-- /meal-prep-containers: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
-- /meal-plans/1500-calorie: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
-- /blog/high-protein-lunches-for-work-uk: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
+- /blog/best-meal-prep-containers-uk: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
+- /blog/meal-prep-containers-uk: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
+- /blog/what-does-1500-calories-look-like-uk: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
+- /blog/best-low-calorie-foods-uk: Recent source changes detected in the last 28 days; wait for more data unless there is a factual, UX or broken-link issue.
 - prerender.js: Recently changed source file; avoid broad follow-up rewrites without a fresh reason.
 - src/components/AffiliateProductGrid.jsx: Recently changed source file; avoid broad follow-up rewrites without a fresh reason.
 - src/components/AnalyticsConsentBanner.jsx: Recently changed source file; avoid broad follow-up rewrites without a fresh reason.
@@ -125,8 +137,10 @@ Source: sample data
 
 ## Recommended Action For The Week
 
-- Action: Do nothing and wait for more data
-- Why: Current opportunities are either too noisy or within the cooldown window.
+- Action: Review one cannibalisation cluster after approval
+- Page: /blog/best-meal-prep-containers-uk
+- Query/intent: prep containers
+- Why: Multiple verified pages appear to overlap on one intent, so consolidation or clearer internal linking is safer than adding content.
 - New page justified: no
 - Approval required: yes
 

@@ -2,50 +2,62 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-07-20T02:14:45.939Z",
+  "generatedAt": "2026-07-20T09:39:24.797Z",
   "range": {
     "current": {
       "startDate": "2026-06-20",
       "endDate": "2026-07-17"
     }
   },
-  "source": "sample",
+  "source": "google-analytics-and-search-console",
   "trendingLinks": [
     {
-      "to": "/meal-plans/1500-calorie",
-      "label": "1500 calorie",
-      "description": "A useful MealPrep.org.uk guide for planning this week.",
-      "category": "Guide"
+      "to": "/choose-calories/1500",
+      "label": "1,500 kcal meal plans",
+      "description": "Narrow the plan library by a specific goal, diet, supermarket or calorie target.",
+      "category": "Plan finder"
     },
     {
-      "to": "/browse",
-      "label": "Browse UK meal plans",
-      "description": "Compare useful routes into calorie, goal and supermarket meal plans.",
+      "to": "/meal-plans/1800-calorie",
+      "label": "1,800 Calorie Meal Plans UK",
+      "description": "Browse related plans, shopping-list ideas and UK supermarket options.",
       "category": "Meal plans"
     },
     {
-      "to": "/blog/cheap-protein-sources-uk-supermarkets",
-      "label": "cheap protein sources uk supermarkets",
+      "to": "/blog/1200-calorie-meal-plan-uk",
+      "label": "1200 Calorie Meal Plan UK",
+      "description": "A practical guide for planning, shopping or prepping meals in the UK.",
+      "category": "Guide"
+    },
+    {
+      "to": "/blog/1400-calorie-meal-plan-uk",
+      "label": "1400 Calorie Meal Plan UK",
+      "description": "A practical guide for planning, shopping or prepping meals in the UK.",
+      "category": "Guide"
+    },
+    {
+      "to": "/meal-plans/1500-calorie",
+      "label": "1500 calorie",
       "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
       "category": "Guide"
     },
     {
-      "to": "/blog/high-protein-lunches-for-work-uk",
-      "label": "high protein lunches for work uk",
+      "to": "/meal-plan/1500-calorie-meal-plan",
+      "label": "1500 calorie meal plan",
       "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
       "category": "Guide"
     },
     {
-      "to": "/meal-prep-containers",
-      "label": "meal prep containers",
+      "to": "/blog/1500-vs-1800-vs-2000-calories",
+      "label": "1500 vs 1800 vs 2000 calories",
       "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
       "category": "Guide"
     },
     {
-      "to": "/",
-      "label": "MealPrep.org.uk",
-      "description": "Start with the generator, quiz and practical weekly planning tools.",
-      "category": "Guide"
+      "to": "/meal-plan/1800-calorie-meal-plan",
+      "label": "1800 Calorie Meal Plan UK: 7-Day Balanced Plan with Shopping List",
+      "description": "Use this ready-made plan as a starting point, then compare related alternatives.",
+      "category": "Ready-made plan"
     }
   ]
 };
