@@ -203,11 +203,59 @@ function cosineSimilarity(a, b) {
 
 // ── Match label & reason ──────────────────────────────────────────────────────
 
-function matchLabel(score) {
+// A plan can score highly on goal, diet, supermarket, budget and effort while
+// completely missing the requested calorie target, because calories are only
+// worth W_CALORIES of the base total. Labelling that "Great Match" is
+// misleading, so hard constraints cap the label regardless of overall score.
+const CALORIE_NEAR_MISS = 300;
+
+function matchLabel(score, compromises = []) {
+  const hasHardMiss = compromises.some(item => item.severity === 'hard');
+  if (hasHardMiss) return 'Closest Match';
+  if (compromises.length) return score >= 72 ? 'Good Match' : 'Possible Match';
+
   if (score >= 88) return 'Best Match';
   if (score >= 72) return 'Great Match';
   if (score >= 55) return 'Good Match';
   return 'Possible Match';
+}
+
+// Lists the ways a plan does not actually satisfy what was asked for, so the
+// results card can say so plainly instead of implying a clean match.
+function buildCompromises(seed, answers) {
+  const compromises = [];
+
+  if (answers.calories && answers.calories !== 'unsure') {
+    const target = parseInt(answers.calories, 10);
+    const diff = Math.abs(seed.calories - target);
+    if (diff > CALORIE_NEAR_MISS) {
+      compromises.push({
+        type: 'calories',
+        severity: 'hard',
+        text: `This plan is ${seed.calories.toLocaleString('en-GB')} kcal, not the ${target.toLocaleString('en-GB')} kcal you asked for.`,
+      });
+    }
+  }
+
+  if (answers.supermarket && answers.supermarket !== 'any' && seed.supermarket !== answers.supermarket) {
+    compromises.push({
+      type: 'supermarket',
+      severity: seed.supermarket === 'any' ? 'soft' : 'hard',
+      text: seed.supermarket === 'any'
+        ? 'Uses generic UK supermarket ingredients rather than a specific store.'
+        : `Built around ${marketLabel(seed.supermarket)}, not ${marketLabel(answers.supermarket)}.`,
+    });
+  }
+
+  if (answers.diet && answers.diet !== 'standard' && seed.dietType !== answers.diet) {
+    compromises.push({
+      type: 'diet',
+      severity: 'hard',
+      text: `This is a ${seed.dietType} plan, not ${answers.diet}.`,
+    });
+  }
+
+  return compromises;
 }
 
 function buildMatchReason(seed, answers, macrosGrams = null) {
@@ -252,6 +300,7 @@ export function getTopMatches(answers, n = 3) {
 
   return scored.slice(0, n).map(({ seed, score, macrosGrams }) => {
     const actualMacros = macrosGrams || getSeedMacroGrams(seed);
+    const compromises = buildCompromises(seed, enrichedAnswers);
     return {
     slug:          seed.slug,
     title:         seed.title,
@@ -266,8 +315,10 @@ export function getTopMatches(answers, n = 3) {
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
     macrosGrams:   actualMacros,
     score,
-    matchLabel:    matchLabel(score),
+    matchLabel:    matchLabel(score, compromises),
     matchReason:   buildMatchReason(seed, enrichedAnswers, actualMacros),
+    compromises,
+    isExactMatch:  compromises.length === 0,
     };
   });
 }

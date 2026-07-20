@@ -1,4 +1,336 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "vite"
+  "framework": "vite",
+  "redirects": [
+    {
+      "source": "/plans/aldi-budget-bodybuilding-2000-tinned-and-frozen-pescatarian-v3",
+      "destination": "/plans/aldi-budget-bodybuilding-2000-training-day-pescatarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-budget-bodybuilding-3500-batch-friendly-v3",
+      "destination": "/plans/aldi-budget-bodybuilding-3500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-budget-fat-loss-1500-very-cheap-batch",
+      "destination": "/plans/aldi-budget-fat-loss-1500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-cheap-hp-2000-desk-lunch-v3",
+      "destination": "/plans/aldi-cheap-hp-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-cutting-1400-low-calorie",
+      "destination": "/plans/aldi-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-cutting-1600-high-protein",
+      "destination": "/plans/aldi-cutting-1600",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-endurance-2000-quick-shop-pescatarian-v3",
+      "destination": "/plans/aldi-endurance-2000-high-carb-fuel-pescatarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-gym-beginner-1800-balanced-plate-v3",
+      "destination": "/plans/aldi-gym-beginner-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-muscle-gain-2000-training-day-v3",
+      "destination": "/plans/aldi-muscle-gain-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-pescatarian-weight-loss-1400-very-cheap-batch",
+      "destination": "/plans/aldi-pescatarian-weight-loss-1400-flexible-batch",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-pescatarian-weight-loss-1500-very-cheap-batch",
+      "destination": "/plans/aldi-pescatarian-weight-loss-1500-budget-standard",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-weight-loss-1400-very-cheap-batch",
+      "destination": "/plans/aldi-weight-loss-1500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/any-cutting-1400-lean-cut",
+      "destination": "/plans/any-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/any-gym-beginner-1800-balanced-plate-vegetarian-v3",
+      "destination": "/plans/any-gym-beginner-1800-quick-shop-vegetarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/any-muscle-gain-3500-recovery-vegetarian-v3",
+      "destination": "/plans/any-muscle-gain-3500-performance-protein-vegetarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-body-recomp-2000-higher-protein-v3",
+      "destination": "/plans/asda-body-recomp-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-body-recomp-2200-training-day-v3",
+      "destination": "/plans/asda-body-recomp-2200",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-budget-bodybuilding-2000-budget-smart-v3",
+      "destination": "/plans/asda-budget-bodybuilding-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-cutting-1400-lean-cut",
+      "destination": "/plans/asda-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-muscle-gain-2000-quick-shop-v3",
+      "destination": "/plans/asda-muscle-gain-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-muscle-gain-2500-higher-protein-vegetarian-v3",
+      "destination": "/plans/asda-muscle-gain-2500-recovery-vegetarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-muscle-gain-3500-higher-protein-vegetarian-v3",
+      "destination": "/plans/asda-muscle-gain-3500-recovery-vegetarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/coop-muscle-gain-2500-budget-batch",
+      "destination": "/plans/asda-muscle-gain-2500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/coop-weight-loss-1400-budget-standard",
+      "destination": "/plans/coop-weight-loss-1500-budget-low",
+      "permanent": true
+    },
+    {
+      "source": "/plans/iceland-budget-bodybuilding-3000-budget-smart-v3",
+      "destination": "/plans/iceland-budget-bodybuilding-3000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/iceland-cheap-high-protein-1800-very-cheap-batch",
+      "destination": "/plans/iceland-cheap-hp-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/iceland-muscle-gain-3500-wholegrain-v3",
+      "destination": "/plans/iceland-muscle-gain-3500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-body-recomp-1800-training-day-v3",
+      "destination": "/plans/lidl-body-recomp-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-budget-bodybuilding-3000-training-day-v3",
+      "destination": "/plans/lidl-budget-bodybuilding-3000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-cutting-1400-batch-cook",
+      "destination": "/plans/lidl-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-gym-beginner-1800-higher-protein-v3",
+      "destination": "/plans/lidl-gym-beginner-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-muscle-gain-2000-recovery-v3",
+      "destination": "/plans/lidl-muscle-gain-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-muscle-gain-2500-wholegrain-v3",
+      "destination": "/plans/lidl-muscle-gain-2500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/marks-spencer-weight-loss-1500-flexible-batch",
+      "destination": "/plans/marks-spencer-weight-loss-1500-moderate-batch",
+      "permanent": true
+    },
+    {
+      "source": "/plans/morrisons-gym-beginner-1800-training-day-v3",
+      "destination": "/plans/morrisons-gym-beginner-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/morrisons-gym-beginner-1800-very-cheap-batch",
+      "destination": "/plans/morrisons-gym-beginner-1800-batch-friendly-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/morrisons-muscle-gain-2000-batch-friendly-pescatarian-v3",
+      "destination": "/plans/morrisons-muscle-gain-2000-performance-protein-pescatarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-budget-bodybuilding-2000-moderate-batch",
+      "destination": "/plans/aldi-budget-bodybuilding-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-low-effort-1800-moderate-batch",
+      "destination": "/plans/lidl-low-effort-1800-batch-light",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-muscle-gain-2500-moderate-batch",
+      "destination": "/plans/morrisons-muscle-gain-2500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-weight-loss-1400-moderate-batch",
+      "destination": "/plans/ocado-weight-loss-1400-moderate-standard",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-weight-loss-1600-flexible-standard",
+      "destination": "/plans/ocado-weight-loss-1400-moderate-standard",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-weight-loss-1600-moderate-batch",
+      "destination": "/plans/ocado-weight-loss-1500-flexible-batch",
+      "permanent": true
+    },
+    {
+      "source": "/plans/ocado-weight-loss-1600-moderate-standard",
+      "destination": "/plans/ocado-weight-loss-1400-moderate-standard",
+      "permanent": true
+    },
+    {
+      "source": "/plans/sainsburys-endurance-3000-balanced-plate-v3",
+      "destination": "/plans/sainsburys-endurance-3000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/sainsburys-endurance-3500-recovery-v3",
+      "destination": "/plans/sainsburys-endurance-3500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/sainsburys-gym-beginner-1800-very-cheap-batch",
+      "destination": "/plans/sainsburys-gym-beginner-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-body-recomp-2000-recovery-v3",
+      "destination": "/plans/tesco-body-recomp-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-body-recomp-pesc-2000-higher-protein-v3",
+      "destination": "/plans/tesco-body-recomp-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-budget-bodybuilding-2000-training-day-vegetarian-v3",
+      "destination": "/plans/tesco-budget-bodybuilding-2000-performance-protein-vegetarian-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-cheap-hp-1800-cook-once-v3",
+      "destination": "/plans/tesco-cheap-hp-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-cutting-1400-quick-prep",
+      "destination": "/plans/tesco-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-cutting-pesc-1500-batch-cook",
+      "destination": "/plans/tesco-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-gym-beginner-1800-batch-friendly-v3",
+      "destination": "/plans/tesco-gym-beginner-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-high-protein-low-cal-1500-very-cheap-batch",
+      "destination": "/plans/tesco-high-protein-low-cal-1500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-low-effort-1800-very-cheap-batch",
+      "destination": "/plans/tesco-low-effort-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-muscle-gain-2000-wholegrain-v3",
+      "destination": "/plans/tesco-muscle-gain-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/uk-cheap-high-protein-1800-very-cheap-batch",
+      "destination": "/plans/any-cheap-hp-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/uk-gym-beginner-1800-very-cheap-batch",
+      "destination": "/plans/any-gym-beginner-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/uk-high-protein-low-cal-1500-very-cheap-batch",
+      "destination": "/plans/any-high-protein-low-cal-1500",
+      "permanent": true
+    },
+    {
+      "source": "/plans/uk-low-effort-1800-very-cheap-batch",
+      "destination": "/plans/any-low-effort-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/waitrose-weight-loss-1400-flexible-batch",
+      "destination": "/plans/waitrose-weight-loss-1400-moderate-low",
+      "permanent": true
+    },
+    {
+      "source": "/plans/waitrose-weight-loss-1400-flexible-standard",
+      "destination": "/plans/waitrose-weight-loss-1400-moderate-standard",
+      "permanent": true
+    },
+    {
+      "source": "/plans/waitrose-weight-loss-1400-moderate-batch",
+      "destination": "/plans/waitrose-weight-loss-1400-moderate-low",
+      "permanent": true
+    },
+    {
+      "source": "/plans/waitrose-weight-loss-1500-flexible-standard",
+      "destination": "/plans/waitrose-weight-loss-1500-moderate-standard",
+      "permanent": true
+    },
+    {
+      "source": "/plans/waitrose-weight-loss-1600-flexible-standard",
+      "destination": "/plans/waitrose-weight-loss-1600-moderate-standard",
+      "permanent": true
+    }
+  ]
 }

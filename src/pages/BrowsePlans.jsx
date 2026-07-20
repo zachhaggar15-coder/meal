@@ -437,7 +437,7 @@ function Select({ label, value, onChange, options }) {
         aria-label={label}
       >
         {options.map(o => (
-          <option key={o.value} value={o.value} disabled={o.disabled}>{o.label}</option>
+          <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
     </label>
@@ -453,21 +453,29 @@ function readFilterParam(params, key, options) {
   return options.some(option => option.value === value) ? value : '';
 }
 
+// Options that cannot return a single plan are removed from the dropdown
+// entirely rather than rendered disabled. A selectable filter that yields an
+// empty page is a dead end, and combinations like "vegan goal + standard diet"
+// are contradictions that should never be offered in the first place. The
+// currently-selected value is always kept so the control never loses its own
+// state mid-interaction.
 function withOptionCounts(options, field, filters) {
-  return options.map(option => {
-    if (!option.value) return option;
+  return options
+    .map(option => {
+      if (!option.value) return option;
 
-    const optionFilters = { ...filters, [field]: option.value };
-    const count = ALL_PLANS.reduce((total, plan) => (
-      planMatchesFilters(plan, optionFilters) ? total + 1 : total
-    ), 0);
+      const optionFilters = { ...filters, [field]: option.value };
+      const count = ALL_PLANS.reduce((total, plan) => (
+        planMatchesFilters(plan, optionFilters) ? total + 1 : total
+      ), 0);
 
-    return {
-      ...option,
-      label: `${option.label} (${count})`,
-      disabled: count === 0 && String(filters[field] || '') !== String(option.value),
-    };
-  });
+      return { ...option, count, label: `${option.label} (${count})` };
+    })
+    .filter(option => (
+      !option.value ||
+      option.count > 0 ||
+      String(filters[field] || '') === String(option.value)
+    ));
 }
 
 function planMatchesFilters(plan, filters) {

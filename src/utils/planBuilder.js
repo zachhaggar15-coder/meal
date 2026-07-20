@@ -1,5 +1,6 @@
 import { MEALS } from '../data/mealLibrary.js';
 import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
+import { getSupermarketProfile, PRICING_CONTEXT_CHECKED } from '../data/supermarketProfiles.js';
 import { isCountUnit } from './countUnits.js';
 import { averageDailyMacros, computeMealNutrition, scaleNutrition } from './nutrition.js';
 
@@ -767,10 +768,30 @@ export function buildPlan(seed) {
     seo:          buildSeo(seed),
     faq:          buildFaqs(seed),
     swaps:        buildSwaps(seed),
+    storeGuide:   buildStoreGuide(seed),
     prepPlan,
     plan,
     shoppingList: buildShoppingList(plan),
     relatedSlugs: getRelatedSlugs(seed),
+  };
+}
+
+// Retailer-specific guidance. Without this, two plans with the same goal and
+// calorie target are identical apart from the store name — which is
+// near-duplicate content across hundreds of URLs, and no use to a reader
+// deciding where to actually shop.
+function buildStoreGuide(seed) {
+  const profile = getSupermarketProfile(seed.supermarket);
+
+  return {
+    label: profile.label,
+    tier: profile.tier,
+    positioning: profile.positioning,
+    valueRange: profile.valueRange,
+    loyalty: profile.loyalty,
+    prepStrengths: profile.prepStrengths,
+    watchOuts: profile.watchOuts,
+    checked: PRICING_CONTEXT_CHECKED,
   };
 }
 

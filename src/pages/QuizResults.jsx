@@ -130,6 +130,7 @@ export default function QuizResults() {
           <div className="result-card-score">{best.score}% match</div>
           <h2 className="result-card-title">{best.title}</h2>
           <p className="result-card-reason">{best.matchReason}</p>
+          <CompromiseNote compromises={best.compromises} />
 
           <div className="result-card-meta">
             <span className="result-meta-pill">{MKT_LABELS[best.supermarket] || best.supermarket}</span>
@@ -149,12 +150,16 @@ export default function QuizResults() {
         </div>
 
         {/* Other matches */}
+        {rest.length > 0 && (
+          <h2 className="quiz-results-alt-heading">Other close matches</h2>
+        )}
         {rest.map((match, i) => (
           <div className="result-card result-card--alt" key={match.slug}>
             <div className="result-card-badge">{match.matchLabel}</div>
             <div className="result-card-score">{match.score}% match</div>
             <h2 className="result-card-title result-card-title--sm">{match.title}</h2>
             <p className="result-card-reason">{match.matchReason}</p>
+            <CompromiseNote compromises={match.compromises} />
 
             <div className="result-card-meta">
               <span className="result-meta-pill">{MKT_LABELS[match.supermarket] || match.supermarket}</span>
@@ -209,6 +214,21 @@ function AdjustmentSelect({ label, value, options, onChange }) {
         ))}
       </select>
     </label>
+  );
+}
+
+// States plainly where a plan does not match what was asked for. Without this
+// a plan can miss the calorie target by 700 kcal and still read as a clean
+// match, because calories are only a small share of the overall score.
+function CompromiseNote({ compromises }) {
+  if (!compromises?.length) return null;
+
+  return (
+    <ul className="result-card-compromises">
+      {compromises.map(item => (
+        <li key={item.type}>{item.text}</li>
+      ))}
+    </ul>
   );
 }
 

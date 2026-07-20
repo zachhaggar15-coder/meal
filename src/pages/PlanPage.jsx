@@ -790,6 +790,48 @@ export default function PlanPage() {
           </>
         )}
 
+        {/* Shopping this plan at the chosen retailer */}
+        {plan.storeGuide && (
+          <section className="plan-store-guide">
+            <h2>Shopping This Plan At {plan.storeGuide.label}</h2>
+            <p className="plan-store-positioning">{plan.storeGuide.positioning}</p>
+
+            <div className="plan-store-facts">
+              <div>
+                <span className="plan-store-fact-label">Value range</span>
+                <span>{plan.storeGuide.valueRange}</span>
+              </div>
+              {plan.storeGuide.loyalty && (
+                <div>
+                  <span className="plan-store-fact-label">Loyalty pricing</span>
+                  <span>{plan.storeGuide.loyalty}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="swaps-grid">
+              <div className="swap-card">
+                <h3>What {plan.storeGuide.label} is good for here</h3>
+                <ul>
+                  {plan.storeGuide.prepStrengths.map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+              </div>
+              <div className="swap-card">
+                <h3>Worth knowing before you shop</h3>
+                <ul>
+                  {plan.storeGuide.watchOuts.map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+              </div>
+            </div>
+
+            <p className="plan-store-note">
+              Retailer details checked {plan.storeGuide.checked}. Ranges and loyalty schemes change —
+              the weekly cost estimate above is based on the plan&apos;s budget tier, not on live
+              prices at this store.
+            </p>
+          </section>
+        )}
+
         {/* Swaps & suggestions */}
         <section className="plan-swaps-section">
           <h2>Swaps &amp; Suggestions</h2>

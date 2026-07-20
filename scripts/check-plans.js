@@ -12,6 +12,9 @@ import {
   filterPlansForCombo,
 } from '../src/data/comboLandingPages.js';
 import { buildPlan, getAllPlanMeta } from '../src/utils/planBuilder.js';
+import redirectConfig from '../vercel.json' with { type: 'json' };
+import protectedUrls from '../src/data/protectedUrls.json' with { type: 'json' };
+import { isBudgetTierAllowed, lowestBudgetTierFor } from '../src/data/supermarketProfiles.js';
 
 const sourceByName = new Map(MEALS.map(meal => [meal.name, meal]));
 const seedSlugs = new Set(PLAN_SEEDS.map(seed => seed.slug));
@@ -115,6 +118,67 @@ for (const [slug, comboPage] of Object.entries(COMBO_LANDING_PAGES)) {
     if (!link.label || !link.to?.startsWith('/')) {
       errors.push(`${slug}: malformed supporting link ${JSON.stringify(link)}`);
     }
+  }
+}
+
+// ── Indexed-URL protection ──────────────────────────────────────────────────
+// Commit c75dfcc narrowed prerendering from PLAN_SEEDS to INDEXABLE_PLAN_SEEDS
+// and silently orphaned 125 URLs that Google was already serving, some ranking
+// at positions 4-11. Nothing failed the build, because nothing was checking.
+// These two guards make that class of regression loud instead of silent.
+const indexableSlugs = new Set(INDEXABLE_PLAN_SEEDS.map(seed => seed.slug));
+const redirectSources = new Set((redirectConfig.redirects || []).map(rule => rule.source));
+
+// protectedUrls.json is maintained separately from the seed generators on
+// purpose. If it were derived from them it would drift in lockstep and never
+// catch anything — the whole point is that it is an independent record of what
+// Google already indexed.
+for (const url of protectedUrls.mustResolve) {
+  const slug = url.slice('/plans/'.length);
+  if (!indexableSlugs.has(slug) && !redirectSources.has(url)) {
+    errors.push(
+      `${url} is a protected URL (previously indexed by Google) but no longer ` +
+      'resolves and has no redirect. Restore the seed or add a redirect to vercel.json.',
+    );
+  }
+}
+
+for (const url of protectedUrls.mustRedirect) {
+  if (!redirectSources.has(url) && !indexableSlugs.has(url.slice('/plans/'.length))) {
+    errors.push(`${url} lost its redirect and does not resolve as a page either`);
+  }
+}
+
+// Premium retailers must not advertise a weekly shop cheaper than is credible.
+// A "£20-30/week at M&S" plan would contradict the cost guidance given
+// elsewhere on the site.
+for (const seed of INDEXABLE_PLAN_SEEDS) {
+  if (!isBudgetTierAllowed(seed.supermarket, seed.budget)) {
+    errors.push(
+      `/plans/${seed.slug} claims budget tier "${seed.budget}" at ${seed.supermarket}, ` +
+      `below the credible floor of "${lowestBudgetTierFor(seed.supermarket)}"`,
+    );
+  }
+}
+
+const redirectTargets = (redirectConfig.redirects || [])
+  .map(rule => rule.destination)
+  .filter(destination => destination.startsWith('/plans/'));
+
+for (const destination of redirectTargets) {
+  const slug = destination.slice('/plans/'.length);
+  if (!indexableSlugs.has(slug)) {
+    errors.push(`redirect target ${destination} does not exist in INDEXABLE_PLAN_SEEDS`);
+  }
+}
+
+for (const source of redirectSources) {
+  const slug = source.slice('/plans/'.length);
+  if (indexableSlugs.has(slug)) {
+    errors.push(
+      `/plans/${slug} is both a live plan and a redirect source — the redirect ` +
+      'will shadow the page. Remove one.',
+    );
   }
 }
 

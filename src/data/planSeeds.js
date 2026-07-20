@@ -1,3 +1,5 @@
+import { RESTORED_PLAN_SEEDS } from './restoredPlanSeeds.js';
+
 const CORE_PLAN_SEEDS = [
   // ── WEIGHT LOSS (30) ─────────────────────────────────────────────────────
   { slug: 'aldi-weight-loss-1500', goal: 'weight-loss', supermarket: 'aldi', calories: 1500, dietType: 'standard', budget: 'very-cheap', effort: 'standard', mealSetIndex: 0, title: 'Aldi Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
@@ -980,7 +982,17 @@ function buildCoverageKey({ goal, supermarket, dietType, calories, budget, effor
 const ADDITIONAL_PLAN_SEEDS = CORE_PLAN_SEEDS.map(buildExpandedPlanSeed);
 const BASE_PLAN_SEEDS = [...CORE_PLAN_SEEDS, ...ADDITIONAL_PLAN_SEEDS];
 const DEEP_EXPANSION_SEEDS = buildDeepExpansionSeeds(Math.max(0, TARGET_PLAN_COUNT - BASE_PLAN_SEEDS.length));
-const INDEXABLE_PLAN_SEED_POOL = [...BASE_PLAN_SEEDS, ...DEEP_EXPANSION_SEEDS];
+
+// Previously-indexed URLs restored so they resolve again — see
+// restoredPlanSeeds.js. Appended after generation and de-duplicated, so a
+// restored slug that generation later starts producing on its own does not
+// create a duplicate route.
+const GENERATED_SEEDS = [...BASE_PLAN_SEEDS, ...DEEP_EXPANSION_SEEDS];
+const GENERATED_SLUGS = new Set(GENERATED_SEEDS.map(seed => seed.slug));
+const INDEXABLE_PLAN_SEED_POOL = [
+  ...GENERATED_SEEDS,
+  ...RESTORED_PLAN_SEEDS.filter(seed => !GENERATED_SLUGS.has(seed.slug)),
+];
 export const COVERAGE_PLAN_SEEDS = buildCoverageSeeds(INDEXABLE_PLAN_SEED_POOL);
 
 export const INDEXABLE_PLAN_SEEDS = INDEXABLE_PLAN_SEED_POOL;
