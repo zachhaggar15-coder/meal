@@ -473,6 +473,9 @@ export default function Home() {
               </details>
             ))}
           </div>
+          <p className="home-faq-more">
+            <Link to="/questions">See more meal prep questions, answered by topic &rarr;</Link>
+          </p>
         </section>
 
         {/* ── AI Generator (secondary) ──────────────────────────────────────── */}

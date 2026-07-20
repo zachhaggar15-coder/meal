@@ -39,6 +39,11 @@ export const TOOL_LINKS = [
     description: 'Estimate a weekly shop by supermarket and household size.',
   },
   {
+    to: '/tools#protein-value-comparator',
+    label: 'Protein Value Comparator',
+    description: 'Compare foods by cost per 25g/30g of protein.',
+  },
+  {
     to: '/tools#container-count-calculator',
     label: 'Container Count Recommender',
     description: 'Work out how many tubs you actually need.',
@@ -100,6 +105,11 @@ export const DIET_NAV_LINKS = DIET_CHOICES.map(item => ({
 }));
 
 export const GUIDE_NAV_LINKS = [
+  {
+    to: '/questions',
+    label: 'Meal Prep Questions',
+    description: 'Real questions about protein, cost, storage and equipment, answered directly.',
+  },
   {
     to: '/blog/meal-prep-for-beginners-uk',
     label: 'Meal Prep For Beginners',
@@ -203,6 +213,7 @@ export const FOOTER_GROUPS = [
   {
     label: 'Guides',
     items: [
+      { to: '/questions', label: 'Meal Prep Questions' },
       { to: '/blog/meal-prep-for-beginners-uk', label: 'Beginners' },
       { to: '/blog/how-to-build-a-calorie-deficit', label: 'Calorie Deficit' },
       { to: '/blog/high-protein-low-calorie-meals', label: 'High Protein Meals' },
@@ -277,6 +288,14 @@ const STATIC_SEARCH_ENTRIES = [
     description: 'Free UK guides for weight loss, high protein, batch cooking and supermarkets.',
     keywords: 'blog guides articles nutrition beginner calorie deficit high protein',
     priority: 70,
+  },
+  {
+    title: 'Meal Prep Questions Answered',
+    to: '/questions',
+    type: 'Guides',
+    description: 'Real questions about protein, cost, supermarkets, storage and equipment, organised by topic.',
+    keywords: 'questions faq protein value cost cheapest supermarket storage batch cooking equipment ask',
+    priority: 72,
   },
   {
     title: 'MealPrep Feedback',

@@ -8,6 +8,16 @@ import { BUDGET_CONTAINERS, MEAL_PREP_STICKERS, MID_RANGE_CONTAINERS } from '../
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
 import { CONTAINER_TIER_COPY, getContainerRecommendation } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import {
+  PROTEIN_FOODS,
+  PRICE_CHECKED_DATE,
+  costPerProteinTarget,
+  costPerServingPence,
+  formatPenceRange,
+  getProteinFood,
+  kcalPerServing,
+  proteinPerServing,
+} from '../data/proteinValueData.js';
 
 const ACTIVITY = {
   sedentary: { label: 'Mostly desk based', factor: 1.2 },
@@ -157,7 +167,7 @@ const jsonLd = [
     url: 'https://www.mealprep.org.uk/tools',
     applicationCategory: 'HealthApplication',
     operatingSystem: 'Any',
-    description: 'Free UK meal prep tools for fridge dinner ideas, calorie targets, protein targets, shopping budgets and meal prep container planning.',
+    description: 'Free UK meal prep tools for fridge dinner ideas, calorie targets, protein targets, shopping budgets, protein value comparison and meal prep container planning.',
   },
   {
     '@context': 'https://schema.org',
@@ -187,6 +197,14 @@ const jsonLd = [
           text: 'No. The tools provide general planning estimates only. Calorie and protein needs vary by person, health status and activity.',
         },
       },
+      {
+        '@type': 'Question',
+        name: 'Are the protein value comparator prices live supermarket prices?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'No. The comparator uses representative UK price ranges checked against real supermarket listings, not a live pricing feed. Prices vary by retailer, pack size, brand and promotion, so use the tool for relative comparison rather than an exact quote.',
+        },
+      },
     ],
   },
 ];
@@ -214,6 +232,11 @@ export default function ToolsPage() {
   const [people, setPeople] = useState(1);
   const [shopDays, setShopDays] = useState(7);
   const [highProtein, setHighProtein] = useState(true);
+
+  const [proteinCompareIds, setProteinCompareIds] = useState([
+    'chicken-breast', 'eggs', 'greek-yogurt', 'tinned-tuna',
+  ]);
+  const [proteinTargetG, setProteinTargetG] = useState(30);
 
   const [fridgeRows, setFridgeRows] = useState(DEFAULT_FRIDGE_ROWS);
   const [dinnerCalories, setDinnerCalories] = useState(650);
@@ -274,6 +297,30 @@ export default function ToolsPage() {
     const householdFactor = people === 1 ? 1 : (1 + ((people - 1) * 0.72));
     return Math.round(base * dayFactor * proteinFactor * householdFactor);
   }, [highProtein, market, people, shopDays]);
+
+  const proteinCompareRows = useMemo(() => {
+    const rows = proteinCompareIds
+      .map(getProteinFood)
+      .filter(Boolean)
+      .map(food => {
+        const cost = costPerServingPence(food);
+        const target = costPerProteinTarget(food, proteinTargetG);
+        return {
+          food,
+          proteinG: proteinPerServing(food),
+          kcal: kcalPerServing(food),
+          costServing: cost,
+          targetCost: target,
+        };
+      });
+    return [...rows].sort((a, b) => a.targetCost.low - b.targetCost.low);
+  }, [proteinCompareIds, proteinTargetG]);
+
+  const bestProteinValue = proteinCompareRows[0];
+
+  function updateProteinCompareSlot(index, id) {
+    setProteinCompareIds(ids => ids.map((current, i) => (i === index ? id : current)));
+  }
 
   function updateFridgeRow(id, field, value) {
     setFridgeRows(rows => rows.map(row => (
@@ -629,6 +676,83 @@ export default function ToolsPage() {
             <Link className="btn-primary" to={buildBrowsePlanUrl({ supermarket: market })}>
               Browse supermarket plans
             </Link>
+          </section>
+
+          <section id="protein-value-comparator" className="tool-panel tool-panel--wide" aria-labelledby="protein-value-heading">
+            <h2 id="protein-value-heading">Protein Value Comparator</h2>
+            <p className="tool-intro">
+              Compare protein sources by calories, protein per serving, and estimated cost per {proteinTargetG}g of protein.
+              Prices are representative UK supermarket ranges checked {PRICE_CHECKED_DATE}, not live pricing — see the note below the table.
+            </p>
+            <div className="tool-fields">
+              {proteinCompareIds.map((id, index) => (
+                <Select
+                  key={index}
+                  label={`Food ${index + 1}`}
+                  value={id}
+                  onChange={value => updateProteinCompareSlot(index, value)}
+                  options={PROTEIN_FOODS.map(food => [food.id, food.name])}
+                />
+              ))}
+              <Select
+                label="Compare cost per"
+                value={String(proteinTargetG)}
+                onChange={value => setProteinTargetG(Number(value))}
+                options={[['25', '25g protein'], ['30', '30g protein']]}
+              />
+            </div>
+
+            {bestProteinValue && (
+              <ResultBlock
+                title={`Best value here: ${bestProteinValue.food.name}`}
+                lines={[
+                  `Approximately ${formatPenceRange(bestProteinValue.targetCost.low, bestProteinValue.targetCost.high)} per ${proteinTargetG}g of protein, the lowest of the foods compared.`,
+                  'This changes if you swap in different foods, target a different protein amount, or catch different prices in-store.',
+                ]}
+              />
+            )}
+
+            <div className="content-table-wrap">
+              <table className="content-table protein-compare-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Food</th>
+                    <th scope="col">Typical serving</th>
+                    <th scope="col">Protein</th>
+                    <th scope="col">Calories</th>
+                    <th scope="col">Cost per serving</th>
+                    <th scope="col">Cost per {proteinTargetG}g protein</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {proteinCompareRows.map(row => (
+                    <tr key={row.food.id}>
+                      <th scope="row">{row.food.name}</th>
+                      <td>{row.food.servingNote}</td>
+                      <td>{row.proteinG}g</td>
+                      <td>{row.kcal} kcal</td>
+                      <td>{formatPenceRange(row.costServing.low, row.costServing.high)}</td>
+                      <td>{formatPenceRange(row.targetCost.low, row.targetCost.high)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="tool-price-note">
+              Cost ranges are representative, not live prices: they reflect typical own-brand to mid-range UK
+              supermarket pricing checked against Tesco and Aldi listings on {PRICE_CHECKED_DATE}. Actual prices
+              vary by retailer, pack size, brand and promotion. Nutrition figures are based on UK CoFID and USDA
+              FoodData Central reference data, the same dataset used to calculate every recipe on this site.
+            </p>
+            <div className="tool-action-row">
+              <Link className="btn-primary" to="/blog/cheapest-protein-sources-cost-per-gram-uk">
+                Read the full cheap protein comparison
+              </Link>
+              <Link className="btn-secondary" to={buildBrowsePlanUrl({ goal: 'high-protein-low-cal' })}>
+                Browse high protein plans
+              </Link>
+            </div>
           </section>
         </div>
 

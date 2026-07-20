@@ -2747,6 +2747,7 @@ input:focus, select:focus {
 
 /* Home FAQ */
 .home-faq { padding: 40px 24px; max-width: 700px; margin: 0 auto; }
+.home-faq-more { text-align: center; margin-top: 16px; font-weight: 600; }
 
 /* Home generator section */
 .home-generator-section {
@@ -5160,6 +5161,23 @@ details[open] .faq-question::after { content: '▴'; }
 .tool-fields--two {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.tool-panel--wide {
+  grid-column: 1 / -1;
+}
+.tool-panel--wide .tool-fields {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+.tool-intro {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+.tool-price-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
 .tool-field {
   display: grid;
   gap: 5px;
@@ -6439,6 +6457,30 @@ details[open] .faq-question::after { content: '▴'; }
 
 .search-opportunity-card-links a:hover,
 .discovery-priority-list a:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.search-opportunity-cluster {
+  margin: 0 0 28px;
+}
+.search-opportunity-cluster h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+.question-hub-link {
+  display: block;
+  padding: 10px 14px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #fff;
+  color: #1d4ed8;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.question-hub-link:hover {
   border-color: #2563eb;
   background: #eff6ff;
 }

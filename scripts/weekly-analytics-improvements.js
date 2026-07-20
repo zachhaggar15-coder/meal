@@ -435,12 +435,14 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     const cooldown = isRouteInCooldown(row.page, routeMeta, recentActivity);
     const trend = buildTrend(row, previous);
     const score = opportunityScore({ row, ctrGap, trend, opportunityClass, considerationLevel, ga, cooldown });
+    const searchIntent = classifySearchIntent(row.query);
 
     return {
       ...row,
       routeLabel: routeMeta.label,
       routeType: routeMeta.type,
       routeVerified: true,
+      searchIntent,
       impressionDelta: previous ? row.impressions - previous.impressions : row.impressions,
       clickDelta: previous ? row.clicks - previous.clicks : row.clicks,
       ctrDelta: previous ? row.ctr - previous.ctr : row.ctr,
@@ -588,6 +590,7 @@ function reportOpportunityRow(row) {
     positionDelta: round(row.positionDelta, 1),
     opportunityClass: row.opportunityClass,
     considerationLevel: row.considerationLevel,
+    searchIntent: row.searchIntent,
     cooldown: row.cooldown,
     opportunityScore: row.opportunityScore,
     recommendedAction: nextActionFor(row),
@@ -754,6 +757,41 @@ function findCannibalisationRisks(rows) {
     .slice(0, 8);
 }
 
+// Buckets a raw Search Console query into a broad intent category so the
+// weekly report can be scanned for conversational/comparison/price-style
+// demand alongside the existing opportunity scoring. This only labels
+// queries for human review in the report/tracker output — it never creates
+// or publishes content on its own.
+function classifySearchIntent(query) {
+  const q = String(query || '').toLowerCase().trim();
+  if (!q) return 'informational';
+
+  const supermarkets = ['aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks and spencer', 'm&s', 'co-op', 'coop'];
+  const equipment = ['container', 'containers', 'tub', 'tubs', 'box', 'boxes', 'scale', 'scales', 'vacuum sealer', 'lunch bag', 'cookbook', 'air fryer', 'slow cooker', 'rice cooker'];
+  const navigational = ['mealprep.org.uk', 'meal prep org uk', 'login', 'sign in', 'app'];
+
+  const isQuestion = /^(how|what|why|when|where|which|who|can|is|are|does|do|should|will)\b/.test(q) || q.endsWith('?');
+  const isComparison = /\bvs\b|\bversus\b|\bor\b.*\bbetter\b|compared? to|which is better/.test(q);
+  const isPriceValue = /\b(cost|costs|price|prices|cheap|cheapest|budget|value|per gram|per £|expensive|afford)\b/.test(q);
+  const isCalorie = /\b(calorie|calories|kcal|macro|macros)\b/.test(q);
+  const isProtein = /\bprotein\b/.test(q);
+  const isSupermarket = supermarkets.some(name => q.includes(name));
+  const isEquipment = equipment.some(term => q.includes(term));
+  const isPracticalProblem = /\b(store|storage|reheat|freeze|freezing|last|go off|safe|leak|smell|soggy)\b/.test(q);
+  const isNavigational = navigational.some(term => q.includes(term));
+
+  if (isNavigational) return 'navigational';
+  if (isComparison) return 'comparison';
+  if (isPriceValue) return 'price_value';
+  if (isSupermarket) return 'supermarket';
+  if (isCalorie) return 'calorie';
+  if (isProtein) return 'protein';
+  if (isPracticalProblem) return 'practical_problem';
+  if (isEquipment) return 'product_equipment';
+  if (isQuestion) return 'question';
+  return 'informational';
+}
+
 function normaliseIntent(query) {
   const stopWords = new Set(['uk', 'best', 'free', 'simple', 'easy', 'guide', 'guides', 'plan', 'plans', 'meal', 'meals']);
   const words = String(query || '')
@@ -913,6 +951,7 @@ function updateWeeklyTracker(analysis) {
     '28_day_click_delta',
     'opportunity_class',
     'consideration_level',
+    'search_intent',
     'route_verified',
     'cooldown',
     'action_taken',
@@ -941,6 +980,7 @@ function updateWeeklyTracker(analysis) {
       row.clickDelta,
       row.opportunityClass,
       row.considerationLevel,
+      row.searchIntent || 'informational',
       row.routeVerified ? 'yes' : 'no',
       row.cooldown ? 'yes' : 'no',
       generatedPaths.has(row.page) ? 'added_to_public_weekly_links' : 'report_only',
@@ -1097,14 +1137,14 @@ function writeOpportunityTable(lines, rows, queryFirst = false) {
     return;
   }
   const header = queryFirst
-    ? '| Query | Page | Class | Impressions | Clicks | CTR | Position | Cooldown | Recommended action |'
-    : '| Page | Query | Class | Impressions | Clicks | CTR | Position | Cooldown | Recommended action |';
+    ? '| Query | Page | Class | Intent | Impressions | Clicks | CTR | Position | Cooldown | Recommended action |'
+    : '| Page | Query | Class | Intent | Impressions | Clicks | CTR | Position | Cooldown | Recommended action |';
   lines.push(header);
-  lines.push('| --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- |');
+  lines.push('| --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- |');
   for (const row of rows) {
     const first = queryFirst ? row.query : row.page;
     const second = queryFirst ? row.page : row.query;
-    lines.push(`| ${mdCell(first)} | ${mdCell(second)} | ${row.opportunityClass} | ${row.impressions} | ${row.clicks} | ${round(row.ctr * 100, 2)}% | ${row.avgPosition} | ${row.cooldown ? 'yes' : 'no'} | ${mdCell(row.recommendedAction)} |`);
+    lines.push(`| ${mdCell(first)} | ${mdCell(second)} | ${row.opportunityClass} | ${row.searchIntent || 'informational'} | ${row.impressions} | ${row.clicks} | ${round(row.ctr * 100, 2)}% | ${row.avgPosition} | ${row.cooldown ? 'yes' : 'no'} | ${mdCell(row.recommendedAction)} |`);
   }
   lines.push('');
 }

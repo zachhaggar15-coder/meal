@@ -2,6 +2,7 @@ import { containerBlogPostsData } from './containerBlogPosts.js';
 import { expandedBlogPostsData } from './expandedBlogPosts.js';
 import { blogPostsBatch4Data } from './blogPostsBatch4.js';
 import { blogPostsBatch5Data } from './blogPostsBatch5.js';
+import { blogPostsBatch6Data } from './blogPostsBatch6.js';
 
 // Static content for SEO blog posts.
 // Each entry keyed by URL slug.
@@ -11,6 +12,7 @@ export const blogPostsData = {
   ...expandedBlogPostsData,
   ...blogPostsBatch4Data,
   ...blogPostsBatch5Data,
+  ...blogPostsBatch6Data,
   'how-to-build-a-calorie-deficit': {
     published: '2026-05-28',
     title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',
@@ -791,6 +793,8 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'cheapest-protein-sources-cost-per-gram-uk', label: 'Cheapest Protein Sources: Cost Per Gram Compared', type: 'blog' },
+      { slug: 'chicken-vs-eggs-protein-value-uk', label: 'Chicken vs Eggs: Which Is Better Value?', type: 'blog' },
       { slug: 'cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK', type: 'blog' },
       { slug: 'protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge UK', type: 'blog' },
       { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Meal Plan', type: 'meal-plan' },
@@ -988,6 +992,7 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'how-much-should-meal-prep-cost-uk', label: 'How Much Should Meal Prep Cost?', type: 'blog' },
       { slug: 'aldi-vs-tesco-meal-prep', label: 'Aldi vs Tesco for Meal Prep', type: 'blog' },
       { slug: 'aldi-weight-loss-1800', label: 'Aldi 1800 kcal Meal Plan', type: 'plan' },
       { slug: 'iceland-weight-loss-1800', label: 'Iceland Budget Meal Plan', type: 'plan' },
@@ -1211,6 +1216,8 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'how-much-should-meal-prep-cost-uk', label: 'How Much Should Meal Prep Cost?', type: 'blog' },
+      { slug: 'is-meal-prep-cheaper-than-meal-deals-uk', label: 'Is Meal Prep Cheaper Than Meal Deals?', type: 'blog' },
       { slug: 'iceland-weight-loss-1800', label: 'Iceland Budget Meal Plan', type: 'plan' },
       { slug: 'aldi-cheap-student-1800', label: 'Cheap Student Meal Plan', type: 'plan' },
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High-Protein Foods', type: 'blog' },
@@ -2363,6 +2370,7 @@ export const blogPostsData = {
       },
     ],
     related: [
+      { slug: 'is-meal-prep-cheaper-than-meal-deals-uk', label: 'Is Meal Prep Cheaper Than Meal Deals?', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
       { slug: 'air-fryer-meal-prep-uk', label: 'Air Fryer Meal Prep UK', type: 'blog' },

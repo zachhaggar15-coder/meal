@@ -198,6 +198,7 @@ const ROUTES = uniqueRoutes([
   '/stickers',
   '/meal-prep-containers',
   '/blog',
+  '/questions',
   '/tools',
   '/about',
   '/contact',
@@ -289,6 +290,7 @@ async function prerender() {
     if (route === '/meal-plans') return ['0.9', 'weekly'];
     if (route === '/about' || route === '/contact' || route === '/privacy' || route === '/terms') return ['0.6', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
+    if (route === '/questions') return ['0.8', 'weekly'];
     if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
     if (SEO_PRIORITY_ROUTE_SET.has(route)) return ['0.9', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];

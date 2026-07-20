@@ -1147,6 +1147,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'cheapest-protein-sources-cost-per-gram-uk', label: 'Cheapest Protein Sources: Cost Per Gram Compared', type: 'blog' },
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Cheap Protein UK', type: 'blog' },
       { slug: 'aldi-high-protein-shopping-list-uk', label: 'Aldi High Protein Shopping List', type: 'blog' },
       ...proteinRelated,
@@ -1344,6 +1345,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'is-protein-powder-cheaper-than-food-uk', label: 'Is Protein Powder Cheaper Than Food?', type: 'blog' },
       { slug: 'cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK', type: 'blog' },
       { slug: 'high-protein-lunches-for-work-uk', label: 'High Protein Work Lunches', type: 'blog' },
       ...proteinRelated,

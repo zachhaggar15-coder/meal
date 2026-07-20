@@ -12,6 +12,7 @@ const Home = lazy(() => import('./pages/Home.jsx'));
 const MealPlanPage = lazy(() => import('./pages/MealPlanPage.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
 const BlogPost = lazy(() => import('./pages/BlogPost.jsx'));
+const QuestionsHub = lazy(() => import('./pages/QuestionsHub.jsx'));
 const ContainerHub = lazy(() => import('./pages/ContainerHub.jsx'));
 const ContainerGuide = lazy(() => import('./pages/ContainerGuide.jsx'));
 const Stickers = lazy(() => import('./pages/Stickers.jsx'));
@@ -93,6 +94,7 @@ export default function App() {
               <Route path="/meal-plans/:slug" element={<MealPlanHubPage />} />
               <Route path="/meal-plan/:slug" element={<MealPlanPage />} />
               <Route path="/blog" element={<Blog />} />
+              <Route path="/questions" element={<QuestionsHub />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/meal-prep-containers" element={<ContainerHub />} />
               <Route path="/meal-prep-containers/:tier" element={<ContainerGuide />} />

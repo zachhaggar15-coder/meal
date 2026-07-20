@@ -50,6 +50,16 @@ const CATEGORY_ORDER = [
     ],
   },
   {
+    label: 'Cost & Value Questions',
+    slugs: [
+      'cheapest-protein-sources-cost-per-gram-uk',
+      'chicken-vs-eggs-protein-value-uk',
+      'is-protein-powder-cheaper-than-food-uk',
+      'how-much-should-meal-prep-cost-uk',
+      'is-meal-prep-cheaper-than-meal-deals-uk',
+    ],
+  },
+  {
     label: 'Meal Prep & Batch Cooking',
     slugs: [
       'summer-meals-uk',
