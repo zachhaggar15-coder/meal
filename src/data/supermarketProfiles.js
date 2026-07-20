@@ -233,6 +233,35 @@ export const SUPERMARKET_PROFILES = {
   },
 };
 
+// How each retailer nudges meal selection.
+//
+// This is what stops same-goal plans being identical across stores. The values
+// are small on purpose: existing tag bonuses in scoreMealForSeed are +8 to +16,
+// so ±5-9 reorders near-ties without overriding the goal and calorie matching
+// that actually determines whether a plan is any good.
+//
+// Each nudge has to be justifiable from how the retailer really operates —
+// a discounter plan leaning on budget-tagged meals, a frozen specialist leaning
+// on batch-friendly ones. It is not randomisation dressed up as personalisation.
+export const STORE_MEAL_BIAS = {
+  aldi: { budget: 9, note: 'Leans on the cheapest staples, matching a discounter shop.' },
+  lidl: { budget: 8, easy: 3, note: 'Discounter staples, with quicker meals for smaller shops.' },
+  asda: { budget: 6, batch: 3, note: 'Value lines and bulk packs suit larger batch cooks.' },
+  tesco: { protein: 3, note: 'Broad range, so selection stays close to the goal profile.' },
+  sainsburys: { easy: 4, note: 'Leans on prepared and part-prepared ingredients.' },
+  morrisons: { protein: 5, note: 'Counter-bought protein in exact prep quantities.' },
+  iceland: { batch: 9, easy: 5, budget: 4, note: 'Freezer-led, prep-ahead meals.' },
+  coop: { easy: 8, note: 'Quicker meals suited to smaller convenience shops.' },
+  waitrose: { budget: -6, protein: 4, note: 'Not constrained to the cheapest lines.' },
+  ocado: { budget: -5, variety: 5, note: 'Widest catalogue, so more varied selections.' },
+  'marks-spencer': { budget: -7, easy: 5, note: 'Premium and part-prepared ingredients.' },
+  any: { note: 'Balanced selection with no retailer bias.' },
+};
+
+export function getStoreMealBias(supermarket) {
+  return STORE_MEAL_BIAS[supermarket] || STORE_MEAL_BIAS.any;
+}
+
 const BUDGET_ORDER = ['very-cheap', 'budget', 'moderate', 'flexible'];
 
 export function getSupermarketProfile(supermarket) {

@@ -1,6 +1,6 @@
 import { MEALS } from '../data/mealLibrary.js';
 import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
-import { getSupermarketProfile, PRICING_CONTEXT_CHECKED } from '../data/supermarketProfiles.js';
+import { getStoreMealBias, getSupermarketProfile, PRICING_CONTEXT_CHECKED } from '../data/supermarketProfiles.js';
 import { isCountUnit } from './countUnits.js';
 import { averageDailyMacros, computeMealNutrition, scaleNutrition } from './nutrition.js';
 
@@ -629,7 +629,56 @@ function scoreMealForSeed(meal, seed) {
   if (seed.calories <= 1600 && kcal > 750) score -= 18;
   if (seed.calories >= 2500 && kcal < 250) score -= 8;
 
+  score += storeMealBias(meal, seed, { tags, protein, proteinDensity });
+
   return score;
+}
+
+// Nudges meal choice toward what a given retailer is actually good at, so two
+// plans with the same goal and calorie target do not come out identical just
+// because they were built from the same meal library. Kept small relative to
+// the goal/emphasis terms above — this breaks ties, it does not drive the plan.
+// Stable per-store offsets into the meal pool. Coprime-ish spacing so stores
+// do not converge on the same picks. Fixed values rather than a hash, so a
+// store's plans stay stable across deploys — these URLs are indexed and should
+// not reshuffle their meals every time the code changes.
+const STORE_INDEX_OFFSETS = {
+  aldi: 0,
+  lidl: 23,
+  tesco: 47,
+  asda: 71,
+  sainsburys: 97,
+  morrisons: 113,
+  iceland: 139,
+  waitrose: 163,
+  ocado: 191,
+  'marks-spencer': 211,
+  coop: 233,
+  any: 259,
+};
+
+function storeIndexOffset(supermarket) {
+  return STORE_INDEX_OFFSETS[supermarket] ?? 0;
+}
+
+function storeMealBias(meal, seed, { tags, protein, proteinDensity }) {
+  const bias = getStoreMealBias(seed.supermarket);
+  let delta = 0;
+
+  if (bias.budget && tags.has('budget')) delta += bias.budget;
+  if (bias.batch && tags.has('batch-friendly')) delta += bias.batch;
+  if (bias.easy && tags.has('easy')) delta += bias.easy;
+  if (bias.protein && tags.has('high-protein')) delta += bias.protein;
+
+  // Retailers with unusually deep catalogues favour less obvious picks, which
+  // is what "more variety" means in practice here.
+  if (bias.variety) {
+    const prepMins = Number(meal.prepMins) || 0;
+    if (prepMins >= 20) delta += bias.variety;
+    if (proteinDensity > 0 && protein >= 25) delta += bias.variety * 0.4;
+  }
+
+  return delta;
 }
 
 function getMealNutrition(meal) {
@@ -652,8 +701,12 @@ export function buildPlanDays(seed) {
   const dinnerPool    = rankMealPool(batchPlan ? batchFriendlyMeals(dinners) : dinners, seed);
   const snackPool     = rankMealPool(batchPlan ? easyBatchSnacks(snacks) : snacks, seed);
 
-  // Use mealSetIndex as a large prime-multiplied offset so sets diverge quickly
-  const base = seed.mealSetIndex * 37;
+  // Use mealSetIndex as a large prime-multiplied offset so sets diverge quickly.
+  // The per-store offset matters as much as the ranking bias: without it, two
+  // plans sharing a mealSetIndex start at the same point in the pool and land on
+  // near-identical weeks even after biasing, which is the duplicate-content
+  // problem this is meant to solve.
+  const base = (seed.mealSetIndex * 37) + storeIndexOffset(seed.supermarket);
 
   // Pick 2 breakfasts for the whole week: primary (Mon–Fri) and secondary (Sat–Sun).
   // This mirrors real UK meal-prep behaviour and keeps the week feeling coherent.
