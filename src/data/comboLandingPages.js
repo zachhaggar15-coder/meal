@@ -331,7 +331,7 @@ export const COMBO_LANDING_PAGES = {
       { label: 'Batch cooking for beginners UK', to: '/blog/batch-cooking-for-beginners-uk' },
       { label: 'Meal prep tubs for batch cooking', to: '/blog/meal-prep-tubs-for-batch-cooking' },
       { label: 'High protein vegetarian plans', to: '/meal-plans/vegetarian' },
-      { label: 'Glass meal prep containers', to: '/meal-prep-containers/mid-range' },
+      { label: 'Glass meal prep containers', to: '/meal-prep-containers/glass' },
     ],
   }),
 

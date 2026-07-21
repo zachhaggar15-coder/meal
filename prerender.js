@@ -225,7 +225,29 @@ const ROUTES = uniqueRoutes([
 ]);
 
 const NOINDEX_ROUTES = new Set(['/quiz/results', '/404', '/admin']);
-const SITEMAP_ROUTES = ROUTES.filter(route => !NOINDEX_ROUTES.has(route));
+
+// Chooser pages canonicalise to their /meal-plans/ hub where one exists (see
+// ChoiceLandingPage). A URL that canonicalises elsewhere must not also be
+// advertised in the sitemap — that contradicts its own canonical tag. Those
+// choosers still prerender and work; they are just kept out of the sitemap so
+// only canonical URLs are listed. Hub-less choosers stay self-canonical and
+// remain included.
+const HUB_SLUG_SET = new Set(MEAL_PLAN_HUB_SLUGS);
+const CANONICALISED_CHOOSERS = new Set([
+  ...SUPERMARKET_CHOOSER_SLUGS
+    .filter(slug => HUB_SLUG_SET.has(slug))
+    .map(slug => `/choose-supermarket/${slug}`),
+  ...DIET_CHOOSER_SLUGS
+    .filter(slug => HUB_SLUG_SET.has(slug))
+    .map(slug => `/choose-diet/${slug}`),
+  ...CALORIE_CHOOSER_SLUGS
+    .filter(slug => HUB_SLUG_SET.has(`${slug}-calorie`))
+    .map(slug => `/choose-calories/${slug}`),
+]);
+
+const SITEMAP_ROUTES = ROUTES.filter(route => (
+  !NOINDEX_ROUTES.has(route) && !CANONICALISED_CHOOSERS.has(route)
+));
 
 async function prerender() {
   const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf-8');

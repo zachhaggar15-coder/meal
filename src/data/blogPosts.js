@@ -97,7 +97,7 @@ export const blogPostsData = {
     modified: '2026-07-05',
     reviewed: '2 July 2026',
     title: 'Best Low-Calorie Foods UK: Filling Options for Meal Prep and Fat Loss',
-    description: 'Best low-calorie foods UK: high-protein, high-fibre and filling options from Aldi, Tesco and Asda. Includes a 1500 calorie plan link, shopping basket guide, and common mistakes to avoid.',
+    description: 'Best low-calorie foods UK: high-protein, high-fibre and filling picks from Aldi, Tesco and Asda, with a 1500 calorie plan link and mistakes to avoid.',
     h1: 'Best Low-Calorie Foods UK: Filling Options for Meal Prep and Fat Loss',
     intro: 'This is the main UK guide to low calorie foods for realistic weight loss weeks: high-protein staples, high-volume vegetables, fruit, ready-to-eat options and supermarket swaps from Tesco, Aldi, Asda, Sainsbury\'s, Lidl and Morrisons. Use it to build a better basket, then jump into a printable 1500 calorie or 1800 calorie meal plan with a shopping list.',
     sources: [

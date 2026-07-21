@@ -15,9 +15,20 @@ import {
   SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseNavigationCardVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
+import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
+const HUB_PATHS = new Set(Object.values(MEAL_PLAN_HUBS).map(hub => hub.path));
+
+// A chooser page and its /meal-plans/ hub target the same intent (e.g.
+// /choose-calories/1500 and /meal-plans/1500-calorie). To stop them splitting
+// ranking signals, the chooser canonicalises to the hub where one exists. The
+// page still works and stays in the funnel; Google is just told the hub is the
+// primary version. Where no hub exists, the chooser stays self-canonical.
+function resolveCanonical(selfPath, hubPath) {
+  return hubPath && HUB_PATHS.has(hubPath) ? hubPath : selfPath;
+}
 
 export default function ChoiceLandingPage({ mode }) {
   const params = useParams();
@@ -33,13 +44,14 @@ export default function ChoiceLandingPage({ mode }) {
     .filter(card => card.plan);
   const chooserVisual = chooseChooserVisual({ mode, choice: config.choice });
 
+  const selfUrl = config.selfUrl || config.canonical;
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: config.title,
       description: config.description,
-      url: `https://www.mealprep.org.uk${config.canonical}`,
+      url: `https://www.mealprep.org.uk${selfUrl}`,
       mainEntity: {
         '@type': 'ItemList',
         itemListElement: cards.map((card, index) => ({
@@ -56,7 +68,7 @@ export default function ChoiceLandingPage({ mode }) {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.mealprep.org.uk/' },
         { '@type': 'ListItem', position: 2, name: 'Meal Plans', item: 'https://www.mealprep.org.uk/browse' },
-        { '@type': 'ListItem', position: 3, name: config.title, item: `https://www.mealprep.org.uk${config.canonical}` },
+        { '@type': 'ListItem', position: 3, name: config.title, item: `https://www.mealprep.org.uk${selfUrl}` },
       ],
     },
   ];
@@ -173,7 +185,8 @@ function buildSupermarketConfig(slug) {
     title,
     shortTitle: choice.label,
     kicker: 'Choose your goal',
-    canonical: `/choose-supermarket/${choice.value}`,
+    selfUrl: `/choose-supermarket/${choice.value}`,
+    canonical: resolveCanonical(`/choose-supermarket/${choice.value}`, `/meal-plans/${choice.value}`),
     description: `Choose a ${choice.label} meal plan by goal, calories and diet type, including weight loss, high protein and muscle gain options.`,
     intro: `${choice.description} Pick the goal first, then open the suggested plan or change calories before choosing.`,
     defaultLabel: 'Current supermarket:',
@@ -203,7 +216,8 @@ function buildDietConfig(slug) {
     title,
     shortTitle: choice.label,
     kicker: 'Choose your supermarket',
-    canonical: `/choose-diet/${choice.value}`,
+    selfUrl: `/choose-diet/${choice.value}`,
+    canonical: resolveCanonical(`/choose-diet/${choice.value}`, `/meal-plans/${choice.value}`),
     description: `Choose a ${choice.label.toLowerCase()} meal plan by supermarket, with ${formatChoiceList(INDEXED_SUPERMARKET_CHOICES.map(market => market.label))}.`,
     intro: `${choice.description} Pick the supermarket next so the diet type no longer defaults to Aldi.`,
     defaultLabel: 'Current diet type:',
@@ -241,7 +255,8 @@ function buildCaloriesConfig(value) {
     title,
     shortTitle: choice.label,
     kicker: 'Choose your goal',
-    canonical: `/choose-calories/${choice.value}`,
+    selfUrl: `/choose-calories/${choice.value}`,
+    canonical: resolveCanonical(`/choose-calories/${choice.value}`, `/meal-plans/${choice.value}-calorie`),
     description: `Choose a ${choice.label} UK meal plan by goal and supermarket, with printable PDFs, macros and shopping lists.`,
     intro: `${choice.description} Pick a goal first, then use More options if you want a different supermarket or diet type.`,
     defaultLabel: 'Current calorie target:',

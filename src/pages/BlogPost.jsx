@@ -260,7 +260,7 @@ export default function BlogPost() {
             </li>
             <li>
               <Link to="/stickers" data-event="container_promo_click" data-source-page={`blog-${slug}`}>
-                Glass Meal Prep Containers For Batch Cooking
+                Printable Meal Prep Labels &amp; Stickers
               </Link>
             </li>
           </ul>
@@ -365,7 +365,10 @@ function ResponsiveBlogTable({ table }) {
 
   return (
     <div className="blog-table-group">
-      <div className="blog-table-cards" aria-label="Table summary">
+      {/* Mobile card view is a purely visual reflow of the table below. It is
+          hidden from assistive tech and search so the same data is not counted
+          twice — the semantic <table> is the single source of truth. */}
+      <div className="blog-table-cards" aria-hidden="true">
         {table.rows.map((row, rowIndex) => (
           <article className="blog-table-card" key={rowIndex}>
             {row.map((cell, cellIndex) => (

@@ -55,6 +55,12 @@ export default function SEO({
       <meta property="og:image:height" content="630" />
       <meta property="og:image:type" content={imageType} />
 
+      {/* Twitter/X card — falls back to a plain link without these */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={ogTitle || title} />
+      <meta name="twitter:description" content={openGraphDescription} />
+      <meta name="twitter:image" content={image} />
+
       {structuredData.map((item, i) => (
         <script key={i} type="application/ld+json">{JSON.stringify(item)}</script>
       ))}

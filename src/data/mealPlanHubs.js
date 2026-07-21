@@ -413,7 +413,7 @@ export const MEAL_PLAN_HUBS = {
   '1500-calorie': {
     slug: '1500-calorie',
     path: '/meal-plans/1500-calorie',
-    title: '1500 Calorie Meal Plan UK - Simple Printable 7-Day PDF + Shopping List',
+    title: '1500 Calorie Meal Plan UK: Printable 7-Day PDF',
     description:
       'Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.',
     h1: '1500 Calorie Meal Plan UK',
