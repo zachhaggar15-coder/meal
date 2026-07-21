@@ -250,6 +250,7 @@ export const expandedBlogPostsData = {
       {
         name: 'greek yogurt berry overnight oats',
         description: 'A cool breakfast jar with oats, berries and yogurt for hot mornings when cooked porridge feels too heavy.',
+        category: 'Breakfast',
         servings: '2 breakfasts',
         prepTime: 'PT8M',
         cookTime: 'PT0M',

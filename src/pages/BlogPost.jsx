@@ -89,6 +89,8 @@ export default function BlogPost() {
       datePublished: data.published || '2026-05-28',
       dateModified: data.modified || '2026-05-30',
       image: ogImageUrl,
+      recipeCategory: recipe.category || 'Main course',
+      recipeCuisine: recipe.cuisine || 'British',
       recipeYield: recipe.servings,
       prepTime: recipe.prepTime,
       cookTime: recipe.cookTime,
