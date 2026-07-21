@@ -1,4 +1,4 @@
-const STORE_TAG = 'amazonaff01d8-21';
+const STORE_TAG = 'amazonaf063dc-21';
 
 function amazonProductUrl(slug, asin) {
   return `https://www.amazon.co.uk/${slug}/dp/${asin}?tag=${STORE_TAG}&linkCode=ll2`;
