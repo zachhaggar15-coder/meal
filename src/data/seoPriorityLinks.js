@@ -164,6 +164,17 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     ],
   },
   {
+    title: 'Meal Delivery and Recipe Boxes',
+    intro: 'Compare prepared meals, recipe boxes and cheaper supermarket self-prep routes before subscribing.',
+    links: [
+      { to: '/blog/best-meal-prep-delivery-uk', label: 'Best Meal Prep Delivery UK' },
+      { to: '/blog/best-high-protein-meal-delivery-uk', label: 'High Protein Meal Delivery UK' },
+      { to: '/blog/cheap-meal-prep-delivery-uk', label: 'Cheap Meal Prep Delivery UK' },
+      { to: '/blog/hellofresh-alternatives-uk', label: 'HelloFresh Alternatives UK' },
+      { to: '/blog/gousto-vs-hellofresh-uk', label: 'Gousto vs HelloFresh UK' },
+    ],
+  },
+  {
     title: 'Summer Meals and Cold Lunches',
     intro: 'Seasonal recipe-led content for summer meals, no-reheat lunches, overnight oats and high-protein work lunches.',
     links: [

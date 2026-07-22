@@ -338,7 +338,7 @@ export default function Home() {
 
         <SearchOpportunityLinks
           title="Essential UK Meal Prep Guides"
-          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein and supermarket comparisons."
+          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
           showDiscovery={false}
         />
 

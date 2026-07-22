@@ -12,6 +12,7 @@ function buildGuides(slug, post) {
   const isSupermarket = hasAny(text, ['tesco', 'aldi', 'asda', 'sainsbury', 'lidl', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'm&s', 'coop', 'co-op', 'supermarket']);
   const isCalorie = hasAny(text, ['calorie', 'weight loss', 'fat loss', 'deficit']);
   const isProtein = hasAny(text, ['protein', 'muscle', 'gym']);
+  const isDelivery = hasAny(text, ['delivery', 'prepared meals', 'hellofresh', 'gousto', 'recipe box', 'recipe boxes']);
 
   const base = [
     {
@@ -73,6 +74,30 @@ function buildGuides(slug, post) {
         description: 'Compare work-lunch boxes, tubs, and glass containers.',
         event: 'popular_guide_container_click',
       },
+    ];
+  }
+
+  if (isDelivery) {
+    return [
+      {
+        to: '/blog/best-meal-prep-delivery-uk',
+        title: 'Delivery comparison',
+        description: 'Compare prepared meals, recipe boxes and supermarket self-prep.',
+        event: 'popular_guide_delivery_click',
+      },
+      {
+        to: '/blog/cheap-meal-prep-delivery-uk',
+        title: 'Cheap delivery options',
+        description: 'Check recipe-box offers, prepared meals and cheaper self-prep routes.',
+        event: 'popular_guide_delivery_click',
+      },
+      {
+        to: '/meal-plans/high-protein',
+        title: 'High protein plans',
+        description: 'Use supermarket plans when delivery is too expensive.',
+        event: 'popular_guide_hub_click',
+      },
+      base[0],
     ];
   }
 

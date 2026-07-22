@@ -352,6 +352,7 @@ export function chooseChooserVisual({ mode, choice, goalChoice } = {}) {
 export function chooseBlogVisual(slug = '') {
   const text = normalise(slug);
 
+  if (includesAny(text, ['delivery', 'hellofresh', 'gousto', 'prepared-meals', 'recipe-box'])) return PLAN_CATEGORY_VISUALS.workLunch;
   if (includesAny(text, ['container', 'box', 'tub', 'lunch-bag', 'lid'])) return PLAN_CATEGORY_VISUALS.batchCooking;
   if (includesAny(text, ['vegan', 'vegetarian', 'plant', 'pescatarian'])) return PLAN_CATEGORY_VISUALS.plantBased;
   if (includesAny(text, ['protein', 'fibre', 'snack', 'breakfast', 'powder'])) return PLAN_CATEGORY_VISUALS.highProtein;
@@ -380,6 +381,7 @@ function includesAny(text, needles) {
 
 function chooseBlogTopic(slug = '') {
   const text = normalise(slug);
+  if (includesAny(text, ['delivery', 'hellofresh', 'gousto', 'prepared-meals', 'recipe-box'])) return 'Delivery guide';
   if (includesAny(text, ['container', 'box', 'tub', 'lid'])) return 'Meal prep kit';
   if (includesAny(text, ['protein', 'snack', 'breakfast', 'fibre'])) return 'Protein planning';
   if (includesAny(text, ['supermarket', 'aldi', 'lidl', 'tesco', 'asda', 'sainsbury', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'm&s', 'coop', 'co-op'])) return 'Supermarket guide';

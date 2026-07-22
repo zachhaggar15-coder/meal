@@ -1,15 +1,20 @@
 const UPPERCASE_WORDS = new Map([
   ['ai', 'AI'],
   ['faq', 'FAQ'],
+  ['frive', 'Frive'],
+  ['fuelhub', 'FuelHub'],
+  ['gousto', 'Gousto'],
+  ['hellofresh', 'HelloFresh'],
   ['nhs', 'NHS'],
   ['pdf', 'PDF'],
   ['pdfs', 'PDFs'],
+  ['simmer', 'Simmer'],
   ['seo', 'SEO'],
   ['tdee', 'TDEE'],
   ['uk', 'UK'],
 ]);
 
-const LOWERCASE_WORDS = new Set(['cm', 'g', 'kcal', 'kg', 'ml', 'wk']);
+const LOWERCASE_WORDS = new Set(['cm', 'g', 'kcal', 'kg', 'ml', 'vs', 'wk']);
 
 function titleCaseWord(word) {
   const lower = word.toLowerCase();

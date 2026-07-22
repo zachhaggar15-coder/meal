@@ -60,6 +60,16 @@ const CATEGORY_ORDER = [
     ],
   },
   {
+    label: 'Meal Delivery & Recipe Boxes',
+    slugs: [
+      'best-meal-prep-delivery-uk',
+      'best-high-protein-meal-delivery-uk',
+      'cheap-meal-prep-delivery-uk',
+      'hellofresh-alternatives-uk',
+      'gousto-vs-hellofresh-uk',
+    ],
+  },
+  {
     label: 'Meal Prep & Batch Cooking',
     slugs: [
       'summer-meals-uk',
