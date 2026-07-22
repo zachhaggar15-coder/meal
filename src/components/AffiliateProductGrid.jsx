@@ -48,7 +48,7 @@ export default function AffiliateProductGrid({
         {products.map(product => (
           <article key={product.name} className="affiliate-product-card">
             <div className="affiliate-product-media">
-              <img src={product.image} alt={`${product.name} meal prep containers`} loading="lazy" />
+              <img src={product.image} alt={product.imageAlt || `${product.name} meal prep containers`} loading="lazy" />
             </div>
             <div className="affiliate-product-body">
               <span className="affiliate-product-badge">{product.badge}</span>

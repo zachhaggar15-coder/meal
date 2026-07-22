@@ -92,7 +92,7 @@ export default function ContainerQuickComparison({
             <div className="container-direct-media">
               <img
                 src={product.image}
-                alt={`${product.shortName} meal prep containers`}
+                alt={product.imageAlt || `${product.shortName} meal prep containers`}
                 loading="eager"
                 decoding="async"
               />

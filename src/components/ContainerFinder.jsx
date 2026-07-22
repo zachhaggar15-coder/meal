@@ -10,6 +10,7 @@ const TIER_LABEL = {
   plastic: 'Plastic containers',
   leakproof: 'Leakproof containers',
   'freezer-safe': 'Freezer-safe containers',
+  'freezer-bags': 'Freezer bags',
   'work-lunch': 'Work lunch boxes',
   'large-sets': 'Large container sets',
 };
@@ -21,6 +22,7 @@ export default function ContainerFinder({ currentTier = 'mid-range' }) {
   const [meals, setMeals] = useState(10);
 
   const recommendation = useMemo(() => {
+    if (useCase === 'flat-freeze') return 'freezer-bags';
     if (budget === 'low') return 'budget';
     if (meals >= 16) return 'large-sets';
     if (useCase === 'freezer') return 'freezer-safe';
@@ -66,6 +68,7 @@ export default function ContainerFinder({ currentTier = 'mid-range' }) {
             ['work', 'Work lunches'],
             ['commute', 'Commuting'],
             ['freezer', 'Freezer prep'],
+            ['flat-freeze', 'Freezer bags'],
             ['microwave', 'Microwave meals'],
           ]}
         />

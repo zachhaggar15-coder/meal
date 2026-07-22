@@ -53,6 +53,12 @@ const searchIntentRows = [
     path: '/meal-prep-containers/freezer-safe',
   },
   {
+    intent: 'Best freezer bags for meal prep',
+    best: 'Reusable silicone freezer bags',
+    why: 'Best for flat-freezing soups, sauces, smoothie packs and batch-cooked portions.',
+    path: '/meal-prep-containers/freezer-bags',
+  },
+  {
     intent: 'Meal prep boxes for work',
     best: 'Rectangular lunch containers',
     why: 'Easy to stack, pack and portion for five weekday lunches.',
@@ -161,9 +167,9 @@ export default function ContainerGuide() {
         <ContainerQuickComparison
           eyebrow={`Sponsored #ad - ${guide.kicker}`}
           title={guide.h1}
-          intro={`Quickly compare ${guideLabel(guide.slug).toLowerCase()} picks by size, material and use. The full buying notes continue below.`}
+          intro={guide.quickComparisonIntro || `Quickly compare ${guideLabel(guide.slug).toLowerCase()} picks by size, material and use. The full buying notes continue below.`}
           picks={quickComparisonPicks}
-          fastPick={heroProduct ? `Start with ${heroProduct.shortName} if you want the main ${guideLabel(guide.slug).toLowerCase()} recommendation, then scroll for all six picks and buying notes.` : null}
+          fastPick={guide.fastPickText || (heroProduct ? `Start with ${heroProduct.shortName} if you want the main ${guideLabel(guide.slug).toLowerCase()} recommendation, then scroll for all ${products.length} picks and buying notes.` : null)}
           headingLevel="h1"
           sourcePage={`${guide.slug}-quick-comparison`}
         />
@@ -250,8 +256,8 @@ export default function ContainerGuide() {
 
         <div id="comparison">
           <AffiliateProductGrid
-            title={`Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
-            intro="Each recommendation is chosen for a different buyer job: low cost, glass upgrade, divided portions, leak resistance, commuting, or a fuller weekly setup."
+            title={guide.productGridTitle || `Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
+            intro={guide.productGridIntro || 'Each recommendation is chosen for a different buyer job: low cost, glass upgrade, divided portions, leak resistance, commuting, or a fuller weekly setup.'}
             productIds={guide.productIds}
             sourcePage={`${guide.slug}-guide`}
             showDisclosure={false}
@@ -267,7 +273,7 @@ export default function ContainerGuide() {
               <h2 id="container-intent-heading">Best container by search intent</h2>
               <p>
                 Match the buyer need first: cheap plastic tubs, glass meal prep boxes,
-                leakproof lunch containers or a work-lunch setup.
+                leakproof lunch containers, freezer bags or a work-lunch setup.
               </p>
             </div>
           </div>
@@ -309,9 +315,11 @@ export default function ContainerGuide() {
           <li><Link to="/meal-prep-containers/plastic">Plastic meal prep containers UK</Link></li>
           <li><Link to="/meal-prep-containers/leakproof">Leakproof meal prep containers UK</Link></li>
           <li><Link to="/meal-prep-containers/freezer-safe">Freezer safe meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/freezer-bags">Freezer bags for meal prep UK</Link></li>
           <li><Link to="/meal-prep-containers/work-lunch">Meal prep boxes for work UK</Link></li>
           <li><Link to="/meal-prep-containers/large-sets">Large meal prep container sets UK</Link></li>
           <li><Link to="/blog/best-meal-prep-containers-uk">Detailed container buying guide</Link></li>
+          <li><Link to="/blog/best-freezer-bags-for-meal-prep-uk">Best freezer bags for meal prep UK</Link></li>
           <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
           <li><Link to="/blog/meal-prep-container-size-guide">Meal prep container size guide</Link></li>
         </ul>

@@ -331,6 +331,7 @@ export const blogPostsBatch5Data = {
     quickAnswer: {
       answer: 'Reusable silicone freezer bags are the more sustainable choice for regular meal prep, since they can be washed and reused hundreds of times. Lay bags flat while freezing rather than freezing them upright, which lets you stack finished portions like books once solid.',
       links: [
+        { label: 'Compare reusable freezer bag picks', to: '/meal-prep-containers/freezer-bags' },
         { label: 'See freezer-safe container advice', to: '/blog/freezer-safe-meal-prep-containers' },
         { label: 'Read freezer meal prep for beginners', to: '/blog/freezer-meal-prep-for-beginners-uk' },
       ],

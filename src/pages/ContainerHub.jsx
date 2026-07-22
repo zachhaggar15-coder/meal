@@ -81,6 +81,12 @@ const queryRows = [
     label: 'Freezer guide',
   },
   {
+    query: 'best freezer bags for meal prep',
+    answer: 'Use reusable silicone freezer bags for flat-freezing soups, sauces, smoothie packs and batch-cooked portions.',
+    link: '/meal-prep-containers/freezer-bags',
+    label: 'Freezer bag guide',
+  },
+  {
     query: 'meal prep boxes for work',
     answer: 'Pick rectangular 900ml to 1 litre containers that stack neatly and seal well in a bag.',
     link: '/meal-prep-containers/work-lunch',
@@ -105,6 +111,7 @@ const setupRows = [
   ['Lunches and dinners', '10 meal containers', 'Glass for reheating, plastic tubs for freezer overflow.'],
   ['Student or budget prep', '10+ plastic tubs', 'Prioritise quantity and stackability over premium materials.'],
   ['Saucy meals and soup', 'Twist-lid tubs plus glass boxes', 'Test lids with water before commuting.'],
+  ['Flat-freezer batches', 'Reusable silicone freezer bags', 'Freeze bags flat on a tray, then stack once solid.'],
   ['Small kitchen', '5 identical boxes', 'Avoid mixed sets if lid clutter is already a problem.'],
 ];
 
@@ -392,9 +399,11 @@ export default function ContainerHub() {
           <li><Link to="/meal-prep-containers/plastic">Plastic meal prep containers UK</Link></li>
           <li><Link to="/meal-prep-containers/leakproof">Leakproof meal prep containers UK</Link></li>
           <li><Link to="/meal-prep-containers/freezer-safe">Freezer safe meal prep containers UK</Link></li>
+          <li><Link to="/meal-prep-containers/freezer-bags">Freezer bags for meal prep UK</Link></li>
           <li><Link to="/meal-prep-containers/work-lunch">Meal prep boxes for work UK</Link></li>
           <li><Link to="/meal-prep-containers/large-sets">Large meal prep container sets UK</Link></li>
           <li><Link to="/blog/best-meal-prep-containers-uk">Best meal prep containers UK buying guide</Link></li>
+          <li><Link to="/blog/best-freezer-bags-for-meal-prep-uk">Best freezer bags for meal prep UK</Link></li>
           <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
           <li><Link to="/blog/leakproof-meal-prep-containers-uk">Leakproof meal prep containers UK</Link></li>
           <li><Link to="/blog/meal-prep-tubs-for-batch-cooking">Meal prep tubs for batch cooking</Link></li>

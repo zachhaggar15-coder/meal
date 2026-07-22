@@ -130,6 +130,7 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
       { to: '/blog/best-meal-prep-containers-uk', label: 'Best Containers Buying Guide' },
       { to: '/blog/glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Containers' },
       { to: '/meal-prep-containers/mid-range', label: 'Glass Meal Prep Containers' },
+      { to: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep' },
     ],
   },
   {
