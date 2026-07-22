@@ -1,7 +1,10 @@
 const STORE_TAG = 'amazonaf063dc-21';
 
 function amazonProductUrl(slug, asin) {
-  return `https://www.amazon.co.uk/${slug}/dp/${asin}?tag=${STORE_TAG}&linkCode=ll2`;
+  // Canonical minimal affiliate link: attribution is by tag alone. We drop the
+  // SiteStripe linkCode/linkId pair rather than emit linkCode=ll2 with no
+  // linkId, which is a malformed half-link.
+  return `https://www.amazon.co.uk/${slug}/dp/${asin}?tag=${STORE_TAG}`;
 }
 
 export const AFFILIATE_DISCLOSURE =

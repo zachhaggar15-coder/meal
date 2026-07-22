@@ -1,7 +1,7 @@
 export const MEAL_PREP_STICKERS = {
   name: 'BOROHOUSE Glass Meal Prep Containers',
   shortName: 'Glass containers',
-  href: 'https://www.amazon.co.uk/BOROHOUSE-10-Pack-Glass-Storage-Containers/dp/B0FFH1DW9W?pf_rd_r=NA8ZP1868XMY1XZY0CR8&pf_rd_p=a75ae4d2-b9af-4bbd-92ae-7564e4eff31c&th=1&linkCode=ll2&tag=amazonaf063dc-21&linkId=d76021662e3e7ff8580c2a90aa38c369&ref_=as_li_ss_tl',
+  href: 'https://www.amazon.co.uk/BOROHOUSE-10-Pack-Glass-Storage-Containers/dp/B0FFH1DW9W?tag=amazonaf063dc-21',
   internalPath: '/meal-prep-containers/glass',
   image: '/meal-containers-ad.webp',
   imageAlt: 'BOROHOUSE 10-pack glass food storage containers',
@@ -17,7 +17,7 @@ export const MEAL_PREP_STICKERS = {
 export const MID_RANGE_CONTAINERS = {
   name: 'Harbour Housewares Glass Meal Prep Containers',
   shortName: 'Glass containers',
-  href: 'https://www.amazon.co.uk/Harbour-Housewares-Glass-Containers-Airtight/dp/B0DXQ8WSRP?tag=amazonaf063dc-21&linkCode=ll2',
+  href: 'https://www.amazon.co.uk/Harbour-Housewares-Glass-Containers-Airtight/dp/B0DXQ8WSRP?tag=amazonaf063dc-21',
   internalPath: '/meal-prep-containers/mid-range',
   image: '/meal-containers-ad.webp',
   imageAlt: 'Harbour Housewares glass meal prep containers with airtight lids',
@@ -33,7 +33,7 @@ export const MID_RANGE_CONTAINERS = {
 export const BUDGET_CONTAINERS = {
   name: 'Vinsani 3 Compartment Meal Prep Containers',
   shortName: 'Budget containers',
-  href: 'https://www.amazon.co.uk/Vinsani-Compartment-Containers-Reusable-Stackable/dp/B0DN32KNK3?tag=amazonaf063dc-21&linkCode=ll2',
+  href: 'https://www.amazon.co.uk/Vinsani-Compartment-Containers-Reusable-Stackable/dp/B0DN32KNK3?tag=amazonaf063dc-21',
   internalPath: '/meal-prep-containers/budget',
   image: '/budget-containers-ad.webp',
   imageAlt: 'Vinsani reusable compartment meal prep containers',
