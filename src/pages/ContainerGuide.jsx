@@ -113,13 +113,7 @@ export default function ContainerGuide() {
             position: index + 1,
             name: product.name,
             url: product.href,
-            item: {
-              '@type': 'Product',
-              name: product.name,
-              image: product.image,
-              description: product.summary,
-              sku: product.asin,
-            },
+            item: { '@id': productJsonLdId(canonical, product) },
           }
         )),
       },
@@ -142,7 +136,7 @@ export default function ContainerGuide() {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     },
-    ...products.map(product => buildProductReviewJsonLd(product)),
+    ...products.map(product => buildProductReviewJsonLd(product, canonical)),
   ];
 
   return (
@@ -329,10 +323,15 @@ export default function ContainerGuide() {
   );
 }
 
-function buildProductReviewJsonLd(product) {
+function productJsonLdId(canonical, product) {
+  return `https://www.mealprep.org.uk${canonical}#product-${product.id}`;
+}
+
+function buildProductReviewJsonLd(product, canonical) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': productJsonLdId(canonical, product),
     name: product.name,
     image: product.image,
     description: product.summary,
