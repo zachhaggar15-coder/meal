@@ -239,7 +239,7 @@ export const NAV_DROPDOWNS = [
 ];
 
 export const MOBILE_NAV_GROUPS = [
-  { label: 'Meal Prep Accessories', items: ACCESSORY_NAV_LINKS, defaultOpen: true },
+  { label: 'Meal Prep Accessories', items: ACCESSORY_NAV_LINKS, defaultOpen: false },
   { label: 'Start Here', items: START_LINKS, defaultOpen: true },
   { label: 'Plan By Goal', items: GOAL_NAV_LINKS, defaultOpen: true },
   { label: 'Supermarket', items: SUPERMARKET_NAV_LINKS, defaultOpen: true },
