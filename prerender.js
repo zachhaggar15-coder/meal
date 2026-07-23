@@ -6,6 +6,7 @@ import { blogPostsData } from './src/data/blogPosts.js';
 import { mealPlansData } from './src/data/mealPlans.js';
 import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
 import { COMBO_LANDING_SLUGS } from './src/data/comboLandingPages.js';
+import { buildBrowsePageRoutes } from './src/data/browsePagination.js';
 import { MEAL_PLAN_HUB_SLUGS } from './src/data/mealPlanHubs.js';
 import { SEO_PRIORITY_ROUTES } from './src/data/seoPriorityLinks.js';
 import {
@@ -182,6 +183,7 @@ const STATIC_PLAN_SLUGS = [
 ];
 
 const PLAN_SLUGS = INDEXABLE_PLAN_SEEDS.map(seed => seed.slug);
+const BROWSE_PAGE_ROUTES = buildBrowsePageRoutes(PLAN_SLUGS.length);
 const LEGACY_MEAL_PLAN_SLUGS = Object.keys(mealPlansData);
 const BLOG_SLUGS = Object.keys(blogPostsData);
 const SEO_PRIORITY_ROUTE_SET = new Set(SEO_PRIORITY_ROUTES);
@@ -208,6 +210,7 @@ const ROUTES = uniqueRoutes([
   '/404',
   '/admin',
   '/meal-plans',
+  ...BROWSE_PAGE_ROUTES,
   ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
   ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
   ...DIET_CHOOSER_SLUGS.map(slug => `/choose-diet/${slug}`),
@@ -303,6 +306,7 @@ async function prerender() {
   function routePriority(route) {
     if (route === '/') return ['1.0', 'weekly'];
     if (route === '/browse') return ['0.9', 'weekly'];
+    if (route.startsWith('/browse/page/')) return ['0.8', 'weekly'];
     if (route.startsWith('/choose-plan/')) return ['0.9', 'weekly'];
     if (route.startsWith('/choose-supermarket/')) return ['0.9', 'weekly'];
     if (route.startsWith('/choose-diet/')) return ['0.9', 'weekly'];

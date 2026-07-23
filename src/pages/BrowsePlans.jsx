@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
@@ -8,6 +8,7 @@ import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
+import { BROWSE_PAGE_SIZE, buildBrowsePagePath } from '../data/browsePagination.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
@@ -168,7 +169,9 @@ const HUB_INDEX_GROUPS = [
 
 export default function BrowsePlans() {
   const [params] = useSearchParams();
+  const { page: pageParam } = useParams();
   const paramString = params.toString();
+  const routePage = readPageParam(pageParam);
   const [search,     setSearch]     = useState(() => params.get('search') || '');
   const [goal,       setGoal]       = useState(() => readFilterParam(params, 'goal', GOALS));
   const [supermarket,setSupermarket]= useState(() => readFilterParam(params, 'supermarket', SUPERMARKETS));
@@ -176,8 +179,7 @@ export default function BrowsePlans() {
   const [calories,   setCalories]   = useState(() => readFilterParam(params, 'calories', CALORIES));
   const [budget,     setBudget]     = useState(() => readFilterParam(params, 'budget', BUDGETS));
   const [effort,     setEffort]     = useState(() => readFilterParam(params, 'effort', EFFORTS));
-  const [page,       setPage]       = useState(1);
-  const PER_PAGE = 24;
+  const [page,       setPage]       = useState(routePage);
 
   useEffect(() => {
     setSearch(params.get('search') || '');
@@ -187,8 +189,8 @@ export default function BrowsePlans() {
     setCalories(readFilterParam(params, 'calories', CALORIES));
     setBudget(readFilterParam(params, 'budget', BUDGETS));
     setEffort(readFilterParam(params, 'effort', EFFORTS));
-    setPage(1);
-  }, [paramString]);
+    setPage(routePage);
+  }, [paramString, routePage]);
 
   const filters = useMemo(() => ({
     search,
@@ -231,15 +233,32 @@ export default function BrowsePlans() {
   const budgetOptions = useMemo(() => withOptionCounts(BUDGETS, 'budget', filters), [filters]);
   const effortOptions = useMemo(() => withOptionCounts(EFFORTS, 'effort', filters), [filters]);
 
-  const pageCount  = Math.ceil(filtered.length / PER_PAGE);
-  const shown      = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const hasActiveFilters = Boolean(search || goal || supermarket || diet || calories || budget || effort);
+  const pageCount = Math.max(1, Math.ceil(filtered.length / BROWSE_PAGE_SIZE));
+  const currentPage = Math.min(Math.max(page, 1), pageCount);
+  const pageStartIndex = (currentPage - 1) * BROWSE_PAGE_SIZE;
+  const shown = filtered.slice(pageStartIndex, pageStartIndex + BROWSE_PAGE_SIZE);
+  const pageNumbers = useMemo(() => (
+    Array.from({ length: pageCount }, (_, index) => index + 1)
+  ), [pageCount]);
+  const canonicalPath = !hasActiveFilters ? buildBrowsePagePath(currentPage) : '/browse';
+  const pageTitleSuffix = currentPage > 1 && !hasActiveFilters ? ` - Page ${currentPage}` : '';
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: `Browse ${PLAN_COUNT} UK meal plans`,
+      name: `Browse ${PLAN_COUNT} UK meal plans${pageTitleSuffix}`,
       description: 'Browse free UK meal plans by goal, supermarket, diet, calories, budget and effort.',
-      url: 'https://www.mealprep.org.uk/browse',
+      url: `https://www.mealprep.org.uk${canonicalPath}`,
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: shown.map((plan, index) => ({
+          '@type': 'ListItem',
+          position: pageStartIndex + index + 1,
+          name: plan.title,
+          url: `https://www.mealprep.org.uk/plans/${plan.slug}`,
+        })),
+      },
     },
     {
       '@context': 'https://schema.org',
@@ -264,9 +283,9 @@ export default function BrowsePlans() {
   return (
     <>
       <SEO
-        title={`Free UK Diet Plans - Browse ${PLAN_COUNT} Meal Plans by Calories & Supermarket | MealPrep.org.uk`}
+        title={`Free UK Diet Plans - Browse ${PLAN_COUNT} Meal Plans by Calories & Supermarket${pageTitleSuffix} | MealPrep.org.uk`}
         description="Browse free online diet plans for UK supermarkets, including 1500 calorie, high protein, vegetarian, muscle gain and printable shopping-list plans."
-        canonical="https://www.mealprep.org.uk/browse"
+        canonical={`https://www.mealprep.org.uk${canonicalPath}`}
         jsonLd={jsonLd}
       />
 
@@ -336,25 +355,72 @@ export default function BrowsePlans() {
 
         {/* Pagination */}
         {pageCount > 1 && (
-          <div className="browse-pagination">
-            <button
-              className="browse-page-btn"
-              disabled={page === 1}
-              onClick={() => setPage(p => p - 1)}
-              type="button"
-            >
-              ← Previous
-            </button>
-            <span className="browse-page-info">Page {page} of {pageCount}</span>
-            <button
-              className="browse-page-btn"
-              disabled={page === pageCount}
-              onClick={() => setPage(p => p + 1)}
-              type="button"
-            >
-              Next →
-            </button>
-          </div>
+          <nav className="browse-pagination" aria-label="Browse meal plan pages">
+            {hasActiveFilters ? (
+              <>
+                <button
+                  className="browse-page-btn"
+                  disabled={currentPage === 1}
+                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  type="button"
+                >
+                  &larr; Previous
+                </button>
+                <span className="browse-page-info">Page {currentPage} of {pageCount}</span>
+                <button
+                  className="browse-page-btn"
+                  disabled={currentPage === pageCount}
+                  onClick={() => setPage(p => Math.min(pageCount, p + 1))}
+                  type="button"
+                >
+                  Next &rarr;
+                </button>
+              </>
+            ) : (
+              <>
+                {currentPage > 1 ? (
+                  <Link className="browse-page-btn" to={buildBrowsePagePath(currentPage - 1)}>
+                    &larr; Previous
+                  </Link>
+                ) : (
+                  <span className="browse-page-btn browse-page-btn--disabled" aria-disabled="true">
+                    &larr; Previous
+                  </span>
+                )}
+                <span className="browse-page-info">Page {currentPage} of {pageCount}</span>
+                {currentPage < pageCount ? (
+                  <Link className="browse-page-btn" to={buildBrowsePagePath(currentPage + 1)}>
+                    Next &rarr;
+                  </Link>
+                ) : (
+                  <span className="browse-page-btn browse-page-btn--disabled" aria-disabled="true">
+                    Next &rarr;
+                  </span>
+                )}
+                <div className="browse-page-links" aria-label="All browse pages">
+                  {pageNumbers.map(pageNumber => (
+                    pageNumber === currentPage ? (
+                      <span
+                        key={pageNumber}
+                        className="browse-page-number browse-page-number--active"
+                        aria-current="page"
+                      >
+                        {pageNumber}
+                      </span>
+                    ) : (
+                      <Link
+                        key={pageNumber}
+                        className="browse-page-number"
+                        to={buildBrowsePagePath(pageNumber)}
+                      >
+                        {pageNumber}
+                      </Link>
+                    )
+                  ))}
+                </div>
+              </>
+            )}
+          </nav>
         )}
 
         <PageHeroVisual visual={SITE_VISUALS.browse} className="browse-hero-visual browse-hero-visual--after-results" priority />
@@ -451,6 +517,11 @@ function cap(s) {
 function readFilterParam(params, key, options) {
   const value = params.get(key) || '';
   return options.some(option => option.value === value) ? value : '';
+}
+
+function readPageParam(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 1 ? parsed : 1;
 }
 
 // Options that cannot return a single plan are removed from the dropdown

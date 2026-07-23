@@ -85,6 +85,7 @@ export default function App() {
               <Route path="/choose-calories/:calories" element={<ChoiceLandingPage mode="calories" />} />
               <Route path="/plans/:slug" element={<PlanPage />} />
               <Route path="/browse" element={<BrowsePlans />} />
+              <Route path="/browse/page/:page" element={<BrowsePlans />} />
               <Route path="/tools" element={<ToolsPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
