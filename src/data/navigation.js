@@ -162,6 +162,11 @@ export const CONTAINER_NAV_LINKS = [
 
 export const ACCESSORY_NAV_LINKS = [
   {
+    to: '/meal-prep-accessories',
+    label: 'Meal Prep Accessories',
+    description: 'The hub for lunch bags, ice packs, labels and practical prep tools.',
+  },
+  {
     to: '/meal-prep-containers/freezer-bags',
     label: 'Freezer Bags',
     description: 'Reusable freezer bags for flat-freezing batch-cooked meals.',
@@ -282,6 +287,7 @@ export const FOOTER_GROUPS = [
   {
     label: 'Prep Kit',
     items: [
+      { to: '/meal-prep-accessories', label: 'Meal Prep Accessories' },
       { to: '/meal-prep-containers', label: 'Best Containers' },
       { to: '/meal-prep-containers/budget', label: 'Budget Containers' },
       { to: '/meal-prep-containers/glass', label: 'Glass Containers' },
@@ -339,6 +345,14 @@ const STATIC_SEARCH_ENTRIES = [
     description: 'Compare budget plastic, glass lunch boxes and larger sets.',
     keywords: 'containers tubs boxes glass plastic freezer work lunch leakproof affiliate',
     priority: 78,
+  },
+  {
+    title: 'Meal Prep Accessories UK',
+    to: '/meal-prep-accessories',
+    type: 'Accessories',
+    description: 'Compare lunch bags, ice packs, sauce pots, oats jars, food flasks, choppers, shakers and freezer labels.',
+    keywords: 'accessories lunch bags ice packs sauce pots overnight oats jars thermometers food flasks vegetable choppers air fryer protein shakers freezer labels',
+    priority: 79,
   },
   {
     title: 'Meal Prep Blog UK',
@@ -422,6 +436,14 @@ function buildSiteSearchIndex() {
       description: link.description,
       keywords: link.description,
       priority: 76,
+    })),
+    ...ACCESSORY_NAV_LINKS.map(link => ({
+      title: link.label,
+      to: link.to,
+      type: 'Accessories',
+      description: link.description,
+      keywords: `${link.label} ${link.description} meal prep accessories amazon uk`,
+      priority: 73,
     })),
     ...CONTAINER_NAV_LINKS.map(link => ({
       title: link.label,

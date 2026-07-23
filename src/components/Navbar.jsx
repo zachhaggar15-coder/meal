@@ -1,14 +1,23 @@
 import { Link, useLocation } from 'react-router-dom';
 import SiteSearch from './SiteSearch.jsx';
+import { ACCESSORY_NAV_LINKS } from '../data/navigation.js';
+
+const ACCESSORY_PATHS = new Set(ACCESSORY_NAV_LINKS.map(link => link.to));
 
 const TOP_TABS = [
   { to: '/', label: 'Home', match: path => path === '/' },
   { to: '/quiz', label: 'Quiz', match: path => path === '/quiz' || path === '/quiz/results' },
   {
+    to: '/meal-prep-accessories',
+    label: 'Meal Prep Accessories',
+    compactLabel: 'Accessories',
+    match: path => path === '/meal-prep-accessories' || ACCESSORY_PATHS.has(path),
+  },
+  {
     to: '/meal-prep-containers',
     label: 'Meal prep containers',
     compactLabel: 'Containers',
-    match: path => path.startsWith('/meal-prep-containers'),
+    match: path => path.startsWith('/meal-prep-containers') && !ACCESSORY_PATHS.has(path),
   },
   { to: '/tools', label: 'Tools', match: path => path === '/tools' },
   { to: '/feedback', label: 'Feedback', match: path => path === '/feedback' },

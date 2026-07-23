@@ -196,6 +196,7 @@ const ROUTES = uniqueRoutes([
   '/quiz/results',
   '/browse',
   '/stickers',
+  '/meal-prep-accessories',
   '/meal-prep-containers',
   '/blog',
   '/questions',

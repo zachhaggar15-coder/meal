@@ -179,6 +179,7 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     title: 'Meal Prep Tools and Accessories',
     intro: 'Compare small prep-kit buys for carrying, cooling, labelling, reheating and speeding up weekly meal prep.',
     links: [
+      { to: '/meal-prep-accessories', label: 'Meal Prep Accessories UK' },
       { to: '/blog/insulated-meal-prep-bags-uk', label: 'Insulated Meal Prep Bags UK' },
       { to: '/blog/reusable-ice-packs-for-lunch-bags-uk', label: 'Reusable Ice Packs UK' },
       { to: '/blog/best-sauce-pots-for-meal-prep-uk', label: 'Sauce Pots for Meal Prep' },
