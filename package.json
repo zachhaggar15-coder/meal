@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist/ssr && node prerender.js && node scripts/check-protected-urls.js",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist/ssr && node prerender.js && node scripts/check-protected-urls.js && node scripts/check-structured-data.js",
     "check:urls": "node scripts/check-protected-urls.js",
+    "check:structured-data": "node scripts/check-structured-data.js",
     "check:plans": "node scripts/check-plans.js",
     "check:nutrition": "node scripts/check-nutrition.js",
     "analytics:weekly": "node scripts/weekly-analytics-improvements.js",
