@@ -160,6 +160,64 @@ export const CONTAINER_NAV_LINKS = [
   },
 ];
 
+export const ACCESSORY_NAV_LINKS = [
+  {
+    to: '/meal-prep-containers/freezer-bags',
+    label: 'Freezer Bags',
+    description: 'Reusable freezer bags for flat-freezing batch-cooked meals.',
+  },
+  {
+    to: '/blog/insulated-meal-prep-bags-uk',
+    label: 'Insulated Meal Prep Bags',
+    description: 'Lunch cooler bags for work, gym meals and longer commutes.',
+  },
+  {
+    to: '/blog/reusable-ice-packs-for-lunch-bags-uk',
+    label: 'Reusable Ice Packs',
+    description: 'Slim freezer blocks for chilled packed lunches.',
+  },
+  {
+    to: '/blog/best-sauce-pots-for-meal-prep-uk',
+    label: 'Sauce Pots',
+    description: 'Dressing and dip pots for salads, bowls and wraps.',
+  },
+  {
+    to: '/blog/overnight-oats-jars-for-meal-prep-uk',
+    label: 'Overnight Oats Jars',
+    description: 'Breakfast jars and pots for grab-and-go prep.',
+  },
+  {
+    to: '/blog/best-food-thermometers-for-meal-prep-uk',
+    label: 'Food Thermometers',
+    description: 'Probe thermometers for chicken, mince and batch cooking.',
+  },
+  {
+    to: '/blog/insulated-food-flasks-for-meal-prep-uk',
+    label: 'Food Flasks',
+    description: 'Hot lunch jars for soup, chilli and no-microwave days.',
+  },
+  {
+    to: '/blog/best-vegetable-choppers-for-meal-prep-uk',
+    label: 'Vegetable Choppers',
+    description: 'Manual choppers and dicers for faster batch prep.',
+  },
+  {
+    to: '/blog/best-air-fryer-accessories-for-meal-prep-uk',
+    label: 'Air Fryer Accessories',
+    description: 'Liners, racks and kits for repeat air-fryer cooking.',
+  },
+  {
+    to: '/blog/best-protein-shakers-uk',
+    label: 'Protein Shakers',
+    description: 'Simple shaker bottles for gym snacks and protein top-ups.',
+  },
+  {
+    to: '/blog/freezer-labels-for-meal-prep-uk',
+    label: 'Freezer Labels',
+    description: 'Date and contents stickers for tubs, bags and jars.',
+  },
+];
+
 export const PRIMARY_NAV_LINKS = [
   { to: '/browse', label: 'Browse Plans', match: path => path === '/browse' || path.startsWith('/plans/') },
   { to: '/tools', label: 'Tools', match: path => path === '/tools' },
@@ -181,6 +239,7 @@ export const NAV_DROPDOWNS = [
 ];
 
 export const MOBILE_NAV_GROUPS = [
+  { label: 'Meal Prep Accessories', items: ACCESSORY_NAV_LINKS, defaultOpen: true },
   { label: 'Start Here', items: START_LINKS, defaultOpen: true },
   { label: 'Plan By Goal', items: GOAL_NAV_LINKS, defaultOpen: true },
   { label: 'Supermarket', items: SUPERMARKET_NAV_LINKS, defaultOpen: true },
