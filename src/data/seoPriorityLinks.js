@@ -176,6 +176,22 @@ export const SEARCH_OPPORTUNITY_CLUSTERS = [
     ],
   },
   {
+    title: 'Meal Prep Tools and Accessories',
+    intro: 'Compare small prep-kit buys for carrying, cooling, labelling, reheating and speeding up weekly meal prep.',
+    links: [
+      { to: '/blog/insulated-meal-prep-bags-uk', label: 'Insulated Meal Prep Bags UK' },
+      { to: '/blog/reusable-ice-packs-for-lunch-bags-uk', label: 'Reusable Ice Packs UK' },
+      { to: '/blog/best-sauce-pots-for-meal-prep-uk', label: 'Sauce Pots for Meal Prep' },
+      { to: '/blog/overnight-oats-jars-for-meal-prep-uk', label: 'Overnight Oats Jars UK' },
+      { to: '/blog/best-food-thermometers-for-meal-prep-uk', label: 'Food Thermometers for Meal Prep' },
+      { to: '/blog/insulated-food-flasks-for-meal-prep-uk', label: 'Insulated Food Flasks UK' },
+      { to: '/blog/best-vegetable-choppers-for-meal-prep-uk', label: 'Vegetable Choppers for Meal Prep' },
+      { to: '/blog/best-air-fryer-accessories-for-meal-prep-uk', label: 'Air Fryer Accessories UK' },
+      { to: '/blog/best-protein-shakers-uk', label: 'Protein Shakers UK' },
+      { to: '/blog/freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep' },
+    ],
+  },
+  {
     title: 'Summer Meals and Cold Lunches',
     intro: 'Seasonal recipe-led content for summer meals, no-reheat lunches, overnight oats and high-protein work lunches.',
     links: [
