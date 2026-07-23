@@ -25,6 +25,7 @@ const ChoiceLandingPage = lazy(() => import('./pages/ChoiceLandingPage.jsx'));
 const BrowsePlans = lazy(() => import('./pages/BrowsePlans.jsx'));
 const MealPlanHubPage = lazy(() => import('./pages/MealPlanHubPage.jsx'));
 const ToolsPage = lazy(() => import('./pages/ToolsPage.jsx'));
+const MealPrepPlus = lazy(() => import('./pages/MealPrepPlus.jsx'));
 const About = lazy(() => import('./pages/About.jsx'));
 const Contact = lazy(() => import('./pages/Contact.jsx'));
 const Feedback = lazy(() => import('./pages/Feedback.jsx'));
@@ -87,6 +88,7 @@ export default function App() {
               <Route path="/browse" element={<BrowsePlans />} />
               <Route path="/browse/page/:page" element={<BrowsePlans />} />
               <Route path="/tools" element={<ToolsPage />} />
+              <Route path="/mealprep-plus" element={<MealPrepPlus />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/feedback" element={<Feedback />} />

@@ -20,6 +20,7 @@ const TOP_TABS = [
     match: path => path.startsWith('/meal-prep-containers') && !ACCESSORY_PATHS.has(path),
   },
   { to: '/tools', label: 'Tools', match: path => path === '/tools' },
+  { to: '/mealprep-plus', label: 'MealPrep+', match: path => path === '/mealprep-plus' },
   { to: '/feedback', label: 'Feedback', match: path => path === '/feedback' },
 ];
 

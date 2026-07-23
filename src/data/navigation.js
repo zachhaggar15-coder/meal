@@ -77,6 +77,11 @@ export const START_LINKS = [
     label: 'Choose Containers',
     description: 'Compare tubs and box setups before batch cooking.',
   },
+  {
+    to: '/mealprep-plus',
+    label: 'Join MealPrep+',
+    description: 'Join the waitlist for weekly UK meal plans sent before you shop.',
+  },
 ];
 
 export const GOAL_NAV_LINKS = GOAL_CHOOSER_ITEMS.map(item => ({
@@ -262,6 +267,7 @@ export const FOOTER_GROUPS = [
       { to: '/quiz', label: 'Find My Plan' },
       { to: '/browse', label: `Browse ${PLAN_COUNT} Plans` },
       { to: '/tools', label: 'Tools' },
+      { to: '/mealprep-plus', label: 'MealPrep+' },
       { to: '/meal-plans', label: 'Supermarkets' },
     ],
   },
@@ -361,6 +367,14 @@ const STATIC_SEARCH_ENTRIES = [
     description: 'Free UK guides for weight loss, high protein, batch cooking and supermarkets.',
     keywords: 'blog guides articles nutrition beginner calorie deficit high protein',
     priority: 70,
+  },
+  {
+    title: 'MealPrep+ Waitlist',
+    to: '/mealprep-plus',
+    type: 'MealPrep+',
+    description: 'Join the waitlist for weekly UK meal plans, recipes and shopping lists.',
+    keywords: 'mealprep plus mealprep+ subscription weekly meal plans waitlist signup sign up',
+    priority: 82,
   },
   {
     title: 'Meal Prep Questions Answered',

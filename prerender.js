@@ -203,6 +203,7 @@ const ROUTES = uniqueRoutes([
   '/blog',
   '/questions',
   '/tools',
+  '/mealprep-plus',
   '/about',
   '/contact',
   '/privacy',
@@ -314,6 +315,7 @@ async function prerender() {
     if (route.startsWith('/meal-plans/')) return ['0.9', 'weekly'];
     if (route === '/quiz') return ['0.9', 'monthly'];
     if (route === '/tools') return ['0.8', 'monthly'];
+    if (route === '/mealprep-plus') return ['0.8', 'weekly'];
     if (route === '/meal-plans') return ['0.9', 'weekly'];
     if (route === '/about' || route === '/contact' || route === '/privacy' || route === '/terms') return ['0.6', 'monthly'];
     if (route === '/blog') return ['0.8', 'weekly'];
