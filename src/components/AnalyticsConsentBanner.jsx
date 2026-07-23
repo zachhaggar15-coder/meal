@@ -6,9 +6,7 @@ import {
 } from '../utils/analytics.js';
 
 export default function AnalyticsConsentBanner() {
-  const [consent, setConsent] = useState(() => (
-    typeof window === 'undefined' ? 'denied' : getAnalyticsConsent()
-  ));
+  const [consent, setConsent] = useState('denied');
 
   useEffect(() => {
     setConsent(getAnalyticsConsent());
