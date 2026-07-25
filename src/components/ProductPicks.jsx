@@ -76,14 +76,15 @@ export default function ProductPicks({
             <span className="product-pick-category">{product.category}</span>
             <h3>{product.name}</h3>
             <p className="product-pick-summary">{product.summary}</p>
+            <p className="product-pick-verdict"><strong>Best for:</strong> {product.bestFor}</p>
             <dl className="affiliate-product-facts">
               <div>
                 <dt>Price band</dt>
                 <dd>{product.priceBand}</dd>
               </div>
               <div>
-                <dt>Best for</dt>
-                <dd>{product.bestFor}</dd>
+                <dt>Type</dt>
+                <dd>{product.category}</dd>
               </div>
             </dl>
             {product.watchOut && (
@@ -98,7 +99,7 @@ export default function ProductPicks({
               data-source-page={sourcePage}
               data-offer={product.name}
             >
-              See price on Amazon UK
+              See Amazon price
             </a>
           </article>
         ))}

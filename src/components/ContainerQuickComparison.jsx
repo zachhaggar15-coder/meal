@@ -102,6 +102,7 @@ export default function ContainerQuickComparison({
               <CardHeadingTag>{sizeLabel}</CardHeadingTag>
               <strong className="container-size-focus">{sizeFocus}</strong>
               <p>{fit}</p>
+              <p className="container-direct-summary">{product.summary}</p>
               <dl className="container-direct-facts">
                 <div>
                   <dt>Material</dt>
@@ -116,6 +117,9 @@ export default function ContainerQuickComparison({
                   <dd>{product.layout}</dd>
                 </div>
               </dl>
+              {product.avoidIf && (
+                <p className="container-direct-avoid"><strong>Avoid if:</strong> {product.avoidIf}</p>
+              )}
               <div className="container-direct-actions">
                 <a
                   href={product.href}

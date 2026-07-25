@@ -259,8 +259,8 @@ export default function BlogPost() {
               </Link>
             </li>
             <li>
-              <Link to="/stickers" data-event="container_promo_click" data-source-page={`blog-${slug}`}>
-                Printable Meal Prep Labels &amp; Stickers
+              <Link to="/glass-meal-prep-containers" data-event="container_promo_click" data-source-page={`blog-${slug}`}>
+                Glass Meal Prep Container Quick Compare
               </Link>
             </li>
           </ul>

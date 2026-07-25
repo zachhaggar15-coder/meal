@@ -168,36 +168,23 @@ export default function ContainerGuide() {
           sourcePage={`${guide.slug}-quick-comparison`}
         />
 
-        <ContainerGuideNav currentSlug={guide.slug} />
-
-        <section className="conversion-panel" aria-label="Buying guide summary">
-          <div>
-            <strong>{toTitleCase(guide.priceBand)}</strong>
-            <span>
-              {guide.summaryText || `Compare ${products.length} Amazon UK meal prep boxes, tubs, and containers for this guide.`}
-            </span>
-          </div>
-          {heroProduct && (
-            <a
-              href={heroProduct.href}
-              target="_blank"
-              rel="noopener noreferrer nofollow sponsored"
-              className="conversion-panel-btn"
-              data-event="container_product_click"
-              data-source-page={`${guide.slug}-summary`}
-              data-offer={heroProduct.name}
-            >
-              View top pick
-            </a>
-          )}
-        </section>
+        <div id="comparison">
+          <AffiliateProductGrid
+            title={guide.productGridTitle || `Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
+            intro={guide.productGridIntro || 'Each recommendation is chosen for a different buyer job: low cost, glass upgrade, divided portions, leak resistance, commuting, or a fuller weekly setup.'}
+            productIds={guide.productIds}
+            sourcePage={`${guide.slug}-guide`}
+            showDisclosure={false}
+            showQuickComparison={false}
+          />
+        </div>
 
         <section className="container-comparison-section" aria-labelledby="container-comparison-heading">
           <div className="section-head-inline">
             <div>
-              <h2 id="container-comparison-heading">{toTitleCase('Quick comparison')}</h2>
+              <h2 id="container-comparison-heading">{toTitleCase('Full comparison table')}</h2>
               <p>
-                Shortlist by material, format, layout and buyer need before opening the Amazon UK listing.
+                Use this if you want the deeper side-by-side details before opening an Amazon UK listing.
               </p>
             </div>
           </div>
@@ -248,16 +235,7 @@ export default function ContainerGuide() {
           </div>
         </section>
 
-        <div id="comparison">
-          <AffiliateProductGrid
-            title={guide.productGridTitle || `Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
-            intro={guide.productGridIntro || 'Each recommendation is chosen for a different buyer job: low cost, glass upgrade, divided portions, leak resistance, commuting, or a fuller weekly setup.'}
-            productIds={guide.productIds}
-            sourcePage={`${guide.slug}-guide`}
-            showDisclosure={false}
-            showQuickComparison={false}
-          />
-        </div>
+        <ContainerGuideNav currentSlug={guide.slug} />
 
         <ContainerFinder currentTier={guide.slug} />
 

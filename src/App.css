@@ -12342,6 +12342,200 @@ textarea {
   font-size: clamp(1.15rem, 1.7vw, 1.35rem);
 }
 
+/* Product placement usability pass: fast product read first, deeper notes below. */
+.product-placement-page {
+  max-width: 1120px;
+}
+
+.product-placement-hero {
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.product-placement-facts {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 18px 0 0;
+}
+
+.product-placement-facts div {
+  background: #fffdf8;
+  border: 1px solid var(--editorial-line, #d9d0b7);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.product-placement-facts dt {
+  color: var(--editorial-muted, #686a57);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.product-placement-facts dd {
+  color: var(--editorial-ink, #12130d);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 4px 0 0;
+}
+
+.product-comparison-grid--buying {
+  align-items: stretch;
+  margin: 24px 0 34px;
+}
+
+.sticker-product-card {
+  border-radius: 8px;
+}
+
+.sticker-product-card-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-verdict,
+.product-pick-verdict {
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  color: var(--editorial-ink, #12130d);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+}
+
+.affiliate-product-grid {
+  gap: 14px;
+}
+
+.affiliate-product-card {
+  align-items: stretch;
+  border-radius: 8px;
+  grid-template-columns: 190px minmax(0, 1fr);
+  padding: 14px;
+}
+
+.affiliate-product-body,
+.product-pick-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.affiliate-product-body h3,
+.product-pick-card h3 {
+  font-size: 1.08rem;
+  line-height: 1.18;
+}
+
+.affiliate-product-summary,
+.product-pick-summary {
+  color: var(--editorial-muted, #686a57);
+  line-height: 1.45;
+}
+
+.affiliate-product-verdict-grid {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.affiliate-product-verdict-grid p {
+  background: #fffdf8;
+  border: 1px solid var(--editorial-line, #d9d0b7);
+  border-left: 4px solid var(--lime, #caff2f);
+  border-radius: 8px;
+  color: var(--editorial-ink, #12130d);
+  font-size: 0.88rem;
+  line-height: 1.42;
+  margin: 0;
+  padding: 9px 10px;
+}
+
+.affiliate-product-facts {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.affiliate-product-facts div {
+  border-radius: 8px;
+}
+
+.affiliate-watchout {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  color: #6f370e;
+  padding: 9px 10px;
+}
+
+.affiliate-product-cta {
+  margin: 2px 0 12px;
+  width: fit-content;
+}
+
+.affiliate-product-details {
+  margin-top: auto;
+}
+
+.product-picks-grid {
+  align-items: stretch;
+}
+
+.product-pick-card {
+  border-radius: 8px;
+  gap: 8px;
+}
+
+.product-pick-card .affiliate-product-cta {
+  margin-top: auto;
+}
+
+.content-page .container-direct-summary {
+  color: var(--editorial-muted, #686a57);
+  font-size: 0.88rem;
+}
+
+.content-page .container-direct-avoid {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  color: #6f370e;
+  font-size: 0.84rem;
+  line-height: 1.38;
+  padding: 9px 10px;
+}
+
+.sticker-promo-btn,
+.conversion-panel-btn {
+  background: var(--lime, #caff2f);
+  border: 2px solid var(--editorial-ink, #12130d);
+  border-radius: 999px;
+  color: var(--editorial-ink, #12130d) !important;
+}
+
+.sticker-promo-btn:hover,
+.conversion-panel-btn:hover {
+  background: var(--editorial-ink, #12130d);
+  color: var(--editorial-paper, #fffdf8) !important;
+}
+
+@media (max-width: 820px) {
+  .product-placement-facts,
+  .affiliate-product-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .affiliate-product-card {
+    grid-template-columns: 1fr;
+  }
+
+  .affiliate-product-media {
+    max-width: 300px;
+  }
+}
+
 /* Retailer-specific guidance on plan pages. Reuses the existing swaps-grid
    card layout so it reads as part of the page rather than a bolted-on block. */
 .plan-store-positioning {

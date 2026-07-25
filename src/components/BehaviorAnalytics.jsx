@@ -419,7 +419,7 @@ function categorisePath(path) {
   if (clean.startsWith('/meal-prep-containers')) return 'containers';
   if (clean.startsWith('/quiz')) return 'quiz';
   if (clean.startsWith('/tools')) return 'tools';
-  if (clean.startsWith('/stickers')) return 'stickers';
+  if (clean.startsWith('/glass-meal-prep-containers') || clean.startsWith('/stickers')) return 'container_product';
   if (clean.startsWith('/admin')) return 'admin';
   if (clean.startsWith('/privacy') || clean.startsWith('/terms') || clean.startsWith('/contact') || clean.startsWith('/about')) return 'support';
   return 'other';

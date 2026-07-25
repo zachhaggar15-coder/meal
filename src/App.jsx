@@ -103,6 +103,7 @@ export default function App() {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/meal-prep-containers" element={<ContainerHub />} />
               <Route path="/meal-prep-containers/:tier" element={<ContainerGuide />} />
+              <Route path="/glass-meal-prep-containers" element={<Stickers />} />
               <Route path="/stickers" element={<Stickers />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />

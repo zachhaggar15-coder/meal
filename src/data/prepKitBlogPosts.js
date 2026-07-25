@@ -742,7 +742,7 @@ export const prepKitBlogPostsData = {
     related: [
       { slug: 'best-freezer-bags-for-meal-prep-uk', label: 'Best Freezer Bags for Meal Prep UK', type: 'blog' },
       { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
-      { path: '/stickers', label: 'Printable Meal Prep Labels and Stickers' },
+      { path: '/glass-meal-prep-containers', label: 'Glass Meal Prep Container Quick Compare' },
       ...prepKitRelated,
     ],
     faq: [

@@ -54,6 +54,11 @@ export default function AffiliateProductGrid({
               <span className="affiliate-product-badge">{product.badge}</span>
               <h3>{product.name}</h3>
               <p className="affiliate-product-summary">{product.summary}</p>
+              <div className="affiliate-product-verdict-grid">
+                <p><strong>Best for:</strong> {product.bestFor}</p>
+                {product.buyIf && <p><strong>Buy if:</strong> {product.buyIf}</p>}
+                {product.avoidIf && <p><strong>Avoid if:</strong> {product.avoidIf}</p>}
+              </div>
               <dl className="affiliate-product-facts">
                 <div>
                   <dt>Price band</dt>
@@ -64,26 +69,26 @@ export default function AffiliateProductGrid({
                   <dd>{product.material}</dd>
                 </div>
                 <div>
-                  <dt>Best for</dt>
-                  <dd>{product.bestFor}</dd>
-                </div>
-                <div>
                   <dt>Set format</dt>
                   <dd>{product.setSize}</dd>
-                </div>
-                <div>
-                  <dt>Size note</dt>
-                  <dd>{product.layout}</dd>
                 </div>
                 <div>
                   <dt>Last checked</dt>
                   <dd>{product.lastChecked || CONTAINER_LAST_CHECKED}</dd>
                 </div>
               </dl>
-              <div className="affiliate-product-fit">
-                <p><strong>Buy if:</strong> {product.buyIf}</p>
-                <p><strong>Avoid if:</strong> {product.avoidIf}</p>
-              </div>
+              <p className="affiliate-watchout"><strong>Watch out:</strong> {product.watchOut}</p>
+              <a
+                href={product.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow sponsored"
+                className="btn-primary affiliate-product-cta"
+                data-event="container_product_click"
+                data-source-page={sourcePage}
+                data-offer={product.name}
+              >
+                See Amazon price
+              </a>
               <details className="affiliate-product-details">
                 <summary>Pros, cons and key features</summary>
                 <div className="affiliate-product-detail-body">
@@ -112,22 +117,10 @@ export default function AffiliateProductGrid({
                     </div>
                   </div>
                   <ul className="content-bullets affiliate-product-bullets">
-                    {product.keyFeatures.map(feature => <li key={feature}>{feature}</li>)}
+                    {product.keyFeatures?.map(feature => <li key={feature}>{feature}</li>)}
                   </ul>
-                  <p className="affiliate-watchout"><strong>Watch out:</strong> {product.watchOut}</p>
                 </div>
               </details>
-              <a
-                href={product.href}
-                target="_blank"
-                rel="noopener noreferrer nofollow sponsored"
-                className="btn-primary affiliate-product-cta"
-                data-event="container_product_click"
-                data-source-page={sourcePage}
-                data-offer={product.name}
-              >
-                See price on Amazon UK
-              </a>
             </div>
           </article>
         ))}

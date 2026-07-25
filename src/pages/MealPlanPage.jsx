@@ -639,7 +639,7 @@ export default function MealPlanPage() {
             </li>
           )}
           <li>
-            <Link to="/stickers" data-event="container_promo_click" data-source-page={slug}>
+            <Link to="/glass-meal-prep-containers" data-event="container_promo_click" data-source-page={slug}>
               Glass Meal Prep Containers For Your Portions
             </Link>
           </li>

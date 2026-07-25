@@ -236,6 +236,17 @@ export default function ContainerHub() {
           sourcePage="container-direct-comparison"
         />
 
+        <div id="comparison">
+          <AffiliateProductGrid
+            title="Best meal prep containers to compare first"
+            intro="These picks cover the main buying jobs: budget batch cooking, everyday glass reheating, freezer tubs, premium leak resistance and a fuller weekly setup."
+            productIds={HUB_PRODUCT_IDS}
+            sourcePage="container-hub"
+            showDisclosure={false}
+            showQuickComparison={false}
+          />
+        </div>
+
         <ContainerGuideNav currentSlug="hub" />
 
         <section className="container-search-match" aria-labelledby="container-query-heading">
@@ -355,17 +366,6 @@ export default function ContainerHub() {
 
         <div id="chooser">
           <ContainerFinder currentTier="mid-range" />
-        </div>
-
-        <div id="comparison">
-          <AffiliateProductGrid
-            title="Best meal prep containers to compare first"
-            intro="These picks cover the main buying jobs: budget batch cooking, everyday glass reheating, freezer tubs, premium leak resistance and a fuller weekly setup."
-            productIds={HUB_PRODUCT_IDS}
-            sourcePage="container-hub"
-            showDisclosure={false}
-            showQuickComparison={false}
-          />
         </div>
 
         <section>

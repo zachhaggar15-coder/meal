@@ -31,6 +31,15 @@ const ACCESSORY_PRODUCT_IDS = [
   'innoveem-easy-peel-freezer-labels',
 ];
 
+const STARTER_ACCESSORY_PRODUCT_IDS = [
+  'lifewit-9l-insulated-lunch-bag',
+  'fit-fresh-slim-ice-packs',
+  'sistema-dressing-pots',
+  'smarch-overnight-oats-jars',
+  'thermopro-tp02s-thermometer',
+  'nuoshen-removable-food-labels',
+];
+
 const accessoryProducts = getMealPrepProducts(ACCESSORY_PRODUCT_IDS);
 const accessoryGuideLinks = ACCESSORY_NAV_LINKS.filter(link => link.to !== '/meal-prep-accessories');
 
@@ -98,19 +107,28 @@ export default function AccessoriesHub() {
 
         <h1>Meal Prep Accessories UK</h1>
         <p className="content-intro">
-          Small accessories make meal prep easier to carry, cool, label and repeat.
-          Use this page as the hub for the new product guides, then compare the
-          individual Amazon UK picks inside each category.
+          See the most useful accessory picks first: carrying, cooling, sauces,
+          breakfast jars, food safety and labels. Then scroll down for the longer
+          guide library if you want deeper buying notes.
         </p>
+
+        <ProductPicks
+          title="Meal prep accessories at a glance"
+          intro="Start with the small item that removes the biggest weekly friction, then open Amazon UK for live price and availability."
+          productIds={STARTER_ACCESSORY_PRODUCT_IDS}
+          sourcePage="meal-prep-accessories-fast-picks"
+          showQuickComparison={false}
+        />
 
         <section className="container-search-match" aria-labelledby="accessory-guides-heading">
           <div className="section-head-inline">
             <div>
               <span className="offer-kicker">Meal Prep Accessories</span>
-              <h2 id="accessory-guides-heading">Accessory Guides</h2>
+              <h2 id="accessory-guides-heading">Deeper accessory guides</h2>
               <p>
-                Start with the job you need to fix: carrying lunches, keeping food cold,
-                labelling freezer portions, speeding up prep or packing breakfast.
+                Need more context before buying? Pick the job you need to fix:
+                carrying lunches, keeping food cold, labelling freezer portions,
+                speeding up prep or packing breakfast.
               </p>
             </div>
           </div>
@@ -128,7 +146,7 @@ export default function AccessoriesHub() {
         </section>
 
         <ProductPicks
-          title="Meal prep accessory products"
+          title="Compare all accessory products"
           intro="All product links use the existing Amazon UK affiliate tag and open on Amazon for live price and availability."
           productIds={ACCESSORY_PRODUCT_IDS}
           sourcePage="meal-prep-accessories-hub"

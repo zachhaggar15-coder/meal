@@ -297,7 +297,7 @@ export const FOOTER_GROUPS = [
       { to: '/meal-prep-containers', label: 'Best Containers' },
       { to: '/meal-prep-containers/budget', label: 'Budget Containers' },
       { to: '/meal-prep-containers/glass', label: 'Glass Containers' },
-      { to: '/stickers', label: 'Meal Prep Stickers' },
+      { to: '/glass-meal-prep-containers', label: 'Glass Container Deal' },
     ],
   },
   {
@@ -351,6 +351,14 @@ const STATIC_SEARCH_ENTRIES = [
     description: 'Compare budget plastic, glass lunch boxes and larger sets.',
     keywords: 'containers tubs boxes glass plastic freezer work lunch leakproof affiliate',
     priority: 78,
+  },
+  {
+    title: 'Glass Meal Prep Container Deal UK',
+    to: '/glass-meal-prep-containers',
+    type: 'Containers',
+    description: 'See the sponsored glass container pick quickly, compare a budget alternative, then read the buying notes.',
+    keywords: 'glass meal prep containers borohouse amazon deal sponsored product comparison',
+    priority: 80,
   },
   {
     title: 'Meal Prep Accessories UK',
