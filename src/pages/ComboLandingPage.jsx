@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PlanCard from '../components/PlanCard.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
@@ -151,19 +152,7 @@ export default function ComboLandingPage({ page }) {
 
           <div className="meal-hub-grid">
             {matchingPlans.map(plan => (
-              <Link key={plan.slug} to={`/plans/${plan.slug}`} className="meal-hub-card">
-                <span className="meal-hub-card-tag">{plan.goalLabel}</span>
-                <h3>{plan.title}</h3>
-                <div className="meal-hub-card-meta">
-                  <span>{MARKET_LABEL[plan.supermarket] || plan.supermarket}</span>
-                  <span>{plan.calories.toLocaleString('en-GB')} kcal</span>
-                  <span>{plan.priceEstimate}/wk</span>
-                  <span>{EFFORT_LABEL[plan.effort] || plan.effort}</span>
-                </div>
-                {plan.dietType !== 'standard' && (
-                  <span className="meal-hub-diet">{cap(plan.dietType)}</span>
-                )}
-              </Link>
+              <PlanCard key={plan.slug} plan={plan} />
             ))}
           </div>
         </section>

@@ -3,6 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PlanCard from '../components/PlanCard.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
@@ -188,19 +189,7 @@ export default function MealPlanHubPage() {
 
           <div className="meal-hub-grid">
             {shownPlans.map(plan => (
-              <Link key={plan.slug} to={`/plans/${plan.slug}`} className="meal-hub-card">
-                <span className="meal-hub-card-tag">{plan.goalLabel}</span>
-                <h3>{plan.title}</h3>
-                <div className="meal-hub-card-meta">
-                  <span>{MARKET_LABEL[plan.supermarket] || plan.supermarket}</span>
-                  <span>{plan.calories.toLocaleString('en-GB')} kcal</span>
-                  <span>{plan.priceEstimate}/wk</span>
-                  <span>{EFFORT_LABEL[plan.effort] || plan.effort}</span>
-                </div>
-                {plan.dietType !== 'standard' && (
-                  <span className="meal-hub-diet">{cap(plan.dietType)}</span>
-                )}
-              </Link>
+              <PlanCard key={plan.slug} plan={plan} />
             ))}
           </div>
         </section>

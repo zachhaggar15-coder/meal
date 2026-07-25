@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import PlanCard from '../components/PlanCard.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
@@ -336,19 +337,7 @@ export default function BrowsePlans() {
         ) : (
           <div className="browse-grid">
             {shown.map(plan => (
-              <Link key={plan.slug} to={`/plans/${plan.slug}`} className="browse-plan-card">
-                <div className="bpc-goal-tag">{plan.goalLabel}</div>
-                <h2 className="bpc-title">{plan.title}</h2>
-                <div className="bpc-meta">
-                  <span className="bpc-meta-item">{MKT_LABEL[plan.supermarket] || plan.supermarket}</span>
-                  <span className="bpc-meta-item">~{plan.calories} kcal</span>
-                  <span className="bpc-meta-item">{plan.priceEstimate}/wk</span>
-                  <span className="bpc-meta-item">{EFFORT_LABEL[plan.effort] || plan.effort}</span>
-                </div>
-                {plan.dietType !== 'standard' && (
-                  <span className="bpc-diet-badge">{cap(plan.dietType)}</span>
-                )}
-              </Link>
+              <PlanCard key={plan.slug} plan={plan} />
             ))}
           </div>
         )}

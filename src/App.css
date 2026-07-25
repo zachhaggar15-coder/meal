@@ -4526,6 +4526,164 @@ details[open] .faq-question::after { content: '▴'; }
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 14px;
 }
+
+/* ── Shared meal-plan card (PlanCard.jsx) ──────────────────────────────────
+   Used by every browsable plan list: /browse, supermarket hubs and combo
+   hubs. Self-contained under the .plan-card namespace so it does not inherit
+   the older .browse-plan-card / .meal-hub-card theme layers. */
+.plan-card {
+  background: var(--editorial-paper, #fffdf8);
+  border: 1px solid var(--editorial-line, #e4ded1);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--editorial-ink, #17130d);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.16s, box-shadow 0.16s, transform 0.16s;
+  --pc-accent: #8a7f6a;
+  --pc-ink: #5a5142;
+  --pc-band: #efeadf;
+}
+.plan-card:hover {
+  border-color: #d6cebb;
+  box-shadow: 0 8px 22px rgba(23, 19, 13, 0.08);
+  transform: translateY(-3px);
+}
+.plan-card:focus-visible {
+  outline: 2px solid var(--editorial-ink, #17130d);
+  outline-offset: 2px;
+}
+
+.pc-banner {
+  position: relative;
+  min-height: 74px;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px 16px;
+  overflow: hidden;
+  background: var(--pc-band);
+}
+.pc-banner::after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  right: -6px;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  opacity: 0.16;
+  background: var(--pc-accent);
+}
+.pc-goal {
+  position: relative;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  line-height: 1.12;
+  color: var(--pc-ink);
+}
+.pc-store {
+  position: absolute;
+  top: 11px;
+  right: 14px;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 99px;
+  background: rgba(255, 253, 248, 0.72);
+  color: var(--pc-ink);
+}
+
+.pc-body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.pc-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--editorial-soft, #efeadf);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.pc-stat {
+  text-align: center;
+  padding: 9px 4px;
+}
+.pc-stat + .pc-stat {
+  border-left: 1px solid var(--editorial-line, #e4ded1);
+}
+.pc-stat b {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1.04rem;
+  line-height: 1;
+}
+.pc-stat span {
+  display: block;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--editorial-muted, #777064);
+  margin-top: 5px;
+}
+
+.pc-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pc-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.28;
+  margin: 0;
+  color: var(--editorial-ink, #17130d);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pc-sub {
+  font-size: 0.76rem;
+  color: var(--editorial-muted, #777064);
+}
+
+.pc-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pc-diet {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #3f5636;
+  background: #d9e5d2;
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.pc-view {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--editorial-ink, #17130d);
+}
+
+/* Goal colour families — desaturated to sit inside the warm ground. */
+.pc-lean     { --pc-accent: #6f8a5f; --pc-ink: #3f5636; --pc-band: #eaefe3; }
+.pc-muscle   { --pc-accent: #b06a4f; --pc-ink: #8a4a32; --pc-band: #f1e7e1; }
+.pc-protein  { --pc-accent: #6a8299; --pc-ink: #3f5666; --pc-band: #e6ecf0; }
+.pc-veg      { --pc-accent: #5f8a6a; --pc-ink: #3f5636; --pc-band: #e5efe1; }
+.pc-wellness { --pc-accent: #8a6a86; --pc-ink: #5a3f57; --pc-band: #efe6ee; }
+.pc-neutral  { --pc-accent: #8a7f6a; --pc-ink: #5a5142; --pc-band: #efeadf; }
 .browse-plan-card {
   background: #fff;
   border: 1px solid #e2e8f0;
