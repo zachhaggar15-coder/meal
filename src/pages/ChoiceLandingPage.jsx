@@ -197,7 +197,7 @@ function buildSupermarketConfig(slug) {
       key: goal.value,
       label: goal.label,
       heading: `${choice.shortLabel || choice.label} ${goal.label} plan`,
-      description: `Start with a ${goal.defaultCalories.toLocaleString('en-GB')} kcal ${goal.label.toLowerCase()} plan, then adjust calories if needed.`,
+      description: `Start with a ${goal.label.toLowerCase()} plan, then adjust calories if needed.`,
       defaultCalories: goal.defaultCalories,
       filters: { supermarket: choice.value, goal: goal.value },
       changeUrl: buildBrowsePlanUrl({ supermarket: choice.value, goal: goal.value }),
@@ -266,7 +266,7 @@ function buildCaloriesConfig(value) {
     cards: GOAL_CHOOSER_ITEMS.map(goal => ({
       key: goal.value,
       label: goal.label,
-      heading: `${choice.label} ${goal.label} plan`,
+      heading: `${goal.label} plan`,
       description: `Find a ${goal.label.toLowerCase()} plan at this calorie target, then choose the store that fits your weekly shop.`,
       defaultCalories: choice.calories,
       filters: { calories: choice.calories, goal: goal.value },

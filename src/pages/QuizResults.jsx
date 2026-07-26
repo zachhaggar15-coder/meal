@@ -5,6 +5,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { track } from '../utils/analytics.js';
+import { planCardTitle } from '../utils/planCardMeta.js';
 import { QUIZ_LAST_ANSWERS_KEY } from '../utils/quizStorage.js';
 
 const EFFORT_LABELS = {
@@ -128,7 +129,7 @@ export default function QuizResults() {
         <div className="result-card result-card--best">
           <div className="result-card-badge result-card-badge--best">{best.matchLabel}</div>
           <div className="result-card-score">{best.score}% match</div>
-          <h2 className="result-card-title">{best.title}</h2>
+          <h2 className="result-card-title">{planCardTitle(best.title)}</h2>
           <p className="result-card-reason">{best.matchReason}</p>
           <CompromiseNote compromises={best.compromises} />
 
@@ -157,7 +158,7 @@ export default function QuizResults() {
           <div className="result-card result-card--alt" key={match.slug}>
             <div className="result-card-badge">{match.matchLabel}</div>
             <div className="result-card-score">{match.score}% match</div>
-            <h2 className="result-card-title result-card-title--sm">{match.title}</h2>
+            <h2 className="result-card-title result-card-title--sm">{planCardTitle(match.title)}</h2>
             <p className="result-card-reason">{match.matchReason}</p>
             <CompromiseNote compromises={match.compromises} />
 

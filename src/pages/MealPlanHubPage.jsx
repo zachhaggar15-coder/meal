@@ -37,14 +37,6 @@ const MARKET_LABEL = {
   any: 'Generic UK supermarket',
 };
 
-const EFFORT_LABEL = {
-  minimal: 'Minimal prep',
-  low: 'Low effort',
-  standard: 'Standard prep',
-  batch: 'Batch cook',
-  'high-variety': 'High variety',
-};
-
 const DEFAULT_SUPPORTING_GUIDES = [
   { label: 'Low calorie foods UK', to: '/blog/best-low-calorie-foods-uk' },
   { label: 'High protein snacks UK', to: '/blog/high-protein-snacks-uk' },
@@ -293,10 +285,6 @@ export default function MealPlanHubPage() {
       <Footer />
     </>
   );
-}
-
-function cap(value) {
-  return value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
 }
 
 function getHubPlanMatches(hub) {

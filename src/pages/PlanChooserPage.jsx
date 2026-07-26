@@ -10,6 +10,7 @@ import {
   INDEXED_SUPERMARKET_CHOICES,
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
+import { planCardTitle } from '../utils/planCardMeta.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
@@ -121,7 +122,7 @@ export default function PlanChooserPage() {
                     {exactDefault ? 'Default' : 'Closest'}: {plan.calories.toLocaleString('en-GB')} kcal
                   </span>
                 </div>
-                <h2>{toTitleCase(plan.title)}</h2>
+                <h2>{toTitleCase(planCardTitle(plan.title))}</h2>
                 <p>{market.description}</p>
                 <div className="plan-chooser-meta">
                   <span>{plan.priceEstimate}/week estimate</span>

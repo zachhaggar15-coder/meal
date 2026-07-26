@@ -107,11 +107,6 @@ const MKT_LABEL = {
   any: 'Generic UK supermarket',
 };
 
-const EFFORT_LABEL = {
-  minimal: 'Minimal', low: 'Low', standard: 'Standard',
-  batch: 'Batch cook', 'high-variety': 'High variety',
-};
-
 const MACRO_SEARCH_TERMS = {
   'performance-protein': 'high protein high carb high carbohydrate 220g carbs 230g carbs 160g protein 170g protein performance protein muscle gain bodybuilding gym training fuel lean bulk',
   'high-carb-fuel': 'high carb high carbohydrate 220g carbs 250g carbs 280g carbs endurance running training fuel carb load performance',
@@ -497,10 +492,6 @@ function Select({ label, value, onChange, options }) {
       </select>
     </label>
   );
-}
-
-function cap(s) {
-  return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 }
 
 function readFilterParam(params, key, options) {

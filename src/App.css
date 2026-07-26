@@ -4527,6 +4527,11 @@ details[open] .faq-question::after { content: '▴'; }
   gap: 14px;
 }
 
+.browse-page .browse-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 14px;
+}
+
 /* ── Shared meal-plan card (PlanCard.jsx) ──────────────────────────────────
    Used by every browsable plan list: /browse, supermarket hubs and combo
    hubs. Self-contained under the .plan-card namespace so it does not inherit
@@ -4536,6 +4541,7 @@ details[open] .faq-question::after { content: '▴'; }
   border: 1px solid var(--editorial-line, #e4ded1);
   border-radius: 12px;
   overflow: hidden;
+  padding: 0;
   text-decoration: none;
   color: var(--editorial-ink, #17130d);
   display: flex;
@@ -4638,7 +4644,7 @@ details[open] .faq-question::after { content: '▴'; }
   flex-direction: column;
   gap: 3px;
 }
-.pc-title {
+.plan-card .pc-title {
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 400;
   font-size: 1rem;
@@ -4988,6 +4994,11 @@ details[open] .faq-question::after { content: '▴'; }
 .meal-hub-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+  gap: 14px;
+}
+
+.meal-hub-plans .meal-hub-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 245px), 1fr));
   gap: 14px;
 }
 

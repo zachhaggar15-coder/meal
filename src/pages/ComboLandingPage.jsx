@@ -17,29 +17,6 @@ import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
-const MARKET_LABEL = {
-  aldi: 'Aldi',
-  lidl: 'Lidl',
-  tesco: 'Tesco',
-  asda: 'Asda',
-  sainsburys: "Sainsbury's",
-  morrisons: 'Morrisons',
-  iceland: 'Iceland',
-  waitrose: 'Waitrose',
-  ocado: 'Ocado',
-  'marks-spencer': 'M&S',
-  coop: 'Co-op',
-  any: 'Generic UK supermarket',
-};
-
-const EFFORT_LABEL = {
-  minimal: 'Minimal prep',
-  low: 'Low effort',
-  standard: 'Standard prep',
-  batch: 'Batch cook',
-  'high-variety': 'High variety',
-};
-
 export default function ComboLandingPage({ page }) {
   const matchingPlans = filterPlansForCombo(ALL_PLANS, page);
   const stats = comboStatLabels(page);
@@ -219,8 +196,4 @@ export default function ComboLandingPage({ page }) {
       </div>
     </>
   );
-}
-
-function cap(value) {
-  return value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
 }
