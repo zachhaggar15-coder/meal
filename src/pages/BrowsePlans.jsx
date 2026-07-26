@@ -239,12 +239,15 @@ export default function BrowsePlans() {
   ), [pageCount]);
   const canonicalPath = !hasActiveFilters ? buildBrowsePagePath(currentPage) : '/browse';
   const pageTitleSuffix = currentPage > 1 && !hasActiveFilters ? ` - Page ${currentPage}` : '';
+  const browseDescription = currentPage > 1 && !hasActiveFilters
+    ? `Page ${currentPage} of free UK diet plans by supermarket, calories, goal, diet, budget and effort, with printable shopping-list plans.`
+    : 'Browse free online diet plans for UK supermarkets, including 1500 calorie, high protein, vegetarian, muscle gain and printable shopping-list plans.';
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: `Browse ${PLAN_COUNT} UK meal plans${pageTitleSuffix}`,
-      description: 'Browse free UK meal plans by goal, supermarket, diet, calories, budget and effort.',
+      description: browseDescription,
       url: `https://www.mealprep.org.uk${canonicalPath}`,
       mainEntity: {
         '@type': 'ItemList',
@@ -280,7 +283,7 @@ export default function BrowsePlans() {
     <>
       <SEO
         title={`Free UK Diet Plans - Browse ${PLAN_COUNT} Meal Plans by Calories & Supermarket${pageTitleSuffix} | MealPrep.org.uk`}
-        description="Browse free online diet plans for UK supermarkets, including 1500 calorie, high protein, vegetarian, muscle gain and printable shopping-list plans."
+        description={browseDescription}
         canonical={`https://www.mealprep.org.uk${canonicalPath}`}
         jsonLd={jsonLd}
       />

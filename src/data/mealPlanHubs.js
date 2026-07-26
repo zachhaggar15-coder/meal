@@ -262,9 +262,22 @@ const CALORIE_AUTHORITY_HUBS = {
     supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.lowCalorieReadyMeals, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.printable],
   }),
   '1400-calorie': createCalorieHub({ calories: 1400, goal: 'Low calorie plan hub', bestFor: 'Smaller deficits' }),
+  '1550-calorie': createCalorieHub({
+    calories: 1550,
+    matchCalories: [1500, 1600],
+    goal: 'Low calorie plan hub',
+    bestFor: 'High-protein legacy plan alternatives',
+    relatedSlugs: ['1500-calorie', '1600-calorie', 'low-calorie', 'high-protein'],
+  }),
   '1600-calorie': createCalorieHub({ calories: 1600, goal: 'Low calorie plan hub', bestFor: 'Steady fat loss' }),
   '1800-calorie': createCalorieHub({ calories: 1800, goal: 'Moderate calorie plan hub', bestFor: 'Sustainable weight loss' }),
   '2000-calorie': createCalorieHub({ calories: 2000, goal: 'Balanced calorie plan hub', bestFor: 'Maintenance or active fat loss' }),
+  '2200-calorie': createCalorieHub({
+    calories: 2200,
+    goal: 'Active calorie plan hub',
+    bestFor: 'Body recomposition, training and active work',
+    relatedSlugs: ['2000-calorie', '2500-calorie', 'muscle-gain', 'high-protein'],
+  }),
   '2500-calorie': createCalorieHub({
     calories: 2500,
     goal: 'Higher calorie plan hub',
@@ -370,6 +383,14 @@ const GOAL_AUTHORITY_HUBS = {
     goals: ['cheap-student'],
     intro: 'Cheap student meal plans focus on low-cost UK supermarket staples, repeatable breakfasts, simple lunches and dinners that do not need a full kitchen of equipment.',
     bestFor: 'Student budget plans',
+  }),
+  'low-effort': createGoalHub({
+    key: 'low-effort',
+    titleLabel: 'Low Effort',
+    goals: ['low-effort'],
+    intro: 'Low effort meal plans are built for weeks when cooking time, equipment or energy is limited. These plans favour repeatable breakfasts, simple lunches, freezer-friendly dinners and supermarket ingredients that reduce prep decisions.',
+    bestFor: 'Fast prep and simple cooking',
+    relatedSlugs: ['busy-professional', '1800-calorie', 'meal-plans-with-shopping-list', 'free-online-diet-plans-uk'],
   }),
   'budget-bodybuilding': createGoalHub({
     key: 'budget-bodybuilding',

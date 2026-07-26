@@ -1809,7 +1809,7 @@ export const blogPostsData = {
       },
     ],
     related: [
-      { slug: 'aldi-menopause-nutrition-1600', label: 'Menopause Nutrition Meal Plan', type: 'plan' },
+      { slug: 'aldi-menopause-1800', label: 'Menopause Nutrition Meal Plan', type: 'plan' },
       { slug: 'anti-inflammatory-diet-meal-plan-uk', label: 'Anti-Inflammatory Diet UK', type: 'blog' },
       { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
       { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
@@ -1890,7 +1890,7 @@ export const blogPostsData = {
       },
     ],
     related: [
-      { slug: 'aldi-endurance-athlete-2000', label: 'Endurance Athlete Meal Plan', type: 'plan' },
+      { slug: 'aldi-endurance-2000', label: 'Endurance Athlete Meal Plan', type: 'plan' },
       { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting', type: 'blog' },
       { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
@@ -2297,7 +2297,7 @@ export const blogPostsData = {
       },
     ],
     related: [
-      { slug: 'aldi-cutting-1500', label: 'Cutting Phase Meal Plan', type: 'plan' },
+      { slug: 'aldi-cutting-1400', label: 'Cutting Phase Meal Plan', type: 'plan' },
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
       { slug: 'how-to-lose-belly-fat-uk', label: 'How to Lose Belly Fat UK', type: 'blog' },
       { slug: '1500-vs-1800-vs-2000-calories', label: '1500 vs 1800 vs 2000 Calories', type: 'blog' },

@@ -8,6 +8,36 @@
       "permanent": true
     },
     {
+      "source": "/stickers",
+      "destination": "/glass-meal-prep-containers",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plan/busy-professional-meal-plan",
+      "destination": "/meal-plan/busy-professional-meal-plan-uk",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plan/low-effort-meal-plan",
+      "destination": "/meal-plan/low-effort-meal-plan-uk",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-cutting-1500",
+      "destination": "/plans/aldi-cutting-1400",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-endurance-athlete-2000",
+      "destination": "/plans/aldi-endurance-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-menopause-nutrition-1600",
+      "destination": "/plans/aldi-menopause-1800",
+      "permanent": true
+    },
+    {
       "source": "/plans/aldi-budget-bodybuilding-2000-tinned-and-frozen-pescatarian-v3",
       "destination": "/plans/aldi-budget-bodybuilding-2000-training-day-pescatarian-v3",
       "permanent": true

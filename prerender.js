@@ -206,6 +206,7 @@ const ROUTES = uniqueRoutes([
   '/mealprep-plus',
   '/about',
   '/contact',
+  '/feedback',
   '/privacy',
   '/terms',
   '/404',
@@ -219,6 +220,8 @@ const ROUTES = uniqueRoutes([
   ...MEAL_PLAN_HUB_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...COMBO_LANDING_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...CONTAINER_GUIDE_SLUGS.map(slug => `/meal-prep-containers/${slug}`),
+  '/glass-meal-prep-containers',
+  '/stickers',
   // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),
   // Legacy meal plan pages (preserved for SEO)
@@ -229,16 +232,15 @@ const ROUTES = uniqueRoutes([
   ...SEO_PRIORITY_ROUTES,
 ]);
 
-const NOINDEX_ROUTES = new Set(['/quiz/results', '/404', '/admin']);
+const NOINDEX_ROUTES = new Set(['/quiz/results', '/404', '/admin', '/feedback']);
 
-// Chooser pages canonicalise to their /meal-plans/ hub where one exists (see
-// ChoiceLandingPage). A URL that canonicalises elsewhere must not also be
-// advertised in the sitemap — that contradicts its own canonical tag. Those
-// choosers still prerender and work; they are just kept out of the sitemap so
-// only canonical URLs are listed. Hub-less choosers stay self-canonical and
-// remain included.
+// A URL that canonicalises elsewhere must not also be advertised in the
+// sitemap. Google treats sitemap URLs as canonical hints, so keep only the
+// preferred URLs listed there.
 const HUB_SLUG_SET = new Set(MEAL_PLAN_HUB_SLUGS);
-const CANONICALISED_CHOOSERS = new Set([
+const NON_CANONICAL_SITEMAP_ROUTES = new Set([
+  '/stickers',
+  '/choose-plan/weight-loss',
   ...SUPERMARKET_CHOOSER_SLUGS
     .filter(slug => HUB_SLUG_SET.has(slug))
     .map(slug => `/choose-supermarket/${slug}`),
@@ -251,7 +253,7 @@ const CANONICALISED_CHOOSERS = new Set([
 ]);
 
 const SITEMAP_ROUTES = ROUTES.filter(route => (
-  !NOINDEX_ROUTES.has(route) && !CANONICALISED_CHOOSERS.has(route)
+  !NOINDEX_ROUTES.has(route) && !NON_CANONICAL_SITEMAP_ROUTES.has(route)
 ));
 
 async function prerender() {
@@ -321,6 +323,7 @@ async function prerender() {
     if (route === '/blog') return ['0.8', 'weekly'];
     if (route === '/questions') return ['0.8', 'weekly'];
     if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
+    if (route === '/glass-meal-prep-containers') return ['0.8', 'weekly'];
     if (SEO_PRIORITY_ROUTE_SET.has(route)) return ['0.9', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];

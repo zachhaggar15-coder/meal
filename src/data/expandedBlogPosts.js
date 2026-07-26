@@ -1584,7 +1584,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'low-effort-meal-plan', label: 'Low Effort Meal Plan', type: 'meal-plan' },
+      { slug: 'low-effort-meal-plan-uk', label: 'Low Effort Meal Plan', type: 'meal-plan' },
       { slug: 'one-pan-meal-prep-uk', label: 'One Pan Meal Prep UK', type: 'blog' },
       ...mealPrepRelated,
     ],
@@ -2510,7 +2510,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'busy-professional-meal-plan', label: 'Busy Professional Meal Plan', type: 'meal-plan' },
+      { slug: 'busy-professional-meal-plan-uk', label: 'Busy Professional Meal Plan', type: 'meal-plan' },
       { slug: 'meal-prep-without-a-microwave-uk', label: 'Meal Prep Without a Microwave', type: 'blog' },
       { slug: 'high-protein-lunches-for-work-uk', label: 'High Protein Work Lunches', type: 'blog' },
     ],
