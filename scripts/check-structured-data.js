@@ -2,7 +2,8 @@
 //
 // Search Console flags Product snippets as invalid when a Product item lacks
 // offers, review, or aggregateRating. This scans the prerendered HTML so a
-// duplicate or incomplete Product node cannot slip into production.
+// duplicate, incomplete, or Google-incompatible Product node cannot slip into
+// production.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,11 +34,14 @@ for (const file of htmlFiles) {
   productCount += products.length;
 
   for (const { value, jsonPath } of products) {
-    if (value.offers || value.review || value.aggregateRating) continue;
+    const eligibility = productRichResultEligibility(value);
+    if (eligibility.ok) continue;
+
     errors.push({
       route,
       name: value.name || value['@id'] || '(unnamed Product)',
       jsonPath,
+      reason: eligibility.reason,
       keys: Object.keys(value).sort().join(', '),
     });
   }
@@ -47,10 +51,13 @@ if (errors.length) {
   console.error(`\ncheck-structured-data FAILED with ${errors.length} invalid Product item(s):`);
   for (const error of errors.slice(0, 40)) {
     console.error(`  - ${error.route}: ${error.name}`);
-    console.error(`    ${error.jsonPath} keys: ${error.keys}`);
+    console.error(`    ${error.jsonPath} ${error.reason}; keys: ${error.keys}`);
   }
   if (errors.length > 40) console.error(`  ...and ${errors.length - 40} more`);
-  console.error('\nEach Product JSON-LD item must include offers, review, or aggregateRating.\n');
+  console.error(
+    '\nEach Product JSON-LD item must include offers, aggregateRating, or ' +
+    'a Google-compatible review with a Person or Team author.\n',
+  );
   process.exit(1);
 }
 
@@ -123,4 +130,38 @@ function collectProducts(value, products = [], jsonPath = '$') {
   }
 
   return products;
+}
+
+function productRichResultEligibility(product) {
+  if (product.offers) return { ok: true };
+  if (product.aggregateRating) return { ok: true };
+
+  const reviews = toArray(product.review).filter(Boolean);
+  if (!reviews.length) {
+    return { ok: false, reason: 'missing offers, aggregateRating, or review' };
+  }
+
+  if (reviews.some(hasGoogleCompatibleReviewAuthor)) return { ok: true };
+
+  return {
+    ok: false,
+    reason: 'review author must be a Person or Team with a name',
+  };
+}
+
+function hasGoogleCompatibleReviewAuthor(review) {
+  return toArray(review.author).some(isGoogleCompatibleReviewAuthor);
+}
+
+function isGoogleCompatibleReviewAuthor(author) {
+  if (!author || typeof author !== 'object') return false;
+
+  const types = toArray(author['@type']);
+  const hasAllowedType = types.includes('Person') || types.includes('Team');
+  return hasAllowedType && typeof author.name === 'string' && author.name.trim().length > 0;
+}
+
+function toArray(value) {
+  if (Array.isArray(value)) return value;
+  return value ? [value] : [];
 }

@@ -14,6 +14,7 @@ import {
   getContainerProduct,
   getContainerProducts,
 } from '../data/containerProducts.js';
+import { SITE_AUTHOR_NAME, SITE_AUTHOR_URL } from '../constants/site.js';
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -317,9 +318,11 @@ function buildProductReviewJsonLd(product, canonical) {
     url: product.href,
     review: {
       '@type': 'Review',
+      name: `${product.shortName || product.name} review`,
       author: {
-        '@type': 'Organization',
-        name: 'MealPrep.org.uk',
+        '@type': 'Team',
+        name: SITE_AUTHOR_NAME,
+        url: SITE_AUTHOR_URL,
       },
       reviewBody: `${product.summary} ${product.buyIf} ${product.avoidIf}`,
       positiveNotes: {
