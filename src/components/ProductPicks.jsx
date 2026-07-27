@@ -73,33 +73,32 @@ export default function ProductPicks({
       <div className="product-picks-grid">
         {products.map(product => (
           <article key={product.id} className="product-pick-card">
-            <span className="product-pick-category">{product.category}</span>
+            <div className="product-pick-top">
+              <span className="product-pick-category">{product.category}</span>
+              <span className="product-pick-price">{product.priceBand}</span>
+            </div>
             <h3>{product.name}</h3>
             <p className="product-pick-summary">{product.summary}</p>
-            <p className="product-pick-verdict"><strong>Best for:</strong> {product.bestFor}</p>
-            <dl className="affiliate-product-facts">
-              <div>
-                <dt>Price band</dt>
-                <dd>{product.priceBand}</dd>
-              </div>
-              <div>
-                <dt>Type</dt>
-                <dd>{product.category}</dd>
-              </div>
-            </dl>
+            <p className="product-pick-verdict">
+              <strong>Best for</strong>
+              {product.bestFor}
+            </p>
             {product.watchOut && (
-              <p className="affiliate-watchout"><strong>Watch out:</strong> {product.watchOut}</p>
+              <p className="product-pick-note">
+                <strong>Good to know</strong>
+                {product.watchOut}
+              </p>
             )}
             <a
               href={product.href}
               target="_blank"
               rel="noopener noreferrer nofollow sponsored"
-              className="btn-primary affiliate-product-cta"
+              className="btn-primary product-pick-cta"
               data-event="mealprep_product_click"
               data-source-page={sourcePage}
               data-offer={product.name}
             >
-              See Amazon price
+              See price on Amazon &rarr;
             </a>
           </article>
         ))}

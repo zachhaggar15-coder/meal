@@ -12503,6 +12503,103 @@ textarea {
   margin-top: auto;
 }
 
+/* Product pick cards (ProductPicks.jsx), redesigned. The old two-fact <dl>
+   sat in a 4-column grid and crushed values into one-word-per-line slivers;
+   it is gone. This is a clean, conversion-first affiliate card: category and
+   price up top, a short verdict, an honest note, and a full-width Amazon CTA
+   pinned to the bottom so every card's money button lines up. */
+.product-picks-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.product-pick-card {
+  background: var(--editorial-paper, #fffdf8);
+  border: 1px solid var(--editorial-line, #e4ded1);
+  border-radius: 12px;
+  padding: 18px;
+  gap: 10px;
+  transition: border-color 0.16s, box-shadow 0.16s, transform 0.16s;
+}
+.product-pick-card:hover {
+  border-color: #d6cebb;
+  box-shadow: 0 8px 22px rgba(23, 19, 13, 0.08);
+  transform: translateY(-2px);
+}
+.product-pick-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+/* Plain uppercase eyebrow rather than a pill, so a long category label
+   ("Insulated lunch bag") wraps as text instead of a clunky two-line pill. */
+.product-pick-category {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  background: none;
+  border-radius: 0;
+  color: var(--editorial-muted, #777064);
+}
+.product-pick-price {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #3f5636;
+  background: #e3ecdc;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.product-pick-card h3 {
+  margin: 4px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 1.12rem;
+  line-height: 1.2;
+  color: var(--editorial-ink, #17130d);
+}
+.product-pick-summary {
+  margin: 0;
+  color: var(--editorial-muted, #777064);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.product-pick-verdict {
+  margin: 2px 0 0;
+  padding: 1px 0 1px 12px;
+  background: none;
+  border: 0;
+  border-left: 3px solid #6f8a5f;
+  border-radius: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--editorial-ink, #17130d);
+}
+.product-pick-note {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--editorial-muted, #777064);
+}
+.product-pick-verdict strong,
+.product-pick-note strong {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--editorial-muted, #777064);
+  margin-bottom: 2px;
+}
+.product-pick-note strong {
+  color: #8a5a1e;
+}
+.product-pick-card .product-pick-cta {
+  margin-top: auto;
+  width: 100%;
+  text-align: center;
+}
+
 .content-page .container-direct-summary {
   color: var(--editorial-muted, #686a57);
   font-size: 0.88rem;
