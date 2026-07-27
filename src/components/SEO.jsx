@@ -42,6 +42,7 @@ export default function SEO({
       <meta name="robots" content={robots} />
       <meta name="application-name" content={SITE_NAME} />
       <meta name="theme-color" content="#2f855a" />
+      <meta name="google-adsense-account" content="ca-pub-7917111630766281" />
       <link rel="canonical" href={url} />
 
       {/* Open Graph */}
