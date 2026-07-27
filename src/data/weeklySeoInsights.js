@@ -2,15 +2,21 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-07-20T09:39:24.797Z",
+  "generatedAt": "2026-07-27T10:13:15.757Z",
   "range": {
     "current": {
-      "startDate": "2026-06-20",
-      "endDate": "2026-07-17"
+      "startDate": "2026-06-27",
+      "endDate": "2026-07-24"
     }
   },
   "source": "google-analytics-and-search-console",
   "trendingLinks": [
+    {
+      "to": "/meal-plans/1400-calorie",
+      "label": "1,400 Calorie Meal Plans UK",
+      "description": "Browse related plans, shopping-list ideas and UK supermarket options.",
+      "category": "Meal plans"
+    },
     {
       "to": "/choose-calories/1500",
       "label": "1,500 kcal meal plans",
@@ -33,12 +39,6 @@ export const WEEKLY_SEO_INSIGHTS = {
       "to": "/blog/1400-calorie-meal-plan-uk",
       "label": "1400 Calorie Meal Plan UK",
       "description": "A practical guide for planning, shopping or prepping meals in the UK.",
-      "category": "Guide"
-    },
-    {
-      "to": "/meal-plans/1500-calorie",
-      "label": "1500 calorie",
-      "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
       "category": "Guide"
     },
     {
