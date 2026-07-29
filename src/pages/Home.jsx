@@ -277,7 +277,7 @@ export default function Home() {
         jsonLd={homeJsonLd}
       />
 
-      <div className="page">
+      <div className="page home-page">
 
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <header className="home-hero">
