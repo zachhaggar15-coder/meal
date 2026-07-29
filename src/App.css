@@ -8646,6 +8646,54 @@ body {
   margin-bottom: 44px;
 }
 
+.quiz-shell-header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 880px;
+  width: 100%;
+}
+
+.quiz-shell-sub {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 68ch;
+  text-align: center;
+}
+
+.quiz-shell-features {
+  align-items: stretch;
+  gap: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 760px;
+  width: 100%;
+}
+
+.quiz-shell-features li {
+  align-items: flex-start;
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+  line-height: 1.45;
+  padding-left: 0;
+  text-align: center;
+}
+
+.quiz-shell-features li::before {
+  flex: 0 0 auto;
+  position: static;
+}
+
+.quiz-header {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 880px;
+  width: 100%;
+}
+
 .quiz-progress-bar,
 .progress-bar-wrap {
   background: transparent;
@@ -13348,6 +13396,8 @@ textarea {
 }
 
 .plan-household-control {
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
   padding: 0;
 }
 
@@ -13357,7 +13407,8 @@ textarea {
   display: flex;
   justify-content: space-between;
   list-style: none;
-  padding: 14px 16px;
+  min-height: 88px;
+  padding: 18px 20px;
 }
 
 .plan-household-summary::-webkit-details-marker {
@@ -13377,21 +13428,66 @@ textarea {
 .plan-household-summary div {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .plan-household-summary strong {
   color: var(--editorial-ink);
+  font-size: 1rem;
 }
 
 .plan-household-summary span {
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 .plan-household-content {
   border-top: 1px solid var(--border);
-  padding: 14px 16px 16px;
+  display: grid;
+  gap: 18px;
+  padding: 18px 20px 22px;
+}
+
+.plan-household-content .plan-household-modes {
+  gap: 10px;
+}
+
+.plan-household-content .plan-household-mode {
+  min-height: 48px;
+}
+
+.plan-household-content .plan-servings-options {
+  gap: 8px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: 100%;
+}
+
+.plan-household-content .plan-servings-option {
+  height: 44px;
+  justify-self: center;
+  width: 44px;
+}
+
+@media (max-width: 480px) {
+  .plan-household-summary {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .plan-household-content {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .plan-household-content .plan-household-modes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .plan-household-content .plan-servings-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 10px;
+  }
 }
 
 .plan-shopping-actions {
