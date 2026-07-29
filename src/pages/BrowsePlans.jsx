@@ -323,18 +323,21 @@ export default function BrowsePlans() {
         </div>
 
         {/* Plan grid */}
-        {shown.length === 0 ? (
-          <div className="browse-empty">
-            <p>No plans match your filters.</p>
-            <button onClick={resetFilters} className="btn-secondary" type="button">Clear all filters</button>
-          </div>
-        ) : (
-          <div className="browse-grid">
-            {shown.map(plan => (
-              <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
-            ))}
-          </div>
-        )}
+        <section aria-labelledby="browse-results-heading">
+          <h2 id="browse-results-heading" className="sr-only">Meal plan results</h2>
+          {shown.length === 0 ? (
+            <div className="browse-empty">
+              <p>No plans match your filters.</p>
+              <button onClick={resetFilters} className="btn-secondary" type="button">Clear all filters</button>
+            </div>
+          ) : (
+            <div className="browse-grid">
+              {shown.map(plan => (
+                <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
+              ))}
+            </div>
+          )}
+        </section>
 
         {/* Pagination */}
         {pageCount > 1 && (

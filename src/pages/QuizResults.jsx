@@ -7,7 +7,11 @@ import { getTopMatches } from '../utils/quizScorer.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { track } from '../utils/analytics.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
-import { QUIZ_LAST_ANSWERS_KEY } from '../utils/quizStorage.js';
+import {
+  QUIZ_LAST_ANSWERS_KEY,
+  decodeQuizAnswers,
+  normaliseQuizAnswers,
+} from '../utils/quizStorage.js';
 
 const EFFORT_LABELS = {
   'minimal':      'Minimal prep',
@@ -73,15 +77,33 @@ export default function QuizResults() {
   const [params] = useSearchParams();
   const paramString = params.toString();
 
-  const initialAnswers = useMemo(() => (
-    readAnswersFromParams(new URLSearchParams(paramString)) || readSavedAnswers() || {}
+  const parsedParams = useMemo(() => (
+    readAnswersFromParams(new URLSearchParams(paramString))
   ), [paramString]);
-
-  const [answers, setAnswers] = useState(initialAnswers);
+  const [answers, setAnswers] = useState(parsedParams.answers || {});
+  const [recoveryMessage, setRecoveryMessage] = useState('');
 
   useEffect(() => {
-    setAnswers(initialAnswers);
-  }, [initialAnswers]);
+    if (parsedParams.answers) {
+      setAnswers(parsedParams.answers);
+      setRecoveryMessage('');
+      return;
+    }
+
+    const saved = readSavedAnswers();
+    setAnswers(saved || {});
+    if (parsedParams.invalid) {
+      setRecoveryMessage(saved
+        ? 'That quiz link could not be read, so we restored your latest choices from this device.'
+        : 'That quiz link could not be read, so these are broad suggestions. Retake the quiz for a personal match.');
+      track.quizInvalidStateRecovered({
+        recovery_source: saved ? 'saved_answers' : 'broad_matches',
+        page_type: 'quiz_results',
+      });
+    } else {
+      setRecoveryMessage(saved ? 'Your latest quiz choices were restored from this device.' : '');
+    }
+  }, [parsedParams]);
 
   const matches = useMemo(() => getTopMatches(answers, 3), [answers]);
   const [best] = matches;
@@ -138,15 +160,23 @@ export default function QuizResults() {
           </p>
         </div>
 
+        {recoveryMessage && (
+          <p className="quiz-results-recovery" role="status">
+            {recoveryMessage}{' '}
+            {parsedParams.invalid && <Link to="/quiz">Retake the quiz</Link>}
+          </p>
+        )}
+
         {/* Best match — featured */}
         <QuizAdjustments answers={answers} onChange={updateAnswer} />
 
         <div className="result-card result-card--best">
           <div className="result-card-badge result-card-badge--best">{best.matchLabel}</div>
-          <div className="result-card-score">{best.score}% match</div>
+          <div className="result-card-score">{best.matchSummary}</div>
           <h2 className="result-card-title">{planCardTitle(best.title)}</h2>
           <p className="result-card-reason">{best.matchReason}</p>
           <CompromiseNote compromises={best.compromises} />
+          <MatchDetails details={best.matchDetails} />
 
           <div className="result-card-meta">
             <span className="result-meta-pill">{MKT_LABELS[best.supermarket] || best.supermarket}</span>
@@ -189,10 +219,14 @@ export default function QuizResults() {
         {rest.map(match => (
           <div className="result-card result-card--alt" key={match.slug}>
             <div className="result-card-badge">{match.matchLabel}</div>
-            <div className="result-card-score">{match.score}% match</div>
+            <div className="result-card-score">{match.matchSummary}</div>
             <h2 className="result-card-title result-card-title--sm">{planCardTitle(match.title)}</h2>
             <p className="result-card-reason">{match.matchReason}</p>
             <CompromiseNote compromises={match.compromises} />
+            <details className="result-match-details result-match-details--collapsed">
+              <summary>Why this plan matched</summary>
+              <MatchDetails details={match.matchDetails} />
+            </details>
 
             <div className="result-card-meta">
               <span className="result-meta-pill">{MKT_LABELS[match.supermarket] || match.supermarket}</span>
@@ -273,6 +307,23 @@ function CompromiseNote({ compromises }) {
   );
 }
 
+function MatchDetails({ details }) {
+  if (!details?.length) return null;
+
+  const symbols = { exact: '✓', close: '~', tradeoff: '!' };
+  return (
+    <ul className="result-match-breakdown" aria-label="How this plan fits your choices">
+      {details.map(item => (
+        <li className={`result-match-breakdown__${item.status}`} key={item.type}>
+          <span className="result-match-symbol" aria-hidden="true">{symbols[item.status]}</span>
+          <strong>{item.label}</strong>
+          <span>{item.text}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function MacroBars({ macros }) {
   const maxByMacro = { protein: 220, carbs: 320, fats: 120, fibre: 50 };
 
@@ -300,19 +351,20 @@ function MacroBars({ macros }) {
 }
 
 function readAnswersFromParams(params) {
-  try {
-    const q = params.get('q');
-    return q ? JSON.parse(atob(q)) : null;
-  } catch {
-    return null;
-  }
+  const q = params.get('q');
+  if (!q) return { answers: null, invalid: false };
+  const answers = decodeQuizAnswers(q);
+  return Object.keys(answers || {}).length
+    ? { answers, invalid: false }
+    : { answers: null, invalid: true };
 }
 
 function readSavedAnswers() {
   if (typeof window === 'undefined') return null;
   try {
     const saved = JSON.parse(window.localStorage.getItem(QUIZ_LAST_ANSWERS_KEY) || 'null');
-    return saved?.answers || null;
+    const answers = normaliseQuizAnswers(saved?.answers);
+    return Object.keys(answers).length ? answers : null;
   } catch {
     return null;
   }

@@ -3,6 +3,7 @@ const ENV = import.meta.env || {};
 const GA_MEASUREMENT_ID = ENV.VITE_GA_MEASUREMENT_ID || DEFAULT_GA_MEASUREMENT_ID;
 const PLAUSIBLE_DOMAIN = ENV.VITE_PLAUSIBLE_DOMAIN || '';
 const PLAUSIBLE_SRC = ENV.VITE_PLAUSIBLE_SRC || 'https://plausible.io/js/script.js';
+const AHREFS_ANALYTICS_KEY = ENV.VITE_AHREFS_ANALYTICS_KEY || 'nKW7PN0isHHrBZ4aqU8Kcg';
 const FIRST_PARTY_ANALYTICS_ENABLED = ENV.VITE_BEHAVIOR_ANALYTICS !== 'false';
 const ANALYTICS_REQUIRE_CONSENT = ENV.VITE_ANALYTICS_REQUIRE_CONSENT !== 'false';
 const CONSENT_KEY = 'mealprep_analytics_consent';
@@ -39,6 +40,15 @@ export function initAnalytics() {
     script.src = PLAUSIBLE_SRC;
     script.dataset.domain = PLAUSIBLE_DOMAIN;
     script.dataset.analyticsProvider = 'plausible';
+    document.head.appendChild(script);
+  }
+
+  if (AHREFS_ANALYTICS_KEY && !document.querySelector('[data-analytics-provider="ahrefs"]')) {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://analytics.ahrefs.com/analytics.js';
+    script.dataset.key = AHREFS_ANALYTICS_KEY;
+    script.dataset.analyticsProvider = 'ahrefs';
     document.head.appendChild(script);
   }
 }
@@ -189,6 +199,20 @@ export const track = {
   mealEdited: (props) => trackEvent('meal_edited', props),
   relatedPlanClicked: (props) => trackEvent('related_plan_clicked', props),
   planPrimaryCtaClicked: (props) => trackEvent('plan_primary_cta_clicked', props),
+  planSaved: (props) => trackEvent('plan_saved', props),
+  planUnsaved: (props) => trackEvent('plan_unsaved', props),
+  planReopened: (props) => trackEvent('plan_reopened', props),
+  savedPlansViewed: (props) => trackEventOnce('saved-plans', 'saved_plans_viewed', props, 5000),
+  savedPlanReopened: (props) => trackEvent('saved_plan_reopened', props),
+  recentPlanReopened: (props) => trackEvent('recent_plan_reopened', props),
+  shoppingItemToggled: (props) => trackEvent('shopping_item_toggled', props),
+  shoppingListResumed: (props) => trackEventOnce(
+    props?.plan_slug || 'shopping-list',
+    'shopping_list_resumed',
+    props,
+    5000,
+  ),
+  shoppingListCleared: (props) => trackEvent('shopping_list_cleared', props),
   readyMadePlanClicked: (slug) => trackEvent('ready_made_plan_clicked', { slug }),
   emailPlanStarted: (props) => trackEvent('email_plan_started', props),
   emailPlanCompleted: (props) => trackEvent('email_plan_completed', props),
@@ -214,6 +238,12 @@ export const track = {
     5000,
   ),
   quizAdjusted: (field) => trackEvent('quiz_results_adjusted', { field }),
+  quizInvalidStateRecovered: (props) => trackEventOnce(
+    'quiz-invalid-state',
+    'quiz_invalid_state_recovered',
+    props,
+    5000,
+  ),
   containerRecommenderStarted: (props) => trackEventOnce(
     props?.source_page || 'container-recommender',
     'container_recommender_started',

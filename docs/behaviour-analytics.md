@@ -13,8 +13,12 @@ This project now has a first-party analytics layer for understanding real visito
 - Site search submissions, search result clicks, and browse filter changes.
 - Coarse device category, viewport size, referrer host/source, UTM fields, language, and timezone.
 - Exploration score, calculated in the admin API from pages visited, categories explored, searches, clicks, scroll depth, and sections seen.
+- Coarse return-visit, local plan-save, saved/recent reopen and tickable shopping-list events.
 
 The browser does not send email addresses, payment data, IP addresses, or typed meal-plan form answers to the behaviour analytics endpoint.
+
+GA4, optional Plausible and Ahrefs scripts are created only after consent. They
+are not present in the initial HTML. Do Not Track is treated as denied.
 
 ## Setup
 
@@ -37,6 +41,7 @@ The browser does not send email addresses, payment data, IP addresses, or typed 
    ```text
    VITE_BEHAVIOR_ANALYTICS=true
    VITE_ANALYTICS_REQUIRE_CONSENT=true
+   VITE_AHREFS_ANALYTICS_KEY=...
    ```
 
    Keep `VITE_ANALYTICS_REQUIRE_CONSENT=true` in production unless another compliant consent system controls analytics before this app loads.
@@ -54,6 +59,8 @@ The browser does not send email addresses, payment data, IP addresses, or typed 
    - Scroll depth by page.
    - Session journeys.
    - Exploration beyond entry intent.
+   - Product Funnel stages for quiz, plan use, shopping, save/share, retention and commercial intent.
+   - Return visits, saved plans and shopping-list use in the overview.
 4. Use the toolbar buttons:
    - **Export event log** for raw analytics events.
    - **Export sessions** for session-level context.
@@ -73,3 +80,12 @@ Use `vercel dev` rather than plain Vite if you want `/api/analytics` and `/api/a
 3. Open `/admin`, enter the admin token, and press **Refresh**.
 
 If the dashboard says analytics tables are not available, run the Supabase migration and refresh again.
+
+## Interpretation
+
+The funnel is multi-entry: an organic visitor can land directly on a plan and use
+the shopping list without a quiz. Compare distinct sessions within a source or
+entry-intent segment instead of treating every stage as a required predecessor.
+Return visits are recorded only after at least four hours away and are bucketed;
+cleared storage, consent denial and another device will not be recognised as the
+same visitor.

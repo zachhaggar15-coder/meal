@@ -8,6 +8,7 @@ import {
   QUIZ_DRAFT_KEY,
   QUIZ_DRAFT_MAX_AGE_MS,
   QUIZ_LAST_ANSWERS_KEY,
+  encodeQuizAnswers,
 } from '../utils/quizStorage.js';
 
 const STEPS = [
@@ -254,7 +255,7 @@ export default function Quiz() {
       page_type: 'quiz',
       cta_location: 'quiz_final_step',
     });
-    const encoded = btoa(JSON.stringify(finalAnswers));
+    const encoded = encodeQuizAnswers(finalAnswers);
     navigate(`/quiz/results?q=${encoded}`);
   }
 

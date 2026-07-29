@@ -9,6 +9,8 @@ import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
+import PlanSaveButton from '../components/PlanSaveButton.jsx';
+import TickableShoppingList from '../components/TickableShoppingList.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
@@ -17,6 +19,12 @@ import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { track } from '../utils/analytics.js';
+import {
+  buildPlanReference,
+  readPlanProgress,
+  recordPlanView,
+  writePlanProgress,
+} from '../utils/planRetention.js';
 import { buildPracticalRecipeSteps } from '../utils/recipeQuality.js';
 import { computeMealNutrition, splitIngredientText, sumNutrition } from '../utils/nutrition.js';
 import { toTitleCase } from '../utils/textFormatting.js';
@@ -116,10 +124,10 @@ export default function PlanPage() {
   const [editNote, setEditNote]            = useState('');
   const [originalPlan, setOriginalPlan]    = useState(null);
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
-  const [planCopyStatus, setPlanCopyStatus] = useState('');
   const [shareStatus, setShareStatus] = useState('');
   const [householdMode, setHouseholdMode] = useState('same');
   const [householdMembers, setHouseholdMembers] = useState(() => buildHouseholdPreset('same'));
+  const [progressRoute, setProgressRoute] = useState('');
   const sourcePlan = editedPlan || plan;
   const displayPlan = useMemo(() => (
     sourcePlan ? scalePlanForHousehold(sourcePlan, householdMembers) : null
@@ -132,6 +140,44 @@ export default function PlanPage() {
     protein_target: plan.macrosGrams?.protein,
     page_type: 'plan',
   }) : null, [plan]);
+  const planRoute = plan ? `/plans/${plan.slug}` : '';
+  const planReference = useMemo(() => plan ? buildPlanReference({
+    route: `/plans/${plan.slug}`,
+    slug: plan.slug,
+    title: plan.title,
+    supermarket: plan.supermarket,
+    goal: plan.goalLabel || plan.goal,
+    calories: plan.calories,
+    protein: plan.macrosGrams?.protein,
+    priceEstimate: plan.priceEstimate,
+  }) : null, [plan]);
+
+  useEffect(() => {
+    if (!planReference) return;
+    const progress = readPlanProgress(planReference.route);
+    if (progress?.activeDayIdx !== undefined) setActiveDayIdx(progress.activeDayIdx);
+    if (progress?.householdMode) setHouseholdMode(progress.householdMode);
+    if (progress?.householdMembers?.length) setHouseholdMembers(progress.householdMembers);
+    setProgressRoute(planReference.route);
+
+    const view = recordPlanView(planReference);
+    if (view.isReturn) {
+      track.planReopened({
+        ...planAnalytics,
+        visit_count: view.viewCount,
+        cta_location: 'direct_or_internal_return',
+      });
+    }
+  }, [planAnalytics, planReference]);
+
+  useEffect(() => {
+    if (!planRoute || progressRoute !== planRoute) return;
+    writePlanProgress(planRoute, {
+      activeDayIdx,
+      householdMode,
+      householdMembers,
+    });
+  }, [activeDayIdx, householdMembers, householdMode, planRoute, progressRoute]);
 
   useEffect(() => {
     if (!planAnalytics) return;
@@ -301,18 +347,6 @@ export default function PlanPage() {
     } catch {
       setShoppingCopyStatus('Copy failed');
       setTimeout(() => setShoppingCopyStatus(''), 2200);
-    }
-  }
-
-  async function copyPlanSummary() {
-    try {
-      await writeClipboard(formatPlanShareText(displayPlan, plan.seo.canonical));
-      setPlanCopyStatus('Copied');
-      track.planCopied({ ...planAnalytics, cta_location: 'plan_action_bar' });
-      setTimeout(() => setPlanCopyStatus(''), 1800);
-    } catch {
-      setPlanCopyStatus('Copy failed');
-      setTimeout(() => setPlanCopyStatus(''), 2200);
     }
   }
 
@@ -517,18 +551,16 @@ export default function PlanPage() {
           ? ' Calories and macros are estimated for each household member from their portion size.'
           : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
       </p>
-      <div className="shopping-list-grid">
-        {Object.entries(displayPlan.shoppingList).map(([cat, items]) =>
-          items.length > 0 ? (
-            <div className="shopping-cat" key={cat}>
-              <h3 className="shopping-cat-title">{catLabel(cat)}</h3>
-              <ul className="shopping-items">
-                {items.map((item, i) => <li key={i}>{item}</li>)}
-              </ul>
-            </div>
-          ) : null
-        )}
-      </div>
+      <TickableShoppingList
+        list={displayPlan.shoppingList}
+        planRoute={planRoute}
+        analyticsContext={planAnalytics}
+        gridClassName="shopping-list-grid"
+        groupClassName="shopping-cat"
+        groupHeadingClassName="shopping-cat-title"
+        listClassName="shopping-items"
+        groupLabel={catLabel}
+      />
     </section>
   );
 
@@ -578,10 +610,10 @@ export default function PlanPage() {
 
         <PlanActionBar
           plan={plan}
-          onCopyPlan={copyPlanSummary}
+          planReference={planReference}
+          analyticsContext={planAnalytics}
           onSharePlan={sharePlan}
           onPrintPlan={handlePrintPlan}
-          planCopyStatus={planCopyStatus}
           shareStatus={shareStatus}
         />
 
@@ -966,7 +998,14 @@ function _PlanQuickFacts({ plan }) {
   );
 }
 
-function PlanActionBar({ plan, onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, shareStatus }) {
+function PlanActionBar({
+  plan,
+  planReference,
+  analyticsContext,
+  onSharePlan,
+  onPrintPlan,
+  shareStatus,
+}) {
   const analyticsProps = {
     'data-plan-slug': plan.slug,
     'data-supermarket': plan.supermarket,
@@ -994,9 +1033,13 @@ function PlanActionBar({ plan, onCopyPlan, onSharePlan, onPrintPlan, planCopySta
       >
         Shopping list
       </a>
-      <button onClick={onCopyPlan} type="button">{planCopyStatus || 'Copy Summary'}</button>
+      <PlanSaveButton
+        plan={planReference}
+        analyticsContext={analyticsContext}
+        className="plan-action-primary"
+      />
       <button onClick={onPrintPlan} type="button">Print PDF</button>
-      <button className="plan-action-primary" onClick={onSharePlan} type="button">
+      <button onClick={onSharePlan} type="button">
         {shareStatus || 'Share'}
       </button>
     </section>
@@ -1626,28 +1669,6 @@ function formatShoppingList(plan) {
 
   const householdLines = formatHouseholdTextLines(plan);
   return `${plan.title || 'Meal plan'} shopping list\n${householdLines.join('\n')}\n\n${groups.join('\n\n')}`;
-}
-
-function formatPlanShareText(plan, url) {
-  const dayLines = (plan.plan || []).map(day => {
-    const meals = day.meals.map(meal => `${meal.type}: ${meal.name}`).join('; ');
-    if (plan.household?.hasMixedPortions) {
-      return `${day.day}: ${meals} (${day.totals.kcal} kcal full portion, ${formatCoreMacros(day.totals)} full portion, ${day.householdTotals.kcal} kcal household)`;
-    }
-    return `${day.day}: ${meals} (${day.totals.kcal} kcal, ${formatFullMacros(day.totals, ', ')} per person)`;
-  });
-
-  return [
-    plan.title,
-    ...formatHouseholdTextLines(plan),
-    plan.summary?.calorieRange,
-    plan.summary?.budgetRange ? `Budget: ${plan.summary.budgetRange}/week estimate total` : null,
-    '',
-    '7-day menu',
-    ...dayLines,
-    '',
-    `Open the plan: ${url}`,
-  ].filter(line => line !== null && line !== undefined).join('\n');
 }
 
 async function writeClipboard(text) {

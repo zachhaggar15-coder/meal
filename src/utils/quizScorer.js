@@ -283,6 +283,128 @@ function buildMatchReason(seed, answers, macrosGrams = null) {
   return `This plan ${parts.join(', ')}.`;
 }
 
+function buildMatchDetails(seed, answers, macrosGrams = null) {
+  const details = [];
+
+  if (answers.goal) {
+    const exact = seed.goal === answers.goal;
+    const related = (RELATED_GOALS[answers.goal] || []).includes(seed.goal);
+    details.push({
+      type: 'goal',
+      label: 'Goal',
+      status: exact ? 'exact' : (related ? 'close' : 'tradeoff'),
+      text: exact
+        ? `${GOAL_LABELS[seed.goal] || seed.goal} matches your goal.`
+        : related
+          ? `${GOAL_LABELS[seed.goal] || seed.goal} is a related goal.`
+          : `${GOAL_LABELS[seed.goal] || seed.goal} differs from your selected goal.`,
+    });
+  }
+
+  if (answers.diet) {
+    const unrestricted = answers.diet === 'standard';
+    const exact = seed.dietType === answers.diet;
+    details.push({
+      type: 'diet',
+      label: 'Diet',
+      status: unrestricted || exact ? 'exact' : 'tradeoff',
+      text: unrestricted
+        ? 'No dietary restriction was requested.'
+        : exact
+          ? `${cap(seed.dietType)} meals throughout.`
+          : `${cap(seed.dietType)} does not match your ${answers.diet} choice.`,
+    });
+  }
+
+  if (answers.supermarket) {
+    const anyMarket = answers.supermarket === 'any';
+    const exact = seed.supermarket === answers.supermarket;
+    const generic = seed.supermarket === 'any';
+    details.push({
+      type: 'supermarket',
+      label: 'Supermarket',
+      status: anyMarket || exact ? 'exact' : (generic ? 'close' : 'tradeoff'),
+      text: anyMarket
+        ? `${marketLabel(seed.supermarket)} fits your flexible supermarket choice.`
+        : exact
+          ? `Built around ${marketLabel(seed.supermarket)}.`
+          : generic
+            ? 'Uses generic UK supermarket ingredients.'
+            : `Built around ${marketLabel(seed.supermarket)}, not ${marketLabel(answers.supermarket)}.`,
+    });
+  }
+
+  if (answers.calories && answers.calories !== 'unsure') {
+    const target = parseInt(answers.calories, 10);
+    if (Number.isFinite(target)) {
+      const diff = Math.abs(seed.calories - target);
+      details.push({
+        type: 'calories',
+        label: 'Calories',
+        status: diff <= 100 ? 'exact' : (diff <= CALORIE_NEAR_MISS ? 'close' : 'tradeoff'),
+        text: diff === 0
+          ? `Matches your ${target.toLocaleString('en-GB')} kcal target.`
+          : `${seed.calories.toLocaleString('en-GB')} kcal/day is ${diff.toLocaleString('en-GB')} kcal from your target.`,
+      });
+    }
+  }
+
+  if (answers.budget) {
+    const seedIndex = BUDGET_ORDER.indexOf(seed.budget);
+    const answerIndex = BUDGET_ORDER.indexOf(answers.budget);
+    const diff = Math.abs(seedIndex - answerIndex);
+    details.push({
+      type: 'budget',
+      label: 'Budget',
+      status: diff === 0 ? 'exact' : (diff === 1 ? 'close' : 'tradeoff'),
+      text: diff === 0
+        ? `${BUDGET_ESTIMATES[seed.budget]}/week matches your budget band.`
+        : `${BUDGET_ESTIMATES[seed.budget]}/week is ${diff === 1 ? 'one band from' : 'outside'} your budget choice.`,
+    });
+  }
+
+  if (answers.effort) {
+    const seedIndex = EFFORT_ORDER.indexOf(seed.effort);
+    const answerIndex = EFFORT_ORDER.indexOf(answers.effort);
+    const diff = Math.abs(seedIndex - answerIndex);
+    details.push({
+      type: 'effort',
+      label: 'Cooking effort',
+      status: diff === 0 ? 'exact' : (diff <= 1 ? 'close' : 'tradeoff'),
+      text: diff === 0
+        ? `${effortLabel(seed.effort)} matches your choice.`
+        : `${effortLabel(seed.effort)} is ${diff === 1 ? 'close to' : 'different from'} your preferred effort.`,
+    });
+  }
+
+  if (answers.macros && answers.macroMode === 'custom-grams' && macrosGrams) {
+    const proteinDiff = Math.abs(Number(macrosGrams.protein || 0) - Number(answers.macros.protein || 0));
+    const carbsDiff = Math.abs(Number(macrosGrams.carbs || 0) - Number(answers.macros.carbs || 0));
+    const status = proteinDiff <= 15 && carbsDiff <= 25
+      ? 'exact'
+      : (proteinDiff <= 30 && carbsDiff <= 50 ? 'close' : 'tradeoff');
+    details.push({
+      type: 'macros',
+      label: 'Macros',
+      status,
+      text: `About ${macrosGrams.protein}g protein and ${macrosGrams.carbs}g carbs per day.`,
+    });
+  }
+
+  return details;
+}
+
+function buildMatchSummary(details) {
+  const exact = details.filter(item => item.status === 'exact').length;
+  const close = details.filter(item => item.status === 'close').length;
+  const tradeoffs = details.filter(item => item.status === 'tradeoff').length;
+  return [
+    exact ? `${exact} exact` : '',
+    close ? `${close} close` : '',
+    tradeoffs ? `${tradeoffs} trade-off${tradeoffs === 1 ? '' : 's'}` : '',
+  ].filter(Boolean).join(' · ') || 'Broad match';
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export function getTopMatches(answers, n = 3) {
@@ -301,6 +423,7 @@ export function getTopMatches(answers, n = 3) {
   return scored.slice(0, n).map(({ seed, score, macrosGrams }) => {
     const actualMacros = macrosGrams || getSeedMacroGrams(seed);
     const compromises = buildCompromises(seed, enrichedAnswers);
+    const matchDetails = buildMatchDetails(seed, enrichedAnswers, actualMacros);
     return {
     slug:          seed.slug,
     title:         seed.title,
@@ -317,6 +440,8 @@ export function getTopMatches(answers, n = 3) {
     score,
     matchLabel:    matchLabel(score, compromises),
     matchReason:   buildMatchReason(seed, enrichedAnswers, actualMacros),
+    matchDetails,
+    matchSummary:  buildMatchSummary(matchDetails),
     compromises,
     isExactMatch:  compromises.length === 0,
     };
@@ -364,4 +489,15 @@ function cap(s) {
 
 function marketLabel(value) {
   return MARKET_LABELS[value] || cap(value);
+}
+
+function effortLabel(value) {
+  const labels = {
+    minimal: 'Minimal prep',
+    low: 'Low effort',
+    standard: 'Standard cooking',
+    batch: 'Batch cooking',
+    'high-variety': 'High variety',
+  };
+  return labels[value] || cap(value);
 }

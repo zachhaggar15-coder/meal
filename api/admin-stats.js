@@ -214,6 +214,8 @@ function buildAnalyticsStats(events, sessions) {
   const sectionEvents = cleanEvents.filter(event => event.event_name === 'content_section_viewed');
   const searchEvents = cleanEvents.filter(isSearchEvent);
   const outboundClicks = cleanEvents.filter(event => event.event_name === 'outbound_click' || event.event_name === 'affiliate_click');
+  const returnEvents = cleanEvents.filter(event => event.event_name === 'return_visit');
+  const funnel = buildFunnelSummary(cleanEvents);
 
   const engagedSeconds = sum(exitEvents.map(event => Number(event.active_time_ms || 0))) / 1000;
   const sessionsWithEvents = journeys.length || cleanSessions.length || 1;
@@ -239,7 +241,13 @@ function buildAnalyticsStats(events, sessions) {
       avgEngagedSeconds: round(engagedSeconds / sessionsWithEvents),
       avgMaxScrollDepth: round(avg(journeys.map(journey => journey.maxScrollDepth))),
       avgExplorationScore: round(avg(journeys.map(journey => journey.explorationScore))),
+      returnVisits: unique(returnEvents.map(event => event.session_id)).length,
+      savedPlanActions: funnel.find(item => item.event === 'plan_saved')?.events || 0,
+      shoppingListUses: sum(funnel
+        .filter(item => ['shopping_list_opened', 'shopping_item_toggled', 'shopping_list_printed'].includes(item.event))
+        .map(item => item.events)),
     },
+    funnel,
     entrySources: toNameValue(countBy(cleanSessions, 'entry_source')).slice(0, 10),
     topEntryIntents: toNameValue(countBy(cleanSessions, 'entry_intent')).slice(0, 12),
     topPages: toNameValue(countBy(pageViews, 'path')).slice(0, 15),
@@ -264,6 +272,41 @@ function buildAnalyticsStats(events, sessions) {
       .sort((a, b) => b.explorationScore - a.explorationScore)
       .slice(0, 15),
   };
+}
+
+function buildFunnelSummary(events) {
+  const stages = [
+    ['quiz_started', 'Quiz started', 'Discovery'],
+    ['quiz_completed', 'Quiz completed', 'Discovery'],
+    ['quiz_result_viewed', 'Recommendation viewed', 'Discovery'],
+    ['plan_viewed_from_quiz', 'Quiz plan opened', 'Plan use'],
+    ['plan_primary_cta_clicked', 'Plan next step', 'Plan use'],
+    ['shopping_list_opened', 'Shopping list opened', 'Shopping'],
+    ['shopping_item_toggled', 'Shopping item ticked', 'Shopping'],
+    ['shopping_list_printed', 'Shopping list printed', 'Shopping'],
+    ['plan_printed', 'Plan printed', 'Save and share'],
+    ['plan_shared', 'Plan shared', 'Save and share'],
+    ['email_plan_completed', 'Plan emailed', 'Save and share'],
+    ['plan_saved', 'Plan saved locally', 'Retention'],
+    ['saved_plan_reopened', 'Saved plan reopened', 'Retention'],
+    ['recent_plan_reopened', 'Recent plan reopened', 'Retention'],
+    ['plan_reopened', 'Plan revisited after 4h+', 'Retention'],
+    ['return_visit', 'Return visit after 4h+', 'Retention'],
+    ['affiliate_link_clicked', 'Affiliate link clicked', 'Commercial'],
+    ['affiliate_click', 'Affiliate exit', 'Commercial'],
+    ['waitlist_completed', 'MealPrep+ signup', 'Commercial'],
+  ];
+
+  return stages.map(([eventName, label, stage]) => {
+    const matching = events.filter(event => event.event_name === eventName);
+    return {
+      stage,
+      event: eventName,
+      label,
+      events: matching.length,
+      sessions: unique(matching.map(event => event.session_id)).length,
+    };
+  });
 }
 
 function groupEventsBySession(events, sessions) {

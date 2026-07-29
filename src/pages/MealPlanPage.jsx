@@ -12,6 +12,8 @@ import ContextualLinks from '../components/ContextualLinks.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
+import PlanSaveButton from '../components/PlanSaveButton.jsx';
+import TickableShoppingList from '../components/TickableShoppingList.jsx';
 import NotFound from './NotFound.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
@@ -21,6 +23,12 @@ import { sumNutrition } from '../utils/nutrition.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
+import {
+  buildPlanReference,
+  readPlanProgress,
+  recordPlanView,
+  writePlanProgress,
+} from '../utils/planRetention.js';
 
 const SHOW_LEGACY_EXAMPLE_PLAN = false;
 
@@ -52,6 +60,7 @@ export default function MealPlanPage() {
   const [plan, setPlan] = useState(() => buildCanonicalLegacyPlan(data?.plan ?? [], data?.targetCalories));
   const [activeDayIdx, setActiveDayIdx] = useState(0);
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
+  const [progressRoute, setProgressRoute] = useState('');
 
   useEffect(() => {
     setPlan(buildCanonicalLegacyPlan(data?.plan ?? [], data?.targetCalories));
@@ -59,6 +68,49 @@ export default function MealPlanPage() {
   }, [slug, data]);
 
   const shoppingList = useMemo(() => buildShoppingList(plan), [plan]);
+  const avgProtein = plan.length
+    ? Math.round(plan.reduce((s, d) => s + d.totals.protein, 0) / plan.length)
+    : null;
+  const planRoute = data ? `/meal-plan/${slug}` : '';
+  const planReference = useMemo(() => data ? buildPlanReference({
+    route: `/meal-plan/${slug}`,
+    slug,
+    title: data.h1,
+    supermarket: detectLegacySupermarket(slug, data)?.slug || 'any',
+    goal: data.planLabel,
+    calories: data.targetCalories,
+    protein: avgProtein,
+    priceEstimate: data.priceEstimate,
+  }) : null, [avgProtein, data, slug]);
+  const planAnalytics = useMemo(() => data ? ({
+    plan_slug: slug,
+    supermarket: detectLegacySupermarket(slug, data)?.slug || 'any',
+    goal: data.planLabel,
+    calorie_target: data.targetCalories,
+    protein_target: avgProtein,
+    page_type: 'legacy_plan',
+  }) : null, [avgProtein, data, slug]);
+
+  useEffect(() => {
+    if (!planReference) return;
+    const progress = readPlanProgress(planReference.route);
+    if (progress?.activeDayIdx !== undefined) setActiveDayIdx(progress.activeDayIdx);
+    setProgressRoute(planReference.route);
+
+    const view = recordPlanView(planReference);
+    if (view.isReturn) {
+      track.planReopened({
+        ...planAnalytics,
+        visit_count: view.viewCount,
+        cta_location: 'direct_or_internal_return',
+      });
+    }
+  }, [planAnalytics, planReference]);
+
+  useEffect(() => {
+    if (!planRoute || progressRoute !== planRoute) return;
+    writePlanProgress(planRoute, { activeDayIdx });
+  }, [activeDayIdx, planRoute, progressRoute]);
 
   if (!data) return <NotFound />;
 
@@ -97,10 +149,6 @@ export default function MealPlanPage() {
       setTimeout(() => setShoppingCopyStatus(''), 2200);
     }
   }
-
-  const avgProtein = plan.length
-    ? Math.round(plan.reduce((s, d) => s + d.totals.protein, 0) / plan.length)
-    : null;
 
   const ogImageUrl = generateMealPlanImageUrl(slug, data.title, data.targetCalories);
   const planFamily = getLegacyPlanFamily(slug, data);
@@ -243,14 +291,14 @@ export default function MealPlanPage() {
         supermarket={data.summary?.supermarkets || detectLegacySupermarket(slug, data)?.label || 'the selected UK supermarket'}
         compact
       />
-      <div className="shop-grid">
-        {Object.entries(shoppingList).filter(([, items]) => items.length > 0).map(([group, items]) => (
-          <div key={group} className="shop-group">
-            <h3>{group.charAt(0).toUpperCase() + group.slice(1)}</h3>
-            <ul>{items.map((item, i) => <li key={i}>{item}</li>)}</ul>
-          </div>
-        ))}
-      </div>
+      <TickableShoppingList
+        list={shoppingList}
+        planRoute={planRoute}
+        analyticsContext={planAnalytics}
+        gridClassName="shop-grid"
+        groupClassName="shop-group"
+        groupLabel={group => group.charAt(0).toUpperCase() + group.slice(1)}
+      />
       <EmailPlanCapture
         plan={{
           slug,
@@ -315,6 +363,11 @@ export default function MealPlanPage() {
           <a href="#shopping-list" data-event="shopping_list_opened" data-source-page={slug} data-page-type="legacy_plan" data-cta-location="plan_action_bar">
             Shopping list
           </a>
+          <PlanSaveButton
+            plan={planReference}
+            analyticsContext={planAnalytics}
+            className="plan-action-primary"
+          />
           <button
             type="button"
             onClick={() => {

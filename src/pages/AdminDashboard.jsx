@@ -232,6 +232,9 @@ function AnalyticsSection({ analytics }) {
         <StatCard label="Avg engaged time" value={`${number(overview.avgEngagedSeconds)}s`} />
         <StatCard label="Avg max scroll" value={`${number(overview.avgMaxScrollDepth)}%`} />
         <StatCard label="Avg exploration" value={`${number(overview.avgExplorationScore)}/100`} />
+        <StatCard label="Return visits" value={number(overview.returnVisits)} />
+        <StatCard label="Plan saves" value={number(overview.savedPlanActions)} />
+        <StatCard label="Shopping actions" value={number(overview.shoppingListUses)} />
       </div>
 
       <div className="admin-breakdowns admin-breakdowns--three">
@@ -239,6 +242,18 @@ function AnalyticsSection({ analytics }) {
         <Breakdown title="Original intent" data={analytics.topEntryIntents || []} />
         <Breakdown title="Top pages" data={analytics.topPages || []} />
       </div>
+
+      <DataTable
+        title="Product Funnel"
+        note="Named outcomes from the latest event sample. Session counts deduplicate repeated actions in one visit."
+        rows={analytics.funnel || []}
+        columns={[
+          { key: 'stage', label: 'Stage' },
+          { key: 'label', label: 'Outcome' },
+          { key: 'events', label: 'Events' },
+          { key: 'sessions', label: 'Sessions' },
+        ]}
+      />
 
       <DataTable
         title="Recent Click Log"

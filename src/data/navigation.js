@@ -63,6 +63,11 @@ export const START_LINKS = [
     intent: 'primary',
   },
   {
+    to: '/saved-plans',
+    label: 'Saved Plans',
+    description: 'Reopen plans and continue shopping lists saved on this device.',
+  },
+  {
     to: '/browse',
     label: `Browse ${PLAN_COUNT} Plans`,
     description: 'Filter by goal, supermarket, diet, calories, budget and effort.',
@@ -265,6 +270,7 @@ export const FOOTER_GROUPS = [
     label: 'Start',
     items: [
       { to: '/quiz', label: 'Find My Plan' },
+      { to: '/saved-plans', label: 'Saved Plans' },
       { to: '/browse', label: `Browse ${PLAN_COUNT} Plans` },
       { to: '/tools', label: 'Tools' },
       { to: '/mealprep-plus', label: 'MealPrep+' },
@@ -319,6 +325,14 @@ const STATIC_SEARCH_ENTRIES = [
     description: 'Answer a few questions and get matched to a plan.',
     keywords: 'quiz match matched plan beginner first time',
     priority: 100,
+  },
+  {
+    title: 'Saved Meal Plans',
+    to: '/saved-plans',
+    type: 'Saved plans',
+    description: 'Reopen plans and shopping progress saved on this device.',
+    keywords: 'saved favourite favorite recent continue reopen shopping list',
+    priority: 98,
   },
   {
     title: `Browse ${PLAN_COUNT} UK Meal Plans`,

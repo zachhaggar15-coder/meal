@@ -203,6 +203,7 @@ const ROUTES = uniqueRoutes([
   '/questions',
   '/tools',
   '/mealprep-plus',
+  '/saved-plans',
   '/about',
   '/contact',
   '/feedback',
@@ -231,7 +232,7 @@ const ROUTES = uniqueRoutes([
   ...SEO_PRIORITY_ROUTES,
 ]);
 
-const NOINDEX_ROUTES = new Set(['/quiz/results', '/404', '/admin', '/feedback']);
+const NOINDEX_ROUTES = new Set(['/quiz/results', '/saved-plans', '/404', '/admin', '/feedback']);
 
 // A URL that canonicalises elsewhere must not also be advertised in the
 // sitemap. Google treats sitemap URLs as canonical hints, so keep only the

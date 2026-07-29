@@ -56,6 +56,13 @@ export default function Sidebar({ open, onClose }) {
               Find My Plan
             </Link>
             <Link
+              to="/saved-plans"
+              className={`sidebar-browse-cta${location.pathname === '/saved-plans' ? ' sidebar-link--active' : ''}`}
+              onClick={onClose}
+            >
+              Saved Plans
+            </Link>
+            <Link
               to="/meal-prep-accessories"
               className={`sidebar-browse-cta${location.pathname === '/meal-prep-accessories' ? ' sidebar-link--active' : ''}`}
               onClick={onClose}

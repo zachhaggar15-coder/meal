@@ -3,6 +3,20 @@ import test from 'node:test';
 import { buildBrowsePlanUrl } from '../src/data/planChooser.js';
 import { buildBlogNextStep } from '../src/utils/contextualJourney.js';
 import { buildPracticalRecipeSteps, validateRecipeQuality } from '../src/utils/recipeQuality.js';
+import { getTopMatches } from '../src/utils/quizScorer.js';
+import {
+  decodeQuizAnswers,
+  encodeQuizAnswers,
+  normaliseQuizAnswers,
+} from '../src/utils/quizStorage.js';
+import {
+  buildPlanReference,
+  getPlanLibrary,
+  readPlanProgress,
+  recordPlanView,
+  toggleSavedPlan,
+  writePlanProgress,
+} from '../src/utils/planRetention.js';
 
 test('calculator selections survive in browse URLs', () => {
   assert.equal(
@@ -13,6 +27,92 @@ test('calculator selections survive in browse URLs', () => {
     }),
     '/browse?goal=high-protein-low-cal&calories=1800&search=150g+protein',
   );
+});
+
+test('quiz answer links are URL-safe, backwards-readable and input-bounded', () => {
+  const answers = {
+    goal: 'weight-loss',
+    diet: 'vegetarian',
+    supermarket: 'aldi',
+    calories: '1500',
+    budget: 'budget',
+    effort: 'batch',
+    macros: { protein: 160, carbs: 180, fats: 60, fibre: 30 },
+    macroMode: 'custom-grams',
+  };
+  const encoded = encodeQuizAnswers(answers);
+
+  assert.doesNotMatch(encoded, /[+/=]/);
+  assert.deepEqual(decodeQuizAnswers(encoded), answers);
+  assert.deepEqual(
+    normaliseQuizAnswers({ ...answers, unknown: 'drop me', macros: { protein: 9999, carbs: 1 } }),
+    { ...answers, macros: { protein: 260, carbs: 50 } },
+  );
+  assert.equal(decodeQuizAnswers('not valid!'), null);
+});
+
+test('quiz results explain concrete fit without a pseudo-precise percentage', () => {
+  const [match] = getTopMatches({
+    goal: 'weight-loss',
+    diet: 'standard',
+    supermarket: 'aldi',
+    calories: '1500',
+    budget: 'budget',
+    effort: 'batch',
+  }, 1);
+
+  assert.ok(match.matchDetails.length >= 6);
+  assert.match(match.matchSummary, /exact|close|trade-off/);
+  assert.doesNotMatch(match.matchSummary, /%/);
+  assert.ok(match.matchDetails.some(item => item.type === 'supermarket'));
+  assert.ok(match.matchDetails.some(item => item.type === 'calories'));
+});
+
+test('saved plans and shopping progress survive corrupt local records safely', () => {
+  const previousWindow = globalThis.window;
+  const previousCustomEvent = globalThis.CustomEvent;
+  const storage = new Map();
+
+  try {
+    globalThis.window = {
+      localStorage: {
+        getItem: key => storage.get(key) || null,
+        setItem: (key, value) => storage.set(key, value),
+      },
+      dispatchEvent: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    };
+    globalThis.CustomEvent = class CustomEvent {
+      constructor(type) { this.type = type; }
+    };
+
+    const reference = buildPlanReference({
+      route: '/plans/aldi-weight-loss-1500?source=quiz',
+      slug: 'aldi-weight-loss-1500',
+      title: 'Aldi Weight Loss Plan',
+      supermarket: 'aldi',
+      goal: 'Weight loss',
+      calories: 1500,
+    });
+    assert.equal(reference.route, '/plans/aldi-weight-loss-1500');
+    assert.equal(recordPlanView(reference).viewCount, 1);
+    assert.deepEqual(toggleSavedPlan(reference), { ok: true, saved: true });
+    assert.equal(getPlanLibrary().saved[0].route, reference.route);
+
+    assert.equal(writePlanProgress(reference.route, {
+      activeDayIdx: 3,
+      checkedItems: ['protein:0', 'vegetables:2', 'invalid'],
+    }), true);
+    assert.deepEqual(readPlanProgress(reference.route).checkedItems, ['protein:0', 'vegetables:2']);
+    assert.equal(readPlanProgress(reference.route).activeDayIdx, 3);
+
+    storage.set('mealprep_saved_plans_v1', '{broken');
+    assert.deepEqual(getPlanLibrary().saved, []);
+  } finally {
+    globalThis.window = previousWindow;
+    globalThis.CustomEvent = previousCustomEvent;
+  }
 });
 
 test('supermarket guides receive a supermarket-specific next step', () => {

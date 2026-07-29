@@ -10,13 +10,13 @@ No page was noindexed, redirected or padded with generic text merely to change a
 
 ## Static crawl and count reconciliation
 
-`npm run build` produces 1,403 routed pages plus the root document and writes 1,404 HTML files. Of those files, 1,377 are self-canonical and indexable and therefore appear in the four sitemap files. The remaining HTML files are deliberate non-indexable utility, admin, error or duplicate-file outputs. The independent protected-URL inventory contains 59 routes, while `vercel.json` contains 67 redirect rules. These inventories answer different questions and are not expected to equal the route count.
+`npm run build` produces 1,404 routed pages plus the root document and writes 1,405 HTML files. Of those files, 1,377 are self-canonical and indexable and therefore appear in the four sitemap files. The new `/saved-plans` route is deliberately `noindex,follow`: it contains device-local state rather than public search content. The remaining HTML files are deliberate non-indexable utility, admin, error or duplicate-file outputs. The independent protected-URL inventory contains 59 routes, while `vercel.json` contains 67 redirect rules. These inventories answer different questions and are not expected to equal the route count.
 
 `npm run audit:seo` crawls the complete built output and checks title, description, one H1, canonical, robots, sitemap membership, prerendered main content and JSON-LD parsing. It also records word count, fingerprints, incoming/outgoing links, structured-data types and nutrition claims. `npm run audit:links` resolves every internal link against the built route and redirect inventory.
 
 | Check | Exhaustive coverage | Blocking threshold | Result |
 |---|---:|---|---|
-| Generated HTML | 1,404 files | required title/description/canonical/H1/main content; valid JSON-LD | passed |
+| Generated HTML | 1,405 files | required title/description/canonical/H1/main content; valid JSON-LD | passed |
 | Canonical/indexable URLs | 1,377 | self-canonical, indexable, sitemap included | passed |
 | Published plan pages | 1,059 | route data, metadata and composition assessed | passed |
 | Internal links | 92,986 occurrences | zero broken links and zero links to redirects | passed |
@@ -24,12 +24,19 @@ No page was noindexed, redirected or padded with generic text merely to change a
 | Redirect rules | 67 | target must exist; no live plan may be shadowed | passed |
 | Recipe entities | seven qualifying pages | visible ingredients/instructions/nutrition must agree | passed |
 | Product entities | 59 | no invented price, rating, review or availability | passed |
+| Metadata claims | 1,377 pages; 1,059 published plans | zero calorie or named-supermarket mismatch | passed |
+| Static accessibility | 1,405 files; 104,718 links; 82,098 controls | zero blocking markup defects | passed after browse-template heading fix |
+| Local assets | 21,225 references | zero broken references | passed |
 
 Machine-readable output is written to:
 
 - `audit-artifacts/url-indexing.json`
 - `audit-artifacts/duplicate-content-clusters.json`
 - `audit-artifacts/broken-links.json`
+- `audit-artifacts/metadata-quality.json`
+- `audit-artifacts/accessibility.json`
+- `audit-artifacts/performance.json`
+- `audit-artifacts/broken-assets.json`
 - `audit-artifacts/live-canonical-crawl.json` after deployment
 
 ## Duplicate and scaled-page assessment
@@ -61,8 +68,15 @@ The site now self-hosts DM Sans instead of waiting for the cross-origin Google F
 
 These changes preserve prerendered article content, direct navigation and site search. Browser diagnostics across the ten representative templates found no horizontal overflow, broken images, dimensionless images or application console errors on desktop or at a true 390 px mobile viewport. Interaction to Next Paint is a field metric and requires post-release real-user data; lab testing uses attributable long tasks and interaction traces only as diagnostic proxies.
 
+The release now enforces build budgets: 183.3 KB gzip initial JavaScript, 33.3 KB
+gzip initial CSS, 120.1 KB gzip largest lazy JavaScript, seven initial local asset
+requests and zero third-party scripts before consent. The `/blog` index is the
+largest raw HTML route at 365.2 KB but compresses to about 28.5 KB while retaining
+its useful visible guide index.
+
 ## Remaining P2 review items
 
 - The 31 exact and 43 near-duplicate composition clusters are retained only where the route's user intent and generated details differ. They should be reviewed alongside Search Console performance before any consolidation.
 - Responsive source sizing for the homepage imagery remains a P2 opportunity; the lab estimate indicates approximately 86 KB could be avoided on a narrow viewport.
+- Metadata review reports 640 titles over 70 characters and eight below 28. These are non-factual review flags; prioritise them with route-level impression and CTR evidence rather than bulk rewriting stable snippets.
 - Nutrition remains an estimate because brands and ingredients vary; exact laboratory accuracy is not claimed.

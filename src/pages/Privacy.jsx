@@ -51,6 +51,16 @@ export default function Privacy() {
         </section>
 
         <section>
+          <h2>Plans saved on your device</h2>
+          <p>
+            If you save a plan, tick shopping-list items, adjust household portions or continue a
+            quiz, that progress is stored locally in your browser. It is not uploaded to a user
+            account. You can remove saved plans from the saved-plans page, or clear this website's
+            stored data in your browser settings.
+          </p>
+        </section>
+
+        <section>
           <h2>Feedback and Contact</h2>
           <p>
             If you submit feedback or email us, we use the information you provide to review the

@@ -24,10 +24,14 @@ npm run check
 | `npm run audit:dietary` | all 169 shared meal labels | zero prohibited ingredients; high-protein ≥20% energy |
 | `npm run check:plans` | all 76,246 seed definitions plus 3,385 detail builds | valid references and filters; detail builds meet calorie tolerances |
 | `npm run audit:plans` | all 76,246 combinations and seven household states per distinct output | seven-day mean ±3%; each day ±7.5%; exact arithmetic; no accidental duplicate; no invalid references |
-| `npm run build` | client, SSR, 1,403 prerender routes, protected URLs, schema and sitemap | zero build/prerender/protection/schema/indexing failures |
-| `npm run audit:seo` | all 1,404 built HTML files and 1,377 canonicals | complete metadata, canonical/indexing/sitemap agreement, meaningful main content, valid JSON-LD |
+| `npm run build` | client, SSR, 1,404 prerender routes, protected URLs, schema and sitemap | zero build/prerender/protection/schema/indexing failures |
+| `npm run audit:seo` | all 1,405 built HTML files and 1,377 canonicals | complete metadata, canonical/indexing/sitemap agreement, meaningful main content, valid JSON-LD |
 | `npm run audit:schema` | all generated structured data | zero invalid or misleading eligible entities |
 | `npm run audit:links` | every built internal link | zero broken links or internal links to redirects |
+| `npm run audit:metadata` | all 1,377 indexable pages and 1,059 published plan claims | zero duplicate primary metadata and zero calorie/supermarket factual mismatch; length flags recorded for prioritised review |
+| `npm run audit:accessibility` | static markup in all 1,405 built HTML files | zero missing names/alts/landmarks/language/skip links and zero duplicate IDs |
+| `npm run audit:performance` | complete emitted client asset graph and every route HTML file | all compressed/raw transfer, request, image and pre-consent script budgets pass |
+| `npm run audit:assets` | all local references in emitted HTML, CSS, JSON and manifests | zero broken local asset references |
 | `npm run audit:live -- https://www.mealprep.org.uk` | every production sitemap canonical | HTTP 200, no redirect, self-canonical, indexable, title/H1/main present |
 
 ## Dependency advisory policy
@@ -41,7 +45,7 @@ The current registry reports GHSA-qwww-vcr4-c8h2 against React Router's React Se
 1. Confirm the complete gate passes from a clean dependency installation.
 2. Commit only relevant repository changes; exclude `.claude` workspace files.
 3. Push the audited branch.
-4. Create a Vercel deployment from that commit and promote that saved deployment to production.
+4. Create a Vercel deployment from that commit and promote that immutable deployment to production.
 5. Run browser checks and `audit:live` against the production alias.
 6. Inspect production runtime/build logs.
 

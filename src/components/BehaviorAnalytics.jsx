@@ -10,10 +10,12 @@ import {
 
 const SESSION_KEY = 'mealprep_analytics_session_id';
 const ENTRY_KEY = 'mealprep_analytics_entry';
+const VISIT_KEY = 'mealprep_analytics_visit_v1';
 const ENDPOINT = '/api/analytics';
 const HEARTBEAT_MS = 15000;
 const FLUSH_DELAY_MS = 2500;
 const SCROLL_MILESTONES = [25, 50, 75, 90, 100];
+const RETURN_VISIT_GAP_MS = 4 * 60 * 60 * 1000;
 
 export default function BehaviorAnalytics() {
   const location = useLocation();
@@ -77,6 +79,7 @@ export default function BehaviorAnalytics() {
 
 function createTracker(getPath) {
   const session = getOrCreateSession(getPath);
+  const visit = recordVisit();
   let page = createPageState(getPath());
   let queue = [];
   let flushTimer = null;
@@ -119,7 +122,15 @@ function createTracker(getPath) {
   track('session_start', {
     entry_intent: session.entry_intent,
     entry_source: session.entry_source,
+    return_visit: visit.isReturn,
+    visit_count_bucket: visit.visitCountBucket,
   });
+  if (visit.isReturn) {
+    track('return_visit', {
+      visit_count_bucket: visit.visitCountBucket,
+      time_away_bucket: visit.timeAwayBucket,
+    });
+  }
   observeSectionsSoon();
 
   return api;
@@ -419,6 +430,7 @@ function categorisePath(path) {
   if (clean.startsWith('/meal-prep-containers')) return 'containers';
   if (clean.startsWith('/quiz')) return 'quiz';
   if (clean.startsWith('/tools')) return 'tools';
+  if (clean.startsWith('/saved-plans')) return 'retention';
   if (clean.startsWith('/glass-meal-prep-containers') || clean.startsWith('/stickers')) return 'container_product';
   if (clean.startsWith('/admin')) return 'admin';
   if (clean.startsWith('/privacy') || clean.startsWith('/terms') || clean.startsWith('/contact') || clean.startsWith('/about')) return 'support';
@@ -496,6 +508,35 @@ function eventMetadata(props) {
     }
   }
   return metadata;
+}
+
+function recordVisit() {
+  const now = Date.now();
+  const stored = parseJson(readStorage('local', VISIT_KEY)) || {};
+  const previousAt = Number(stored.last_seen_at || 0);
+  const previousCount = Math.max(0, Number(stored.visit_count) || 0);
+  const timeAway = previousAt ? now - previousAt : 0;
+  const isReturn = previousAt > 0 && timeAway >= RETURN_VISIT_GAP_MS;
+  const visitCount = previousCount
+    ? previousCount + (isReturn ? 1 : 0)
+    : 1;
+
+  writeStorage('local', VISIT_KEY, JSON.stringify({
+    last_seen_at: now,
+    visit_count: Math.min(99, visitCount),
+  }));
+
+  return {
+    isReturn,
+    visitCountBucket: visitCount >= 5 ? '5_plus' : String(visitCount),
+    timeAwayBucket: timeAway >= 28 * 24 * 60 * 60 * 1000
+      ? '28d_plus'
+      : timeAway >= 7 * 24 * 60 * 60 * 1000
+        ? '7_to_27d'
+        : timeAway >= 24 * 60 * 60 * 1000
+          ? '1_to_6d'
+          : '4_to_23h',
+  };
 }
 
 function makeId() {

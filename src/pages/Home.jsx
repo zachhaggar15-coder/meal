@@ -305,7 +305,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="trust-row">
-            <span className="trust-badge"><strong>{PLAN_COUNT.toLocaleString('en-GB')}</strong> plan combinations</span>
+            <span className="trust-badge"><strong>{PLAN_COUNT.toLocaleString('en-GB')}</strong> published plans</span>
             <span className="trust-badge"><strong>11</strong> supermarkets</span>
             <span className="trust-badge"><strong>Free</strong> with no account</span>
             <span className="trust-badge"><strong>Shopping list</strong> included</span>
