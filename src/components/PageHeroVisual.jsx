@@ -5,6 +5,8 @@ export default function PageHeroVisual({ visual, className = '', priority = fals
     <figure className={`page-hero-visual ${className}`.trim()}>
       <img
         src={visual.src}
+        srcSet={visual.srcSet}
+        sizes={visual.sizes}
         alt={visual.alt || ''}
         width={visual.width || 1200}
         height={visual.height || 675}

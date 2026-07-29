@@ -147,10 +147,14 @@ export const SUPERMARKET_CARD_VISUALS = {
 };
 
 export const SITE_VISUALS = {
-  home: visual(
-    'weekly-prep.webp',
-    'Prepared weekly meals, supermarket ingredients and a meal planning list on a kitchen counter'
-  ),
+  home: {
+    ...visual(
+      'weekly-prep.webp',
+      'Prepared weekly meals, supermarket ingredients and a meal planning list on a kitchen counter'
+    ),
+    srcSet: `${BASE}weekly-prep-720.webp 720w, ${BASE}weekly-prep.webp 1200w`,
+    sizes: '(max-width: 760px) calc(100vw - 30px), 44vw',
+  },
   browse: visual(
     'supermarket-shop.webp',
     'A weekly supermarket shop arranged with a blank shopping list for meal planning'
