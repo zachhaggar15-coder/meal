@@ -100,7 +100,16 @@ export default function ComboLandingPage({ page }) {
             {stats.map(stat => <span key={stat}>{stat}</span>)}
           </div>
           <div className="meal-hub-actions">
-            <a className="btn-primary" href="#matching-plans">Compare plans</a>
+            <a
+              className="btn-primary"
+              href="#matching-plans"
+              data-event="plan_primary_cta_clicked"
+              data-source-page={`combo-${page.slug}`}
+              data-page-type="combo_landing"
+              data-cta-location="hero"
+            >
+              View matching weekly plans
+            </a>
             <Link className="btn-secondary" to="/quiz">Find my best match</Link>
           </div>
           <PageHeroVisual visual={comboVisual} className="meal-hub-hero-visual" priority />
@@ -129,7 +138,7 @@ export default function ComboLandingPage({ page }) {
 
           <div className="meal-hub-grid">
             {matchingPlans.map(plan => (
-              <PlanCard key={plan.slug} plan={plan} />
+              <PlanCard key={plan.slug} plan={plan} sourcePage={`combo-${page.slug}`} />
             ))}
           </div>
         </section>

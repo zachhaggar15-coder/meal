@@ -2,7 +2,13 @@ import { MEALS } from '../data/mealLibrary.js';
 import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
 import { getStoreMealBias, getSupermarketProfile, PRICING_CONTEXT_CHECKED } from '../data/supermarketProfiles.js';
 import { isCountUnit } from './countUnits.js';
-import { averageDailyMacros, computeMealNutrition, scaleNutrition } from './nutrition.js';
+import {
+  averageDailyMacros,
+  computeMealNutrition,
+  computeMealNutritionRaw,
+  sumNutrition,
+} from './nutrition.js';
+import { buildPracticalRecipeSteps } from './recipeQuality.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -89,7 +95,7 @@ export const MACRO_GRAMS = {
 
 const GOAL_BEST_FOR = {
   'weight-loss': 'Anyone aiming for a sustainable calorie deficit',
-  'high-protein-low-cal': 'Fat loss while preserving muscle mass',
+  'high-protein-low-cal': 'Higher-protein meal planning within a lower-calorie target',
   'muscle-gain': 'Building muscle with a calorie surplus',
   'budget-fat-loss': 'Budget-conscious fat loss on ~£30/week',
   'cheap-student': 'Students on a tight budget',
@@ -103,11 +109,11 @@ const GOAL_BEST_FOR = {
   'gym-beginner': 'New to structured gym nutrition',
   'cheap-high-protein': 'Maximum protein on a tight budget',
   'maintenance': 'Maintaining current weight at a balanced ~2,000 kcal/day',
-  'anti-inflammatory': 'Reducing inflammation with omega-3-rich, whole-food meals',
-  'menopause-nutrition': 'Supporting hormonal balance with calcium, iron and protein',
+  'anti-inflammatory': 'Mediterranean-style planning with oily fish, plants and whole foods',
+  'menopause-nutrition': 'General meal planning with protein, fibre and calcium-rich foods',
   'endurance-athlete': 'Fuelling running and endurance training with higher-carb meals',
   'body-recomp': 'Body recomposition with high protein and slightly higher calories',
-  'cutting': 'Aggressive calorie deficit while preserving lean muscle mass',
+  'cutting': 'A structured lower-calorie, higher-protein plan for active adults',
 };
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -722,17 +728,24 @@ function storeMealBias(meal, seed, { tags, protein, proteinDensity }) {
 function getMealNutrition(meal) {
   const key = meal?.id || meal?.name;
   if (key && MEAL_NUTRITION_CACHE.has(key)) return MEAL_NUTRITION_CACHE.get(key);
-  const nutrition = computeMealNutrition(meal?.ingredients || []);
+  const nutrition = computeMealNutritionRaw(meal?.ingredients || []);
   if (key) MEAL_NUTRITION_CACHE.set(key, nutrition);
   return nutrition;
 }
 
 export function buildPlanDays(seed) {
   const eligible = getEligibleMeals(seed.dietType);
-  const breakfasts = eligible.filter(m => m.type === 'breakfast');
-  const lunches    = eligible.filter(m => m.type === 'lunch');
-  const dinners    = eligible.filter(m => m.type === 'dinner');
-  const snacks     = eligible.filter(m => m.type === 'snack');
+  const requireHighProtein = String(seed.goal || '').includes('high-protein');
+  const forType = type => {
+    const pool = eligible.filter(meal => meal.type === type);
+    if (!requireHighProtein) return pool;
+    const qualifying = pool.filter(meal => meal.tags?.includes('high-protein'));
+    return qualifying.length ? qualifying : pool;
+  };
+  const breakfasts = forType('breakfast');
+  const lunches    = forType('lunch');
+  const dinners    = forType('dinner');
+  const snacks     = forType('snack');
   const batchPlan  = isBatchPlan(seed);
   const breakfastPool = rankMealPool(batchPlan ? batchFriendlyMeals(breakfasts) : breakfasts, seed);
   const lunchPool     = rankMealPool(batchPlan ? batchFriendlyMeals(lunches) : lunches, seed);
@@ -758,6 +771,8 @@ export function buildPlanDays(seed) {
   const batchDinnerB = batchPlan ? pickDinnerForLunch(dinnerPool, base + 29, batchLunch, new Set([batchDinnerA?.id])) : null;
   const batchSnackA = batchPlan ? pick(snackPool, base + 13) : null;
   const batchSnackB = batchPlan ? pickDifferent(snackPool, base + 19, new Set([batchSnackA?.id])) : null;
+  const batchSnackC = batchPlan ? pickDifferent(snackPool, base + 29, new Set([batchSnackA?.id, batchSnackB?.id])) : null;
+  const batchSnackD = batchPlan ? pickDifferent(snackPool, base + 41, new Set([batchSnackA?.id, batchSnackB?.id, batchSnackC?.id])) : null;
 
   const plan = DAYS.map((day, di) => {
     const s = base + di * 11;
@@ -771,41 +786,46 @@ export function buildPlanDays(seed) {
 
     const mealList = [b, l, d].filter(Boolean);
 
-    // Add snack(s) based on calorie target
-    if (seed.calories >= 1800 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snackPool, s + 13));
-    if (seed.calories >= 2000 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snackPool, s + 19));
-    if (seed.calories >= 3000 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackA : pick(snackPool, s + 29));
-    if (seed.calories >= 3500 && snackPool.length) mealList.push(batchPlan && di < 5 ? batchSnackB : pick(snackPool, s + 41));
+    // Add distinct snacks where the eligible pool allows it. Repeated snack
+    // portions remain possible only on 3,000+ kcal plans whose restricted diet
+    // has fewer qualifying snack recipes than the number of required portions.
+    const usedSnackIds = new Set();
+    const addSnack = (batchSnack, offset) => {
+      if (!snackPool.length) return;
+      const snack = batchPlan && di < 5
+        ? batchSnack
+        : pickDifferent(snackPool, s + offset, usedSnackIds);
+      if (!snack) return;
+      mealList.push(snack);
+      usedSnackIds.add(snack.id);
+    };
+    if (seed.calories >= 1800) addSnack(batchSnackA, 13);
+    if (seed.calories >= 2000) addSnack(batchSnackB, 19);
+    if (seed.calories >= 3000) addSnack(batchSnackC, 29);
+    if (seed.calories >= 3500) addSnack(batchSnackD, 41);
 
     const adjustedMeals = rebalanceMealsToTarget(mealList, seed.calories);
 
-    const meals = adjustedMeals.map(({ meal: m, kcal, protein, carbs, fats, fibre, portionScale }) => {
-      const ingredients = scaleIngredientsForPortion(m.ingredients, portionScale);
+    const meals = adjustedMeals.map(({ meal: m, ingredients, nutrition }) => {
       const displayMeal = { ...m, ingredients };
 
       return {
         type:       cap(m.type),
         name:       m.name,
-        kcal,
-        protein,
-        carbs,
-        fats,
-        fibre,
+        kcal:        nutrition.kcal,
+        protein:     nutrition.protein,
+        carbs:       nutrition.carbs,
+        fats:        nutrition.fats,
+        fibre:       nutrition.fibre,
         prep:       `${m.prepMins} min`,
-        desc:       buildMealDesc(displayMeal, kcal, protein, carbs),
+        desc:       buildMealDesc(displayMeal, nutrition.kcal, nutrition.protein, nutrition.carbs),
         ingredients,
         portion_size: buildPortionSize(ingredients),
         recipe:     buildRecipeSteps(displayMeal),
       };
     });
 
-    const totals = {
-      kcal:    meals.reduce((sum, m) => sum + m.kcal, 0),
-      protein: meals.reduce((sum, m) => sum + m.protein, 0),
-      carbs:   meals.reduce((sum, m) => sum + m.carbs, 0),
-      fats:    meals.reduce((sum, m) => sum + m.fats, 0),
-      fibre:   meals.reduce((sum, m) => sum + m.fibre, 0),
-    };
+    const totals = sumNutrition(meals);
 
     return { day, meals, totals };
   });
@@ -1071,40 +1091,31 @@ function rebalanceMealsToTarget(meals, targetCalories) {
     sum + (item.nutrition.kcal || item.meal.cal || 0)
   ), 0);
 
-  if (!baseTotal || !targetCalories) {
-    return enrichedMeals.map(({ meal, nutrition }) => ({
-      meal,
-      ...scaleNutrition(nutrition, 1, nutrition.kcal || meal.cal),
-      portionScale: 1,
-    }));
+  let portionScale = baseTotal && targetCalories ? targetCalories / baseTotal : 1;
+  let adjusted = [];
+  let closest = [];
+  let closestDifference = Number.POSITIVE_INFINITY;
+
+  // Quantities shown to the user are the source of truth. Scale, format, then
+  // recalculate from those exact displayed quantities. A second pass absorbs
+  // the small error introduced by practical unit rounding without overriding
+  // any independently calculated calorie field.
+  for (let pass = 0; pass < 6; pass += 1) {
+    adjusted = enrichedMeals.map(({ meal }) => {
+      const ingredients = scaleIngredientsForPortion(meal.ingredients, portionScale);
+      return { meal, ingredients, nutrition: computeMealNutrition(ingredients), portionScale };
+    });
+    const displayedTotal = adjusted.reduce((sum, item) => sum + item.nutrition.kcal, 0);
+    const difference = Math.abs(displayedTotal - Number(targetCalories || displayedTotal));
+    if (difference < closestDifference) {
+      closest = adjusted;
+      closestDifference = difference;
+    }
+    if (!targetCalories || !displayedTotal || difference <= 1) break;
+    portionScale *= targetCalories / displayedTotal;
   }
 
-  const portionScale = targetCalories / baseTotal;
-  const rawCalories = enrichedMeals.map(({ meal, nutrition }) => (
-    (nutrition.kcal || meal.cal || 0) * portionScale
-  ));
-  const roundedCalories = distributeRoundedTotal(rawCalories, targetCalories);
-
-  return enrichedMeals.map(({ meal, nutrition }, index) => ({
-    meal,
-    ...scaleNutrition(nutrition, portionScale, roundedCalories[index]),
-    portionScale,
-  }));
-}
-
-function distributeRoundedTotal(values, targetTotal) {
-  const floors = values.map(Math.floor);
-  let remaining = targetTotal - floors.reduce((sum, value) => sum + value, 0);
-  const order = values
-    .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
-    .sort((a, b) => b.fraction - a.fraction);
-
-  for (let i = 0; i < Math.abs(remaining); i += 1) {
-    const target = order[i % order.length]?.index ?? 0;
-    floors[target] += remaining > 0 ? 1 : -1;
-  }
-
-  return floors;
+  return closest.length ? closest : adjusted;
 }
 
 function buildPortionSize(ingredients) {
@@ -1113,7 +1124,7 @@ function buildPortionSize(ingredients) {
 
 export function scaleIngredientsForPortion(ingredients, portionScale = 1) {
   const values = Array.isArray(ingredients) ? ingredients : [];
-  if (!Number.isFinite(portionScale) || Math.abs(portionScale - 1) < 0.03) {
+  if (!Number.isFinite(portionScale) || Math.abs(portionScale - 1) < 0.0001) {
     return values.map(cleanPortionScaleText);
   }
   return values.map(ingredient => scaleIngredientForPortion(ingredient, portionScale));
@@ -1168,17 +1179,14 @@ function cleanPortionScaleText(value) {
 
 function formatMeasuredAmount(value, unit) {
   const lowerUnit = unit.toLowerCase();
-  let rounded = value;
+  let rounded;
 
   if (lowerUnit === 'g' || lowerUnit === 'ml') {
-    if (value < 10) rounded = Math.max(1, Math.round(value));
-    else if (value < 250) rounded = roundTo(value, 5);
-    else if (value < 500) rounded = roundTo(value, 10);
-    else rounded = roundTo(value, 25);
+    rounded = Math.max(1, Math.round(value));
   } else if (lowerUnit === 'kg' || lowerUnit === 'l') {
-    rounded = roundTo(value, 0.05);
+    rounded = roundTo(value, 0.01);
   } else {
-    rounded = Math.max(0.25, roundTo(value, 0.25));
+    rounded = Math.max(0.05, roundTo(value, 0.05));
   }
 
   const spacer = lowerUnit === 'tbsp' || lowerUnit === 'tsp' ? ' ' : '';
@@ -1186,7 +1194,7 @@ function formatMeasuredAmount(value, unit) {
 }
 
 function formatWholeCount(value) {
-  return Math.max(1, Math.round(value));
+  return Math.max(0.25, roundTo(value, 0.25));
 }
 
 export { isCountUnit } from './countUnits.js';
@@ -1244,87 +1252,7 @@ function buildMealDesc(meal, kcal, protein, carbs = null) {
 }
 
 function buildRecipeSteps(meal) {
-  const ingredients = (meal.ingredients || []).join(', ');
-  const name = meal.name.toLowerCase();
-  const isNoCook = meal.prepMins <= 5 || (meal.tags || []).includes('easy');
-
-  if (name.includes('overnight') || name.includes('chia')) {
-    return [
-      `Add ${ingredients} to a lidded container.`,
-      'Stir well, cover, and chill for at least 4 hours or overnight.',
-      'Stir again before eating and add a splash of milk if it is too thick.',
-    ];
-  }
-
-  if (name.includes('smoothie')) {
-    return [
-      `Add ${ingredients} to a blender.`,
-      'Blend until smooth, adding a splash more milk or water if needed.',
-      'Pour into a glass or shaker and serve cold.',
-    ];
-  }
-
-  if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
-    return [
-      `Add the base ingredients to a bowl: ${ingredients}.`,
-      'Top with the fruit, nuts, seeds, or honey listed.',
-      'Eat straight away, or cover and chill for later the same day.',
-    ];
-  }
-
-  if (name.includes('toast') || name.includes('bagel') || name.includes('wrap') || name.includes('sandwich')) {
-    return [
-      'Toast or warm the bread, bagel, wrap, or pitta if preferred.',
-      `Prepare the filling ingredients: ${ingredients}.`,
-      'Layer the filling evenly, season to taste, and serve or wrap tightly for later.',
-    ];
-  }
-
-  if (name.includes('salad') || name.includes('bowl')) {
-    return [
-      `Wash and chop the salad or vegetable ingredients: ${ingredients}.`,
-      'Cook or warm any protein or grains listed, then let them cool slightly.',
-      'Combine everything in a bowl, season, and pack dressing separately if meal prepping.',
-    ];
-  }
-
-  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
-    return [
-      'Cook the pasta, rice, or noodles according to the packet instructions.',
-      `Meanwhile, prepare the remaining ingredients: ${ingredients}.`,
-      'Combine in a pan or bowl, heat through, season, and portion into containers if needed.',
-    ];
-  }
-
-  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
-    return [
-      `Prep the listed ingredients: ${ingredients}.`,
-      'Cook the protein and firmer vegetables in a pan for 5-8 minutes.',
-      'Add sauces, tins, stock, or pulses from the ingredient list and simmer until hot and thickened.',
-    ];
-  }
-
-  if (name.includes('egg') || name.includes('scramble') || name.includes('omelette')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Cook the eggs in a non-stick pan over medium heat, stirring or folding gently.',
-      'Serve with the listed bread, vegetables, or toppings.',
-    ];
-  }
-
-  if (isNoCook) {
-    return [
-      `Lay out the ingredients: ${ingredients}.`,
-      'Drain, slice, or portion anything that needs preparing.',
-      'Assemble in a bowl or container, season, and eat cold or microwave until hot if preferred.',
-    ];
-  }
-
-  return [
-    `Prepare the ingredients: ${ingredients}.`,
-    'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
-    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
-  ];
+  return buildPracticalRecipeSteps(meal);
 }
 
 // ── Lookups ───────────────────────────────────────────────────────────────────
@@ -1348,6 +1276,7 @@ export function getAllPlanMeta() {
     emphasis:      seed.emphasis,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
+    macrosGrams:   getSeedMacroGrams(seed),
   }));
 }
 

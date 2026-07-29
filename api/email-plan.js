@@ -3,7 +3,9 @@
 // the server so the browser cannot inject arbitrary email content.
 
 import { createHash } from 'node:crypto';
-import { getPlanBySlug, scalePlanForHousehold } from '../src/utils/planBuilder.js';
+import { mealPlansData } from '../src/data/mealPlans.js';
+import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../src/utils/planBuilder.js';
+import { buildCanonicalLegacyPlan } from '../src/utils/legacyPlanBuilder.js';
 import { SITE_CONTACT_EMAIL, SITE_NAME, SITE_URL } from '../src/constants/site.js';
 import {
   cleanEmail,
@@ -46,7 +48,7 @@ export default async function handler(req, res) {
   }
 
   const slug = cleanMeta(body.planSlug, 120);
-  const basePlan = getPlanBySlug(slug);
+  const basePlan = resolveEmailPlan(slug);
   if (!basePlan) {
     return res.status(404).json({ error: 'Plan not found.' });
   }
@@ -92,6 +94,32 @@ export default async function handler(req, res) {
   }
 }
 
+export function resolveEmailPlan(slug) {
+  const generatedPlan = getPlanBySlug(slug);
+  if (generatedPlan) return generatedPlan;
+
+  const legacy = mealPlansData[slug];
+  if (!legacy?.plan?.length) return null;
+  const plan = buildCanonicalLegacyPlan(legacy.plan, legacy.targetCalories);
+
+  return {
+    slug,
+    title: legacy.h1 || legacy.title,
+    calories: legacy.targetCalories,
+    priceEstimate: legacy.priceEstimate,
+    plan,
+    shoppingList: buildShoppingList(plan),
+    summary: {
+      ...(legacy.summary || {}),
+      calorieRange: `~${Number(legacy.targetCalories || 0).toLocaleString('en-GB')} kcal/day`,
+      budgetRange: legacy.priceEstimate,
+    },
+    seo: {
+      canonical: `${SITE_URL}/meal-plan/${slug}`,
+    },
+  };
+}
+
 function buildPlanEmailText({ plan, planUrl }) {
   const dayLines = (plan.plan || []).flatMap(day => [
     '',
@@ -109,6 +137,7 @@ function buildPlanEmailText({ plan, planUrl }) {
     plan.title,
     plan.summary?.calorieRange,
     `Budget estimate: ${plan.summary?.budgetRange || plan.priceEstimate}`,
+    'Cost note: this is a planning range, not a live checkout quote; pack sizes, offers, substitutions and cupboard staples affect the total.',
     `Cooking for: ${plan.householdLabel || plan.peopleLabel || '1 person'}`,
     '',
     `Open the plan: ${planUrl}`,
@@ -158,6 +187,7 @@ function buildPlanEmailHtml({ plan, planUrl }) {
       <div style="display:grid;gap:8px;margin:0 0 18px;color:#312d26;">
         <p style="margin:0;"><strong>Calories:</strong> ${escapeHtml(plan.summary?.calorieRange || `${plan.calories} kcal/day`)}</p>
         <p style="margin:0;"><strong>Budget:</strong> ${escapeHtml(plan.summary?.budgetRange || plan.priceEstimate)} estimate</p>
+        <p style="margin:0;color:#6b655a;"><strong>Cost note:</strong> planning range, not a live checkout quote. Pack sizes, offers, substitutions and cupboard staples affect the total.</p>
         <p style="margin:0;"><strong>Cooking for:</strong> ${escapeHtml(plan.householdLabel || plan.peopleLabel || '1 person')}</p>
       </div>
       ${dayHtml}

@@ -119,14 +119,14 @@ const DEFAULT_MACROS = { protein: '160', carbs: '180', fats: '60', fibre: '30' }
 
 export default function Quiz() {
   const navigate = useNavigate();
-  const [initialDraft] = useState(() => readQuizDraft());
-  const [step, setStep] = useState(() => initialDraft?.step || 0);
-  const [answers, setAnswers] = useState(() => initialDraft?.answers || {});
-  const [macros, setMacros] = useState(() => initialDraft?.macros || DEFAULT_MACROS);
-  const [macroMode, setMacroMode] = useState(() => initialDraft?.macroMode || null);
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [macros, setMacros] = useState(DEFAULT_MACROS);
+  const [macroMode, setMacroMode] = useState(null);
   const [macroError, setMacroError] = useState('');
-  const [customCalories, setCustomCalories] = useState(() => initialDraft?.customCalories || '');
+  const [customCalories, setCustomCalories] = useState('');
   const [customCalorieError, setCustomCalorieError] = useState('');
+  const [draftRestored, setDraftRestored] = useState(false);
   const startTrackedRef = useRef(false);
 
   const current = STEPS[step];
@@ -137,13 +137,26 @@ export default function Quiz() {
   );
 
   useEffect(() => {
+    const draft = readQuizDraft();
+    if (draft) {
+      setStep(draft.step || 0);
+      setAnswers(draft.answers || {});
+      setMacros(draft.macros || DEFAULT_MACROS);
+      setMacroMode(draft.macroMode || null);
+      setCustomCalories(draft.customCalories || '');
+    }
+    setDraftRestored(true);
+  }, []);
+
+  useEffect(() => {
     if (!startTrackedRef.current) {
-      track.quizStarted();
+      track.quizStarted({ page_type: 'quiz', cta_location: 'quiz_page' });
       startTrackedRef.current = true;
     }
   }, []);
 
   useEffect(() => {
+    if (!draftRestored) return;
     writeJson(QUIZ_DRAFT_KEY, {
       step,
       answers,
@@ -152,7 +165,7 @@ export default function Quiz() {
       customCalories,
       savedAt: Date.now(),
     });
-  }, [answers, customCalories, macroMode, macros, step]);
+  }, [answers, customCalories, draftRestored, macroMode, macros, step]);
 
   function handleSelect(value) {
     if (current.id === 'calories' && value === 'custom') {
@@ -233,7 +246,14 @@ export default function Quiz() {
     if (typeof window !== 'undefined') {
       window.localStorage.removeItem(QUIZ_DRAFT_KEY);
     }
-    track.quizCompleted();
+    track.quizCompleted({
+      goal: finalAnswers.goal,
+      supermarket: finalAnswers.supermarket,
+      calorie_target: finalAnswers.calories,
+      protein_target: finalAnswers.macros?.protein,
+      page_type: 'quiz',
+      cta_location: 'quiz_final_step',
+    });
     const encoded = btoa(JSON.stringify(finalAnswers));
     navigate(`/quiz/results?q=${encoded}`);
   }

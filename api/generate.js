@@ -12,6 +12,7 @@ import {
   validateGeneratedPlan,
 } from '../server/ai-validation.js';
 import { applyApiGuards } from './_guards.js';
+import { canonicaliseAiPlan, UnresolvedNutritionError } from '../server/canonical-nutrition.js';
 
 const ALLOWED_DIETS = new Set(['standard', 'vegetarian', 'vegan', 'pescatarian']);
 const ALLOWED_COOK_TIMES = new Set(['15', '30', '45', 'any']);
@@ -99,7 +100,7 @@ export default async function handler(req, res) {
     let buf = '';
     let fullContent = '';
 
-    outer: while (true) {
+    while (true) {
       const { done, value } = await reader.read();
       if (done) break;
 
@@ -127,7 +128,17 @@ export default async function handler(req, res) {
             sendEvent({ type: 'error', error: 'The generated plan was incomplete. Please try again.' });
             return res.end();
           }
-          sendEvent({ type: 'done', plan: parsed });
+          let canonical;
+          try {
+            canonical = canonicaliseAiPlan(parsed);
+          } catch (error) {
+            if (error instanceof UnresolvedNutritionError) {
+              sendEvent({ type: 'error', error: 'The generated plan used an ingredient without a verifiable quantity or nutrition match. Please try again.' });
+              return res.end();
+            }
+            throw error;
+          }
+          sendEvent({ type: 'done', plan: canonical });
           return res.end();
         }
 

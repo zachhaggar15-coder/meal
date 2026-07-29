@@ -12,13 +12,25 @@ import {
 // front-loads the three figures people compare on (calories, cost, effort), and
 // the plan name sits underneath as a caption. Keeping it in one component means
 // the design stays consistent across pages instead of drifting per page.
-export default function PlanCard({ plan }) {
+export default function PlanCard({ plan, sourcePage = 'plan_grid', ctaLocation = 'plan_card' }) {
   const family = planCardFamily(plan.goal);
   const goalShort = planGoalShort(plan.goal, plan.goalLabel);
   const hasDiet = plan.dietType && plan.dietType !== 'standard';
 
   return (
-    <Link to={`/plans/${plan.slug}`} className={`plan-card pc-${family}`}>
+    <Link
+      to={`/plans/${plan.slug}`}
+      className={`plan-card pc-${family}`}
+      data-event="plan_primary_cta_clicked"
+      data-source-page={sourcePage}
+      data-plan-slug={plan.slug}
+      data-supermarket={plan.supermarket}
+      data-goal={plan.goal}
+      data-calorie-target={plan.calories}
+      data-protein-target={plan.macrosGrams?.protein}
+      data-page-type="plan_discovery"
+      data-cta-location={ctaLocation}
+    >
       <div className="pc-banner">
         <span className="pc-goal">{goalShort}</span>
         <span className="pc-store">{planMarketShort(plan.supermarket)}</span>

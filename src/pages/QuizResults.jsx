@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { track } from '../utils/analytics.js';
@@ -73,7 +74,7 @@ export default function QuizResults() {
   const paramString = params.toString();
 
   const initialAnswers = useMemo(() => (
-    readAnswersFromParams(params) || readSavedAnswers() || {}
+    readAnswersFromParams(new URLSearchParams(paramString)) || readSavedAnswers() || {}
   ), [paramString]);
 
   const [answers, setAnswers] = useState(initialAnswers);
@@ -83,6 +84,20 @@ export default function QuizResults() {
   }, [initialAnswers]);
 
   const matches = useMemo(() => getTopMatches(answers, 3), [answers]);
+  const [best] = matches;
+
+  useEffect(() => {
+    if (!best) return;
+    track.quizResultViewed({
+      result_slug: best.slug,
+      plan_slug: best.slug,
+      supermarket: best.supermarket,
+      goal: best.goal,
+      calorie_target: best.calories,
+      protein_target: best.macrosGrams?.protein,
+      page_type: 'quiz_results',
+    });
+  }, [best]);
 
   function updateAnswer(field, value) {
     setAnswers(prev => {
@@ -103,7 +118,7 @@ export default function QuizResults() {
     );
   }
 
-  const [best, ...rest] = matches;
+  const rest = matches.slice(1);
 
   return (
     <>
@@ -145,16 +160,33 @@ export default function QuizResults() {
 
           <MacroBars macros={best.macrosGrams || best.macros} />
 
-          <Link to={`/plans/${best.slug}`} className="result-card-cta result-card-cta--primary">
+          <Link
+            to={`/plans/${best.slug}?source=quiz`}
+            className="result-card-cta result-card-cta--primary"
+            data-event="plan_primary_cta_clicked"
+            data-plan-slug={best.slug}
+            data-supermarket={best.supermarket}
+            data-goal={best.goal}
+            data-calorie-target={best.calories}
+            data-protein-target={best.macrosGrams?.protein}
+            data-page-type="quiz_results"
+            data-cta-location="best_match"
+          >
             View Full Plan →
           </Link>
         </div>
+
+        <EmailPlanCapture
+          plan={best}
+          sourcePage="quiz_results"
+          compact
+        />
 
         {/* Other matches */}
         {rest.length > 0 && (
           <h2 className="quiz-results-alt-heading">Other close matches</h2>
         )}
-        {rest.map((match, i) => (
+        {rest.map(match => (
           <div className="result-card result-card--alt" key={match.slug}>
             <div className="result-card-badge">{match.matchLabel}</div>
             <div className="result-card-score">{match.score}% match</div>
@@ -169,7 +201,15 @@ export default function QuizResults() {
               <span className="result-meta-pill">{EFFORT_LABELS[match.effort] || match.effort}</span>
             </div>
 
-            <Link to={`/plans/${match.slug}`} className="result-card-cta">
+            <Link
+              to={`/plans/${match.slug}?source=quiz`}
+              className="result-card-cta"
+              data-event="related_plan_clicked"
+              data-plan-slug={match.slug}
+              data-source-page="quiz-results"
+              data-page-type="quiz_results"
+              data-cta-location="alternative_match"
+            >
               View Plan →
             </Link>
           </div>

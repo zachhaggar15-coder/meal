@@ -45,7 +45,7 @@ function createCalorieHub({
     intro:
       `Use these ${calorieText} calorie meal plans when you want a clear UK supermarket week with recipes, macros, PDF export and a shopping list. The plans favour realistic meals, visible protein and portions you can actually shop for.`,
     match: { calories: matchCalories },
-    stats: [`${calorieText} kcal focus`, 'Printable PDF plans', 'Weekly shopping lists'],
+    stats: [bestFor, 'Printable PDF plans', 'Weekly shopping lists'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [

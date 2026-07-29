@@ -77,6 +77,8 @@ export default function ContainerQuickComparison({
             data-event="container_product_click"
             data-source-page={`${sourcePage}-snapshot`}
             data-offer={product.name}
+            data-affiliate-category="meal-prep-containers"
+            data-product-name={product.name}
             aria-label={`See ${product.shortName} on Amazon UK`}
           >
             <span>{sizeLabel}</span>
@@ -129,6 +131,8 @@ export default function ContainerQuickComparison({
                   data-event="container_product_click"
                   data-source-page={sourcePage}
                   data-offer={product.name}
+                  data-affiliate-category="meal-prep-containers"
+                  data-product-name={product.name}
                 >
                   See Amazon price
                 </a>

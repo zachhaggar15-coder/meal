@@ -1,9 +1,10 @@
-import { useId, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   WAITLIST_SUPERMARKETS,
   WAITLIST_GOALS,
   WAITLIST_FEATURES,
 } from '../data/waitlistOptions.js';
+import { track } from '../utils/analytics.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -18,6 +19,8 @@ async function safeJson(res) {
  */
 export default function WaitlistSection({ sourcePage = '', className = '', compact = false }) {
   const uid = useId();
+  const sectionRef = useRef(null);
+  const startedRef = useRef(false);
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [supermarket, setSupermarket] = useState('');
@@ -28,10 +31,36 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
 
   const sending = status === 'sending';
   const done = status === 'success' || status === 'duplicate';
+  const analyticsContext = useMemo(() => ({
+    source_page: sourcePage || 'unknown',
+    page_type: sourcePage || 'unknown',
+    cta_location: compact ? 'compact_waitlist' : 'waitlist',
+  }), [compact, sourcePage]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || typeof IntersectionObserver === 'undefined') return undefined;
+
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.35)) return;
+      track.waitlistViewed(analyticsContext);
+      observer.disconnect();
+    }, { threshold: [0.35] });
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [analyticsContext]);
+
+  function markStarted() {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    track.waitlistStarted(analyticsContext);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (sending) return;
+    markStarted();
 
     const cleanEmail = email.trim().toLowerCase();
     if (!EMAIL_RE.test(cleanEmail)) {
@@ -65,6 +94,12 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
       } else {
         setStatus('success');
       }
+      track.waitlistCompleted({
+        ...analyticsContext,
+        registration_status: data.duplicate ? 'duplicate' : 'new',
+        supermarket: supermarket || undefined,
+        goal: goal || undefined,
+      });
     } catch (err) {
       setStatus('error');
       setMessage(err.message || 'Something went wrong. Please try again.');
@@ -73,6 +108,7 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
 
   return (
     <section
+      ref={sectionRef}
       className={['waitlist', className].filter(Boolean).join(' ')}
       aria-labelledby={`${uid}-title`}
     >
@@ -80,19 +116,12 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
         <div className="waitlist-intro">
           <span className="waitlist-badge">MealPrep+ · Coming soon</span>
           <h2 id={`${uid}-title`} className="waitlist-title">
-            Meal planning without the weekly hassle.
+            Get next week's personalised plan automatically.
           </h2>
           <p className="waitlist-sub">
-            We're building <strong>MealPrep+</strong>, a low-cost weekly meal planning service designed
-            around UK supermarkets, realistic budgets, calories, protein targets and simple shopping lists.
-          </p>
-          <p className="waitlist-sub">
-            Instead of spending time every week deciding what to cook, you'll receive a complete weekly
-            meal plan with recipes, shopping lists and preparation instructions.
-          </p>
-          <p className="waitlist-sub">
-            Before building the full product, we're testing demand. Join the waitlist and we'll let you
-            know if MealPrep+ launches.
+            <strong>MealPrep+</strong> is a planned low-cost service that would send a fresh weekly
+            meal plan and shopping list built around your supermarket, budget, calories and protein
+            target. Join the waitlist to tell us this saved effort would be useful.
           </p>
 
           {!compact && (
@@ -139,6 +168,7 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
                   autoComplete="email"
                   required
                   value={email}
+                  onFocus={markStarted}
                   onChange={e => { setEmail(e.target.value); if (status === 'error') setStatus('idle'); }}
                   placeholder="you@example.com"
                   disabled={sending}
@@ -147,46 +177,50 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
                 />
               </div>
 
-              <div className="waitlist-field">
-                <label htmlFor={`${uid}-name`}>First name <span className="waitlist-optional">(optional)</span></label>
-                <input
-                  id={`${uid}-name`}
-                  type="text"
-                  autoComplete="given-name"
-                  value={firstName}
-                  onChange={e => setFirstName(e.target.value)}
-                  placeholder="Alex"
-                  disabled={sending}
-                />
-              </div>
+              {!compact && (
+                <>
+                  <div className="waitlist-field">
+                    <label htmlFor={`${uid}-name`}>First name <span className="waitlist-optional">(optional)</span></label>
+                    <input
+                      id={`${uid}-name`}
+                      type="text"
+                      autoComplete="given-name"
+                      value={firstName}
+                      onChange={e => setFirstName(e.target.value)}
+                      placeholder="Alex"
+                      disabled={sending}
+                    />
+                  </div>
 
-              <div className="waitlist-field-row">
-                <div className="waitlist-field">
-                  <label htmlFor={`${uid}-supermarket`}>Favourite supermarket <span className="waitlist-optional">(optional)</span></label>
-                  <select
-                    id={`${uid}-supermarket`}
-                    value={supermarket}
-                    onChange={e => setSupermarket(e.target.value)}
-                    disabled={sending}
-                  >
-                    <option value="">Select…</option>
-                    {WAITLIST_SUPERMARKETS.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                </div>
+                  <div className="waitlist-field-row">
+                    <div className="waitlist-field">
+                      <label htmlFor={`${uid}-supermarket`}>Favourite supermarket <span className="waitlist-optional">(optional)</span></label>
+                      <select
+                        id={`${uid}-supermarket`}
+                        value={supermarket}
+                        onChange={e => setSupermarket(e.target.value)}
+                        disabled={sending}
+                      >
+                        <option value="">Select…</option>
+                        {WAITLIST_SUPERMARKETS.map(s => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                    </div>
 
-                <div className="waitlist-field">
-                  <label htmlFor={`${uid}-goal`}>Primary goal <span className="waitlist-optional">(optional)</span></label>
-                  <select
-                    id={`${uid}-goal`}
-                    value={goal}
-                    onChange={e => setGoal(e.target.value)}
-                    disabled={sending}
-                  >
-                    <option value="">Select…</option>
-                    {WAITLIST_GOALS.map(g => <option key={g} value={g}>{g}</option>)}
-                  </select>
-                </div>
-              </div>
+                    <div className="waitlist-field">
+                      <label htmlFor={`${uid}-goal`}>Primary goal <span className="waitlist-optional">(optional)</span></label>
+                      <select
+                        id={`${uid}-goal`}
+                        value={goal}
+                        onChange={e => setGoal(e.target.value)}
+                        disabled={sending}
+                      >
+                        <option value="">Select…</option>
+                        {WAITLIST_GOALS.map(g => <option key={g} value={g}>{g}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
 
               {/* Honeypot — hidden from real users */}
               <div className="waitlist-honeypot" aria-hidden="true">

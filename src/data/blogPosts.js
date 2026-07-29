@@ -1671,28 +1671,28 @@ export const blogPostsData = {
     title: 'Anti-Inflammatory Diet UK: 7-Day Meal Plan & Food List',
     description: 'Anti-inflammatory diet UK guide — what to eat, what to avoid, and a 7-day meal plan built around omega-3-rich, whole foods. Free personalised plan generator.',
     h1: 'Anti-Inflammatory Diet UK: Foods, Meal Plan, and What the Research Says',
-    intro: 'Chronic low-grade inflammation is linked to a wide range of conditions including heart disease, type 2 diabetes, joint pain, fatigue, and cognitive decline. An anti-inflammatory diet addresses this at its root by loading your meals with foods that reduce inflammatory markers and eliminating those that drive them up. This guide explains exactly which foods to eat and avoid, the research behind them, and a practical 7-day UK meal plan using readily available supermarket ingredients.',
+    intro: '“Anti-inflammatory” is commonly used for a Mediterranean-style eating pattern rich in vegetables, fruit, wholegrains, pulses, nuts, olive oil and oily fish. Food is not a treatment for inflammatory disease, and individual foods do not reliably control symptoms. This guide offers general UK meal-planning ideas based on that overall pattern; anyone managing a condition or persistent symptoms should seek individual clinical advice.',
     sections: [
       {
         h2: 'What is an Anti-Inflammatory Diet?',
         paragraphs: [
-          'An anti-inflammatory diet is not a single rigid protocol — it is a way of eating that prioritises foods rich in antioxidants, omega-3 fatty acids, fibre, and phytonutrients while minimising ultra-processed foods, refined sugars, and industrial seed oils. The Mediterranean diet is the most researched anti-inflammatory eating pattern, but a UK-adapted version built around familiar supermarket staples is equally effective.',
-          'The key mechanism is simple: certain foods trigger the release of inflammatory cytokines (chemical messengers that promote inflammation), while others suppress them. A diet high in refined carbohydrates, trans fats, and processed meats consistently raises inflammatory markers such as C-reactive protein (CRP) and interleukin-6. A diet rich in oily fish, leafy greens, berries, nuts, and olive oil consistently lowers them.',
+          'There is no single clinical “anti-inflammatory diet”. The term usually describes an overall Mediterranean-style pattern that prioritises vegetables, fruit, wholegrains, pulses, nuts, olive oil and fish while limiting heavily processed foods.',
+          'Research considers the whole eating pattern rather than treating one food as a medicine. The practical value here is a varied, fibre-rich weekly plan, not a promise to prevent, treat or cure disease.',
         ],
       },
       {
         h2: 'The Best Anti-Inflammatory Foods Available in UK Supermarkets',
         paragraphs: [
-          'These are the highest-impact anti-inflammatory foods, all widely available at Tesco, Aldi, Sainsbury\'s, and Asda:',
+          'These foods fit a Mediterranean-style pattern and are widely available at major UK supermarkets:',
         ],
         bullets: [
-          'Oily fish (salmon, mackerel, sardines, trout): the richest dietary source of long-chain omega-3 fatty acids (EPA and DHA), which directly suppress inflammatory pathways. Aim for 2–3 portions per week.',
-          'Extra-virgin olive oil: high in oleocanthal, a compound with anti-inflammatory properties similar to ibuprofen. Use as your primary cooking and dressing oil.',
-          'Berries (blueberries, strawberries, raspberries, blackberries): extremely high in anthocyanins and other flavonoids that reduce oxidative stress and inflammation. Fresh or frozen are equally effective.',
+          'Oily fish (salmon, mackerel, sardines, trout): a dietary source of long-chain omega-3 fatty acids (EPA and DHA). Follow current NHS guidance on fish portions and pregnancy-related limits.',
+          'Extra-virgin olive oil: a practical unsaturated fat for dressings and lower-temperature cooking; it should not be compared with medicine.',
+          'Berries (blueberries, strawberries, raspberries, blackberries): fruit containing fibre and a range of polyphenols. Fresh and frozen both work in meal prep.',
           'Leafy greens (spinach, kale, rocket): rich in vitamin K, magnesium, and carotenoids, all of which help modulate inflammatory responses.',
           'Walnuts and almonds: provide omega-3 ALA (plant-based), vitamin E, and polyphenols. A 30 g daily portion consistently reduces inflammatory markers in clinical trials.',
-          'Turmeric: curcumin, the active compound, has potent anti-inflammatory effects comparable to some NSAIDs in research settings. Combine with black pepper (piperine) to increase bioavailability by up to 2,000%.',
-          'Green tea: EGCG (epigallocatechin gallate) is one of the most well-studied anti-inflammatory phytonutrients. 2–3 cups per day shows meaningful effects in research.',
+          'Turmeric: a flavouring that can add variety to curries, soups and grains. Normal culinary use is not equivalent to a curcumin supplement or an anti-inflammatory medicine.',
+          'Green tea: an optional unsweetened drink; evidence about specific clinical effects does not make it a treatment.',
           'Wholegrains (oats, brown rice, quinoa): provide resistant starch and fibre that feed beneficial gut bacteria, reducing gut permeability and systemic inflammation.',
         ],
       },
@@ -1726,10 +1726,10 @@ export const blogPostsData = {
         ],
       },
       {
-        h2: 'How Long Does It Take to See Results?',
+        h2: 'What Results Can This Plan Claim?',
         paragraphs: [
-          'Research shows measurable reductions in inflammatory markers (CRP, IL-6) within 2–4 weeks of consistent anti-inflammatory eating. Clinical improvements — reduced joint pain, better energy, improved sleep — are typically reported within 4–8 weeks. Full metabolic benefits accrue over months of sustained dietary change.',
-          'Use our free meal plan generator to build a personalised anti-inflammatory plan. Select the Anti-Inflammatory goal category and choose your preferred supermarket to receive a complete 7-day plan with shopping list.',
+          'This general meal plan cannot predict changes in blood markers, pain, energy or sleep. Those outcomes depend on health status and require appropriate clinical assessment.',
+          'Use the plan generator for a Mediterranean-style week with a shopping list. It is general planning information, not personalised treatment.',
         ],
       },
     ],
@@ -1741,17 +1741,17 @@ export const blogPostsData = {
     ],
     faq: [
       { q: 'What is the best anti-inflammatory diet in the UK?', a: 'The Mediterranean-style diet is the most researched. For UK shoppers this means eating oily fish (salmon, mackerel, sardines) 2–3 times per week, using extra-virgin olive oil as your primary fat, eating plenty of leafy greens and berries, choosing wholegrains, and limiting ultra-processed foods, sugary drinks, and processed meats.' },
-      { q: 'Which foods reduce inflammation most effectively?', a: 'The highest-impact anti-inflammatory foods are oily fish (omega-3 EPA and DHA), extra-virgin olive oil (oleocanthal), berries (anthocyanins), walnuts (omega-3 ALA and polyphenols), turmeric with black pepper (curcumin), and leafy greens (vitamin K and carotenoids). All are available in UK supermarkets.' },
-      { q: 'How long does an anti-inflammatory diet take to work?', a: 'Measurable reductions in inflammatory markers (CRP, IL-6) typically appear within 2–4 weeks of consistent anti-inflammatory eating. Clinical improvements like reduced joint pain and better energy are usually felt within 4–8 weeks. Full metabolic benefits build over months of sustained dietary change.' },
+      { q: 'Which foods fit a Mediterranean-style plan?', a: 'A varied pattern can include vegetables, fruit, pulses, wholegrains, nuts, olive oil and oily fish. No single food should be presented as a treatment for inflammation.' },
+      { q: 'How long does an anti-inflammatory diet take to work?', a: 'A general meal plan cannot predict a clinical result or timeline. Speak to a qualified healthcare professional about persistent symptoms or a diagnosed inflammatory condition.' },
     ],
   },
 
   'menopause-diet-plan-uk': {
     published: '2026-05-30',
-    title: 'Menopause Diet Plan UK: What to Eat for Hormonal Balance',
-    description: 'Menopause diet plan UK — the best foods for managing symptoms, protecting bone density, and supporting weight management during perimenopause and menopause. Generate a free plan.',
-    h1: 'Menopause Diet Plan UK: What to Eat for Hormonal Balance and Weight Management',
-    intro: 'Menopause brings significant hormonal shifts that affect metabolism, bone density, muscle mass, and weight distribution. The right diet can meaningfully reduce common symptoms including hot flushes, poor sleep, low energy, and weight gain — while protecting long-term health. This guide explains the evidence-based dietary approach for perimenopausal and postmenopausal women in the UK, with practical meal ideas using everyday supermarket ingredients.',
+    title: 'Menopause Nutrition UK: Practical Food Planning',
+    description: 'General menopause nutrition planning with protein, fibre and calcium-rich foods, plus cautious weight-management guidance and everyday UK meal ideas.',
+    h1: 'Menopause Nutrition UK: Practical Food Planning and Weight Management',
+    intro: 'Menopause can affect health, appetite and body composition differently for each person. Food can support adequate protein, fibre, calcium and vitamin D intake, but this meal-planning guide does not claim to balance hormones or treat hot flushes, sleep problems or other symptoms. Speak to a GP or registered dietitian for persistent symptoms, bone-health concerns or individual clinical needs.',
     sections: [
       {
         h2: 'How Menopause Changes Your Nutritional Needs',
@@ -1775,10 +1775,10 @@ export const blogPostsData = {
         ],
       },
       {
-        h2: 'Foods That May Reduce Menopause Symptoms',
+        h2: 'Foods Commonly Included in Menopause Nutrition Guidance',
         paragraphs: [
-          'Beyond general nutritional targets, certain foods have specific evidence for reducing menopausal symptoms:',
-          'Soy foods (tofu, edamame, soy milk): contain isoflavones (genistein and daidzein) that act as weak phytoestrogens. Meta-analyses suggest 40–80 mg of soy isoflavones per day can reduce hot flush frequency by 20–30% in some women. Tofu is available at all major UK supermarkets for around £1.50–2.50 per block.',
+          'These foods can help build a varied pattern, but individual responses differ and they should not be presented as a substitute for clinical treatment:',
+          'Soy foods (tofu, edamame, soy milk): contain isoflavones and can be useful sources of protein. Evidence on hot flushes is mixed, so this guide does not promise a symptom reduction.',
           'Flaxseeds (linseeds): contain lignans with phytoestrogenic activity. 1–2 tablespoons per day, ground, added to yogurt or porridge. Tesco and Aldi sell ground flaxseed for around £1.50–2 per 250 g.',
           'Calcium-rich dairy and fortified alternatives: protecting bone density is the most evidence-backed dietary priority for postmenopausal women. Aim for 3 servings of calcium-rich foods per day.',
         ],
@@ -1815,8 +1815,8 @@ export const blogPostsData = {
       { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
     ],
     faq: [
-      { q: 'What should I eat during menopause to lose weight?', a: 'Focus on high protein (1.2–1.6g/kg/day) to counteract muscle loss, reduce refined carbohydrates to improve insulin sensitivity, eliminate alcohol to reduce visceral fat storage, and ensure adequate calcium (700–1,200mg/day) and vitamin D (supplement with 10–25mcg daily). A modest 200–300 calorie daily deficit is usually sufficient to halt menopausal weight gain.' },
-      { q: 'Which foods help with menopause hot flushes?', a: 'Soy foods (tofu, edamame, soy milk) contain isoflavones that may reduce hot flush frequency by 20–30% in some women. Ground flaxseed (1–2 tablespoons daily) provides lignans with phytoestrogenic activity. Both are worth trying for 6–8 weeks — effects vary significantly between individuals.' },
+      { q: 'What should I eat during menopause to manage weight?', a: 'Build meals around adequate protein, vegetables, fibre-rich carbohydrates and suitable portions. Calorie needs and safe deficits vary, so use the calculator only as a starting estimate and seek individual advice where health or medication affects weight.' },
+      { q: 'Which foods help with menopause hot flushes?', a: 'No food can be promised to treat hot flushes. Soy foods and ground flaxseed can fit a balanced diet, but evidence and individual responses vary; discuss persistent symptoms with a GP.' },
       { q: 'How much calcium do I need during menopause?', a: 'The NHS recommends 700mg of calcium per day for adults, but many experts recommend 1,000–1,200mg for postmenopausal women to support bone density. Best UK sources: low-fat Greek yogurt (120mg/100g), skimmed milk (120mg/100ml), tinned sardines with bones (350mg/100g), and kale (150mg/100g cooked).' },
     ],
   },

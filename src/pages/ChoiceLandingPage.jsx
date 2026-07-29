@@ -6,7 +6,6 @@ import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   buildBrowsePlanUrl,
-  CALORIE_CHOICES,
   getCalorieChoice,
   getDietChoice,
   getIndexedSupermarketChoice,
@@ -141,7 +140,19 @@ export default function ChoiceLandingPage({ mode }) {
                   <span>{card.plan.dietType === 'standard' ? 'Standard diet' : cap(card.plan.dietType)}</span>
                 </div>
                 <div className="plan-chooser-actions">
-                  <Link className="btn-primary" to={`/plans/${card.plan.slug}`}>
+                  <Link
+                    className="btn-primary"
+                    to={`/plans/${card.plan.slug}`}
+                    data-event="plan_primary_cta_clicked"
+                    data-source-page={`${mode}-${config.choice.value}`}
+                    data-plan-slug={card.plan.slug}
+                    data-supermarket={card.plan.supermarket}
+                    data-goal={card.plan.goal}
+                    data-calorie-target={card.plan.calories}
+                    data-protein-target={card.plan.macrosGrams?.protein}
+                    data-page-type="choice_landing"
+                    data-cta-location="plan_card"
+                  >
                     View plan
                   </Link>
                   <Link className="plan-chooser-change" to={card.changeUrl}>

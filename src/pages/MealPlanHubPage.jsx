@@ -146,7 +146,16 @@ export default function MealPlanHubPage() {
             {hub.stats.map(stat => <span key={stat}>{stat}</span>)}
           </div>
           <div className="meal-hub-actions">
-            <a className="btn-primary" href="#top-plans">Compare top plans</a>
+            <a
+              className="btn-primary"
+              href="#top-plans"
+              data-event="plan_primary_cta_clicked"
+              data-source-page={`meal-plan-hub-${hub.slug}`}
+              data-page-type="meal_plan_hub"
+              data-cta-location="hero"
+            >
+              View the best matching plans
+            </a>
             <Link className="btn-secondary" to="/quiz">Find my best match</Link>
           </div>
         </header>
@@ -181,7 +190,7 @@ export default function MealPlanHubPage() {
 
           <div className="meal-hub-grid">
             {shownPlans.map(plan => (
-              <PlanCard key={plan.slug} plan={plan} />
+              <PlanCard key={plan.slug} plan={plan} sourcePage={`meal-plan-hub-${hub.slug}`} />
             ))}
           </div>
         </section>

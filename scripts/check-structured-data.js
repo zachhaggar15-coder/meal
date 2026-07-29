@@ -23,15 +23,22 @@ const htmlFiles = findHtmlFiles(dist)
 const errors = [];
 let productCount = 0;
 let pagesWithProducts = 0;
+let recipeCount = 0;
+let pagesWithRecipes = 0;
 
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, 'utf8');
   const route = routeFromFile(file);
   const structuredData = extractJsonLd(html, route);
   const products = structuredData.flatMap(item => collectProducts(item));
+  const recipes = structuredData.flatMap(item => collectTypedNodes(item, 'Recipe'));
 
   if (products.length) pagesWithProducts += 1;
+  if (recipes.length) pagesWithRecipes += 1;
   productCount += products.length;
+  recipeCount += recipes.length;
+
+  validateDuplicateRootBlocks(structuredData, route);
 
   for (const { value, jsonPath } of products) {
     const eligibility = productRichResultEligibility(value);
@@ -45,25 +52,50 @@ for (const file of htmlFiles) {
       keys: Object.keys(value).sort().join(', '),
     });
   }
+
+  for (const { value, jsonPath } of recipes) {
+    const eligibility = recipeEligibility(value);
+    if (!eligibility.ok) {
+      errors.push({
+        route,
+        name: value.name || value['@id'] || '(unnamed Recipe)',
+        jsonPath,
+        reason: eligibility.reason,
+        keys: Object.keys(value).sort().join(', '),
+      });
+    }
+
+    if (
+      route.startsWith('/plans/') &&
+      value.url &&
+      normalisePath(new URL(value.url, 'https://www.mealprep.org.uk').pathname) === route
+    ) {
+      errors.push({
+        route,
+        name: value.name || '(unnamed Recipe)',
+        jsonPath,
+        reason: 'a seven-day plan must not be described as one Recipe',
+        keys: Object.keys(value).sort().join(', '),
+      });
+    }
+  }
 }
 
 if (errors.length) {
-  console.error(`\ncheck-structured-data FAILED with ${errors.length} invalid Product item(s):`);
+  console.error(`\ncheck-structured-data FAILED with ${errors.length} structured-data issue(s):`);
   for (const error of errors.slice(0, 40)) {
     console.error(`  - ${error.route}: ${error.name}`);
     console.error(`    ${error.jsonPath} ${error.reason}; keys: ${error.keys}`);
   }
   if (errors.length > 40) console.error(`  ...and ${errors.length - 40} more`);
-  console.error(
-    '\nEach Product JSON-LD item must include offers, aggregateRating, or ' +
-    'a Google-compatible review with a Person or Team author.\n',
-  );
+  console.error('\nFix invalid, incomplete or duplicated structured data before deploying.\n');
   process.exit(1);
 }
 
 console.log(
   `check-structured-data passed: ${pagesWithProducts} pages contain ` +
-  `${productCount} valid Product item(s).`,
+  `${productCount} valid Product item(s); ${pagesWithRecipes} pages contain ` +
+  `${recipeCount} sufficiently detailed Recipe item(s).`,
 );
 
 function findHtmlFiles(dir) {
@@ -132,6 +164,59 @@ function collectProducts(value, products = [], jsonPath = '$') {
   return products;
 }
 
+function collectTypedNodes(value, requestedType, nodes = [], jsonPath = '$') {
+  if (!value || typeof value !== 'object') return nodes;
+
+  const types = toArray(value['@type']);
+  if (types.includes(requestedType)) nodes.push({ value, jsonPath });
+
+  for (const [key, child] of Object.entries(value)) {
+    if (Array.isArray(child)) {
+      child.forEach((item, index) => collectTypedNodes(item, requestedType, nodes, `${jsonPath}.${key}[${index}]`));
+    } else {
+      collectTypedNodes(child, requestedType, nodes, `${jsonPath}.${key}`);
+    }
+  }
+
+  return nodes;
+}
+
+function validateDuplicateRootBlocks(items, route) {
+  const seen = new Set();
+
+  items.forEach((item, index) => {
+    const fingerprint = JSON.stringify(item);
+    if (!seen.has(fingerprint)) {
+      seen.add(fingerprint);
+      return;
+    }
+
+    errors.push({
+      route,
+      name: item.name || item['@id'] || `JSON-LD script ${index + 1}`,
+      jsonPath: `$[${index}]`,
+      reason: 'duplicate structured-data root block',
+      keys: Object.keys(item).sort().join(', '),
+    });
+  });
+}
+
+function recipeEligibility(recipe) {
+  if (!String(recipe.name || '').trim()) return { ok: false, reason: 'missing recipe name' };
+  if (!toArray(recipe.recipeIngredient).filter(Boolean).length) {
+    return { ok: false, reason: 'missing recipe ingredients' };
+  }
+  if (!toArray(recipe.recipeInstructions).filter(Boolean).length) {
+    return { ok: false, reason: 'missing recipe instructions' };
+  }
+  if (!String(recipe.recipeYield || '').trim()) return { ok: false, reason: 'missing recipe yield' };
+  if (!recipe.prepTime && !recipe.cookTime && !recipe.totalTime) {
+    return { ok: false, reason: 'missing preparation or cooking time' };
+  }
+  if (!toArray(recipe.image).filter(Boolean).length) return { ok: false, reason: 'missing recipe image' };
+  return { ok: true };
+}
+
 function productRichResultEligibility(product) {
   if (product.offers) return { ok: true };
   if (product.aggregateRating) return { ok: true };
@@ -164,4 +249,9 @@ function isGoogleCompatibleReviewAuthor(author) {
 function toArray(value) {
   if (Array.isArray(value)) return value;
   return value ? [value] : [];
+}
+
+function normalisePath(value) {
+  if (!value || value === '/') return '/';
+  return `/${String(value).replace(/^\//, '').replace(/\/$/, '')}`;
 }

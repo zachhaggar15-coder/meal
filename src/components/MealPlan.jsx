@@ -60,7 +60,9 @@ export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
       setCopied(true);
       track.planCopied();
       setTimeout(() => setCopied(false), 2000);
-    } catch {}
+    } catch {
+      // Clipboard access is best-effort; the plan remains visible.
+    }
   }
 
   async function copyAll() {
@@ -75,7 +77,9 @@ export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
       setCopiedAll(true);
       track.planCopied();
       setTimeout(() => setCopiedAll(false), 2000);
-    } catch {}
+    } catch {
+      // Clipboard access is best-effort; the plan remains visible.
+    }
   }
 
   async function sharePlan() {
@@ -89,7 +93,9 @@ export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
         setShared(true);
         track.shareClicked();
         setTimeout(() => setShared(false), 2000);
-      } catch {}
+      } catch {
+        // A cancelled native share is not an application error.
+      }
     } else {
       await copyPlan();
     }

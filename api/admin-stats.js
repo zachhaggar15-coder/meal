@@ -287,7 +287,6 @@ function buildJourneySummary(group) {
   const categories = unique(events.map(event => event.page_category).filter(Boolean));
   const entryCategory = categorisePath(session.entry_path || paths[0] || '');
   const beyondCategories = categories.filter(category => category && category !== entryCategory && category !== 'admin');
-  const pageViews = events.filter(event => event.event_name === 'page_view');
   const clicks = events.filter(isClickEvent);
   const searches = events.filter(isSearchEvent);
   const exits = events.filter(event => event.event_name === 'page_exit');

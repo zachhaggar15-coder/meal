@@ -15,6 +15,7 @@ import { buildPlan, getAllPlanMeta } from '../src/utils/planBuilder.js';
 import redirectConfig from '../vercel.json' with { type: 'json' };
 import protectedUrls from '../src/data/protectedUrls.json' with { type: 'json' };
 import { isBudgetTierAllowed, lowestBudgetTierFor } from '../src/data/supermarketProfiles.js';
+import { calorieTargetResult } from '../src/utils/targetValidation.js';
 
 const sourceByName = new Map(MEALS.map(meal => [meal.name, meal]));
 const seedSlugs = new Set(PLAN_SEEDS.map(seed => seed.slug));
@@ -39,10 +40,6 @@ for (const seed of detailCheckSeeds) {
       errors.push(`${seed.slug}: ${day.day} has too few meals`);
     }
 
-    if (day.totals?.kcal !== seed.calories) {
-      errors.push(`${seed.slug}: ${day.day} totals ${day.totals?.kcal} kcal, expected ${seed.calories}`);
-    }
-
     for (const meal of day.meals || []) {
       const text = [
         meal.type,
@@ -57,6 +54,19 @@ for (const seed of detailCheckSeeds) {
         errors.push(`${seed.slug}: ${day.day} contains broken text in ${meal.name}`);
       }
     }
+  }
+
+  const calorieCheck = calorieTargetResult(plan.plan, seed.calories);
+  if (!calorieCheck.eligible) {
+    const mean = calorieCheck.meanDifferencePercent;
+    const worstDay = Math.max(
+      ...calorieCheck.dayDifferencesPercent.map(difference => Math.abs(difference)),
+      0,
+    );
+    errors.push(
+      `${seed.slug}: calorie target outside release tolerance ` +
+      `(mean ${mean?.toFixed(2) ?? 'n/a'}%, worst day ${worstDay.toFixed(2)}%)`,
+    );
   }
 
   for (const [group, items] of Object.entries(plan.shoppingList || {})) {

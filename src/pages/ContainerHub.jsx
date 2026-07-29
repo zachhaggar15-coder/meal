@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
+import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerFinder from '../components/ContainerFinder.jsx';
 import ContainerGuideNav from '../components/ContainerGuideNav.jsx';
@@ -246,6 +247,19 @@ export default function ContainerHub() {
             showQuickComparison={false}
           />
         </div>
+
+        <ContextualNextStep
+          eyebrow="Match the setup"
+          title="Work out how many containers your week needs"
+          description="Count the lunches, dinners, sauce tubs and freezer spares before choosing a set size."
+          primary={{ to: '/tools#container-count-calculator', label: 'Calculate my container count' }}
+          secondary={[
+            { to: '/quiz', label: 'Find a weekly meal plan first' },
+            { to: '#setup-heading', label: 'See the starter setups' },
+          ]}
+          pageType="container-hub"
+          className="container-contextual-next-step"
+        />
 
         <ContainerGuideNav currentSlug="hub" />
 

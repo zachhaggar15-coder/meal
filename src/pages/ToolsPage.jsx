@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
@@ -8,6 +8,7 @@ import { BUDGET_CONTAINERS, MEAL_PREP_STICKERS, MID_RANGE_CONTAINERS } from '../
 import { buildBrowsePlanUrl } from '../data/planChooser.js';
 import { CONTAINER_TIER_COPY, getContainerRecommendation } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { track } from '../utils/analytics.js';
 import {
   PROTEIN_FOODS,
   PRICE_CHECKED_DATE,
@@ -211,6 +212,8 @@ const jsonLd = [
 
 export default function ToolsPage() {
   const location = useLocation();
+  const containerResultRef = useRef(null);
+  const containerStartedRef = useRef(false);
   const [sex, setSex] = useState('female');
   const [age, setAge] = useState(35);
   const [height, setHeight] = useState(170);
@@ -317,6 +320,39 @@ export default function ToolsPage() {
   }, [proteinCompareIds, proteinTargetG]);
 
   const bestProteinValue = proteinCompareRows[0];
+  const midpointProteinTarget = Math.round(((proteinResult.low + proteinResult.high) / 2) / 5) * 5;
+
+  useEffect(() => {
+    const result = containerResultRef.current;
+    if (!result || typeof IntersectionObserver === 'undefined') return undefined;
+
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.4)) return;
+      track.containerRecommendationViewed({
+        source_page: 'tools-container-recommender',
+        page_type: 'tools',
+        recommended_tier: containerTier,
+        container_count: containerResult,
+        cta_location: 'container_calculator_result',
+      });
+      observer.disconnect();
+    }, { threshold: [0.4] });
+
+    observer.observe(result);
+    return () => observer.disconnect();
+  }, [containerResult, containerTier]);
+
+  function updateContainerInput(setter, value) {
+    if (!containerStartedRef.current) {
+      containerStartedRef.current = true;
+      track.containerRecommenderStarted({
+        source_page: 'tools-container-recommender',
+        page_type: 'tools',
+        cta_location: 'container_calculator',
+      });
+    }
+    setter(value);
+  }
 
   function updateProteinCompareSlot(index, id) {
     setProteinCompareIds(ids => ids.map((current, i) => (i === index ? id : current)));
@@ -587,21 +623,27 @@ export default function ToolsPage() {
                 'High-protein plans are easiest when the weekly shop includes eggs, yogurt, fish, chicken, tofu, beans or lentils.',
               ]}
             />
-            <Link className="btn-primary" to={buildBrowsePlanUrl({ goal: proteinGoal === 'gain' ? 'muscle-gain' : 'high-protein-low-cal' })}>
-              Browse high protein plans
+            <Link
+              className="btn-primary"
+              to={buildBrowsePlanUrl({
+                goal: proteinGoal === 'gain' ? 'muscle-gain' : 'high-protein-low-cal',
+                search: `${midpointProteinTarget}g protein`,
+              })}
+            >
+              Browse plans near {midpointProteinTarget}g protein
             </Link>
           </section>
 
-          <section id="container-count-calculator" className="tool-panel">
+          <section id="container-count-calculator" className="tool-panel" ref={containerResultRef}>
             <h2>Container Count Recommender</h2>
             <div className="tool-fields">
-              <NumberField label="Prep days" value={prepDays} onChange={setPrepDays} min={1} max={7} suffix="days" />
-              <NumberField label="Meals per day" value={mealsPerDay} onChange={setMealsPerDay} min={1} max={4} suffix="meals" />
-              <NumberField label="Spares" value={spareContainers} onChange={setSpareContainers} min={0} max={10} suffix="extra" />
+              <NumberField label="Prep days" value={prepDays} onChange={value => updateContainerInput(setPrepDays, value)} min={1} max={7} suffix="days" />
+              <NumberField label="Meals per day" value={mealsPerDay} onChange={value => updateContainerInput(setMealsPerDay, value)} min={1} max={4} suffix="meals" />
+              <NumberField label="Spares" value={spareContainers} onChange={value => updateContainerInput(setSpareContainers, value)} min={0} max={10} suffix="extra" />
               <Select
                 label="Main use"
                 value={containerUseCase}
-                onChange={setContainerUseCase}
+                onChange={value => updateContainerInput(setContainerUseCase, value)}
                 options={[
                   ['work', 'Work lunches'],
                   ['microwave', 'Reheating meals'],
@@ -612,7 +654,7 @@ export default function ToolsPage() {
               <Select
                 label="Material"
                 value={containerMaterial}
-                onChange={setContainerMaterial}
+                onChange={value => updateContainerInput(setContainerMaterial, value)}
                 options={[
                   ['either', 'Either'],
                   ['plastic', 'Plastic'],
@@ -622,7 +664,7 @@ export default function ToolsPage() {
               <Select
                 label="Budget"
                 value={containerBudget}
-                onChange={setContainerBudget}
+                onChange={value => updateContainerInput(setContainerBudget, value)}
                 options={[
                   ['low', 'Lowest cost'],
                   ['mid', 'Best value'],
@@ -646,6 +688,8 @@ export default function ToolsPage() {
                 data-event={containerOffer.eventName}
                 data-source-page="tools-container-recommender"
                 data-offer={containerOffer.name}
+                data-affiliate-category="meal-prep-containers"
+                data-product-name={containerOffer.name}
               >
                 View matched pick on Amazon UK
               </a>

@@ -87,6 +87,23 @@ export default function About() {
           </p>
         </section>
 
+        <section id="meal-plan-costs">
+          <h2>How Our Meal-Plan Costs Are Estimated</h2>
+          <p>
+            Weekly costs on generated plans are broad planning ranges based on the plan's
+            budget tier and the UK supermarket it targets. They are not a live basket quote
+            and should not be read as the exact amount charged at checkout.
+          </p>
+          <p>
+            The range can assume that small amounts of common cupboard staples, such as oil,
+            seasoning or sauces, are already available. It also cannot precisely account for
+            every pack-size leftover. Your actual spend will change with the brands and pack
+            sizes you choose, substitutions, promotions, regional prices and what is already
+            in your kitchen. Check the current shelf or online price before shopping when the
+            exact total matters.
+          </p>
+        </section>
+
         <section>
           <h2>Contact and Corrections</h2>
           <p>

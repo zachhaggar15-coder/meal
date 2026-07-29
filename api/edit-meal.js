@@ -10,6 +10,7 @@ import {
   parseJsonObject,
   validateEditedMealPayload,
 } from '../server/ai-validation.js';
+import { canonicaliseAiMeal, UnresolvedNutritionError } from '../server/canonical-nutrition.js';
 import { applyApiGuards } from './_guards.js';
 
 const MAX_MEAL_JSON_SIZE = 16000;
@@ -105,7 +106,16 @@ Rules:
       return res.status(502).json({ error: 'The updated meal was incomplete. Please try again.' });
     }
 
-    return res.status(200).json({ meal: parsed.meal });
+    try {
+      return res.status(200).json({ meal: canonicaliseAiMeal(parsed.meal) });
+    } catch (error) {
+      if (error instanceof UnresolvedNutritionError) {
+        return res.status(502).json({
+          error: 'The updated meal used an ingredient without a verifiable quantity or nutrition match. Please try a more specific edit.',
+        });
+      }
+      throw error;
+    }
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Something went wrong. Please try again.' });

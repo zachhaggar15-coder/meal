@@ -9,12 +9,20 @@ import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
+import ContextualNextStep from '../components/ContextualNextStep.jsx';
+import CostEstimateNote from '../components/CostEstimateNote.jsx';
+import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import NotFound from './NotFound.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
-import { buildShoppingList, scaleIngredientsForPortion } from '../utils/planBuilder.js';
+import { buildShoppingList } from '../utils/planBuilder.js';
+import { buildCanonicalLegacyPlan, canonicaliseLegacyMeal } from '../utils/legacyPlanBuilder.js';
+import { sumNutrition } from '../utils/nutrition.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { track } from '../utils/analytics.js';
+
+const SHOW_LEGACY_EXAMPLE_PLAN = false;
 
 function ContentTable({ headers, rows }) {
   return (
@@ -41,12 +49,12 @@ export default function MealPlanPage() {
   const { slug } = useParams();
   const data = mealPlansData[slug];
 
-  const [plan, setPlan] = useState(() => normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+  const [plan, setPlan] = useState(() => buildCanonicalLegacyPlan(data?.plan ?? [], data?.targetCalories));
   const [activeDayIdx, setActiveDayIdx] = useState(0);
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
 
   useEffect(() => {
-    setPlan(normalisePlanCalories(data?.plan ?? [], data?.targetCalories));
+    setPlan(buildCanonicalLegacyPlan(data?.plan ?? [], data?.targetCalories));
     setActiveDayIdx(0);
   }, [slug, data]);
 
@@ -61,18 +69,28 @@ export default function MealPlanPage() {
       return {
         ...day,
         meals,
-        totals: {
-          kcal: meals.reduce((s, m) => s + (m.kcal || 0), 0),
-          protein: meals.reduce((s, m) => s + (m.protein || 0), 0),
-        },
+        totals: sumNutrition(meals),
       };
     }));
+    track.mealEdited({
+      plan_slug: slug,
+      calorie_target: data.targetCalories,
+      page_type: 'legacy_plan',
+      cta_location: 'meal_swap',
+      meal_name: newMeal?.name,
+    });
   }
 
   async function copyShoppingList() {
     try {
       await navigator.clipboard.writeText(formatLegacyShoppingList(data.h1, shoppingList));
       setShoppingCopyStatus('Copied');
+      track.shoppingListCopied({
+        plan_slug: slug,
+        calorie_target: data.targetCalories,
+        page_type: 'legacy_plan',
+        cta_location: 'shopping_list',
+      });
       setTimeout(() => setShoppingCopyStatus(''), 1800);
     } catch {
       setShoppingCopyStatus('Copy failed');
@@ -132,14 +150,14 @@ export default function MealPlanPage() {
   ];
 
   const examplePlanSection = (
-    <section className="legacy-plan-primary">
+    <section id="meal-plan" className="legacy-plan-primary">
       <h2>Example 7-Day {data.planLabel} Meal Plan</h2>
       <p>
         Below is a sample week. Each day is planned to hit approximately{' '}
         <strong>{data.targetCalories.toLocaleString()} calories</strong> with a strong protein
         focus. Calorie and protein figures are estimates; weigh ingredients if you need
         precision. Use the{' '}
-        <Link to="/" data-event="generator_cta_click" data-source-page={slug}>free generator</Link> to get a freshly personalised version.
+        <Link to="/quiz" data-event="plan_primary_cta_clicked" data-source-page={slug}>meal-plan finder</Link> to get a better-matched version.
       </p>
 
       {activeDay && (
@@ -210,7 +228,7 @@ export default function MealPlanPage() {
   );
 
   const shoppingListSection = (
-    <section className="legacy-shopping-primary">
+    <section id="shopping-list" className="legacy-shopping-primary">
       <div className="plan-shopping-header">
         <h2>Sample Weekly Shopping List</h2>
         <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
@@ -221,6 +239,10 @@ export default function MealPlanPage() {
         Here is a sample shopping list to cover this 7-day plan. Estimated cost:{' '}
         <strong>{data.priceEstimate}</strong>.
       </p>
+      <CostEstimateNote
+        supermarket={data.summary?.supermarkets || detectLegacySupermarket(slug, data)?.label || 'the selected UK supermarket'}
+        compact
+      />
       <div className="shop-grid">
         {Object.entries(shoppingList).filter(([, items]) => items.length > 0).map(([group, items]) => (
           <div key={group} className="shop-group">
@@ -229,6 +251,17 @@ export default function MealPlanPage() {
           </div>
         ))}
       </div>
+      <EmailPlanCapture
+        plan={{
+          slug,
+          supermarket: detectLegacySupermarket(slug, data)?.slug,
+          goal: data.planLabel,
+          calories: data.targetCalories,
+          macrosGrams: { protein: avgProtein },
+        }}
+        sourcePage="legacy_plan"
+        compact
+      />
     </section>
   );
 
@@ -256,11 +289,66 @@ export default function MealPlanPage() {
           {data.reviewed || data.modified || '17 June 2026'}.
         </p>
 
+        <section className="legacy-plan-overview" aria-label="Plan overview">
+          <div>
+            <span>Calorie target</span>
+            <strong>~{data.targetCalories.toLocaleString('en-GB')} kcal/day</strong>
+          </div>
+          <div>
+            <span>Protein target</span>
+            <strong>{avgProtein ? `~${avgProtein}g/day` : 'Estimated per meal'}</strong>
+          </div>
+          <div>
+            <span>Weekly cost</span>
+            <strong>{data.priceEstimate} estimate</strong>
+          </div>
+          <div>
+            <span>Supermarket</span>
+            <strong>{data.summary?.supermarkets || detectLegacySupermarket(slug, data)?.label || 'UK supermarkets'}</strong>
+          </div>
+        </section>
+
+        <nav className="plan-action-bar" aria-label="Plan actions">
+          <a href="#meal-plan" data-event="plan_primary_cta_clicked" data-source-page={slug} data-page-type="legacy_plan" data-cta-location="plan_action_bar">
+            View meals
+          </a>
+          <a href="#shopping-list" data-event="shopping_list_opened" data-source-page={slug} data-page-type="legacy_plan" data-cta-location="plan_action_bar">
+            Shopping list
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              track.planPrinted({
+                plan_slug: slug,
+                calorie_target: data.targetCalories,
+                page_type: 'legacy_plan',
+                cta_location: 'plan_action_bar',
+              });
+              window.print();
+            }}
+          >
+            Print or save
+          </button>
+        </nav>
+
         {examplePlanSection}
+        <ContextualNextStep
+          eyebrow="Next step"
+          title="Shop this plan without rebuilding the list"
+          description="Open the grouped weekly list, or use the quiz if this calorie target or supermarket is not quite right."
+          primary={{ to: '#shopping-list', label: 'Open the shopping list', event: 'shopping_list_opened' }}
+          secondary={[
+            { to: `/browse?calories=${data.targetCalories}`, label: `Compare ${data.targetCalories.toLocaleString('en-GB')} calorie plans` },
+            { to: '/quiz', label: 'Find a better match' },
+          ]}
+          pageType={`legacy-plan-${slug}`}
+          className="plan-continuation"
+        />
         {shoppingListSection}
 
         {/* Quick-stats summary card */}
-        <div className="plan-summary-card">
+        <details className="plan-summary-card legacy-plan-summary-detail">
+          <summary>More plan and cost details</summary>
           <h2>Plan at a glance</h2>
           <table className="plan-summary-table">
             <tbody>
@@ -325,15 +413,15 @@ export default function MealPlanPage() {
           <p className="plan-summary-personalise">
             Not quite right?{' '}
             <Link
-              to="/"
-              data-event="generator_cta_click"
+              to="/quiz"
+              data-event="plan_primary_cta_clicked"
               data-source-page={slug}
               data-target-calories={data.targetCalories}
             >
               Generate a personalised version in 30 seconds &rarr;
             </Link>
           </p>
-        </div>
+        </details>
 
         <p className="content-intro">{data.intro}</p>
 
@@ -440,7 +528,7 @@ export default function MealPlanPage() {
           </>
         )}
 
-        {false && (
+        {SHOW_LEGACY_EXAMPLE_PLAN && (
           <>
         <h2>Example 7-Day {data.planLabel} Meal Plan</h2>
         <p>
@@ -647,7 +735,7 @@ export default function MealPlanPage() {
 
         <FeedbackBox />
       </div>
-      <WaitlistSection sourcePage="meal-plan" />
+      <WaitlistSection sourcePage="meal-plan" compact />
       <Footer />
     </>
   );
@@ -722,198 +810,16 @@ function detectLegacySupermarket(slug, data) {
   return match ? { slug: match[0] === 'sainsbury' ? 'sainsburys' : match[0], label: match[1] } : null;
 }
 
-function normalisePlanCalories(plan, targetCalories) {
-  if (!Array.isArray(plan) || !targetCalories) return [];
-
-  return plan.map(day => {
-    const meals = rebalanceLegacyMeals(day.meals || [], targetCalories);
-    return {
-      ...day,
-      meals,
-      totals: {
-        kcal: meals.reduce((sum, meal) => sum + (meal.kcal || 0), 0),
-        protein: meals.reduce((sum, meal) => sum + (meal.protein || 0), 0),
-      },
-    };
-  });
-}
-
-function rebalanceLegacyMeals(meals, targetCalories) {
-  const baseTotal = meals.reduce((sum, meal) => sum + (meal.kcal || 0), 0);
-  if (!baseTotal || !targetCalories) return meals.map(enrichLegacyMeal);
-
-  const portionScale = targetCalories / baseTotal;
-  const rawCalories = meals.map(meal => (meal.kcal || 0) * portionScale);
-  const adjustedCalories = distributeRoundedTotal(rawCalories, targetCalories);
-
-  return meals.map((meal, index) => {
-    const ingredients = scaleIngredientsForPortion(
-      normaliseLegacyIngredients(meal.ingredients, meal.portion_size, meal.name),
-      portionScale,
-    );
-
-    return enrichLegacyMeal({
-      ...meal,
-      kcal: adjustedCalories[index],
-      protein: Math.max(1, Math.round((meal.protein || 0) * portionScale)),
-      desc: cleanLegacyCopy(meal.desc),
-      ingredients,
-      portion_size: ingredients.join(', '),
-    });
-  });
-}
-
 function normaliseSwappedMeal(currentMeal, newMeal = {}) {
-  return enrichLegacyMeal({
+  return canonicaliseLegacyMeal({
     ...currentMeal,
     name: newMeal.name ?? currentMeal.name,
-    kcal: toInteger(newMeal.calories ?? newMeal.kcal, currentMeal.kcal),
-    protein: toInteger(newMeal.protein, currentMeal.protein),
     prep: newMeal.prep_time ?? newMeal.prep ?? currentMeal.prep,
     desc: newMeal.description ?? newMeal.desc ?? currentMeal.desc,
     portion_size: newMeal.portion_size ?? currentMeal.portion_size,
     ingredients: newMeal.ingredients ?? currentMeal.ingredients,
     recipe: newMeal.recipe ?? currentMeal.recipe,
   });
-}
-
-function enrichLegacyMeal(meal) {
-  const ingredients = normaliseLegacyIngredients(meal.ingredients, meal.portion_size, meal.name);
-  const mealWithIngredients = {
-    ...meal,
-    ingredients,
-    portion_size: meal.portion_size || ingredients.join(', '),
-  };
-
-  return {
-    ...mealWithIngredients,
-    recipe: normaliseLegacyRecipe(meal.recipe) || buildLegacyRecipe(mealWithIngredients),
-  };
-}
-
-function normaliseLegacyIngredients(value, portionSize, mealName) {
-  if (Array.isArray(value)) {
-    const ingredients = value.map(formatLegacyIngredient).filter(Boolean);
-    if (ingredients.length) return ingredients;
-  }
-
-  if (typeof value === 'string') {
-    const ingredients = value.split(',').map(formatLegacyIngredient).filter(Boolean);
-    if (ingredients.length) return ingredients;
-  }
-
-  if (portionSize) {
-    const ingredients = String(portionSize).split(',').map(formatLegacyIngredient).filter(Boolean);
-    if (ingredients.length) return ingredients;
-  }
-
-  return mealName ? [mealName] : [];
-}
-
-function formatLegacyIngredient(ingredient) {
-  if (typeof ingredient === 'object' && ingredient !== null) {
-    const name = ingredient.item || ingredient.name || '';
-    const amount = ingredient.amount ? ` ${ingredient.amount}` : '';
-    return cleanLegacyIngredient(`${name}${amount}`);
-  }
-  return cleanLegacyIngredient(ingredient);
-}
-
-function cleanLegacyIngredient(ingredient) {
-  return cleanLegacyCopy(ingredient);
-}
-
-function cleanLegacyCopy(value) {
-  return String(value || '')
-    .replace(/\.\s*Use about .*$/i, '')
-    .replace(/\s*Use about .*?(?:\.|$)/i, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function normaliseLegacyRecipe(recipe) {
-  if (Array.isArray(recipe)) {
-    const steps = recipe.map(cleanLegacyCopy).filter(Boolean);
-    return steps.length ? steps.slice(0, 6) : null;
-  }
-
-  if (typeof recipe === 'string') {
-    const steps = recipe
-      .split(/\n+|(?:^|\s)\d+\.\s*/g)
-      .map(cleanLegacyCopy)
-      .filter(Boolean);
-    return steps.length ? steps.slice(0, 6) : null;
-  }
-
-  return null;
-}
-
-function buildLegacyRecipe(meal) {
-  const ingredients = meal.ingredients?.length ? meal.ingredients.join(', ') : meal.portion_size || meal.name;
-  const name = String(meal.name || '').toLowerCase();
-  const type = String(meal.type || '').toLowerCase();
-
-  if (name.includes('smoothie')) {
-    return [
-      `Add the listed ingredients to a blender: ${ingredients}.`,
-      'Blend until smooth, adding a splash of milk or water if needed.',
-      'Serve chilled straight away.',
-    ];
-  }
-
-  if (type.includes('breakfast') || name.includes('oats') || name.includes('yogurt')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Combine the base ingredients in a bowl or container and stir well.',
-      'Add toppings last, then eat straight away or chill until needed.',
-    ];
-  }
-
-  if (name.includes('wrap') || name.includes('sandwich') || name.includes('toast') || name.includes('pitta')) {
-    return [
-      'Toast or warm the bread, wrap, pitta, or bagel if preferred.',
-      `Prepare the filling ingredients: ${ingredients}.`,
-      'Layer everything evenly, season to taste, and serve or wrap for later.',
-    ];
-  }
-
-  if (name.includes('salad') || name.includes('bowl')) {
-    return [
-      `Wash, chop, and portion the ingredients: ${ingredients}.`,
-      'Cook or warm any grains or protein, then let them cool slightly.',
-      'Combine in a bowl and keep dressing separate until serving if meal prepping.',
-    ];
-  }
-
-  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Cook the protein, aromatics, and firmer vegetables in a pan for 5-8 minutes.',
-      'Add the remaining ingredients and simmer until hot, thickened, and cooked through.',
-    ];
-  }
-
-  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
-    return [
-      'Cook the pasta, rice, or noodles according to the packet instructions.',
-      `Prepare the remaining ingredients while it cooks: ${ingredients}.`,
-      'Combine everything, heat through, season to taste, and portion if meal prepping.',
-    ];
-  }
-
-  if (name.includes('egg') || name.includes('omelette') || name.includes('scramble')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Cook the eggs in a non-stick pan over medium heat, stirring or folding gently.',
-      'Serve with the listed sides or toppings.',
-    ];
-  }
-
-  return [
-    `Prepare the ingredients: ${ingredients}.`,
-    'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
-    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
-  ];
 }
 
 function formatLegacyShoppingList(title, shoppingList) {
@@ -935,24 +841,4 @@ function formatShoppingGroup(group) {
     dairy: 'Dairy & Eggs',
     extras: 'Extras & Condiments',
   }[group] || group;
-}
-
-function toInteger(value, fallback = 0) {
-  const parsed = Number.parseInt(value, 10);
-  return Number.isFinite(parsed) ? parsed : fallback;
-}
-
-function distributeRoundedTotal(values, targetTotal) {
-  const floors = values.map(Math.floor);
-  let remaining = targetTotal - floors.reduce((sum, value) => sum + value, 0);
-  const order = values
-    .map((value, index) => ({ index, fraction: value - Math.floor(value) }))
-    .sort((a, b) => b.fraction - a.fraction);
-
-  for (let i = 0; i < Math.abs(remaining); i += 1) {
-    const target = order[i % order.length]?.index ?? 0;
-    floors[target] += remaining > 0 ? 1 : -1;
-  }
-
-  return floors;
 }

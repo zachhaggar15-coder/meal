@@ -52,6 +52,16 @@ function cleanName(name) {
 export function parseIngredientLine(raw) {
   const original = String(raw || '').trim();
   if (!original) return { name: '', kind: 'unparsed', raw: original };
+  const explicitlyExcluded = /\bexcluded from nutrition estimate\b/i.test(original);
+  if (explicitlyExcluded) {
+    return {
+      name: cleanName(original.replace(/\boptional\b.*$/i, '')),
+      qualifier: null,
+      kind: 'negligible',
+      excluded: true,
+      raw: original,
+    };
+  }
 
   // 1. Explicit parenthetical gram override always wins — it's the most
   //    reliable stated quantity, regardless of what precedes it.
@@ -127,6 +137,23 @@ export function parseIngredientLine(raw) {
   }
 
   // 8. Bare leading/trailing integer with no unit — a plain count: "Onion 1", "1 banana".
+  // Slash fractions produced by portion scaling: "Avocado 3/4" or
+  // "1 1/2 eggs". Parse these before bare numeric counts so the denominator
+  // is never mistaken for a whole-item quantity.
+  const trailingSlashFraction = original.match(/^(.*?)\s+((?:(\d+)\s+)?(\d+)\s*\/\s*(\d+))\s*((?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled)?)$/i);
+  if (trailingSlashFraction && trailingSlashFraction[1].trim()) {
+    const [, prefix, , whole = '0', numerator, denominator, qualifier] = trailingSlashFraction;
+    const qty = Number(whole) + (Number(numerator) / Number(denominator));
+    return { name: cleanName(prefix), qualifier: qualifier || null, kind: 'fraction', qty, unit: 'item', raw: original };
+  }
+  const leadingSlashFraction = original.match(/^((?:(\d+)\s+)?(\d+)\s*\/\s*(\d+))\s+(.*)$/);
+  if (leadingSlashFraction) {
+    const [, , whole = '0', numerator, denominator, rest] = leadingSlashFraction;
+    const { name, qualifier } = stripQualifier(rest);
+    const qty = Number(whole) + (Number(numerator) / Number(denominator));
+    return { name: cleanName(name), qualifier, kind: 'fraction', qty, unit: 'item', raw: original };
+  }
+
   const trailingBareCount = original.match(/^(.*?)(\d+(?:\.\d+)?)\s*((?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled)?)$/i);
   if (trailingBareCount && trailingBareCount[1].trim()) {
     const [, prefix, amount, suffix] = trailingBareCount;
@@ -145,6 +172,13 @@ export function parseIngredientLine(raw) {
     return { name: cleanName(original), qualifier: null, kind: 'negligible', raw: original };
   }
   return { name: cleanName(original), qualifier: null, kind: 'unparsed', raw: original };
+}
+
+export function hasValidIngredientQuantity(parsed) {
+  if (parsed?.excluded) return true;
+  if (!parsed || parsed.kind === 'unparsed' || parsed.kind === 'negligible') return false;
+  if (/(?:^|\s)-\d/.test(parsed.raw || '')) return false;
+  return Number.isFinite(parsed?.qty) && parsed.qty > 0;
 }
 
 function buildMeasured(name, amount, unit, qualifier, raw) {

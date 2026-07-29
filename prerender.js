@@ -20,7 +20,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(__dirname, 'dist');
 
 // Legacy slug snapshot retained for reference. Static build routes come from INDEXABLE_PLAN_SEEDS.
-const STATIC_PLAN_SLUGS = [
+const _STATIC_PLAN_SLUGS = [
   // Weight Loss (30)
   'aldi-weight-loss-1500','aldi-weight-loss-1800','aldi-weight-loss-1500-v2','aldi-weight-loss-1800-vegan',
   'tesco-weight-loss-1500','tesco-weight-loss-1800','tesco-weight-loss-1800-veg',

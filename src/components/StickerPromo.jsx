@@ -13,6 +13,8 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
           data-event={offer.eventName}
           data-source-page={sourcePage}
           data-offer={offer.name}
+          data-affiliate-category="meal-prep-containers"
+          data-product-name={offer.name}
         >
           <img src={offer.image} alt={offer.imageAlt || offer.name} />
         </a>
@@ -30,6 +32,8 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
             data-event={offer.eventName}
             data-source-page={sourcePage}
             data-offer={offer.name}
+            data-affiliate-category="meal-prep-containers"
+            data-product-name={offer.name}
           >
             {offer.cta}
           </a>
@@ -40,7 +44,7 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
             data-source-page={sourcePage}
             data-offer={offer.name}
           >
-            Learn more
+            Learn about {offer.name}
           </Link>
         </div>
         {offer.proofPoints?.length > 0 && (

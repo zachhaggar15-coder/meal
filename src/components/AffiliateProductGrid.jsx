@@ -86,6 +86,8 @@ export default function AffiliateProductGrid({
                 data-event="container_product_click"
                 data-source-page={sourcePage}
                 data-offer={product.name}
+                data-affiliate-category="meal-prep-containers"
+                data-product-name={product.name}
               >
                 See Amazon price
               </a>

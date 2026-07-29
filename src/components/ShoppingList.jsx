@@ -39,7 +39,9 @@ export default function ShoppingList({ list, price }) {
       setCopied(true);
       track.shoppingListCopied();
       setTimeout(() => setCopied(false), 2000);
-    } catch {}
+    } catch {
+      // Clipboard access is best-effort; the list remains visible.
+    }
   }
 
   return (

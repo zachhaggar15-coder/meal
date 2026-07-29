@@ -186,7 +186,7 @@ export function buildCalorieChooserPath(calories) {
   return `/choose-calories/${calories}`;
 }
 
-export function buildBrowsePlanUrl({ goal, supermarket, diet, calories, budget, effort }) {
+export function buildBrowsePlanUrl({ goal, supermarket, diet, calories, budget, effort, search }) {
   const params = new URLSearchParams();
   if (goal) params.set('goal', goal);
   if (supermarket) params.set('supermarket', supermarket);
@@ -194,5 +194,6 @@ export function buildBrowsePlanUrl({ goal, supermarket, diet, calories, budget, 
   if (calories) params.set('calories', String(calories));
   if (budget) params.set('budget', budget);
   if (effort) params.set('effort', effort);
+  if (search) params.set('search', String(search));
   return `/browse${params.toString() ? `?${params.toString()}` : ''}`;
 }

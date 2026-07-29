@@ -1,4 +1,4 @@
-import { blogPostsData } from './blogPosts.js';
+import blogSearchIndex from './blogSearchIndex.json' with { type: 'json' };
 import { COMBO_LANDING_PAGES } from './comboLandingPages.js';
 import { CONTAINER_GUIDE_GROUPS } from './containerProducts.js';
 import { MEAL_PLAN_HUBS } from './mealPlanHubs.js';
@@ -491,12 +491,12 @@ function buildSiteSearchIndex() {
       keywords: [page.title, page.kicker, page.intro].filter(Boolean).join(' '),
       priority: 58,
     })),
-    ...Object.entries(blogPostsData).map(([slug, post]) => ({
-      title: post.h1 || post.title,
-      to: `/blog/${slug}`,
+    ...blogSearchIndex.map(post => ({
+      title: post.title,
+      to: `/blog/${post.slug}`,
       type: 'Guide',
-      description: post.description || post.intro,
-      keywords: [post.title, post.intro, post.description].filter(Boolean).join(' '),
+      description: post.description,
+      keywords: post.keywords,
       priority: 55,
     })),
     ...getAllPlanMeta().map(plan => ({

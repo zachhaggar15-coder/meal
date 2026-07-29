@@ -6,6 +6,7 @@ import {
   assertText,
 } from '../api/_guards.js';
 import { adminTokenFromHeaders, escCsv } from '../api/admin-stats.js';
+import { resolveEmailPlan } from '../api/email-plan.js';
 
 function makeReq({ body = {}, headers = {}, ip = '203.0.113.10', ua = 'guard-test' } = {}) {
   return {
@@ -91,6 +92,12 @@ async function run() {
   assert.equal(adminTokenFromHeaders({ headers: {}, query: { token: 'leaky' } }), '');
   assert.equal(escCsv('=1+1'), '\'=1+1');
   assert.equal(escCsv('hello, world'), '"hello, world"');
+
+  const legacyEmailPlan = resolveEmailPlan('tesco-low-calorie-meal-plan');
+  assert.equal(legacyEmailPlan?.slug, 'tesco-low-calorie-meal-plan');
+  assert.match(legacyEmailPlan?.seo?.canonical || '', /\/meal-plan\/tesco-low-calorie-meal-plan$/);
+  assert.ok(Object.values(legacyEmailPlan?.shoppingList || {}).flat().length > 0);
+  assert.equal(resolveEmailPlan('not-a-real-plan'), null);
 }
 
 run().catch((err) => {

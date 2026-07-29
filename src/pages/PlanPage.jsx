@@ -1,11 +1,14 @@
-import { useState, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState, useMemo } from 'react';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import ContextualNextStep from '../components/ContextualNextStep.jsx';
+import CostEstimateNote from '../components/CostEstimateNote.jsx';
+import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
@@ -14,6 +17,8 @@ import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { track } from '../utils/analytics.js';
+import { buildPracticalRecipeSteps } from '../utils/recipeQuality.js';
+import { computeMealNutrition, splitIngredientText, sumNutrition } from '../utils/nutrition.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import NotFound from './NotFound.jsx';
 
@@ -32,6 +37,7 @@ const HOUSEHOLD_MODES = [
   { value: 'custom', label: 'Custom' },
 ];
 const MAX_HOUSEHOLD_MEMBERS = 6;
+const SHOW_LEGACY_PLAN_RENDERER = false;
 
 const GOAL_HUB_SLUGS = {
   'weight-loss': 'weight-loss',
@@ -98,6 +104,7 @@ function buildHouseholdPreset(mode = 'same') {
 
 export default function PlanPage() {
   const { slug } = useParams();
+  const { search } = useLocation();
   const plan = useMemo(() => getPlanBySlug(slug), [slug]);
 
   const [activeDayIdx, setActiveDayIdx]   = useState(0);
@@ -111,14 +118,31 @@ export default function PlanPage() {
   const [shoppingCopyStatus, setShoppingCopyStatus] = useState('');
   const [planCopyStatus, setPlanCopyStatus] = useState('');
   const [shareStatus, setShareStatus] = useState('');
-  const [planEmailStatus, setPlanEmailStatus] = useState('idle');
-  const [planEmailMessage, setPlanEmailMessage] = useState('');
   const [householdMode, setHouseholdMode] = useState('same');
   const [householdMembers, setHouseholdMembers] = useState(() => buildHouseholdPreset('same'));
   const sourcePlan = editedPlan || plan;
   const displayPlan = useMemo(() => (
     sourcePlan ? scalePlanForHousehold(sourcePlan, householdMembers) : null
   ), [sourcePlan, householdMembers]);
+  const planAnalytics = useMemo(() => plan ? ({
+    plan_slug: plan.slug,
+    supermarket: plan.supermarket,
+    goal: plan.goal,
+    calorie_target: plan.calories,
+    protein_target: plan.macrosGrams?.protein,
+    page_type: 'plan',
+  }) : null, [plan]);
+
+  useEffect(() => {
+    if (!planAnalytics) return;
+    const params = new URLSearchParams(search);
+    if (params.get('source') === 'quiz') {
+      track.planViewedFromQuiz({
+        ...planAnalytics,
+        traffic_entry_type: 'quiz',
+      });
+    }
+  }, [planAnalytics, search]);
 
   if (!plan) {
     return <NotFound />;
@@ -131,7 +155,7 @@ export default function PlanPage() {
     : `https://www.mealprep.org.uk${planVisual?.src || '/og-preview.png'}`;
 
   const jsonLd = [
-    buildPlanRecipeJsonLd(plan, planImageUrl),
+    buildPlanCollectionJsonLd(plan, planImageUrl),
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
@@ -185,13 +209,7 @@ export default function PlanPage() {
         newPlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx] = normaliseEditedMeal(meal, data.meal);
         // Recalculate day totals
         const dayMeals = newPlan.plan[editTarget.dayIdx].meals;
-        newPlan.plan[editTarget.dayIdx].totals = {
-          kcal:    dayMeals.reduce((s, m) => s + (m.kcal || 0), 0),
-          protein: dayMeals.reduce((s, m) => s + (m.protein || 0), 0),
-          carbs:   dayMeals.reduce((s, m) => s + (m.carbs || 0), 0),
-          fats:    dayMeals.reduce((s, m) => s + (m.fats || 0), 0),
-          fibre:   dayMeals.reduce((s, m) => s + (m.fibre || 0), 0),
-        };
+        newPlan.plan[editTarget.dayIdx].totals = sumNutrition(dayMeals);
         newPlan.shoppingList = buildShoppingList(newPlan.plan);
 
         setEditedPlan(newPlan);
@@ -199,8 +217,13 @@ export default function PlanPage() {
         setEditTarget(null);
         setEditPrompt('');
         track.mealEditCompleted(plan.slug);
+        track.mealEdited({
+          ...planAnalytics,
+          cta_location: 'inline_meal_editor',
+          meal_name: data.meal.name,
+        });
       }
-    } catch (err) {
+    } catch (_err) {
       setEditError('Edit failed. Please try again.');
       track.mealEditFailed(plan.slug);
     } finally {
@@ -217,11 +240,21 @@ export default function PlanPage() {
   function selectHouseholdMode(mode) {
     setHouseholdMode(mode);
     setHouseholdMembers(buildHouseholdPreset(mode));
+    track.planAdjusted({
+      ...planAnalytics,
+      adjustment_type: 'household_mode',
+      adjustment_value: mode,
+    });
   }
 
   function selectSamePortionCount(count) {
     setHouseholdMode('same');
     setHouseholdMembers(buildSamePortionMembers(count));
+    track.planAdjusted({
+      ...planAnalytics,
+      adjustment_type: 'servings',
+      serving_count: count,
+    });
   }
 
   function updateHouseholdMember(id, field, value) {
@@ -263,7 +296,7 @@ export default function PlanPage() {
         document.body.removeChild(textarea);
       }
       setShoppingCopyStatus('Copied');
-      track.shoppingListCopied();
+      track.shoppingListCopied({ ...planAnalytics, cta_location: 'shopping_list' });
       setTimeout(() => setShoppingCopyStatus(''), 1800);
     } catch {
       setShoppingCopyStatus('Copy failed');
@@ -275,7 +308,7 @@ export default function PlanPage() {
     try {
       await writeClipboard(formatPlanShareText(displayPlan, plan.seo.canonical));
       setPlanCopyStatus('Copied');
-      track.planCopied();
+      track.planCopied({ ...planAnalytics, cta_location: 'plan_action_bar' });
       setTimeout(() => setPlanCopyStatus(''), 1800);
     } catch {
       setPlanCopyStatus('Copy failed');
@@ -298,7 +331,7 @@ export default function PlanPage() {
         await writeClipboard(plan.seo.canonical);
         setShareStatus('Link copied');
       }
-      track.shareClicked();
+      track.planShared({ ...planAnalytics, cta_location: 'plan_action_bar' });
       setTimeout(() => setShareStatus(''), 1800);
     } catch {
       setShareStatus('Share cancelled');
@@ -307,42 +340,22 @@ export default function PlanPage() {
   }
 
   function handlePrintPlan() {
-    track.printClicked();
+    track.planPrinted({ ...planAnalytics, cta_location: 'plan_action_bar' });
     window.print();
   }
 
-  async function handleEmailPlan({ email, website }) {
-    if (planEmailStatus === 'sending') return;
+  function handlePrintShoppingList() {
+    const body = document.body;
+    const cleanup = () => {
+      body.classList.remove('print-shopping-only');
+      window.removeEventListener('afterprint', cleanup);
+    };
 
-    setPlanEmailStatus('sending');
-    setPlanEmailMessage('');
-    track.planEmailSubmitted(plan.slug);
-
-    try {
-      const res = await fetch('/api/email-plan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          website,
-          planSlug: plan.slug,
-          householdMembers,
-          source: typeof window !== 'undefined' ? window.location.href : plan.seo.canonical,
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(data?.error || 'Could not send the plan.');
-      }
-
-      setPlanEmailStatus('sent');
-      setPlanEmailMessage('Sent. Check your inbox for the plan and shopping list.');
-      track.planEmailSent(plan.slug);
-    } catch (err) {
-      setPlanEmailStatus('error');
-      setPlanEmailMessage(err.message || 'Could not send the plan right now.');
-      track.planEmailFailed(plan.slug, err.message || 'unknown');
-    }
+    body.classList.add('print-shopping-only');
+    window.addEventListener('afterprint', cleanup, { once: true });
+    track.shoppingListPrinted({ ...planAnalytics, cta_location: 'shopping_list' });
+    window.print();
+    window.setTimeout(cleanup, 1500);
   }
 
   const planDaysSection = (
@@ -483,9 +496,14 @@ export default function PlanPage() {
     <section id="shopping-list" className="plan-shopping-section">
       <div className="plan-shopping-header">
         <h2>Weekly Shopping List</h2>
-        <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
-          {shoppingCopyStatus || 'Copy shopping list'}
-        </button>
+        <div className="plan-shopping-actions">
+          <button className="plan-copy-shopping-btn" onClick={copyShoppingList} type="button">
+            {shoppingCopyStatus || 'Copy shopping list'}
+          </button>
+          <button className="plan-copy-shopping-btn" onClick={handlePrintShoppingList} type="button">
+            Print shopping list
+          </button>
+        </div>
       </div>
       <p className="plan-shopping-container-note">
         Need containers for this batch?{' '}
@@ -545,6 +563,8 @@ export default function PlanPage() {
           Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed: 2 July 2026.
         </p>
 
+        <PlanOverview plan={displayPlan} sourcePlan={plan} />
+
         {editNote && (
           <div className="plan-edit-notice">
             <strong>Note:</strong> {editNote}{' '}
@@ -557,6 +577,7 @@ export default function PlanPage() {
         )}
 
         <PlanActionBar
+          plan={plan}
           onCopyPlan={copyPlanSummary}
           onSharePlan={sharePlan}
           onPrintPlan={handlePrintPlan}
@@ -576,57 +597,29 @@ export default function PlanPage() {
         />
 
         {planDaysSection}
+        <ContextualNextStep
+          eyebrow="Keep going"
+          title="Turn these meals into this week's shop"
+          description="Open the grouped list with quantities already adjusted for your household."
+          primary={{ to: '#shopping-list', label: 'Open the full shopping list', event: 'shopping_list_opened' }}
+          secondary={[
+            { to: `/browse?supermarket=${plan.supermarket}&calories=${plan.calories}`, label: 'Compare a similar plan' },
+            { to: '/quiz', label: 'Find a better match' },
+          ]}
+          pageType={`plan-${plan.slug}`}
+          className="plan-continuation"
+        />
         {shoppingListSection}
-        <PlanEmailCapture
+        <EmailPlanCapture
           plan={plan}
-          status={planEmailStatus}
-          message={planEmailMessage}
-          onSubmit={handleEmailPlan}
+          householdMembers={householdMembers}
+          sourcePage="plan"
         />
         <PageHeroVisual visual={planVisual} className="plan-page-visual plan-page-visual--after-plan" />
         <ContainerSetupRecommendation
           plan={displayPlan}
           sourcePage={`plan-${plan.slug || 'page'}-containers`}
         />
-
-        {/* Summary card */}
-        <div className="plan-summary-card">
-          <div className="plan-summary-grid">
-            <SummaryItem label="Supermarket"  value={MKT_LABEL[plan.supermarket] || plan.supermarket} />
-            <SummaryItem label="Cooking for" value={displayPlan.peopleLabel} />
-            <SummaryItem label="Cook amount" value={`${displayPlan.totalPortionLabel} portions`} />
-            <SummaryItem label="Calorie target" value={displayPlan.summary.calorieRange} />
-            <SummaryItem label="Weekly budget"  value={`${displayPlan.summary.budgetRange} total`} />
-            <SummaryItem label="Prep difficulty" value={plan.effortLabel} />
-            <SummaryItem label="Best for"       value={plan.summary.bestFor} />
-            <SummaryItem label="Diet"
-              value={plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType)} />
-          </div>
-
-          {/* Macro bars */}
-          <div className="plan-macros">
-            <h3 className="plan-macros-title">{toTitleCase('Estimated daily macros per person')}</h3>
-            <div className="macro-bars">
-              {[
-                { key: 'protein', label: 'Protein', max: 200 },
-                { key: 'carbs',   label: 'Carbs',   max: 300 },
-                { key: 'fats',    label: 'Fats',    max: 120 },
-                { key: 'fibre',   label: 'Fibre',   max: 50  },
-              ].map(({ key, label, max }) => {
-                const g = plan.macrosGrams?.[key] ?? 0;
-                return (
-                  <div className="macro-bar-row" key={key}>
-                    <span className="macro-bar-label">{label}</span>
-                    <div className="macro-bar-track">
-                      <div className="macro-bar-fill" style={{ width: `${Math.min(100, Math.round((g / max) * 100))}%` }} />
-                    </div>
-                    <span className="macro-bar-pct">{g}g</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
 
         <details className="plan-secondary-details">
           <summary>{toTitleCase('Plan details and assumptions')}</summary>
@@ -647,7 +640,7 @@ export default function PlanPage() {
           marketLabel={MKT_LABEL[plan.supermarket] || plan.supermarket}
         />
 
-        {false && (
+        {SHOW_LEGACY_PLAN_RENDERER && (
           <>
         {/* 7-Day Plan */}
         <section className="plan-days-section">
@@ -878,7 +871,16 @@ export default function PlanPage() {
             <h2>Related Meal Plans</h2>
             <div className="related-plans-grid">
               {plan.relatedSlugs.map(r => (
-                <Link key={r.slug} to={`/plans/${r.slug}`} className="related-plan-card">
+                <Link
+                  key={r.slug}
+                  to={`/plans/${r.slug}`}
+                  className="related-plan-card"
+                  data-event="related_plan_clicked"
+                  data-plan-slug={r.slug}
+                  data-source-page={`plan-${plan.slug}`}
+                  data-page-type="plan"
+                  data-cta-location="related_plans"
+                >
                   {r.title}
                 </Link>
               ))}
@@ -900,7 +902,7 @@ export default function PlanPage() {
         <FeedbackBox />
 
       </div>
-      <WaitlistSection sourcePage="plan" />
+      <WaitlistSection sourcePage="plan" compact />
       <Footer />
     </>
   );
@@ -915,7 +917,31 @@ function SummaryItem({ label, value }) {
   );
 }
 
-function PlanQuickFacts({ plan }) {
+function PlanOverview({ plan, sourcePlan }) {
+  const market = MKT_LABEL[sourcePlan.supermarket] || sourcePlan.supermarket;
+
+  return (
+    <section className="plan-overview" aria-labelledby="plan-overview-heading">
+      <div className="plan-overview-head">
+        <div>
+          <span className="offer-kicker">Your week at a glance</span>
+          <h2 id="plan-overview-heading">Plan summary</h2>
+        </div>
+        <span className="plan-overview-household">{plan.peopleLabel}</span>
+      </div>
+      <div className="plan-overview-grid">
+        <SummaryItem label="Supermarket" value={market} />
+        <SummaryItem label="Goal" value={sourcePlan.goalLabel} />
+        <SummaryItem label="Daily calories" value={`~${sourcePlan.calories.toLocaleString('en-GB')} kcal`} />
+        <SummaryItem label="Daily protein" value={`~${sourcePlan.macrosGrams?.protein || 0}g`} />
+        <SummaryItem label="Weekly cost" value={`${plan.priceEstimate} estimate`} />
+      </div>
+      <CostEstimateNote supermarket={market} compact />
+    </section>
+  );
+}
+
+function _PlanQuickFacts({ plan }) {
   const facts = [
     { label: 'Best for', value: plan.summary.bestFor },
     { label: 'Calories', value: plan.summary.calorieRange },
@@ -940,80 +966,39 @@ function PlanQuickFacts({ plan }) {
   );
 }
 
-function PlanActionBar({ onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, shareStatus }) {
+function PlanActionBar({ plan, onCopyPlan, onSharePlan, onPrintPlan, planCopyStatus, shareStatus }) {
+  const analyticsProps = {
+    'data-plan-slug': plan.slug,
+    'data-supermarket': plan.supermarket,
+    'data-goal': plan.goal,
+    'data-calorie-target': plan.calories,
+    'data-protein-target': plan.macrosGrams?.protein,
+    'data-page-type': 'plan',
+  };
+
   return (
     <section className="plan-action-bar" aria-label="Plan actions">
-      <a href="#meal-plan">Meals</a>
-      <a href="#shopping-list">Shopping List</a>
+      <a
+        href="#meal-plan"
+        data-event="plan_primary_cta_clicked"
+        data-cta-location="plan_action_bar"
+        {...analyticsProps}
+      >
+        View meals
+      </a>
+      <a
+        href="#shopping-list"
+        data-event="shopping_list_opened"
+        data-cta-location="plan_action_bar"
+        {...analyticsProps}
+      >
+        Shopping list
+      </a>
       <button onClick={onCopyPlan} type="button">{planCopyStatus || 'Copy Summary'}</button>
       <button onClick={onPrintPlan} type="button">Print PDF</button>
       <button className="plan-action-primary" onClick={onSharePlan} type="button">
         {shareStatus || 'Share'}
       </button>
-    </section>
-  );
-}
-
-function PlanEmailCapture({ plan, status, message, onSubmit }) {
-  const [email, setEmail] = useState('');
-  const [website, setWebsite] = useState('');
-  const sending = status === 'sending';
-  const sent = status === 'sent';
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    if (!email.trim() || sending) return;
-    onSubmit({ email: email.trim(), website });
-  }
-
-  return (
-    <section className="plan-email-capture" aria-labelledby="plan-email-heading">
-      <div>
-        <span className="offer-kicker">Save this plan</span>
-        <h2 id="plan-email-heading">Email this plan to yourself</h2>
-        <p>
-          Get the 7-day menu, shopping list and printable plan link in your inbox.
-        </p>
-      </div>
-      {sent ? (
-        <p className="plan-email-status plan-email-status--sent" role="status">{message}</p>
-      ) : (
-        <form className="plan-email-form" onSubmit={handleSubmit}>
-          <label>
-            <span>Email address</span>
-            <input
-              type="email"
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-              placeholder="you@example.com"
-              autoComplete="email"
-              required
-              disabled={sending}
-            />
-          </label>
-          <label className="plan-email-honeypot" aria-hidden="true">
-            Website
-            <input
-              type="text"
-              value={website}
-              onChange={event => setWebsite(event.target.value)}
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </label>
-          <button className="btn-primary" type="submit" disabled={sending || !email.trim()}>
-            {sending ? 'Sending...' : 'Email plan'}
-          </button>
-          {message && (
-            <p className={`plan-email-status plan-email-status--${status}`} role="status">
-              {message}
-            </p>
-          )}
-        </form>
-      )}
-      <p className="plan-email-note">
-        Current selection: {plan.title}
-      </p>
     </section>
   );
 }
@@ -1032,49 +1017,47 @@ function HouseholdPortionsControl({
   const showMemberRows = mode !== 'same';
 
   return (
-    <section className="plan-servings-control plan-household-control" aria-labelledby="plan-household-heading">
-      <div className="plan-household-header">
+    <details className="plan-servings-control plan-household-control">
+      <summary className="plan-household-summary">
         <div>
-          <h2 id="plan-household-heading">{toTitleCase('Household portions')}</h2>
-          <p>Same meals, adjusted portions.</p>
+          <strong>{toTitleCase('Adjust household portions')}</strong>
+          <span>Currently {displayPlan.peopleLabel} · {displayPlan.totalPortionLabel} cook portions</span>
         </div>
-        <span className="plan-household-total">
-          {displayPlan.totalPortionLabel} cook portions
-        </span>
-      </div>
+      </summary>
 
-      <div className="plan-household-modes" role="group" aria-label="Household portion type">
-        {HOUSEHOLD_MODES.map(option => (
-          <button
-            key={option.value}
-            className={option.value === mode ? 'plan-household-mode plan-household-mode--active' : 'plan-household-mode'}
-            type="button"
-            aria-pressed={option.value === mode}
-            onClick={() => onModeChange(option.value)}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
-
-      {mode === 'same' && (
-        <div className="plan-servings-options" role="group" aria-label="People to cook for">
-          {SERVING_OPTIONS.map(option => (
+      <div className="plan-household-content">
+        <div className="plan-household-modes" role="group" aria-label="Household portion type">
+          {HOUSEHOLD_MODES.map(option => (
             <button
-              key={option}
-              className={option === sameCount ? 'plan-servings-option plan-servings-option--active' : 'plan-servings-option'}
+              key={option.value}
+              className={option.value === mode ? 'plan-household-mode plan-household-mode--active' : 'plan-household-mode'}
               type="button"
-              aria-pressed={option === sameCount}
-              onClick={() => onSameCountChange(option)}
+              aria-pressed={option.value === mode}
+              onClick={() => onModeChange(option.value)}
             >
-              {option}
+              {option.label}
             </button>
           ))}
         </div>
-      )}
 
-      {showMemberRows && (
-        <div className="plan-household-rows">
+        {mode === 'same' && (
+          <div className="plan-servings-options" role="group" aria-label="People to cook for">
+            {SERVING_OPTIONS.map(option => (
+              <button
+                key={option}
+                className={option === sameCount ? 'plan-servings-option plan-servings-option--active' : 'plan-servings-option'}
+                type="button"
+                aria-pressed={option === sameCount}
+                onClick={() => onSameCountChange(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {showMemberRows && (
+          <div className="plan-household-rows">
           {members.map((member, index) => (
             <div className="plan-household-row" key={member.id}>
               <input
@@ -1115,9 +1098,10 @@ function HouseholdPortionsControl({
           >
             Add person
           </button>
-        </div>
-      )}
-    </section>
+          </div>
+        )}
+      </div>
+    </details>
   );
 }
 
@@ -1255,29 +1239,17 @@ function PlanQualityNotes({ plan }) {
   );
 }
 
-function buildPlanRecipeJsonLd(plan, planImageUrl) {
+function buildPlanCollectionJsonLd(plan, planImageUrl) {
   const days = plan.plan || [];
-  const meals = days.flatMap((day, dayIndex) => (
-    (day.meals || []).map((meal, mealIndex) => ({ day, dayIndex, meal, mealIndex }))
-  ));
-  const averageDailyMinutes = Math.max(
-    15,
-    Math.round(meals.reduce((sum, item) => sum + readMealMinutes(item.meal), 0) / Math.max(1, days.length)),
-  );
-  const timing = splitPrepCookMinutes(averageDailyMinutes);
   const market = MKT_LABEL[plan.supermarket] || plan.supermarket;
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Recipe',
-    '@id': `${plan.seo.canonical}#recipe`,
+    '@type': 'CollectionPage',
+    '@id': `${plan.seo.canonical}#weekly-plan`,
     name: plan.title,
     description: plan.seo.description,
     url: plan.seo.canonical,
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': plan.seo.canonical,
-    },
     image: [planImageUrl],
     datePublished: '2026-06-01',
     dateModified: '2026-07-02',
@@ -1288,28 +1260,23 @@ function buildPlanRecipeJsonLd(plan, planImageUrl) {
       url: 'https://www.mealprep.org.uk',
       email: SITE_CONTACT_EMAIL,
     },
-    recipeCategory: 'Meal prep',
-    recipeCuisine: 'British',
-    recipeYield: '1 person for 7 days',
-    keywords: [
-      `${plan.goalLabel} meal plan`,
-      `${market} meal prep`,
-      `${plan.calories.toLocaleString('en-GB')} calorie meal plan`,
-      plan.dietType !== 'standard' ? `${plan.dietType} meal plan` : null,
-    ].filter(Boolean).join(', '),
-    prepTime: formatIsoDuration(timing.prep),
-    cookTime: formatIsoDuration(timing.cook),
-    totalTime: formatIsoDuration(averageDailyMinutes),
-    recipeIngredient: flattenShoppingIngredients(plan.shoppingList).slice(0, 120),
-    recipeInstructions: buildPlanInstructionSections(days),
-    nutrition: buildNutritionJsonLd({
-      kcal: plan.calories,
-      protein: plan.macrosGrams?.protein,
-      carbs: plan.macrosGrams?.carbs,
-      fats: plan.macrosGrams?.fats,
-      fibre: plan.macrosGrams?.fibre,
-    }),
-    hasPart: meals.map(item => buildMealRecipeJsonLd(plan, item, planImageUrl)),
+    mainEntity: {
+      '@type': 'ItemList',
+      name: `${plan.title} seven-day menu`,
+      numberOfItems: days.length,
+      itemListElement: days.map((day, dayIndex) => ({
+        '@type': 'ListItem',
+        position: dayIndex + 1,
+        item: {
+          '@type': 'CreativeWork',
+          '@id': `${plan.seo.canonical}#day-${dayIndex + 1}`,
+          name: `${day.day} menu`,
+          description: (day.meals || [])
+            .map(meal => `${meal.type}: ${meal.name}`)
+            .join('; '),
+        },
+      })),
+    },
     citation: DEFAULT_SOURCES.map(source => source.url),
     about: [
       `${plan.goalLabel} meal plan`,
@@ -1319,7 +1286,7 @@ function buildPlanRecipeJsonLd(plan, planImageUrl) {
   };
 }
 
-function buildMealRecipeJsonLd(plan, { day, dayIndex, meal, mealIndex }, planImageUrl) {
+function _buildMealRecipeJsonLd(plan, { day, dayIndex, meal, mealIndex }, planImageUrl) {
   const minutes = readMealMinutes(meal);
   const timing = splitPrepCookMinutes(minutes);
 
@@ -1341,7 +1308,7 @@ function buildMealRecipeJsonLd(plan, { day, dayIndex, meal, mealIndex }, planIma
   };
 }
 
-function buildPlanInstructionSections(days) {
+function _buildPlanInstructionSections(days) {
   return days.map((day, dayIndex) => ({
     '@type': 'HowToSection',
     name: day.day,
@@ -1389,7 +1356,7 @@ function buildNutritionJsonLd(source = {}) {
   };
 }
 
-function flattenShoppingIngredients(shoppingList = {}) {
+function _flattenShoppingIngredients(shoppingList = {}) {
   return uniqueStrings(Object.values(shoppingList).flat());
 }
 
@@ -1556,14 +1523,11 @@ function PrintablePlanSummary({ plan, marketLabel }) {
 function normaliseEditedMeal(currentMeal, returnedMeal = {}) {
   const merged = { ...currentMeal, ...returnedMeal };
   const ingredients = normaliseIngredients(merged.ingredients, merged.portion_size, merged.name);
+  const nutrition = computeMealNutrition(ingredients);
   const portionSize = merged.portion_size || ingredients.join(', ');
   const mealWithIngredients = {
     ...merged,
-    kcal: toInteger(merged.kcal ?? merged.calories ?? currentMeal.kcal),
-    protein: toInteger(merged.protein ?? currentMeal.protein),
-    carbs: toInteger(merged.carbs ?? merged.carbohydrates ?? currentMeal.carbs),
-    fats: toInteger(merged.fats ?? merged.fat ?? currentMeal.fats),
-    fibre: toInteger(merged.fibre ?? merged.fiber ?? currentMeal.fibre),
+    ...nutrition,
     ingredients,
     portion_size: portionSize,
   };
@@ -1581,12 +1545,12 @@ function normaliseIngredients(value, portionSize, mealName) {
   }
 
   if (typeof value === 'string') {
-    const ingredients = value.split(',').map(formatIngredient).filter(Boolean);
+    const ingredients = splitIngredientText(value).map(formatIngredient).filter(Boolean);
     if (ingredients.length) return ingredients;
   }
 
   if (portionSize) {
-    const ingredients = String(portionSize).split(',').map(formatIngredient).filter(Boolean);
+    const ingredients = splitIngredientText(portionSize).map(formatIngredient).filter(Boolean);
     if (ingredients.length) return ingredients;
   }
 
@@ -1627,68 +1591,7 @@ function normaliseRecipe(recipe) {
 }
 
 function buildDynamicRecipe(meal) {
-  const ingredients = meal.ingredients?.length ? meal.ingredients.join(', ') : meal.portion_size || meal.name;
-  const name = String(meal.name || '').toLowerCase();
-  const type = String(meal.type || '').toLowerCase();
-
-  if (name.includes('smoothie')) {
-    return [
-      `Add the listed ingredients to a blender: ${ingredients}.`,
-      'Blend until smooth, adding a splash of water or milk if it is too thick.',
-      'Pour into a glass or shaker and serve chilled.',
-    ];
-  }
-
-  if (type.includes('breakfast') || name.includes('oats') || name.includes('yogurt')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Combine the base ingredients in a bowl or container and stir well.',
-      'Top with any fruit, nuts, seeds, or sauces listed and eat straight away or chill for later.',
-    ];
-  }
-
-  if (name.includes('wrap') || name.includes('sandwich') || name.includes('toast') || name.includes('pitta')) {
-    return [
-      'Warm or toast the bread, wrap, pitta, or bagel if preferred.',
-      `Prepare the filling ingredients: ${ingredients}.`,
-      'Layer the filling evenly, season to taste, then serve or wrap tightly for meal prep.',
-    ];
-  }
-
-  if (name.includes('salad') || name.includes('bowl')) {
-    return [
-      `Wash, chop, and portion the listed ingredients: ${ingredients}.`,
-      'Cook or warm any grains or protein, then let them cool slightly.',
-      'Combine everything in a bowl, season, and keep dressing separate until serving if prepping ahead.',
-    ];
-  }
-
-  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Cook the protein, aromatics, and firmer vegetables in a pan until lightly browned.',
-      'Add the remaining ingredients and simmer until hot, thickened, and cooked through.',
-    ];
-  }
-
-  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
-    return [
-      'Cook the pasta, rice, or noodles according to the packet instructions.',
-      `Prepare the remaining ingredients while it cooks: ${ingredients}.`,
-      'Combine everything, heat through, season to taste, and portion into containers if needed.',
-    ];
-  }
-
-  return [
-    `Prepare the ingredients: ${ingredients}.`,
-    'Cook the main protein or vegetables in a non-stick pan over medium heat until cooked through.',
-    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
-  ];
-}
-
-function toInteger(value) {
-  const parsed = Number.parseInt(value, 10);
-  return Number.isFinite(parsed) ? parsed : 0;
+  return buildPracticalRecipeSteps(meal);
 }
 
 function toMacroNumber(value) {

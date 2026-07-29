@@ -14,6 +14,7 @@ import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { proteinFilterMatches } from '../utils/targetValidation.js';
 import { trackEvent } from '../utils/analytics.js';
 
 // Browse only links to indexed, prerendered plan pages. The larger synthetic
@@ -100,13 +101,6 @@ const EFFORTS = [
   { value: 'high-variety','label':'High variety' },
 ];
 
-const MKT_LABEL = {
-  aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
-  sainsburys: "Sainsbury's", morrisons: 'Morrisons', iceland: 'Iceland',
-  waitrose: 'Waitrose', ocado: 'Ocado', 'marks-spencer': 'M&S', coop: 'Co-op',
-  any: 'Generic UK supermarket',
-};
-
 const MACRO_SEARCH_TERMS = {
   'performance-protein': 'high protein high carb high carbohydrate 220g carbs 230g carbs 160g protein 170g protein performance protein muscle gain bodybuilding gym training fuel lean bulk',
   'high-carb-fuel': 'high carb high carbohydrate 220g carbs 250g carbs 280g carbs endurance running training fuel carb load performance',
@@ -178,13 +172,14 @@ export default function BrowsePlans() {
   const [page,       setPage]       = useState(routePage);
 
   useEffect(() => {
-    setSearch(params.get('search') || '');
-    setGoal(readFilterParam(params, 'goal', GOALS));
-    setSupermarket(readFilterParam(params, 'supermarket', SUPERMARKETS));
-    setDiet(readFilterParam(params, 'diet', DIETS));
-    setCalories(readFilterParam(params, 'calories', CALORIES));
-    setBudget(readFilterParam(params, 'budget', BUDGETS));
-    setEffort(readFilterParam(params, 'effort', EFFORTS));
+    const currentParams = new URLSearchParams(paramString);
+    setSearch(currentParams.get('search') || '');
+    setGoal(readFilterParam(currentParams, 'goal', GOALS));
+    setSupermarket(readFilterParam(currentParams, 'supermarket', SUPERMARKETS));
+    setDiet(readFilterParam(currentParams, 'diet', DIETS));
+    setCalories(readFilterParam(currentParams, 'calories', CALORIES));
+    setBudget(readFilterParam(currentParams, 'budget', BUDGETS));
+    setEffort(readFilterParam(currentParams, 'effort', EFFORTS));
     setPage(routePage);
   }, [paramString, routePage]);
 
@@ -285,6 +280,7 @@ export default function BrowsePlans() {
         title={`Free UK Diet Plans - Browse ${PLAN_COUNT} Meal Plans by Calories & Supermarket${pageTitleSuffix} | MealPrep.org.uk`}
         description={browseDescription}
         canonical={`https://www.mealprep.org.uk${canonicalPath}`}
+        robots={hasActiveFilters ? 'noindex,follow' : undefined}
         jsonLd={jsonLd}
       />
 
@@ -335,7 +331,7 @@ export default function BrowsePlans() {
         ) : (
           <div className="browse-grid">
             {shown.map(plan => (
-              <PlanCard key={plan.slug} plan={plan} />
+              <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
             ))}
           </div>
         )}
@@ -542,6 +538,10 @@ function planMatchesFilters(plan, filters) {
 
   const q = normaliseSearchText(filters.search);
   if (!q) return true;
+  const proteinTarget = q.match(/^(\d{2,3})g protein$/);
+  if (proteinTarget) {
+    return proteinFilterMatches(plan.macrosGrams?.protein, proteinTarget[1]);
+  }
 
   const haystack = normaliseSearchText([
     plan.title,

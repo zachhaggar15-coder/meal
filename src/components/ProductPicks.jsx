@@ -61,6 +61,8 @@ export default function ProductPicks({
                   data-event="mealprep_product_click"
                   data-source-page={`${sourcePage}-quick-comparison`}
                   data-offer={product.name}
+                  data-affiliate-category={product.category}
+                  data-product-name={product.name}
                 >
                   See Amazon price
                 </a>
@@ -97,6 +99,8 @@ export default function ProductPicks({
               data-event="mealprep_product_click"
               data-source-page={sourcePage}
               data-offer={product.name}
+              data-affiliate-category={product.category}
+              data-product-name={product.name}
             >
               See price on Amazon &rarr;
             </a>

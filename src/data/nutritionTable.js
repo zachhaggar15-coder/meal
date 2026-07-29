@@ -14,6 +14,8 @@
 // the same kcal100/pro100 figures as a measured amount. `gramsPerTbsp` /
 // `gramsPerTsp` override the generic 15g/5g spoon conversion for ingredients
 // whose density differs meaningfully from water (oils, honey, nut butters).
+// `basis: 'ml'` marks liquids whose label/CoFID values are expressed per
+// 100ml. This prevents millilitres from being silently treated as grams.
 
 export const NUTRITION_TABLE = {
   // ── Grains & carbs (dry/raw weight unless the key says otherwise) ────────
@@ -56,10 +58,10 @@ export const NUTRITION_TABLE = {
   'rye crackers':           { kcal100: 340, pro100: 8, gramsEach: 10 }, // corrected 2026-07-06: Ryvita Original official label ~350kcal/100g
 
   // ── Dairy & alternatives ─────────────────────────────────────────────────
-  'semi-skimmed milk':      { kcal100: 47, pro100: 3.6 }, // verified 2026-07-06
-  'skimmed milk':           { kcal100: 34, pro100: 3.4 },
-  'oat milk':               { kcal100: 47, pro100: 1.0 },
-  'soy milk':               { kcal100: 33, pro100: 3 },
+  'semi-skimmed milk':      { kcal100: 47, pro100: 3.6, basis: 'ml' }, // verified 2026-07-06
+  'skimmed milk':           { kcal100: 34, pro100: 3.4, basis: 'ml' },
+  'oat milk':               { kcal100: 47, pro100: 1.0, basis: 'ml' },
+  'soy milk':               { kcal100: 33, pro100: 3, basis: 'ml' },
   'low-fat greek yogurt':   { kcal100: 73, pro100: 10 }, // verified 2026-07-06
   '0% greek yogurt':        { kcal100: 57, pro100: 10 },
   'greek yogurt':           { kcal100: 73, pro100: 10 },
@@ -69,7 +71,7 @@ export const NUTRITION_TABLE = {
   'high-protein yogurt pot':{ kcal100: 75, pro100: 11.5, gramsEach: 150 }, // corrected 2026-07-06: Arla Protein/Milbona branded pots ~10-12.5g/100g
   'protein yogurt':         { kcal100: 75, pro100: 11.5 },
   'skyr':                   { kcal100: 63, pro100: 11 },
-  'plain kefir':            { kcal100: 41, pro100: 3.4 },
+  'plain kefir':            { kcal100: 41, pro100: 3.4, basis: 'ml' },
   'cottage cheese':         { kcal100: 98, pro100: 12 },
   'low-fat cottage cheese': { kcal100: 80, pro100: 11 },
   'reduced-fat cheddar':    { kcal100: 280, pro100: 29 }, // corrected 2026-07-06: Cathedral City/Pilgrims Choice reduced-fat cheddar ~274-315kcal, 28-30g
@@ -117,6 +119,7 @@ export const NUTRITION_TABLE = {
   'mackerel fillet':        { kcal100: 205, pro100: 19, gramsEach: 80 },
   'tinned mackerel in brine': { kcal100: 190, pro100: 19 },
   'tinned sardines':        { kcal100: 175, pro100: 21 },
+  'tinned sardines in oil drained': { kcal100: 208, pro100: 24.6 },
   'smoked haddock fillet':  { kcal100: 100, pro100: 23, gramsEach: 150 },
   'cod fillet':             { kcal100: 82, pro100: 18, gramsEach: 150 },
   'tuna steak':             { kcal100: 120, pro100: 26 }, // corrected 2026-07-06: nudged toward USDA raw tuna (species-dependent)
@@ -219,30 +222,30 @@ export const NUTRITION_TABLE = {
   'honey':                  { kcal100: 304, pro100: 0.3, gramsPerTsp: 7, gramsPerTbsp: 21 }, // verified 2026-07-06
   'maple syrup':            { kcal100: 260, pro100: 0.1, gramsPerTsp: 7, gramsPerTbsp: 21 },
   'balsamic glaze':         { kcal100: 250, pro100: 0.5 },
-  'light dressing':         { kcal100: 50, pro100: 1 },
+  'light dressing':         { kcal100: 50, pro100: 1, basis: 'ml' },
   'lemon dressing':         { kcal100: 90, pro100: 1.5 },
   'mustard dressing':       { kcal100: 90, pro100: 1.5 },
   'tahini dressing':        { kcal100: 235, pro100: 9 }, // corrected 2026-07-06: Al'Fez UK tahini dressing label
   'balsamic dressing':      { kcal100: 90, pro100: 0.5 },
-  'plant-based dressing':   { kcal100: 90, pro100: 1.5 },
+  'plant-based dressing':   { kcal100: 90, pro100: 1.5, basis: 'ml' },
   'caesar dressing':        { kcal100: 300, pro100: 2 },
   'light caesar dressing':  { kcal100: 120, pro100: 2 },
   'mint yogurt sauce':      { kcal100: 60, pro100: 3 },
   'raita':                  { kcal100: 60, pro100: 3 },
   'curry paste':            { kcal100: 250, pro100: 5 },
   'tikka paste':            { kcal100: 250, pro100: 5 },
-  'tomato curry sauce':     { kcal100: 78, pro100: 1.5 }, // corrected 2026-07-06: Sharwood's UK jarred curry sauce labels (Jalfrezi/Rogan Josh/Balti)
+  'tomato curry sauce':     { kcal100: 78, pro100: 1.5, basis: 'ml' }, // corrected 2026-07-06: Sharwood's UK jarred curry sauce labels (Jalfrezi/Rogan Josh/Balti)
   'miso paste':             { kcal100: 200, pro100: 12 },
-  'coconut milk':           { kcal100: 190, pro100: 2 },
-  'coconut milk light':     { kcal100: 95, pro100: 1 },
+  'coconut milk':           { kcal100: 190, pro100: 2, basis: 'ml' },
+  'coconut milk light':     { kcal100: 95, pro100: 1, basis: 'ml' },
   'reduced-sugar baked beans': { kcal100: 75, pro100: 5 },
   'tinned pineapple in juice': { kcal100: 60, pro100: 0.5 },
   'pancake batter':         { kcal100: 200, pro100: 7 },
   'energy balls':           { kcal100: 450, pro100: 6 },
-  'vegetable stock':        { kcal100: 6, pro100: 0.3 }, // corrected 2026-07-06: Knorr/Oxo UK made-up stock labels
-  'chicken stock':          { kcal100: 6, pro100: 0.4 }, // corrected 2026-07-06: consistent with Knorr/Oxo made-up stock labels
-  'beef stock':             { kcal100: 7, pro100: 0.4 }, // corrected 2026-07-06: consistent with Knorr/Oxo made-up stock labels
-  'water':                  { kcal100: 0, pro100: 0 },
+  'vegetable stock':        { kcal100: 6, pro100: 0.3, basis: 'ml' }, // corrected 2026-07-06: Knorr/Oxo UK made-up stock labels
+  'chicken stock':          { kcal100: 6, pro100: 0.4, basis: 'ml' }, // corrected 2026-07-06: consistent with Knorr/Oxo made-up stock labels
+  'beef stock':             { kcal100: 7, pro100: 0.4, basis: 'ml' }, // corrected 2026-07-06: consistent with Knorr/Oxo made-up stock labels
+  'water':                  { kcal100: 0, pro100: 0, basis: 'ml' },
   'garlic powder':          { kcal100: 330, pro100: 17 },
   'curry powder':           { kcal100: 300, pro100: 12 },
   'garam masala':           { kcal100: 300, pro100: 12 },
@@ -267,7 +270,7 @@ export const NUTRITION_TABLE = {
 // Values are per 100g/ml. kcal/protein stay in NUTRITION_TABLE so existing
 // calorie regression checks remain stable; these fields add fat, carbohydrate
 // and fibre without replacing the already-audited kcal/protein figures.
-const NUTRITION_MACRO_OVERRIDES = {
+export const NUTRITION_MACRO_OVERRIDES = {
   'rolled oats': { fat100: 6.5, carb100: 60, fibre100: 10.1 },
   'oat flour': { fat100: 6.5, carb100: 60, fibre100: 10 },
   'bran flakes': { fat100: 2.2, carb100: 73.3, fibre100: 12.8 },
@@ -366,6 +369,7 @@ const NUTRITION_MACRO_OVERRIDES = {
   'mackerel fillet': { fat100: 13.9, carb100: 0, fibre100: 0 },
   'tinned mackerel in brine': { fat100: 12, carb100: 0, fibre100: 0 },
   'tinned sardines': { fat100: 9, carb100: 0, fibre100: 0 },
+  'tinned sardines in oil drained': { fat100: 11.5, carb100: 0, fibre100: 0 },
   'smoked haddock fillet': { fat100: 0.6, carb100: 0, fibre100: 0 },
   'cod fillet': { fat100: 0.7, carb100: 0, fibre100: 0 },
   'tuna steak': { fat100: 1, carb100: 0, fibre100: 0 },
@@ -625,6 +629,7 @@ export const NUTRITION_SYNONYMS = {
   'tinned mackerel in brine': 'tinned mackerel in brine',
   'tinned sardines': 'tinned sardines',
   'tinned sardines in spring water': 'tinned sardines',
+  'tinned sardines in oil drained': 'tinned sardines in oil drained',
   'smoked haddock fillet': 'smoked haddock fillet',
   'cod fillet': 'cod fillet',
   'tuna steak': 'tuna steak',
@@ -770,7 +775,7 @@ export const NUTRITION_SYNONYMS = {
   'basil': 'mixed herbs', 'parsley': 'mixed herbs', 'coriander': 'mixed herbs',
 };
 
-const NEGLIGIBLE_ESTIMATE = { kcal: 3, protein: 0, carbs: 0, fats: 0, fibre: 0 };
+const NEGLIGIBLE_ESTIMATE = { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0 };
 const UNIT_TO_GRAMS = { g: 1, kg: 1000, ml: 1, l: 1000, tbsp: 15, tsp: 5 };
 
 function lookupEntry(name, qualifier) {
@@ -782,81 +787,22 @@ function lookupEntry(name, qualifier) {
 
 function completeNutritionEntry(key, entry) {
   if (!entry) return null;
-  const override = NUTRITION_MACRO_OVERRIDES[key] || {};
-  const fallback = inferMissingMacros(key, entry, override);
+  const override = NUTRITION_MACRO_OVERRIDES[key];
+  if (
+    !override ||
+    !Number.isFinite(override.fat100) ||
+    !Number.isFinite(override.carb100) ||
+    !Number.isFinite(override.fibre100)
+  ) {
+    return null;
+  }
 
   return {
     ...entry,
-    fat100: numberOr(override.fat100, fallback.fat100),
-    carb100: numberOr(override.carb100, fallback.carb100),
-    fibre100: numberOr(override.fibre100, fallback.fibre100),
+    fat100: override.fat100,
+    carb100: override.carb100,
+    fibre100: override.fibre100,
   };
-}
-
-function numberOr(value, fallback) {
-  return Number.isFinite(value) ? value : fallback;
-}
-
-function inferMissingMacros(key, entry, override) {
-  const kcal = Number(entry.kcal100 || 0);
-  const protein = Number(entry.pro100 || 0);
-  const keyText = String(key || '').toLowerCase();
-
-  if (Number.isFinite(override.fat100) && Number.isFinite(override.carb100)) {
-    return {
-      fat100: override.fat100,
-      carb100: override.carb100,
-      fibre100: Number.isFinite(override.fibre100) ? override.fibre100 : 0,
-    };
-  }
-
-  if (
-    keyText.includes('oil') ||
-    keyText.includes('butter') ||
-    keyText.includes('ghee')
-  ) {
-    return { fat100: round1(kcal / 9), carb100: 0, fibre100: 0 };
-  }
-
-  if (isZeroCarbProtein(keyText)) {
-    return {
-      fat100: round1(Math.max(0, (kcal - protein * 4) / 9)),
-      carb100: 0,
-      fibre100: 0,
-    };
-  }
-
-  const assumedFat = Number.isFinite(override.fat100)
-    ? override.fat100
-    : inferDefaultFat(keyText);
-  const carbs = Math.max(0, (kcal - (protein * 4) - (assumedFat * 9)) / 4);
-
-  return {
-    fat100: round1(assumedFat),
-    carb100: round1(carbs),
-    fibre100: Number.isFinite(override.fibre100) ? override.fibre100 : 0,
-  };
-}
-
-function isZeroCarbProtein(keyText) {
-  return [
-    'chicken', 'turkey', 'beef', 'steak', 'lamb', 'pork', 'bacon',
-    'salmon', 'mackerel', 'sardine', 'haddock', 'cod', 'tuna', 'prawn',
-    'egg white', 'egg yolk',
-  ].some(term => keyText.includes(term));
-}
-
-function inferDefaultFat(keyText) {
-  if (keyText.includes('nut') || keyText.includes('seed') || keyText.includes('tahini')) return 45;
-  if (keyText.includes('cheese') || keyText.includes('halloumi') || keyText.includes('paneer')) return 12;
-  if (keyText.includes('yogurt') || keyText.includes('milk') || keyText.includes('skyr')) return 1;
-  if (keyText.includes('sauce') || keyText.includes('dressing') || keyText.includes('paste')) return 5;
-  if (keyText.includes('bread') || keyText.includes('pasta') || keyText.includes('rice') || keyText.includes('oat')) return 2;
-  return 1;
-}
-
-function round1(value) {
-  return Math.round(Number(value || 0) * 10) / 10;
 }
 
 // Computes calories and macros for a single parsed ingredient (see
@@ -874,9 +820,15 @@ export function computeIngredientNutrition(parsed) {
   const entry = lookupEntry(parsed.name, parsed.qualifier);
   if (!entry) return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false };
 
+  let amountPerHundred = null;
   let grams = null;
   if (parsed.kind === 'measured') {
-    if (parsed.unit === 'tbsp' && entry.gramsPerTbsp) grams = parsed.qty * entry.gramsPerTbsp;
+    if ((parsed.unit === 'ml' || parsed.unit === 'l') && entry.basis === 'ml') {
+      const millilitres = parsed.qty * (parsed.unit === 'l' ? 1000 : 1);
+      amountPerHundred = millilitres / 100;
+    } else if ((parsed.unit === 'ml' || parsed.unit === 'l') && entry.basis !== 'ml') {
+      return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false, reason: 'volume-without-density' };
+    } else if (parsed.unit === 'tbsp' && entry.gramsPerTbsp) grams = parsed.qty * entry.gramsPerTbsp;
     else if (parsed.unit === 'tsp' && entry.gramsPerTsp) grams = parsed.qty * entry.gramsPerTsp;
     else grams = parsed.qty * (UNIT_TO_GRAMS[parsed.unit] ?? 1);
   } else if (parsed.kind === 'count' || parsed.kind === 'fraction') {
@@ -884,14 +836,20 @@ export function computeIngredientNutrition(parsed) {
     if (gramsEach) grams = parsed.qty * gramsEach;
   }
 
-  if (grams === null) return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false };
+  if (amountPerHundred === null && grams !== null) amountPerHundred = grams / 100;
+  if (amountPerHundred === null) return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false };
 
   return {
-    kcal: (entry.kcal100 * grams) / 100,
-    protein: (entry.pro100 * grams) / 100,
-    carbs: (entry.carb100 * grams) / 100,
-    fats: (entry.fat100 * grams) / 100,
-    fibre: (entry.fibre100 * grams) / 100,
+    kcal: entry.kcal100 * amountPerHundred,
+    protein: entry.pro100 * amountPerHundred,
+    carbs: entry.carb100 * amountPerHundred,
+    fats: entry.fat100 * amountPerHundred,
+    fibre: entry.fibre100 * amountPerHundred,
     matched: true,
+    sourceKey: (parsed.qualifier && NUTRITION_SYNONYMS[`${parsed.name}|${parsed.qualifier}`])
+      || NUTRITION_SYNONYMS[parsed.name]
+      || parsed.name,
+    grams,
+    basis: entry.basis || 'g',
   };
 }

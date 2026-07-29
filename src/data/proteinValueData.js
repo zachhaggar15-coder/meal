@@ -1,14 +1,14 @@
+import { NUTRITION_TABLE } from './nutritionTable.js';
+
 // Protein value comparison dataset: cost, calories and protein for common UK
 // protein sources, used by the Protein Value Comparator tool (ToolsPage) and
 // by protein-value comparison guides in the blog content.
 //
-// NUTRITION: kcal100/pro100 figures are taken directly from
-// src/data/nutritionTable.js (the same dataset used to compute every recipe's
+// NUTRITION: kcal100/pro100 figures are resolved at module load from
+// src/data/nutritionTable.js (the same canonical dataset used to compute every recipe's
 // calorie/macro figures on the site), which is sourced from UK CoFID
 // (McCance & Widdowson's Composition of Foods) cross-checked against USDA
-// FoodData Central. Two entries not already in that table (tinned sardines,
-// and chicken thighs' "cooked" note) use the same USDA FDC methodology and
-// are flagged below.
+// FoodData Central. This file does not hold an independent nutrition copy.
 //
 // PRICE: costPer100gLowPence/costPer100gHighPence are REPRESENTATIVE ranges,
 // not live prices. They were checked against real UK supermarket listings
@@ -25,13 +25,12 @@ export const PRICE_METHODOLOGY =
 // basis as kcal100/pro100. This keeps "cost per gram of protein" calculations
 // internally consistent: you buy chicken raw, so its purchase price should be
 // divided by its raw-weight protein content, not its cooked-and-reduced weight.
-export const PROTEIN_FOODS = [
+const PROTEIN_FOOD_DEFINITIONS = [
   {
     id: 'chicken-breast',
+    nutritionKey: 'chicken breast',
     name: 'Chicken breast (raw)',
     category: 'Meat',
-    kcal100: 120,
-    pro100: 22.5,
     costPer100gLowPence: 45,
     costPer100gHighPence: 70,
     servingG: 150,
@@ -40,10 +39,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'chicken-thighs',
+    nutritionKey: 'chicken thighs',
     name: 'Chicken thighs, boneless skinless (raw)',
     category: 'Meat',
-    kcal100: 115,
-    pro100: 20,
     costPer100gLowPence: 35,
     costPer100gHighPence: 55,
     servingG: 150,
@@ -52,10 +50,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'eggs',
+    nutritionKey: 'egg',
     name: 'Eggs, large',
     category: 'Dairy & eggs',
-    kcal100: 143,
-    pro100: 12.6,
     costPer100gLowPence: 50,
     costPer100gHighPence: 65,
     servingG: 116,
@@ -64,10 +61,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'greek-yogurt',
+    nutritionKey: 'low-fat greek yogurt',
     name: 'Greek yogurt (0% or low-fat)',
     category: 'Dairy & eggs',
-    kcal100: 73,
-    pro100: 10,
     costPer100gLowPence: 23,
     costPer100gHighPence: 38,
     servingG: 200,
@@ -76,10 +72,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'skyr',
+    nutritionKey: 'skyr',
     name: 'Skyr',
     category: 'Dairy & eggs',
-    kcal100: 63,
-    pro100: 11,
     costPer100gLowPence: 30,
     costPer100gHighPence: 45,
     servingG: 200,
@@ -88,10 +83,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'cottage-cheese',
+    nutritionKey: 'cottage cheese',
     name: 'Cottage cheese',
     category: 'Dairy & eggs',
-    kcal100: 98,
-    pro100: 12,
     costPer100gLowPence: 35,
     costPer100gHighPence: 55,
     servingG: 150,
@@ -100,10 +94,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'tinned-tuna',
+    nutritionKey: 'tinned tuna in spring water',
     name: 'Tinned tuna in spring water',
     category: 'Fish',
-    kcal100: 116,
-    pro100: 26,
     costPer100gLowPence: 45,
     costPer100gHighPence: 90,
     servingG: 145,
@@ -112,24 +105,20 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'tinned-sardines',
+    nutritionKey: 'tinned sardines in oil drained',
     name: 'Tinned sardines in oil, drained',
     category: 'Fish',
-    kcal100: 208,
-    pro100: 24.6,
     costPer100gLowPence: 55,
     costPer100gHighPence: 95,
     servingG: 90,
     servingNote: 'one standard tin, drained',
-    // kcal/protein: USDA FoodData Central, canned sardines in oil, drained solids
-    // (not yet in nutritionTable.js; same sourcing standard applied).
     notes: 'Higher calorie than tuna due to oil content, but a similarly strong protein source and often better value.',
   },
   {
     id: 'lean-beef-mince',
+    nutritionKey: 'lean beef mince',
     name: 'Lean beef mince (5% fat, raw)',
     category: 'Meat',
-    kcal100: 137,
-    pro100: 21,
     costPer100gLowPence: 60,
     costPer100gHighPence: 100,
     servingG: 125,
@@ -138,10 +127,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'turkey-mince',
+    nutritionKey: 'turkey mince lean',
     name: 'Turkey mince, lean (raw)',
     category: 'Meat',
-    kcal100: 132,
-    pro100: 21,
     costPer100gLowPence: 55,
     costPer100gHighPence: 85,
     servingG: 125,
@@ -150,10 +138,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'firm-tofu',
+    nutritionKey: 'firm tofu',
     name: 'Firm tofu',
     category: 'Plant protein',
-    kcal100: 145,
-    pro100: 15.5,
     costPer100gLowPence: 45,
     costPer100gHighPence: 70,
     servingG: 150,
@@ -162,10 +149,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'lentils-cooked',
+    nutritionKey: 'lentils cooked',
     name: 'Lentils, cooked',
     category: 'Plant protein',
-    kcal100: 114,
-    pro100: 9,
     costPer100gLowPence: 8,
     costPer100gHighPence: 15,
     servingG: 200,
@@ -174,10 +160,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'kidney-beans',
+    nutritionKey: 'kidney beans',
     name: 'Kidney beans, tinned (drained)',
     category: 'Plant protein',
-    kcal100: 100,
-    pro100: 7,
     costPer100gLowPence: 14,
     costPer100gHighPence: 21,
     servingG: 200,
@@ -186,10 +171,9 @@ export const PROTEIN_FOODS = [
   },
   {
     id: 'protein-powder',
+    nutritionKey: 'protein powder',
     name: 'Whey protein powder',
     category: 'Supplement',
-    kcal100: 380,
-    pro100: 78,
     costPer100gLowPence: 168,
     costPer100gHighPence: 267,
     servingG: 30,
@@ -197,6 +181,18 @@ export const PROTEIN_FOODS = [
     notes: 'By far the most protein-dense option, and often cheaper per gram of protein than meat once bought in bulk or on a sale, but it is a supplement rather than a whole food.',
   },
 ];
+
+export const PROTEIN_FOODS = PROTEIN_FOOD_DEFINITIONS.map(food => {
+  const nutrition = NUTRITION_TABLE[food.nutritionKey];
+  if (!nutrition) {
+    throw new Error(`Unknown canonical nutrition key: ${food.nutritionKey}`);
+  }
+  return {
+    ...food,
+    kcal100: nutrition.kcal100,
+    pro100: nutrition.pro100,
+  };
+});
 
 // ── Derived calculations ────────────────────────────────────────────────────
 

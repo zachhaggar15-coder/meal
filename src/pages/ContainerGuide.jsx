@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
@@ -170,14 +171,27 @@ export default function ContainerGuide() {
         />
 
         <div id="comparison">
-          <AffiliateProductGrid
+        <AffiliateProductGrid
             title={guide.productGridTitle || `Best ${guideLabel(guide.slug).toLowerCase()} meal prep containers`}
             intro={guide.productGridIntro || 'Each recommendation is chosen for a different buyer job: low cost, glass upgrade, divided portions, leak resistance, commuting, or a fuller weekly setup.'}
             productIds={guide.productIds}
             sourcePage={`${guide.slug}-guide`}
             showDisclosure={false}
             showQuickComparison={false}
-          />
+        />
+
+        <ContextualNextStep
+          eyebrow="Before you buy"
+          title="Match the set size to your actual prep week"
+          description="Use the free count tool if you are unsure whether you need five boxes, ten boxes or freezer extras."
+          primary={{ to: '/tools#container-count-calculator', label: 'Calculate my container count' }}
+          secondary={[
+            { to: '/quiz', label: 'Find a meal plan to portion' },
+            { to: '/meal-prep-containers', label: 'Compare all container types' },
+          ]}
+          pageType={`container-guide-${guide.slug}`}
+          className="container-contextual-next-step"
+        />
         </div>
 
         <section className="container-comparison-section" aria-labelledby="container-comparison-heading">
@@ -223,6 +237,8 @@ export default function ContainerGuide() {
                         target="_blank"
                         rel="noopener noreferrer nofollow sponsored"
                         data-event="container_product_click"
+                        data-affiliate-category="meal-prep-containers"
+                        data-product-name={product.name}
                         data-source-page={`${guide.slug}-comparison-table`}
                         data-offer={product.name}
                       >

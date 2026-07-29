@@ -11,6 +11,7 @@ import {
   validateGeneratedPlan,
 } from '../server/ai-validation.js';
 import { applyApiGuards } from './_guards.js';
+import { canonicaliseAiPlan, UnresolvedNutritionError } from '../server/canonical-nutrition.js';
 
 const MAX_PLAN_JSON_SIZE = 160000;
 const MAX_INSTRUCTION_LENGTH = 500;
@@ -107,7 +108,16 @@ Rules:
       return res.status(502).json({ error: 'The updated plan was incomplete. Please try again.' });
     }
 
-    return res.status(200).json(parsed);
+    try {
+      return res.status(200).json(canonicaliseAiPlan(parsed));
+    } catch (error) {
+      if (error instanceof UnresolvedNutritionError) {
+        return res.status(502).json({
+          error: 'The updated plan used an ingredient without a verifiable quantity or nutrition match. Please try a more specific edit.',
+        });
+      }
+      throw error;
+    }
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Something went wrong. Please try again.' });

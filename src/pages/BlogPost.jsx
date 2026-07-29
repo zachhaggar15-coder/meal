@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
+import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
@@ -18,6 +19,7 @@ import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerato
 import { BUDGET_CONTAINERS, MID_RANGE_CONTAINERS, MEAL_PREP_STICKERS } from '../data/offers.js';
 import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { buildBlogNextStep } from '../utils/contextualJourney.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -30,6 +32,7 @@ export default function BlogPost() {
   const showTrustBox = data.trustNote !== false;
   const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
   const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
+  const nextStep = buildBlogNextStep({ slug, data, exactPlanLinks });
 
   const jsonLd = [
     {
@@ -146,7 +149,12 @@ export default function BlogPost() {
               )}
             </aside>
           )}
-          <ExactPlanLinks links={exactPlanLinks} />
+          <ContextualNextStep
+            {...nextStep}
+            eyebrow="Make this practical"
+            pageType={`blog-${slug}`}
+            className="blog-next-step"
+          />
 
           {hasCustomBlogImage(slug) && (
             <figure className="blog-hero-image blog-hero-image--after-answer">
@@ -225,18 +233,20 @@ export default function BlogPost() {
           />
 
           <div className="cta-box cta-box--large">
-            <h2>Generate Your Free UK Meal Plan</h2>
+            <h2>Find Your UK Supermarket Meal Plan</h2>
             <p>
-              Ready to put this into practice? Use the free AI generator to create a personalised
-              meal plan for your preferred UK supermarket, calorie target, and dietary preferences.
+              Answer seven quick questions to find a realistic weekly plan for your supermarket,
+              calorie target, budget and dietary preferences.
             </p>
             <Link
-              to="/"
+              to="/quiz"
               className="btn-primary"
-              data-event="generator_cta_click"
+              data-event="plan_primary_cta_clicked"
               data-source-page={`blog-${slug}`}
+              data-page-type="blog"
+              data-cta-location="article_end"
             >
-              Generate My Personalised Plan &rarr;
+              Find My Meal Plan &rarr;
             </Link>
           </div>
 
@@ -251,8 +261,8 @@ export default function BlogPost() {
             ))}
             <li>
               <Link
-                to="/"
-                data-event="generator_cta_click"
+                to="/quiz"
+                data-event="plan_primary_cta_clicked"
                 data-source-page={`blog-${slug}`}
               >
                 Generate A Personalised UK Meal Plan
@@ -337,24 +347,6 @@ function RecipeCollection({ recipes, slug }) {
         ))}
       </div>
     </section>
-  );
-}
-
-function ExactPlanLinks({ links }) {
-  if (!links.length) return null;
-
-  return (
-    <aside className="exact-plan-links" aria-label="Exact meal plan matches">
-      <div>
-        <strong>{toTitleCase('Exact plan matches')}</strong>
-        <p>Jump straight from this guide to a practical plan, shopping list or printable week.</p>
-      </div>
-      <div className="exact-plan-link-list">
-        {links.map(link => (
-          <Link key={link.to} to={link.to}>{toTitleCase(link.label)}</Link>
-        ))}
-      </div>
-    </aside>
   );
 }
 

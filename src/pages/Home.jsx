@@ -10,7 +10,7 @@ import WaitlistSection from '../components/WaitlistSection.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
-import PopularSearches from '../components/PopularSearches.jsx';
+import PopularSearches, { POPULAR_SEARCH_LINKS } from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
@@ -271,8 +271,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title={`UK Meal Prep Plans: Supermarket & Calorie | MealPrep.org.uk`}
-        description={`Browse ${PLAN_COUNT} free UK meal prep plans by supermarket, calorie target and goal — 7-day menus, shopping lists, macros and PDF export.`}
+        title="Find a UK Supermarket Meal Plan | MealPrep.org.uk"
+        description={`Find a realistic 7-day meal plan for the UK supermarket you use, with shopping lists, calories, macros and printable plans from a library of ${PLAN_COUNT}.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -283,64 +283,35 @@ export default function Home() {
         <header className="home-hero">
           <SiteLogo variant="hero" className="home-hero-logo" />
           <h1 className="home-hero-h1">
-            Eat well this week without the guesswork.
+            Find a realistic weekly plan for the supermarket you use.
           </h1>
           <p className="home-hero-sub">
-            A quiet, considered meal planner. Tell us your goal, budget and supermarket; we return a ready-made 7-day plan, shopping list, and practical container setup for the week.
+            Answer seven quick questions about your goal, budget and usual UK supermarket.
+            We'll match you with a ready-made 7-day plan and shopping list.
           </p>
           <div className="home-hero-actions">
-            <Link to="/quiz" className="btn-hero-primary">
-              Start the quiz
+            <Link
+              to="/quiz"
+              className="btn-hero-primary"
+              data-event="plan_primary_cta_clicked"
+              data-source-page="home"
+              data-page-type="homepage"
+              data-cta-location="hero"
+            >
+              Find my meal plan
             </Link>
             <Link to="/browse" className="btn-hero-secondary">
-              Browse all plans
+              Browse plans manually
             </Link>
           </div>
           <div className="trust-row">
-            <span className="trust-badge"><strong>1,000+</strong> ready-made plans</span>
+            <span className="trust-badge"><strong>{PLAN_COUNT.toLocaleString('en-GB')}</strong> plan combinations</span>
             <span className="trust-badge"><strong>11</strong> supermarkets</span>
-            <span className="trust-badge"><strong>£31</strong> typical estimate</span>
-            <span className="trust-badge"><strong>Box count</strong> after planning</span>
+            <span className="trust-badge"><strong>Free</strong> with no account</span>
+            <span className="trust-badge"><strong>Shopping list</strong> included</span>
           </div>
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>
-
-        {/* ── Browse by calorie target ─────────────────────────────────── */}
-        <section className="calorie-nav-section">
-          <h2 className="section-title">Browse by calorie target</h2>
-          <div className="calorie-nav-links">
-            <Link to="/meal-plan/1500-calorie-meal-plan" className="calorie-nav-card">
-              <strong>1,500 kcal</strong>
-              <span>Fat loss — most popular target</span>
-            </Link>
-            <Link to="/meal-plan/1800-calorie-meal-plan" className="calorie-nav-card">
-              <strong>1,800 kcal</strong>
-              <span>Moderate deficit — active adults</span>
-            </Link>
-            <Link to="/meal-plan/2000-calorie-meal-plan" className="calorie-nav-card">
-              <strong>2,000 kcal</strong>
-              <span>Maintenance or light deficit</span>
-            </Link>
-            <Link to="/meal-plan/2500-calorie-meal-plan" className="calorie-nav-card">
-              <strong>2,500 kcal</strong>
-              <span>Muscle gain and bulking</span>
-            </Link>
-          </div>
-        </section>
-
-        <PopularSearches
-          title="Popular UK Meal Plan Searches"
-          intro="Start with the highest-demand guides, then jump into a printable plan or shopping list."
-          className="popular-searches--home"
-        />
-
-        <WeeklyTrendingLinks compact />
-
-        <SearchOpportunityLinks
-          title="Essential UK Meal Prep Guides"
-          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
-          showDiscovery={false}
-        />
 
         {/* ── How it works ─────────────────────────────────────────────────── */}
         <section className="how-it-works">
@@ -368,7 +339,30 @@ export default function Home() {
             </div>
           </div>
           <div className="hiw-cta">
-            <Link to="/quiz" className="btn-primary">Start the Quiz</Link>
+            <Link to="/quiz" className="btn-primary">Find my meal plan</Link>
+          </div>
+        </section>
+
+        {/* ── Manual calorie browsing remains available, but secondary ── */}
+        <section className="calorie-nav-section">
+          <h2 className="section-title">Prefer to browse by calorie target?</h2>
+          <div className="calorie-nav-links">
+            <Link to="/meal-plan/1500-calorie-meal-plan" className="calorie-nav-card">
+              <strong>1,500 kcal</strong>
+              <span>Fat loss — most popular target</span>
+            </Link>
+            <Link to="/meal-plan/1800-calorie-meal-plan" className="calorie-nav-card">
+              <strong>1,800 kcal</strong>
+              <span>Moderate deficit — active adults</span>
+            </Link>
+            <Link to="/meal-plan/2000-calorie-meal-plan" className="calorie-nav-card">
+              <strong>2,000 kcal</strong>
+              <span>Maintenance or light deficit</span>
+            </Link>
+            <Link to="/meal-plan/2500-calorie-meal-plan" className="calorie-nav-card">
+              <strong>2,500 kcal</strong>
+              <span>Muscle gain and bulking</span>
+            </Link>
           </div>
         </section>
 
@@ -436,6 +430,23 @@ export default function Home() {
         </section>
 
         <StickerPromo offer={MID_RANGE_CONTAINERS} sourcePage="home-prep-flow" />
+
+        {/* Search-led discovery remains available after the core product journey. */}
+        <PopularSearches
+          title="Popular UK Meal Plan Searches"
+          intro="Start with a focused set of useful guides, plans and shopping-list routes."
+          links={POPULAR_SEARCH_LINKS.slice(0, 8)}
+          className="popular-searches--home"
+        />
+
+        <WeeklyTrendingLinks compact />
+
+        <SearchOpportunityLinks
+          title="Essential UK Meal Prep Guides"
+          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
+          showDiscovery={false}
+          compact
+        />
 
         {/* ── FAQ ──────────────────────────────────────────────────────────── */}
         <section className="home-faq">
@@ -528,7 +539,7 @@ export default function Home() {
         </section>
 
       </div>
-      <WaitlistSection sourcePage="home" />
+      <WaitlistSection sourcePage="home" compact />
       <Footer />
     </>
   );
