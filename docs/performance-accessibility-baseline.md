@@ -25,6 +25,13 @@ and CLS 0; desktop recorded FCP 0.50 s, LCP 0.70 s and CLS 0. These are diagnost
 lab observations, not field Core Web Vitals. Interaction to Next Paint requires
 real-user data.
 
+The production mobile Lighthouse sample taken immediately before responsive hero
+delivery recorded 541,612 transferred bytes, 7.77 s LCP, 0 CLS and 0 ms TBT. The
+same harness after adding a 720 px source recorded 473,737 bytes, 7.02 s LCP,
+0 CLS and 0 ms TBT. Lighthouse's estimated image-delivery waste fell from 81,171
+bytes to zero. These are single-run diagnostic comparisons; field LCP and INP
+remain the decision metrics.
+
 ## Accessibility baseline
 
 `npm run audit:accessibility` inspects every emitted page for document language,
@@ -48,6 +55,7 @@ desktop flows therefore remain a required browser release check.
 
 The largest lazy blog chunk is deliberately route-scoped. Initial JavaScript
 still contains generated plan data and a blog data dependency that should be
-profiled before further splitting. Responsive homepage image sizing has an
-estimated narrow-viewport saving of about 86 KB. Neither issue currently breaks
-the release budget.
+profiled before further splitting. The homepage now offers a 49.7 KB, 720 px
+WebP alongside the 117.7 KB, 1,200 px source; field data should confirm the
+benefit across real devices and connection speeds. Neither remaining profiling
+question currently breaks the release budget.

@@ -10,7 +10,7 @@ evidence threshold. Rankings are not claimed as outcomes.
 | P1 | A clearer plan CTA on high-impression organic landing pages increases useful plan opens. | `plan_primary_cta_clicked / qualified organic landing sessions` | engaged time, return rate, no affiliate-click loss | Enough sessions on one stable template; exclude recently edited snippets |
 | P1 | Showing a brief saved-plan reminder after meaningful plan use increases return usage. | coarse `return_visit` and `saved_plan_reopened` | dismiss rate, no layout shift, no notification channel | At least 50 plan saves and stable consented tracking |
 | P1 | A top-result explanation ordered by the user's strongest constraint improves quiz-to-plan continuation. | `plan_viewed_from_quiz / quiz_result_viewed` | quiz completion, alternative-plan clicks | 100 consented quiz result views |
-| P2 | A narrower mobile hero image reduces LCP without hurting quiz starts. | mobile LCP and quiz starts | CLS, image quality | Reproducible local source-size saving and field baseline |
+| P2 | The responsive mobile hero image reduces field LCP without hurting quiz starts. Implemented 29 July 2026; evaluation remains open. | mobile LCP and quiz starts | CLS, image quality | Sufficient post-release field traffic for comparison |
 | P2 | Container guides that lead with calculated container count improve qualified affiliate use. | recommender completion to affiliate click | engaged time, disclosure visibility | Sufficient container-guide traffic after cooldown |
 
 Do not run multiple copy changes on the same low-traffic route simultaneously.
