@@ -12823,6 +12823,28 @@ textarea {
   line-height: 1.2;
   color: var(--editorial-ink, #17130d);
 }
+.product-pick-image {
+  align-items: center;
+  aspect-ratio: 4 / 3;
+  background: #f2efe7;
+  border: 1px solid var(--editorial-line, #e4ded1);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.product-pick-image img {
+  background: #fff;
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  transition: transform 0.18s ease;
+  width: 100%;
+}
+.product-pick-image:hover img {
+  transform: scale(1.025);
+}
 .product-pick-summary {
   margin: 0;
   color: var(--editorial-muted, #777064);
@@ -12911,6 +12933,49 @@ textarea {
 
 /* Retailer-specific guidance on plan pages. Reuses the existing swaps-grid
    card layout so it reads as part of the page rather than a bolted-on block. */
+.swap-card--store-strengths {
+  background: #f0f4ea;
+  border-color: #d4dfc8;
+}
+
+.swap-card--store-notes {
+  background: #f8f1e7;
+  border-color: #e7d8c0;
+}
+
+.swap-card--cheaper {
+  background: #fcf5e6;
+  border-color: #ead9b7;
+}
+
+.swap-card--protein {
+  background: #edf3f5;
+  border-color: #cfdde2;
+}
+
+.swap-card--vegetarian {
+  background: #eef5ed;
+  border-color: #cfe0cb;
+}
+
+.swap-card--store-strengths h3,
+.swap-card--vegetarian h3 {
+  color: #536b49;
+}
+
+.swap-card--store-notes h3,
+.swap-card--cheaper h3 {
+  color: #856129;
+}
+
+.swap-card--protein h3 {
+  color: #466a78;
+}
+
+.swap-card[class*="swap-card--"] li {
+  border-bottom-color: rgba(70, 62, 48, 0.09);
+}
+
 .plan-store-positioning {
   color: var(--editorial-muted);
   margin: 0 0 18px;
@@ -12939,12 +13004,15 @@ textarea {
 }
 
 .plan-store-note {
-  border-top: 1px solid var(--editorial-line);
+  background: #f3efe6;
+  border: 1px solid #dfd5c3;
+  border-radius: 4px;
   color: var(--editorial-muted);
   font-size: 0.82rem;
   line-height: 1.5;
   margin-top: 20px;
-  padding-top: 12px;
+  max-width: 70ch;
+  padding: 12px 14px;
 }
 
 /* Explicit "this does not match what you asked for" note. Deliberately plain

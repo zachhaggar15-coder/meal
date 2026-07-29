@@ -117,6 +117,7 @@ export default function AccessoriesHub() {
           intro="Start with the small item that removes the biggest weekly friction, then open Amazon UK for live price and availability."
           productIds={STARTER_ACCESSORY_PRODUCT_IDS}
           sourcePage="meal-prep-accessories-fast-picks"
+          showImages
           showQuickComparison={false}
         />
 

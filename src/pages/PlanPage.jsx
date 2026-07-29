@@ -27,6 +27,10 @@ import {
 } from '../utils/planRetention.js';
 import { buildPracticalRecipeSteps } from '../utils/recipeQuality.js';
 import { computeMealNutrition, splitIngredientText, sumNutrition } from '../utils/nutrition.js';
+import {
+  getCommonDenominatorPortionShares,
+  PORTION_SHARE_DENOMINATOR,
+} from '../utils/portionShares.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import NotFound from './NotFound.jsx';
 
@@ -460,12 +464,12 @@ export default function PlanPage() {
                     ))}
                     {displayPlan.household?.hasMixedPortions && meal.householdPortions?.length > 1 && (
                       <li className="plan-meal-recipe-serve-step">
-                        Divide the finished dish:{' '}
-                        {meal.householdPortions.map((p, i) => (
+                        Divide the finished dish into {PORTION_SHARE_DENOMINATOR} equal shares:{' '}
+                        {getCommonDenominatorPortionShares(meal.householdPortions).map((p, i) => (
                           <span key={p.id}>
                             {i > 0 ? ', ' : ''}
                             <strong>{p.label}</strong>
-                            {' '}— {toNiceFraction(p.portionScale / (meal.totalPortions || 1))}
+                            {' '}— {p.fraction}
                           </span>
                         ))}.
                       </li>
@@ -835,13 +839,13 @@ export default function PlanPage() {
             </div>
 
             <div className="swaps-grid">
-              <div className="swap-card">
+              <div className="swap-card swap-card--store-strengths">
                 <h3>What {plan.storeGuide.label} is good for here</h3>
                 <ul>
                   {plan.storeGuide.prepStrengths.map((item, i) => <li key={i}>{item}</li>)}
                 </ul>
               </div>
-              <div className="swap-card">
+              <div className="swap-card swap-card--store-notes">
                 <h3>Worth knowing before you shop</h3>
                 <ul>
                   {plan.storeGuide.watchOuts.map((item, i) => <li key={i}>{item}</li>)}
@@ -861,20 +865,20 @@ export default function PlanPage() {
         <section className="plan-swaps-section">
           <h2>Swaps &amp; Suggestions</h2>
           <div className="swaps-grid">
-            <div className="swap-card">
+            <div className="swap-card swap-card--cheaper">
               <h3>💰 Make it cheaper</h3>
               <ul>
                 {plan.swaps.cheaper.map((s, i) => <li key={i}>{s}</li>)}
               </ul>
             </div>
-            <div className="swap-card">
+            <div className="swap-card swap-card--protein">
               <h3>💪 Increase protein</h3>
               <ul>
                 {plan.swaps.higherProtein.map((s, i) => <li key={i}>{s}</li>)}
               </ul>
             </div>
             {plan.swaps.vegetarian?.length > 0 && (
-              <div className="swap-card">
+              <div className="swap-card swap-card--vegetarian">
                 <h3>🥦 Make it vegetarian</h3>
                 <ul>
                   {plan.swaps.vegetarian.map((s, i) => <li key={i}>{s}</li>)}
@@ -1146,20 +1150,6 @@ function HouseholdPortionsControl({
       </div>
     </details>
   );
-}
-
-function toNiceFraction(decimal) {
-  const candidates = [
-    [1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [1, 5],
-    [2, 5], [3, 5], [4, 5], [1, 6], [5, 6], [1, 8], [3, 8], [5, 8], [7, 8],
-  ];
-  let best = [1, 1];
-  let bestDiff = Math.abs(decimal - 1);
-  for (const [n, d] of candidates) {
-    const diff = Math.abs(decimal - n / d);
-    if (diff < bestDiff) { bestDiff = diff; best = [n, d]; }
-  }
-  return best[1] === 1 ? 'all' : `${best[0]}/${best[1]}`;
 }
 
 function MealPortionBreakdown({ portions = [] }) {

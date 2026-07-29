@@ -10,6 +10,7 @@ export default function ProductPicks({
   productIds = [],
   sourcePage = 'blog-tool-recommendation',
   showDisclosure = true,
+  showImages = false,
   showQuickComparison = true,
 }) {
   const products = getMealPrepProducts(productIds);
@@ -75,6 +76,28 @@ export default function ProductPicks({
       <div className="product-picks-grid">
         {products.map(product => (
           <article key={product.id} className="product-pick-card">
+            {showImages && product.image && (
+              <a
+                className="product-pick-image"
+                href={product.href}
+                target="_blank"
+                rel="noopener noreferrer nofollow sponsored"
+                data-event="mealprep_product_click"
+                data-source-page={`${sourcePage}-image`}
+                data-offer={product.name}
+                data-affiliate-category={product.category}
+                data-product-name={product.name}
+              >
+                <img
+                  src={product.image}
+                  alt={product.imageAlt || product.name}
+                  width={product.imageWidth}
+                  height={product.imageHeight}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            )}
             <div className="product-pick-top">
               <span className="product-pick-category">{product.category}</span>
               <span className="product-pick-price">{product.priceBand}</span>
