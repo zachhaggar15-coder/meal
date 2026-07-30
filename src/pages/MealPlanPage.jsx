@@ -13,6 +13,7 @@ import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import PlanSaveButton from '../components/PlanSaveButton.jsx';
+import RecipeDetails from '../components/RecipeDetails.jsx';
 import TickableShoppingList from '../components/TickableShoppingList.jsx';
 import NotFound from './NotFound.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
@@ -243,19 +244,7 @@ export default function MealPlanPage() {
                     </span>
                   </div>
                   <p className="plan-meal-desc">{meal.desc}</p>
-                  {meal.portion_size && (
-                    <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
-                  )}
-                  {meal.recipe?.length > 0 && (
-                    <details className="plan-meal-recipe">
-                      <summary>Recipe</summary>
-                      <ol>
-                        {meal.recipe.map((stepText, stepIdx) => (
-                          <li key={stepIdx}>{stepText}</li>
-                        ))}
-                      </ol>
-                    </details>
-                  )}
+                  <RecipeDetails meal={meal} />
                   <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(activeDayIdx, j, newMeal)} />
                 </div>
               ))}
@@ -606,19 +595,7 @@ export default function MealPlanPage() {
                     </span>
                   </div>
                   <p className="plan-meal-desc">{meal.desc}</p>
-                  {meal.portion_size && (
-                    <p className="plan-meal-portion"><strong>Portions:</strong> {meal.portion_size}</p>
-                  )}
-                  {meal.recipe?.length > 0 && (
-                    <details className="plan-meal-recipe">
-                      <summary>Recipe</summary>
-                      <ol>
-                        {meal.recipe.map((stepText, stepIdx) => (
-                          <li key={stepIdx}>{stepText}</li>
-                        ))}
-                      </ol>
-                    </details>
-                  )}
+                  <RecipeDetails meal={meal} />
                   <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(i, j, newMeal)} />
                 </div>
               ))}

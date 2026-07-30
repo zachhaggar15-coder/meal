@@ -1,4 +1,5 @@
 import { buildPracticalRecipeSteps } from './recipeQuality.js';
+import { getCookingIngredientDisplay } from './cookingQuantities.js';
 import { computeMealNutrition, computeMealNutritionRaw, splitIngredientText, sumNutrition } from './nutrition.js';
 import { scaleIngredientsForPortion } from './planBuilder.js';
 
@@ -29,13 +30,15 @@ export function canonicaliseLegacyMeal(meal = {}, portionScale = 1) {
     ...meal,
     ...nutrition,
     desc: cleanLegacyCopy(meal.desc),
+    calculationIngredients: ingredients,
     ingredients,
+    cookingIngredients: getCookingIngredientDisplay(ingredients),
     portion_size: ingredients.join(', '),
   };
 
   return {
     ...mealWithIngredients,
-    recipe: normaliseLegacyRecipe(meal.recipe) || buildPracticalRecipeSteps(mealWithIngredients),
+    recipe: buildPracticalRecipeSteps(mealWithIngredients),
   };
 }
 
@@ -56,14 +59,14 @@ export function buildCanonicalLegacyPlan(plan, targetCalories) {
 
     for (let pass = 0; pass < 6; pass += 1) {
       meals = sourceMeals.map(meal => canonicaliseLegacyMeal(meal, scale));
-      const displayedTotal = meals.reduce((sum, meal) => sum + meal.kcal, 0);
-      const difference = Math.abs(displayedTotal - Number(targetCalories));
+      const canonicalTotal = meals.reduce((sum, meal) => sum + meal.kcal, 0);
+      const difference = Math.abs(canonicalTotal - Number(targetCalories));
       if (difference < closestDifference) {
         closestMeals = meals;
         closestDifference = difference;
       }
-      if (!displayedTotal || difference <= 1) break;
-      scale *= Number(targetCalories) / displayedTotal;
+      if (!canonicalTotal || difference <= 1) break;
+      scale *= Number(targetCalories) / canonicalTotal;
     }
     meals = closestMeals.length ? closestMeals : meals;
 
@@ -82,23 +85,6 @@ function formatLegacyIngredient(ingredient) {
     return cleanLegacyCopy(`${name}${amount}`);
   }
   return cleanLegacyCopy(ingredient);
-}
-
-function normaliseLegacyRecipe(recipe) {
-  if (Array.isArray(recipe)) {
-    const steps = recipe.map(cleanLegacyCopy).filter(Boolean);
-    return steps.length ? steps.slice(0, 8) : null;
-  }
-
-  if (typeof recipe === 'string') {
-    const steps = recipe
-      .split(/\n+|(?:^|\s)\d+\.\s*/g)
-      .map(cleanLegacyCopy)
-      .filter(Boolean);
-    return steps.length ? steps.slice(0, 8) : null;
-  }
-
-  return null;
 }
 
 function cleanLegacyCopy(value) {

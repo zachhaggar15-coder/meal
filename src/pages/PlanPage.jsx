@@ -10,6 +10,7 @@ import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import PlanSaveButton from '../components/PlanSaveButton.jsx';
+import RecipeDetails from '../components/RecipeDetails.jsx';
 import TickableShoppingList from '../components/TickableShoppingList.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
@@ -26,6 +27,7 @@ import {
   writePlanProgress,
 } from '../utils/planRetention.js';
 import { buildPracticalRecipeSteps } from '../utils/recipeQuality.js';
+import { getCookingIngredientDisplay } from '../utils/cookingQuantities.js';
 import { computeMealNutrition, splitIngredientText, sumNutrition } from '../utils/nutrition.js';
 import {
   getCommonDenominatorPortionShares,
@@ -455,28 +457,20 @@ export default function PlanPage() {
                 <MealPortionBreakdown portions={meal.householdPortions} />
               )}
 
-              {meal.recipe?.length > 0 && (
-                <details className="plan-meal-recipe">
-                  <summary>Recipe</summary>
-                  <ol>
-                    {meal.recipe.map((stepText, stepIdx) => (
-                      <li key={stepIdx}>{stepText}</li>
-                    ))}
-                    {displayPlan.household?.hasMixedPortions && meal.householdPortions?.length > 1 && (
-                      <li className="plan-meal-recipe-serve-step">
-                        Divide the finished dish into {PORTION_SHARE_DENOMINATOR} equal shares:{' '}
-                        {getCommonDenominatorPortionShares(meal.householdPortions).map((p, i) => (
-                          <span key={p.id}>
-                            {i > 0 ? ', ' : ''}
-                            <strong>{p.label}</strong>
-                            {' '}— {p.fraction}
-                          </span>
-                        ))}.
-                      </li>
-                    )}
-                  </ol>
-                </details>
-              )}
+              <RecipeDetails meal={meal}>
+                {displayPlan.household?.hasMixedPortions && meal.householdPortions?.length > 1 ? (
+                  <li className="plan-meal-recipe-serve-step">
+                    Divide the finished dish into {PORTION_SHARE_DENOMINATOR} equal shares:{' '}
+                    {getCommonDenominatorPortionShares(meal.householdPortions).map((p, i) => (
+                      <span key={p.id}>
+                        {i > 0 ? ', ' : ''}
+                        <strong>{p.label}</strong>
+                        {' '}— {p.fraction}
+                      </span>
+                    ))}.
+                  </li>
+                ) : null}
+              </RecipeDetails>
 
               <button
                 className="plan-meal-edit-btn"
@@ -725,16 +719,7 @@ export default function PlanPage() {
                     <p className="plan-meal-desc">{meal.desc}</p>
                   )}
 
-                  {meal.recipe?.length > 0 && (
-                    <details className="plan-meal-recipe">
-                      <summary>Recipe</summary>
-                      <ol>
-                        {meal.recipe.map((stepText, stepIdx) => (
-                          <li key={stepIdx}>{stepText}</li>
-                        ))}
-                      </ol>
-                    </details>
-                  )}
+                  <RecipeDetails meal={meal} />
 
                   {/* AI edit trigger */}
                   <button
@@ -1394,7 +1379,9 @@ function _flattenShoppingIngredients(shoppingList = {}) {
 }
 
 function getMealIngredients(meal) {
-  return uniqueStrings(meal.ingredients || meal.portion_size?.split(',') || [meal.name]);
+  const cookingIngredients = meal.cookingIngredients
+    || getCookingIngredientDisplay(meal.calculationIngredients || meal.ingredients || meal.portion_size);
+  return uniqueStrings(cookingIngredients.length ? cookingIngredients : [meal.name]);
 }
 
 function uniqueStrings(values = []) {
@@ -1561,13 +1548,15 @@ function normaliseEditedMeal(currentMeal, returnedMeal = {}) {
   const mealWithIngredients = {
     ...merged,
     ...nutrition,
+    calculationIngredients: ingredients,
     ingredients,
+    cookingIngredients: getCookingIngredientDisplay(ingredients),
     portion_size: portionSize,
   };
 
   return {
     ...mealWithIngredients,
-    recipe: normaliseRecipe(merged.recipe) || buildDynamicRecipe(mealWithIngredients),
+    recipe: buildDynamicRecipe(mealWithIngredients),
   };
 }
 
@@ -1604,23 +1593,6 @@ function cleanIngredient(ingredient) {
     .replace(/\.\s*Use about .*$/i, '')
     .replace(/\s+/g, ' ')
     .trim();
-}
-
-function normaliseRecipe(recipe) {
-  if (Array.isArray(recipe)) {
-    const steps = recipe.map(step => String(step || '').trim()).filter(Boolean);
-    return steps.length ? steps.slice(0, 6) : null;
-  }
-
-  if (typeof recipe === 'string') {
-    const steps = recipe
-      .split(/\n+|(?:^|\s)\d+\.\s*/g)
-      .map(step => step.trim())
-      .filter(Boolean);
-    return steps.length ? steps.slice(0, 6) : null;
-  }
-
-  return null;
 }
 
 function buildDynamicRecipe(meal) {

@@ -8,6 +8,7 @@ import {
   computeMealNutritionRaw,
   sumNutrition,
 } from './nutrition.js';
+import { getCookingIngredientDisplay } from './cookingQuantities.js';
 import { buildPracticalRecipeSteps } from './recipeQuality.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -218,7 +219,7 @@ export function buildShoppingList(plan) {
 
   for (const day of plan) {
     for (const meal of day.meals) {
-      for (const rawIng of meal.ingredients || []) {
+      for (const rawIng of meal.calculationIngredients || meal.ingredients || []) {
         const ing = normaliseShoppingIngredient(rawIng);
         if (!ing) continue;
         const cat = categoriseIngredient(ing);
@@ -728,7 +729,7 @@ function storeMealBias(meal, seed, { tags, protein, proteinDensity }) {
 function getMealNutrition(meal) {
   const key = meal?.id || meal?.name;
   if (key && MEAL_NUTRITION_CACHE.has(key)) return MEAL_NUTRITION_CACHE.get(key);
-  const nutrition = computeMealNutritionRaw(meal?.ingredients || []);
+  const nutrition = computeMealNutritionRaw(meal?.calculationIngredients || meal?.ingredients || []);
   if (key) MEAL_NUTRITION_CACHE.set(key, nutrition);
   return nutrition;
 }
@@ -819,7 +820,9 @@ export function buildPlanDays(seed) {
         fibre:       nutrition.fibre,
         prep:       `${m.prepMins} min`,
         desc:       buildMealDesc(displayMeal, nutrition.kcal, nutrition.protein, nutrition.carbs),
+        calculationIngredients: ingredients,
         ingredients,
+        cookingIngredients: getCookingIngredientDisplay(ingredients),
         portion_size: buildPortionSize(ingredients),
         recipe:     buildRecipeSteps(displayMeal),
       };
@@ -1041,9 +1044,9 @@ function formatPortionCount(value) {
 }
 
 function scaleMealForHousehold(meal, members, totalPortions) {
-  const baseIngredients = meal.ingredients || [];
+  const baseIngredients = meal.calculationIngredients || meal.ingredients || [];
   const ingredients = scaleIngredientsForPortion(baseIngredients, totalPortions);
-  const recipe = scaleRecipeForPeople(meal.recipe, baseIngredients, ingredients);
+  const presentationMeal = { ...meal, ingredients };
 
   return {
     ...meal,
@@ -1057,20 +1060,12 @@ function scaleMealForHousehold(meal, members, totalPortions) {
       fats: Math.round((meal.fats || 0) * member.portionScale),
       fibre: Math.round((meal.fibre || 0) * member.portionScale),
     })),
+    calculationIngredients: ingredients,
     ingredients,
+    cookingIngredients: getCookingIngredientDisplay(ingredients),
     portion_size: buildPortionSize(ingredients),
-    recipe,
+    recipe: buildPracticalRecipeSteps(presentationMeal),
   };
-}
-
-function scaleRecipeForPeople(recipe, baseIngredients, scaledIngredients) {
-  if (!Array.isArray(recipe)) return recipe;
-
-  const oldList = (baseIngredients || []).join(', ');
-  const newList = (scaledIngredients || []).join(', ');
-  if (!oldList || !newList || oldList === newList) return recipe;
-
-  return recipe.map(step => String(step || '').replace(oldList, newList));
 }
 
 function scaleBudgetEstimate(value, people) {
@@ -1096,10 +1091,9 @@ function rebalanceMealsToTarget(meals, targetCalories) {
   let closest = [];
   let closestDifference = Number.POSITIVE_INFINITY;
 
-  // Quantities shown to the user are the source of truth. Scale, format, then
-  // recalculate from those exact displayed quantities. A second pass absorbs
-  // the small error introduced by practical unit rounding without overriding
-  // any independently calculated calorie field.
+  // These scaled strings are canonical calculation quantities. Nutrition,
+  // shopping aggregation and plan totals all use them. A separate cooking
+  // presentation is derived later and never round-trips into this loop.
   for (let pass = 0; pass < 6; pass += 1) {
     adjusted = enrichedMeals.map(({ meal }) => {
       const ingredients = scaleIngredientsForPortion(meal.ingredients, portionScale);

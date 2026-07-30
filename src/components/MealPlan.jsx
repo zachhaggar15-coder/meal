@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import RecipeDetails from './RecipeDetails.jsx';
 import { track } from '../utils/analytics.js';
+import { getCookingIngredientDisplay } from '../utils/cookingQuantities.js';
+import { buildPracticalRecipeSteps } from '../utils/recipeQuality.js';
 
 function buildShoppingText(list, price) {
   const lines = [];
@@ -28,7 +31,12 @@ function buildPlanText(weeklyPlan) {
     const meals = day.meals.map(m => {
       let line = `  ${m.type}: ${m.name} — ${m.calories || 0} kcal, ${formatFullMacros(m, ', ')}`;
       if (m.prep_time) line += `, ${m.prep_time}`;
-      if (m.portion_size) line += `\n    Portion: ${m.portion_size}`;
+      const cookingIngredients = getCookingIngredientDisplay(
+        m.calculationIngredients || m.ingredients || m.portion_size,
+      );
+      if (cookingIngredients.length) {
+        line += `\n    Ingredients: ${cookingIngredients.join(', ')}`;
+      }
       const recipe = getMealRecipe(m);
       if (recipe.length) {
         line += `\n    Recipe:\n${recipe.map((step, index) => `      ${index + 1}. ${step}`).join('\n')}`;
@@ -144,24 +152,7 @@ export default function MealPlan({ plan, weeklyPlan, shoppingList, price }) {
                   </div>
                 </div>
                 {meal.description && <p className="meal-desc">{meal.description}</p>}
-                {meal.portion_size && (
-                  <p className="meal-portion"><strong>Portion:</strong> {meal.portion_size}</p>
-                )}
-                {Array.isArray(meal.ingredients) && meal.ingredients.length > 0 && (
-                  <ul className="meal-ingredients">
-                    {meal.ingredients.map((ing, iIdx) => (
-                      <li key={iIdx}>{formatMealIngredient(ing)}</li>
-                    ))}
-                  </ul>
-                )}
-                {getMealRecipe(meal).length > 0 && (
-                  <details className="plan-meal-recipe">
-                    <summary>Recipe</summary>
-                    <ol>
-                      {getMealRecipe(meal).map((step, iIdx) => <li key={iIdx}>{step}</li>)}
-                    </ol>
-                  </details>
-                )}
+                <RecipeDetails meal={meal} />
               </div>
             ))}
           {day.daily_totals && (
@@ -209,93 +200,6 @@ function formatFullMacros(source = {}, separator = ' · ') {
 }
 
 function getMealRecipe(meal) {
-  if (Array.isArray(meal.recipe)) {
-    const steps = meal.recipe.map(step => String(step || '').trim()).filter(Boolean);
-    if (steps.length) return steps.slice(0, 6);
-  }
-
-  if (typeof meal.recipe === 'string') {
-    const steps = meal.recipe
-      .split(/\n+|(?:^|\s)\d+\.\s*/g)
-      .map(step => step.trim())
-      .filter(Boolean);
-    if (steps.length) return steps.slice(0, 6);
-  }
-
-  return buildFallbackRecipe(meal);
-}
-
-function buildFallbackRecipe(meal) {
-  const ingredients = getIngredientText(meal);
-  const name = String(meal.name || '').toLowerCase();
-
-  if (name.includes('smoothie')) {
-    return [
-      `Add the listed ingredients to a blender: ${ingredients}.`,
-      'Blend until smooth, adding a splash of liquid if needed.',
-      'Serve chilled straight away.',
-    ];
-  }
-
-  if (name.includes('oats') || name.includes('yogurt') || String(meal.type || '').toLowerCase().includes('breakfast')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Combine the base ingredients in a bowl or container and stir well.',
-      'Add toppings last and eat straight away or chill until needed.',
-    ];
-  }
-
-  if (name.includes('wrap') || name.includes('sandwich') || name.includes('toast') || name.includes('pitta')) {
-    return [
-      'Toast or warm the bread, wrap, pitta, or bagel if preferred.',
-      `Prepare the filling ingredients: ${ingredients}.`,
-      'Layer everything evenly, season to taste, and serve or wrap for later.',
-    ];
-  }
-
-  if (name.includes('salad') || name.includes('bowl')) {
-    return [
-      `Wash, chop, and portion the ingredients: ${ingredients}.`,
-      'Cook or warm any grains or protein, then let them cool slightly.',
-      'Combine everything in a bowl and keep dressing separate until serving if prepping ahead.',
-    ];
-  }
-
-  if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
-    return [
-      `Prepare the ingredients: ${ingredients}.`,
-      'Cook the protein, aromatics, and firmer vegetables in a pan for 5-8 minutes.',
-      'Add the remaining ingredients and simmer until hot, thickened, and cooked through.',
-    ];
-  }
-
-  if (name.includes('pasta') || name.includes('rice') || name.includes('noodle')) {
-    return [
-      'Cook the pasta, rice, or noodles according to the packet instructions.',
-      `Prepare the remaining ingredients while it cooks: ${ingredients}.`,
-      'Combine everything, heat through, season to taste, and portion if meal prepping.',
-    ];
-  }
-
-  return [
-    `Prepare the ingredients: ${ingredients}.`,
-    'Cook the main protein or vegetables in a pan over medium heat until cooked through.',
-    'Add the remaining ingredients, heat until piping hot, season to taste, and serve.',
-  ];
-}
-
-function getIngredientText(meal) {
-  if (Array.isArray(meal.ingredients) && meal.ingredients.length > 0) {
-    return meal.ingredients.map(formatMealIngredient).filter(Boolean).join(', ');
-  }
-  return meal.portion_size || meal.name || 'the listed ingredients';
-}
-
-function formatMealIngredient(ingredient) {
-  if (typeof ingredient === 'object' && ingredient !== null) {
-    const name = ingredient.item || ingredient.name || '';
-    const amount = ingredient.amount ? ` ${ingredient.amount}` : '';
-    return `${name}${amount}`.trim();
-  }
-  return String(ingredient || '').trim();
+  const calculationIngredients = meal.calculationIngredients || meal.ingredients || meal.portion_size;
+  return buildPracticalRecipeSteps({ ...meal, ingredients: calculationIngredients });
 }
