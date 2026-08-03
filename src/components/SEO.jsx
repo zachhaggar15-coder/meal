@@ -4,6 +4,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from '../constants/site.js';
+import { fitMetadataTitle } from '../utils/seoMetadata.js';
 
 const DOMAIN = SITE_URL;
 
@@ -28,6 +29,8 @@ export default function SEO({
   const url = cleanCanonicalUrl(canonical);
   const image = ogImage || `${DOMAIN}/og-preview.png`;
   const imageType = getImageType(image);
+  const metaTitle = fitMetadataTitle(title);
+  const socialTitle = fitMetadataTitle(ogTitle || title);
   const metaDescription = trimMetaDescription(description);
   const openGraphDescription = trimMetaDescription(ogDescription || description);
   const structuredData = [
@@ -37,7 +40,7 @@ export default function SEO({
 
   return (
     <Helmet>
-      <title>{title}</title>
+      <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta name="robots" content={robots} />
       <meta name="application-name" content={SITE_NAME} />
@@ -47,7 +50,7 @@ export default function SEO({
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />
-      <meta property="og:title" content={ogTitle || title} />
+      <meta property="og:title" content={socialTitle} />
       <meta property="og:description" content={openGraphDescription} />
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={SITE_NAME} />
@@ -58,7 +61,7 @@ export default function SEO({
 
       {/* Twitter/X card — falls back to a plain link without these */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={ogTitle || title} />
+      <meta name="twitter:title" content={socialTitle} />
       <meta name="twitter:description" content={openGraphDescription} />
       <meta name="twitter:image" content={image} />
 

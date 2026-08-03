@@ -14,6 +14,8 @@ This project now has a first-party analytics layer for understanding real visito
 - Coarse device category, viewport size, referrer host/source, UTM fields, language, and timezone.
 - Exploration score, calculated in the admin API from pages visited, categories explored, searches, clicks, scroll depth, and sections seen.
 - Coarse return-visit, local plan-save, saved/recent reopen and tickable shopping-list events.
+- Navigation-scoped LCP, INP, CLS, FCP and TTFB measurements, with route, rating
+  and navigation type. The dashboard and weekly report use p75 values.
 
 The browser does not send email addresses, payment data, IP addresses, or typed meal-plan form answers to the behaviour analytics endpoint.
 
@@ -61,6 +63,7 @@ are not present in the initial HTML. Do Not Track is treated as denied.
    - Exploration beyond entry intent.
    - Product Funnel stages for quiz, plan use, shopping, save/share, retention and commercial intent.
    - Return visits, saved plans and shopping-list use in the overview.
+   - Field Core Web Vitals overall and by route, with INP-first route ordering.
 4. Use the toolbar buttons:
    - **Export event log** for raw analytics events.
    - **Export sessions** for session-level context.
@@ -89,3 +92,7 @@ entry-intent segment instead of treating every stage as a required predecessor.
 Return visits are recorded only after at least four hours away and are bucketed;
 cleared storage, consent denial and another device will not be recognised as the
 same visitor.
+
+Core Web Vitals are field measurements only when they come from real visitors.
+An empty dashboard means the collection is active but the consented production
+sample has not arrived yet; local browser runs are not substituted for field data.

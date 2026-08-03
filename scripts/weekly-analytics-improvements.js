@@ -17,6 +17,10 @@ import {
   GOAL_CHOOSER_ITEMS,
   SUPERMARKET_CHOICES,
 } from '../src/data/planChooser.js';
+import {
+  buildCompositionTrafficReview,
+  buildPlanCompositionClusters,
+} from './lib/planCompositionClusters.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -25,6 +29,7 @@ const trackerPath = path.join(rootDir, 'docs', 'search-console-weekly-tracker.cs
 const latestReportPath = path.join(rootDir, 'docs', 'weekly-analytics-report.md');
 const reportDir = path.join(rootDir, 'docs', 'seo-reports');
 const generatedDataPath = path.join(rootDir, 'src', 'data', 'weeklySeoInsights.js');
+const latestCompositionReviewPath = path.join(rootDir, 'docs', 'composition-route-review.json');
 
 const INTERNAL_LANGUAGE_PATTERNS = [
   /search console/gi,
@@ -48,6 +53,7 @@ const options = {
   days: numberFromEnv('WEEKLY_ANALYTICS_DAYS', args.get('days'), 28),
   gscRowLimit: numberFromEnv('WEEKLY_ANALYTICS_GSC_ROW_LIMIT', args.get('gsc-row-limit'), 500),
   gaRowLimit: numberFromEnv('WEEKLY_ANALYTICS_GA_ROW_LIMIT', args.get('ga-row-limit'), 150),
+  fieldVitalRowLimit: numberFromEnv('WEEKLY_ANALYTICS_VITAL_ROW_LIMIT', args.get('vital-row-limit'), 10000),
   minImpressions: numberFromEnv('WEEKLY_ANALYTICS_MIN_IMPRESSIONS', args.get('min-impressions'), 50),
   strongImpressions: numberFromEnv('WEEKLY_ANALYTICS_STRONG_IMPRESSIONS', args.get('strong-impressions'), 100),
   priorityImpressions: numberFromEnv('WEEKLY_ANALYTICS_PRIORITY_IMPRESSIONS', args.get('priority-impressions'), 250),
@@ -71,9 +77,11 @@ async function main() {
   let currentSearchRows = [];
   let previousSearchRows = [];
   let gaLandingPages = [];
+  let fieldVitalRows = [];
 
   if (sampleMode) {
     ({ currentSearchRows, previousSearchRows, gaLandingPages } = sampleAnalyticsData());
+    fieldVitalRows = sampleFieldVitalRows();
   } else {
     if (!options.siteUrl && !options.ga4PropertyId) {
       throw new Error(
@@ -117,6 +125,21 @@ async function main() {
     } else {
       warnings.push('GA4_PROPERTY_ID is missing, so GA landing page enrichment was skipped.');
     }
+
+    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      try {
+        fieldVitalRows = await fetchFieldVitalRows({
+          supabaseUrl: process.env.SUPABASE_URL,
+          serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+          startDate: range.current.startDate,
+          rowLimit: options.fieldVitalRowLimit,
+        });
+      } catch (error) {
+        warnings.push(`Field Core Web Vitals fetch failed: ${error.message || error}`);
+      }
+    } else {
+      warnings.push('Supabase analytics credentials are missing, so field Core Web Vitals remain available only in the private dashboard.');
+    }
   }
 
   const analysis = buildAnalysis({
@@ -126,6 +149,7 @@ async function main() {
     range,
     routeIndex,
     recentActivity,
+    fieldVitalRows,
     warnings,
   });
 
@@ -271,6 +295,85 @@ async function fetchGa4LandingPages(auth, { propertyId, startDate, endDate, rowL
   }).filter(row => isPublicPagePath(row.path));
 }
 
+async function fetchFieldVitalRows({ supabaseUrl, serviceKey, startDate, rowLimit }) {
+  const baseUrl = String(supabaseUrl || '').replace(/\/$/, '');
+  const url = new URL(`${baseUrl}/rest/v1/analytics_events`);
+  url.searchParams.set('select', 'occurred_at,session_id,path,metadata');
+  url.searchParams.set('event_name', 'eq.web_vital');
+  url.searchParams.set('occurred_at', `gte.${startDate}T00:00:00.000Z`);
+  url.searchParams.set('order', 'occurred_at.desc.nullslast');
+  url.searchParams.set('limit', String(rowLimit));
+
+  const response = await fetch(url, {
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+    },
+  });
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`analytics_events ${response.status}: ${detail.slice(0, 240)}`);
+  }
+  return response.json();
+}
+
+function buildFieldVitalsReview(rows, routeIndex) {
+  const grouped = new Map();
+  let samples = 0;
+
+  for (const row of rows || []) {
+    const route = normalisePath(row.path || row.metadata?.path);
+    const name = String(row.metadata?.metric_name || '').toUpperCase();
+    const value = Number(row.metadata?.metric_value);
+    if (!routeIndex.has(route) || !['LCP', 'INP', 'CLS', 'FCP', 'TTFB'].includes(name) || !Number.isFinite(value)) continue;
+    const current = grouped.get(route) || {
+      route,
+      values: new Map(),
+      sessions: new Set(),
+      samples: 0,
+    };
+    current.values.set(name, [...(current.values.get(name) || []), value]);
+    if (row.session_id) current.sessions.add(row.session_id);
+    current.samples += 1;
+    samples += 1;
+    grouped.set(route, current);
+  }
+
+  const routes = [...grouped.values()].map(row => ({
+    route: row.route,
+    LCP: percentile(row.values.get('LCP') || [], 0.75),
+    INP: percentile(row.values.get('INP') || [], 0.75),
+    CLS: percentile(row.values.get('CLS') || [], 0.75),
+    FCP: percentile(row.values.get('FCP') || [], 0.75),
+    TTFB: percentile(row.values.get('TTFB') || [], 0.75),
+    sessions: row.sessions.size,
+    samples: row.samples,
+  })).sort((left, right) => (
+    (right.INP ?? -1) - (left.INP ?? -1)
+    || right.samples - left.samples
+    || left.route.localeCompare(right.route)
+  ));
+
+  return {
+    samples,
+    routes,
+    note: samples
+      ? 'p75 values from consented production visits; use representative route samples for decisions.'
+      : 'Collection is active; p75 values populate after consented production visits.',
+  };
+}
+
+function percentile(values, percentileValue) {
+  const sorted = values.map(Number).filter(Number.isFinite).sort((left, right) => left - right);
+  if (!sorted.length) return null;
+  return sorted[Math.max(0, Math.ceil(sorted.length * percentileValue) - 1)];
+}
+
+function formatVital(value, name) {
+  if (!Number.isFinite(value)) return '-';
+  return name === 'CLS' ? String(round(value, 3)) : `${Math.round(value)} ms`;
+}
+
 function normaliseGaProperty(value) {
   const property = String(value || '').trim().replace(/^properties\//, '');
   if (!property) throw new Error('GA4_PROPERTY_ID is empty.');
@@ -412,7 +515,7 @@ function isPublicPagePath(value) {
   return true;
 }
 
-function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, range, routeIndex, recentActivity, warnings }) {
+function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, range, routeIndex, recentActivity, fieldVitalRows, warnings }) {
   const unverifiedRoutes = collectUnverifiedRoutes(currentSearchRows, gaLandingPages, routeIndex);
   if (unverifiedRoutes.length) {
     warnings.push(`Skipped ${unverifiedRoutes.length} analytics rows because their routes were not in the verified route inventory.`);
@@ -478,6 +581,13 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const cannibalisationRisks = findCannibalisationRisks(enrichedSearchRows);
   const doNotEdit = buildDoNotEditList(recentActivity, searchOpportunities);
   const recommendedAction = chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit });
+  const planClusters = buildPlanCompositionClusters();
+  const compositionReview = buildCompositionTrafficReview({
+    ...planClusters,
+    searchRows: enrichedSearchRows,
+    gaRows,
+  });
+  const fieldVitals = buildFieldVitalsReview(fieldVitalRows, routeIndex);
 
   const generatedPublicData = {
     generatedAt: range.generatedAt,
@@ -497,6 +607,8 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     cannibalisationRisks,
     doNotEdit,
     recommendedAction,
+    compositionReview,
+    fieldVitals,
     recentActivity,
     unverifiedRoutes,
     warnings,
@@ -996,6 +1108,7 @@ function writeWeeklyReports(analysis) {
   const datedReportPath = path.join(reportDir, `${analysis.range.current.endDate}.md`);
   fs.writeFileSync(datedReportPath, report, 'utf8');
   fs.writeFileSync(latestReportPath, report, 'utf8');
+  fs.writeFileSync(latestCompositionReviewPath, `${JSON.stringify(analysis.compositionReview, null, 2)}\n`, 'utf8');
 }
 
 function renderWeeklyReport(analysis) {
@@ -1069,6 +1182,35 @@ function renderWeeklyReport(analysis) {
     }
   } else {
     lines.push('- No obvious multi-page intent overlap crossed the current threshold.');
+  }
+  lines.push('');
+
+  lines.push('## Field Core Web Vitals', '');
+  lines.push(`- Real-user metric samples: ${analysis.fieldVitals.samples}`);
+  lines.push(`- Routes with field data: ${analysis.fieldVitals.routes.length}`);
+  lines.push(`- Status: ${analysis.fieldVitals.note}`);
+  lines.push('');
+  lines.push('| Route | INP p75 | LCP p75 | CLS p75 | Samples |');
+  lines.push('| --- | ---: | ---: | ---: | ---: |');
+  if (analysis.fieldVitals.routes.length) {
+    for (const row of analysis.fieldVitals.routes.slice(0, 20)) {
+      lines.push(`| ${mdCell(row.route)} | ${formatVital(row.INP, 'INP')} | ${formatVital(row.LCP, 'LCP')} | ${formatVital(row.CLS, 'CLS')} | ${row.samples} |`);
+    }
+  } else {
+    lines.push('| Awaiting consented production visits | - | - | - | 0 |');
+  }
+  lines.push('');
+
+  lines.push('## Composition Cluster Route Review', '');
+  lines.push(`- Exact clusters reviewed: ${analysis.compositionReview.coverage.exactClusters}`);
+  lines.push(`- Near-duplicate pairs reviewed: ${analysis.compositionReview.coverage.nearDuplicatePairs}`);
+  lines.push(`- Cluster routes with traffic evidence: ${analysis.compositionReview.coverage.routesWithTrafficEvidence} of ${analysis.compositionReview.coverage.routes}`);
+  lines.push(`- Full route-level evidence: docs/composition-route-review.json`);
+  lines.push('');
+  lines.push('| Review ID | Type | Status | Evidence leader | Routes |');
+  lines.push('| --- | --- | --- | --- | ---: |');
+  for (const cluster of analysis.compositionReview.clusters.slice(0, 20)) {
+    lines.push(`| ${cluster.reviewId} | ${cluster.type} | ${cluster.status} | ${mdCell(cluster.leader || '-')} | ${cluster.routes.length} |`);
   }
   lines.push('');
 
@@ -1176,6 +1318,8 @@ function renderConsoleSummary(analysis) {
     `Search opportunities: ${analysis.searchOpportunities.length}`,
     `Verified rows: ${analysis.enrichedSearchRows.length}`,
     `Unverified routes skipped: ${analysis.unverifiedRoutes.length}`,
+    `Field vital samples: ${analysis.fieldVitals.samples}`,
+    `Composition clusters reviewed: ${analysis.compositionReview.coverage.exactClusters} exact, ${analysis.compositionReview.coverage.nearDuplicatePairs} near`,
     `Recommended action: ${analysis.recommendedAction.action}`,
     ...(analysis.warnings.length ? [`Warnings: ${analysis.warnings.join(' | ')}`] : []),
   ].join('\n');
@@ -1204,6 +1348,15 @@ function sampleAnalyticsData() {
   ];
 
   return { currentSearchRows, previousSearchRows, gaLandingPages };
+}
+
+function sampleFieldVitalRows() {
+  return [
+    { session_id: 'sample_vitals_1', path: '/meal-prep-containers', metadata: { metric_name: 'INP', metric_value: 168 } },
+    { session_id: 'sample_vitals_2', path: '/meal-prep-containers', metadata: { metric_name: 'INP', metric_value: 214 } },
+    { session_id: 'sample_vitals_1', path: '/meal-prep-containers', metadata: { metric_name: 'LCP', metric_value: 2280 } },
+    { session_id: 'sample_vitals_2', path: '/meal-prep-containers', metadata: { metric_name: 'CLS', metric_value: 0.04 } },
+  ];
 }
 
 function titleCase(value) {

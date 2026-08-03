@@ -7,6 +7,7 @@ import {
   onAnalyticsConsentChange,
   trackPageView,
 } from '../utils/analytics.js';
+import { observeWebVitals } from '../utils/webVitals.js';
 
 const SESSION_KEY = 'mealprep_analytics_session_id';
 const ENTRY_KEY = 'mealprep_analytics_entry';
@@ -86,6 +87,7 @@ function createTracker(getPath) {
   let sectionObserver = null;
   let observeTimer = null;
   let lastResizeAt = 0;
+  const vitals = observeWebVitals(metric => track('web_vital', metric), { path: page.path });
 
   const api = {
     track,
@@ -205,6 +207,7 @@ function createTracker(getPath) {
 
   function finishPage(reason) {
     updateActiveTime();
+    vitals.flush(reason);
     track('page_exit', {
       ...pageMetrics(),
       exit_reason: reason,
@@ -337,6 +340,7 @@ function createTracker(getPath) {
     window.clearTimeout(flushTimer);
     window.clearTimeout(observeTimer);
     sectionObserver?.disconnect();
+    vitals.disconnect();
   }
 }
 
@@ -378,7 +382,7 @@ function getOrCreateSession(getPath) {
     consent_state: 'granted',
     metadata: {
       app: 'mealprep',
-      tracker_version: 1,
+      tracker_version: 2,
     },
   };
 }

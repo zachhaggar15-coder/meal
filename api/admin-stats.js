@@ -124,11 +124,12 @@ async function readWaitlistRows(supabaseUrl, headers) {
 
 async function loadAnalyticsStats(supabaseUrl, headers) {
   try {
-    const [events, sessions] = await Promise.all([
+    const [events, sessions, vitalEvents] = await Promise.all([
       readAnalyticsEvents(supabaseUrl, headers, 5000),
       readAnalyticsSessions(supabaseUrl, headers, 1000),
+      readAnalyticsEvents(supabaseUrl, headers, 10000, 'web_vital'),
     ]);
-    return buildAnalyticsStats(events, sessions);
+    return buildAnalyticsStats(events, sessions, vitalEvents);
   } catch (err) {
     console.error('Analytics stats unavailable:', err.message || err);
     return {
@@ -138,11 +139,12 @@ async function loadAnalyticsStats(supabaseUrl, headers) {
   }
 }
 
-async function readAnalyticsEvents(supabaseUrl, headers, limit) {
+async function readAnalyticsEvents(supabaseUrl, headers, limit, eventName = '') {
   const url = restUrl(supabaseUrl, 'analytics_events', {
     select: ANALYTICS_EVENT_SELECT,
     order: 'occurred_at.desc.nullslast',
     limit: String(limit),
+    ...(eventName ? { event_name: `eq.${eventName}` } : {}),
   });
   return fetchJson(url, headers, 'analytics_events');
 }
@@ -193,7 +195,7 @@ function buildWaitlistStats(rows) {
   };
 }
 
-function buildAnalyticsStats(events, sessions) {
+function buildAnalyticsStats(events, sessions, vitalEvents = []) {
   const cleanEvents = events
     .map(event => ({
       ...event,
@@ -266,12 +268,88 @@ function buildAnalyticsStats(events, sessions) {
       })),
     contentSeen: topContentSections(sectionEvents).slice(0, 20),
     scrollDepthByPage: scrollDepthByPage(cleanEvents).slice(0, 15),
+    coreWebVitals: buildCoreWebVitals(vitalEvents),
     sessionJourneys: journeys.slice(0, 25),
     explorationLeaders: journeys
       .filter(journey => journey.explorationScore > 0)
       .sort((a, b) => b.explorationScore - a.explorationScore)
       .slice(0, 15),
   };
+}
+
+function buildCoreWebVitals(events) {
+  const valuesByMetric = new Map();
+  const valuesByRoute = new Map();
+
+  for (const event of events) {
+    const metadata = event?.metadata && typeof event.metadata === 'object' ? event.metadata : {};
+    const name = String(metadata.metric_name || '').toUpperCase();
+    const value = Number(metadata.metric_value);
+    const route = String(event.path || metadata.path || '').split('?')[0] || '/';
+    if (!['LCP', 'INP', 'CLS', 'FCP', 'TTFB'].includes(name) || !Number.isFinite(value)) continue;
+
+    valuesByMetric.set(name, [...(valuesByMetric.get(name) || []), value]);
+    const routeKey = `${route}|${name}`;
+    const routeEntry = valuesByRoute.get(routeKey) || { route, name, values: [], sessions: new Set() };
+    routeEntry.values.push(value);
+    if (event.session_id) routeEntry.sessions.add(event.session_id);
+    valuesByRoute.set(routeKey, routeEntry);
+  }
+
+  const summary = ['LCP', 'INP', 'CLS'].map(name => {
+    const values = valuesByMetric.get(name) || [];
+    const p75 = percentile(values, 0.75);
+    return {
+      name,
+      p75,
+      unit: name === 'CLS' ? 'score' : 'ms',
+      rating: vitalRating(name, p75),
+      samples: values.length,
+    };
+  });
+
+  const routeMap = new Map();
+  for (const entry of valuesByRoute.values()) {
+    const row = routeMap.get(entry.route) || { route: entry.route, samples: 0, sessions: new Set() };
+    row[entry.name.toLowerCase()] = percentile(entry.values, 0.75);
+    row.samples += entry.values.length;
+    for (const session of entry.sessions) row.sessions.add(session);
+    routeMap.set(entry.route, row);
+  }
+
+  const routes = [...routeMap.values()]
+    .map(row => ({ ...row, sessions: row.sessions.size }))
+    .sort((left, right) => (right.inp || 0) - (left.inp || 0) || right.samples - left.samples)
+    .slice(0, 30);
+
+  return {
+    configured: true,
+    samples: events.length,
+    summary,
+    routes,
+    note: events.length
+      ? 'p75 values from consented real-user visits; route decisions need a representative sample.'
+      : 'Collection is active. Values appear after consented production visits.',
+  };
+}
+
+function percentile(values, percentileValue) {
+  const sorted = values.map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+  if (!sorted.length) return null;
+  return sorted[Math.max(0, Math.ceil(sorted.length * percentileValue) - 1)];
+}
+
+function vitalRating(name, value) {
+  if (!Number.isFinite(value)) return 'awaiting_data';
+  const thresholds = {
+    LCP: [2500, 4000],
+    INP: [200, 500],
+    CLS: [0.1, 0.25],
+  }[name];
+  if (!thresholds) return 'observed';
+  if (value <= thresholds[0]) return 'good';
+  if (value <= thresholds[1]) return 'needs_improvement';
+  return 'poor';
 }
 
 function buildFunnelSummary(events) {

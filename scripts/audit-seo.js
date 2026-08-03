@@ -1,7 +1,7 @@
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
-import { buildPlanDays } from '../src/utils/planBuilder.js';
 import { crawlDist } from './lib/crawlDist.js';
 import { writeAuditJson } from './lib/auditOutput.js';
+import { buildPlanCompositionClusters } from './lib/planCompositionClusters.js';
 
 const { pages, sitemapPaths } = crawlDist();
 const errors = [];
@@ -25,66 +25,7 @@ for (const [description, group] of descriptionGroups) {
   if (description && group.length > 1) errors.push(`duplicate description on ${group.map(page => page.route).join(', ')}`);
 }
 
-const compositionGroups = new Map();
-const planSummaries = [];
-for (const seed of INDEXABLE_PLAN_SEEDS) {
-  const { plan } = buildPlanDays(seed);
-  const mealNames = plan.flatMap(day => day.meals.map(meal => meal.name));
-  const compositionFingerprint = [...mealNames].sort().join('|');
-  const summary = {
-    slug: seed.slug,
-    route: `/plans/${seed.slug}`,
-    goal: seed.goal,
-    supermarket: seed.supermarket,
-    dietType: seed.dietType,
-    calories: seed.calories,
-    uniqueMeals: new Set(mealNames).size,
-    compositionFingerprint,
-  };
-  planSummaries.push(summary);
-  compositionGroups.set(compositionFingerprint, [
-    ...(compositionGroups.get(compositionFingerprint) || []),
-    summary,
-  ]);
-}
-const exactCompositionClusters = [...compositionGroups.values()]
-  .filter(group => group.length > 1)
-  .map(group => ({
-    size: group.length,
-    routes: group.map(item => item.route),
-    meaningfulDifferences: [...new Set(group.map(item => (
-      `${item.supermarket}|${item.goal}|${item.calories}|${item.dietType}`
-    )))],
-    resolution: 'Retained only where rendered store guidance, quantities, macros, shopping list or goal context differs.',
-  }))
-  .sort((a, b) => b.size - a.size);
-
-const nearDuplicateClusters = [];
-const comparisonBuckets = groupBy(planSummaries, item => `${item.dietType}|${item.calories}`);
-for (const bucket of comparisonBuckets.values()) {
-  for (let leftIndex = 0; leftIndex < bucket.length; leftIndex += 1) {
-    const left = bucket[leftIndex];
-    const leftMeals = new Set(left.compositionFingerprint.split('|'));
-    for (let rightIndex = leftIndex + 1; rightIndex < bucket.length; rightIndex += 1) {
-      const right = bucket[rightIndex];
-      if (left.compositionFingerprint === right.compositionFingerprint) continue;
-      const rightMeals = new Set(right.compositionFingerprint.split('|'));
-      const intersection = [...leftMeals].filter(meal => rightMeals.has(meal)).length;
-      const union = new Set([...leftMeals, ...rightMeals]).size;
-      const similarity = union ? intersection / union : 0;
-      if (similarity >= 0.85) {
-        nearDuplicateClusters.push({
-          routes: [left.route, right.route],
-          mealJaccardSimilarity: Number(similarity.toFixed(3)),
-          differentiators: {
-            goal: [left.goal, right.goal],
-            supermarket: [left.supermarket, right.supermarket],
-          },
-        });
-      }
-    }
-  }
-}
+const { exactCompositionClusters, nearDuplicateClusters } = buildPlanCompositionClusters();
 
 const urlReport = {
   generatedAt: new Date().toISOString(),
@@ -119,7 +60,12 @@ const duplicateReport = {
   },
   exactCompositionClusters,
   nearDuplicateClusters,
-  policy: 'Similarity is evidence for review, not an automatic noindex decision. No filler text is generated to change scores.',
+  trafficReview: {
+    command: 'npm run analytics:weekly',
+    report: 'docs/composition-route-review.json',
+    cadence: 'weekly',
+  },
+  policy: 'Similarity is evidence for weekly route-level traffic review, not an automatic noindex decision. No filler text is generated to change scores.',
 };
 const urlPath = writeAuditJson('url-indexing.json', urlReport);
 const duplicatePath = writeAuditJson('duplicate-content-clusters.json', duplicateReport);

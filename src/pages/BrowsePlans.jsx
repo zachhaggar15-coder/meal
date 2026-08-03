@@ -277,7 +277,7 @@ export default function BrowsePlans() {
   return (
     <>
       <SEO
-        title={`Free UK Diet Plans - Browse ${PLAN_COUNT} Meal Plans by Calories & Supermarket${pageTitleSuffix} | MealPrep.org.uk`}
+        title={`Browse ${PLAN_COUNT.toLocaleString('en-GB')} UK Meal Plans by Goal & Calories${pageTitleSuffix} | MealPrep.org.uk`}
         description={browseDescription}
         canonical={`https://www.mealprep.org.uk${canonicalPath}`}
         robots={hasActiveFilters ? 'noindex,follow' : undefined}

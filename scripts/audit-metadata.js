@@ -71,6 +71,7 @@ const report = {
     calorieOrSupermarketClaimMismatches: 0,
     titleLengthReview: '28 to 70 characters',
     descriptionLengthReview: '90 to 160 characters',
+    lengthReviewItems: 0,
   },
   errors,
   warningSummary: countBy(warnings, item => item.type),
@@ -83,9 +84,10 @@ const report = {
 };
 const reportPath = writeAuditJson('metadata-quality.json', report);
 
-if (errors.length) {
-  console.error(`Metadata audit failed with ${errors.length} factual mismatch(es).`);
+if (errors.length || warnings.length) {
+  console.error(`Metadata audit failed with ${errors.length} factual mismatch(es) and ${warnings.length} length review item(s).`);
   errors.slice(0, 80).forEach(error => console.error(`- ${error.route}: ${error.type}`));
+  warnings.slice(0, 80).forEach(warning => console.error(`- ${warning.route}: ${warning.type} (${warning.length})`));
   process.exit(1);
 }
 

@@ -1,6 +1,6 @@
 # Known limitations
 
-Last reviewed: 29 July 2026
+Last reviewed: 3 August 2026
 
 - Nutrition is a deterministic planning estimate. Brand reformulation, natural
   variation, cooking loss, drained weight and measured portions can differ.
@@ -15,14 +15,17 @@ Last reviewed: 29 July 2026
   Consent denial, blocked scripts and cleared storage create unavoidable gaps.
 - Search Console and GA4 source data are reviewed by the weekly automation when
   credentials are available. The repository cannot infer unobserved search demand.
-- The 31 exact meal-composition clusters and 43 near-duplicate pairs remain
-  eligible only where intent or rendered details differ. They need ongoing review
-  with route-level search and engagement evidence.
-- 648 metadata length items are review flags, not factual failures: 640 titles are
-  over 70 characters and eight are below 28. Prioritise routes with impression and
-  CTR evidence and respect the 28-day edit cooldown.
-- Browser lab results are diagnostic. Population Core Web Vitals, especially INP,
-  require sufficient field data.
+- Meal-composition similarity is reviewed automatically every week. The full
+  route-level evidence for all 31 exact clusters and 43 near-duplicate pairs is
+  written to `docs/composition-route-review.json`; consolidation remains a human
+  decision because similarity alone does not prove duplicated search intent.
+- Metadata generation is release-gated to 28–70 characters for titles and 90–160
+  characters for descriptions. The previous 648 title-length review items have
+  been cleared, and any recurrence now fails `npm run audit:metadata`.
+- Browser lab results are diagnostic. Production now collects consented,
+  route-aware LCP, INP and CLS measurements and reports p75 values in the private
+  dashboard and weekly analytics report. A representative field sample still
+  depends on real production visits.
 - The largest lazy article-data chunk is about 120 KB gzip. It is not in the normal
   initial route graph, but further route-level splitting may help article visits.
 - Email delivery depends on Resend and verified sender configuration. The UI

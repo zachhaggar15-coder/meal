@@ -68,15 +68,16 @@ The site now self-hosts DM Sans instead of waiting for the cross-origin Google F
 
 These changes preserve prerendered article content, direct navigation and site search. Browser diagnostics across the ten representative templates found no horizontal overflow, broken images, dimensionless images or application console errors on desktop or at a true 390 px mobile viewport. Interaction to Next Paint is a field metric and requires post-release real-user data; lab testing uses attributable long tasks and interaction traces only as diagnostic proxies.
 
-The release now enforces build budgets: 183.3 KB gzip initial JavaScript, 33.3 KB
+The release now enforces build budgets: 189.5 KB gzip initial JavaScript, 34.0 KB
 gzip initial CSS, 120.1 KB gzip largest lazy JavaScript, seven initial local asset
 requests and zero third-party scripts before consent. The `/blog` index is the
 largest raw HTML route at 365.2 KB but compresses to about 28.5 KB while retaining
 its useful visible guide index.
 
-## Remaining P2 review items
+## Ongoing review controls
 
-- The 31 exact and 43 near-duplicate composition clusters are retained only where the route's user intent and generated details differ. They should be reviewed alongside Search Console performance before any consolidation.
+- The 31 exact and 43 near-duplicate composition clusters are joined to route-level Search Console and GA4 evidence by the weekly automation. Every cluster has a stable review ID, an evidence status and a human-review recommendation in `docs/composition-route-review.json`; no route is consolidated automatically.
 - Responsive source sizing for the homepage imagery remains a P2 opportunity; the lab estimate indicates approximately 86 KB could be avoided on a narrow viewport.
-- Metadata review reports 640 titles over 70 characters and eight below 28. These are non-factual review flags; prioritise them with route-level impression and CTR evidence rather than bulk rewriting stable snippets.
+- Metadata titles are now fitted centrally to the 28–70 character review range, while plan-title generation preserves unique route cues. The metadata audit is release-blocking if any title or description leaves its review range.
+- Consented real-user LCP, INP and CLS are captured by route and summarised at p75 in both the private dashboard and weekly analytics report. Local lab checks remain separate diagnostics.
 - Nutrition remains an estimate because brands and ingredients vary; exact laboratory accuracy is not claimed.

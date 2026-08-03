@@ -17,6 +17,9 @@ const MAX_METADATA_BYTES = 12 * 1024;
 const EMAIL_RE = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
 
 export default async function handler(req, res) {
+  const startedAt = Date.now();
+  const requestId = req.headers?.['x-vercel-id'] || '';
+  console.log(JSON.stringify({ level: 'info', message: 'analytics_start', route: '/api/analytics', requestId }));
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
   }
@@ -43,6 +46,7 @@ export default async function handler(req, res) {
 
   const events = normaliseEvents(payload?.events, session.session_id);
   if (events.length === 0) {
+    console.log(JSON.stringify({ level: 'info', message: 'analytics_done', route: '/api/analytics', stored: 0, ms: Date.now() - startedAt, requestId }));
     return res.status(200).json({ ok: true, stored: 0 });
   }
 
@@ -90,11 +94,12 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Could not store analytics events.' });
     }
   } catch (err) {
-    console.error('Analytics insert exception:', err);
+    console.error(JSON.stringify({ level: 'error', message: 'analytics_failed', route: '/api/analytics', error: err?.message || String(err), ms: Date.now() - startedAt, requestId }));
     return res.status(500).json({ error: 'Could not store analytics.' });
   }
 
   res.setHeader('Cache-Control', 'no-store');
+  console.log(JSON.stringify({ level: 'info', message: 'analytics_done', route: '/api/analytics', stored: events.length, ms: Date.now() - startedAt, requestId }));
   return res.status(200).json({ ok: true, stored: events.length });
 }
 

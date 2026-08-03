@@ -353,8 +353,8 @@ function buildShoppingKey(ing) {
 
 // ── SEO metadata ──────────────────────────────────────────────────────────────
 
-const PLAN_TITLE_SUFFIX = ' | MealPrep.org.uk';
-const PLAN_TITLE_MAX_LENGTH = 120;
+const PLAN_TITLE_SUFFIX = '';
+const PLAN_TITLE_MAX_LENGTH = 70;
 const PLAN_DESCRIPTION_MAX_LENGTH = 155;
 
 const COMPACT_GOAL_LABELS = {
@@ -380,7 +380,7 @@ const COMPACT_GOAL_LABELS = {
   cutting: 'Cutting',
 };
 
-const SEO_TITLE_COLLISION_SLUGS = buildSeoTitleCollisionSet();
+const SEO_TITLE_COLLISION_INDEX = buildSeoTitleCollisionIndex();
 
 function buildSeo(seed) {
   const mkt = getMarketLabel(seed.supermarket);
@@ -400,19 +400,25 @@ function buildSeo(seed) {
 
 function buildCtrPlanTitle(seed, marketLabel, goalLabel, calories) {
   const seedTitle = compactSeedPlanTitle(seed.title);
-  const collisionCue = SEO_TITLE_COLLISION_SLUGS.has(seed.slug) ? ` - Menu ${Number(seed.mealSetIndex || 0) + 1}` : '';
   const topic = buildCompactPlanTopic(seed, goalLabel);
   const market = marketLabel === 'UK' ? 'UK' : marketLabel;
   const caloriesText = calories.toLocaleString('en-GB');
-  const candidates = [
-    `${seedTitle}${collisionCue}`,
+  const candidates = buildPlanTitleCandidates(seedTitle, market, caloriesText, topic);
+  const collisionIndex = SEO_TITLE_COLLISION_INDEX.get(seed.slug);
+  const collisionCue = collisionIndex ? ` - Option ${collisionIndex}` : '';
+  const selected = pickFirstWithinLimit(candidates, PLAN_TITLE_MAX_LENGTH, `${collisionCue}${PLAN_TITLE_SUFFIX}`);
+
+  return `${selected}${collisionCue}`;
+}
+
+function buildPlanTitleCandidates(seedTitle, market, caloriesText, topic) {
+  return [
+    seedTitle,
     `${market} ${caloriesText} kcal ${topic} Plan`,
     `${market} ${topic} Plan`,
     `${caloriesText} kcal ${topic} Plan`,
     `${topic} Meal Plan`,
   ];
-
-  return pickFirstWithinLimit(candidates, PLAN_TITLE_MAX_LENGTH, PLAN_TITLE_SUFFIX);
 }
 
 function buildCtrPlanDescription(seed, marketLabel, goalLabel, calories, planTitle) {
@@ -425,19 +431,33 @@ function buildCtrPlanDescription(seed, marketLabel, goalLabel, calories, planTit
   );
 }
 
-function buildSeoTitleCollisionSet() {
+function buildSeoTitleCollisionIndex() {
   const groups = new Map();
 
   for (const seed of INDEXABLE_PLAN_SEEDS) {
-    const title = compactSeedPlanTitle(seed.title);
+    const market = getMarketLabel(seed.supermarket);
+    const marketText = market === 'UK' ? 'UK' : market;
+    const goal = GOAL_LABELS[seed.goal] || seed.goal;
+    const topic = buildCompactPlanTopic(seed, goal);
+    const title = pickFirstWithinLimit(
+      buildPlanTitleCandidates(
+        compactSeedPlanTitle(seed.title),
+        marketText,
+        seed.calories.toLocaleString('en-GB'),
+        topic,
+      ),
+      PLAN_TITLE_MAX_LENGTH,
+      PLAN_TITLE_SUFFIX,
+    );
     groups.set(title, [...(groups.get(title) || []), seed.slug]);
   }
 
-  return new Set(
-    [...groups.values()]
-      .filter(slugs => slugs.length > 1)
-      .flat(),
-  );
+  const index = new Map();
+  for (const slugs of groups.values()) {
+    if (slugs.length < 2) continue;
+    [...slugs].sort().forEach((slug, position) => index.set(slug, position + 1));
+  }
+  return index;
 }
 
 function compactSeedPlanTitle(title) {

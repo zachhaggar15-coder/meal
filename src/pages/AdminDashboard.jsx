@@ -212,6 +212,7 @@ function AnalyticsSection({ analytics }) {
   }
 
   const overview = analytics.overview || {};
+  const coreWebVitals = analytics.coreWebVitals || { summary: [], routes: [] };
 
   return (
     <section className="admin-panel admin-analytics">
@@ -252,6 +253,34 @@ function AnalyticsSection({ analytics }) {
           { key: 'label', label: 'Outcome' },
           { key: 'events', label: 'Events' },
           { key: 'sessions', label: 'Sessions' },
+        ]}
+      />
+
+      <div className="admin-section-head">
+        <h3>Field Core Web Vitals</h3>
+        <p>{coreWebVitals.note}</p>
+      </div>
+      <div className="admin-stats-grid">
+        {(coreWebVitals.summary || []).map(metric => (
+          <StatCard
+            key={metric.name}
+            label={`${metric.name} p75`}
+            value={formatVital(metric)}
+            detail={`${metric.rating.replace(/_/g, ' ')} - ${number(metric.samples)} samples`}
+          />
+        ))}
+      </div>
+      <DataTable
+        title="Route-level vitals"
+        note="Routes with INP are shown first so interaction delays can be investigated where visitors actually encounter them."
+        rows={coreWebVitals.routes || []}
+        columns={[
+          { key: 'route', label: 'Route', render: row => truncate(row.route, 54) },
+          { key: 'inp', label: 'INP p75', render: row => formatMilliseconds(row.inp) },
+          { key: 'lcp', label: 'LCP p75', render: row => formatMilliseconds(row.lcp) },
+          { key: 'cls', label: 'CLS p75', render: row => row.cls ?? '-' },
+          { key: 'sessions', label: 'Sessions' },
+          { key: 'samples', label: 'Samples' },
         ]}
       />
 
@@ -410,6 +439,15 @@ function WaitlistSection({ stats }) {
 
 function number(value) {
   return new Intl.NumberFormat('en-GB', { maximumFractionDigits: 1 }).format(Number(value) || 0);
+}
+
+function formatVital(metric) {
+  if (metric?.p75 === null || metric?.p75 === undefined) return 'Awaiting data';
+  return metric.unit === 'score' ? number(metric.p75) : `${number(metric.p75)}ms`;
+}
+
+function formatMilliseconds(value) {
+  return Number.isFinite(Number(value)) ? `${number(value)}ms` : '-';
 }
 
 function shortDate(value) {

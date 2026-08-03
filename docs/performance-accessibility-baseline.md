@@ -1,6 +1,6 @@
 # Performance and accessibility baseline
 
-Last reviewed: 29 July 2026
+Last reviewed: 3 August 2026
 
 ## Build baseline
 
@@ -8,8 +8,8 @@ The production build is inspected exhaustively by `npm run audit:performance`:
 
 | Measure | Current | Release budget |
 |---|---:|---:|
-| Initial JavaScript | 183.3 KB gzip | 205.1 KB gzip |
-| Initial CSS | 33.3 KB gzip | 43.9 KB gzip |
+| Initial JavaScript | 189.5 KB gzip | 205.1 KB gzip |
+| Initial CSS | 34.0 KB gzip | 43.9 KB gzip |
 | Largest lazy JavaScript chunk | 120.1 KB gzip | 136.7 KB gzip |
 | Largest image | 459.1 KB | 732.4 KB |
 | Largest route HTML | 365.2 KB raw / 28.5 KB gzip | 390.6 KB raw / 58.6 KB gzip |
@@ -23,7 +23,10 @@ only after consent.
 The previous repeatable local homepage lab recorded mobile FCP 2.28 s, LCP 3.50 s
 and CLS 0; desktop recorded FCP 0.50 s, LCP 0.70 s and CLS 0. These are diagnostic
 lab observations, not field Core Web Vitals. Interaction to Next Paint requires
-real-user data.
+real-user data. The production tracker now records navigation-scoped LCP, INP,
+CLS, FCP and TTFB after analytics consent. The private dashboard and weekly
+analytics report calculate route-level p75 values; they explicitly show
+"awaiting data" until consented production visits exist.
 
 The production mobile Lighthouse sample taken immediately before responsive hero
 delivery recorded 541,612 transferred bytes, 7.77 s LCP, 0 CLS and 0 ms TBT. The
