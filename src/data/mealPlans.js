@@ -693,8 +693,8 @@ export const mealPlansData = {
   'tesco-low-calorie-meal-plan': {
     published: '2026-05-28',
     modified: '2026-06-08',
-    title: 'Tesco Low Calorie Meal Plan UK: 7-Day Plan with Shopping List',
-    description: '7-day Tesco low calorie meal plan: Tesco own-brand shopping list, Clubcard-friendly swaps, calorie and protein targets, and simple UK ingredients for fat loss.',
+    title: 'Tesco Low-Calorie Meal Plan: 7 Days, 1,500 Calories',
+    description: 'Follow a 7-day Tesco meal plan at around 1,500 calories and 90–135g protein daily, with a £40–£45 shopping basket and Clubcard-friendly swaps.',
     h1: 'Tesco Low Calorie Meal Plan UK: 7-Day Plan with Shopping List',
     summary: {
       supermarkets: 'Tesco',
