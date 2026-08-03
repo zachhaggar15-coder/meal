@@ -32,6 +32,7 @@ for (const file of htmlFiles) {
   const structuredData = extractJsonLd(html, route);
   const products = structuredData.flatMap(item => collectProducts(item));
   const recipes = structuredData.flatMap(item => collectTypedNodes(item, 'Recipe'));
+  const searchActions = structuredData.flatMap(item => collectTypedNodes(item, 'SearchAction'));
 
   if (products.length) pagesWithProducts += 1;
   if (recipes.length) pagesWithRecipes += 1;
@@ -39,6 +40,16 @@ for (const file of htmlFiles) {
   recipeCount += recipes.length;
 
   validateDuplicateRootBlocks(structuredData, route);
+
+  for (const { value, jsonPath } of searchActions) {
+    errors.push({
+      route,
+      name: value.name || 'SearchAction',
+      jsonPath,
+      reason: 'obsolete sitelinks search markup can expose template URLs to Googlebot',
+      keys: Object.keys(value).sort().join(', '),
+    });
+  }
 
   for (const { value, jsonPath } of products) {
     const eligibility = productRichResultEligibility(value);
