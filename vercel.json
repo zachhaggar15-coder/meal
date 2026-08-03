@@ -28,6 +28,16 @@
       "permanent": true
     },
     {
+      "source": "/plans/aldi-body-recomp-1800-high-protein",
+      "destination": "/plans/aldi-body-recomp-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-budget-bodybuilding-veg-2000-higher-protein-v3",
+      "destination": "/plans/aldi-budget-bodybuilding-veg-2000",
+      "permanent": true
+    },
+    {
       "source": "/plans/aldi-endurance-athlete-2000",
       "destination": "/plans/aldi-endurance-2000",
       "permanent": true
@@ -178,6 +188,16 @@
       "permanent": true
     },
     {
+      "source": "/plans/lidl-body-recomp-1800-training-day",
+      "destination": "/plans/lidl-body-recomp-1800",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-budget-bodybuilding-2000-higher-protein-v3",
+      "destination": "/plans/lidl-budget-bodybuilding-2000",
+      "permanent": true
+    },
+    {
       "source": "/plans/lidl-budget-bodybuilding-3000-training-day-v3",
       "destination": "/plans/lidl-budget-bodybuilding-3000",
       "permanent": true
@@ -204,6 +224,11 @@
     },
     {
       "source": "/plans/marks-spencer-weight-loss-1500-flexible-batch",
+      "destination": "/plans/marks-spencer-weight-loss-1500-moderate-batch",
+      "permanent": true
+    },
+    {
+      "source": "/plans/marks-spencer-high-protein-low-cal-1500-moderate-batch",
       "destination": "/plans/marks-spencer-weight-loss-1500-moderate-batch",
       "permanent": true
     },
@@ -274,6 +299,11 @@
     },
     {
       "source": "/plans/tesco-body-recomp-2000-recovery-v3",
+      "destination": "/plans/tesco-body-recomp-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-body-recomp-2000-high-variety",
       "destination": "/plans/tesco-body-recomp-2000",
       "permanent": true
     },
