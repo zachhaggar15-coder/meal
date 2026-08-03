@@ -889,8 +889,8 @@ export const blogPostsData = {
   'cheapest-uk-supermarket-meal-prep': {
     published: '2026-05-28',
     modified: '2026-07-05',
-    title: 'Best UK Supermarkets for Meal Prep: Aldi vs Lidl vs Tesco vs Asda',
-    description: 'Best UK supermarkets for meal prep: full comparison of Aldi, Lidl, Tesco, Asda, Morrisons, Iceland and Sainsbury\'s on budget, protein, low-cal and convenience. Links to supermarket-specific meal plans.',
+    title: 'Cheapest UK Supermarket for Meal Prep: 7 Compared',
+    description: 'Compare Aldi, Lidl, Iceland, Asda, Tesco, Morrisons and Sainsbury\'s for a one-week meal prep basket, plus a two-supermarket savings strategy.',
     h1: 'Best UK Supermarkets for Meal Prep: Aldi vs Lidl vs Tesco vs Asda',
     intro: 'Choosing the right supermarket can make a meaningful difference to your weekly meal prep budget. This guide compares seven major UK supermarkets — Aldi, Lidl, Tesco, Asda, Morrisons, Sainsbury\'s, and Iceland — on a standard high-protein meal prep shop, highlighting which wins on budget, which suits specific goals, and where to find dedicated meal plans for each store.',
     contextualLinks: [
