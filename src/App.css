@@ -12931,6 +12931,13 @@ textarea {
   }
 }
 
+@media (max-width: 460px) {
+  .affiliate-product-cta {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 /* Retailer-specific guidance on plan pages. Reuses the existing swaps-grid
    card layout so it reads as part of the page rather than a bolted-on block. */
 .swap-card--store-strengths {
