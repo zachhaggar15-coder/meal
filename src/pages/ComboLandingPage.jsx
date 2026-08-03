@@ -4,6 +4,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import QuizNudge from '../components/QuizNudge.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import {
   COMBO_LANDING_PAGES,
@@ -142,6 +143,12 @@ export default function ComboLandingPage({ page }) {
             ))}
           </div>
         </section>
+
+        <QuizNudge
+          sourcePage={`combo-${page.slug}`}
+          pageType="combo_landing"
+          location="after_matching_plans"
+        />
 
         <section className="combo-copy-grid">
           <article>

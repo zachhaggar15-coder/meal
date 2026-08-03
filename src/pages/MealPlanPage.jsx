@@ -5,6 +5,7 @@ import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
+import QuizNudge from '../components/QuizNudge.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
@@ -466,6 +467,12 @@ export default function MealPlanPage() {
         </details>
 
         <p className="content-intro">{data.intro}</p>
+
+        <QuizNudge
+          sourcePage={`legacy-plan-${slug}`}
+          pageType="legacy_plan"
+          location="before_generator_cta"
+        />
 
         {data.ctaPlacements?.intro !== false && (
           <GeneratorCTA

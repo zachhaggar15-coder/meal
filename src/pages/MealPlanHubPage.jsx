@@ -7,6 +7,7 @@ import PlanCard from '../components/PlanCard.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import QuizNudge from '../components/QuizNudge.jsx';
 import ComboLandingPage from './ComboLandingPage.jsx';
 import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
@@ -194,6 +195,12 @@ export default function MealPlanHubPage() {
             ))}
           </div>
         </section>
+
+        <QuizNudge
+          sourcePage={`meal-plan-hub-${hub.slug}`}
+          pageType="meal_plan_hub"
+          location="after_top_plans"
+        />
 
         <PageHeroVisual visual={hubVisual} className="meal-hub-hero-visual meal-hub-hero-visual--after-plans" priority />
 

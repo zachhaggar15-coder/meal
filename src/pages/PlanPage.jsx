@@ -7,6 +7,7 @@ import WaitlistSection from '../components/WaitlistSection.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
+import QuizNudge from '../components/QuizNudge.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
@@ -595,6 +596,12 @@ export default function PlanPage() {
         </p>
 
         <PlanOverview plan={displayPlan} sourcePlan={plan} />
+
+        <QuizNudge
+          sourcePage={`plan-${plan.slug}`}
+          pageType="plan"
+          location="after_plan_overview"
+        />
 
         {editNote && (
           <div className="plan-edit-notice">

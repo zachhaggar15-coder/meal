@@ -10,6 +10,7 @@ import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
+import QuizNudge from '../components/QuizNudge.jsx';
 import TrustBox from '../components/TrustBox.jsx';
 import NotFound from './NotFound.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
@@ -151,6 +152,11 @@ export default function BlogPost() {
               )}
             </aside>
           )}
+          <QuizNudge
+            sourcePage={`blog-${slug}`}
+            pageType="blog"
+            location="after_quick_answer"
+          />
           <ContextualNextStep
             {...nextStep}
             eyebrow="Make this practical"
