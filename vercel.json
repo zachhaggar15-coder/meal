@@ -33,6 +33,11 @@
       "permanent": true
     },
     {
+      "source": "/plans/aldi-body-recomp-veg-2000-lean-recomp",
+      "destination": "/plans/aldi-body-recomp-veg-2000",
+      "permanent": true
+    },
+    {
       "source": "/plans/aldi-budget-bodybuilding-veg-2000-higher-protein-v3",
       "destination": "/plans/aldi-budget-bodybuilding-veg-2000",
       "permanent": true
@@ -113,6 +118,11 @@
       "permanent": true
     },
     {
+      "source": "/plans/any-cutting-1600-high-protein",
+      "destination": "/plans/any-cutting-1600",
+      "permanent": true
+    },
+    {
       "source": "/plans/any-gym-beginner-1800-balanced-plate-vegetarian-v3",
       "destination": "/plans/any-gym-beginner-1800-quick-shop-vegetarian-v3",
       "permanent": true
@@ -128,7 +138,17 @@
       "permanent": true
     },
     {
+      "source": "/plans/asda-body-recomp-2000-lean-recomp",
+      "destination": "/plans/asda-body-recomp-2000",
+      "permanent": true
+    },
+    {
       "source": "/plans/asda-body-recomp-2200-training-day-v3",
+      "destination": "/plans/asda-body-recomp-2200",
+      "permanent": true
+    },
+    {
+      "source": "/plans/asda-body-recomp-2200-batch-cook",
       "destination": "/plans/asda-body-recomp-2200",
       "permanent": true
     },
@@ -233,6 +253,11 @@
       "permanent": true
     },
     {
+      "source": "/plans/morrisons-body-recomp-2000-high-protein",
+      "destination": "/plans/morrisons-body-recomp-2000-higher-protein-v3",
+      "permanent": true
+    },
+    {
       "source": "/plans/morrisons-gym-beginner-1800-training-day-v3",
       "destination": "/plans/morrisons-gym-beginner-1800",
       "permanent": true
@@ -288,6 +313,11 @@
       "permanent": true
     },
     {
+      "source": "/plans/sainsburys-body-recomp-2200-batch-cook",
+      "destination": "/plans/sainsburys-body-recomp-2200",
+      "permanent": true
+    },
+    {
       "source": "/plans/sainsburys-endurance-3500-recovery-v3",
       "destination": "/plans/sainsburys-endurance-3500",
       "permanent": true
@@ -310,6 +340,11 @@
     {
       "source": "/plans/tesco-body-recomp-pesc-2000-higher-protein-v3",
       "destination": "/plans/tesco-body-recomp-2000",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-body-recomp-pesc-2000-training-day",
+      "destination": "/plans/tesco-body-recomp-pesc-2000",
       "permanent": true
     },
     {
