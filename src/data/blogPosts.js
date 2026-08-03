@@ -621,8 +621,8 @@ export const blogPostsData = {
     published: '2026-05-28',
     modified: '2026-07-13',
     reviewed: '13 July 2026',
-    title: 'Cheap Protein UK: Best High-Protein Foods by Value',
-    description: 'Cheap protein UK guide: eggs, tuna, lentils, chicken, Greek yogurt, tofu and cottage cheese ranked by value for budget meal prep.',
+    title: 'Cheap High-Protein Foods UK: 10 Best-Value Staples',
+    description: 'Compare 10 cheap protein staples, from eggs and tuna to lentils and frozen chicken, with protein-per-penny guidance for UK meal prep.',
     h1: 'Cheap Protein UK: Best High-Protein Foods by Value',
     intro: 'Getting enough protein does not have to be expensive. In UK supermarkets, the best cheap protein usually comes from ordinary staples: eggs, tinned fish, Greek yogurt, lentils, beans, tofu, frozen chicken and cottage cheese. This guide ranks the options by usefulness for budget meal prep, not just headline protein grams.',
     sources: [
