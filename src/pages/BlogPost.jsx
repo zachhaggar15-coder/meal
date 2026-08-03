@@ -1,4 +1,6 @@
+import { Fragment } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import AdSlot from '../components/AdSlot.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import StickerPromo from '../components/StickerPromo.jsx';
@@ -155,6 +157,10 @@ export default function BlogPost() {
             pageType={`blog-${slug}`}
             className="blog-next-step"
           />
+          <AdSlot
+            placement="in-article-intro"
+            slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
+          />
 
           {hasCustomBlogImage(slug) && (
             <figure className="blog-hero-image blog-hero-image--after-answer">
@@ -189,25 +195,33 @@ export default function BlogPost() {
           <RecipeCollection recipes={data.recipes} slug={slug} />
 
           {data.sections.map((section, i) => (
-            <section key={i}>
-              <h2>{toTitleCase(section.h2)}</h2>
-              {section.paragraphs.map((para, j) => (
-                <p key={j}>{para}</p>
-              ))}
-              {section.bullets && (
-                <ul className="content-bullets">
-                  {section.bullets.map((bullet, j) => <li key={j}>{bullet}</li>)}
-                </ul>
+            <Fragment key={i}>
+              <section>
+                <h2>{toTitleCase(section.h2)}</h2>
+                {section.paragraphs.map((para, j) => (
+                  <p key={j}>{para}</p>
+                ))}
+                {section.bullets && (
+                  <ul className="content-bullets">
+                    {section.bullets.map((bullet, j) => <li key={j}>{bullet}</li>)}
+                  </ul>
+                )}
+                {section.numbered && (
+                  <ol className="content-numbered">
+                    {section.numbered.map((item, j) => <li key={j}>{item}</li>)}
+                  </ol>
+                )}
+                {section.table && (
+                  <ResponsiveBlogTable table={section.table} />
+                )}
+              </section>
+              {i === Math.floor((data.sections.length - 1) / 2) && (
+                <AdSlot
+                  placement="in-article-midpoint"
+                  slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
+                />
               )}
-              {section.numbered && (
-                <ol className="content-numbered">
-                  {section.numbered.map((item, j) => <li key={j}>{item}</li>)}
-                </ol>
-              )}
-              {section.table && (
-                <ResponsiveBlogTable table={section.table} />
-              )}
-            </section>
+            </Fragment>
           ))}
 
           {/* Sticker promo — before final CTA */}

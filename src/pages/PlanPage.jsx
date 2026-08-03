@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
+import AdSlot from '../components/AdSlot.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
@@ -921,6 +922,10 @@ export default function PlanPage() {
         />
 
         <FeedbackBox />
+        <AdSlot
+          placement="plan-inline"
+          slotId={import.meta.env.VITE_AD_SLOT_PLAN_INLINE}
+        />
 
       </div>
       <WaitlistSection sourcePage="plan" compact />
