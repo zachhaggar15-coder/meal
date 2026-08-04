@@ -17,7 +17,10 @@ const output = `${JSON.stringify(records, null, 2)}\n`;
 
 if (process.argv.includes('--check')) {
   const current = fs.existsSync(outputPath) ? fs.readFileSync(outputPath, 'utf8') : '';
-  if (current !== output) {
+  // Git may check this generated JSON out with CRLF on Windows. Compare the
+  // content after normalising line endings so a clean cross-platform checkout
+  // does not report a false stale-index failure.
+  if (current.replace(/\r\n/g, '\n') !== output) {
     console.error('Blog search index is stale. Run npm run generate:blog-index.');
     process.exit(1);
   }
