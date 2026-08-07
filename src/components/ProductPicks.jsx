@@ -65,7 +65,7 @@ export default function ProductPicks({
                   data-affiliate-category={product.category}
                   data-product-name={product.name}
                 >
-                  See Amazon price
+                  See Amazon price &rarr;
                 </a>
               </article>
             ))}
@@ -125,7 +125,7 @@ export default function ProductPicks({
               data-affiliate-category={product.category}
               data-product-name={product.name}
             >
-              See price on Amazon &rarr;
+              See Amazon price &rarr;
             </a>
           </article>
         ))}

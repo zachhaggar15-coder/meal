@@ -89,7 +89,7 @@ export default function AffiliateProductGrid({
                 data-affiliate-category="meal-prep-containers"
                 data-product-name={product.name}
               >
-                See Amazon price
+                See Amazon price &rarr;
               </a>
               <details className="affiliate-product-details">
                 <summary>Pros, cons and key features</summary>

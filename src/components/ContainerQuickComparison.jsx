@@ -134,7 +134,7 @@ export default function ContainerQuickComparison({
                   data-affiliate-category="meal-prep-containers"
                   data-product-name={product.name}
                 >
-                  See Amazon price
+                  See Amazon price &rarr;
                 </a>
                 {guidePath && <Link to={guidePath} className="btn-secondary">More like this</Link>}
               </div>
