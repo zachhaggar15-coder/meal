@@ -21,11 +21,18 @@ import {
   buildCompositionTrafficReview,
   buildPlanCompositionClusters,
 } from './lib/planCompositionClusters.js';
+import {
+  SHIPPED_CHANGES,
+  buildEventBeforeAfter,
+  buildTrackerBeforeAfter,
+  daysSince,
+} from './lib/shippedChanges.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 
 const trackerPath = path.join(rootDir, 'docs', 'search-console-weekly-tracker.csv');
+const shippedChangeEventTrackerPath = path.join(rootDir, 'docs', 'shipped-change-event-tracker.csv');
 const latestReportPath = path.join(rootDir, 'docs', 'weekly-analytics-report.md');
 const reportDir = path.join(rootDir, 'docs', 'seo-reports');
 const generatedDataPath = path.join(rootDir, 'src', 'data', 'weeklySeoInsights.js');
@@ -77,10 +84,12 @@ async function main() {
   let currentSearchRows = [];
   let previousSearchRows = [];
   let gaLandingPages = [];
+  let gaEventCounts = [];
   let fieldVitalRows = [];
 
   if (sampleMode) {
     ({ currentSearchRows, previousSearchRows, gaLandingPages } = sampleAnalyticsData());
+    gaEventCounts = sampleGa4EventCounts();
     fieldVitalRows = sampleFieldVitalRows();
   } else {
     if (!options.siteUrl && !options.ga4PropertyId) {
@@ -122,6 +131,27 @@ async function main() {
       } catch (error) {
         warnings.push(`GA4 fetch failed: ${error.message || error}`);
       }
+
+      // Separate, additive call: counts of the specific on-site events the
+      // shipped-change registry watches (e.g. plan_primary_cta_clicked),
+      // broken down by page. This is what actually answers "did click-through
+      // move" for a UI change — landing-page engagementRate above does not
+      // capture a specific button's click rate. Failure here must not affect
+      // anything else the report already does.
+      const watchedEventNames = [...new Set(SHIPPED_CHANGES.flatMap(change => change.watchEvents))];
+      if (watchedEventNames.length) {
+        try {
+          gaEventCounts = await fetchGa4EventCounts(auth, {
+            propertyId: options.ga4PropertyId,
+            startDate: range.current.startDate,
+            endDate: range.current.endDate,
+            eventNames: watchedEventNames,
+            rowLimit: options.gaRowLimit,
+          });
+        } catch (error) {
+          warnings.push(`GA4 event-count fetch failed: ${error.message || error}`);
+        }
+      }
     } else {
       warnings.push('GA4_PROPERTY_ID is missing, so GA landing page enrichment was skipped.');
     }
@@ -146,6 +176,7 @@ async function main() {
     currentSearchRows,
     previousSearchRows,
     gaLandingPages,
+    gaEventCounts,
     range,
     routeIndex,
     recentActivity,
@@ -162,6 +193,7 @@ async function main() {
 
   writeGeneratedData(analysis);
   updateWeeklyTracker(analysis);
+  updateShippedChangeEventTracker(analysis);
   writeWeeklyReports(analysis);
 
   console.log(renderConsoleSummary(analysis));
@@ -293,6 +325,39 @@ async function fetchGa4LandingPages(auth, { propertyId, startDate, endDate, rowL
       engagementRate: numberOrZero(metrics[2]?.value),
     };
   }).filter(row => isPublicPagePath(row.path));
+}
+
+// Per-page counts of specific named events (the data-event attributes already
+// wired into ClickTracking.jsx), for the shipped-change before/after review.
+// A separate report from fetchGa4LandingPages because landing-page metrics
+// (pageViews/engagementRate) do not break down by which button was clicked.
+async function fetchGa4EventCounts(auth, { propertyId, startDate, endDate, eventNames, rowLimit }) {
+  const analyticsdata = google.analyticsdata({ version: 'v1beta', auth });
+  const response = await analyticsdata.properties.runReport({
+    property: normaliseGaProperty(propertyId),
+    requestBody: {
+      dateRanges: [{ startDate, endDate }],
+      dimensions: [{ name: 'pagePath' }, { name: 'eventName' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          inListFilter: { values: eventNames },
+        },
+      },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: rowLimit,
+    },
+  });
+
+  return (response.data.rows || []).map(row => {
+    const metrics = row.metricValues || [];
+    return {
+      path: normalisePath(row.dimensionValues?.[0]?.value || ''),
+      eventName: String(row.dimensionValues?.[1]?.value || ''),
+      eventCount: numberOrZero(metrics[0]?.value),
+    };
+  }).filter(row => isPublicPagePath(row.path) && row.eventName);
 }
 
 async function fetchFieldVitalRows({ supabaseUrl, serviceKey, startDate, rowLimit }) {
@@ -515,7 +580,7 @@ function isPublicPagePath(value) {
   return true;
 }
 
-function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, range, routeIndex, recentActivity, fieldVitalRows, warnings }) {
+function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, warnings }) {
   const unverifiedRoutes = collectUnverifiedRoutes(currentSearchRows, gaLandingPages, routeIndex);
   if (unverifiedRoutes.length) {
     warnings.push(`Skipped ${unverifiedRoutes.length} analytics rows because their routes were not in the verified route inventory.`);
@@ -588,6 +653,9 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     gaRows,
   });
   const fieldVitals = buildFieldVitalsReview(fieldVitalRows, routeIndex);
+  const trackerHistory = readTrackerHistory();
+  const shippedChangeEventHistory = readShippedChangeEventHistory();
+  const shippedChangeReview = buildShippedChangeReview(trackerHistory, shippedChangeEventHistory);
 
   const generatedPublicData = {
     generatedAt: range.generatedAt,
@@ -609,6 +677,9 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     recommendedAction,
     compositionReview,
     fieldVitals,
+    shippedChangeReview,
+    gaLandingPages: gaRows,
+    gaEventCounts: (gaEventCounts || []).filter(row => routeIndex.has(row.path)),
     recentActivity,
     unverifiedRoutes,
     warnings,
@@ -1102,6 +1173,124 @@ function updateWeeklyTracker(analysis) {
   fs.writeFileSync(trackerPath, [header.join(','), ...existingData, ...rows, ''].join('\n'), 'utf8');
 }
 
+// Parses the accumulated dated snapshots back out of the tracker CSV this
+// same script has been appending to every run, so a shipped change from
+// weeks ago can be compared against real "before" history immediately
+// instead of waiting for new data to accumulate from a fresh empty file.
+function readTrackerHistory() {
+  if (!fs.existsSync(trackerPath)) return [];
+  const lines = fs.readFileSync(trackerPath, 'utf8').split(/\r?\n/).filter(Boolean);
+  if (lines.length < 2) return [];
+
+  const header = parseCsvLine(lines[0]);
+  const dateIdx = header.indexOf('date');
+  const pageIdx = header.indexOf('page');
+  const impressionsIdx = header.indexOf('impressions');
+  const clicksIdx = header.indexOf('clicks');
+  const ctrIdx = header.indexOf('ctr');
+  const positionIdx = header.indexOf('avg_position');
+  if ([dateIdx, pageIdx, impressionsIdx, clicksIdx, ctrIdx, positionIdx].some(idx => idx === -1)) return [];
+
+  return lines.slice(1).map(line => {
+    const cells = parseCsvLine(line);
+    return {
+      date: cells[dateIdx],
+      page: cells[pageIdx],
+      impressions: numberOrZero(cells[impressionsIdx]),
+      clicks: numberOrZero(cells[clicksIdx]),
+      ctr: numberOrZero(String(cells[ctrIdx] || '').replace('%', '')) / 100,
+      avgPosition: numberOrZero(cells[positionIdx]),
+    };
+  }).filter(row => row.date && row.page);
+}
+
+// Minimal RFC-4180-style CSV line parser matching what csvCell() below
+// produces (quoted fields, doubled internal quotes) — good enough for a file
+// this script fully controls the writing of, not a general-purpose parser.
+function parseCsvLine(line) {
+  const cells = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i += 1) {
+    const char = line[i];
+    if (inQuotes) {
+      if (char === '"' && line[i + 1] === '"') { current += '"'; i += 1; }
+      else if (char === '"') { inQuotes = false; }
+      else { current += char; }
+    } else if (char === '"') {
+      inQuotes = true;
+    } else if (char === ',') {
+      cells.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  cells.push(current);
+  return cells;
+}
+
+// Dated, append-only, same shape as updateWeeklyTracker: one row per
+// shipped-change per run, so on-site event counts accumulate into real
+// before/after history over the following weeks, honestly reported as thin
+// until enough snapshots exist rather than treated as conclusive on day one.
+function updateShippedChangeEventTracker(analysis) {
+  ensureDir(path.dirname(shippedChangeEventTrackerPath));
+  const runDate = analysis.range.current.endDate;
+  const header = ['date', 'change_id', 'event_name', 'event_count', 'matched_page_views'];
+
+  const existingLines = fs.existsSync(shippedChangeEventTrackerPath)
+    ? fs.readFileSync(shippedChangeEventTrackerPath, 'utf8').split(/\r?\n/).filter(Boolean)
+    : [];
+  const existingData = existingLines.slice(1).filter(line => !line.startsWith(`${runDate},`));
+
+  const rows = [];
+  for (const change of SHIPPED_CHANGES) {
+    for (const eventName of change.watchEvents) {
+      const matchingEvents = analysis.gaEventCounts.filter(row => row.eventName === eventName && change.routeMatch(row.path));
+      const eventCount = matchingEvents.reduce((total, row) => total + row.eventCount, 0);
+      const matchedViews = analysis.gaLandingPages
+        .filter(row => change.routeMatch(row.path))
+        .reduce((total, row) => total + row.pageViews, 0);
+      rows.push([runDate, change.id, eventName, eventCount, matchedViews].map(csvCell).join(','));
+    }
+  }
+
+  fs.writeFileSync(shippedChangeEventTrackerPath, [header.join(','), ...existingData, ...rows, ''].join('\n'), 'utf8');
+}
+
+function readShippedChangeEventHistory() {
+  if (!fs.existsSync(shippedChangeEventTrackerPath)) return [];
+  const lines = fs.readFileSync(shippedChangeEventTrackerPath, 'utf8').split(/\r?\n/).filter(Boolean);
+  if (lines.length < 2) return [];
+
+  const header = parseCsvLine(lines[0]);
+  const dateIdx = header.indexOf('date');
+  const changeIdIdx = header.indexOf('change_id');
+  const eventCountIdx = header.indexOf('event_count');
+  const pageViewsIdx = header.indexOf('matched_page_views');
+  if ([dateIdx, changeIdIdx, eventCountIdx, pageViewsIdx].some(idx => idx === -1)) return [];
+
+  return lines.slice(1).map(line => {
+    const cells = parseCsvLine(line);
+    return {
+      date: cells[dateIdx],
+      changeId: cells[changeIdIdx],
+      eventCount: numberOrZero(cells[eventCountIdx]),
+      pageViews: numberOrZero(cells[pageViewsIdx]),
+    };
+  }).filter(row => row.date && row.changeId);
+}
+
+function buildShippedChangeReview(trackerHistory, eventHistory) {
+  return SHIPPED_CHANGES.map(change => ({
+    change,
+    days: daysSince(change.date),
+    search: buildTrackerBeforeAfter(change, trackerHistory),
+    events: buildEventBeforeAfter(change, eventHistory),
+  }));
+}
+
 function writeWeeklyReports(analysis) {
   ensureDir(reportDir);
   const report = renderWeeklyReport(analysis);
@@ -1213,6 +1402,46 @@ function renderWeeklyReport(analysis) {
     lines.push(`| ${cluster.reviewId} | ${cluster.type} | ${cluster.status} | ${mdCell(cluster.leader || '-')} | ${cluster.routes.length} |`);
   }
   lines.push('');
+
+  lines.push('## Shipped Change Tracking', '');
+  lines.push(
+    '- Before/after evidence for UX or copy changes shipped on judgement, so effect is checked instead of assumed.',
+    '- Search columns come from the accumulated weekly tracker CSV (organic search-result CTR). Event columns come from the specific on-site click event each change targets (the more direct answer to "did click-through move").',
+    '- A change needs at least one dated snapshot on both sides of its ship date to say anything; until then this reports "not enough data yet" rather than guessing.',
+    '',
+  );
+  for (const entry of analysis.shippedChangeReview) {
+    lines.push(`### ${entry.change.title}`, '');
+    lines.push(`- Shipped: ${entry.change.date} (${entry.days} days ago, commit ${entry.change.commit})`);
+    lines.push(`- ${entry.change.description}`);
+    lines.push('');
+
+    const search = entry.search;
+    lines.push('**Search-result CTR (weekly tracker history)**', '');
+    if (search.beforeSnapshots > 0 && search.afterSnapshots > 0) {
+      lines.push('| | Impressions | Clicks | CTR | Avg position |');
+      lines.push('| --- | ---: | ---: | ---: | ---: |');
+      lines.push(`| Before (${search.beforeSnapshots} snapshot${search.beforeSnapshots === 1 ? '' : 's'}) | ${search.before.impressions} | ${search.before.clicks} | ${round(search.before.ctr * 100, 2)}% | ${round(search.before.avgPosition, 1)} |`);
+      lines.push(`| After (${search.afterSnapshots} snapshot${search.afterSnapshots === 1 ? '' : 's'}) | ${search.after.impressions} | ${search.after.clicks} | ${round(search.after.ctr * 100, 2)}% | ${round(search.after.avgPosition, 1)} |`);
+    } else {
+      lines.push(`- Not enough data yet: ${search.beforeSnapshots} snapshot(s) before, ${search.afterSnapshots} after. Needs at least one of each.`);
+    }
+    lines.push('');
+
+    const events = entry.events;
+    lines.push('**On-site click-through (event tracker history)**', '');
+    if (events.beforeSnapshots > 0 && events.afterSnapshots > 0) {
+      const beforeRate = events.beforeViews ? (events.beforeEvents / events.beforeViews) * 100 : 0;
+      const afterRate = events.afterViews ? (events.afterEvents / events.afterViews) * 100 : 0;
+      lines.push('| | Events | Page views | Click-through rate |');
+      lines.push('| --- | ---: | ---: | ---: |');
+      lines.push(`| Before (${events.beforeSnapshots} snapshot${events.beforeSnapshots === 1 ? '' : 's'}) | ${events.beforeEvents} | ${events.beforeViews} | ${round(beforeRate, 2)}% |`);
+      lines.push(`| After (${events.afterSnapshots} snapshot${events.afterSnapshots === 1 ? '' : 's'}) | ${events.afterEvents} | ${events.afterViews} | ${round(afterRate, 2)}% |`);
+    } else {
+      lines.push(`- Not enough data yet: ${events.beforeSnapshots} snapshot(s) before, ${events.afterSnapshots} after. This tracker starts recording from the run this change was added, so "before" fills in from here rather than a past run.`);
+    }
+    lines.push('');
+  }
 
   lines.push('## Do Not Edit This Week', '');
   if (analysis.doNotEdit.length) {
@@ -1348,6 +1577,15 @@ function sampleAnalyticsData() {
   ];
 
   return { currentSearchRows, previousSearchRows, gaLandingPages };
+}
+
+function sampleGa4EventCounts() {
+  return [
+    { path: '/browse', eventName: 'plan_primary_cta_clicked', eventCount: 62 },
+    { path: '/meal-plans/1500-calorie', eventName: 'plan_primary_cta_clicked', eventCount: 18 },
+    { path: '/meal-prep-containers', eventName: 'container_product_click', eventCount: 9 },
+    { path: '/blog/cheap-protein-sources-uk-supermarkets', eventName: 'mealprep_product_click', eventCount: 3 },
+  ];
 }
 
 function sampleFieldVitalRows() {
