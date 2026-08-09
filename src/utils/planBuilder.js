@@ -94,6 +94,99 @@ export const MACRO_GRAMS = {
   'recomp-protein': { protein: 165, carbs: 190, fats: 60, fibre: 35 },
 };
 
+// Why each emphasis targets the macro split it does (see MACRO_PROFILES above),
+// and the protein swaps that actually fit that approach. Without this, the
+// "higher protein" swap list was one fixed array of five lines rendered
+// identically on every plan page regardless of goal, effort or supermarket —
+// real duplicate content across 1,000+ URLs. This ties the visible copy back
+// to an attribute the meal-selection algorithm already treats as meaningful.
+const EMPHASIS_CONTEXT = {
+  'lean-protein': {
+    rationale: 'Meals lean on lower-fat protein — chicken breast, white fish, egg whites, low-fat dairy — so protein stays high without pushing calories up, which matters when the goal is fat loss without losing muscle.',
+    proteinSwaps: [
+      'Add extra egg whites (3–4) to a breakfast instead of whole eggs — protein without the extra fat',
+      'Swap a carb portion for extra chicken breast or white fish on higher-hunger days',
+      'Use 0% fat Greek yogurt or quark instead of standard yogurt for the same volume, far more protein',
+    ],
+  },
+  'batch-cooking': {
+    rationale: 'Meals are chosen to hold up after a few days in the fridge or freezer — stews, chillies, tray bakes and grain bowls — rather than anything that goes soggy or dries out on reheating.',
+    proteinSwaps: [
+      'Cook an extra portion of mince or beans into the weekly batch — cheap to add, keeps well',
+      'Add tinned beans or lentils to a batch-cooked chilli or curry for extra protein at low cost',
+      'Portion cooked chicken thighs into the freezer in 100g bags to add to any meal without extra cooking',
+    ],
+  },
+  'frozen-friendly': {
+    rationale: 'Meals are built around ingredients that freeze well — frozen fish, frozen vegetables, freezer-friendly bases — so a weekly shop keeps for longer and less goes to waste.',
+    proteinSwaps: [
+      'Keep a bag of frozen prawns or white fish fillets as a fast protein top-up on any meal',
+      'Frozen chicken breast portions cost less than fresh and add protein without a special shop',
+      'Add frozen edamame to a rice or noodle dish for extra plant protein with no prep',
+    ],
+  },
+  'high-carb-fuel': {
+    rationale: 'Carbohydrate sits higher relative to protein in this plan — useful when training volume is high and the priority is fuelling sessions rather than restricting calories.',
+    proteinSwaps: [
+      'Stir a scoop of whey or plant protein into porridge or a smoothie rather than swapping out rice or pasta',
+      'Add a protein source alongside the carb-heavy meals (extra chicken, tofu or eggs) instead of replacing carbs',
+      'Use a higher-protein bread or pasta as a straight swap without changing portion sizes',
+    ],
+  },
+  'high-variety': {
+    rationale: 'Meals deliberately rotate protein sources and formats across the week — this plan avoids repeating the same protein twice in one day so the week does not feel monotonous.',
+    proteinSwaps: [
+      'Rotate in a protein you have not used yet that week (turkey, tofu, prawns) rather than repeating the same one',
+      'Add a handful of nuts or seeds to a salad or bowl for a different protein source and texture',
+      'Swap one dairy-based snack for a plant-based one (edamame, hummus) to keep variety going',
+    ],
+  },
+  'low-cal-swaps': {
+    rationale: 'Every meal already carries at least one lower-calorie swap — egg whites instead of whole eggs, cauliflower rice, extra lean protein instead of extra carbs — to keep calories down without cutting protein.',
+    proteinSwaps: [
+      'Use 0% fat Greek yogurt or quark in place of standard yogurt for more protein at a similar calorie cost',
+      'Add a hard-boiled egg or egg white as an afternoon snack instead of a higher-calorie option',
+      'Swap a carb side for extra lean protein when a meal feels short on fullness',
+    ],
+  },
+  'minimal-effort': {
+    rationale: 'Meals need close to no active cooking — assemble-and-eat, one-pan or ready-to-eat combinations — so the plan stays realistic on the busiest days.',
+    proteinSwaps: [
+      'Keep tinned tuna, mackerel or pre-cooked chicken on hand for a zero-prep protein top-up',
+      'Add cottage cheese or a protein yogurt as a snack — no cooking, no extra washing up',
+      'A ready-made protein shake covers a gap without adding a single extra step',
+    ],
+  },
+  'performance-protein': {
+    rationale: 'Both protein and carbohydrate run high in this plan — it is built for training performance and recovery, not calorie restriction, so there is no need to trade one macro off against the other.',
+    proteinSwaps: [
+      'Add a post-workout combination of fast carbs and protein (banana and whey, or chocolate milk) after harder sessions',
+      'Use an extra portion of chicken, fish or tofu on higher-training days rather than cutting carbs to make room',
+      'Greek yogurt with fruit and granola covers both protein and carb needs in one snack',
+    ],
+  },
+  'recomp-protein': {
+    rationale: 'Protein sits high relative to a near-maintenance calorie target — the aim is building muscle and losing fat at the same time, which needs more protein than either goal alone.',
+    proteinSwaps: [
+      'Add 2–3 extra egg whites to breakfast rather than increasing portion size across the board',
+      'Use a protein shake as a between-meal top-up instead of an extra carb-based snack',
+      'Swap a starchy side for extra chicken, fish or tofu when a meal runs light on protein',
+    ],
+  },
+  'whole-food': {
+    rationale: 'Protein comes from whole foods — fish, eggs, dairy, legumes — rather than protein powders or bars, in line with the whole-food approach this plan takes throughout.',
+    proteinSwaps: [
+      'Add an extra tin of fish (mackerel, sardines, tuna) rather than reaching for a protein bar',
+      'Use extra eggs or cottage cheese as a whole-food protein top-up between meals',
+      'Swap a processed snack for a handful of nuts and a boiled egg to keep protein whole-food',
+    ],
+  },
+};
+
+function getEmphasisContext(emphasis) {
+  return EMPHASIS_CONTEXT[emphasis] || EMPHASIS_CONTEXT['lean-protein'];
+}
+
 const GOAL_BEST_FOR = {
   'weight-loss': 'Anyone aiming for a sustainable calorie deficit',
   'high-protein-low-cal': 'Higher-protein meal planning within a lower-calorie target',
@@ -502,9 +595,11 @@ function getMarketLabel(supermarket) {
 
 // ── FAQs ──────────────────────────────────────────────────────────────────────
 
-function buildFaqs(seed) {
+function buildFaqs(seed, averageMacros) {
   const mkt = seed.supermarket === 'any' ? 'a generic UK supermarket average' : getMarketLabel(seed.supermarket);
   const gl = (GOAL_LABELS[seed.goal] || seed.goal).toLowerCase();
+  const emphasisContext = getEmphasisContext(seed.emphasis);
+  const dailyProtein = Math.round(averageMacros?.protein || 0);
 
   return [
     {
@@ -513,13 +608,11 @@ function buildFaqs(seed) {
     },
     {
       q: `How much protein does this plan provide per day?`,
-      a: seed.emphasis === 'lean-protein'
-        ? `This is a high-protein plan. Most days target 140–180g of protein, which supports muscle retention during a calorie deficit and helps manage hunger.`
-        : `Protein is balanced across the week. Most days provide 100–130g, which meets general UK dietary guidelines for active adults.`,
+      a: `This plan averages ${dailyProtein}g of protein per day across the week, based on the meals actually selected — ${dailyProtein >= 130 ? 'well above' : 'in line with'} general UK guidance of roughly 0.8–1.6g per kg of bodyweight for active adults.`,
     },
     {
-      q: `Can I swap meals I don't like?`,
-      a: `Yes. Use the AI edit button on any meal to swap it out. Common requests include swapping chicken for turkey, replacing salmon with tinned tuna, or making a day vegetarian. The shopping list updates automatically.`,
+      q: `Why does this ${gl} plan use this approach?`,
+      a: `${emphasisContext.rationale} At ${seed.calories.toLocaleString('en-GB')} kcal/day, that keeps it realistic to follow rather than restrictive.`,
     },
     {
       q: `Can I print this ${gl} meal plan or save it as a PDF?`,
@@ -544,21 +637,22 @@ function buildFaqs(seed) {
 
 function buildSwaps(seed) {
   const isBudget = seed.budget === 'very-cheap' || seed.budget === 'budget';
+  const profile = getSupermarketProfile(seed.supermarket);
+  const emphasisContext = getEmphasisContext(seed.emphasis);
+
   return {
     cheaper: [
+      seed.supermarket === 'any'
+        ? 'Buy own-brand rolled oats, rice, pasta and tins — nutritionally identical to branded, at any supermarket'
+        : `Buy ${profile.label}'s ${profile.valueRange} range for rice, pasta, oats and tins — nutritionally identical to standard lines, at the lowest price point in store`,
       'Replace fresh salmon with tinned mackerel or sardines in brine (saves ~£2–3/week)',
-      isBudget ? 'Buy store-brand rolled oats, rice, and pasta — nutritionally identical to branded' : 'Switch to own-brand products across the board',
+      isBudget
+        ? 'Buy dried pulses (lentils, chickpeas, black beans) and cook in bulk rather than tinned — cheaper per portion'
+        : `Switch to ${profile.label}'s value range across the board rather than mid-tier lines`,
       'Use frozen chicken breast instead of fresh (saves ~£1.50/week, same protein)',
       'Swap fresh berries for frozen mixed berries (same nutrients, fraction of the cost)',
-      'Buy pulses (lentils, chickpeas, black beans) dried and cook in bulk',
     ],
-    higherProtein: [
-      'Add a scoop of unflavoured whey or plant protein to porridge or smoothies',
-      'Replace rice or pasta with extra protein (an additional chicken breast or 2 boiled eggs)',
-      'Use Skyr or Quark instead of standard yogurt (roughly 2× the protein)',
-      'Add a hard-boiled egg as an afternoon snack on rest days',
-      'Swap rice cakes or crackers for a protein bar (aim for 20g+ protein, under 200 kcal)',
-    ],
+    higherProtein: emphasisContext.proteinSwaps,
     vegetarian: seed.dietType === 'standard' ? [
       'Replace chicken with Quorn fillets or diced firm tofu',
       'Swap beef mince for tinned green lentils or plant-based mince',
@@ -900,7 +994,7 @@ export function buildPlan(seed) {
     },
 
     seo:          buildSeo(seed),
-    faq:          buildFaqs(seed),
+    faq:          buildFaqs(seed, averageMacros),
     swaps:        buildSwaps(seed),
     storeGuide:   buildStoreGuide(seed),
     prepPlan,
