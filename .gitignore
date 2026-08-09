@@ -7,5 +7,6 @@ audit-artifacts
 .vercel
 .DS_Store
 *.log
+.claude/worktrees
 
 .vercel
