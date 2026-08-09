@@ -103,6 +103,7 @@ export const MACRO_GRAMS = {
 const EMPHASIS_CONTEXT = {
   'lean-protein': {
     rationale: 'Meals lean on lower-fat protein — chicken breast, white fish, egg whites, low-fat dairy — so protein stays high without pushing calories up, which matters when the goal is fat loss without losing muscle.',
+    distinguisher: 'the meal selection is biased toward lower-fat protein sources rather than just hitting a protein number however it can',
     proteinSwaps: [
       'Add extra egg whites (3–4) to a breakfast instead of whole eggs — protein without the extra fat',
       'Swap a carb portion for extra chicken breast or white fish on higher-hunger days',
@@ -111,6 +112,7 @@ const EMPHASIS_CONTEXT = {
   },
   'batch-cooking': {
     rationale: 'Meals are chosen to hold up after a few days in the fridge or freezer — stews, chillies, tray bakes and grain bowls — rather than anything that goes soggy or dries out on reheating.',
+    distinguisher: 'meals are filtered for how well they hold up over several days, not just for taste on day one',
     proteinSwaps: [
       'Cook an extra portion of mince or beans into the weekly batch — cheap to add, keeps well',
       'Add tinned beans or lentils to a batch-cooked chilli or curry for extra protein at low cost',
@@ -119,6 +121,7 @@ const EMPHASIS_CONTEXT = {
   },
   'frozen-friendly': {
     rationale: 'Meals are built around ingredients that freeze well — frozen fish, frozen vegetables, freezer-friendly bases — so a weekly shop keeps for longer and less goes to waste.',
+    distinguisher: 'ingredients are chosen so a single shop keeps for the full week without a mid-week top-up',
     proteinSwaps: [
       'Keep a bag of frozen prawns or white fish fillets as a fast protein top-up on any meal',
       'Frozen chicken breast portions cost less than fresh and add protein without a special shop',
@@ -127,6 +130,7 @@ const EMPHASIS_CONTEXT = {
   },
   'high-carb-fuel': {
     rationale: 'Carbohydrate sits higher relative to protein in this plan — useful when training volume is high and the priority is fuelling sessions rather than restricting calories.',
+    distinguisher: 'the carb-to-protein ratio is deliberately higher than a typical fat-loss plan, to leave enough fuel for training',
     proteinSwaps: [
       'Stir a scoop of whey or plant protein into porridge or a smoothie rather than swapping out rice or pasta',
       'Add a protein source alongside the carb-heavy meals (extra chicken, tofu or eggs) instead of replacing carbs',
@@ -135,6 +139,7 @@ const EMPHASIS_CONTEXT = {
   },
   'high-variety': {
     rationale: 'Meals deliberately rotate protein sources and formats across the week — this plan avoids repeating the same protein twice in one day so the week does not feel monotonous.',
+    distinguisher: 'the meal rotation actively avoids repeating the same protein twice in one day',
     proteinSwaps: [
       'Rotate in a protein you have not used yet that week (turkey, tofu, prawns) rather than repeating the same one',
       'Add a handful of nuts or seeds to a salad or bowl for a different protein source and texture',
@@ -143,6 +148,7 @@ const EMPHASIS_CONTEXT = {
   },
   'low-cal-swaps': {
     rationale: 'Every meal already carries at least one lower-calorie swap — egg whites instead of whole eggs, cauliflower rice, extra lean protein instead of extra carbs — to keep calories down without cutting protein.',
+    distinguisher: 'each meal already has a lower-calorie substitution built in, rather than leaving that to you',
     proteinSwaps: [
       'Use 0% fat Greek yogurt or quark in place of standard yogurt for more protein at a similar calorie cost',
       'Add a hard-boiled egg or egg white as an afternoon snack instead of a higher-calorie option',
@@ -151,6 +157,7 @@ const EMPHASIS_CONTEXT = {
   },
   'minimal-effort': {
     rationale: 'Meals need close to no active cooking — assemble-and-eat, one-pan or ready-to-eat combinations — so the plan stays realistic on the busiest days.',
+    distinguisher: 'meals are filtered for near-zero active cooking time, not just for being quick recipes',
     proteinSwaps: [
       'Keep tinned tuna, mackerel or pre-cooked chicken on hand for a zero-prep protein top-up',
       'Add cottage cheese or a protein yogurt as a snack — no cooking, no extra washing up',
@@ -159,6 +166,7 @@ const EMPHASIS_CONTEXT = {
   },
   'performance-protein': {
     rationale: 'Both protein and carbohydrate run high in this plan — it is built for training performance and recovery, not calorie restriction, so there is no need to trade one macro off against the other.',
+    distinguisher: 'both protein and carbs are set high together, rather than trading one off against the other',
     proteinSwaps: [
       'Add a post-workout combination of fast carbs and protein (banana and whey, or chocolate milk) after harder sessions',
       'Use an extra portion of chicken, fish or tofu on higher-training days rather than cutting carbs to make room',
@@ -167,6 +175,7 @@ const EMPHASIS_CONTEXT = {
   },
   'recomp-protein': {
     rationale: 'Protein sits high relative to a near-maintenance calorie target — the aim is building muscle and losing fat at the same time, which needs more protein than either goal alone.',
+    distinguisher: 'protein is set higher than a typical weight-loss plan while calories stay close to maintenance',
     proteinSwaps: [
       'Add 2–3 extra egg whites to breakfast rather than increasing portion size across the board',
       'Use a protein shake as a between-meal top-up instead of an extra carb-based snack',
@@ -175,6 +184,7 @@ const EMPHASIS_CONTEXT = {
   },
   'whole-food': {
     rationale: 'Protein comes from whole foods — fish, eggs, dairy, legumes — rather than protein powders or bars, in line with the whole-food approach this plan takes throughout.',
+    distinguisher: 'protein comes from whole foods throughout, with no reliance on powders or bars',
     proteinSwaps: [
       'Add an extra tin of fish (mackerel, sardines, tuna) rather than reaching for a protein bar',
       'Use extra eggs or cottage cheese as a whole-food protein top-up between meals',
@@ -593,6 +603,30 @@ function getMarketLabel(supermarket) {
   return SUPERMARKET_LABELS[supermarket] || cap(supermarket);
 }
 
+// ── Intro paragraph ─────────────────────────────────────────────────────────────
+//
+// The visible on-page intro used to just reuse plan.seo.description — a
+// ~155-character meta description written for a search snippet, not a real
+// explanation of the plan. Two plans with the same goal and calories had a
+// near-identical one-line intro. This builds a genuine 3-sentence intro from
+// goal purpose, real computed protein, supermarket positioning and the
+// emphasis rationale — none of it duplicated in the FAQ (see distinguisher
+// above, used instead of rationale in "how is this different").
+function buildIntro(seed, averageMacros) {
+  const mkt = getMarketLabel(seed.supermarket);
+  const profile = getSupermarketProfile(seed.supermarket);
+  const emphasisContext = getEmphasisContext(seed.emphasis);
+  const dailyProtein = Math.round(averageMacros?.protein || 0);
+  const bestFor = GOAL_BEST_FOR[seed.goal] || 'General healthy eating';
+  const caloriesText = seed.calories.toLocaleString('en-GB');
+
+  const marketClause = seed.supermarket === 'any'
+    ? 'built from ingredients stocked at any major UK supermarket'
+    : `built around ${mkt}'s ${profile.valueRange}`;
+
+  return `${bestFor}. This 7-day plan targets ${caloriesText} kcal/day and averages ${dailyProtein}g of protein, ${marketClause} for roughly ${BUDGET_ESTIMATES[seed.budget]}/week. ${emphasisContext.rationale}`;
+}
+
 // ── FAQs ──────────────────────────────────────────────────────────────────────
 
 function buildFaqs(seed, averageMacros) {
@@ -611,8 +645,8 @@ function buildFaqs(seed, averageMacros) {
       a: `This plan averages ${dailyProtein}g of protein per day across the week, based on the meals actually selected — ${dailyProtein >= 130 ? 'well above' : 'in line with'} general UK guidance of roughly 0.8–1.6g per kg of bodyweight for active adults.`,
     },
     {
-      q: `Why does this ${gl} plan use this approach?`,
-      a: `${emphasisContext.rationale} At ${seed.calories.toLocaleString('en-GB')} kcal/day, that keeps it realistic to follow rather than restrictive.`,
+      q: `How is this different from a generic ${gl} plan?`,
+      a: `Plenty of ${gl} plans share the same ${seed.calories.toLocaleString('en-GB')} kcal target — the difference here is that ${emphasisContext.distinguisher}.`,
     },
     {
       q: `Can I print this ${gl} meal plan or save it as a PDF?`,
@@ -994,6 +1028,7 @@ export function buildPlan(seed) {
     },
 
     seo:          buildSeo(seed),
+    intro:        buildIntro(seed, averageMacros),
     faq:          buildFaqs(seed, averageMacros),
     swaps:        buildSwaps(seed),
     storeGuide:   buildStoreGuide(seed),

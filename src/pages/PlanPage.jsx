@@ -590,7 +590,7 @@ export default function PlanPage() {
         {/* Hero */}
         <SiteLogo variant="page" className="page-header-logo" />
         <h1 className="plan-page-h1">{plan.title}</h1>
-        <p className="plan-page-intro">{plan.seo.description}</p>
+        <p className="plan-page-intro">{plan.intro}</p>
         <p className="content-byline">
           Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed: 2 July 2026.
         </p>
