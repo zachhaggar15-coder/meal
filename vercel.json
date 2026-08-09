@@ -188,6 +188,11 @@
       "permanent": true
     },
     {
+      "source": "/plans/coop-weight-loss-1400-flexible-standard",
+      "destination": "/plans/coop-weight-loss-1500-budget-low",
+      "permanent": true
+    },
+    {
       "source": "/plans/iceland-budget-bodybuilding-3000-budget-smart-v3",
       "destination": "/plans/iceland-budget-bodybuilding-3000",
       "permanent": true
@@ -250,6 +255,11 @@
     {
       "source": "/plans/marks-spencer-high-protein-low-cal-1500-moderate-batch",
       "destination": "/plans/marks-spencer-weight-loss-1500-moderate-batch",
+      "permanent": true
+    },
+    {
+      "source": "/plans/marks-spencer-weight-loss-1400-flexible-standard",
+      "destination": "/plans/marks-spencer-weight-loss-1400-moderate-batch",
       "permanent": true
     },
     {
