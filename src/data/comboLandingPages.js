@@ -370,7 +370,7 @@ export const COMBO_LANDING_PAGES = {
     supportingLinks: [
       { label: 'High protein lunches for work UK', to: '/blog/high-protein-lunches-for-work-uk' },
       { label: 'Meal prep boxes for work lunches', to: '/blog/meal-prep-boxes-for-work-lunches' },
-      { label: 'Low effort meal plans', to: '/meal-plans/low-effort' },
+      { label: 'Low effort meal plans', to: '/browse?goal=low-effort' },
       { label: 'Leakproof meal prep containers UK', to: '/blog/leakproof-meal-prep-containers-uk' },
     ],
   }),

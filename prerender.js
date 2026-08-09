@@ -241,6 +241,11 @@ const HUB_SLUG_SET = new Set(MEAL_PLAN_HUB_SLUGS);
 const NON_CANONICAL_SITEMAP_ROUTES = new Set([
   '/stickers',
   '/choose-plan/weight-loss',
+  '/meal-plan/aldi-high-protein-meal-plan',
+  '/meal-plan/sainsburys-low-calorie-meal-plan',
+  '/meal-plan/morrisons-low-calorie-meal-plan',
+  '/meal-plan/gym-beginner-meal-plan-uk',
+  '/meal-plans/low-effort',
   ...SUPERMARKET_CHOOSER_SLUGS
     .filter(slug => HUB_SLUG_SET.has(slug))
     .map(slug => `/choose-supermarket/${slug}`),

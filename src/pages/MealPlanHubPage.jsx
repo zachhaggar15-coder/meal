@@ -23,6 +23,10 @@ import { toTitleCase } from '../utils/textFormatting.js';
 const ALL_PLANS = getAllPlanMeta();
 const CARD_LIMIT = 12;
 
+const REDIRECTED_HUB_SLUGS = {
+  'low-effort': '/browse',
+};
+
 const MARKET_LABEL = {
   aldi: 'Aldi',
   lidl: 'Lidl',
@@ -55,7 +59,9 @@ export default function MealPlanHubPage() {
 
   const { plans: matchingPlans, usedFallback: usingFallbackPlans } = getHubPlanMatches(hub);
   const shownPlans = matchingPlans.slice(0, CARD_LIMIT);
-  const canonical = `/meal-plans/${hub.slug}`;
+  // vercel.json 301-redirects these hub slugs elsewhere. The static file
+  // still builds, but a non-self canonical keeps it out of the sitemap.
+  const canonical = REDIRECTED_HUB_SLUGS[hub.slug] || `/meal-plans/${hub.slug}`;
   const sources = hub.sources || DEFAULT_SOURCES;
   const supportingGuides = hub.supportingGuides || DEFAULT_SUPPORTING_GUIDES;
   const hubVisual = chooseHubVisual(hub);

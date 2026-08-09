@@ -341,7 +341,7 @@ const SUPERMARKET_AUTHORITY_HUBS = {
     key: 'coop',
     label: 'Co-op',
     budgetNote: 'Co-op is strongest for local convenience shops, top-up baskets, simple staples and smaller meal-prep weeks.',
-    relatedSlugs: ['low-effort', 'busy-professional', 'generic-uk-supermarket', 'meal-plans-with-shopping-list'],
+    relatedSlugs: ['busy-professional', 'generic-uk-supermarket', 'meal-plans-with-shopping-list'],
   }),
 };
 

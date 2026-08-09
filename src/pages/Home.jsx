@@ -96,7 +96,7 @@ const FEATURED_CATEGORIES = [
     plans: [
       { slug: 'tesco-low-calorie',    label: 'Tesco Low Calorie Meal Plan',    path: '/meal-plan/tesco-low-calorie-meal-plan' },
       { slug: 'aldi-low-calorie',     label: 'Aldi Low Calorie Meal Plan',     path: '/meal-plan/aldi-low-calorie-meal-plan' },
-      { slug: 'aldi-high-protein',    label: 'Aldi High Protein Meal Plan',    path: '/meal-plan/aldi-high-protein-meal-plan' },
+      { slug: 'aldi-high-protein',    label: 'Aldi High Protein Meal Plan',    path: '/plans/aldi-high-protein-low-cal-1500' },
       { slug: 'lidl-meal-plans',      label: 'Lidl Meal Plans',                path: '/meal-plans/lidl' },
       { slug: 'asda-meal-prep',       label: 'Asda Meal Prep Guide',           path: '/blog/asda-meal-prep-uk' },
       { slug: 'iceland-meal-plans',   label: 'Iceland Meal Plans',             path: '/meal-plans/iceland' },

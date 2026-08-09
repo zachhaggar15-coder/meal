@@ -2577,7 +2577,7 @@ export const expandedBlogPostsData = {
       {
         parts: [
           { text: 'For a structured high-protein week: the ' },
-          { label: 'Aldi high protein meal plan', to: '/meal-plan/aldi-high-protein-meal-plan' },
+          { label: 'Aldi high protein meal plan', to: '/plans/aldi-high-protein-low-cal-1500' },
           { text: ' and the ' },
           { label: 'Tesco high protein meal plan', to: '/meal-plan/tesco-high-protein-meal-plan' },
           { text: ' both include shopping lists and calorie targets.' },

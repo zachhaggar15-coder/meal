@@ -105,9 +105,9 @@ export const DISCOVERY_PRIORITY_LINKS = [
     note: 'A vegan Tesco plan with plant-based meals and a moderate calorie target.',
   },
   {
-    to: '/meal-plan/gym-beginner-meal-plan-uk',
+    to: '/plans/any-gym-beginner-1800',
     label: 'Gym Beginner Meal Plan UK',
-    note: 'A legacy starter guide for new gym routines, protein planning and simple weekly meals.',
+    note: 'A starter guide for new gym routines, protein planning and simple weekly meals.',
   },
   {
     to: '/meal-plan/low-effort-meal-plan-uk',

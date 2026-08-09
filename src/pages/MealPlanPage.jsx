@@ -308,7 +308,7 @@ export default function MealPlanPage() {
       <SEO
         title={data.title}
         description={data.description}
-        canonical={`/meal-plan/${slug}`}
+        canonical={REDIRECTED_LEGACY_PLANS[slug] || `/meal-plan/${slug}`}
         ogType="article"
         ogImage={ogImageUrl}
         jsonLd={jsonLd}
@@ -819,6 +819,17 @@ function getLegacyPlanFamily(slug, data) {
   };
 }
 
+// vercel.json 301-redirects these slugs to their current /plans/ equivalent.
+// The static file still builds (see check-protected-urls.js), but a non-self
+// canonical keeps it out of the sitemap and off Google's radar, matching the
+// pattern already used by Stickers.jsx.
+const REDIRECTED_LEGACY_PLANS = {
+  'aldi-high-protein-meal-plan': '/plans/aldi-high-protein-low-cal-1500',
+  'sainsburys-low-calorie-meal-plan': '/plans/sainsburys-weight-loss-1500',
+  'morrisons-low-calorie-meal-plan': '/plans/morrisons-weight-loss-1500',
+  'gym-beginner-meal-plan-uk': '/plans/any-gym-beginner-1800',
+};
+
 const LEGACY_GENERATED_EQUIVALENTS = {
   '1500-calorie-meal-plan': { to: '/meal-plans/1500-calorie', label: 'Printable 1500 calorie plans' },
   '1800-calorie-meal-plan': { to: '/meal-plans/1800-calorie', label: 'Printable 1800 calorie plans' },
@@ -826,8 +837,6 @@ const LEGACY_GENERATED_EQUIVALENTS = {
   'aldi-low-calorie-meal-plan': { to: '/plans/aldi-weight-loss-1500', label: 'Current Aldi 1500 calorie plan' },
   'tesco-low-calorie-meal-plan': { to: '/plans/tesco-weight-loss-1500', label: 'Current Tesco 1500 calorie plan' },
   'asda-1500-calorie-meal-plan': { to: '/plans/asda-weight-loss-1500', label: 'Current Asda 1500 calorie plan' },
-  'sainsburys-low-calorie-meal-plan': { to: '/plans/sainsburys-weight-loss-1500', label: "Current Sainsbury's 1500 calorie plan" },
-  'morrisons-low-calorie-meal-plan': { to: '/plans/morrisons-weight-loss-1500', label: 'Current Morrisons 1500 calorie plan' },
   'iceland-budget-meal-plan': { to: '/plans/iceland-budget-fat-loss-1500', label: 'Current Iceland budget fat-loss plan' },
 };
 

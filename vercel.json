@@ -23,6 +23,31 @@
       "permanent": true
     },
     {
+      "source": "/meal-plan/aldi-high-protein-meal-plan",
+      "destination": "/plans/aldi-high-protein-low-cal-1500",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plan/sainsburys-low-calorie-meal-plan",
+      "destination": "/plans/sainsburys-weight-loss-1500",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plan/morrisons-low-calorie-meal-plan",
+      "destination": "/plans/morrisons-weight-loss-1500",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plan/gym-beginner-meal-plan-uk",
+      "destination": "/plans/any-gym-beginner-1800",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plans/low-effort",
+      "destination": "/browse",
+      "permanent": true
+    },
+    {
       "source": "/plans/aldi-cutting-1500",
       "destination": "/plans/aldi-cutting-1400",
       "permanent": true

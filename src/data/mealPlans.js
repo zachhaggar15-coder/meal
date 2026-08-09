@@ -1004,7 +1004,6 @@ export const mealPlansData = {
     ],
     related: [
       { slug: 'aldi-low-calorie-meal-plan', label: 'Aldi 1500 Calorie Plan' },
-      { slug: 'aldi-high-protein-meal-plan', label: 'Aldi High Protein Plan' },
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan' },
       { slug: 'tesco-1800-calorie-meal-plan', label: 'Tesco 1800 Calorie Plan' },
     ],
@@ -1257,7 +1256,6 @@ export const mealPlansData = {
       { slug: 'sainsburys-1800-calorie-meal-plan', label: "Sainsbury's 1800 Calorie Plan" },
       { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan' },
       { slug: 'tesco-low-calorie-meal-plan', label: 'Tesco Low Calorie Plan' },
-      { slug: 'morrisons-low-calorie-meal-plan', label: 'Morrisons Low Calorie Plan' },
     ],
     blogLinks: [
       { path: '/blog/how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit' },
@@ -1297,7 +1295,6 @@ export const mealPlansData = {
     related: [
       { slug: 'morrisons-1800-calorie-meal-plan', label: 'Morrisons 1800 Calorie Plan' },
       { slug: '1500-calorie-meal-plan', label: '1500 Calorie Meal Plan' },
-      { slug: 'sainsburys-low-calorie-meal-plan', label: "Sainsbury's Low Calorie Plan" },
       { slug: 'asda-1500-calorie-meal-plan', label: 'Asda 1500 Calorie Plan' },
     ],
     blogLinks: [
@@ -1688,7 +1685,6 @@ export const mealPlansData = {
     related: [
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Low Calorie Plan' },
       { slug: 'budget-fat-loss-meal-plan-uk', label: 'Budget Fat Loss Plan' },
-      { slug: 'aldi-high-protein-meal-plan', label: 'Aldi High Protein Plan' },
       { slug: 'cheap-student-meal-plan-uk', label: 'Cheap Student Meal Plan' },
     ],
     blogLinks: [
