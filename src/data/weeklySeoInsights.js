@@ -2,11 +2,11 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-08-03T10:10:03.078Z",
+  "generatedAt": "2026-08-10T08:10:22.078Z",
   "range": {
     "current": {
-      "startDate": "2026-07-04",
-      "endDate": "2026-07-31"
+      "startDate": "2026-07-11",
+      "endDate": "2026-08-07"
     }
   },
   "source": "google-analytics-and-search-console",
@@ -42,6 +42,12 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Guide"
     },
     {
+      "to": "/meal-plans/1500-calorie",
+      "label": "1500 calorie",
+      "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
+      "category": "Guide"
+    },
+    {
       "to": "/meal-plan/1500-calorie-meal-plan",
       "label": "1500 calorie meal plan",
       "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
@@ -52,12 +58,6 @@ export const WEEKLY_SEO_INSIGHTS = {
       "label": "1500 vs 1800 vs 2000 calories",
       "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
       "category": "Guide"
-    },
-    {
-      "to": "/meal-plan/1800-calorie-meal-plan",
-      "label": "1800 Calorie Meal Plan UK: 7-Day Balanced Plan with Shopping List",
-      "description": "Use this ready-made plan as a starting point, then compare related alternatives.",
-      "category": "Ready-made plan"
     }
   ]
 };
