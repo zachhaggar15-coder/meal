@@ -633,12 +633,14 @@ function buildFaqs(seed, averageMacros) {
   const mkt = seed.supermarket === 'any' ? 'a generic UK supermarket average' : getMarketLabel(seed.supermarket);
   const gl = (GOAL_LABELS[seed.goal] || seed.goal).toLowerCase();
   const emphasisContext = getEmphasisContext(seed.emphasis);
+  const profile = getSupermarketProfile(seed.supermarket);
   const dailyProtein = Math.round(averageMacros?.protein || 0);
+  const caloriesText = seed.calories.toLocaleString('en-GB');
 
   return [
     {
       q: `How much does this ${gl} plan cost per week?`,
-      a: `This plan is designed for ${mkt} and typically costs ${BUDGET_ESTIMATES[seed.budget]} per week for one person, depending on what you already have at home. Buying in bulk, choosing own-brand items, and batch cooking can reduce the cost further.`,
+      a: `This plan is designed for ${mkt} and typically costs ${BUDGET_ESTIMATES[seed.budget]} per week for one person, depending on what you already have at home. ${profile.loyalty ? `${profile.loyalty} can reduce this further.` : 'Buying in bulk and choosing own-brand items can reduce this further.'}`,
     },
     {
       q: `How much protein does this plan provide per day?`,
@@ -650,7 +652,7 @@ function buildFaqs(seed, averageMacros) {
     },
     {
       q: `Can I print this ${gl} meal plan or save it as a PDF?`,
-      a: `Yes. Use the export / print PDF button on the plan page. The printable version summarises the full 7-day meal plan and includes the weekly shopping list.`,
+      a: `Yes. Use the export / print PDF button on the plan page. The printable version summarises all 7 days at ${caloriesText} kcal/day, the ${mkt} shopping list, and your chosen household portion sizes.`,
     },
     {
       q: `Is this plan suitable for meal prep?`,
@@ -661,7 +663,7 @@ function buildFaqs(seed, averageMacros) {
     {
       q: `Is this plan suitable for ${seed.dietType === 'standard' ? 'beginners' : seed.dietType + ' eaters'}?`,
       a: seed.dietType === 'standard'
-        ? `Yes. The meals use widely available ingredients and straightforward cooking methods. No specialist equipment or culinary experience is needed.`
+        ? `Yes. Recipes are rated ${EFFORT_LABELS[seed.effort] || seed.effort} and use ingredients available at ${mkt} — no specialist equipment or advanced technique is needed.`
         : `Yes. Every meal in this plan is ${seed.dietType}, using ingredients readily available from ${mkt}.`,
     },
   ];
