@@ -2,6 +2,7 @@ import { AFFILIATE_DISCLOSURE, getContainerProducts } from '../data/containerPro
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import ContainerQuickComparison from './ContainerQuickComparison.jsx';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 
 export default function AffiliateProductGrid({
   title = 'Recommended meal prep containers',
@@ -10,6 +11,8 @@ export default function AffiliateProductGrid({
   sourcePage = 'container-guide',
   showDisclosure = true,
   showQuickComparison = true,
+  recommendationSource,
+  compact = false,
 }) {
   const products = getContainerProducts(productIds);
 
@@ -26,6 +29,11 @@ export default function AffiliateProductGrid({
         <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
       )}
 
+      <p className="affiliate-claims-note">
+        Product formats and care details follow current Amazon listing or manufacturer information,
+        not hands-on testing. Check the live listing before buying.
+      </p>
+
       {showQuickComparison && products.length > 1 && (
         <ContainerQuickComparison
           eyebrow="Quick comparison"
@@ -41,27 +49,32 @@ export default function AffiliateProductGrid({
           headingLevel="h3"
           sourcePage={`${sourcePage}-quick-comparison`}
           showDisclosure={false}
+          recommendationSource={recommendationSource}
         />
       )}
 
       <div className="affiliate-product-grid">
-        {products.map(product => (
-          <article key={product.name} className="affiliate-product-card">
-            <div className="affiliate-product-media">
-              <img src={product.image} alt={product.imageAlt || `${product.name} meal prep containers`} loading="lazy" />
-            </div>
+        {products.map((product, index) => (
+          <article key={product.name} className={`affiliate-product-card${compact ? ' affiliate-product-card--compact' : ''}`}>
+            {!compact && (
+              <div className="affiliate-product-media">
+                <img src={product.image} alt={product.imageAlt || `${product.name} meal prep containers`} loading="lazy" />
+              </div>
+            )}
             <div className="affiliate-product-body">
               <span className="affiliate-product-badge">{product.badge}</span>
               <h3>{product.name}</h3>
               <p className="affiliate-product-summary">{product.summary}</p>
-              <div className="affiliate-product-verdict-grid">
-                <p><strong>Best for:</strong> {product.bestFor}</p>
-                {product.buyIf && <p><strong>Buy if:</strong> {product.buyIf}</p>}
-                {product.avoidIf && <p><strong>Avoid if:</strong> {product.avoidIf}</p>}
-              </div>
+              {!compact && (
+                <div className="affiliate-product-verdict-grid">
+                  <p><strong>Best for:</strong> {product.bestFor}</p>
+                  {product.buyIf && <p><strong>Buy if:</strong> {product.buyIf}</p>}
+                  {product.avoidIf && <p><strong>Avoid if:</strong> {product.avoidIf}</p>}
+                </div>
+              )}
               <dl className="affiliate-product-facts">
                 <div>
-                  <dt>Price band</dt>
+                  <dt>Price level</dt>
                   <dd>{product.priceBand}</dd>
                 </div>
                 <div>
@@ -72,10 +85,12 @@ export default function AffiliateProductGrid({
                   <dt>Set format</dt>
                   <dd>{product.setSize}</dd>
                 </div>
-                <div>
-                  <dt>Last checked</dt>
-                  <dd>{product.lastChecked || CONTAINER_LAST_CHECKED}</dd>
-                </div>
+                {!compact && (
+                  <div>
+                    <dt>Last checked</dt>
+                    <dd>{product.lastChecked || CONTAINER_LAST_CHECKED}</dd>
+                  </div>
+                )}
               </dl>
               <p className="affiliate-watchout"><strong>Watch out:</strong> {product.watchOut}</p>
               <a
@@ -83,11 +98,14 @@ export default function AffiliateProductGrid({
                 target="_blank"
                 rel="noopener noreferrer nofollow sponsored"
                 className="btn-primary affiliate-product-cta"
-                data-event="container_product_click"
-                data-source-page={sourcePage}
-                data-offer={product.name}
-                data-affiliate-category="meal-prep-containers"
-                data-product-name={product.name}
+                {...affiliateLinkData({
+                  product,
+                  productCategory: 'meal-prep-containers',
+                  sourcePage,
+                  placement: 'detailed_card',
+                  listPosition: index + 1,
+                  recommendationSource,
+                })}
               >
                 See Amazon price &rarr;
               </a>

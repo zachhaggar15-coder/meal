@@ -39,6 +39,21 @@ export const SHIPPED_CHANGES = [
       'mealprep_product_click',
     ],
   },
+  {
+    id: 'canonical-affiliate-measurement',
+    title: 'Canonical affiliate product click measurement',
+    date: '2026-08-13',
+    description:
+      'Replaced duplicate automatic and component-specific Amazon conversion labels with one affiliate_product_click event and a stable product, placement, viewport and recommendation-source taxonomy.',
+    routeMatch: path => path === '/'
+      || path.startsWith('/plans/')
+      || path.startsWith('/meal-plan/')
+      || path.startsWith('/meal-prep-containers')
+      || path === '/meal-prep-accessories'
+      || path.startsWith('/blog/')
+      || path.startsWith('/tools'),
+    watchEvents: ['affiliate_product_click'],
+  },
 ];
 
 export function daysSince(dateString) {

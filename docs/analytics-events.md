@@ -30,9 +30,10 @@ not included.
 | `plan_adjusted` | Household mode or serving count changes | plan context, `adjustment_type`, `adjustment_value`, `serving_count` | Are portion controls useful? |
 | `meal_edited` | An AI edit or legacy meal swap completes | plan context, `meal_name`, `cta_location` | How often are plans personalised at meal level? |
 | `related_plan_clicked` | An alternative match or related plan is clicked | `plan_slug`, `page_type`, `cta_location`, `destination` | Do contextual alternatives deepen plan exploration? |
-| `affiliate_link_clicked` | A labelled affiliate link is clicked | `affiliate_category`, `product_name`, `source_page`, `destination` | Which useful recommendations create commercial intent? |
+| `affiliate_product_click` | One user click attempts to leave MealPrep.org.uk for an affiliate product | `product_id`, `product_name`, `product_category`, `source_page`, `source_page_type`, `placement`, `list_position`, `selected_problem`, `viewport_category`, `recommendation_source`, `destination` | Which useful recommendations create commercial intent without duplicate conversion counting? |
 | `container_recommender_started` | First container-calculator input changes | `source_page`, `page_type`, `cta_location` | How many visitors actively use the recommender? |
 | `container_recommendation_viewed` | A recommendation becomes visible | `recommended_tier`, `container_count`, `prep_meal_count`, `source_page` | Which setups are actually seen? |
+| `accessory_guide_clicked` | A visitor opens a deeper guide from the accessories hub | `source_page`, `selected_problem`, `placement`, `list_position`, `recommendation_source` | Which practical friction deserves a clearer hub pathway? |
 | `email_plan_started` | Email-plan field receives first focus or form is submitted | plan context, `page_type`, `cta_location` | How many visitors begin the immediate save flow? |
 | `email_plan_completed` | Plan email endpoint succeeds | plan context, `page_type`, `cta_location` | How many immediate plan saves complete? |
 | `email_plan_failed` | Plan email endpoint fails | plan context, non-sensitive `reason` | Is the save flow technically reliable? |
@@ -54,9 +55,26 @@ Plan events use the same lower-case parameter names when the data exists:
 - `traffic_entry_type`
 
 Automatic behaviour events such as `page_view`, `scroll_depth`,
-`content_section_viewed`, `affiliate_click` and `ui_click` remain available for
-broader journey analysis. Funnel events above are explicit and deduplicated so
-component re-renders do not create a second conversion event.
+`content_section_viewed` and `ui_click` remain available for broader journey
+analysis. `affiliate_product_click` is the only current Amazon outbound
+conversion event. It is emitted once per click in each configured analytics
+destination; component-specific product events are not emitted as additional
+affiliate conversions.
+
+Canonical affiliate measurement begins on **13 August 2026**. The historical
+`affiliate_click`, `affiliate_link_clicked`, `container_product_click`,
+`mealprep_product_click`, `budget_container_product_click` and
+`mid_range_container_product_click` series remain queryable but are deprecated.
+They must not be added together or compared directly with the canonical series,
+because one old interaction could create more than one of those events.
+
+Keep `recommendation_source` to this stable set: `container_buying_guide`,
+`container_hub`, `container_specialist_guide`, `container_chooser`,
+`accessories_hub`, `accessory_guide`, `plan_derived`, `homepage`, `other`.
+Useful non-conversion events such as `container_chooser_started`,
+`container_chooser_completed`, `container_chooser_result_clicked`,
+`accessory_guide_clicked`, `plan_accessory_recommendation_viewed` and
+`plan_accessory_recommendation_clicked` must never be counted as Amazon exits.
 
 ## Dashboard funnel
 

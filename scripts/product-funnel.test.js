@@ -17,6 +17,13 @@ import {
   toggleSavedPlan,
   writePlanProgress,
 } from '../src/utils/planRetention.js';
+import {
+  AFFILIATE_PRODUCT_CLICK_EVENT,
+  affiliateLinkData,
+  buildAffiliateEventProperties,
+  inferRecommendationSource,
+  isAffiliateUrl,
+} from '../src/utils/affiliateAnalytics.js';
 
 test('calculator selections survive in browse URLs', () => {
   assert.equal(
@@ -240,4 +247,63 @@ test('mount-safe analytics events are emitted only once per dedupe window', asyn
       delete globalThis.navigator;
     }
   }
+});
+
+test('affiliate analytics recognises Amazon boundaries without broad substring matching', () => {
+  assert.equal(isAffiliateUrl('https://www.amazon.co.uk/item/dp/B0FFH1DW9W?tag=amazonaf063dc-21'), true);
+  assert.equal(isAffiliateUrl('https://amzn.to/example'), true);
+  assert.equal(isAffiliateUrl('https://example.com/amazon-affiliate-guide'), false);
+  assert.equal(isAffiliateUrl('/blog/affiliate-marketing'), false);
+});
+
+test('canonical affiliate properties use stable page, placement and recommendation taxonomies', () => {
+  const target = {
+    href: 'https://www.amazon.co.uk/item/dp/B0FFH1DW9W?tag=amazonaf063dc-21',
+    dataset: {
+      productId: 'borohouse-10-pack-glass',
+      productName: 'BOROHOUSE 10-Pack Glass Storage Containers',
+      productCategory: 'meal-prep-containers',
+      sourcePage: 'best-containers-quick-comparison',
+      placement: 'quick_picks',
+      listPosition: '2',
+      selectedProblem: 'full-week prep',
+      recommendationSource: 'container_buying_guide',
+    },
+  };
+
+  assert.deepEqual(buildAffiliateEventProperties(target, {
+    pathname: '/blog/best-meal-prep-containers-uk?source=home',
+    viewportWidth: 390,
+  }), {
+    product_id: 'borohouse-10-pack-glass',
+    product_name: 'BOROHOUSE 10-Pack Glass Storage Containers',
+    product_category: 'meal-prep-containers',
+    source_page: '/blog/best-meal-prep-containers-uk',
+    source_page_type: 'article',
+    placement: 'quick_picks',
+    list_position: 2,
+    selected_problem: 'full-week prep',
+    viewport_category: 'mobile',
+    recommendation_source: 'container_buying_guide',
+    source_component: 'best-containers-quick-comparison',
+    destination: target.href,
+  });
+  assert.equal(inferRecommendationSource({ pathname: '/plans/aldi-high-protein-low-cal-1500' }), 'plan_derived');
+});
+
+test('affiliate link attributes expose one canonical conversion event', () => {
+  const attributes = affiliateLinkData({
+    product: { id: 'starter-pack', name: 'Starter pack', category: 'Containers' },
+    sourcePage: 'buying-guide',
+    placement: 'detailed_card',
+    listPosition: 1,
+    recommendationSource: 'container_buying_guide',
+  });
+
+  assert.equal(attributes['data-event'], AFFILIATE_PRODUCT_CLICK_EVENT);
+  assert.equal(attributes['data-product-id'], 'starter-pack');
+  assert.equal(attributes['data-list-position'], 1);
+  assert.equal(attributes['data-recommendation-source'], 'container_buying_guide');
+  assert.equal(Object.values(attributes).includes('affiliate_link_clicked'), false);
+  assert.equal(Object.values(attributes).includes('affiliate_click'), false);
 });

@@ -5,6 +5,7 @@ import {
   getContainerProducts,
 } from '../data/containerProducts.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 
 function resolveComparisonItems({ picks, productIds, fallbackSearch }) {
   if (picks?.length) {
@@ -46,6 +47,9 @@ export default function ContainerQuickComparison({
   headingLevel = 'h2',
   sourcePage = 'container-quick-comparison',
   showDisclosure = true,
+  showSnapshotStrip = true,
+  compact = false,
+  recommendationSource,
 }) {
   const items = resolveComparisonItems({ picks, productIds, fallbackSearch });
 
@@ -57,7 +61,7 @@ export default function ContainerQuickComparison({
   const headingId = `${sourcePage}-heading`.replace(/[^a-z0-9_-]/gi, '-');
 
   return (
-    <section className="container-direct-compare" aria-labelledby={headingId}>
+    <section className={`container-direct-compare${compact ? ' container-direct-compare--compact' : ''}`} aria-labelledby={headingId}>
       <div className="container-direct-head">
         <div>
           <span className="offer-kicker">{toTitleCase(eyebrow)}</span>
@@ -66,19 +70,24 @@ export default function ContainerQuickComparison({
         {intro && <p>{intro}</p>}
       </div>
 
-      <div className={`container-snapshot-strip container-snapshot-strip--${Math.min(items.length, 3)}`} aria-label="Container options at a glance">
-        {items.map(({ product, sizeLabel, sizeFocus }) => (
+      {showSnapshotStrip && (
+        <div className={`container-snapshot-strip container-snapshot-strip--${Math.min(items.length, 3)}`} aria-label="Container options at a glance">
+        {items.map(({ product, sizeLabel, sizeFocus, searchedFor }, index) => (
           <a
             key={`${product.id}-snapshot`}
             href={product.href}
             target="_blank"
             rel="noopener noreferrer nofollow sponsored"
             className="container-snapshot-item"
-            data-event="container_product_click"
-            data-source-page={`${sourcePage}-snapshot`}
-            data-offer={product.name}
-            data-affiliate-category="meal-prep-containers"
-            data-product-name={product.name}
+            {...affiliateLinkData({
+              product,
+              productCategory: 'meal-prep-containers',
+              sourcePage: `${sourcePage}-snapshot`,
+              placement: 'quick_comparison_snapshot',
+              listPosition: index + 1,
+              selectedProblem: searchedFor,
+              recommendationSource,
+            })}
             aria-label={`See ${product.shortName} on Amazon UK`}
           >
             <span>{sizeLabel}</span>
@@ -86,10 +95,11 @@ export default function ContainerQuickComparison({
             <small>{product.material}</small>
           </a>
         ))}
-      </div>
+        </div>
+      )}
 
       <div className={`container-direct-grid container-direct-grid--${Math.min(items.length, 3)}`}>
-        {items.map(({ product, searchedFor, sizeLabel, sizeFocus, fit, guidePath }) => (
+        {items.map(({ product, searchedFor, sizeLabel, sizeFocus, fit, guidePath }, index) => (
           <article key={product.id} className="container-direct-card">
             <div className="container-direct-media">
               <img
@@ -104,7 +114,7 @@ export default function ContainerQuickComparison({
               <CardHeadingTag>{sizeLabel}</CardHeadingTag>
               <strong className="container-size-focus">{sizeFocus}</strong>
               <p>{fit}</p>
-              <p className="container-direct-summary">{product.summary}</p>
+              {!compact && <p className="container-direct-summary">{product.summary}</p>}
               <dl className="container-direct-facts">
                 <div>
                   <dt>Material</dt>
@@ -114,10 +124,12 @@ export default function ContainerQuickComparison({
                   <dt>Format</dt>
                   <dd>{product.setSize}</dd>
                 </div>
-                <div>
-                  <dt>Layout</dt>
-                  <dd>{product.layout}</dd>
-                </div>
+                {!compact && (
+                  <div>
+                    <dt>Layout</dt>
+                    <dd>{product.layout}</dd>
+                  </div>
+                )}
               </dl>
               {product.avoidIf && (
                 <p className="container-direct-avoid"><strong>Avoid if:</strong> {product.avoidIf}</p>
@@ -128,11 +140,15 @@ export default function ContainerQuickComparison({
                   target="_blank"
                   rel="noopener noreferrer nofollow sponsored"
                   className="btn-primary"
-                  data-event="container_product_click"
-                  data-source-page={sourcePage}
-                  data-offer={product.name}
-                  data-affiliate-category="meal-prep-containers"
-                  data-product-name={product.name}
+                  {...affiliateLinkData({
+                    product,
+                    productCategory: 'meal-prep-containers',
+                    sourcePage,
+                    placement: 'quick_picks',
+                    listPosition: index + 1,
+                    selectedProblem: searchedFor,
+                    recommendationSource,
+                  })}
                 >
                   See Amazon price &rarr;
                 </a>

@@ -8,6 +8,7 @@ import {
   trackPageView,
 } from '../utils/analytics.js';
 import { observeWebVitals } from '../utils/webVitals.js';
+import { isAffiliateUrl } from '../utils/affiliateAnalytics.js';
 
 const SESSION_KEY = 'mealprep_analytics_session_id';
 const ENTRY_KEY = 'mealprep_analytics_entry';
@@ -242,9 +243,12 @@ function createTracker(getPath) {
     const href = getHref(target);
     const targetUrl = href ? safeUrl(href) : null;
     const isOutbound = targetUrl && targetUrl.host !== window.location.host;
-    const eventName = isOutbound
-      ? (isAffiliateHref(targetUrl.href) ? 'affiliate_click' : 'outbound_click')
-      : 'ui_click';
+    const affiliateClick = isOutbound && isAffiliateUrl(targetUrl.href);
+    // ClickTracking owns affiliate clicks and sends the same canonical event to
+    // GA/Plausible and this first-party queue. Returning here prevents the
+    // capture-phase behaviour listener from recording the interaction twice.
+    if (affiliateClick) return;
+    const eventName = isOutbound ? 'outbound_click' : 'ui_click';
 
     track(eventName, {
       target_text: getElementLabel(target),
@@ -483,10 +487,6 @@ function safeUrl(value) {
   } catch {
     return null;
   }
-}
-
-function isAffiliateHref(href) {
-  return /(amazon|amzn\.to|awin1|track|affiliate|tag=|ascsubtag|partner)/i.test(String(href || ''));
 }
 
 function normaliseEventName(name) {

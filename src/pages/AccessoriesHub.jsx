@@ -135,12 +135,22 @@ export default function AccessoriesHub() {
           </div>
 
           <div className="container-search-grid">
-            {accessoryGuideLinks.map(link => (
+            {accessoryGuideLinks.map((link, index) => (
               <article key={link.to} className="container-search-card">
                 <span>Guide</span>
                 <h3>{toTitleCase(link.label)}</h3>
                 <p>{link.description}</p>
-                <Link to={link.to}>Open guide</Link>
+                <Link
+                  to={link.to}
+                  data-event="accessory_guide_clicked"
+                  data-source-page="/meal-prep-accessories"
+                  data-selected-problem={link.label}
+                  data-recommendation-source="accessories_hub"
+                  data-placement="deeper_guide_grid"
+                  data-list-position={index + 1}
+                >
+                  Open guide
+                </Link>
               </article>
             ))}
           </div>

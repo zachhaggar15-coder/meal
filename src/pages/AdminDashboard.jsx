@@ -215,6 +215,8 @@ function SemanticQaSection({ semanticQa }) {
   const latest = semanticQa.latest;
   const severity = latest.severity || {};
   const coverage = semanticQa.coverage || {};
+  const calibration = semanticQa.calibration || {};
+  const calibrationRates = calibration.rates || {};
 
   return (
     <section className="admin-panel">
@@ -222,13 +224,14 @@ function SemanticQaSection({ semanticQa }) {
         <h2>Plan Quality</h2>
         <p>
           A deterministic weekly sample checks complete plans for contradictions, coherence and shopping-list usability.
-          Findings are review evidence only; this process never rewrites plan content.
+          Findings are review evidence only; a plan with a Medium flag has not "failed", and this process never rewrites plan content.
         </p>
       </div>
 
       <div className="admin-stats-grid admin-stats-grid--wide">
         <StatCard label="Latest sample" value={number(latest.sampleSize)} detail={dateOnly(latest.runAt)} />
-        <StatCard label="Pass rate" value={`${number(latest.passRate)}%`} />
+        <StatCard label="Plans with no review flags" value={`${number(latest.plansWithoutFlagsRate)}%`} detail={`${number(latest.passed)} of ${number(latest.sampleSize)}`} />
+        <StatCard label="Plans with review flags" value={number(latest.flagged)} detail={`of ${number(latest.sampleSize)} sampled`} />
         <StatCard label="Critical" value={number(severity.Critical)} />
         <StatCard label="High" value={number(severity.High)} />
         <StatCard label="Medium" value={number(severity.Medium)} />
@@ -237,11 +240,14 @@ function SemanticQaSection({ semanticQa }) {
         <StatCard label="Plans ever sampled" value={number(coverage.plansEverSampled)} detail={`${number(coverage.percentageEverSampled)}% of ${number(coverage.totalPublishedPlans)}`} />
         <StatCard label="Sampled in 30 days" value={number(coverage.plansSampledLast30Days)} />
         <StatCard label="Model review" value={modelStatus(latest.model?.status)} detail={latest.model?.model || 'Deterministic local checks'} />
+        <StatCard label="Calibration reviewed" value={number(calibration.reviewed)} detail={`${number(calibration.unreviewed)} awaiting a human label`} />
+        <StatCard label="Useful-signal precision" value={percentOrPending(calibrationRates.usefulSignalPrecision)} detail={calibration.sufficientForOverallRates ? 'Human-labelled sample' : 'Needs at least 10 reviewed findings'} />
+        <StatCard label="False-positive rate" value={percentOrPending(calibrationRates.falsePositiveRate)} detail="Uncertain labels are excluded" />
       </div>
 
       <DataTable
         title="Recent Findings"
-        note="Open a route for manual verification. Review status is persisted by the QA history file."
+        note="Open a route for manual verification. Medium means review suggested, not a failed plan. Review status is persisted by the QA history file."
         rows={semanticQa.recentFindings || []}
         columns={[
           { key: 'severity', label: 'Severity' },
@@ -256,7 +262,7 @@ function SemanticQaSection({ semanticQa }) {
 
       <DataTable
         title="Potential Systemic Patterns"
-        note="Patterns only appear here when at least two sampled plans share the same likely cause."
+        note="Patterns appear when at least two sampled plans share a likely cause. Medium patterns become engineering priorities only after human confirmation, repeated evidence or high-traffic impact."
         rows={semanticQa.systemicIssues || []}
         columns={[
           { key: 'patternKey', label: 'Pattern' },
@@ -275,10 +281,36 @@ function SemanticQaSection({ semanticQa }) {
         columns={[
           { key: 'runAt', label: 'Run', render: row => dateOnly(row.runAt) },
           { key: 'sampleSize', label: 'Sample' },
-          { key: 'passRate', label: 'Pass rate', render: row => `${number(row.passRate)}%` },
+          { key: 'plansWithoutFlagsRate', label: 'No-flag share', render: row => `${number(row.plansWithoutFlagsRate)}%` },
           { key: 'criticalHigh', label: 'Critical / High' },
           { key: 'medium', label: 'Medium' },
           { key: 'cumulativeCoverage', label: 'Plans ever sampled' },
+        ]}
+      />
+
+      <DataTable
+        title="Human Calibration Sample"
+        note="Labels live separately from generated QA history. Precision is deliberately withheld until the reviewed sample is large enough."
+        rows={calibration.items || []}
+        columns={[
+          { key: 'route', label: 'Plan', render: row => <a href={row.route} target="_blank" rel="noreferrer">{truncate(row.route, 46)}</a> },
+          { key: 'category', label: 'Category' },
+          { key: 'detectorSeverity', label: 'Detector severity' },
+          { key: 'evidence', label: 'Evidence' },
+          { key: 'outcome', label: 'Human outcome' },
+          { key: 'humanSeverity', label: 'Human severity' },
+        ]}
+        empty="No calibration sample has been prepared."
+      />
+
+      <DataTable
+        title="Calibration Precision By Category"
+        rows={calibration.byCategory || []}
+        columns={[
+          { key: 'name', label: 'Category' },
+          { key: 'reviewed', label: 'Reviewed' },
+          { key: 'precision', label: 'Useful-signal precision', render: row => percentOrPending(row.rates?.usefulSignalPrecision) },
+          { key: 'falsePositiveRate', label: 'False-positive rate', render: row => percentOrPending(row.rates?.falsePositiveRate) },
         ]}
       />
 
@@ -544,7 +576,13 @@ function number(value) {
 }
 
 function modelStatus(value) {
-  return ({ available: 'Completed', partial: 'Partial', not_configured: 'Local only', unavailable: 'Local fallback' })[value] || 'Unknown';
+  return ({ available: 'Completed', partial: 'Partial', malformed: 'Malformed rejected', not_configured: 'Local only', unavailable: 'Local fallback' })[value] || 'Unknown';
+}
+
+function percentOrPending(value) {
+  return value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value))
+    ? `${number(value)}%`
+    : 'Pending';
 }
 
 function formatVital(metric) {

@@ -218,7 +218,15 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
   const exitEvents = cleanEvents.filter(event => event.event_name === 'page_exit');
   const sectionEvents = cleanEvents.filter(event => event.event_name === 'content_section_viewed');
   const searchEvents = cleanEvents.filter(isSearchEvent);
-  const outboundClicks = cleanEvents.filter(event => event.event_name === 'outbound_click' || event.event_name === 'affiliate_click');
+  const outboundClicks = cleanEvents.filter(event => (
+    event.event_name === 'outbound_click'
+    || event.event_name === 'affiliate_product_click'
+    || event.event_name === 'affiliate_click'
+  ));
+  const canonicalAffiliateClicks = cleanEvents.filter(event => event.event_name === 'affiliate_product_click');
+  const deprecatedAffiliateClicks = cleanEvents.filter(event => (
+    event.event_name === 'affiliate_click' || event.event_name === 'affiliate_link_clicked'
+  ));
   const returnEvents = cleanEvents.filter(event => event.event_name === 'return_visit');
   const funnel = buildFunnelSummary(cleanEvents);
 
@@ -240,6 +248,8 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
       pageViews: pageViews.length,
       clicks: clickEvents.length,
       outboundClicks: outboundClicks.length,
+      canonicalAffiliateClicks: canonicalAffiliateClicks.length,
+      deprecatedAffiliateClicks: deprecatedAffiliateClicks.length,
       internalSearches: searchEvents.length,
       sectionsSeen: sectionEvents.length,
       avgPagesPerSession: round(avg(journeys.map(journey => journey.pageCount))),
@@ -252,6 +262,7 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
         .filter(item => ['shopping_list_opened', 'shopping_item_toggled', 'shopping_list_printed'].includes(item.event))
         .map(item => item.events)),
     },
+    affiliateMeasurement: buildAffiliateMeasurement(cleanEvents),
     funnel,
     entrySources: toNameValue(countBy(cleanSessions, 'entry_source')).slice(0, 10),
     topEntryIntents: toNameValue(countBy(cleanSessions, 'entry_intent')).slice(0, 12),
@@ -277,6 +288,60 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
       .filter(journey => journey.explorationScore > 0)
       .sort((a, b) => b.explorationScore - a.explorationScore)
       .slice(0, 15),
+  };
+}
+
+function buildAffiliateMeasurement(events) {
+  const baselineDate = '2026-08-13';
+  const baselineMs = Date.parse(`${baselineDate}T00:00:00.000Z`);
+  const current = events.filter(event => event.ts >= baselineMs);
+  const clicks = current.filter(event => event.event_name === 'affiliate_product_click');
+  const pageViews = current.filter(event => event.event_name === 'page_view');
+  const legacy = events.filter(event => (
+    event.event_name === 'affiliate_click' || event.event_name === 'affiliate_link_clicked'
+  ));
+
+  const countMetadata = key => toNameValue(clicks.reduce((counts, event) => {
+    const value = event.metadata?.[key] || 'Not specified';
+    counts[value] = (counts[value] || 0) + 1;
+    return counts;
+  }, {})).slice(0, 20);
+
+  const paths = unique([
+    ...pageViews.map(event => event.path),
+    ...clicks.map(event => event.path),
+  ].filter(Boolean));
+
+  return {
+    baselineDate,
+    canonicalEvent: 'affiliate_product_click',
+    clicks: clicks.length,
+    pageViews: pageViews.length,
+    clicksPerThousandPageViews: pageViews.length
+      ? round((clicks.length / pageViews.length) * 1000)
+      : null,
+    affiliateCtr: null,
+    affiliateCtrNote: 'Requires affiliate_product_impression events; do not substitute legacy click labels.',
+    byProduct: countMetadata('product_name'),
+    byPlacement: countMetadata('placement'),
+    byViewport: countMetadata('viewport_category'),
+    byRecommendationSource: countMetadata('recommendation_source'),
+    pages: paths.map(path => {
+      const views = pageViews.filter(event => event.path === path).length;
+      const pageClicks = clicks.filter(event => event.path === path).length;
+      return {
+        path,
+        pageViews: views,
+        clicks: pageClicks,
+        clicksPerThousandPageViews: views ? round((pageClicks / views) * 1000) : null,
+      };
+    }).sort((left, right) => right.clicks - left.clicks || right.pageViews - left.pageViews),
+    deprecatedHistoricalEvents: {
+      total: legacy.length,
+      affiliateClick: legacy.filter(event => event.event_name === 'affiliate_click').length,
+      affiliateLinkClicked: legacy.filter(event => event.event_name === 'affiliate_link_clicked').length,
+      note: 'Historical diagnostics only; never add these to canonical conversions.',
+    },
   };
 }
 
@@ -373,8 +438,9 @@ function buildFunnelSummary(events) {
     ['recent_plan_reopened', 'Recent plan reopened', 'Retention'],
     ['plan_reopened', 'Plan revisited after 4h+', 'Retention'],
     ['return_visit', 'Return visit after 4h+', 'Retention'],
-    ['affiliate_link_clicked', 'Affiliate link clicked', 'Commercial'],
-    ['affiliate_click', 'Affiliate exit', 'Commercial'],
+    ['affiliate_product_click', 'Affiliate product click (canonical)', 'Commercial'],
+    ['affiliate_link_clicked', 'Affiliate link clicked (deprecated)', 'Deprecated analytics'],
+    ['affiliate_click', 'Affiliate exit (deprecated)', 'Deprecated analytics'],
     ['waitlist_completed', 'MealPrep+ signup', 'Commercial'],
   ];
 
@@ -558,6 +624,7 @@ function scrollDepthByPage(events) {
 function isClickEvent(event) {
   return event.event_name === 'ui_click'
     || event.event_name === 'outbound_click'
+    || event.event_name === 'affiliate_product_click'
     || event.event_name === 'affiliate_click'
     || event.event_name.endsWith('_click')
     || event.event_name.includes('clicked');

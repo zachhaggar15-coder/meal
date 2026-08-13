@@ -1,5 +1,6 @@
 import { AFFILIATE_DISCLOSURE, getMealPrepProducts } from '../data/mealPrepProducts.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 
 // Generic (non-container) product recommendation cards: slow cookers, rice
 // cookers, scales, blenders, freezer bags, vacuum sealers, cookbooks.
@@ -12,6 +13,7 @@ export default function ProductPicks({
   showDisclosure = true,
   showImages = false,
   showQuickComparison = true,
+  recommendationSource,
 }) {
   const products = getMealPrepProducts(productIds);
 
@@ -36,7 +38,7 @@ export default function ProductPicks({
             <p>See the main difference before reading the full product notes.</p>
           </div>
           <div className="product-quick-grid">
-            {products.slice(0, 3).map(product => (
+            {products.slice(0, 3).map((product, index) => (
               <article key={product.id} className="product-quick-card">
                 <span className="container-search-chip">Use case: {title}</span>
                 <h4>{product.name}</h4>
@@ -59,11 +61,13 @@ export default function ProductPicks({
                   target="_blank"
                   rel="noopener noreferrer nofollow sponsored"
                   className="btn-primary"
-                  data-event="mealprep_product_click"
-                  data-source-page={`${sourcePage}-quick-comparison`}
-                  data-offer={product.name}
-                  data-affiliate-category={product.category}
-                  data-product-name={product.name}
+                  {...affiliateLinkData({
+                    product,
+                    sourcePage: `${sourcePage}-quick-comparison`,
+                    placement: 'quick_picks',
+                    listPosition: index + 1,
+                    recommendationSource,
+                  })}
                 >
                   See Amazon price &rarr;
                 </a>
@@ -74,7 +78,7 @@ export default function ProductPicks({
       )}
 
       <div className="product-picks-grid">
-        {products.map(product => (
+        {products.map((product, index) => (
           <article key={product.id} className="product-pick-card">
             {showImages && product.image && (
               <a
@@ -82,11 +86,13 @@ export default function ProductPicks({
                 href={product.href}
                 target="_blank"
                 rel="noopener noreferrer nofollow sponsored"
-                data-event="mealprep_product_click"
-                data-source-page={`${sourcePage}-image`}
-                data-offer={product.name}
-                data-affiliate-category={product.category}
-                data-product-name={product.name}
+                {...affiliateLinkData({
+                  product,
+                  sourcePage: `${sourcePage}-image`,
+                  placement: 'product_image',
+                  listPosition: index + 1,
+                  recommendationSource,
+                })}
               >
                 <img
                   src={product.image}
@@ -119,11 +125,13 @@ export default function ProductPicks({
               target="_blank"
               rel="noopener noreferrer nofollow sponsored"
               className="btn-primary product-pick-cta"
-              data-event="mealprep_product_click"
-              data-source-page={sourcePage}
-              data-offer={product.name}
-              data-affiliate-category={product.category}
-              data-product-name={product.name}
+              {...affiliateLinkData({
+                product,
+                sourcePage,
+                placement: 'detailed_card',
+                listPosition: index + 1,
+                recommendationSource,
+              })}
             >
               See Amazon price &rarr;
             </a>

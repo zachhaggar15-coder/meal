@@ -9,6 +9,7 @@ import {
   buildPlanCompositionClusters,
 } from './lib/planCompositionClusters.js';
 import { buildPublicPopularityLinks } from './lib/publicPopularity.js';
+import { extractDomIds } from './lib/accessibilityMarkup.js';
 
 test('metadata titles stay inside the review range', () => {
   const values = [
@@ -100,4 +101,16 @@ test('generated public weekly links contain no fallback descriptions or raw metr
     assert.ok(link.description && !forbidden.test(link.description));
     assert.deepEqual(Object.keys(link).sort(), ['category', 'description', 'label', 'to']);
   }
+});
+
+test('accessibility ID parsing ignores analytics product IDs', () => {
+  const html = [
+    '<main id="main-content">',
+    '<a data-product-id="same-product" href="#">First</a>',
+    '<a data-product-id="same-product" href="#">Second</a>',
+    '<section id="recommendations"></section>',
+    '</main>',
+  ].join('');
+
+  assert.deepEqual(extractDomIds(html), ['main-content', 'recommendations']);
 });

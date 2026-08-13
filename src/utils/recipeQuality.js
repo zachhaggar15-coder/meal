@@ -23,7 +23,7 @@ const INGREDIENT_ALIASES = [
   ['potato', ['potato']],
   ['chicken', ['chicken']],
   ['turkey', ['turkey']],
-  ['beef', ['beef', 'mince']],
+  ['beef', ['beef', 'steak', 'sirloin', 'mince']],
   ['lamb', ['lamb']],
   ['pork', ['pork']],
   ['salmon', ['salmon']],
@@ -194,18 +194,33 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (name.includes('nicoise') || name.includes('niçoise')) {
-    const potatoes = findCookingName(cookingIngredients, /potato/i) || 'potatoes';
-    const eggs = findCookingName(cookingIngredients, /^eggs?$/i) || 'egg';
-    const beans = findCookingName(cookingIngredients, /green beans/i) || 'green beans';
-    const tuna = findCookingName(cookingIngredients, /tuna/i) || 'tuna';
+    const potatoes = findCookingName(cookingIngredients, /potato/i);
+    const eggs = findCookingName(cookingIngredients, /^eggs?$/i);
+    const beans = findCookingName(cookingIngredients, /green beans/i);
+    const tuna = findCookingName(cookingIngredients, /tuna/i);
     const tomatoes = findCookingName(cookingIngredients, /tomato/i);
     const olives = findCookingName(cookingIngredients, /olive/i);
-    return [
-      `Boil the ${potatoes} in lightly salted water until tender, then drain and cool slightly.`,
-      `Boil the ${eggs} for 8-9 minutes, adding the ${beans} for the final 4 minutes. Cool under cold water, then peel and halve the egg.`,
-      `Drain the ${stripTinnedPrefix(tuna)}${tomatoes ? ` and halve the ${tomatoes}` : ''}${olives ? `; drain the ${olives} if needed` : ''}.`,
-      'Arrange everything in a bowl, season with black pepper and serve.',
-    ];
+    const steps = [];
+
+    if (potatoes) {
+      steps.push(`Boil the ${potatoes} in lightly salted water until tender, then drain and cool slightly.`);
+    }
+    if (eggs && beans) {
+      steps.push(`Boil the ${eggs} for 8-9 minutes, adding the ${beans} for the final 4 minutes. Cool under cold water, then peel and halve the egg.`);
+    } else if (eggs) {
+      steps.push(`Boil the ${eggs} for 8-9 minutes. Cool under cold water, then peel and halve the egg.`);
+    } else if (beans) {
+      steps.push(`Boil or steam the ${beans} for 4 minutes until just tender, then cool under cold water.`);
+    }
+    if (tuna || tomatoes || olives) {
+      steps.push([
+        tuna ? `Drain the ${stripTinnedPrefix(tuna)}` : '',
+        tomatoes ? `halve the ${tomatoes}` : '',
+        olives ? `drain the ${olives} if needed` : '',
+      ].filter(Boolean).join('; ') + '.');
+    }
+    steps.push('Arrange everything in a bowl, season with black pepper and serve.');
+    return steps;
   }
 
   if (name.includes('egg fried') || name.includes('fried rice')) {
@@ -256,7 +271,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
     ];
   }
 
-  if (name.includes('egg') || protein === 'eggs' || name.includes('omelette')) {
+  if (/\beggs?\b/.test(name) || protein === 'eggs' || name.includes('omelette')) {
     const carrier = findCookingNames(cookingIngredients, /(bread|toast|bagel|pitta)/i);
     const accompaniments = withoutNames(remainingNames, [
       ...findCookingNames(cookingIngredients, /^eggs?$/i),
@@ -390,7 +405,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
 
   if (isNoCook) {
     const drainables = findCookingNames(cookingIngredients, /^(tinned|canned)\b|beans|chickpeas|lentils/i);
-    const fresh = withoutNames(remainingNames, drainables);
+    const fresh = withoutNames(remainingNames, [...drainables, ...sauces]);
     return [
       drainables.length
         ? drainTinnedStep(drainables)
@@ -706,7 +721,11 @@ function normalisePotatoState(value) {
 
 function hasIngredientPhrase(value, phrase) {
   const normalised = String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-  return (` ${normalised} `).includes(` ${phrase} `);
+  const target = String(phrase || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  if (!target) return false;
+  const escaped = target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pluralSuffix = /[a-z]$/.test(target) && !target.endsWith('s') ? '(?:s|es)?' : '';
+  return new RegExp(`(?:^| )${escaped}${pluralSuffix}(?=$| )`).test(normalised);
 }
 
 function normaliseIngredients(value, portionSize, mealName) {
@@ -728,7 +747,7 @@ function normaliseIngredients(value, portionSize, mealName) {
 function findIngredient(searchable, candidates) {
   for (const candidate of candidates) {
     const aliases = INGREDIENT_ALIASES.find(([label]) => label === candidate)?.[1] || [candidate];
-    if (aliases.some(alias => searchable.includes(alias))) return candidate;
+    if (aliases.some(alias => hasIngredientPhrase(searchable, alias))) return candidate;
   }
   return '';
 }

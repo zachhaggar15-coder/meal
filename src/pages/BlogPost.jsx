@@ -8,6 +8,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
+import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
@@ -36,6 +37,7 @@ export default function BlogPost() {
   const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
   const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
   const nextStep = buildBlogNextStep({ slug, data, exactPlanLinks });
+  const useBuyingGuideFlow = data.commercialLayout === 'container-buying-guide';
 
   const jsonLd = [
     {
@@ -135,11 +137,13 @@ export default function BlogPost() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
-          <p className="content-byline">
-            Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
-            {data.reviewed || data.modified || '17 June 2026'}.
-          </p>
-          {quickAnswer && (
+          {!useBuyingGuideFlow && (
+            <p className="content-byline">
+              Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
+              {data.reviewed || data.modified || '17 June 2026'}.
+            </p>
+          )}
+          {quickAnswer && !useBuyingGuideFlow && (
             <aside className="quick-answer-box" aria-label="Quick answer">
               <strong>{toTitleCase('Quick answer')}</strong>
               <p>{quickAnswer.answer}</p>
@@ -152,23 +156,27 @@ export default function BlogPost() {
               )}
             </aside>
           )}
-          <QuizNudge
-            sourcePage={`blog-${slug}`}
-            pageType="blog"
-            location="after_quick_answer"
-          />
-          <ContextualNextStep
-            {...nextStep}
-            eyebrow="Make this practical"
-            pageType={`blog-${slug}`}
-            className="blog-next-step"
-          />
-          <AdSlot
-            placement="in-article-intro"
-            slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
-          />
+          {!useBuyingGuideFlow && (
+            <>
+              <QuizNudge
+                sourcePage={`blog-${slug}`}
+                pageType="blog"
+                location="after_quick_answer"
+              />
+              <ContextualNextStep
+                {...nextStep}
+                eyebrow="Make this practical"
+                pageType={`blog-${slug}`}
+                className="blog-next-step"
+              />
+              <AdSlot
+                placement="in-article-intro"
+                slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
+              />
+            </>
+          )}
 
-          {hasCustomBlogImage(slug) && (
+          {hasCustomBlogImage(slug) && !useBuyingGuideFlow && (
             <figure className="blog-hero-image blog-hero-image--after-answer">
               <img src={ogImageUrl} alt={`${data.h1} guide`} />
             </figure>
@@ -176,9 +184,28 @@ export default function BlogPost() {
           {data.affiliateDisclosure && (
             <p className="affiliate-disclosure">{data.affiliateDisclosure}</p>
           )}
-          <ContextualLinks blocks={data.contextualLinks} />
+          {useBuyingGuideFlow && data.productRecommendations && (
+            <>
+              <ContainerQuickComparison
+                eyebrow="Quick picks"
+                title={data.productRecommendations.title}
+                intro={data.productRecommendations.intro}
+                picks={data.productRecommendations.quickPicks}
+                sourcePage={`blog-${slug}-quick-picks`}
+                showDisclosure={false}
+                showSnapshotStrip={false}
+                compact
+                recommendationSource="container_buying_guide"
+              />
+              <p className="content-byline">
+                Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
+                {data.reviewed || data.modified || '17 June 2026'}.
+              </p>
+            </>
+          )}
+          {!useBuyingGuideFlow && <ContextualLinks blocks={data.contextualLinks} />}
 
-          {data.productRecommendations && (
+          {data.productRecommendations && !useBuyingGuideFlow && (
             <AffiliateProductGrid
               title={data.productRecommendations.title}
               intro={data.productRecommendations.intro}
@@ -221,6 +248,18 @@ export default function BlogPost() {
                   <ResponsiveBlogTable table={section.table} />
                 )}
               </section>
+              {useBuyingGuideFlow && data.detailedProductsAfterSection === i && (
+                <AffiliateProductGrid
+                  title="Details on the three picks"
+                  intro="Compare the trade-offs once you know which use case fits you. Amazon shows the current price and listing details."
+                  productIds={data.productRecommendations.productIds}
+                  sourcePage={`blog-${slug}-detailed-picks`}
+                  showDisclosure={false}
+                  showQuickComparison={false}
+                  recommendationSource="container_buying_guide"
+                  compact
+                />
+              )}
               {i === Math.floor((data.sections.length - 1) / 2) && (
                 <AdSlot
                   placement="in-article-midpoint"
@@ -229,6 +268,27 @@ export default function BlogPost() {
               )}
             </Fragment>
           ))}
+
+          {useBuyingGuideFlow && (
+            <>
+              <ContextualLinks blocks={data.contextualLinks} />
+              <QuizNudge
+                sourcePage={`blog-${slug}`}
+                pageType="blog"
+                location="after_buying_guide"
+              />
+              <ContextualNextStep
+                {...nextStep}
+                eyebrow="Use your containers"
+                pageType={`blog-${slug}`}
+                className="blog-next-step"
+              />
+              <AdSlot
+                placement="in-article-midpoint"
+                slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
+              />
+            </>
+          )}
 
           {/* Sticker promo — before final CTA */}
           {data.faq?.length && (
@@ -247,10 +307,12 @@ export default function BlogPost() {
 
           <PopularGuides slug={slug} post={data} />
 
-          <StickerPromo
-            offer={data.offer === 'premium' ? MEAL_PREP_STICKERS : data.offer === 'mid-range' || data.affiliateDisclosure ? MID_RANGE_CONTAINERS : BUDGET_CONTAINERS}
-            sourcePage={`blog-${slug}-body`}
-          />
+          {!useBuyingGuideFlow && (
+            <StickerPromo
+              offer={data.offer === 'premium' ? MEAL_PREP_STICKERS : data.offer === 'mid-range' || data.affiliateDisclosure ? MID_RANGE_CONTAINERS : BUDGET_CONTAINERS}
+              sourcePage={`blog-${slug}-body`}
+            />
+          )}
 
           <div className="cta-box cta-box--large">
             <h2>Find Your UK Supermarket Meal Plan</h2>

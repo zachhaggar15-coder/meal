@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { crawlDist, distRoot } from './lib/crawlDist.js';
 import { writeAuditJson } from './lib/auditOutput.js';
+import { extractDomIds } from './lib/accessibilityMarkup.js';
 
 const { pages } = crawlDist();
 const errors = [];
@@ -34,7 +35,7 @@ for (const page of pages) {
     pageErrors.push('missing skip link to #main-content');
   }
 
-  const ids = [...visibleHtml.matchAll(/\bid=["']([^"']+)["']/gi)].map(match => match[1]);
+  const ids = extractDomIds(visibleHtml);
   const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
   if (duplicateIds.length) pageErrors.push(`duplicate IDs: ${duplicateIds.slice(0, 8).join(', ')}`);
 

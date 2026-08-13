@@ -1,7 +1,10 @@
 import { MEALS } from '../src/data/mealLibrary.js';
+import { mealPlansData } from '../src/data/mealPlans.js';
+import { canonicaliseLegacyMeal } from '../src/utils/legacyPlanBuilder.js';
 import { buildPracticalRecipeSteps, validateRecipeQuality } from '../src/utils/recipeQuality.js';
 
 const issues = [];
+let editorialMealOccurrences = 0;
 
 for (const meal of MEALS) {
   const recipe = buildPracticalRecipeSteps(meal);
@@ -12,6 +15,23 @@ for (const meal of MEALS) {
       name: meal.name,
       issues: mealIssues,
     });
+  }
+}
+
+for (const [slug, plan] of Object.entries(mealPlansData)) {
+  for (const day of plan.plan || []) {
+    for (const sourceMeal of day.meals || []) {
+      editorialMealOccurrences += 1;
+      const meal = canonicaliseLegacyMeal(sourceMeal);
+      const mealIssues = validateRecipeQuality(meal);
+      if (mealIssues.length) {
+        issues.push({
+          id: `${slug}:${day.day}:${meal.name}`,
+          name: meal.name,
+          issues: mealIssues,
+        });
+      }
+    }
   }
 }
 
@@ -31,5 +51,5 @@ if (blocking.length) {
 }
 
 console.log(
-  `Recipe quality check passed for ${MEALS.length} shared meals with zero unresolved quantity defects.`,
+  `Recipe quality check passed for ${MEALS.length} shared meals and ${editorialMealOccurrences} editorial meal occurrences with zero unresolved method/ingredient defects.`,
 );

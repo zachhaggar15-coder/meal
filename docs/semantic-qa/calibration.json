@@ -1,0 +1,720 @@
+{
+  "version": 1,
+  "sourceRunId": "2026-W33-2026-08-13",
+  "createdAt": "2026-08-13T17:58:43.612Z",
+  "updatedAt": "2026-08-13T18:01:17.721Z",
+  "instructions": {
+    "outcomes": [
+      "True issue",
+      "Useful warning",
+      "False positive",
+      "Uncertain"
+    ],
+    "severities": [
+      "Critical",
+      "High",
+      "Medium",
+      "Low",
+      "None"
+    ],
+    "note": "Edit only humanLabel fields. Generated QA history remains unchanged. Re-run npm run qa:semantic:calibration to preserve labels while refreshing the sample."
+  },
+  "coverage": {
+    "ingredientMethod": 12,
+    "mealNameAndGenericWording": 21,
+    "shoppingList": 9,
+    "planVariety": 5,
+    "methodQuality": 0,
+    "culinaryCoherence": 0,
+    "gaps": [
+      "No method-quality finding existed in the first run or current library-wide detector output.",
+      "No culinary-coherence finding existed in the first run or current library-wide detector output."
+    ]
+  },
+  "items": [
+    {
+      "id": "qa_7d6edd57f7efaa31",
+      "route": "/meal-plan/aldi-high-protein-meal-plan",
+      "affectedLocation": "Thursday — Lunch: Tuna Nicoise Salad",
+      "category": "ingredient-method consistency",
+      "patternKey": "method-core-ingredient-missing",
+      "detectorSeverity": "High",
+      "evidence": "The method mentions potato, but no matching ingredient is listed.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "ingredient-method consistency",
+      "humanLabel": {
+        "outcome": "True issue",
+        "severity": "High",
+        "reviewer": "user-confirmed",
+        "reviewedAt": "2026-08-13",
+        "notes": "Confirmed in the approved phase brief; fixed through the shared Niçoise method template."
+      }
+    },
+    {
+      "id": "qa_9ec20e2eeff3f8de",
+      "route": "/meal-plan/2000-calorie-meal-plan",
+      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_5b0dd4fb66aef124",
+      "route": "/meal-plan/2000-calorie-meal-plan",
+      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "beef is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_ed62d8f27f8fd46d",
+      "route": "/meal-plan/tesco-1800-calorie-meal-plan",
+      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_281f29a76204f943",
+      "route": "/meal-plan/tesco-1800-calorie-meal-plan",
+      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "beef is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_f1fd5f910fd15a2d",
+      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+      "affectedLocation": "Monday — Lunch: Chickpea & Spinach Salad",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "chickpea is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_b9ef5c4b48dc829f",
+      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+      "affectedLocation": "Thursday — Lunch: Black Bean Tacos",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "bean is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_397cc9da5fa5b880",
+      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+      "affectedLocation": "Saturday — Lunch: Lentil & Roasted Veg Bowl",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_0e371ee5af0b450d",
+      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+      "affectedLocation": "Sunday — Lunch: Caprese & Chickpea Salad",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "chickpea is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_e362c705b980083b",
+      "route": "/meal-plan/aldi-high-protein-meal-plan",
+      "affectedLocation": "Monday — Dinner: Chicken Breast with Lentils & Greens",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_767ce511348d9cd2",
+      "route": "/meal-plan/aldi-high-protein-meal-plan",
+      "affectedLocation": "Friday — Lunch: Chicken & Chickpea Power Salad",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "chickpea is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_9d5be1d584c7ceb0",
+      "route": "/meal-plan/aldi-high-protein-meal-plan",
+      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils",
+      "category": "ingredient-method consistency",
+      "patternKey": "important-ingredient-unused",
+      "detectorSeverity": "Medium",
+      "evidence": "cod is central to the meal name but is not clearly used in the method.",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "generic wording",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_8c87f472c995a0a8",
+      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+      "affectedLocation": "Monday — Dinner: Tofu & Vegetable Stir-Fry",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_96c8ec76dcdc0612",
+      "route": "/meal-plan/aldi-high-protein-meal-plan",
+      "affectedLocation": "Monday — Lunch: Tuna & Egg White Salad",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a salad, but the method does not assemble one.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_85ec4ecd2e0cc884",
+      "route": "/meal-plan/aldi-high-protein-meal-plan",
+      "affectedLocation": "Thursday — Dinner: Lean Beef Stir-Fry",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_b7f591407baf4e6d",
+      "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
+      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a salad, but the method does not assemble one.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_f1eb5a6c3a7a43ba",
+      "route": "/plans/lidl-vegan-low-cal-1500",
+      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a salad, but the method does not assemble one.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_6a92151255c2c4dd",
+      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
+      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_e998ef9a55cd65de",
+      "route": "/plans/tesco-maintenance-vegan-2000",
+      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a salad, but the method does not assemble one.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_e8ef10232477e118",
+      "route": "/plans/tesco-maintenance-vegan-2000",
+      "affectedLocation": "Wednesday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_56ef8b34f5a91d86",
+      "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
+      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_65da7894323d06cd",
+      "route": "/plans/aldi-veg-low-cal-1500",
+      "affectedLocation": "Friday — Lunch: Baked Falafel and Salad Pitta",
+      "category": "meal-name coherence",
+      "patternKey": "meal-style-method-mismatch",
+      "detectorSeverity": "Medium",
+      "evidence": "The meal is called a salad, but the method does not assemble one.",
+      "scope": "template/systemic",
+      "origin": "first-run",
+      "reviewTheme": "meal-name coherence",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_047e2c0fcdc72d96",
+      "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Cucumber 4 slices (about 3 3/4 used) (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_474bfef7e66b58e1",
+      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_8ec4851d9c86dfb2",
+      "route": "/plans/tesco-maintenance-vegan-2000",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Cucumber 3 slices (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_632f5a17ecbc97c6",
+      "route": "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil 2.5 tbsp (condiments).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_f482b2efb576e84b",
+      "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Olive oil 2 tsp (condiments); Olive oil at least 1.25 tbsp (condiments).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_229825f937f7b591",
+      "route": "/plans/sainsburys-endurance-2500-recovery",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Cucumber 10 slices (vegetables); Cucumber 2 (about 1 1/2 used) (vegetables).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_f2ae02352eae26e6",
+      "route": "/plans/aldi-veg-low-cal-1500",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Olive oil at least 1 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_9ecebf7ef54277c0",
+      "route": "/plans/iceland-busy-professional-1800-twenty-minute",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Olive oil at least 2.25 tsp (condiments); Olive oil at least 1.75 tbsp (condiments).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "qa_49e70c9b143fcb97",
+      "route": "/plans/sainsburys-gym-beginner-2000",
+      "affectedLocation": "Weekly shopping list",
+      "category": "shopping-list usability",
+      "patternKey": "shopping-duplicate-alias",
+      "detectorSeverity": "Medium",
+      "evidence": "Potential duplicate purchase entries: Cucumber 1 (about 1/2 used) (vegetables); Cucumber slices 7 (vegetables).",
+      "scope": "uncertain",
+      "origin": "first-run",
+      "reviewTheme": "shopping list",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cal_f1072036fedb0a17",
+      "route": "/plans/tesco-busy-professional-veg-1800",
+      "affectedLocation": "Monday, Wednesday, Friday, Saturday, Sunday",
+      "category": "plan-level variety",
+      "patternKey": "unjustified-dinner-repetition",
+      "detectorSeverity": "Medium",
+      "evidence": "5 dinners repeat Teriyaki Tofu with Brown Rice and Broccoli; the plan appears batch-oriented but the repetition is still high.",
+      "scope": "template/systemic",
+      "origin": "library-supplement",
+      "reviewTheme": "plan variety",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cal_6d65d368ec4dd2b1",
+      "route": "/plans/asda-busy-professional-veg-1800",
+      "affectedLocation": "Monday, Wednesday, Friday, Saturday, Sunday",
+      "category": "plan-level variety",
+      "patternKey": "unjustified-dinner-repetition",
+      "detectorSeverity": "Medium",
+      "evidence": "5 dinners repeat Mushroom and Lentil Shepherd's Pie; the plan appears batch-oriented but the repetition is still high.",
+      "scope": "template/systemic",
+      "origin": "library-supplement",
+      "reviewTheme": "plan variety",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cal_003cae86e321bc37",
+      "route": "/plans/tesco-veg-low-cal-1800",
+      "affectedLocation": "Monday, Wednesday, Friday, Saturday, Sunday",
+      "category": "plan-level variety",
+      "patternKey": "unjustified-dinner-repetition",
+      "detectorSeverity": "Medium",
+      "evidence": "5 dinners repeat Quorn Mince Bolognese with Wholemeal Pasta; the plan appears batch-oriented but the repetition is still high.",
+      "scope": "template/systemic",
+      "origin": "library-supplement",
+      "reviewTheme": "plan variety",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cal_ea7391b0f4359b42",
+      "route": "/plans/aldi-veg-low-cal-batch-1800",
+      "affectedLocation": "Monday, Wednesday, Friday, Saturday, Sunday",
+      "category": "plan-level variety",
+      "patternKey": "unjustified-dinner-repetition",
+      "detectorSeverity": "Medium",
+      "evidence": "5 dinners repeat Mushroom and Lentil Shepherd's Pie; the plan appears batch-oriented but the repetition is still high.",
+      "scope": "template/systemic",
+      "origin": "library-supplement",
+      "reviewTheme": "plan variety",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cal_8c4706915728018b",
+      "route": "/plans/aldi-budget-bodybuilding-veg-2000",
+      "affectedLocation": "Monday, Wednesday, Friday, Saturday, Sunday",
+      "category": "plan-level variety",
+      "patternKey": "unjustified-dinner-repetition",
+      "detectorSeverity": "Medium",
+      "evidence": "5 dinners repeat Teriyaki Tofu with Brown Rice and Broccoli; the plan appears batch-oriented but the repetition is still high.",
+      "scope": "template/systemic",
+      "origin": "library-supplement",
+      "reviewTheme": "plan variety",
+      "humanLabel": {
+        "outcome": "",
+        "severity": "",
+        "reviewer": "",
+        "reviewedAt": "",
+        "notes": ""
+      }
+    }
+  ]
+}

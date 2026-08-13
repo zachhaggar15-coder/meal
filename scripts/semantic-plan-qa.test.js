@@ -6,8 +6,10 @@ import {
   assessPlanLocally,
   buildDashboardData,
   normaliseSeverity,
+  parseModelReviewOutput,
   selectSemanticQaSample,
 } from './lib/semanticPlanQa.js';
+import { buildCalibrationMetrics } from './lib/semanticQaCalibration.js';
 
 const NOW = new Date('2026-08-13T12:00:00.000Z');
 
@@ -76,6 +78,42 @@ test('severity normalization uses the approved Critical/High/Medium/Low scale', 
   assert.equal(normaliseSeverity('HIGH'), 'High');
   assert.equal(normaliseSeverity('Medium'), 'Medium');
   assert.equal(normaliseSeverity('unexpected'), 'Low');
+});
+
+test('model enrichment accepts fenced strict JSON and rejects malformed or extra fields', () => {
+  const valid = {
+    reviews: [{
+      planId: 'test',
+      findings: [{
+        severity: 'Medium', category: 'method quality', explanation: 'Review this step.',
+        affectedLocation: 'Monday dinner', confidence: 'medium', scope: 'uncertain', patternKey: 'method-review',
+      }],
+    }],
+  };
+  assert.deepEqual(parseModelReviewOutput(`\`\`\`json\n${JSON.stringify(valid)}\n\`\`\``), valid);
+  assert.throws(() => parseModelReviewOutput('{"reviews": ['), /Malformed JSON/);
+  assert.throws(
+    () => parseModelReviewOutput(JSON.stringify({ ...valid, commentary: 'guess' })),
+    /only a reviews array/,
+  );
+});
+
+test('calibration metrics stay unavailable until enough human labels exist', () => {
+  const calibration = {
+    items: [
+      calibrationItem('True issue'),
+      calibrationItem('Useful warning'),
+      calibrationItem('False positive'),
+      calibrationItem('Uncertain'),
+      calibrationItem(''),
+    ],
+  };
+  const metrics = buildCalibrationMetrics(calibration);
+
+  assert.equal(metrics.reviewed, 4);
+  assert.equal(metrics.unreviewed, 1);
+  assert.equal(metrics.rates.usefulSignalPrecision, null);
+  assert.equal(metrics.sufficientForOverallRates, false);
 });
 
 test('shopping semantic checks do not misclassify green beans through an unsafe bean substring', () => {
@@ -208,4 +246,12 @@ function calorieBand(value) {
   if (value <= 2000) return 'medium';
   if (value <= 2500) return 'high';
   return 'very-high';
+}
+
+function calibrationItem(outcome) {
+  return {
+    category: 'method quality',
+    detectorSeverity: 'Medium',
+    humanLabel: { outcome },
+  };
 }

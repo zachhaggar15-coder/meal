@@ -9,7 +9,11 @@ import {
 import { computeMealNutritionRaw } from '../src/utils/nutrition.js';
 import { scaleIngredientsForPortion } from '../src/utils/planBuilder.js';
 import { canonicaliseLegacyMeal } from '../src/utils/legacyPlanBuilder.js';
-import { buildPracticalRecipeSteps, resolvePotatoPreparation } from '../src/utils/recipeQuality.js';
+import {
+  buildPracticalRecipeSteps,
+  resolvePotatoPreparation,
+  validateRecipeQuality,
+} from '../src/utils/recipeQuality.js';
 
 const FISHCAKE_CANONICAL = [
   'Tinned tuna 128g',
@@ -163,4 +167,58 @@ test('raw, boiled, roast and mashed potato intentions produce distinct methods',
   assert.match(boiled, /Boil the potato/i);
   assert.match(roast, /roast at 200°C/i);
   assert.match(mashed, /boil.+then drain and mash/i);
+});
+
+test('Niçoise methods only prepare ingredients that are actually listed', () => {
+  const potatoFree = canonicaliseLegacyMeal({
+    name: 'Tuna Nicoise Salad',
+    prep: '10 min',
+    portion_size: '145g tinned tuna, 1 egg, 80g green beans, 100g cherry tomatoes, 10g olives',
+  });
+  const generated = MEALS.find(meal => meal.id === 'tuna-niçoise');
+  const generatedMethod = buildPracticalRecipeSteps(generated).join(' ');
+
+  assert.doesNotMatch(potatoFree.recipe.join(' '), /\bpotato(?:es)?\b/i);
+  assert.match(potatoFree.recipe.join(' '), /Boil the egg.+green beans/i);
+  assert.match(generatedMethod, /Boil the new potatoes/i);
+});
+
+test('meal-name matching is boundary-aware and recognises common beef aliases', () => {
+  const veggieMethod = buildPracticalRecipeSteps({
+    name: 'Hummus & Veggie Sticks',
+    prep: '2 min',
+    ingredients: ['Hummus 40g', 'Carrot sticks 100g', 'Cucumber 100g'],
+  }).join(' ');
+  const steak = {
+    name: 'Grilled Lean Beef Steak with Roasted Veg',
+    ingredients: ['Lean sirloin steak 150g', 'Roasted veg 200g'],
+  };
+  const steakRecipe = buildPracticalRecipeSteps(steak);
+
+  assert.doesNotMatch(veggieMethod, /\beggs?\b|scramble|omelette/i);
+  assert.match(veggieMethod, /carrot sticks.+cucumber/i);
+  assert.match(steakRecipe.join(' '), /lean sirloin steak/i);
+  assert.deepEqual(
+    validateRecipeQuality({ ...steak, recipe: steakRecipe })
+      .filter(issue => issue.startsWith('instruction mentions')),
+    [],
+  );
+});
+
+test('complete shared and editorial meal libraries never prepare an absent material ingredient', () => {
+  const assertConsistent = (meal, label) => {
+    const recipe = meal.recipe || buildPracticalRecipeSteps(meal);
+    const issues = validateRecipeQuality({ ...meal, recipe })
+      .filter(issue => issue.startsWith('instruction mentions'));
+    assert.deepEqual(issues, [], `${label}: ${issues.join(', ')}`);
+  };
+
+  for (const meal of MEALS) assertConsistent(meal, `shared ${meal.name}`);
+  for (const [slug, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const meal of day.meals || []) {
+        assertConsistent(canonicaliseLegacyMeal(meal), `${slug} ${day.day} ${meal.name}`);
+      }
+    }
+  }
 });

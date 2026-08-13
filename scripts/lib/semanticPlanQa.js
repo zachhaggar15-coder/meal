@@ -8,6 +8,10 @@ import { buildPlan, buildShoppingList } from '../../src/utils/planBuilder.js';
 import { buildCanonicalLegacyPlan } from '../../src/utils/legacyPlanBuilder.js';
 import { parseIngredientLine } from '../../src/utils/ingredientParser.js';
 import { resolvePotatoPreparation } from '../../src/utils/recipeQuality.js';
+import {
+  buildCalibrationMetrics,
+  readSemanticQaCalibration,
+} from './semanticQaCalibration.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..', '..');
@@ -182,19 +186,26 @@ export async function runWeeklySemanticQa({
   let modelStatus = useModel ? 'available' : 'not_configured';
   let modelError = '';
   let modelCalls = 0;
+  let modelDiagnostics = { attempted: 0, successful: 0, malformed: 0, unavailable: 0 };
 
   if (useModel) {
     try {
       const modelResult = await assessPlansWithModel(hydrated, { model, logger });
       modelReviews = modelResult.reviews;
       modelCalls = modelResult.calls;
+      modelDiagnostics = modelResult.diagnostics;
       if (modelResult.failures) {
-        modelStatus = modelReviews.length ? 'partial' : 'unavailable';
+        modelStatus = modelReviews.length
+          ? 'partial'
+          : modelDiagnostics.malformed
+            ? 'malformed'
+            : 'unavailable';
         modelError = cleanText(modelResult.errors.join(' | '), 240);
       }
     } catch (error) {
       modelStatus = 'unavailable';
       modelError = cleanText(error.message || error, 240);
+      modelDiagnostics = { ...modelDiagnostics, attempted: Math.max(1, modelDiagnostics.attempted), unavailable: Math.max(1, modelDiagnostics.unavailable) };
       logger.warn?.(`Semantic QA model review unavailable: ${modelError}`);
     }
   }
@@ -210,9 +221,11 @@ export async function runWeeklySemanticQa({
     modelStatus,
     modelError,
     modelCalls,
+    modelDiagnostics,
   });
   const nextHistory = updateHistory(history, run, reviews, inventory.length);
-  const dashboard = buildDashboardData({ history: nextHistory, inventory, latestRun: run });
+  const calibration = readSemanticQaCalibration();
+  const dashboard = buildDashboardData({ history: nextHistory, inventory, latestRun: run, calibration });
 
   if (persist) {
     writeSemanticQaHistory(nextHistory);
@@ -442,21 +455,26 @@ async function assessPlansWithModel(plans, { model, logger, batchSize = 3 } = {}
   let calls = 0;
   let failures = 0;
   const errors = [];
+  const diagnostics = { attempted: 0, successful: 0, malformed: 0, unavailable: 0 };
   for (let index = 0; index < plans.length; index += batchSize) {
     const batch = plans.slice(index, index + batchSize);
     calls += 1;
+    diagnostics.attempted += 1;
     try {
       const response = await requestModelReview(batch, { model });
       reviews.push(...response.reviews);
+      diagnostics.successful += 1;
       logger.info?.(`Semantic QA model batch ${calls}: ${batch.length} plan(s) reviewed.`);
     } catch (error) {
       failures += 1;
+      if (error?.code === 'MALFORMED_MODEL_OUTPUT') diagnostics.malformed += 1;
+      else diagnostics.unavailable += 1;
       const message = cleanText(error.message || error, 180);
       errors.push(`batch ${calls}: ${message}`);
       logger.warn?.(`Semantic QA model batch ${calls} unavailable: ${message}`);
     }
   }
-  return { reviews, calls, failures, errors };
+  return { reviews, calls, failures, errors, diagnostics };
 }
 
 async function requestModelReview(plans, { model }) {
@@ -485,7 +503,7 @@ async function requestModelReview(plans, { model }) {
   };
 
   let lastError;
-  for (let attempt = 0; attempt < 3; attempt += 1) {
+  for (let attempt = 0; attempt < 2; attempt += 1) {
     try {
       const response = await fetch('https://api.openai.com/v1/responses', {
         method: 'POST',
@@ -499,7 +517,7 @@ async function requestModelReview(plans, { model }) {
       if (!response.ok) {
         const errorText = cleanText(await response.text(), 400);
         const retryable = response.status === 429 || response.status >= 500;
-        if (retryable && attempt < 2) {
+        if (retryable && attempt < 1) {
           await delay(1000 * (2 ** attempt));
           continue;
         }
@@ -510,10 +528,10 @@ async function requestModelReview(plans, { model }) {
         throw new Error(`OpenAI response incomplete: ${payload.incomplete_details?.reason || 'unknown reason'}`);
       }
       const outputText = extractOutputText(payload);
-      return JSON.parse(outputText);
+      return parseModelReviewOutput(outputText);
     } catch (error) {
       lastError = error;
-      if (attempt < 2 && (error instanceof SyntaxError || /fetch|timeout|aborted|incomplete|429|5\d\d/i.test(String(error.message || error)))) {
+      if (attempt < 1 && (error?.code === 'MALFORMED_MODEL_OUTPUT' || /fetch|timeout|aborted|incomplete|429|5\d\d/i.test(String(error.message || error)))) {
         await delay(1000 * (2 ** attempt));
         continue;
       }
@@ -521,6 +539,56 @@ async function requestModelReview(plans, { model }) {
     }
   }
   throw lastError || new Error('Semantic QA model review failed.');
+}
+
+export function parseModelReviewOutput(value) {
+  const text = String(value || '').trim();
+  const fenced = text.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  const candidate = fenced ? fenced[1].trim() : text;
+  let parsed;
+  try {
+    parsed = JSON.parse(candidate);
+  } catch (error) {
+    throw malformedModelOutput(`Malformed JSON: ${error.message || error}`);
+  }
+  validateModelReviewPayload(parsed);
+  return parsed;
+}
+
+function validateModelReviewPayload(payload) {
+  const severities = new Set(['Critical', 'High', 'Medium', 'Low']);
+  const categories = new Set(['meal-name coherence', 'ingredient-method consistency', 'culinary coherence', 'method quality', 'portion/use coherence', 'plan-level variety', 'shopping-list usability', 'user usefulness']);
+  const confidences = new Set(['high', 'medium', 'low']);
+  const scopes = new Set(['plan-specific', 'template/systemic', 'uncertain']);
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload) || !Array.isArray(payload.reviews)
+    || Object.keys(payload).some(key => key !== 'reviews')) {
+    throw malformedModelOutput('Structured output must be an object containing only a reviews array.');
+  }
+  for (const review of payload.reviews) {
+    if (!review || typeof review !== 'object' || Array.isArray(review)
+      || typeof review.planId !== 'string' || !Array.isArray(review.findings)
+      || Object.keys(review).some(key => !['planId', 'findings'].includes(key))) {
+      throw malformedModelOutput('Each review must contain only planId and findings.');
+    }
+    for (const finding of review.findings) {
+      const keys = ['severity', 'category', 'explanation', 'affectedLocation', 'confidence', 'scope', 'patternKey'];
+      if (!finding || typeof finding !== 'object' || Array.isArray(finding)
+        || Object.keys(finding).some(key => !keys.includes(key))
+        || keys.some(key => typeof finding[key] !== 'string')
+        || !severities.has(finding.severity)
+        || !categories.has(finding.category)
+        || !confidences.has(finding.confidence)
+        || !scopes.has(finding.scope)) {
+        throw malformedModelOutput('A model finding did not match the strict semantic-QA schema.');
+      }
+    }
+  }
+}
+
+function malformedModelOutput(message) {
+  const error = new Error(message);
+  error.code = 'MALFORMED_MODEL_OUTPUT';
+  return error;
 }
 
 const MODEL_INSTRUCTIONS = `You are a cautious UK meal-plan quality reviewer. Review each complete seven-day plan for human usability, not nutrition arithmetic. Flag only issues likely to confuse or disappoint a normal cook: meal-name mismatch, missing or invented ingredients, contradictory preparation, obviously incoherent combinations, bad sequencing, implausible condiment use, accidental repetition, or unusable shopping-list semantics. Do not flag merely unconventional but plausible food. Do not rewrite or propose replacement copy. Return concise evidence-only findings. Use Critical only when the plan cannot reasonably produce the stated meal, has a serious dietary conflict, or misses essential shopping items. High materially damages trust. Medium is noticeable but usable. Low is polish. patternKey must be a short reusable kebab-case cause. scope must be plan-specific, template/systemic, or uncertain.`;
@@ -680,7 +748,7 @@ export function aggregateSystemicIssues(reviews, priorRuns = [], now = new Date(
       || right.affectedSampledPlans - left.affectedSampledPlans);
 }
 
-function buildRunRecord({ reviews, systemicIssues, now, weekSeed, model, modelStatus, modelError, modelCalls }) {
+function buildRunRecord({ reviews, systemicIssues, now, weekSeed, model, modelStatus, modelError, modelCalls, modelDiagnostics }) {
   const severity = { Critical: 0, High: 0, Medium: 0, Low: 0 };
   for (const review of reviews) {
     for (const finding of review.findings) severity[finding.severity] += 1;
@@ -699,6 +767,7 @@ function buildRunRecord({ reviews, systemicIssues, now, weekSeed, model, modelSt
     passed,
     flagged,
     passRate: reviews.length ? round((passed / reviews.length) * 100, 1) : 0,
+    plansWithoutFlagsRate: reviews.length ? round((passed / reviews.length) * 100, 1) : 0,
     severity,
     systemicIssues,
     systemicIssueCount: systemicIssues.length,
@@ -708,12 +777,18 @@ function buildRunRecord({ reviews, systemicIssues, now, weekSeed, model, modelSt
       status: modelStatus,
       model: modelStatus === 'not_configured' ? '' : model,
       calls: modelCalls,
+      attempted: modelDiagnostics?.attempted || 0,
+      successful: modelDiagnostics?.successful || 0,
+      malformed: modelDiagnostics?.malformed || 0,
+      unavailable: modelDiagnostics?.unavailable || 0,
       error: modelError,
       fallback: modelStatus === 'available'
         ? 'Local checks and model review completed.'
         : modelStatus === 'partial'
           ? 'Local checks completed; model enrichment was partial and failed batches were skipped.'
-          : 'Local semantic checks completed; model enrichment did not run.',
+          : modelStatus === 'malformed'
+            ? 'Local checks completed; malformed model output was rejected after one retry.'
+            : 'Local semantic checks completed; model enrichment did not run.',
     },
   };
 }
@@ -753,7 +828,7 @@ function updateHistory(history, run, reviews, totalPlans) {
   return next;
 }
 
-export function buildDashboardData({ history, inventory, latestRun }) {
+export function buildDashboardData({ history, inventory, latestRun, calibration = readSemanticQaCalibration() }) {
   const plans = inventory || buildPlanInventory();
   const perPlan = history?.perPlan || {};
   const everSampled = Object.keys(perPlan).length;
@@ -769,6 +844,7 @@ export function buildDashboardData({ history, inventory, latestRun }) {
       supermarket: review.supermarket,
       calorieTarget: review.calorieTarget,
       category: item.category,
+      patternKey: item.patternKey,
       issue: item.explanation,
       scope: item.scope,
       reviewStatus: item.reviewStatus || history?.reviewStatuses?.[item.findingId] || 'New',
@@ -786,6 +862,7 @@ export function buildDashboardData({ history, inventory, latestRun }) {
       passed: latestRun.passed,
       flagged: latestRun.flagged,
       passRate: latestRun.passRate,
+      plansWithoutFlagsRate: latestRun.plansWithoutFlagsRate ?? latestRun.passRate,
       severity: latestRun.severity,
       systemicIssueCount: latestRun.systemicIssueCount,
       model: latestRun.model,
@@ -801,6 +878,7 @@ export function buildDashboardData({ history, inventory, latestRun }) {
       runAt: run.runAt,
       sampleSize: run.sampleSize,
       passRate: run.passRate,
+      plansWithoutFlagsRate: run.plansWithoutFlagsRate ?? run.passRate,
       criticalHigh: Number(run.severity?.Critical || 0) + Number(run.severity?.High || 0),
       medium: Number(run.severity?.Medium || 0),
       cumulativeCoverage: run.coverageAfterRun?.plansEverSampled || null,
@@ -808,6 +886,21 @@ export function buildDashboardData({ history, inventory, latestRun }) {
     breakdowns: buildBreakdowns(latestReviews),
     recentFindings,
     systemicIssues: latestRun?.systemicIssues || [],
+    calibration: {
+      ...buildCalibrationMetrics(calibration),
+      items: (calibration.items || []).map(item => ({
+        id: item.id,
+        route: item.route,
+        category: item.category,
+        patternKey: item.patternKey,
+        detectorSeverity: item.detectorSeverity,
+        evidence: item.evidence,
+        origin: item.origin,
+        reviewTheme: item.reviewTheme,
+        outcome: item.humanLabel?.outcome || 'Unreviewed',
+        humanSeverity: item.humanLabel?.severity || 'Unreviewed',
+      })),
+    },
   };
 }
 
@@ -820,6 +913,7 @@ function compactRunForHistory(run) {
     passed: run.passed,
     flagged: run.flagged,
     passRate: run.passRate,
+    plansWithoutFlagsRate: run.plansWithoutFlagsRate ?? run.passRate,
     severity: run.severity,
     systemicIssueCount: run.systemicIssueCount,
     systemicIssues: run.systemicIssues,

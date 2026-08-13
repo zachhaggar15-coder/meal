@@ -23,7 +23,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "calls": 0,
       "error": "Unterminated string in JSON at position 6781 (line 124 column 32)",
       "fallback": "Local semantic checks completed; model enrichment did not run."
-    }
+    },
+    "plansWithoutFlagsRate": 10
   },
   "coverage": {
     "totalPublishedPlans": 1089,
@@ -39,7 +40,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "passRate": 10,
       "criticalHigh": 1,
       "medium": 101,
-      "cumulativeCoverage": 30
+      "cumulativeCoverage": 30,
+      "plansWithoutFlagsRate": 10
     }
   ],
   "breakdowns": {
@@ -1315,5 +1317,508 @@ export const SEMANTIC_QA_DASHBOARD = {
       "mostRecentDetection": "2026-08-13T16:44:35.864Z",
       "note": "Potential systemic issue — investigate shared generation logic."
     }
-  ]
+  ],
+  "calibration": {
+    "sampleSize": 36,
+    "reviewed": 1,
+    "unreviewed": 35,
+    "outcomes": {
+      "True issue": 1,
+      "Useful warning": 0,
+      "False positive": 0,
+      "Uncertain": 0
+    },
+    "rates": {
+      "trueIssueRate": null,
+      "falsePositiveRate": null,
+      "usefulSignalPrecision": null,
+      "denominator": 1
+    },
+    "byCategory": [
+      {
+        "name": "ingredient-method consistency",
+        "reviewed": 1,
+        "outcomes": {
+          "True issue": 1,
+          "Useful warning": 0,
+          "False positive": 0,
+          "Uncertain": 0
+        },
+        "rates": {
+          "trueIssueRate": null,
+          "falsePositiveRate": null,
+          "usefulSignalPrecision": null,
+          "denominator": 1
+        },
+        "sufficientForRates": false
+      }
+    ],
+    "byDetectorSeverity": [
+      {
+        "name": "High",
+        "reviewed": 1,
+        "outcomes": {
+          "True issue": 1,
+          "Useful warning": 0,
+          "False positive": 0,
+          "Uncertain": 0
+        },
+        "rates": {
+          "trueIssueRate": null,
+          "falsePositiveRate": null,
+          "usefulSignalPrecision": null,
+          "denominator": 1
+        },
+        "sufficientForRates": false
+      }
+    ],
+    "sufficientForOverallRates": false,
+    "coverage": {
+      "ingredientMethod": 12,
+      "mealNameAndGenericWording": 21,
+      "shoppingList": 9,
+      "planVariety": 5,
+      "methodQuality": 0,
+      "culinaryCoherence": 0,
+      "gaps": [
+        "No method-quality finding existed in the first run or current library-wide detector output.",
+        "No culinary-coherence finding existed in the first run or current library-wide detector output."
+      ]
+    },
+    "sourceRunId": "2026-W33-2026-08-13",
+    "items": [
+      {
+        "id": "qa_7d6edd57f7efaa31",
+        "route": "/meal-plan/aldi-high-protein-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "method-core-ingredient-missing",
+        "detectorSeverity": "High",
+        "evidence": "The method mentions potato, but no matching ingredient is listed.",
+        "origin": "first-run",
+        "reviewTheme": "ingredient-method consistency",
+        "outcome": "True issue",
+        "humanSeverity": "High"
+      },
+      {
+        "id": "qa_9ec20e2eeff3f8de",
+        "route": "/meal-plan/2000-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_5b0dd4fb66aef124",
+        "route": "/meal-plan/2000-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "beef is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_ed62d8f27f8fd46d",
+        "route": "/meal-plan/tesco-1800-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_281f29a76204f943",
+        "route": "/meal-plan/tesco-1800-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "beef is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_f1fd5f910fd15a2d",
+        "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "chickpea is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_b9ef5c4b48dc829f",
+        "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "bean is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_397cc9da5fa5b880",
+        "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_0e371ee5af0b450d",
+        "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "chickpea is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_e362c705b980083b",
+        "route": "/meal-plan/aldi-high-protein-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "lentil is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_767ce511348d9cd2",
+        "route": "/meal-plan/aldi-high-protein-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "chickpea is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_9d5be1d584c7ceb0",
+        "route": "/meal-plan/aldi-high-protein-meal-plan",
+        "category": "ingredient-method consistency",
+        "patternKey": "important-ingredient-unused",
+        "detectorSeverity": "Medium",
+        "evidence": "cod is central to the meal name but is not clearly used in the method.",
+        "origin": "first-run",
+        "reviewTheme": "generic wording",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_8c87f472c995a0a8",
+        "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_96c8ec76dcdc0612",
+        "route": "/meal-plan/aldi-high-protein-meal-plan",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a salad, but the method does not assemble one.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_85ec4ecd2e0cc884",
+        "route": "/meal-plan/aldi-high-protein-meal-plan",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_b7f591407baf4e6d",
+        "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a salad, but the method does not assemble one.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_f1eb5a6c3a7a43ba",
+        "route": "/plans/lidl-vegan-low-cal-1500",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a salad, but the method does not assemble one.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_6a92151255c2c4dd",
+        "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_e998ef9a55cd65de",
+        "route": "/plans/tesco-maintenance-vegan-2000",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a salad, but the method does not assemble one.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_e8ef10232477e118",
+        "route": "/plans/tesco-maintenance-vegan-2000",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_56ef8b34f5a91d86",
+        "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_65da7894323d06cd",
+        "route": "/plans/aldi-veg-low-cal-1500",
+        "category": "meal-name coherence",
+        "patternKey": "meal-style-method-mismatch",
+        "detectorSeverity": "Medium",
+        "evidence": "The meal is called a salad, but the method does not assemble one.",
+        "origin": "first-run",
+        "reviewTheme": "meal-name coherence",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_047e2c0fcdc72d96",
+        "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Cucumber 4 slices (about 3 3/4 used) (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_474bfef7e66b58e1",
+        "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_8ec4851d9c86dfb2",
+        "route": "/plans/tesco-maintenance-vegan-2000",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Cucumber 3 slices (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_632f5a17ecbc97c6",
+        "route": "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil 2.5 tbsp (condiments).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_f482b2efb576e84b",
+        "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Olive oil 2 tsp (condiments); Olive oil at least 1.25 tbsp (condiments).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_229825f937f7b591",
+        "route": "/plans/sainsburys-endurance-2500-recovery",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Cucumber 10 slices (vegetables); Cucumber 2 (about 1 1/2 used) (vegetables).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_f2ae02352eae26e6",
+        "route": "/plans/aldi-veg-low-cal-1500",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Olive oil at least 1 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_9ecebf7ef54277c0",
+        "route": "/plans/iceland-busy-professional-1800-twenty-minute",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Olive oil at least 2.25 tsp (condiments); Olive oil at least 1.75 tbsp (condiments).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "qa_49e70c9b143fcb97",
+        "route": "/plans/sainsburys-gym-beginner-2000",
+        "category": "shopping-list usability",
+        "patternKey": "shopping-duplicate-alias",
+        "detectorSeverity": "Medium",
+        "evidence": "Potential duplicate purchase entries: Cucumber 1 (about 1/2 used) (vegetables); Cucumber slices 7 (vegetables).",
+        "origin": "first-run",
+        "reviewTheme": "shopping list",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "cal_f1072036fedb0a17",
+        "route": "/plans/tesco-busy-professional-veg-1800",
+        "category": "plan-level variety",
+        "patternKey": "unjustified-dinner-repetition",
+        "detectorSeverity": "Medium",
+        "evidence": "5 dinners repeat Teriyaki Tofu with Brown Rice and Broccoli; the plan appears batch-oriented but the repetition is still high.",
+        "origin": "library-supplement",
+        "reviewTheme": "plan variety",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "cal_6d65d368ec4dd2b1",
+        "route": "/plans/asda-busy-professional-veg-1800",
+        "category": "plan-level variety",
+        "patternKey": "unjustified-dinner-repetition",
+        "detectorSeverity": "Medium",
+        "evidence": "5 dinners repeat Mushroom and Lentil Shepherd's Pie; the plan appears batch-oriented but the repetition is still high.",
+        "origin": "library-supplement",
+        "reviewTheme": "plan variety",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "cal_003cae86e321bc37",
+        "route": "/plans/tesco-veg-low-cal-1800",
+        "category": "plan-level variety",
+        "patternKey": "unjustified-dinner-repetition",
+        "detectorSeverity": "Medium",
+        "evidence": "5 dinners repeat Quorn Mince Bolognese with Wholemeal Pasta; the plan appears batch-oriented but the repetition is still high.",
+        "origin": "library-supplement",
+        "reviewTheme": "plan variety",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "cal_ea7391b0f4359b42",
+        "route": "/plans/aldi-veg-low-cal-batch-1800",
+        "category": "plan-level variety",
+        "patternKey": "unjustified-dinner-repetition",
+        "detectorSeverity": "Medium",
+        "evidence": "5 dinners repeat Mushroom and Lentil Shepherd's Pie; the plan appears batch-oriented but the repetition is still high.",
+        "origin": "library-supplement",
+        "reviewTheme": "plan variety",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      },
+      {
+        "id": "cal_8c4706915728018b",
+        "route": "/plans/aldi-budget-bodybuilding-veg-2000",
+        "category": "plan-level variety",
+        "patternKey": "unjustified-dinner-repetition",
+        "detectorSeverity": "Medium",
+        "evidence": "5 dinners repeat Teriyaki Tofu with Brown Rice and Broccoli; the plan appears batch-oriented but the repetition is still high.",
+        "origin": "library-supplement",
+        "reviewTheme": "plan variety",
+        "outcome": "Unreviewed",
+        "humanSeverity": "Unreviewed"
+      }
+    ]
+  }
 };

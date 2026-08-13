@@ -197,11 +197,12 @@ async function main() {
         passed: 0,
         flagged: 0,
         passRate: 0,
+        plansWithoutFlagsRate: 0,
         severity: { Critical: 0, High: 0, Medium: 0, Low: 0 },
         systemicIssues: [],
         systemicIssueCount: 0,
         manualReviewRoutes: [],
-        model: { status: 'unavailable', model: '', calls: 0, error: message },
+        model: { status: 'unavailable', model: '', calls: 0, attempted: 0, successful: 0, malformed: 0, unavailable: 1, error: message },
       },
       reviews: [],
       systemicIssues: [],
@@ -1351,10 +1352,17 @@ function renderWeeklyReport(analysis) {
     lines.push('- Semantic plan QA did not produce a sample this week. See Warnings for the independent failure reason.', '');
   } else {
     lines.push(`- Plans reviewed: ${semanticRun.sampleSize}`);
-    lines.push(`- Pass rate: ${semanticRun.passRate}% (${semanticRun.passed} passed; ${semanticRun.flagged} flagged)`);
+    lines.push(`- Plans with no review flags: ${semanticRun.plansWithoutFlagsRate ?? semanticRun.passRate}% (${semanticRun.passed}/${semanticRun.sampleSize})`);
+    lines.push(`- Plans producing at least one review flag: ${semanticRun.flagged}/${semanticRun.sampleSize}`);
     lines.push(`- Severity counts: Critical ${semanticRun.severity.Critical}, High ${semanticRun.severity.High}, Medium ${semanticRun.severity.Medium}, Low ${semanticRun.severity.Low}`);
+    lines.push('- Medium means review suggested. It does not block SEO work unless human-confirmed, repeated systemically or present on a high-traffic page.');
     lines.push(`- Potential systemic patterns: ${semanticRun.systemicIssueCount}`);
-    lines.push(`- Model status: ${semanticRun.model.status}${semanticRun.model.model ? ` (${semanticRun.model.model}, ${semanticRun.model.calls} call${semanticRun.model.calls === 1 ? '' : 's'})` : ''}`);
+    lines.push(`- Model status: ${semanticRun.model.status}${semanticRun.model.model ? ` (${semanticRun.model.model}, ${semanticRun.model.calls} batch${semanticRun.model.calls === 1 ? '' : 'es'})` : ''}; attempted ${semanticRun.model.attempted || 0}, successful ${semanticRun.model.successful || 0}, malformed ${semanticRun.model.malformed || 0}, unavailable ${semanticRun.model.unavailable || 0}`);
+    const calibration = analysis.semanticQa?.dashboard?.calibration;
+    if (calibration) {
+      lines.push(`- Human calibration: ${calibration.reviewed}/${calibration.sampleSize} reviewed; ${calibration.unreviewed} unreviewed.`);
+      lines.push(`- Calibration precision: ${calibration.sufficientForOverallRates ? `${calibration.rates.usefulSignalPrecision}% useful-signal precision; ${calibration.rates.falsePositiveRate}% false-positive rate` : 'withheld until at least 10 findings have human labels'}.`);
+    }
     lines.push(`- Manual review queue: ${semanticRun.manualReviewRoutes.length}`);
     lines.push('');
 
@@ -1390,7 +1398,7 @@ function renderWeeklyReport(analysis) {
       lines.push('- No issue pattern affected two or more sampled plans.');
     }
     lines.push('');
-    lines.push('_This process records evidence and queues review. It never rewrites plans automatically._', '');
+    lines.push('_Critical blocks promotion of the affected route. High prioritises investigation. Medium is review evidence, not an automatic quality failure or SEO blocker. This process never rewrites plans automatically._', '');
   }
 
   lines.push('## Public Links Written', '');
@@ -1611,7 +1619,7 @@ function renderConsoleSummary(analysis) {
     `Unverified routes skipped: ${analysis.unverifiedRoutes.length}`,
     `Field vital samples: ${analysis.fieldVitals.samples}`,
     `Composition clusters reviewed: ${analysis.compositionReview.coverage.exactClusters} exact, ${analysis.compositionReview.coverage.nearDuplicatePairs} near`,
-    `Semantic plan QA: ${analysis.semanticQa?.run?.sampleSize || 0} sampled, ${analysis.semanticQa?.run?.flagged || 0} flagged, ${analysis.semanticQa?.run?.systemicIssueCount || 0} systemic pattern(s)`,
+    `Semantic plan QA: ${analysis.semanticQa?.run?.sampleSize || 0} sampled, ${analysis.semanticQa?.run?.flagged || 0} produced review flags, ${analysis.semanticQa?.run?.systemicIssueCount || 0} systemic pattern(s)`,
     `Recommended action: ${analysis.recommendedAction.action}`,
     ...(analysis.warnings.length ? [`Warnings: ${analysis.warnings.join(' | ')}`] : []),
   ].join('\n');

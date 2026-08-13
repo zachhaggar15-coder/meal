@@ -1,16 +1,27 @@
 import { useEffect } from 'react';
 import { trackEvent } from '../utils/analytics.js';
+import {
+  AFFILIATE_PRODUCT_CLICK_EVENT,
+  buildAffiliateEventProperties,
+  isAffiliateUrl,
+} from '../utils/affiliateAnalytics.js';
 
 export default function ClickTracking() {
   useEffect(() => {
     function handleClick(event) {
       const target = event.target instanceof Element
-        ? event.target.closest('[data-event]')
+        ? event.target.closest('a[href], [data-event]')
         : null;
 
       if (!target) return;
 
-      const props = {
+      const affiliateClick = isAffiliateUrl(target.href);
+      const eventName = affiliateClick
+        ? AFFILIATE_PRODUCT_CLICK_EVENT
+        : target.dataset.event;
+      if (!eventName) return;
+
+      const props = affiliateClick ? buildAffiliateEventProperties(target) : {
         source_page: target.dataset.sourcePage,
         offer: target.dataset.offer,
         target_calories: target.dataset.targetCalories,
@@ -23,17 +34,14 @@ export default function ClickTracking() {
         cta_location: target.dataset.ctaLocation,
         affiliate_category: target.dataset.affiliateCategory,
         product_name: target.dataset.productName || target.dataset.offer,
+        selected_problem: target.dataset.selectedProblem,
+        recommendation_source: target.dataset.recommendationSource,
+        placement: target.dataset.placement,
+        list_position: target.dataset.listPosition,
         destination: target.href,
       };
 
-      trackEvent(target.dataset.event, props);
-
-      if (
-        target.dataset.affiliateCategory &&
-        target.dataset.event !== 'affiliate_link_clicked'
-      ) {
-        trackEvent('affiliate_link_clicked', props);
-      }
+      trackEvent(eventName, props);
     }
 
     document.addEventListener('click', handleClick);
