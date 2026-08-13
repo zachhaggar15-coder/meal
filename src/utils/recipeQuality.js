@@ -1,4 +1,5 @@
 import { getCookingIngredientModels } from './cookingQuantities.js';
+import { parseIngredientLine } from './ingredientParser.js';
 
 const PLACEHOLDER_PATTERNS = [
   /\bcook (?:the )?pasta,?\s*rice or noodles\b/i,
@@ -51,6 +52,9 @@ export function buildPracticalRecipeSteps(meal = {}) {
   const isNoCook = prepMinutes <= 5 && (!protein || !needsCooking(protein, searchable));
   const starchDisplayName = findCookingName(cookingIngredients, starchAliases(starch));
   const starchName = starch === 'potato' ? starchDisplayName || starch : starch || starchDisplayName;
+  const potatoPreparation = starch === 'potato'
+    ? resolvePotatoPreparation(meal, ingredientList)
+    : null;
   const proteinDisplayName = findCookingName(cookingIngredients, proteinAliases(protein)) || protein;
   const proteinName = normaliseProteinMethodName(protein, proteinDisplayName);
   const vegetables = findCookingNames(
@@ -132,10 +136,33 @@ export function buildPracticalRecipeSteps(meal = {}) {
     const mixIns = [...onionNames, eggName ? `the ${eggName}` : ''].filter(Boolean);
 
     return [
-      `Cook the ${potatoName.replace(/, cooked and mashed/i, '')} until tender, then mash and leave it to cool slightly.`,
+      potatoPreparation?.declared
+        ? potatoPreparation.state === 'mashed'
+          ? `Have the ${potatoName} ready, and leave it to cool if it is still warm.`
+          : `Have the ${potatoName} ready, then mash and leave it to cool slightly.`
+        : `Cook the ${potatoName.replace(/, cooked and mashed/i, '')} until tender, then mash and leave it to cool slightly.`,
       `Drain the ${stripTinnedPrefix(fishName)}, then mix it with the mashed potato, ${joinNatural(mixIns)}. Season to taste.`,
       'Shape the mixture into evenly sized fishcakes. Cook in a lightly oiled non-stick pan for 3-4 minutes per side, until golden and hot through.',
       `Serve with ${joinNatural([...leaves, ...dressing])}.`,
+    ];
+  }
+
+  if (starch === 'potato' && (
+    potatoPreparation?.state === 'jacket'
+    || /\bjacket(?:ed)?\s+potato/i.test(name)
+  )) {
+    const potatoMethodName = methodPotatoName(starchName);
+    const fillingNames = withoutNames(remainingNames, [starchName, starchDisplayName])
+      .map(stripTinnedPrefix);
+    const drainedNames = tinIngredients.map(stripTinnedPrefix);
+    const mixIns = withoutNames(fillingNames, drainedNames);
+
+    return [
+      prepareBakedPotatoStep(potatoMethodName, potatoPreparation),
+      tinIngredients.length
+        ? `${drainTinnedStep(tinIngredients)} Mix with ${joinNatural(mixIns)} and season to taste.`
+        : `Prepare ${joinNatural(fillingNames)} for the filling and season to taste.`,
+      `Split the ${potatoMethodName}, fluff the middle with a fork, spoon over the filling and serve hot.`,
     ];
   }
 
@@ -271,11 +298,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
     const eggs = findCookingNames(cookingIngredients, /^eggs?$/i);
     const steps = [];
     if (starch) {
-      steps.push(
-        /roast/i.test(name) && /potato/i.test(starchName)
-          ? `Cut the ${starchName} into even chunks and roast at 200°C (180°C fan) for 20-25 minutes, until tender and browned. Cool slightly.`
-          : cookStarchStep(starchName, { cool: true }),
-      );
+      steps.push(cookStarchStep(starchName, { cool: true, potatoPreparation }));
     }
     if (eggs.length) {
       steps.push(`Boil the ${joinNatural(eggs)} for 8-9 minutes, then cool under cold water, peel and halve.`);
@@ -343,7 +366,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
           : 'Heat a large pan over medium heat.',
       `Stir in ${joinNatural(flavourings)}, then add ${joinNatural(additions)} and simmer gently until tender and thickened.`,
       starch && starch !== 'potato'
-        ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true })
+        ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true, potatoPreparation })
         : 'Taste, season and portion for serving.',
     ];
   }
@@ -351,15 +374,17 @@ export function buildPracticalRecipeSteps(meal = {}) {
   if (starch) {
     const nonStarch = withoutNames(remainingNames, [starchName]);
     return [
-      cookStarchStep(starchName),
+      cookStarchStep(starchName, { potatoPreparation }),
       protein && needsCooking(protein, searchable)
         ? vegetables.length
           ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })} Add ${joinNatural(vegetables)} and cook until tender.`
           : cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })
         : `Meanwhile, prepare ${joinNatural(nonStarch)} and warm everything gently in a pan.`,
-      sauces.length
-        ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural(sauces)}, and heat through before serving.`
-        : `Fold the cooked ${starchName} through the pan, season to taste and serve hot.`,
+      starch === 'potato'
+        ? `Serve the ${starchName} with the prepared ingredients${sauces.length ? ` and ${joinNatural(sauces)}` : ''}, then season to taste.`
+        : sauces.length
+          ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural(sauces)}, and heat through before serving.`
+          : `Fold the cooked ${starchName} through the pan, season to taste and serve hot.`,
     ];
   }
 
@@ -543,27 +568,145 @@ function cookProteinStep(proteinName, { prefix = '', finish = '' } = {}) {
   return `${prefix}${firstLetter}${ending}`;
 }
 
-function cookStarchStep(starchName, { prefix = '', cool = false, serveAlongside = false } = {}) {
+function cookStarchStep(starchName, {
+  prefix = '',
+  cool = false,
+  serveAlongside = false,
+  potatoPreparation = null,
+} = {}) {
   const starch = String(starchName || 'starch');
   let instruction;
 
-  if (/sweet potato/i.test(starch)) {
-    instruction = `cut the ${starch} into even chunks and boil in lightly salted water until tender`;
-  } else if (/potato/i.test(starch)) {
-    instruction = `boil the ${starch} in lightly salted water until tender`;
+  if (/potato/i.test(starch)) {
+    instruction = potatoInstruction(starch, potatoPreparation);
   } else {
     const pronoun = /(noodles|potatoes)/i.test(starch) ? 'their' : 'its';
     instruction = `cook the ${starch} according to ${pronoun} packet instructions`;
   }
 
-  if (cool) instruction += ', then drain and cool slightly';
-  else if (serveAlongside) instruction += ' and serve alongside';
-  else instruction += ', then drain if needed';
+  const potatoState = /potato/i.test(starch) ? potatoPreparation?.state || 'raw' : '';
+  const needsDraining = !potatoState || ['raw', 'boiled'].includes(potatoState);
+  if (cool) instruction += needsDraining ? ', then drain and cool slightly' : ', then cool slightly';
+  else if (serveAlongside) instruction += needsDraining ? ', then drain and serve alongside' : ' and serve alongside';
+  else if (needsDraining) instruction += ', then drain if needed';
 
   const sentence = prefix
     ? instruction
     : instruction.charAt(0).toUpperCase() + instruction.slice(1);
   return `${prefix}${sentence}.`;
+}
+
+function potatoInstruction(starchName, preparation) {
+  const potato = methodPotatoName(starchName);
+  const state = preparation?.state || 'raw';
+  const alreadyPrepared = Boolean(preparation?.declared) && state !== 'raw';
+
+  if (alreadyPrepared) {
+    if (state === 'mashed') return `have the ${starchName} ready and reheat gently if serving hot`;
+    if (state === 'roast') return `have the ${starchName} ready and reheat until piping hot if needed`;
+    if (state === 'baked' || state === 'jacket') return `reheat the ${starchName} until piping hot`;
+    if (state === 'boiled') return `have the ${starchName} ready and reheat gently if serving hot`;
+    return `have the prepared ${potato} ready and reheat gently if serving hot`;
+  }
+
+  if (state === 'mashed') return `boil the ${potato} in lightly salted water until tender, then drain and mash`;
+  if (state === 'roast') return `cut the ${potato} into even chunks and roast at 200°C (180°C fan) until tender and browned`;
+  if (state === 'baked' || state === 'jacket') return `prick the ${potato} with a fork and bake at 200°C (180°C fan) until tender throughout`;
+  if (/sweet potato/i.test(starchName)) return `cut the ${potato} into even chunks and boil in lightly salted water until tender`;
+  return `boil the ${potato} in lightly salted water until tender`;
+}
+
+function prepareBakedPotatoStep(potatoName, preparation) {
+  if (preparation?.declared && preparation.state !== 'raw') {
+    return `Reheat the ${potatoName} until piping hot throughout.`;
+  }
+  return `Heat the oven to 200°C (180°C fan). Prick the ${potatoName} with a fork, then bake until the skin is crisp and the middle is tender.`;
+}
+
+function methodPotatoName(value) {
+  const cleaned = String(value || 'potato')
+    .replace(/^prepared\s+/i, '')
+    .replace(/^(?:baked|boiled|roasted|mashed|cooked)\s+/i, '')
+    .replace(/,\s*(?:baked|boiled|roasted|mashed|cooked)$/i, '')
+    .trim();
+  return cleaned || 'potato';
+}
+
+export function resolvePotatoPreparation(meal = {}, ingredients = null) {
+  const ingredientValues = ingredients || normaliseIngredients(meal.ingredients, meal.portion_size, meal.name);
+  const structuredState = findStructuredPotatoPreparation(meal);
+  if (structuredState) return { state: structuredState, source: 'structured', declared: true };
+
+  const qualifierState = findPotatoQualifier(ingredientValues);
+  if (qualifierState) return { state: qualifierState, source: 'ingredient-qualifier', declared: true };
+
+  const nameState = inferPotatoPreparationFromName(meal.name);
+  if (nameState) return { state: nameState, source: 'meal-name', declared: false };
+
+  return { state: 'raw', source: 'default', declared: false };
+}
+
+function findStructuredPotatoPreparation(meal) {
+  const mealState = meal.potatoPreparation
+    || meal.preparationState?.potato
+    || meal.preparation?.potato;
+  const normalisedMealState = normalisePotatoState(mealState);
+  if (normalisedMealState) return normalisedMealState;
+
+  const values = Array.isArray(meal.ingredients) ? meal.ingredients : [];
+  for (const ingredient of values) {
+    if (!ingredient || typeof ingredient !== 'object') continue;
+    const name = ingredient.item || ingredient.name || ingredient.ingredient || '';
+    if (!hasIngredientPhrase(name, 'potato')) continue;
+    const state = normalisePotatoState(
+      ingredient.preparation || ingredient.preparationState || ingredient.qualifier || ingredient.state,
+    );
+    if (state) return state;
+  }
+  return '';
+}
+
+function findPotatoQualifier(ingredients) {
+  for (const ingredient of ingredients || []) {
+    const parsed = parseIngredientLine(ingredient);
+    if (!hasIngredientPhrase(parsed.name, 'potato')) continue;
+    const parsedState = normalisePotatoState(parsed.qualifier);
+    if (parsedState) return parsedState;
+
+    const text = String(ingredient || '').toLowerCase();
+    const explicitState = text.match(/(?:^|[\s,(])(raw|boiled|baked|jacket|mashed|roast(?:ed)?|cooked|prepared)(?=[\s,)]|$)/i)?.[1];
+    const normalised = normalisePotatoState(explicitState);
+    if (normalised) return normalised;
+  }
+  return '';
+}
+
+function inferPotatoPreparationFromName(value) {
+  const name = String(value || '').toLowerCase();
+  if (/\bjacket(?:ed)?\s+potato/.test(name)) return 'jacket';
+  if (/\b(?:baked|bake)\s+potato/.test(name)) return 'baked';
+  if (/\b(?:roast|roasted)\s+(?:sweet\s+)?potato|\bpotato\s+(?:wedges|roast)/.test(name)) return 'roast';
+  if (/\bmashed\s+(?:sweet\s+)?potato|\bpotato\s+mash/.test(name)) return 'mashed';
+  if (/\bboiled\s+(?:new\s+)?potato/.test(name)) return 'boiled';
+  return '';
+}
+
+function normalisePotatoState(value) {
+  const state = String(value || '').trim().toLowerCase();
+  if (!state) return '';
+  if (state === 'jacket' || state === 'jacketed') return 'jacket';
+  if (state === 'bake' || state === 'baked') return 'baked';
+  if (state === 'roast' || state === 'roasted') return 'roast';
+  if (state === 'mash' || state === 'mashed') return 'mashed';
+  if (state === 'boil' || state === 'boiled') return 'boiled';
+  if (state === 'cooked' || state === 'prepared') return 'prepared';
+  if (state === 'raw') return 'raw';
+  return '';
+}
+
+function hasIngredientPhrase(value, phrase) {
+  const normalised = String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  return (` ${normalised} `).includes(` ${phrase} `);
 }
 
 function normaliseIngredients(value, portionSize, mealName) {

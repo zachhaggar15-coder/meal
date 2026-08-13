@@ -144,7 +144,7 @@ const HUB_INDEX_GROUPS = [
     slugs: ['meal-plans-with-shopping-list', 'printable-meal-plans', 'low-calorie-shopping-list', 'high-protein-shopping-list', 'budget-shopping-list'],
   },
   {
-    label: 'Exact high-intent pages',
+    label: 'More specific plan options',
     slugs: [
       'aldi-1500-calorie-meal-plan',
       'tesco-1500-calorie-meal-plan',

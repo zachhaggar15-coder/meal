@@ -129,6 +129,84 @@ test('household scaling preserves per-person nutrition and reconciles shopping q
   assert.notDeepEqual(scaled.shoppingList, base.shoppingList);
 });
 
+test('shopping classification is phrase-aware and follows a shopper-friendly taxonomy', () => {
+  const shopping = shoppingListFor([
+    'Peanut butter 20g', 'Pea 40g', 'Peas 80g', 'Peanut 20g', 'Peanuts 20g',
+    'Lean-sirloin steak 150g', 'Beef steaks 150g', 'Pork loin 150g',
+    'Turkey bacon 2 slices', 'Smoked bacon 2 rashers',
+    'Tinned tuna in spring water 145g', 'Tuna steaks 150g', 'Prawns 120g', 'Tofu 150g', 'Tempeh 150g',
+    'Whey protein 30g', 'Protein powder 30g', 'Vegan protein-powder 30g', 'Pea protein powder 30g',
+    'Greek yogurt 200g', 'Greek-style yoghurt 200g', 'Cottage cheese 150g', 'Eggs 2',
+    'Sweet-chilli sauce 15g', 'Spearmint tea 10g', 'Cornflakes 40g',
+  ]);
+
+  assert.ok(shopping.condiments.some(item => /peanut butter/i.test(item)));
+  assert.ok(shopping.vegetables.some(item => /^Peas\b/i.test(item)));
+  assert.ok(!shopping.vegetables.some(item => /peanut|protein powder|spearmint|cornflakes/i.test(item)));
+  for (const matcher of [
+    /Lean-sirloin steak/i, /Beef steaks/i, /bacon/i, /pork loin/i,
+    /Tinned tuna/i, /Tuna steaks/i, /prawns/i, /tofu/i, /tempeh/i,
+    /Whey protein/i, /^Protein powder/i, /Vegan protein-powder/i, /Pea protein powder/i,
+    /^Eggs\b/i,
+  ]) {
+    assert.ok(shopping.protein.some(item => matcher.test(item)), `${matcher} is in Protein`);
+  }
+  assert.ok(shopping.dairy.some(item => /Greek yogurt/i.test(item)));
+  assert.ok(shopping.dairy.some(item => /Greek-style yoghurt/i.test(item)));
+  assert.ok(shopping.dairy.some(item => /Cottage cheese/i.test(item)));
+});
+
+test('shopping purchase presentation rounds countable quantities up and shows expected use', () => {
+  const shopping = shoppingListFor([
+    'Onion 0.36',
+    'Peppers 1.14',
+    'Avocado half',
+    'Wholemeal bread 9.25 slices',
+    'Snack mix 0.47 packs',
+    '1 small roll (67g)',
+    'Semi-skimmed milk 1271ml',
+    'Peanut butter 1.15 tsp',
+  ]);
+  const all = Object.values(shopping).flat();
+
+  assert.ok(all.includes('Onion 1 (about 1/3 used)'));
+  assert.ok(all.includes('Peppers 2 (about 1 1/4 used)'));
+  assert.ok(all.includes('Avocado 1 (about 1/2 used)'));
+  assert.ok(all.includes('Wholemeal bread 10 slices (about 9 1/4 used)'));
+  assert.ok(all.includes('Snack mix 1 pack (about 1/2 used)'));
+  assert.ok(all.includes('1 small roll'));
+  assert.ok(all.includes('Semi-skimmed milk at least 1300ml'));
+  assert.ok(all.includes('Peanut butter at least 1.25 tsp'));
+});
+
+test('shopping presentation never mutates ingredients or changes nutrition totals', () => {
+  const ingredients = [
+    'Semi-skimmed milk 1271ml',
+    'Peanut butter 1.15 tsp',
+    'Onion 0.36',
+    'Eggs 1.14',
+  ];
+  const sourceSnapshot = [...ingredients];
+  const nutritionBefore = computeMealNutritionRaw(ingredients);
+  const shopping = shoppingListFor(ingredients);
+  const nutritionAfter = computeMealNutritionRaw(ingredients);
+
+  assert.deepEqual(ingredients, sourceSnapshot);
+  assert.deepEqual(nutritionAfter, nutritionBefore);
+  assert.ok(Object.values(shopping).flat().some(item => item === 'Eggs 2 (about 1 1/4 used)'));
+});
+
+test('representative generated plans use whole purchase counts in shopping lists', () => {
+  const seed = INDEXABLE_PLAN_SEEDS.find(item => item.slug === 'aldi-high-protein-1500-calorie-meal-plan')
+    || INDEXABLE_PLAN_SEEDS[0];
+  const { plan } = buildPlanDays(seed);
+  const shopping = buildShoppingList(plan);
+  const all = Object.values(shopping).flat();
+
+  assert.ok(all.length > 0);
+  assert.ok(all.every(item => !/\b\d+\.\d+\s+(?:packs?|slices?|eggs?)\b/i.test(item)));
+});
+
 test('legacy page and email paths share the canonical plan builder', () => {
   const [slug, legacy] = Object.entries(mealPlansData)[0];
   const canonicalDays = buildCanonicalLegacyPlan(legacy.plan, legacy.targetCalories);
@@ -176,4 +254,8 @@ test('AI plan edits rebuild day totals and the consolidated shopping list', () =
 
 function pick(value, keys) {
   return Object.fromEntries(keys.map(key => [key, value[key]]));
+}
+
+function shoppingListFor(ingredients) {
+  return buildShoppingList([{ meals: [{ ingredients }] }]);
 }

@@ -6,7 +6,7 @@ export const DISCOVERY_PRIORITY_LINKS = [
   },
   {
     to: '/meal-plan/asda-1500-calorie-meal-plan',
-    label: 'Asda 1500 Calorie Legacy Plan',
+    label: 'Asda 1500 Calorie Ready-Made Plan',
     note: 'A lower-calorie Asda plan with links to related calorie and supermarket options.',
   },
   {

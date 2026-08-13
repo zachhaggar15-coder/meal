@@ -190,12 +190,114 @@ export default function AdminDashboard() {
             </div>
             {error && <p className="waitlist-error" role="alert">{error}</p>}
 
+            {stats?.semanticQa && <SemanticQaSection semanticQa={stats.semanticQa} />}
             {stats?.analytics && <AnalyticsSection analytics={stats.analytics} />}
             {stats && <WaitlistSection stats={stats} />}
           </>
         )}
       </div>
     </>
+  );
+}
+
+function SemanticQaSection({ semanticQa }) {
+  if (!semanticQa.available || !semanticQa.latest) {
+    return (
+      <section className="admin-panel">
+        <div className="admin-section-head">
+          <h2>Plan Quality</h2>
+          <p>The first weekly semantic meal-plan sample has not run yet.</p>
+        </div>
+      </section>
+    );
+  }
+
+  const latest = semanticQa.latest;
+  const severity = latest.severity || {};
+  const coverage = semanticQa.coverage || {};
+
+  return (
+    <section className="admin-panel">
+      <div className="admin-section-head">
+        <h2>Plan Quality</h2>
+        <p>
+          A deterministic weekly sample checks complete plans for contradictions, coherence and shopping-list usability.
+          Findings are review evidence only; this process never rewrites plan content.
+        </p>
+      </div>
+
+      <div className="admin-stats-grid admin-stats-grid--wide">
+        <StatCard label="Latest sample" value={number(latest.sampleSize)} detail={dateOnly(latest.runAt)} />
+        <StatCard label="Pass rate" value={`${number(latest.passRate)}%`} />
+        <StatCard label="Critical" value={number(severity.Critical)} />
+        <StatCard label="High" value={number(severity.High)} />
+        <StatCard label="Medium" value={number(severity.Medium)} />
+        <StatCard label="Low" value={number(severity.Low)} />
+        <StatCard label="Systemic patterns" value={number(latest.systemicIssueCount)} />
+        <StatCard label="Plans ever sampled" value={number(coverage.plansEverSampled)} detail={`${number(coverage.percentageEverSampled)}% of ${number(coverage.totalPublishedPlans)}`} />
+        <StatCard label="Sampled in 30 days" value={number(coverage.plansSampledLast30Days)} />
+        <StatCard label="Model review" value={modelStatus(latest.model?.status)} detail={latest.model?.model || 'Deterministic local checks'} />
+      </div>
+
+      <DataTable
+        title="Recent Findings"
+        note="Open a route for manual verification. Review status is persisted by the QA history file."
+        rows={semanticQa.recentFindings || []}
+        columns={[
+          { key: 'severity', label: 'Severity' },
+          { key: 'route', label: 'Plan', render: row => <a href={row.route} target="_blank" rel="noreferrer">{truncate(row.route, 54)}</a> },
+          { key: 'affectedLocation', label: 'Location' },
+          { key: 'issue', label: 'Evidence' },
+          { key: 'scope', label: 'Scope' },
+          { key: 'reviewStatus', label: 'Status' },
+        ]}
+        empty="No findings in the latest sample."
+      />
+
+      <DataTable
+        title="Potential Systemic Patterns"
+        note="Patterns only appear here when at least two sampled plans share the same likely cause."
+        rows={semanticQa.systemicIssues || []}
+        columns={[
+          { key: 'patternKey', label: 'Pattern' },
+          { key: 'severity', label: 'Severity' },
+          { key: 'affectedSampledPlans', label: 'Sampled plans' },
+          { key: 'likelySharedComponent', label: 'Likely shared component' },
+          { key: 'firstDetected', label: 'First detected', render: row => dateOnly(row.firstDetected) },
+          { key: 'mostRecentDetection', label: 'Latest', render: row => dateOnly(row.mostRecentDetection) },
+        ]}
+        empty="No repeated issue pattern in the latest sample."
+      />
+
+      <DataTable
+        title="Coverage Trend"
+        rows={semanticQa.trend || []}
+        columns={[
+          { key: 'runAt', label: 'Run', render: row => dateOnly(row.runAt) },
+          { key: 'sampleSize', label: 'Sample' },
+          { key: 'passRate', label: 'Pass rate', render: row => `${number(row.passRate)}%` },
+          { key: 'criticalHigh', label: 'Critical / High' },
+          { key: 'medium', label: 'Medium' },
+          { key: 'cumulativeCoverage', label: 'Plans ever sampled' },
+        ]}
+      />
+
+      <div className="admin-grid-two">
+        {Object.entries(semanticQa.breakdowns || {}).map(([facet, rows]) => (
+          <DataTable
+            key={facet}
+            title={`Latest sample by ${facet}`}
+            rows={rows}
+            columns={[
+              { key: 'name', label: 'Group' },
+              { key: 'sampled', label: 'Sampled' },
+              { key: 'flagged', label: 'Flagged' },
+              { key: 'reviewRate', label: 'Flag rate', render: row => `${number(row.reviewRate)}%` },
+            ]}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -439,6 +541,10 @@ function WaitlistSection({ stats }) {
 
 function number(value) {
   return new Intl.NumberFormat('en-GB', { maximumFractionDigits: 1 }).format(Number(value) || 0);
+}
+
+function modelStatus(value) {
+  return ({ available: 'Completed', partial: 'Partial', not_configured: 'Local only', unavailable: 'Local fallback' })[value] || 'Unknown';
 }
 
 function formatVital(metric) {

@@ -38,7 +38,7 @@ export default function ProductPicks({
           <div className="product-quick-grid">
             {products.slice(0, 3).map(product => (
               <article key={product.id} className="product-quick-card">
-                <span className="container-search-chip">You searched: {title}</span>
+                <span className="container-search-chip">Use case: {title}</span>
                 <h4>{product.name}</h4>
                 <dl>
                   <div>

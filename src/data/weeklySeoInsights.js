@@ -12,52 +12,22 @@ export const WEEKLY_SEO_INSIGHTS = {
   "source": "google-analytics-and-search-console",
   "trendingLinks": [
     {
-      "to": "/meal-plans/1400-calorie",
-      "label": "1,400 Calorie Meal Plans UK",
-      "description": "Browse related plans, shopping-list ideas and UK supermarket options.",
-      "category": "Meal plans"
-    },
-    {
-      "to": "/choose-calories/1500",
-      "label": "1,500 kcal meal plans",
-      "description": "Narrow the plan library by a specific goal, diet, supermarket or calorie target.",
-      "category": "Plan finder"
-    },
-    {
-      "to": "/meal-plans/1800-calorie",
-      "label": "1,800 Calorie Meal Plans UK",
-      "description": "Browse related plans, shopping-list ideas and UK supermarket options.",
-      "category": "Meal plans"
-    },
-    {
-      "to": "/blog/1200-calorie-meal-plan-uk",
-      "label": "1200 Calorie Meal Plan UK",
-      "description": "A practical guide for planning, shopping or prepping meals in the UK.",
+      "to": "/blog/best-meal-prep-containers-uk",
+      "label": "Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options",
+      "description": "Compare glass, plastic and leakproof meal prep containers for UK work lunches and batch cooking, including five-pack, 1-litre and freezer-safe options.",
       "category": "Guide"
     },
     {
-      "to": "/blog/1400-calorie-meal-plan-uk",
-      "label": "1400 Calorie Meal Plan UK",
-      "description": "A practical guide for planning, shopping or prepping meals in the UK.",
+      "to": "/blog/what-does-1500-calories-look-like-uk",
+      "label": "What Does 1500 Calories Look Like?",
+      "description": "See what 1500 calories looks like in the UK: realistic breakfast, lunch, dinner and snack examples, plus the full 7-day 1500 calorie meal plan to use next.",
       "category": "Guide"
     },
     {
-      "to": "/meal-plans/1500-calorie",
-      "label": "1500 calorie",
-      "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
-      "category": "Guide"
-    },
-    {
-      "to": "/meal-plan/1500-calorie-meal-plan",
-      "label": "1500 calorie meal plan",
-      "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
-      "category": "Guide"
-    },
-    {
-      "to": "/blog/1500-vs-1800-vs-2000-calories",
-      "label": "1500 vs 1800 vs 2000 calories",
-      "description": "A useful MealPrep.org.uk guide readers are finding helpful.",
-      "category": "Guide"
+      "to": "/meal-plan/2000-calorie-meal-plan",
+      "label": "2000 Calorie Meal Plan UK — Free 7-Day Balanced Guide",
+      "description": "Complete 2000 calorie meal plan for active UK adults. Maintain energy, build muscle, or gentle weight loss. High-protein meals with shopping list. Generate yours free.",
+      "category": "Ready-made plan"
     }
   ]
 };

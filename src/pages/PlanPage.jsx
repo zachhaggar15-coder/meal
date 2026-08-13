@@ -1217,7 +1217,7 @@ function PlanQualityNotes({ plan }) {
 
       <div className="plan-quality-grid">
         <article>
-          <h3>{toTitleCase('Search intent')}</h3>
+          <h3>What this plan is for</h3>
           <p>
             A {market} {plan.goalLabel.toLowerCase()} plan at {calorieText} calories is useful when
             someone wants a printable week before shopping, not just a generic diet article.

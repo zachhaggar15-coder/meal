@@ -266,7 +266,7 @@ const CALORIE_AUTHORITY_HUBS = {
     calories: 1550,
     matchCalories: [1500, 1600],
     goal: 'Low calorie plan hub',
-    bestFor: 'High-protein legacy plan alternatives',
+    bestFor: 'High-protein ready-made alternatives',
     relatedSlugs: ['1500-calorie', '1600-calorie', 'low-calorie', 'high-protein'],
   }),
   '1600-calorie': createCalorieHub({ calories: 1600, goal: 'Low calorie plan hub', bestFor: 'Steady fat loss' }),
@@ -477,7 +477,7 @@ export const MEAL_PLAN_HUBS = {
         ],
       },
       {
-        h2: 'Best 1500 calorie plan types by search intent',
+        h2: 'Choose the right 1500 calorie plan',
         paragraphs: [
           'Weight loss and budget fat loss plans are the safest starting points. High-protein low-calorie plans suit gym users, while vegetarian and vegan low-calorie plans are better when you want plant-forward meals without building the week yourself.',
         ],
@@ -542,7 +542,7 @@ export const MEAL_PLAN_HUBS = {
           'For many UK shoppers, the strongest starting point is a 1500 or 1600 calorie plan. More active users may prefer 1800 calories, while 1400 calorie plans need extra care around hunger, protein and energy.',
         ],
         table: {
-          headers: ['Search intent', 'Best starting page', 'Why'],
+          headers: ['What you need', 'Best starting page', 'Why'],
           rows: [
             ['Low calorie weekly meal plan', 'This low calorie hub', 'Compares weekly plans across calories and supermarkets'],
             ['1500 calorie meal plan', '1500 calorie hub', 'Most direct lower-calorie printable target'],
@@ -612,7 +612,7 @@ export const MEAL_PLAN_HUBS = {
           'The best starting point is the quiz if you want a match, or the browse page if you already know your calories, supermarket or diet type.',
         ],
         table: {
-          headers: ['Search intent', 'Best page to use', 'What you get'],
+          headers: ['What you need', 'Best page to use', 'What you get'],
           rows: [
             ['Diet plan UK free', 'This hub or the quiz', 'A no-sign-up route into matched 7-day plans'],
             ['Free nutrition plan', 'Browse filters', 'Calories, macros, recipes and shopping list'],

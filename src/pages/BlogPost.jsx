@@ -377,22 +377,6 @@ function ResponsiveBlogTable({ table }) {
 
   return (
     <div className="blog-table-group">
-      {/* Mobile card view is a purely visual reflow of the table below. It is
-          hidden from assistive tech and search so the same data is not counted
-          twice — the semantic <table> is the single source of truth. */}
-      <div className="blog-table-cards" aria-hidden="true">
-        {table.rows.map((row, rowIndex) => (
-          <article className="blog-table-card" key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <div className="blog-table-card-row" key={`${rowIndex}-${cellIndex}`}>
-                <strong>{headers[cellIndex]}</strong>
-                <span>{cell}</span>
-              </div>
-            ))}
-          </article>
-        ))}
-      </div>
-
       <div className="content-table-wrap blog-table-wrap" aria-label="Scrollable comparison table">
         <table className="content-table blog-table">
           {table.headers && (
@@ -408,7 +392,7 @@ function ResponsiveBlogTable({ table }) {
             {table.rows.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex}>{cell}</td>
+                  <td key={cellIndex} data-label={headers[cellIndex]}>{cell}</td>
                 ))}
               </tr>
             ))}

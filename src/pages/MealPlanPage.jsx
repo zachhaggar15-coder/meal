@@ -784,7 +784,7 @@ function LegacyPlanFamilyBox({ family }) {
   return (
     <aside className="legacy-plan-family" aria-labelledby="legacy-plan-family-heading">
       <div>
-        <h2 id="legacy-plan-family-heading">{toTitleCase('Current plan family')}</h2>
+        <h2 id="legacy-plan-family-heading">Other ways to plan this week</h2>
         <p>
           Looking for a different version? Compare related calorie, supermarket and
           shopping-list pages below.

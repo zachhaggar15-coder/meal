@@ -107,7 +107,7 @@ export const commercialBlogPostsData = {
     ],
     sections: [
       {
-        h2: 'Best meal prep delivery by search intent',
+        h2: 'Choose meal prep delivery by the job',
         paragraphs: [
           'The best choice depends on what you are trying to remove from your week. Some people want cooking removed completely. Others only want the planning and shopping handled. The table below separates those jobs so the comparison is fair.',
         ],

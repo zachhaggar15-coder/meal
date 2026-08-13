@@ -27,6 +27,8 @@ import {
   buildTrackerBeforeAfter,
   daysSince,
 } from './lib/shippedChanges.js';
+import { runWeeklySemanticQa } from './lib/semanticPlanQa.js';
+import { buildPublicPopularityLinks } from './lib/publicPopularity.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -86,6 +88,7 @@ async function main() {
   let gaLandingPages = [];
   let gaEventCounts = [];
   let fieldVitalRows = [];
+  let semanticQa;
 
   if (sampleMode) {
     ({ currentSearchRows, previousSearchRows, gaLandingPages } = sampleAnalyticsData());
@@ -172,6 +175,39 @@ async function main() {
     }
   }
 
+  try {
+    semanticQa = await runWeeklySemanticQa({
+      currentSearchRows,
+      gaLandingPages,
+      recentActivity,
+      sampleSize: numberFromEnv('SEMANTIC_QA_SAMPLE_SIZE', args.get('semantic-sample-size'), 30),
+      persist: !dryRun,
+      useModel: !sampleMode && Boolean(process.env.OPENAI_API_KEY),
+      model: process.env.SEMANTIC_QA_MODEL || 'gpt-5-mini',
+    });
+    if (semanticQa.run.model.status !== 'available') {
+      warnings.push('Semantic plan QA completed with deterministic local checks; optional model enrichment was unavailable or not configured.');
+    }
+  } catch (error) {
+    const message = cleanText(error.message || error, 240);
+    warnings.push(`Semantic plan QA failed independently: ${message}`);
+    semanticQa = {
+      run: {
+        sampleSize: 0,
+        passed: 0,
+        flagged: 0,
+        passRate: 0,
+        severity: { Critical: 0, High: 0, Medium: 0, Low: 0 },
+        systemicIssues: [],
+        systemicIssueCount: 0,
+        manualReviewRoutes: [],
+        model: { status: 'unavailable', model: '', calls: 0, error: message },
+      },
+      reviews: [],
+      systemicIssues: [],
+    };
+  }
+
   const analysis = buildAnalysis({
     currentSearchRows,
     previousSearchRows,
@@ -181,6 +217,7 @@ async function main() {
     routeIndex,
     recentActivity,
     fieldVitalRows,
+    semanticQa,
     warnings,
   });
 
@@ -481,22 +518,25 @@ function buildRouteIndex() {
   function addRoute(route, meta) {
     const pathValue = normalisePath(route);
     if (!isPublicPagePath(pathValue)) return;
+    const existing = routes.get(pathValue);
+    const isPriorityAlias = meta.type === 'priority-route' && existing;
     routes.set(pathValue, {
       route: pathValue,
-      label: sanitisePublicText(meta.label || labelFromPath(pathValue), 90),
-      type: meta.type || 'page',
-      publicEligible: meta.publicEligible !== false,
-      source: meta.source || 'source-route-map',
+      label: sanitisePublicText(isPriorityAlias ? existing.label : (meta.label || existing?.label || labelFromPath(pathValue)), 90),
+      description: sanitiseOptionalPublicText(meta.description || existing?.description, 180),
+      type: isPriorityAlias ? existing.type : (meta.type || existing?.type || 'page'),
+      publicEligible: meta.publicEligible !== undefined ? meta.publicEligible : existing?.publicEligible !== false,
+      source: meta.source || existing?.source || 'source-route-map',
     });
   }
 
-  addRoute('/', { label: 'MealPrep.org.uk', type: 'home' });
-  addRoute('/quiz', { label: 'Meal plan quiz', type: 'tool' });
-  addRoute('/browse', { label: 'Browse UK meal plans', type: 'hub' });
-  addRoute('/stickers', { label: 'Meal prep stickers', type: 'promo' });
-  addRoute('/meal-prep-containers', { label: 'Meal prep containers', type: 'container-guide' });
-  addRoute('/blog', { label: 'Meal prep guides', type: 'blog-index' });
-  addRoute('/tools', { label: 'Meal prep tools', type: 'tool' });
+  addRoute('/', { label: 'MealPrep.org.uk', description: 'Build a practical UK meal plan with recipes and one weekly shopping list.', type: 'home' });
+  addRoute('/quiz', { label: 'Meal plan quiz', description: 'Answer a few questions to find a plan that fits your goal, diet and routine.', type: 'tool' });
+  addRoute('/browse', { label: 'Browse UK meal plans', description: 'Compare plans by calories, supermarket, goal and dietary preference.', type: 'hub' });
+  addRoute('/stickers', { label: 'Meal prep stickers', description: 'Create printable labels for dated, organised fridge and freezer portions.', type: 'promo' });
+  addRoute('/meal-prep-containers', { label: 'Meal prep containers', description: 'Compare container sizes and materials for lunches, freezing and reheating.', type: 'container-guide' });
+  addRoute('/blog', { label: 'Meal prep guides', description: 'Find practical UK guides for planning, shopping, cooking and food storage.', type: 'blog-index' });
+  addRoute('/tools', { label: 'Meal prep tools', description: 'Use calculators and planning tools to make a weekly food shop easier.', type: 'tool' });
   addRoute('/about', { label: 'About MealPrep.org.uk', type: 'support' });
   addRoute('/contact', { label: 'Contact MealPrep.org.uk', type: 'support' });
   addRoute('/privacy', { label: 'Privacy', type: 'support', publicEligible: false });
@@ -516,13 +556,13 @@ function buildRouteIndex() {
     addRoute(`/choose-calories/${item.value}`, { label: `${item.label} meal plans`, type: 'chooser' });
   }
   for (const page of Object.values(MEAL_PLAN_HUBS)) {
-    addRoute(page.path, { label: page.h1 || page.title, type: 'meal-plan-hub' });
+    addRoute(page.path, { label: page.h1 || page.title, description: page.description, type: 'meal-plan-hub' });
   }
   for (const page of Object.values(COMBO_LANDING_PAGES)) {
-    addRoute(page.path, { label: page.h1 || page.title, type: 'meal-plan-hub' });
+    addRoute(page.path, { label: page.h1 || page.title, description: page.description, type: 'meal-plan-hub' });
   }
   for (const page of Object.values(CONTAINER_GUIDES)) {
-    addRoute(page.path, { label: page.h1 || page.title, type: 'container-guide' });
+    addRoute(page.path, { label: page.h1 || page.title, description: page.description, type: 'container-guide' });
   }
   for (const seed of INDEXABLE_PLAN_SEEDS) {
     addRoute(`/plans/${seed.slug}`, {
@@ -532,10 +572,10 @@ function buildRouteIndex() {
     });
   }
   for (const [slug, page] of Object.entries(mealPlansData)) {
-    addRoute(`/meal-plan/${slug}`, { label: page.h1 || page.title, type: 'legacy-meal-plan' });
+    addRoute(`/meal-plan/${slug}`, { label: page.h1 || page.title, description: page.description, type: 'legacy-meal-plan' });
   }
   for (const [slug, page] of Object.entries(blogPostsData)) {
-    addRoute(`/blog/${slug}`, { label: page.h1 || page.title, type: 'blog-guide' });
+    addRoute(`/blog/${slug}`, { label: page.h1 || page.title, description: page.description, type: 'blog-guide' });
   }
   for (const route of SEO_PRIORITY_ROUTES) {
     addRoute(route, { label: labelFromPath(route), type: 'priority-route' });
@@ -580,7 +620,7 @@ function isPublicPagePath(value) {
   return true;
 }
 
-function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, warnings }) {
+function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, semanticQa, warnings }) {
   const unverifiedRoutes = collectUnverifiedRoutes(currentSearchRows, gaLandingPages, routeIndex);
   if (unverifiedRoutes.length) {
     warnings.push(`Skipped ${unverifiedRoutes.length} analytics rows because their routes were not in the verified route inventory.`);
@@ -645,7 +685,7 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const pageRollups = buildPageRollups(enrichedSearchRows, gaRows, routeIndex);
   const cannibalisationRisks = findCannibalisationRisks(enrichedSearchRows);
   const doNotEdit = buildDoNotEditList(recentActivity, searchOpportunities);
-  const recommendedAction = chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit });
+  const recommendedAction = chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit, semanticQa });
   const planClusters = buildPlanCompositionClusters();
   const compositionReview = buildCompositionTrafficReview({
     ...planClusters,
@@ -678,6 +718,7 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     compositionReview,
     fieldVitals,
     shippedChangeReview,
+    semanticQa,
     gaLandingPages: gaRows,
     gaEventCounts: (gaEventCounts || []).filter(row => routeIndex.has(row.path)),
     recentActivity,
@@ -782,35 +823,14 @@ function reportOpportunityRow(row) {
 }
 
 function buildTrendingLinks(searchRows, gaRows, routeIndex) {
-  const byPath = new Map();
-
-  for (const row of searchRows) {
-    if (byPath.has(row.page)) continue;
-    const meta = routeIndex.get(row.page);
-    if (!isEligibleForPopularLink(row.page, meta, row)) continue;
-    byPath.set(row.page, {
-      to: row.page,
-      label: sanitisePublicText(meta.label || titleCase(row.query), 90),
-      description: publicDescriptionForRoute(meta, row),
-      category: publicCategory(meta),
-    });
-  }
-
-  for (const row of gaRows) {
-    if (byPath.has(row.path)) continue;
-    const meta = routeIndex.get(row.path);
-    if (!isEligibleForPopularLink(row.path, meta, row)) continue;
-    byPath.set(row.path, {
-      to: row.path,
-      label: sanitisePublicText(meta.label || labelFromPath(row.path), 90),
-      description: publicDescriptionForRoute(meta, row),
-      category: publicCategory(meta),
-    });
-  }
-
-  return [...byPath.values()]
-    .sort((a, b) => a.label.localeCompare(b.label))
-    .slice(0, 8);
+  return buildPublicPopularityLinks({
+    searchRows,
+    gaRows,
+    routeIndex,
+    limit: 8,
+    isEligible: isEligibleForPopularLink,
+    categoryFor: publicCategory,
+  });
 }
 
 function isEligibleForPopularLink(route, meta, metrics) {
@@ -820,24 +840,6 @@ function isEligibleForPopularLink(route, meta, metrics) {
     return (metrics.impressions >= options.strongImpressions && metrics.clicks >= 2) || metrics.pageViews >= 25;
   }
   return true;
-}
-
-function publicDescriptionForRoute(meta, row) {
-  const descriptions = {
-    home: 'Start with the generator, quiz and practical weekly planning tools.',
-    hub: 'Compare useful routes into calorie, goal and supermarket meal plans.',
-    'meal-plan-hub': 'Browse related plans, shopping-list ideas and UK supermarket options.',
-    'blog-guide': 'A practical guide for planning, shopping or prepping meals in the UK.',
-    'container-guide': 'Compare storage options for work lunches, freezing, batch cooking and reheating.',
-    'legacy-meal-plan': 'Use this ready-made plan as a starting point, then compare related alternatives.',
-    chooser: 'Narrow the plan library by a specific goal, diet, supermarket or calorie target.',
-    tool: 'Use a practical tool to choose or customise your meal plan.',
-    promo: 'A useful extra for organising prep, labels and weekly food planning.',
-  };
-  if (row?.impressionDelta > options.minImpressions || row?.pageViews > 0) {
-    return descriptions[meta.type] || 'A useful MealPrep.org.uk guide readers are finding helpful.';
-  }
-  return descriptions[meta.type] || 'A useful MealPrep.org.uk guide for planning this week.';
 }
 
 function publicCategory(meta) {
@@ -1004,7 +1006,19 @@ function buildDoNotEditList(recentActivity, opportunities) {
   return [...routeItems, ...sourceItems].slice(0, 12);
 }
 
-function chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit }) {
+function chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit, semanticQa }) {
+  const criticalHigh = Number(semanticQa?.run?.severity?.Critical || 0) + Number(semanticQa?.run?.severity?.High || 0);
+  if (criticalHigh > 0 || semanticQa?.run?.systemicIssues?.some(issue => ['Critical', 'High'].includes(issue.severity))) {
+    const route = semanticQa.run.manualReviewRoutes?.[0] || '';
+    return {
+      action: 'Review the highest-severity meal-plan quality finding',
+      page: route,
+      query: '',
+      why: `The weekly semantic sample found ${criticalHigh} Critical/High finding${criticalHigh === 1 ? '' : 's'}. Product correctness takes priority over search-led copy changes.`,
+      approvalRequired: true,
+      newPageJustified: false,
+    };
+  }
   const eligible = searchOpportunities.find(row => !row.cooldown && ['near_page_one', 'striking_distance'].includes(row.opportunityClass));
   if (eligible) {
     return {
@@ -1331,6 +1345,54 @@ function renderWeeklyReport(analysis) {
   lines.push(`- Impression thresholds: ${options.minImpressions} minor, ${options.strongImpressions} strong, ${options.priorityImpressions} priority`);
   lines.push('');
 
+  lines.push('## Plan Quality', '');
+  const semanticRun = analysis.semanticQa?.run;
+  if (!semanticRun?.sampleSize) {
+    lines.push('- Semantic plan QA did not produce a sample this week. See Warnings for the independent failure reason.', '');
+  } else {
+    lines.push(`- Plans reviewed: ${semanticRun.sampleSize}`);
+    lines.push(`- Pass rate: ${semanticRun.passRate}% (${semanticRun.passed} passed; ${semanticRun.flagged} flagged)`);
+    lines.push(`- Severity counts: Critical ${semanticRun.severity.Critical}, High ${semanticRun.severity.High}, Medium ${semanticRun.severity.Medium}, Low ${semanticRun.severity.Low}`);
+    lines.push(`- Potential systemic patterns: ${semanticRun.systemicIssueCount}`);
+    lines.push(`- Model status: ${semanticRun.model.status}${semanticRun.model.model ? ` (${semanticRun.model.model}, ${semanticRun.model.calls} call${semanticRun.model.calls === 1 ? '' : 's'})` : ''}`);
+    lines.push(`- Manual review queue: ${semanticRun.manualReviewRoutes.length}`);
+    lines.push('');
+
+    lines.push('### Reviewed Plans', '');
+    lines.push('| Route | Sample reason | Result | Highest severity | Findings | Source |');
+    lines.push('| --- | --- | --- | --- | ---: | --- |');
+    for (const review of analysis.semanticQa.reviews) {
+      lines.push(`| ${mdCell(review.route)} | ${review.sampleReason} | ${review.overallStatus} | ${review.highestSeverity} | ${review.findingCount} | ${review.assessmentSource} |`);
+    }
+    lines.push('');
+
+    lines.push('### Findings Requiring Human Review', '');
+    const findings = analysis.semanticQa.reviews.flatMap(review => review.findings.map(item => ({ ...item, route: review.route })));
+    if (findings.length) {
+      lines.push('| Severity | Route | Location | Issue | Scope | Review status |');
+      lines.push('| --- | --- | --- | --- | --- | --- |');
+      for (const item of findings.sort((left, right) => severityRank(right.severity) - severityRank(left.severity))) {
+        lines.push(`| ${item.severity} | ${mdCell(item.route)} | ${mdCell(item.affectedLocation)} | ${mdCell(item.explanation)} | ${item.scope} | ${item.reviewStatus || 'New'} |`);
+      }
+    } else {
+      lines.push('- No findings in the sampled plans.');
+    }
+    lines.push('');
+
+    lines.push('### Potential Systemic Patterns', '');
+    if (semanticRun.systemicIssues.length) {
+      lines.push('| Pattern | Severity | Sampled plans | Likely shared component | First detected |');
+      lines.push('| --- | --- | ---: | --- | --- |');
+      for (const issue of semanticRun.systemicIssues) {
+        lines.push(`| ${issue.patternKey} | ${issue.severity} | ${issue.affectedSampledPlans} | ${mdCell(issue.likelySharedComponent)} | ${issue.firstDetected.slice(0, 10)} |`);
+      }
+    } else {
+      lines.push('- No issue pattern affected two or more sampled plans.');
+    }
+    lines.push('');
+    lines.push('_This process records evidence and queues review. It never rewrites plans automatically._', '');
+  }
+
   lines.push('## Public Links Written', '');
   if (analysis.generatedPublicData.trendingLinks.length) {
     for (const link of analysis.generatedPublicData.trendingLinks) {
@@ -1549,9 +1611,14 @@ function renderConsoleSummary(analysis) {
     `Unverified routes skipped: ${analysis.unverifiedRoutes.length}`,
     `Field vital samples: ${analysis.fieldVitals.samples}`,
     `Composition clusters reviewed: ${analysis.compositionReview.coverage.exactClusters} exact, ${analysis.compositionReview.coverage.nearDuplicatePairs} near`,
+    `Semantic plan QA: ${analysis.semanticQa?.run?.sampleSize || 0} sampled, ${analysis.semanticQa?.run?.flagged || 0} flagged, ${analysis.semanticQa?.run?.systemicIssueCount || 0} systemic pattern(s)`,
     `Recommended action: ${analysis.recommendedAction.action}`,
     ...(analysis.warnings.length ? [`Warnings: ${analysis.warnings.join(' | ')}`] : []),
   ].join('\n');
+}
+
+function severityRank(value) {
+  return { None: 0, Low: 1, Medium: 2, High: 3, Critical: 4 }[value] || 0;
 }
 
 function sampleAnalyticsData() {
@@ -1597,15 +1664,6 @@ function sampleFieldVitalRows() {
   ];
 }
 
-function titleCase(value) {
-  return cleanText(value, 90)
-    .toLowerCase()
-    .replace(/\b[a-z][a-z'.-]*/g, word => {
-      const upper = { uk: 'UK', ai: 'AI', faq: 'FAQ', pdf: 'PDF', ga4: 'GA4' }[word];
-      return upper || word.charAt(0).toUpperCase() + word.slice(1);
-    });
-}
-
 function labelFromPath(value) {
   if (value === '/') return 'Home';
   const last = value.split('/').filter(Boolean).pop() || value;
@@ -1618,6 +1676,13 @@ function sanitisePublicText(value, maxLength) {
     text = text.replace(pattern, '');
   }
   return cleanText(text.replace(/\s{2,}/g, ' '), maxLength) || 'Meal prep guide';
+}
+
+function sanitiseOptionalPublicText(value, maxLength) {
+  if (!value) return '';
+  let text = cleanText(value, maxLength);
+  for (const pattern of INTERNAL_LANGUAGE_PATTERNS) text = text.replace(pattern, '');
+  return cleanText(text.replace(/\s{2,}/g, ' '), maxLength);
 }
 
 function cleanText(value, maxLength) {

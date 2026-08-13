@@ -687,9 +687,9 @@ export const blogPostsData = {
         },
       },
       {
-        h2: 'Cheap protein by search intent',
+        h2: 'Choose protein for your goal',
         paragraphs: [
-          'The cheapest protein source is not always the best answer. A student batch-cook, a low-calorie lunch box and a muscle-gain basket need different staples, so use intent before choosing the product.',
+          'The cheapest protein source is not always the best answer. A student batch-cook, a low-calorie lunch box and a muscle-gain basket need different staples, so start with what fits your week.',
         ],
         table: {
           headers: ['Intent', 'Best cheap protein choices', 'Best next page'],

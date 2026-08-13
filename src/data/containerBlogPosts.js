@@ -102,12 +102,12 @@ export const containerBlogPostsData = {
         },
       },
       {
-        h2: 'Best container by search intent',
+        h2: 'Choose a container for the job',
         paragraphs: [
-          'Different searches usually mean different buyer needs. A student searching for cheap meal prep tubs is not looking for the same product as someone searching for glass lunch boxes for work.',
+          'Different jobs need different containers. A student looking for cheap meal prep tubs is not choosing for the same reasons as someone comparing glass lunch boxes for work.',
         ],
         table: {
-          headers: ['Search intent', 'Best starting point', 'Why'],
+          headers: ['What you need', 'Best starting point', 'Why'],
           rows: [
             ['Best meal prep containers UK', 'Mid range glass containers', 'Best all-round balance for lunches, reheating and long-term use'],
             ['Cheap meal prep containers', 'Budget plastic multipacks', 'Lowest cost per tub for batch cooking and freezer portions'],

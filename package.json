@@ -31,8 +31,10 @@
     "check": "npm run lint && npm test && npm run test:security && npm run audit:dependencies && npm run build && npm run check:plans && npm run audit:all",
     "analytics:weekly": "node scripts/weekly-analytics-improvements.js",
     "analytics:weekly:sample": "node scripts/weekly-analytics-improvements.js --sample --dry-run",
+    "qa:semantic": "node scripts/run-semantic-plan-qa.js",
+    "qa:semantic:dry-run": "node scripts/run-semantic-plan-qa.js --dry-run --no-model",
     "analytics:weekly:email:dry-run": "node scripts/email-weekly-analytics-report.js --dry-run",
-    "test": "node --test scripts/product-funnel.test.js scripts/nutrition-system.test.js scripts/portion-shares.test.js scripts/cooking-quantities.test.js scripts/seo-operations.test.js",
+    "test": "node --test scripts/product-funnel.test.js scripts/nutrition-system.test.js scripts/portion-shares.test.js scripts/cooking-quantities.test.js scripts/seo-operations.test.js scripts/semantic-plan-qa.test.js",
     "test:security": "node scripts/api-guards.test.js",
     "preview": "vite preview",
     "start": "vercel dev"

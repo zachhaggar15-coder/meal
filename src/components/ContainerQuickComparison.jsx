@@ -100,7 +100,7 @@ export default function ContainerQuickComparison({
               />
             </div>
             <div className="container-direct-body">
-              <span className="container-search-chip">You searched: {searchedFor}</span>
+              <span className="container-search-chip">Best for: {searchedFor}</span>
               <CardHeadingTag>{sizeLabel}</CardHeadingTag>
               <strong className="container-size-focus">{sizeFocus}</strong>
               <p>{fit}</p>

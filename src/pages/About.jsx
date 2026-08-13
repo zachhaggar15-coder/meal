@@ -81,7 +81,7 @@ export default function About() {
           </p>
           <p>
             Automation helps scale the plan library and route coverage, but pages are structured
-            around practical search intent: what the reader is trying to buy, cook, print or
+            around practical tasks: what the reader is trying to buy, cook, print or
             compare. Priority pages are reviewed for duplicated copy, broken internal links,
             unrealistic budgets and unsupported nutrition claims before release.
           </p>

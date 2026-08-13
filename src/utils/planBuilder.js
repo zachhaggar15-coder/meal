@@ -295,26 +295,71 @@ function pickDinnerForLunch(dinners, seed, lunch, usedIds = new Set()) {
 
 // ── Shopping list builder ──────────────────────────────────────────────────────
 
-const PROTEIN_KW    = ['chicken','beef','turkey','pork','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince','falafel'];
+const PROTEIN_KW    = ['chicken','beef','steak','sirloin','turkey','pork','bacon','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince','falafel','whey protein','protein powder','vegan protein powder','pea protein'];
 const CARB_KW       = ['bread','rice','pasta','oat','potato','tortilla','roll','pitta','noodle','flour','wraps','granola','quinoa','couscous','orzo','soba'];
-const DAIRY_KW      = ['milk','yogurt','cheese','cream','butter','skyr','ricotta','halloumi','cottage','mozzarella','parmesan','feta','creme fraiche','crème fraîche','mascarpone','kefir'];
+const DAIRY_KW      = ['milk','yogurt','yoghurt','cheese','cream','butter','skyr','ricotta','halloumi','cottage cheese','mozzarella','parmesan','feta','creme fraiche','crème fraîche','mascarpone','kefir'];
 const VEG_KW        = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','leaf','leaves','kale','cucumber','celery','avocado','mushroom','butternut squash','sweet potato','parsnip','pea','edamame','corn','bean sprout','cabbage','leek','asparagus','watercress','rocket','mixed veg','frozen veg','pak choi','bok choy','aubergine','coleslaw','radish','fennel','beetroot','turnip','swede'];
 const FRUIT_KW      = ['banana','apple','orange','mango','berry','strawberry','blueberry','raspberry','grape','peach','pear','plum','melon','pineapple','pomegranate','kiwi','apricot','nectarine','grapefruit','dates','raisins','dried fruit','dried mango','dried apricot'];
 const HERB_KW       = ['garlic','ginger','chilli','cumin','turmeric','paprika','cinnamon','oregano','basil','thyme','rosemary','coriander','parsley','mixed herbs','bay leaf','black pepper','white pepper','cayenne','nutmeg','cardamom','clove','star anise','fenugreek','chive','dill','mint','tarragon','sage','fennel seed','caraway','allspice','za\'atar','harissa','smoked paprika','ground coriander','ground cumin','curry powder','garam masala','five spice','mixed spice'];
 const CONDIMENT_KW  = ['olive oil','vegetable oil','sunflower oil','coconut oil','sesame oil','rapeseed oil','soy sauce','tamari','honey','mayo','mayonnaise','mustard','ketchup','vinegar','dressing','paste','stock','gravy','miso','sriracha','tabasco','worcestershire','fish sauce','oyster sauce','hoisin','teriyaki','tahini','pesto','salsa','relish','chutney','jam','hummus','peanut butter','almond butter','nut butter','hot sauce','sweet chilli','reduced sugar sauce'];
 const TIN_KW        = ['tinned','canned','baked bean','mixed bean','butter bean','cannellini','haricot','flageolet','borlotti'];
+const SHOPPING_CATEGORY_FAMILIES = [
+  ['condiments', CONDIMENT_KW],
+  ['fruit', FRUIT_KW],
+  ['dairy', DAIRY_KW],
+  ['protein', PROTEIN_KW],
+  ['vegetables', VEG_KW],
+  ['carbs', CARB_KW],
+  ['herbs', HERB_KW],
+  ['tins', TIN_KW],
+].map(([category, keywords]) => [
+  category,
+  keywords.map(keyword => normaliseIngredientPhrase(keyword).split(' ').filter(Boolean)),
+]);
+const SHOPPING_CATEGORY_CACHE = new Map();
 
 function categoriseIngredient(ing) {
-  const lower = ing.toLowerCase();
-  if (FRUIT_KW.some(k => lower.includes(k)))      return 'fruit';
-  if (PROTEIN_KW.some(k => lower.includes(k)))    return 'protein';
-  if (VEG_KW.some(k => lower.includes(k)))        return 'vegetables';
-  if (DAIRY_KW.some(k => lower.includes(k)))      return 'dairy';
-  if (CARB_KW.some(k => lower.includes(k)))       return 'carbs';
-  if (HERB_KW.some(k => lower.includes(k)))       return 'herbs';
-  if (CONDIMENT_KW.some(k => lower.includes(k)))  return 'condiments';
-  if (TIN_KW.some(k => lower.includes(k)))        return 'tins';
+  const normalised = normaliseIngredientPhrase(ing);
+  const categoryKey = normalised.replace(/\b\d+\b/g, '').replace(/\s+/g, ' ').trim();
+  const cached = SHOPPING_CATEGORY_CACHE.get(categoryKey);
+  if (cached) return cached;
+
+  for (const [category, keywordTokenGroups] of SHOPPING_CATEGORY_FAMILIES) {
+    if (matchesIngredientFamily(categoryKey, keywordTokenGroups)) {
+      SHOPPING_CATEGORY_CACHE.set(categoryKey, category);
+      return category;
+    }
+  }
+  SHOPPING_CATEGORY_CACHE.set(categoryKey, 'extras');
   return 'extras';
+}
+
+function matchesIngredientFamily(normalisedIngredient, keywordTokenGroups) {
+  const ingredientTokens = normalisedIngredient.split(' ').filter(Boolean);
+  return keywordTokenGroups.some(keywordTokens => {
+    if (!keywordTokens.length || keywordTokens.length > ingredientTokens.length) return false;
+
+    return ingredientTokens.some((_, start) => keywordTokens.every((keywordToken, offset) => (
+      ingredientTokenMatches(ingredientTokens[start + offset], keywordToken)
+    )));
+  });
+}
+
+function ingredientTokenMatches(ingredientToken, keywordToken) {
+  if (!ingredientToken) return false;
+  if (ingredientToken === keywordToken) return true;
+  if (keywordToken.endsWith('y')) return ingredientToken === `${keywordToken.slice(0, -1)}ies`;
+  if (keywordToken.endsWith('s')) return false;
+  return ingredientToken === `${keywordToken}s` || ingredientToken === `${keywordToken}es`;
+}
+
+function normaliseIngredientPhrase(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[’']/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }
 
 export function buildShoppingList(plan) {
@@ -360,6 +405,15 @@ function addShoppingIngredient(group, ingredient) {
 
 function parseShoppingIngredient(ingredient) {
   const cleaned = cleanPortionScaleText(ingredient);
+  const leadingCountWithGramNote = cleaned.match(/^(\d+(?:\.\d+)?)\s+(.+?)\s*\(\s*\d+(?:\.\d+)?\s*g[^)]*\)$/i);
+  if (leadingCountWithGramNote) {
+    const [, amount, label] = leadingCountWithGramNote;
+    const countNoun = label.match(/\b([a-z]+s?)\b(?=[^a-z]*$)/i)?.[1];
+    if (isCountUnit(countNoun)) {
+      return buildParsedIngredient(label, Number(amount), 'item', '', true);
+    }
+  }
+
   const measured = cleaned.match(/^(.*?)(\d+(?:\.\d+)?)\s*(kg|g|ml|l|tbsp|tsp)\b(.*)$/i);
   if (measured) {
     const [, prefix, amount, unit, suffix] = measured;
@@ -394,11 +448,17 @@ function parseShoppingIngredient(ingredient) {
     return buildParsedIngredient(prefix, amount, 'item', suffix);
   }
 
+  const leadingBareCount = cleaned.match(/^(\d+(?:\.\d+)?)\s+(.+)$/);
+  if (leadingBareCount) {
+    const [, amount, label] = leadingBareCount;
+    return buildParsedIngredient(label, Number(amount), 'item');
+  }
+
   const key = buildShoppingKey(cleaned);
   return { key, label: cleaned, amount: null, unit: '', suffix: '', count: 1 };
 }
 
-function buildParsedIngredient(prefix, amount, unit, suffix = '') {
+function buildParsedIngredient(prefix, amount, unit, suffix = '', amountFirst = false) {
   const label = prefix.trim();
   const cleanSuffix = suffix.trim();
   const key = `${buildShoppingKey(label)}|${unit}|${buildShoppingKey(cleanSuffix)}`;
@@ -410,6 +470,7 @@ function buildParsedIngredient(prefix, amount, unit, suffix = '') {
     unit,
     suffix: cleanSuffix,
     count: 1,
+    amountFirst,
   };
 }
 
@@ -425,13 +486,59 @@ function formatShoppingIngredient(item) {
     return item.count > 1 ? `${item.label} x${item.count}` : item.label;
   }
 
+  const countable = item.unit === 'item' || isCountUnit(item.unit);
+  const purchaseAmount = countable
+    ? Math.max(1, Math.ceil(item.amount - Number.EPSILON))
+    : roundShoppingMeasurementUp(item.amount, item.unit);
   const amount = item.unit === 'item'
-    ? formatFractionAmount(item.amount)
+    ? String(purchaseAmount)
     : isCountUnit(item.unit)
-      ? `${formatWholeCount(item.amount)} ${formatCountUnit(item.unit, formatWholeCount(item.amount))}`
-      : formatMeasuredAmount(item.amount, item.unit);
+      ? `${purchaseAmount} ${formatCountUnit(item.unit, purchaseAmount)}`
+      : `${purchaseAmount > item.amount ? 'at least ' : ''}${formatMeasuredAmount(purchaseAmount, item.unit)}`;
   const suffix = item.suffix ? ` ${item.suffix}` : '';
-  return `${item.label} ${amount}${suffix}`.trim();
+  const usage = countable && purchaseAmount > item.amount
+    ? ` (about ${formatApproximateUse(item.amount)} used)`
+    : '';
+  const purchaseText = item.amountFirst
+    ? `${amount} ${item.label}${suffix}`
+    : `${item.label} ${amount}${suffix}`;
+  return `${purchaseText}${usage}`.trim();
+}
+
+function roundShoppingMeasurementUp(value, unit) {
+  const amount = Number(value);
+  const lowerUnit = String(unit || '').toLowerCase();
+  let increment = 0.25;
+
+  if (lowerUnit === 'g' || lowerUnit === 'ml') {
+    if (amount <= 25) increment = 1;
+    else if (amount <= 100) increment = 5;
+    else if (amount <= 500) increment = 10;
+    else if (amount <= 1000) increment = 25;
+    else increment = 50;
+  } else if (lowerUnit === 'kg' || lowerUnit === 'l') {
+    increment = 0.05;
+  }
+
+  return Math.ceil((amount - Number.EPSILON) / increment) * increment;
+}
+
+function formatApproximateUse(value) {
+  const options = [
+    [0.25, '1/4'], [1 / 3, '1/3'], [0.5, '1/2'], [2 / 3, '2/3'], [0.75, '3/4'],
+  ];
+  const amount = Number(value);
+  const whole = Math.floor(amount);
+  const fraction = amount - whole;
+  const [matchedValue, matchedText] = options.reduce((best, option) => (
+    Math.abs(option[0] - fraction) < Math.abs(best[0] - fraction) ? option : best
+  ), options[0]);
+
+  if (fraction < 0.125) return whole ? String(whole) : 'less than 1/4';
+  const fractionText = Math.abs(matchedValue - fraction) <= 0.18
+    ? matchedText
+    : formatFractionAmount(fraction);
+  return whole ? `${whole} ${fractionText}` : fractionText;
 }
 
 function normaliseShoppingIngredient(ing) {

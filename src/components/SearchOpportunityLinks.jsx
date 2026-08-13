@@ -6,8 +6,8 @@ import {
 import { toTitleCase } from '../utils/textFormatting.js';
 
 export default function SearchOpportunityLinks({
-  title = 'Useful UK meal prep routes',
-  intro = 'Start with practical guides, calorie plans, shopping-list routes and container comparisons that help you choose what to prep next.',
+  title = 'Helpful next steps',
+  intro = 'Start with practical guides, calorie plans, shopping lists and container comparisons that help you choose what to prep next.',
   showDiscovery = true,
   compact = false,
 }) {

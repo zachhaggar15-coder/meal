@@ -266,9 +266,9 @@ export default function ContainerHub() {
         <section className="container-search-match" aria-labelledby="container-query-heading">
           <div className="section-head-inline">
             <div>
-              <h2 id="container-query-heading">Best container by search</h2>
+              <h2 id="container-query-heading">Choose by how you will use it</h2>
               <p>
-                Tap the phrase that looks closest to what you searched for, then compare
+                Pick the job that sounds closest to your week, then compare
                 only the container type that fits that job.
               </p>
             </div>
@@ -276,7 +276,7 @@ export default function ContainerHub() {
           <div className="container-search-grid">
             {queryRows.map(row => (
               <article key={row.query} className="container-search-card">
-                <span>Search</span>
+                <span>Best for</span>
                 <h3>{toTitleCase(row.query)}</h3>
                 <p>{row.answer}</p>
                 {row.link.startsWith('#') ? (

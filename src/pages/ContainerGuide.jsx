@@ -259,9 +259,9 @@ export default function ContainerGuide() {
         <section className="container-search-match" aria-labelledby="container-intent-heading">
           <div className="section-head-inline">
             <div>
-              <h2 id="container-intent-heading">Best container by search intent</h2>
+              <h2 id="container-intent-heading">Choose by how you will use it</h2>
               <p>
-                Match the buyer need first: cheap plastic tubs, glass meal prep boxes,
+                Start with the job you need the container to do: cheap plastic tubs, glass meal prep boxes,
                 leakproof lunch containers, freezer bags or a work-lunch setup.
               </p>
             </div>

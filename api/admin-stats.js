@@ -7,6 +7,8 @@
 //   SUPABASE_SERVICE_ROLE_KEY
 //   ADMIN_DASHBOARD_TOKEN   (a long random string you choose)
 
+import { SEMANTIC_QA_DASHBOARD } from '../src/data/semanticQaDashboard.js';
+
 const WAITLIST_SELECT = [
   'email',
   'first_name',
@@ -109,6 +111,7 @@ export default async function handler(req, res) {
 
   const stats = buildWaitlistStats(rows);
   stats.analytics = await loadAnalyticsStats(supabaseUrl, headers);
+  stats.semanticQa = SEMANTIC_QA_DASHBOARD;
 
   res.setHeader('Cache-Control', 'no-store');
   return res.status(200).json(stats);
