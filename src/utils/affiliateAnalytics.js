@@ -1,5 +1,7 @@
 export const AFFILIATE_PRODUCT_CLICK_EVENT = 'affiliate_product_click';
+export const AFFILIATE_PRODUCT_IMPRESSION_EVENT = 'affiliate_product_impression';
 export const AFFILIATE_BASELINE_DATE = '2026-08-13';
+export const AFFILIATE_BASELINE_TIMESTAMP = '2026-08-13T18:54:50.777Z';
 
 export const RECOMMENDATION_SOURCES = Object.freeze([
   'container_buying_guide',
@@ -75,13 +77,16 @@ export function buildAffiliateEventProperties(target, context = {}) {
   const sourceComponent = dataset.sourcePage || '';
   const listPosition = parseListPosition(dataset.listPosition);
 
+  const placement = dataset.placement || inferPlacement(sourceComponent);
+
   return compactProperties({
     product_id: dataset.productId || extractAmazonProductId(href),
     product_name: dataset.productName || dataset.offer,
     product_category: dataset.productCategory || dataset.affiliateCategory,
     source_page: normalisePath(pathname),
     source_page_type: dataset.sourcePageType || inferSourcePageType(pathname),
-    placement: dataset.placement || inferPlacement(sourceComponent),
+    placement,
+    placement_group: getAffiliatePlacementGroup(placement),
     list_position: listPosition,
     selected_problem: dataset.selectedProblem,
     viewport_category: getViewportCategory(viewportWidth),
@@ -93,6 +98,24 @@ export function buildAffiliateEventProperties(target, context = {}) {
     source_component: sourceComponent,
     destination: href,
   });
+}
+
+export function getAffiliatePlacementGroup(value) {
+  const placement = String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '_');
+  if (/quick_pick/.test(placement)) return 'quick_picks';
+  if (/detailed|product_card|product_image|recommendation_card/.test(placement)) return 'detailed_recommendation';
+  if (/comparison|snapshot|table/.test(placement)) return 'comparison_section';
+  return 'other';
+}
+
+export function buildAffiliateImpressionKey(properties = {}) {
+  return [
+    properties.source_page || '/',
+    properties.product_id || properties.product_name || 'unknown_product',
+    String(properties.source_component || 'unknown_component').replace(/-image$/, ''),
+    properties.placement_group || getAffiliatePlacementGroup(properties.placement),
+    properties.list_position || 'unpositioned',
+  ].join('|');
 }
 
 export function affiliateLinkData({

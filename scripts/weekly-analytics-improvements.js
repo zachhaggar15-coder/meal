@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { google } from 'googleapis';
+import { buildAffiliateMeasurement } from '../api/admin-stats.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { blogPostsData } from '../src/data/blogPosts.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
@@ -29,6 +30,10 @@ import {
 } from './lib/shippedChanges.js';
 import { runWeeklySemanticQa } from './lib/semanticPlanQa.js';
 import { buildPublicPopularityLinks } from './lib/publicPopularity.js';
+import {
+  SEO_EXPERIMENTS,
+  buildSeoExperimentReviews,
+} from './lib/seoExperiments.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -88,12 +93,15 @@ async function main() {
   let gaLandingPages = [];
   let gaEventCounts = [];
   let fieldVitalRows = [];
+  let commercialEventRows = [];
+  let seoExperimentSnapshots = [];
   let semanticQa;
 
   if (sampleMode) {
     ({ currentSearchRows, previousSearchRows, gaLandingPages } = sampleAnalyticsData());
     gaEventCounts = sampleGa4EventCounts();
     fieldVitalRows = sampleFieldVitalRows();
+    commercialEventRows = sampleCommercialEventRows();
   } else {
     if (!options.siteUrl && !options.ga4PropertyId) {
       throw new Error(
@@ -119,6 +127,15 @@ async function main() {
         endDate: range.previous.endDate,
         rowLimit: options.gscRowLimit,
       });
+      try {
+        seoExperimentSnapshots = await fetchSearchConsoleExperimentSnapshots(auth, {
+          siteUrl: options.siteUrl,
+          startDate: range.current.startDate,
+          endDate: range.current.endDate,
+        });
+      } catch (error) {
+        warnings.push(`SEO experiment Search Console fetch failed independently: ${error.message || error}`);
+      }
     } else {
       warnings.push('SEARCH_CONSOLE_SITE_URL is missing, so search opportunity scoring was skipped.');
     }
@@ -170,6 +187,15 @@ async function main() {
       } catch (error) {
         warnings.push(`Field Core Web Vitals fetch failed: ${error.message || error}`);
       }
+      try {
+        commercialEventRows = await fetchCommercialEventRows({
+          supabaseUrl: process.env.SUPABASE_URL,
+          serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+          rowLimit: 20000,
+        });
+      } catch (error) {
+        warnings.push(`Commercial funnel fetch failed independently: ${error.message || error}`);
+      }
     } else {
       warnings.push('Supabase analytics credentials are missing, so field Core Web Vitals remain available only in the private dashboard.');
     }
@@ -218,6 +244,8 @@ async function main() {
     routeIndex,
     recentActivity,
     fieldVitalRows,
+    commercialEventRows,
+    seoExperimentSnapshots,
     semanticQa,
     warnings,
   });
@@ -337,6 +365,45 @@ async function fetchSearchConsoleRows(auth, { siteUrl, startDate, endDate, rowLi
   }).filter(Boolean);
 }
 
+async function fetchSearchConsoleExperimentSnapshots(auth, { siteUrl, startDate, endDate }) {
+  const searchconsole = google.searchconsole({ version: 'v1', auth });
+
+  return Promise.all(SEO_EXPERIMENTS.map(async experiment => {
+    const pageUrl = new URL(experiment.route, 'https://www.mealprep.org.uk').href;
+    const pageFilter = { dimension: 'page', operator: 'equals', expression: pageUrl };
+    const request = async (dimensions, filters) => {
+      const response = await searchconsole.searchanalytics.query({
+        siteUrl,
+        requestBody: {
+          startDate,
+          endDate,
+          dimensions,
+          dimensionFilterGroups: [{ filters }],
+          rowLimit: 10,
+          searchType: 'web',
+        },
+      });
+      const row = response.data.rows?.[0];
+      return row ? {
+        clicks: numberOrZero(row.clicks),
+        impressions: numberOrZero(row.impressions),
+        ctr: Number.isFinite(Number(row.ctr)) ? Number(row.ctr) : null,
+        avgPosition: Number.isFinite(Number(row.position)) ? Number(row.position) : null,
+      } : { clicks: 0, impressions: 0, ctr: null, avgPosition: null };
+    };
+
+    return {
+      id: experiment.id,
+      page: await request(['page'], [pageFilter]),
+      exactQuery: await request(['query'], [
+        pageFilter,
+        { dimension: 'query', operator: 'equals', expression: experiment.query },
+      ]),
+      source: 'Fresh Google Search Console API data',
+    };
+  }));
+}
+
 async function fetchGa4LandingPages(auth, { propertyId, startDate, endDate, rowLimit }) {
   const analyticsdata = google.analyticsdata({ version: 'v1beta', auth });
   const response = await analyticsdata.properties.runReport({
@@ -418,6 +485,33 @@ async function fetchFieldVitalRows({ supabaseUrl, serviceKey, startDate, rowLimi
     throw new Error(`analytics_events ${response.status}: ${detail.slice(0, 240)}`);
   }
   return response.json();
+}
+
+async function fetchCommercialEventRows({ supabaseUrl, serviceKey, rowLimit }) {
+  const baseUrl = String(supabaseUrl || '').replace(/\/$/, '');
+  const url = new URL(`${baseUrl}/rest/v1/analytics_events`);
+  url.searchParams.set('select', 'occurred_at,event_name,path,metadata');
+  url.searchParams.set('event_name', 'in.(page_view,affiliate_product_impression,affiliate_product_click)');
+  url.searchParams.set('occurred_at', 'gte.2026-08-13T18:54:50.777Z');
+  url.searchParams.set('order', 'occurred_at.desc.nullslast');
+  url.searchParams.set('limit', String(rowLimit));
+
+  const response = await fetch(url, {
+    headers: {
+      apikey: serviceKey,
+      Authorization: `Bearer ${serviceKey}`,
+    },
+  });
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(`analytics_events ${response.status}: ${detail.slice(0, 240)}`);
+  }
+  const rows = await response.json();
+  return rows.map(row => ({
+    ...row,
+    ts: Date.parse(row.occurred_at),
+    metadata: row.metadata && typeof row.metadata === 'object' ? row.metadata : {},
+  })).filter(row => Number.isFinite(row.ts));
 }
 
 function buildFieldVitalsReview(rows, routeIndex) {
@@ -621,7 +715,7 @@ function isPublicPagePath(value) {
   return true;
 }
 
-function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, semanticQa, warnings }) {
+function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, commercialEventRows, seoExperimentSnapshots, semanticQa, warnings }) {
   const unverifiedRoutes = collectUnverifiedRoutes(currentSearchRows, gaLandingPages, routeIndex);
   if (unverifiedRoutes.length) {
     warnings.push(`Skipped ${unverifiedRoutes.length} analytics rows because their routes were not in the verified route inventory.`);
@@ -632,6 +726,11 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const gaRows = gaLandingPages.filter(row => routeIndex.has(row.path));
   const previousByKey = new Map(previousRows.map(row => [searchKey(row), row]));
   const gaByPath = new Map(gaRows.map(row => [row.path, row]));
+  const experimentStatus = buildSeoExperimentReviews({
+    snapshots: seoExperimentSnapshots,
+    now: range.generatedAt,
+  });
+  const activeExperimentRoutes = new Set(experimentStatus.filter(item => item.active).map(item => item.route));
 
   const enrichedSearchRows = currentRows.map(row => {
     const previous = previousByKey.get(searchKey(row));
@@ -641,7 +740,8 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     const ctrGap = Math.max(0, expectedCtrValue - row.ctr);
     const opportunityClass = classifyOpportunity(row);
     const considerationLevel = classifyConsideration(row.impressions);
-    const cooldown = isRouteInCooldown(row.page, routeMeta, recentActivity);
+    const cooldown = isRouteInCooldown(row.page, routeMeta, recentActivity)
+      || activeExperimentRoutes.has(row.page);
     const trend = buildTrend(row, previous);
     const score = opportunityScore({ row, ctrGap, trend, opportunityClass, considerationLevel, ga, cooldown });
     const searchIntent = classifySearchIntent(row.query);
@@ -685,7 +785,12 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const publicTrendingLinks = buildTrendingLinks(qualifiedRows, gaRows, routeIndex);
   const pageRollups = buildPageRollups(enrichedSearchRows, gaRows, routeIndex);
   const cannibalisationRisks = findCannibalisationRisks(enrichedSearchRows);
-  const doNotEdit = buildDoNotEditList(recentActivity, searchOpportunities);
+  const seoExperiments = buildSeoExperimentReviews({
+    searchRows: enrichedSearchRows,
+    snapshots: seoExperimentSnapshots,
+    now: range.generatedAt,
+  });
+  const doNotEdit = buildDoNotEditList(recentActivity, searchOpportunities, seoExperiments);
   const recommendedAction = chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit, semanticQa });
   const planClusters = buildPlanCompositionClusters();
   const compositionReview = buildCompositionTrafficReview({
@@ -697,6 +802,9 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const trackerHistory = readTrackerHistory();
   const shippedChangeEventHistory = readShippedChangeEventHistory();
   const shippedChangeReview = buildShippedChangeReview(trackerHistory, shippedChangeEventHistory);
+  const containerGuideCommercial = buildAffiliateMeasurement((commercialEventRows || []).filter(row => (
+    row.path === '/blog/best-meal-prep-containers-uk'
+  )));
 
   const generatedPublicData = {
     generatedAt: range.generatedAt,
@@ -719,6 +827,8 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     compositionReview,
     fieldVitals,
     shippedChangeReview,
+    containerGuideCommercial,
+    seoExperiments,
     semanticQa,
     gaLandingPages: gaRows,
     gaEventCounts: (gaEventCounts || []).filter(row => routeIndex.has(row.path)),
@@ -992,9 +1102,14 @@ function totalImpressions(pages) {
   return pages.reduce((total, page) => total + page.impressions, 0);
 }
 
-function buildDoNotEditList(recentActivity, opportunities) {
+function buildDoNotEditList(recentActivity, opportunities, seoExperiments = []) {
+  const experimentItems = seoExperiments.filter(experiment => experiment.active).map(experiment => ({
+    item: experiment.route,
+    reason: `${experiment.label}. Minimum cooldown runs until ${experiment.cooldownUntil}; intervene early only for an allowed rendering, Google-title, ranking-collapse, factual, functional or technical exception.`,
+  }));
   const cooldownRoutes = new Set(opportunities.filter(row => row.cooldown).map(row => row.page));
-  const routeItems = [...cooldownRoutes].map(route => ({
+  const experimentRoutes = new Set(experimentItems.map(item => item.item));
+  const routeItems = [...cooldownRoutes].filter(route => !experimentRoutes.has(route)).map(route => ({
     item: route,
     reason: `Recent source changes detected in the last ${options.cooldownDays} days; wait for more data unless there is a factual, UX or broken-link issue.`,
   }));
@@ -1004,7 +1119,7 @@ function buildDoNotEditList(recentActivity, opportunities) {
     reason: 'Recently changed source file; avoid broad follow-up rewrites without a fresh reason.',
   }));
 
-  return [...routeItems, ...sourceItems].slice(0, 12);
+  return [...experimentItems, ...routeItems, ...sourceItems].slice(0, 12);
 }
 
 function chooseRecommendedAction({ searchOpportunities, cannibalisationRisks, doNotEdit, semanticQa }) {
@@ -1346,6 +1461,39 @@ function renderWeeklyReport(analysis) {
   lines.push(`- Impression thresholds: ${options.minImpressions} minor, ${options.strongImpressions} strong, ${options.priorityImpressions} priority`);
   lines.push('');
 
+  lines.push('## Controlled SEO Experiments', '');
+  for (const experiment of analysis.seoExperiments) {
+    lines.push(`### ${experiment.route}`, '');
+    lines.push(`- Status: ${experiment.label}`);
+    lines.push(`- Started: ${experiment.startDate}; minimum cooldown ends: ${experiment.cooldownUntil}`);
+    lines.push(`- Data source: ${experiment.current.source}`);
+    lines.push(`- Page: ${formatExperimentMetrics(experiment.current.page)}`);
+    lines.push(`- Exact query \`${experiment.query}\`: ${formatExperimentMetrics(experiment.current.exactQuery)}`);
+    lines.push(`- Historical supplied page baseline (not a fresh API pull): ${formatExperimentMetrics(experiment.suppliedHistoricalBaseline.page)}`);
+    lines.push(`- Historical supplied exact-query baseline (not a fresh API pull): ${formatExperimentMetrics(experiment.suppliedHistoricalBaseline.exactQuery)}`);
+    if (experiment.recrawlCandidate) {
+      lines.push(`- Indexing/recrawl candidate recorded once for the ${experiment.startDate} deployment; do not repeat an indexing request every week.`);
+    }
+    lines.push('- Do not infer a decision from one weekly movement or rewrite the page automatically.', '');
+  }
+
+  lines.push('## Container Buying Guide Commercial Funnel', '');
+  const commercial = analysis.containerGuideCommercial;
+  lines.push(`- Canonical measurement starts: ${commercial.baselineTimestamp}`);
+  lines.push(`- Buying-guide views: ${commercial.pageViews}`);
+  lines.push(`- Product impressions: ${commercial.impressions}`);
+  lines.push(`- Canonical affiliate clicks: ${commercial.clicks}`);
+  lines.push(`- Affiliate CTR: ${commercial.impressions ? `${commercial.clicks} clicks / ${commercial.impressions} impressions (${commercial.affiliateCtr}%)` : `unavailable (${commercial.clicks} clicks / 0 measured impressions)`}`);
+  lines.push(`- Affiliate clicks per 1,000 page views: ${commercial.clicksPerThousandPageViews ?? 'unavailable'}`);
+  lines.push('- Measurement stops at the outbound Amazon click; no Amazon conversion or revenue is inferred.');
+  lines.push('');
+  writeAffiliateBreakdown(lines, 'Placement', commercial.byPlacement);
+  writeAffiliateBreakdown(lines, 'Product ID', commercial.byProductId);
+  writeAffiliateBreakdown(lines, 'Product category', commercial.byProductCategory);
+  writeAffiliateBreakdown(lines, 'List position', commercial.byListPosition);
+  writeAffiliateBreakdown(lines, 'Recommendation source', commercial.byRecommendationSource);
+  writeAffiliateBreakdown(lines, 'Device', commercial.byViewport);
+
   lines.push('## Plan Quality', '');
   const semanticRun = analysis.semanticQa?.run;
   if (!semanticRun?.sampleSize) {
@@ -1672,6 +1820,24 @@ function sampleFieldVitalRows() {
   ];
 }
 
+function sampleCommercialEventRows() {
+  const ts = Date.parse('2026-08-14T12:00:00Z');
+  const path = '/blog/best-meal-prep-containers-uk';
+  const metadata = {
+    product_id: 'budget-compartment-50-pack',
+    product_category: 'meal-prep-containers',
+    placement: 'quick_picks',
+    list_position: 1,
+    viewport_category: 'mobile',
+    recommendation_source: 'container_buying_guide',
+  };
+  return [
+    { ts, event_name: 'page_view', path, metadata: {} },
+    { ts, event_name: 'affiliate_product_impression', path, metadata },
+    { ts, event_name: 'affiliate_product_click', path, metadata },
+  ];
+}
+
 function labelFromPath(value) {
   if (value === '/') return 'Home';
   const last = value.split('/').filter(Boolean).pop() || value;
@@ -1708,6 +1874,32 @@ function csvCell(value) {
 
 function mdCell(value) {
   return String(value ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
+}
+
+function formatExperimentMetrics(metrics = {}) {
+  const clicks = numberOrZero(metrics.clicks);
+  const impressions = numberOrZero(metrics.impressions);
+  const ctr = Number.isFinite(Number(metrics.ctr))
+    ? `${round(Number(metrics.ctr) * 100, 2)}% CTR`
+    : 'CTR unavailable';
+  const position = Number.isFinite(Number(metrics.avgPosition))
+    ? `average position ${round(Number(metrics.avgPosition), 2)}`
+    : 'average position unavailable';
+  return `${clicks} clicks / ${impressions} impressions / ${ctr} / ${position}`;
+}
+
+function writeAffiliateBreakdown(lines, label, rows = []) {
+  lines.push(`### ${label}`, '');
+  lines.push('| Value | Clicks | Impressions | Affiliate CTR |');
+  lines.push('| --- | ---: | ---: | ---: |');
+  if (!rows.length) {
+    lines.push('| Awaiting data | 0 | 0 | unavailable |', '');
+    return;
+  }
+  for (const row of rows) {
+    lines.push(`| ${mdCell(row.name)} | ${row.clicks} | ${row.impressions} | ${row.impressions ? `${row.clicks} / ${row.impressions} (${row.affiliateCtr}%)` : 'unavailable'} |`);
+  }
+  lines.push('');
 }
 
 function numberOrZero(value) {

@@ -10,6 +10,11 @@ import {
 } from './lib/planCompositionClusters.js';
 import { buildPublicPopularityLinks } from './lib/publicPopularity.js';
 import { extractDomIds } from './lib/accessibilityMarkup.js';
+import {
+  SEO_EXPERIMENT_ACTIVE_LABEL,
+  SEO_EXPERIMENTS,
+  buildSeoExperimentReviews,
+} from './lib/seoExperiments.js';
 
 test('metadata titles stay inside the review range', () => {
   const values = [
@@ -55,6 +60,22 @@ test('all composition clusters receive stable route-level review records', () =>
   assert.equal(review.clusters.length, 74);
   assert.equal(new Set(review.clusters.map(item => item.reviewId)).size, 74);
   assert.equal(review.clusters.find(item => item.reviewId === first.reviewId)?.status, 'review_consolidation');
+});
+
+test('container metadata experiment records supplied baselines and enforces its cooldown', () => {
+  const [experiment] = SEO_EXPERIMENTS;
+  const [active] = buildSeoExperimentReviews({ now: new Date('2026-08-20T12:00:00Z') });
+  const [complete] = buildSeoExperimentReviews({ now: new Date('2026-09-10T12:00:00Z') });
+  const source = fs.readFileSync(path.resolve('src/data/containerBlogPosts.js'), 'utf8');
+
+  assert.equal(experiment.suppliedHistoricalBaseline.page.impressions, 8210);
+  assert.equal(experiment.suppliedHistoricalBaseline.exactQuery.clicks, 8);
+  assert.equal(active.label, SEO_EXPERIMENT_ACTIVE_LABEL);
+  assert.equal(active.active, true);
+  assert.equal(complete.active, false);
+  assert.match(source, /title: 'Best Meal Prep Containers UK: 3 Practical Picks'/);
+  assert.match(source, /description: 'Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance\.'/);
+  assert.match(source, /h1: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options'/);
 });
 
 test('public popularity links use measured engagement order and curated descriptions only', () => {

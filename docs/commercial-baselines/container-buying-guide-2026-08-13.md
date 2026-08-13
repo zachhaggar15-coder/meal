@@ -6,7 +6,8 @@ Captured: 13 August 2026
 
 Pre-change observation window: 15 May to 12 August 2026
 
-Canonical affiliate measurement starts: 13 August 2026, after the canonical-event release reaches production
+Canonical affiliate measurement starts: 13 August 2026 at 18:54:50.777 UTC
+(production deployment `dpl_565mBMphB4C9S3DjguVWSF9nAv8A`)
 
 ## Search
 
@@ -62,11 +63,13 @@ as historical diagnostics only and are not a conversion baseline.
 | Canonical clicks by product / placement / viewport | Unavailable before launch |
 | Affiliate product impressions | Not collected |
 
-From the canonical start date, the private analytics response reports canonical
-clicks, page views, clicks per 1,000 page views, and breakdowns by product,
-placement, viewport and recommendation source. Affiliate CTR remains explicitly
-unavailable until a dedicated `affiliate_product_impression` event is shipped;
-page views must not be mislabeled as product impressions.
+From the canonical start timestamp, the private analytics response reports
+canonical clicks, page views, clicks per 1,000 page views, and breakdowns by
+product, placement, viewport and recommendation source. Product-impression
+collection begins with the metadata experiment deployment. From that point,
+affiliate CTR is canonical clicks divided by measured product impressions and
+must always be displayed with its click and impression denominator. Page views
+must never be mislabeled as product impressions.
 
 ## Internal journey
 

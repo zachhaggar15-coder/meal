@@ -14,6 +14,20 @@ plan and build checks pass. It does not rewrite article copy, metadata, routes,
 meal plans, blog posts or long-form content automatically. After a successful
 run it emails the latest report and suggested action summary through Resend.
 
+Controlled metadata experiments are registered in
+`scripts/lib/seoExperiments.js`. While an experiment is inside its minimum
+cooldown, the report labels the route `SEO experiment active — do not rewrite`,
+keeps it in the do-not-edit list, records fresh page and exact-query Search
+Console metrics when available, and does not recommend another rewrite from a
+single weekly movement.
+
+The container buying-guide commercial section uses the canonical
+`affiliate_product_click` and `affiliate_product_impression` events. It reports
+views, impressions, clicks, clicks per 1,000 views and CTR with explicit click
+and impression denominators, plus placement, product, list-position,
+recommendation-source and device breakdowns. Measurement stops at the Amazon
+outbound click unless real downstream data is available.
+
 ## Required GitHub Secrets
 
 Add these repository secrets before enabling the weekly job:

@@ -8,6 +8,12 @@
 //   ADMIN_DASHBOARD_TOKEN   (a long random string you choose)
 
 import { SEMANTIC_QA_DASHBOARD } from '../src/data/semanticQaDashboard.js';
+import {
+  AFFILIATE_BASELINE_TIMESTAMP,
+  AFFILIATE_PRODUCT_CLICK_EVENT,
+  AFFILIATE_PRODUCT_IMPRESSION_EVENT,
+  getAffiliatePlacementGroup,
+} from '../src/utils/affiliateAnalytics.js';
 
 const WAITLIST_SELECT = [
   'email',
@@ -291,48 +297,81 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
   };
 }
 
-function buildAffiliateMeasurement(events) {
-  const baselineDate = '2026-08-13';
-  const baselineMs = Date.parse(`${baselineDate}T00:00:00.000Z`);
+export function buildAffiliateMeasurement(events) {
+  const baselineTimestamp = AFFILIATE_BASELINE_TIMESTAMP;
+  const baselineDate = baselineTimestamp.slice(0, 10);
+  const baselineMs = Date.parse(baselineTimestamp);
   const current = events.filter(event => event.ts >= baselineMs);
-  const clicks = current.filter(event => event.event_name === 'affiliate_product_click');
+  const clicks = current.filter(event => event.event_name === AFFILIATE_PRODUCT_CLICK_EVENT);
+  const impressions = current.filter(event => event.event_name === AFFILIATE_PRODUCT_IMPRESSION_EVENT);
   const pageViews = current.filter(event => event.event_name === 'page_view');
   const legacy = events.filter(event => (
     event.event_name === 'affiliate_click' || event.event_name === 'affiliate_link_clicked'
   ));
 
-  const countMetadata = key => toNameValue(clicks.reduce((counts, event) => {
-    const value = event.metadata?.[key] || 'Not specified';
+  const countMetadata = (rows, key, normalise = value => value) => toNameValue(rows.reduce((counts, event) => {
+    const value = normalise(event.metadata?.[key] || 'Not specified');
     counts[value] = (counts[value] || 0) + 1;
     return counts;
   }, {})).slice(0, 20);
 
+  const buildBreakdown = key => {
+    const clickCounts = countByMetadata(clicks, key);
+    const impressionCounts = countByMetadata(impressions, key);
+    return unique([...Object.keys(clickCounts), ...Object.keys(impressionCounts)])
+      .map(value => metricRow(value, clickCounts[value] || 0, impressionCounts[value] || 0))
+      .sort((left, right) => right.clicks - left.clicks || right.impressions - left.impressions);
+  };
+
+  const buildPlacementBreakdown = () => {
+    const clickCounts = countByMetadata(clicks, 'placement', getAffiliatePlacementGroup);
+    const impressionCounts = countByMetadata(impressions, 'placement', getAffiliatePlacementGroup);
+    return ['quick_picks', 'detailed_recommendation', 'comparison_section', 'other']
+      .map(value => metricRow(value, clickCounts[value] || 0, impressionCounts[value] || 0));
+  };
+
   const paths = unique([
     ...pageViews.map(event => event.path),
     ...clicks.map(event => event.path),
+    ...impressions.map(event => event.path),
   ].filter(Boolean));
 
   return {
     baselineDate,
-    canonicalEvent: 'affiliate_product_click',
+    baselineTimestamp,
+    canonicalEvent: AFFILIATE_PRODUCT_CLICK_EVENT,
+    impressionEvent: AFFILIATE_PRODUCT_IMPRESSION_EVENT,
     clicks: clicks.length,
+    impressions: impressions.length,
     pageViews: pageViews.length,
     clicksPerThousandPageViews: pageViews.length
       ? round((clicks.length / pageViews.length) * 1000)
       : null,
-    affiliateCtr: null,
-    affiliateCtrNote: 'Requires affiliate_product_impression events; do not substitute legacy click labels.',
-    byProduct: countMetadata('product_name'),
-    byPlacement: countMetadata('placement'),
-    byViewport: countMetadata('viewport_category'),
-    byRecommendationSource: countMetadata('recommendation_source'),
+    affiliateCtr: impressions.length ? round((clicks.length / impressions.length) * 100) : null,
+    affiliateCtrNumerator: clicks.length,
+    affiliateCtrDenominator: impressions.length,
+    affiliateCtrNote: impressions.length
+      ? 'CTR is canonical clicks divided by measured product impressions; always show both counts.'
+      : 'Awaiting affiliate_product_impression events; do not substitute page views or legacy click labels.',
+    byProduct: countMetadata(clicks, 'product_name'),
+    byPlacement: buildPlacementBreakdown(),
+    byProductId: buildBreakdown('product_id'),
+    byProductCategory: buildBreakdown('product_category'),
+    byListPosition: buildBreakdown('list_position'),
+    byViewport: buildBreakdown('viewport_category'),
+    byRecommendationSource: buildBreakdown('recommendation_source'),
     pages: paths.map(path => {
       const views = pageViews.filter(event => event.path === path).length;
       const pageClicks = clicks.filter(event => event.path === path).length;
+      const pageImpressions = impressions.filter(event => event.path === path).length;
       return {
         path,
         pageViews: views,
         clicks: pageClicks,
+        impressions: pageImpressions,
+        affiliateCtr: pageImpressions ? round((pageClicks / pageImpressions) * 100) : null,
+        affiliateCtrNumerator: pageClicks,
+        affiliateCtrDenominator: pageImpressions,
         clicksPerThousandPageViews: views ? round((pageClicks / views) * 1000) : null,
       };
     }).sort((left, right) => right.clicks - left.clicks || right.pageViews - left.pageViews),
@@ -342,6 +381,26 @@ function buildAffiliateMeasurement(events) {
       affiliateLinkClicked: legacy.filter(event => event.event_name === 'affiliate_link_clicked').length,
       note: 'Historical diagnostics only; never add these to canonical conversions.',
     },
+  };
+}
+
+function countByMetadata(events, key, normalise = value => value) {
+  return events.reduce((counts, event) => {
+    const raw = event.metadata?.[key];
+    const value = String(normalise(raw === undefined || raw === '' ? 'Not specified' : raw));
+    counts[value] = (counts[value] || 0) + 1;
+    return counts;
+  }, {});
+}
+
+function metricRow(value, clicks, impressions) {
+  return {
+    name: String(value),
+    clicks,
+    impressions,
+    affiliateCtr: impressions ? round((clicks / impressions) * 100) : null,
+    affiliateCtrNumerator: clicks,
+    affiliateCtrDenominator: impressions,
   };
 }
 

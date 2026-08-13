@@ -18,12 +18,17 @@ import {
   writePlanProgress,
 } from '../src/utils/planRetention.js';
 import {
+  AFFILIATE_BASELINE_TIMESTAMP,
   AFFILIATE_PRODUCT_CLICK_EVENT,
+  AFFILIATE_PRODUCT_IMPRESSION_EVENT,
   affiliateLinkData,
   buildAffiliateEventProperties,
+  buildAffiliateImpressionKey,
+  getAffiliatePlacementGroup,
   inferRecommendationSource,
   isAffiliateUrl,
 } from '../src/utils/affiliateAnalytics.js';
+import { buildAffiliateMeasurement } from '../api/admin-stats.js';
 
 test('calculator selections survive in browse URLs', () => {
   assert.equal(
@@ -281,6 +286,7 @@ test('canonical affiliate properties use stable page, placement and recommendati
     source_page: '/blog/best-meal-prep-containers-uk',
     source_page_type: 'article',
     placement: 'quick_picks',
+    placement_group: 'quick_picks',
     list_position: 2,
     selected_problem: 'full-week prep',
     viewport_category: 'mobile',
@@ -289,6 +295,76 @@ test('canonical affiliate properties use stable page, placement and recommendati
     destination: target.href,
   });
   assert.equal(inferRecommendationSource({ pathname: '/plans/aldi-high-protein-low-cal-1500' }), 'plan_derived');
+});
+
+test('affiliate impression keys deduplicate links within one product presentation', () => {
+  const base = {
+    source_page: '/meal-prep-accessories',
+    product_id: 'lunch-bag',
+    list_position: 1,
+  };
+  const image = buildAffiliateImpressionKey({
+    ...base,
+    source_component: 'accessories-starter-image',
+    placement: 'product_image',
+    placement_group: getAffiliatePlacementGroup('product_image'),
+  });
+  const cta = buildAffiliateImpressionKey({
+    ...base,
+    source_component: 'accessories-starter',
+    placement: 'detailed_card',
+    placement_group: getAffiliatePlacementGroup('detailed_card'),
+  });
+
+  assert.equal(image, cta);
+  assert.equal(getAffiliatePlacementGroup('quick_comparison_snapshot'), 'comparison_section');
+});
+
+test('commercial affiliate reporting retains CTR denominators and deployment boundary', () => {
+  const after = Date.parse(AFFILIATE_BASELINE_TIMESTAMP) + 1000;
+  const before = Date.parse(AFFILIATE_BASELINE_TIMESTAMP) - 1000;
+  const events = [
+    { ts: before, event_name: AFFILIATE_PRODUCT_CLICK_EVENT, path: '/blog/best-meal-prep-containers-uk', metadata: {} },
+    { ts: after, event_name: 'page_view', path: '/blog/best-meal-prep-containers-uk', metadata: {} },
+    ...Array.from({ length: 5 }, () => ({
+      ts: after,
+      event_name: AFFILIATE_PRODUCT_IMPRESSION_EVENT,
+      path: '/blog/best-meal-prep-containers-uk',
+      metadata: {
+        product_id: 'starter-pack',
+        product_category: 'meal-prep-containers',
+        placement: 'quick_picks',
+        list_position: 1,
+        viewport_category: 'mobile',
+        recommendation_source: 'container_buying_guide',
+      },
+    })),
+    {
+      ts: after,
+      event_name: AFFILIATE_PRODUCT_CLICK_EVENT,
+      path: '/blog/best-meal-prep-containers-uk',
+      metadata: {
+        product_id: 'starter-pack',
+        product_category: 'meal-prep-containers',
+        placement: 'quick_picks',
+        list_position: 1,
+        viewport_category: 'mobile',
+        recommendation_source: 'container_buying_guide',
+      },
+    },
+  ];
+  const report = buildAffiliateMeasurement(events);
+
+  assert.equal(report.baselineTimestamp, AFFILIATE_BASELINE_TIMESTAMP);
+  assert.equal(report.clicks, 1);
+  assert.equal(report.impressions, 5);
+  assert.equal(report.affiliateCtr, 20);
+  assert.equal(report.affiliateCtrNumerator, 1);
+  assert.equal(report.affiliateCtrDenominator, 5);
+  assert.deepEqual(report.byPlacement[0], {
+    name: 'quick_picks', clicks: 1, impressions: 5, affiliateCtr: 20,
+    affiliateCtrNumerator: 1, affiliateCtrDenominator: 5,
+  });
 });
 
 test('affiliate link attributes expose one canonical conversion event', () => {
