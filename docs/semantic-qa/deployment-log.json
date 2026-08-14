@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "deployments": [
+    {
+      "commit": "a9fc5e6ff065b1bc9562386e5f92b32b01a261db",
+      "deployedAt": "2026-08-14T13:58:00.373Z",
+      "summary": "Shopping-list dedup/unit-merge, egg-white weight presentation, category fixes (black pepper, green beans), recipe-method fixes (cooking spray, spring onion), diet-label fix, shopping-list checkbox/bullet fix, QA findings ledger + admin CLI, regression corpus. Verified live at mealprep.org.uk/plans/aldi-high-protein-low-cal-1500.",
+      "gate": "npm run check (lint, test, test:security, audit:dependencies, build+prerender 1404 routes, check:plans, audit:all) — exit 0"
+    }
+  ]
+}
