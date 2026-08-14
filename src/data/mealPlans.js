@@ -229,7 +229,7 @@ export const PLAN_1500 = [
   ], totals: { kcal: 1343, protein: 87 } },
   { day: 'Wednesday', meals: [
     { type: 'Breakfast', name: 'Banana & Oat Smoothie', kcal: 390, protein: 16, prep: '5 min', desc: 'Blended banana, 50 g oats, skimmed milk, and a teaspoon of peanut butter.', portion_size: '1 banana, 50g oats, 200ml skimmed milk, 1 tsp peanut butter' },
-    { type: 'Lunch', name: 'Grilled Chicken Caesar Salad', kcal: 166, protein: 28, prep: '10 min', desc: 'Chicken breast strips over romaine lettuce with a light Caesar dressing and Parmesan shavings. No croutons.', portion_size: '120g chicken breast, 80g romaine lettuce, 20ml light dressing' },
+    { type: 'Lunch', name: 'Grilled Chicken Caesar Salad', kcal: 180, protein: 28, prep: '10 min', desc: 'Chicken breast strips over romaine lettuce with a light Caesar dressing and Parmesan shavings. No croutons.', portion_size: '120g chicken breast, 80g romaine lettuce, 20ml light Caesar dressing' },
     { type: 'Dinner', name: 'Turkey Mince Chilli with Brown Rice', kcal: 423, protein: 40, prep: '25 min', desc: 'Lean turkey mince cooked with tinned tomatoes, kidney beans, and chilli spices. Served with brown rice.', portion_size: '150g turkey mince, 40g brown rice (dry), 80g kidney beans' },
     { type: 'Snack', name: 'Carrot Sticks & Hummus', kcal: 107, protein: 4, prep: '2 min', desc: '100 g carrot sticks with 40 g reduced-fat hummus.', portion_size: '100g carrot sticks, 40g hummus' },
   ], totals: { kcal: 1048, protein: 86 } },

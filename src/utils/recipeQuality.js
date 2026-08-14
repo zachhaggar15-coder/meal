@@ -2,9 +2,12 @@ import { getCookingIngredientModels } from './cookingQuantities.js';
 import { parseIngredientLine } from './ingredientParser.js';
 import {
   PROTEIN_FAMILIES,
+  PULSE_STATE,
   STARCH_FAMILIES,
   findProtein,
   findStarch,
+  hasCookingLiquid,
+  isDryPulseName,
   isPulseProteinFamily,
   isSoupSideAccompaniment,
   proteinAliasesFor,
@@ -12,6 +15,14 @@ import {
   resolvePulseState,
   starchAliasesFor,
 } from './ingredientRoles.js';
+
+// The bread-style carrier a toast/wrap/sandwich dish is built on. "toast"
+// belongs here because legacy plans name the ingredient itself that way
+// ("1 slice wholemeal toast") — without it, an avocado-toast method opened
+// with "Toast or warm the listed ingredients" because it found no carrier.
+// One shared constant rather than the three near-identical copies this
+// replaced.
+const BREAD_CARRIER_PATTERN = /(bread|toast|bagel|wrap|tortilla|pitta|roll)/i;
 
 const PLACEHOLDER_PATTERNS = [
   /\bcook (?:the )?pasta,?\s*rice or noodles\b/i,
@@ -90,10 +101,20 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (name.includes('smoothie')) {
+    // A "smoothie bowl" is eaten with a spoon and crunchy toppings, not
+    // poured into a glass — and those toppings (granola, seeds) are meant
+    // to stay crunchy, not get blended into the base.
+    const isBowl = name.includes('bowl');
+    const toppings = isBowl
+      ? findCookingNames(cookingIngredients, /(granola|seeds|nuts|coconut flakes)/i)
+      : [];
+    const base = withoutNames(remainingNames, toppings);
     return [
-      `Put ${joinNatural(remainingNames)} in a blender.`,
+      `Put ${joinNatural(base)} in a blender.`,
       'Blend until completely smooth, adding a small splash of water or milk only if needed.',
-      'Pour into a glass or shaker and serve cold.',
+      isBowl
+        ? `Pour into a bowl${toppings.length ? ` and top with ${joinNatural(toppings)}` : ''}, then serve cold.`
+        : 'Pour into a glass or shaker and serve cold.',
     ];
   }
 
@@ -109,6 +130,30 @@ export function buildPracticalRecipeSteps(meal = {}) {
     ];
   }
 
+  // A pancake/waffle is a strong dish-type signal that must outrank a
+  // secondary serving component in the name — "Wholemeal Pancakes with
+  // Low-Fat Yogurt" and "Protein Waffles with Greek Yogurt" both contain
+  // "yogurt", but the yogurt is a topping, not the dish: raw egg and flour
+  // are batter that MUST be whisked and cooked, never "topped" onto a cold
+  // yogurt bowl. Checked before the yogurt/cereal branch for that reason.
+  if (name.includes('pancake') || name.includes('waffle')) {
+    // "batter" catches legacy plans that list a pre-made batter as the
+    // ingredient ("80g pancake batter") — without it the batter fell
+    // through to the toppings and was bizarrely "served with" the pancakes.
+    const batter = findCookingNames(cookingIngredients, /(flour|egg|milk|protein powder|whey|batter)/i);
+    const toppings = withoutNames(remainingNames, batter);
+    const isWaffle = name.includes('waffle');
+    return [
+      `Whisk ${joinNatural(batter)} into a smooth batter and leave it to stand for 2 minutes.`,
+      isWaffle
+        ? 'Cook in a preheated waffle iron until golden and crisp, in batches if needed.'
+        : 'Lightly grease a non-stick pan, then cook small pancakes for 1-2 minutes per side.',
+      toppings.length
+        ? `Serve with ${joinNatural(toppings)}.`
+        : 'Serve while warm.',
+    ];
+  }
+
   if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
     const bases = findCookingNames(cookingIngredients, /(yogurt|skyr|kefir|weetabix|bran flakes|granola|milk|cereal)/i);
     const toppings = withoutNames(remainingNames, bases);
@@ -118,18 +163,6 @@ export function buildPracticalRecipeSteps(meal = {}) {
         ? `Top with ${joinNatural(toppings)}.`
         : 'Stir gently and serve.',
       'Eat straight away, or cover and chill for later the same day.',
-    ];
-  }
-
-  if (name.includes('pancake')) {
-    const batter = findCookingNames(cookingIngredients, /(flour|egg|milk)/i);
-    const toppings = withoutNames(remainingNames, batter);
-    return [
-      `Whisk ${joinNatural(batter)} into a smooth batter and leave it to stand for 2 minutes.`,
-      'Lightly grease a non-stick pan, then cook small pancakes for 1-2 minutes per side.',
-      toppings.length
-        ? `Serve with ${joinNatural(toppings)}.`
-        : 'Serve while warm.',
     ];
   }
 
@@ -251,20 +284,40 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (name.includes('full english')) {
-    const cookedItems = findCookingNames(cookingIngredients, /(bacon|sausage)/i);
-    const vegetables = findCookingNames(cookingIngredients, /(mushroom|tomato)/i);
+    // Every component of a full English is optional in practice — a
+    // high-protein version may have turkey rashers but no beans or toast.
+    // Each clause is therefore built only when its ingredient exists;
+    // previously the templates interpolated empty strings, producing
+    // "warm the  gently in a small saucepan" and "toast the ."
+    const cookedItems = findCookingNames(cookingIngredients, /(bacon|sausage|rasher)/i);
+    const fryPanVegetables = findCookingNames(cookingIngredients, /(mushroom|tomato)/i);
     const beans = findCookingName(cookingIngredients, /baked beans/i);
     const eggs = findCookingName(cookingIngredients, /^eggs?$/i) || 'eggs';
-    const toast = findCookingName(cookingIngredients, /bread/i);
+    const toast = findCookingName(cookingIngredients, BREAD_CARRIER_PATTERN);
+    const panStep = [
+      fryPanVegetables.length ? `Add ${joinNatural(fryPanVegetables)} to the pan and cook until softened` : '',
+      beans ? `warm the ${beans} gently in a small saucepan` : '',
+    ].filter(Boolean).join('; ');
     return [
-      `Cook ${joinNatural(cookedItems)} in a non-stick pan until browned and cooked through.`,
-      `Add ${joinNatural(vegetables)} to the pan and cook until softened; warm the ${beans} gently in a small saucepan.`,
-      `Cook the ${eggs} to your liking and toast the ${toast}.`,
+      cookedItems.length
+        ? `Cook ${joinNatural(cookedItems)} in a non-stick pan until browned and cooked through.`
+        : 'Heat a non-stick pan over medium heat.',
+      panStep ? `${panStep}.` : '',
+      `Cook the ${eggs} to your liking${toast ? ` and toast the ${toast}` : ''}.`,
       'Serve everything together while hot.',
-    ];
+    ].filter(Boolean);
   }
 
-  if (name.includes('lettuce cups')) {
+  // A meal named "... Wraps" or "... Cups" is only a bread/tortilla wrap if
+  // it actually has one — "Lean Beef Mince Lettuce Wraps" uses lettuce
+  // leaves as the wrapping vessel, not bread, and needs the same handling
+  // as "lettuce cups" (below), not the toast/bagel/wrap/sandwich branch
+  // further down, which would open with "Toast or warm" nothing.
+  const breadCarrierNames = findCookingNames(cookingIngredients, BREAD_CARRIER_PATTERN);
+  const lettuceVesselNames = findCookingNames(cookingIngredients, /lettuce|leaves/i);
+  const isLettuceVessel = lettuceVesselNames.length > 0 && breadCarrierNames.length === 0;
+
+  if (name.includes('lettuce cups') || (isLettuceVessel && /\b(wraps?|cups)\b/.test(name))) {
     const mince = findCookingName(cookingIngredients, /mince|turkey|beef|pork/i);
     const leaves = findCookingName(cookingIngredients, /lettuce|leaves/i) || 'lettuce leaves';
     // "Lettuce cups" describes a container, not a cooking method — a hot
@@ -319,7 +372,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (name.includes('toast') || name.includes('bagel') || name.includes('wrap') || name.includes('sandwich') || name.includes('pitta')) {
-    const carriers = findCookingNames(cookingIngredients, /(bread|bagel|wrap|tortilla|pitta|roll)/i);
+    const carriers = findCookingNames(cookingIngredients, BREAD_CARRIER_PATTERN);
     const filling = withoutNames(remainingNames, carriers);
     return [
       `${name.includes('sandwich') ? 'Lay out' : 'Toast or warm'} ${joinNatural(carriers)}.`,
@@ -338,7 +391,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
       vegetables.filter(item => !/(peas|mixed veg|green beans)/i.test(item)),
       [...leafy, starchName],
     );
-    const carriers = findCookingNames(cookingIngredients, /(bread|bagel|wrap|tortilla|pitta|roll)/i);
+    const carriers = findCookingNames(cookingIngredients, BREAD_CARRIER_PATTERN);
     const eggs = findCookingNames(cookingIngredients, /^eggs?$/i);
     const steps = [];
     if (starch) {
@@ -421,7 +474,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
         : aromatics.length || usableFirmVegetables.length
           ? `Heat a large pan over medium heat and soften ${joinNatural([...aromatics, ...usableFirmVegetables])} for 5-7 minutes.`
           : 'Heat a large pan over medium heat.',
-      `Stir in ${joinNatural(flavourings)}, then add ${joinNatural(additions)} and simmer gently until tender and thickened.`,
+      buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames }),
       starch && starch !== 'potato'
         ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true, potatoPreparation })
         : accompanimentNames.length
@@ -431,7 +484,10 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (starch) {
-    const nonStarch = withoutNames(remainingNames, [starchName]);
+    // Exclude the starch by BOTH its family name and its display name —
+    // step one already cooks it, so leaving "wholemeal pasta (dry weight)"
+    // in this list made step two re-"prepare" the very thing just cooked.
+    const nonStarch = withoutNames(remainingNames, [starchName, starchDisplayName]);
     return [
       cookStarchStep(starchName, { potatoPreparation }),
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
@@ -578,6 +634,44 @@ function stripTinnedPrefix(value) {
     .replace(/\s+tinned$/i, '')
     .replace(/\s+in (?:spring water|brine)$/i, '')
     .trim();
+}
+
+// The soup/stew branch's central simmer step. Two refinements over a plain
+// template string:
+//  1. When there's nothing to name in the "stir in" clause (no stock,
+//     tomatoes, spice paste etc. detected), that clause is dropped rather
+//     than rendered as the meaningless "Stir in the listed ingredients" —
+//     generic wording is only acceptable when it isn't hiding something.
+//  2. When a dry pulse is present and no cooking-liquid ingredient exists
+//     anywhere in the meal (checked via the same signal used elsewhere,
+//     not invented), the step says explicitly what the pulse simmers in.
+//     This never adds a stock ingredient to the ingredient list or
+//     nutrition — water is a free pantry staple, the same way "boil the
+//     potatoes in lightly salted water" doesn't require water to be listed.
+function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames }) {
+  // A dry pulse needs stated liquid whether or not it's the dish's PRIMARY
+  // protein — "Turkey & Lentil Soup" and "Chicken & Vegetable Stew" resolve
+  // their protein to the meat, but the dry lentils alongside it still can't
+  // simmer in nothing. Checks the actual simmer contents, not just the
+  // primary-protein classification.
+  const dryPulseInPot = isPulseProtein
+    ? pulseState === PULSE_STATE.DRY
+    : additions.some(item => isDryPulseName(item));
+  const needsLiquidNote = dryPulseInPot && !hasCookingLiquid(remainingNames);
+  const liquidClause = needsLiquidNote ? ' with enough water or stock to cover' : '';
+  // When every ingredient has already been named in an earlier step there
+  // is genuinely nothing left to add — saying "add the listed ingredients"
+  // then reads as filler that hides nothing but helps no one. Drop the
+  // clause entirely rather than emitting the generic phrase.
+  if (!additions.length) {
+    return flavourings.length
+      ? `Stir in ${joinNatural(flavourings)}${liquidClause}, then simmer gently until tender and thickened.`
+      : `Simmer gently${liquidClause} until tender and thickened.`;
+  }
+  const additionsText = joinNatural(additions);
+  return flavourings.length
+    ? `Stir in ${joinNatural(flavourings)}, then add ${additionsText}${liquidClause} and simmer gently until tender and thickened.`
+    : `Add ${additionsText}${liquidClause} and simmer gently until tender and thickened.`;
 }
 
 function drainTinnedStep(values) {

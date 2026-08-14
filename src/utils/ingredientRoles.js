@@ -109,6 +109,18 @@ export function pulseFamily(name) {
 
 export const PULSE_STATE = { DRY: 'dry', TINNED: 'tinned', COOKED: 'cooked' };
 
+// True when a display name reads as a dry (not tinned/pre-cooked) pulse —
+// used to decide whether a simmer step must state its cooking liquid, for
+// pulses that are in the pot but are not the dish's primary protein.
+// Reads the "(dry weight)" suffix that cookingQuantities.js already renders
+// from the parser's 'dry' qualifier, rather than re-parsing the raw line.
+export function isDryPulseName(displayName) {
+  const text = String(displayName || '');
+  if (!isPulseIngredient(text)) return false;
+  if (/\b(tinned|canned|cooked)\b/i.test(text)) return false;
+  return /\bdry\b/i.test(text) || !/\b(weight|drained)\b/i.test(text);
+}
+
 // Reuses the SAME structured signals the rest of the app already has for
 // this — the "tinned"/"canned" substring convention already used by
 // cookingQuantities.js and planBuilder.js's shopping aggregation, and the

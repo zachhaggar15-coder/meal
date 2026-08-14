@@ -1903,6 +1903,24 @@ export const SEMANTIC_QA_DASHBOARD = {
   },
   "findingsLedger": [
     {
+      "id": "manual_eca649f3493d4715",
+      "source": "manual",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "Other",
+      "severity": "Medium",
+      "evidence": "STRUCTURAL FLAVOUR COMPLETENESS - PRODUCT/DATA DECISION, NOT A METHOD BUG. The non-blocking audit (scripts/audit-recipe-invariants.js) flags 202 occurrences across 26 distinct recipe patterns where a savoury cooked dish carries no recognised flavour component at all (no aromatic, herb, spice, stock, sauce, acid or seasoning ingredient). Clear examples: 'Baked Salmon with Broccoli & New Potatoes' (salmon + broccoli + potatoes, nothing else); 'Roast Chicken Breast with Root Veg' (chicken + parsnips + carrots); 'Grilled Chicken with Roasted Mediterranean Veg' (chicken + rice + mixed veg). These are nutritionally valid and now cookable, but read as under-specified food rather than a recipe a person would write. Resolving this requires ADDING material ingredients to the meal data, which changes canonical nutrition - explicitly a product decision outside the method-generation scope, so no change was made. Recommend deciding whether to (a) add negligible-calorie seasoning ingredients that are excluded from nutrition, (b) add real ingredients and accept the nutrition delta, or (c) accept these as intentionally minimal. Full list: node scripts/audit-recipe-invariants.js",
+      "affectedLocation": "26 distinct recipe patterns, shared + legacy library",
+      "firstDetectedAt": "2026-08-14T23:23:22.487Z",
+      "lastDetectedAt": "2026-08-14T23:23:22.487Z",
+      "lastRecheckAt": "",
+      "lastRecheckResult": "",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": "STRUCTURAL FLAVOUR COMPLETENESS - PRODUCT/DATA DECISION, NOT A METHOD BUG. The non-blocking audit (scripts/audit-recipe-invariants.js) flags 202 occurrences across 26 distinct recipe patterns where a savoury cooked dish carries no recognised flavour component at all (no aromatic, herb, spice, stock, sauce, acid or seasoning ingredient). Clear examples: 'Baked Salmon with Broccoli & New Potatoes' (salmon + broccoli + potatoes, nothing else); 'Roast Chicken Breast with Root Veg' (chicken + parsnips + carrots); 'Grilled Chicken with Roasted Mediterranean Veg' (chicken + rice + mixed veg). These are nutritionally valid and now cookable, but read as under-specified food rather than a recipe a person would write. Resolving this requires ADDING material ingredients to the meal data, which changes canonical nutrition - explicitly a product decision outside the method-generation scope, so no change was made. Recommend deciding whether to (a) add negligible-calorie seasoning ingredients that are excluded from nutrition, (b) add real ingredients and accept the nutrition delta, or (c) accept these as intentionally minimal. Full list: node scripts/audit-recipe-invariants.js",
+      "potentiallySystemic": true
+    },
+    {
       "id": "manual_5b409c1e8bca0f60",
       "source": "manual",
       "route": "/plans/aldi-high-protein-low-cal-1500",
@@ -1915,9 +1933,9 @@ export const SEMANTIC_QA_DASHBOARD = {
       "lastRecheckAt": "",
       "lastRecheckResult": "",
       "resolvedAt": "",
-      "status": "New",
-      "humanAssessment": "Uncertain",
-      "humanNote": "checkSoupStewMissingLiquid non-blocking audit (scripts/audit-recipe-invariants.js) flags 86 soup/stew/curry/chilli occurrences with no stock/water ingredient literally listed. Most look like false positives against the invariant as currently defined (ingredient presence) — the generated method already instructs adding water/stock as a cooking step, and real recipes don't normally list plain water as a shopping ingredient. A minority (e.g. 'Turkey Mince Chilli with Brown Rice' — no tomatoes/stock/sauce base at all) look more genuinely worth reviewing. Recommend refining the invariant to check the METHOD TEXT for a liquid-related instruction rather than the ingredient list before using it for anything beyond non-blocking review evidence.",
+      "status": "Fixed",
+      "humanAssessment": "Useful warning",
+      "humanNote": "Refined 2026-08-15. The original ingredient-list-based check was ~97% false positive (water is not a grocery item). Rewritten to inspect the METHOD for a stated cooking medium instead. That refined version found 2 genuine defects (Turkey & Lentil Soup, Chicken & Vegetable Stew: dry lentils simmered with no stated liquid), both now fixed by generalising the dry-pulse liquid clause to fire whenever a dry pulse is in the pot, not only when it is the primary protein. Check now sits at 0 flagged and has been promoted to a blocking invariant.",
       "potentiallySystemic": false
     },
     {
@@ -1933,9 +1951,9 @@ export const SEMANTIC_QA_DASHBOARD = {
       "lastRecheckAt": "",
       "lastRecheckResult": "",
       "resolvedAt": "",
-      "status": "New",
-      "humanAssessment": "Uncertain",
-      "humanNote": "Meal-name keyword collisions route dishes through the wrong method template. Confirmed instances: (1) 'Lean Beef Mince Lettuce Wraps' — no bread/tortilla present, but the name contains 'wraps' so it triggers the toast/bagel/wrap/sandwich branch; carriers is empty, producing a nonsensical opening step 'Toast or warm the listed ingredients.' (2) 'Wholemeal Pancakes with Low-Fat Yogurt' and 'Protein Waffles with Greek Yogurt' — the yogurt/cereal branch is checked before the pancake branch and matches on the word 'yogurt' alone, so raw eggs and flour are 'topped' onto a cold yogurt bowl instead of whisked into a batter and cooked. This second case is food-safety adjacent (raw egg never cooked) and should be prioritised. Same architectural class as the already-fixed lettuce-cups (hot mince vs cold prawn) collision — worth a systemic sweep for other meal names that trigger a branch by keyword alone regardless of whether the ingredients actually match that branch's assumptions.",
+      "status": "Fixed",
+      "humanAssessment": "True issue",
+      "humanNote": "Confirmed and fixed 2026-08-15. Root cause was family-selection precedence: branches were chosen on meal-name keyword alone. Fixed by (1) checking pancake/waffle BEFORE the yogurt/cereal branch so a strong dish-type signal outranks a serving component, and (2) routing lettuce-vessel wraps/cups to the lettuce branch using ingredient evidence (lettuce present, no bread carrier) rather than the name alone. Both now covered by passing regression tests and by a promoted blocking invariant (family-validity) that fails the build on any recurrence.",
       "potentiallySystemic": true
     },
     {

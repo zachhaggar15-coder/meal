@@ -228,8 +228,8 @@ export const NUTRITION_TABLE = {
   'tahini dressing':        { kcal100: 235, pro100: 9 }, // corrected 2026-07-06: Al'Fez UK tahini dressing label
   'balsamic dressing':      { kcal100: 90, pro100: 0.5 },
   'plant-based dressing':   { kcal100: 90, pro100: 1.5, basis: 'ml' },
-  'caesar dressing':        { kcal100: 300, pro100: 2 },
-  'light caesar dressing':  { kcal100: 120, pro100: 2 },
+  'caesar dressing':        { kcal100: 300, pro100: 2, basis: 'ml' },
+  'light caesar dressing':  { kcal100: 120, pro100: 2, basis: 'ml' }, // same ml-basis convention as the sibling 'light dressing'/'plant-based dressing' entries — a pourable dressing, density ~= water
   'mint yogurt sauce':      { kcal100: 60, pro100: 3 },
   'raita':                  { kcal100: 60, pro100: 3 },
   'curry paste':            { kcal100: 250, pro100: 5 },

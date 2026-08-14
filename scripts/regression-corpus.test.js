@@ -15,6 +15,12 @@ import { mealPlansData } from '../src/data/mealPlans.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { buildPlanDays, buildShoppingList } from '../src/utils/planBuilder.js';
 import { buildPracticalRecipeSteps, resolvePotatoPreparation, validateRecipeQuality } from '../src/utils/recipeQuality.js';
+import { canonicaliseLegacyMeal } from '../src/utils/legacyPlanBuilder.js';
+import {
+  checkFamilyValidity,
+  checkHydrationWithoutMedium,
+  checkRawProteinWithoutCooking,
+} from './lib/recipeInvariants.js';
 
 function mealById(id) {
   const meal = MEALS.find(item => item.id === id);
@@ -159,11 +165,36 @@ test('[corpus] cherry tomatoes (grams vs count) and olive oil (tsp vs tbsp) each
 // name exists in the same record but was never propagated to the
 // ingredient string used for shopping/nutrition. Low blast radius (1
 // occurrence) — a legacy-data hygiene issue, not a generator bug.
-test('[corpus] a dressing already named specifically in the description is not shopped for under a vague generic name', { todo: 'confirmed in mealPlans.js Wednesday Grilled Chicken Caesar Salad — desc says "light Caesar dressing", portion_size says "20ml light dressing"' }, () => {
+// FIXED 2026-08: the specific identity ("light Caesar dressing") already
+// existed in nutritionTable.js — only the meal's portion_size string used
+// the vague generic "light dressing". Corrected the data so the identity
+// flows through to the displayed ingredients, method and shopping list.
+// No flavour was invented: the same record's own description already said
+// "a light Caesar dressing".
+test('[corpus] a dressing already named specifically in the description is not shopped for under a vague generic name', () => {
   const plan = Object.values(mealPlansData).find(item => (item.plan || []).some(day => (day.meals || []).some(meal => /caesar/i.test(meal.desc || ''))));
   const meal = plan?.plan.flatMap(day => day.meals).find(item => /caesar/i.test(item.desc || ''));
   assert.ok(meal, 'expected to find the Caesar salad meal this case documents');
   assert.doesNotMatch(meal.portion_size || '', /\blight dressing\b/i, 'portion_size should name the same dressing as desc, not a generic fallback');
+  assert.match(meal.portion_size || '', /caesar/i);
+});
+
+// No meal anywhere should carry the bare, unbuyable "light dressing"
+// identity — a shopper cannot tell what to buy from it. Guards against the
+// vague identity being reintroduced in any meal, not just the one fixed.
+test('[corpus] no meal uses the unbuyably-vague bare "light dressing" identity', () => {
+  const offenders = [];
+  for (const [slug, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const meal of day.meals || []) {
+        if (/\blight dressing\b/i.test(meal.portion_size || '')) offenders.push(`${slug}:${day.day}:${meal.name}`);
+      }
+    }
+  }
+  for (const meal of MEALS) {
+    if ((meal.ingredients || []).some(item => /\blight dressing\b/i.test(item))) offenders.push(meal.id);
+  }
+  assert.deepEqual(offenders, [], `these meals still use the vague "light dressing" identity: ${offenders.join(', ')}`);
 });
 
 // ── 15/16. Black pepper / green beans shopping-category errors (FIXED) ────
@@ -251,33 +282,42 @@ test('[corpus] a cold prawn-cocktail lettuce cup is not put through the hot cook
   assert.doesNotMatch(method, /breaking it up/i, 'mince-style language should not apply to whole prawns');
 });
 
-// ── New findings from the post-fix audit sweep (2026-08) — precisely
-//    diagnosed, but NOT fixed in this phase (out of the approved (a)-(d)
-//    scope). Kept as regression cases for the next quality phase.
+// ── FIXED 2026-08 (second recipe-quality phase): family-selection
+//    precedence bugs, same architecture class as the lettuce-cups fix.
 
 // "Lean Beef Mince Lettuce Wraps" (a literal lettuce leaf wrap, no bread)
-// matches the toast/bagel/wrap/sandwich branch purely because its name
-// contains "wraps" — the same class of bug as the lettuce-cups mismatch,
-// a different instance. `carriers` (bread/wrap/tortilla) is then empty, so
-// step one falls back to "Toast or warm the listed ingredients" — nothing
-// is actually toasted or warmed.
-test('[corpus] a lettuce-wrap dish (no bread/tortilla) is not sent through the toast/wrap branch\'s "toast or warm" opening step', { todo: 'newly diagnosed 2026-08 — toast/wrap branch triggers on the word "wrap" in the name regardless of whether a literal wrap/tortilla ingredient is present; out of scope for the (a)-(d) fix, needs its own approval' }, () => {
+// used to match the toast/bagel/wrap/sandwich branch purely because its
+// name contains "wraps". Fixed: the lettuce-cups branch now also triggers
+// on "wrap(s)"/"cups" names when ingredient evidence shows a lettuce
+// vessel and no bread/tortilla carrier — using ingredient roles, not just
+// the name, per the audit's requirement.
+test('[corpus] a lettuce-wrap dish (no bread/tortilla) is not sent through the toast/wrap branch\'s "toast or warm" opening step', () => {
   const meal = mealById('beef-lettuce-wraps');
   const method = buildPracticalRecipeSteps(meal).join(' ');
   assert.doesNotMatch(method, /toast or warm the listed ingredients/i);
+  assert.match(method, /lean beef mince/i, 'the mince filling must still be named and cooked');
+});
+
+test('[corpus] a real bread/tortilla wrap is unaffected by the lettuce-vessel fix', () => {
+  for (const id of ['chicken-caesar-wrap', 'turkey-avocado-wrap', 'chicken-tikka-wrap']) {
+    const meal = mealById(id);
+    const method = buildPracticalRecipeSteps(meal).join(' ');
+    assert.match(method, /toast or warm/i, `${id} should still toast/warm its actual tortilla`);
+  }
 });
 
 // "Wholemeal Pancakes with Low-Fat Yogurt" and "Protein Waffles with Greek
-// Yogurt" match the yogurt/cereal branch (checked before the pancake
-// branch) purely because "yogurt" is in the name — so raw eggs and flour
-// are "topped" onto a cold yogurt bowl instead of being whisked into a
-// batter and cooked. More serious than a wording quality issue: raw egg is
-// never cooked.
-test('[corpus] a pancake/waffle dish is not routed through the yogurt-bowl branch just because "yogurt" is in its name', { todo: 'newly diagnosed 2026-08 — yogurt/cereal branch is checked before the pancake branch and matches on the word "yogurt" alone; raw eggs end up "topped" on a cold bowl rather than cooked; out of scope for the (a)-(d) fix, needs its own approval (food-safety adjacent — should be prioritised)' }, () => {
+// Yogurt" used to match the yogurt/cereal branch (checked before the
+// pancake branch) purely because "yogurt" is in the name, leaving raw egg
+// "topped" onto a cold bowl. Fixed: pancake/waffle is now checked first —
+// a strong dish-type signal outranking a secondary serving component.
+test('[corpus] a pancake/waffle dish is not routed through the yogurt-bowl branch just because "yogurt" is in its name', () => {
   for (const id of ['wholemeal-pancakes', 'protein-waffles-yogurt']) {
     const meal = mealById(id);
     const method = buildPracticalRecipeSteps(meal).join(' ');
     assert.doesNotMatch(method, /top with[^.]*\beggs?\b/i, `${id}: raw egg should never be "topped" on a cold dish`);
+    assert.match(method, /whisk[^.]*\beggs?\b[^.]*batter/i, `${id}: eggs must be explicitly whisked into a batter`);
+    assert.match(method, /cook/i, `${id}: the batter must be explicitly cooked`);
   }
 });
 
@@ -315,4 +355,147 @@ test('[corpus] deterministic recipe-quality gate and full-library nutrition/plan
   assert.ok(INDEXABLE_PLAN_SEEDS.length > 0);
   const sampleSeed = INDEXABLE_PLAN_SEEDS.find(seed => seed.slug === 'aldi-high-protein-low-cal-1500');
   assert.ok(buildPlanDays(sampleSeed).plan.length === 7);
+});
+
+// ── Second-phase fixes (2026-08): defects found by the post-fix audit
+//    sweep, all fixed in the same pass as the family-collision work.
+
+// "1 slice wholemeal toast" names the carrier "toast", which was missing
+// from the bread-carrier pattern — so an avocado-toast method opened with
+// "Toast or warm the listed ingredients" having found nothing to toast.
+test('[corpus] a toast dish whose ingredient is named "toast" finds its carrier', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Avocado Toast with Nutritional Yeast',
+    ingredients: ['2 slices wholemeal toast (70g)', 'Avocado half', 'Tomato 1', 'Nutritional yeast 2 tbsp'],
+  }).join(' ');
+  assert.doesNotMatch(method, /the listed ingredients/i);
+  assert.match(method, /toast/i);
+});
+
+// A full English is assembled from optional components; missing ones used
+// to interpolate as empty strings ("warm the  gently", "toast the .").
+test('[corpus] a full English with no beans or bread never emits an empty ingredient slot', () => {
+  const steps = buildPracticalRecipeSteps({
+    name: 'High-Protein Full English',
+    ingredients: ['Eggs 2', 'Turkey rashers 60g', 'Mushrooms 100g', 'Tomatoes 100g'],
+  });
+  const method = steps.join(' ');
+  assert.doesNotMatch(method, /the\s+\./, 'no "the ." from an empty name');
+  assert.doesNotMatch(method, /the\s{2,}/, 'no "the  " double space from an empty name');
+  assert.doesNotMatch(method, /warm the\s+gently/i);
+});
+
+// A legacy plan can list a pre-made batter as the ingredient; "batter"
+// was missing from the batter pattern, so it fell through to toppings and
+// the pancakes were bizarrely "served with pancake batter".
+test('[corpus] a pre-made pancake batter ingredient is whisked, not served as a topping', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Wholemeal Pancakes with Berries',
+    ingredients: ['80g pancake batter (2 pancakes)', '80g berries', '50g low-fat yogurt'],
+  }).join(' ');
+  assert.doesNotMatch(method, /serve with[^.]*batter/i);
+  assert.match(method, /whisk[^.]*batter/i);
+});
+
+// The starch is cooked in step one; leaving its display name in the
+// "prepare ..." list made step two re-prepare the very thing just cooked.
+test('[corpus] a starch cooked in step one is not re-listed as something to prepare in step two', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Spinach and Ricotta Wholemeal Pasta',
+    ingredients: ['Ricotta 100g', 'Wholemeal pasta 90g dry', 'Baby spinach 150g', 'Garlic 2 cloves', 'Parmesan 15g', 'Olive oil 1 tbsp'],
+  });
+  const prepareStep = method.find(step => /prepare/i.test(step)) || '';
+  assert.doesNotMatch(prepareStep, /pasta/i, 'the pasta is already cooked in step one');
+});
+
+// A soup/stew where every ingredient is already named earlier should not
+// append a meaningless "add the listed ingredients" clause.
+test('[corpus] a stew with nothing left to add omits the filler clause instead of saying "the listed ingredients"', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Lean Beef and Sweet Potato Stew',
+    ingredients: ['Lean stewing beef 200g', 'Sweet potato 250g', 'Tinned tomatoes 400g', 'Onion 1', 'Garlic 3 cloves', 'Carrot 2', 'Beef stock 300ml'],
+  }).join(' ');
+  assert.doesNotMatch(method, /the listed ingredients/i);
+  assert.match(method, /simmer/i);
+});
+
+// A smoothie BOWL is spooned with crunchy toppings, not poured into a
+// glass with the granola blended into it.
+test('[corpus] a smoothie bowl keeps its crunchy toppings out of the blender and serves in a bowl', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Banana and Date Smoothie Bowl with Seeds',
+    ingredients: ['Banana 2', 'Medjool dates 2', 'Oat milk 100ml', 'Hemp seeds 1 tbsp', 'Low-sugar granola 20g'],
+  });
+  const blendStep = method.find(step => /blender/i.test(step)) || '';
+  assert.doesNotMatch(blendStep, /granola/i, 'granola should not go in the blender');
+  assert.match(method.join(' '), /bowl/i);
+});
+
+// ── Promoted blocking invariants ────────────────────────────────────────
+// These three started as non-blocking audit checks. After the family-
+// selection and pulse-state fixes they sit at zero flags across the whole
+// library (169 shared + 840 legacy occurrences), and every case they ever
+// flagged was a genuine defect — no false positives in review. They are
+// promoted here so a regression reintroducing an unsafe or incoherent
+// method fails the build rather than waiting for a manual audit run.
+// (The remaining two checks — core-ingredient omission and structural
+// flavour completeness — stay non-blocking in
+// scripts/audit-recipe-invariants.js: both still carry real false
+// positives, and flavour gaps need ingredient additions, which is a
+// product decision, not a method fix.)
+test('[corpus][invariant] no raw protein anywhere in the library lacks a cooking step', () => {
+  const offenders = [];
+  for (const meal of MEALS) {
+    const method = buildPracticalRecipeSteps(meal).join(' ');
+    const uncooked = checkRawProteinWithoutCooking(meal.name, meal.ingredients, method);
+    if (uncooked.length) offenders.push(`${meal.id}: ${uncooked.join('/')}`);
+  }
+  for (const [slug, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const sourceMeal of day.meals || []) {
+        const meal = canonicaliseLegacyMeal(sourceMeal);
+        const uncooked = checkRawProteinWithoutCooking(meal.name, meal.ingredients, (meal.recipe || []).join(' '));
+        if (uncooked.length) offenders.push(`${slug}:${day.day}:${meal.name}: ${uncooked.join('/')}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `raw protein with no cooking step: ${offenders.join(' | ')}`);
+});
+
+test('[corpus][invariant] no dish needing hydration simmers without a stated cooking medium', () => {
+  const offenders = [];
+  for (const meal of MEALS) {
+    const method = buildPracticalRecipeSteps(meal).join(' ');
+    if (checkHydrationWithoutMedium(meal.name, meal.ingredients, method)) offenders.push(meal.id);
+  }
+  for (const [slug, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const sourceMeal of day.meals || []) {
+        const meal = canonicaliseLegacyMeal(sourceMeal);
+        if (checkHydrationWithoutMedium(meal.name, meal.ingredients, (meal.recipe || []).join(' '))) {
+          offenders.push(`${slug}:${day.day}:${meal.name}`);
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `dry ingredient simmered with no stated liquid: ${offenders.join(' | ')}`);
+});
+
+test('[corpus][invariant] no meal is routed through a method family incompatible with its ingredients', () => {
+  const offenders = [];
+  for (const meal of MEALS) {
+    const method = buildPracticalRecipeSteps(meal).join(' ');
+    const problems = checkFamilyValidity(meal.name, meal.ingredients, method);
+    if (problems.length) offenders.push(`${meal.id}: ${problems.join('; ')}`);
+  }
+  for (const [slug, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const sourceMeal of day.meals || []) {
+        const meal = canonicaliseLegacyMeal(sourceMeal);
+        const problems = checkFamilyValidity(meal.name, meal.ingredients, (meal.recipe || []).join(' '));
+        if (problems.length) offenders.push(`${slug}:${day.day}:${meal.name}: ${problems.join('; ')}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `family/ingredient incompatibility: ${offenders.join(' | ')}`);
 });
