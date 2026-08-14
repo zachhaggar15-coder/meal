@@ -287,6 +287,7 @@ export default function MealPlanPage() {
         analyticsContext={planAnalytics}
         gridClassName="shop-grid"
         groupClassName="shop-group"
+        listClassName="shopping-items"
         groupLabel={group => group.charAt(0).toUpperCase() + group.slice(1)}
       />
       <EmailPlanCapture

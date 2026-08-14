@@ -6,6 +6,7 @@ import {
   recheckRoute,
   setFindingAssessment,
   setFindingStatus,
+  setPotentiallySystemic,
 } from './lib/semanticQaLedger.js';
 
 const NOW = new Date('2026-08-14T12:00:00.000Z');
@@ -97,6 +98,21 @@ test('a finding no longer produced by the detector is marked resolved without de
   assert.equal(entry.lastRecheckResult, 'no-longer-detected');
   assert.ok(entry.resolvedAt);
   assert.equal(entry.evidence, 'Two lines for the same item.', 'original evidence is retained, not erased');
+});
+
+test('a finding can be flagged as potentially systemic independently of its status or assessment', () => {
+  const { ledger, id } = addManualFinding(emptyLedger(), {
+    route: '/plans/example', category: 'Recipe method', severity: 'High',
+    evidence: 'Dry lentils with no cooking liquid', addedAt: NOW,
+  });
+  assert.equal(ledger.entries[id].potentiallySystemic, false);
+
+  const flagged = setFindingStatus(setPotentiallySystemic(ledger, id, true), id, 'Fixed');
+  assert.equal(flagged.entries[id].potentiallySystemic, true, 'stays flagged even once the single finding is Fixed');
+  assert.equal(flagged.entries[id].status, 'Fixed');
+
+  const unflagged = setPotentiallySystemic(flagged, id, false);
+  assert.equal(unflagged.entries[id].potentiallySystemic, false);
 });
 
 test('a human status/assessment survives a recheck even when the finding is still detected', () => {

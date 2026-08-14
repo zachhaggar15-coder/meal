@@ -1023,6 +1023,7 @@ export function buildDashboardData({ history, inventory, latestRun, calibration 
       status: entry.status,
       humanAssessment: entry.humanAssessment,
       humanNote: entry.humanNote,
+      potentiallySystemic: entry.potentiallySystemic || false,
     })),
     systemicIssues: latestRun?.systemicIssues || [],
     calibration: {

@@ -1917,7 +1917,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "resolvedAt": "",
       "status": "New",
       "humanAssessment": "Uncertain",
-      "humanNote": ""
+      "humanNote": "",
+      "potentiallySystemic": false
     },
     {
       "id": "qa_d3d9213bfa4a6232",
@@ -1934,7 +1935,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "resolvedAt": "",
       "status": "New",
       "humanAssessment": "Uncertain",
-      "humanNote": ""
+      "humanNote": "",
+      "potentiallySystemic": false
     }
   ]
 };

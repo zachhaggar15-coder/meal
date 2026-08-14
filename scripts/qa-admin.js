@@ -27,8 +27,10 @@ import {
   readLedger,
   setFindingAssessment,
   setFindingStatus,
+  setPotentiallySystemic,
   writeLedger,
 } from './lib/semanticQaLedger.js';
+import { readDeploymentLog, recordDeployment, writeDeploymentLog } from './lib/qaDeploymentLog.js';
 
 const [, , command, ...rest] = process.argv;
 
@@ -37,8 +39,10 @@ try {
     case 'add-finding': await runAddFinding(rest); break;
     case 'set-status': await runSetStatus(rest); break;
     case 'set-assessment': await runSetAssessment(rest); break;
+    case 'flag-systemic': await runFlagSystemic(rest); break;
     case 'recheck': await runRecheck(rest); break;
     case 'list': runList(rest); break;
+    case 'record-deployment': runRecordDeployment(rest); break;
     default: printUsageAndExit();
   }
 } catch (error) {
@@ -59,10 +63,34 @@ async function runAddFinding(args) {
     note: flags.note || '',
     evidence: flags.evidence || flags.note || '',
     dayOrMeal: flags.location || '',
+    potentiallySystemic: Boolean(flags.systemic),
   });
   writeLedger(nextLedger);
   await regenerateDashboard(nextLedger);
-  console.log(`Added finding ${id} for ${flags.route} (${flags.category}, ${flags.severity}).`);
+  console.log(`Added finding ${id} for ${flags.route} (${flags.category}, ${flags.severity})${flags.systemic ? ' [potentially systemic]' : ''}.`);
+}
+
+async function runFlagSystemic(args) {
+  const flags = parseFlags(args);
+  const [findingId] = args.filter(value => !value.startsWith('--'));
+  if (!findingId) throw new Error('flag-systemic requires <findingId> [--off].');
+  const nextLedger = setPotentiallySystemic(readLedger(), findingId, !flags.off);
+  writeLedger(nextLedger);
+  await regenerateDashboard(nextLedger);
+  console.log(`${findingId} -> potentially systemic: ${!flags.off}`);
+}
+
+function runRecordDeployment(args) {
+  const flags = parseFlags(args);
+  if (!flags.commit) throw new Error('record-deployment requires --commit <hash> [--summary "..."] [--gate "..."].');
+  const log = recordDeployment(readDeploymentLog(), {
+    commit: flags.commit,
+    summary: flags.summary || '',
+    gate: flags.gate || '',
+  });
+  writeDeploymentLog(log);
+  const entry = log.deployments[log.deployments.length - 1];
+  console.log(`Recorded deployment ${entry.commit} at ${entry.deployedAt}.`);
 }
 
 async function runSetStatus(args) {
@@ -109,8 +137,9 @@ function runList(args) {
   for (const row of rows) {
     console.log([
       row.id, row.route, row.severity, row.category, row.status, row.humanAssessment,
+      row.potentiallySystemic ? 'SYSTEMIC' : '',
       row.resolvedAt ? `resolved ${row.resolvedAt.slice(0, 10)}` : 'open',
-    ].join(' | '));
+    ].filter(Boolean).join(' | '));
   }
   console.log(`${rows.length} finding(s).`);
 }
@@ -149,6 +178,7 @@ async function regenerateDashboard(ledger) {
       status: entry.status,
       humanAssessment: entry.humanAssessment,
       humanNote: entry.humanNote,
+      potentiallySystemic: entry.potentiallySystemic || false,
     })),
   });
 }
@@ -182,14 +212,17 @@ function printUsageAndExit() {
     'Usage: node scripts/qa-admin.js <command> [args]',
     '',
     'Commands:',
-    '  add-finding --route <route> --category <category> --severity <Critical|High|Medium|Low> --note <text> [--evidence <text>] [--location <text>]',
+    '  add-finding --route <route> --category <category> --severity <Critical|High|Medium|Low> --note <text> [--evidence <text>] [--location <text>] [--systemic]',
     `      categories: ${FINDING_CATEGORIES.join(', ')}`,
     '  set-status <findingId> <status>',
     `      statuses: ${WORKFLOW_STATUSES.join(', ')}`,
     '  set-assessment <findingId> <assessment> [--note <text>]',
     `      assessments: ${HUMAN_ASSESSMENTS.join(', ')}`,
+    '  flag-systemic <findingId> [--off]',
+    '      marks (or unmarks) a finding as worth a library-wide investigation, independent of status/assessment',
     '  recheck <route>',
     '  list [--route <route>] [--status <status>] [--assessment <assessment>]',
+    '  record-deployment --commit <hash> [--summary <text>] [--gate <text>]',
   ].join('\n'));
   process.exit(1);
 }

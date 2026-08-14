@@ -9319,6 +9319,16 @@ textarea {
   padding: 0;
 }
 
+/* The tickable row already has its own marker (the checkbox) — a browser
+   default list bullet next to it reads as a redundant, misaligned second
+   marker. Set directly on the row rather than relying on the parent <ul>
+   carrying a specific class, so a shopping list is never one missed prop
+   away from getting a stray bullet back (see MealPlanPage.jsx, which used
+   to omit the class that supplied this). */
+.shopping-item {
+  list-style: none;
+}
+
 .shopping-item label {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr);

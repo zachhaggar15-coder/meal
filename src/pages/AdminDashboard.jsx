@@ -263,7 +263,7 @@ function SemanticQaSection({ semanticQa }) {
 
       <DataTable
         title="Historical & Manual Findings"
-        note="Every finding ever detected (auto) or added by hand (manual), kept after a fix rather than deleted. 'Latest recheck' reflects node scripts/qa-admin.js recheck <route>; 'Resolved' is set automatically when a recheck no longer detects it, but Status/Assessment stay under human control (node scripts/qa-admin.js set-status / set-assessment / add-finding)."
+        note="Every finding ever detected (auto) or added by hand (manual), kept after a fix rather than deleted. 'Latest recheck' reflects node scripts/qa-admin.js recheck <route>; 'Resolved' is set automatically when a recheck no longer detects it, but Status/Assessment stay under human control (node scripts/qa-admin.js set-status / set-assessment / add-finding). A row marked 'Systemic?' (node scripts/qa-admin.js flag-systemic <findingId>) is a single-page observation the owner believes may affect other plans and is worth a library-wide investigation."
         rows={semanticQa.findingsLedger || []}
         columns={[
           { key: 'source', label: 'Source' },
@@ -275,6 +275,7 @@ function SemanticQaSection({ semanticQa }) {
           { key: 'firstDetectedAt', label: 'Detected', render: row => dateOnly(row.firstDetectedAt) },
           { key: 'humanAssessment', label: 'Assessment' },
           { key: 'status', label: 'Status' },
+          { key: 'potentiallySystemic', label: 'Systemic?', render: row => (row.potentiallySystemic ? 'Yes' : '') },
           { key: 'lastRecheckResult', label: 'Latest recheck', render: row => row.lastRecheckResult || 'Not rechecked' },
           { key: 'resolvedAt', label: 'Resolved', render: row => dateOnly(row.resolvedAt) || '—' },
         ]}

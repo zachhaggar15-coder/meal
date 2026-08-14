@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-14T12:55:09.784Z",
+  "updatedAt": "2026-08-14T13:32:08.651Z",
   "entries": {
     "qa_65f08241a9324caa": {
       "id": "qa_65f08241a9324caa",
@@ -18,7 +18,8 @@
       "resolvedAt": "",
       "status": "New",
       "humanAssessment": "Uncertain",
-      "humanNote": ""
+      "humanNote": "",
+      "potentiallySystemic": false
     },
     "qa_d3d9213bfa4a6232": {
       "id": "qa_d3d9213bfa4a6232",

@@ -74,6 +74,7 @@ export function upsertAutoFindings(ledger, reviews, now = new Date()) {
         status: existing?.status || 'New',
         humanAssessment: existing?.humanAssessment || 'Uncertain',
         humanNote: existing?.humanNote || '',
+        potentiallySystemic: existing?.potentiallySystemic || false,
       };
     }
   }
@@ -81,7 +82,7 @@ export function upsertAutoFindings(ledger, reviews, now = new Date()) {
 }
 
 export function addManualFinding(ledger, {
-  route, category, severity, note, evidence, dayOrMeal = '', addedAt = new Date(),
+  route, category, severity, note, evidence, dayOrMeal = '', addedAt = new Date(), potentiallySystemic = false,
 }) {
   if (!route) throw new Error('addManualFinding requires a route.');
   if (!FINDING_CATEGORIES.includes(category)) throw new Error(`Unknown category: ${category}`);
@@ -107,6 +108,7 @@ export function addManualFinding(ledger, {
     status: 'New',
     humanAssessment: 'Uncertain',
     humanNote: note || '',
+    potentiallySystemic,
   };
   return { ledger: next, id };
 }
@@ -123,6 +125,14 @@ export function setFindingAssessment(ledger, findingId, assessment, note = '') {
     if (!HUMAN_ASSESSMENTS.includes(assessment)) throw new Error(`Unknown assessment: ${assessment}`);
     return { ...entry, humanAssessment: assessment, humanNote: note || entry.humanNote };
   });
+}
+
+// Lets an owner promote a single page-level observation into a flag worth a
+// library-wide investigation, independent of status/assessment — e.g. a
+// finding marked "Fixed" for this route can still stay flagged
+// potentially-systemic if the same root cause likely affects other plans.
+export function setPotentiallySystemic(ledger, findingId, value = true) {
+  return updateEntry(ledger, findingId, entry => ({ ...entry, potentiallySystemic: Boolean(value) }));
 }
 
 function updateEntry(ledger, findingId, updater) {
@@ -187,6 +197,7 @@ export function recheckRoute(ledger, route, assessRoute, now = new Date()) {
       status: 'New',
       humanAssessment: 'Uncertain',
       humanNote: '',
+      potentiallySystemic: false,
     };
   }
 
