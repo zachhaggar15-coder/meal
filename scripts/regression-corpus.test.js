@@ -60,17 +60,21 @@ test('[corpus] "Veggie" sticks does not collide with the egg-dish branch, and "s
 });
 
 // ── 5/7. Lentil soup simmers a bread roll; central lentils hidden by
-//         generic wording (root cause: needsCooking() treats 'lentils' and
-//         'beans' as never needing cooking, regardless of dry vs tinned —
-//         see recipeQuality.js needsCooking()). NOT YET FIXED.
-test('[corpus] a dry-lentil soup names and cooks the lentils, and does not simmer the side bread roll', { todo: 'root cause identified — needsCooking() excludes lentils/beans unconditionally; see audit report' }, () => {
+//         generic wording. FIXED: needsCooking() is now state-aware
+//         (ingredientRoles.js resolvePulseState) — a dry pulse is guaranteed
+//         a place in the final "add X and simmer" sentence instead of being
+//         excluded as "already handled", and a side accompaniment (bread
+//         roll) is excluded from that same sentence and mentioned as a side
+//         instead (see isPulseProtein / isSoupSideAccompaniment in
+//         recipeQuality.js's curry/chilli/stew/soup branch).
+test('[corpus] a dry-lentil soup names and cooks the lentils, and does not simmer the side bread roll', () => {
   const meal = mealById('butternut-squash-soup');
   const method = buildPracticalRecipeSteps(meal).join(' ');
   assert.match(method, /\blentil/i, 'the central named ingredient must appear in the method');
   assert.doesNotMatch(method, /simmer[^.]*\b(roll|bread)\b/i, 'the side bread roll must not be the object of a cooking instruction');
 });
 
-test('[corpus] "Lentil and Roasted Vegetable Soup" does not hide its lentils behind "the listed ingredients"', { todo: 'root cause identified — see audit report' }, () => {
+test('[corpus] "Lentil and Roasted Vegetable Soup" does not hide its lentils behind "the listed ingredients"', () => {
   const meal = mealById('lentil-roasted-veg-soup');
   const method = buildPracticalRecipeSteps(meal).join(' ');
   assert.doesNotMatch(method, /\bthe listed ingredients\b/i);
@@ -78,11 +82,26 @@ test('[corpus] "Lentil and Roasted Vegetable Soup" does not hide its lentils beh
 });
 
 // ── 6. Dry pulses need an adequate cooking instruction (not "warm gently"),
-//        which needs real liquid + real simmering time to soften. NOT YET FIXED.
-test('[corpus] dry red lentils get a real cook/simmer instruction, not a "warm gently" pass-through', { todo: 'root cause identified — see audit report' }, () => {
+//        which needs real liquid + real simmering time to soften. FIXED:
+//        the starch branch now gives a dry pulse an explicit
+//        "simmer ... with enough water or stock to cover" instruction
+//        instead of routing to the generic fallback.
+test('[corpus] dry red lentils get a real cook/simmer instruction, not a "warm gently" pass-through', () => {
   const meal = mealById('lentil-dahl');
   const method = buildPracticalRecipeSteps(meal).join(' ');
   assert.doesNotMatch(method, /warm everything gently in a pan/i);
+  assert.match(method, /simmer/i);
+});
+
+// ── Green Lentil and Roasted Sweet Potato Bowl — the salad/bowl branch's
+//    direct cookProteinStep() call previously silently dropped a dry pulse
+//    entirely (no drainTinnedStep fallback fires either, since there's no
+//    "tinned" marker to catch). FIXED via cookProteinStep's dryPulse case.
+test('[corpus] a dry-lentil bowl explicitly cooks and mentions the lentils, not silently', () => {
+  const meal = mealById('lentil-sweet-potato-bowl');
+  const method = buildPracticalRecipeSteps(meal).join(' ');
+  assert.match(method, /\blentil/i);
+  assert.match(method, /simmer/i);
 });
 
 // ── 8. Cooking spray treated as a serving ingredient (FIXED) ───────────────
@@ -186,11 +205,16 @@ test('[corpus] the container-count-outlier detector still flags the known 23-con
 //         adjacent, not just vague wording). Same root-cause family
 //         (protein/ingredient-role recognition is an incomplete keyword
 //         list) as the lentil issues above. NOT YET FIXED.
-test('[corpus] a baked cod/haddock dish gets an actual cooking instruction for the fish, not "warm gently"', { todo: 'root cause identified — cod/haddock/mackerel missing from recipeQuality.js proteinCandidates; see audit report' }, () => {
+// FIXED: cod, haddock, mackerel and sardine are now recognised protein
+// families in ingredientRoles.js (PROTEIN_FAMILIES), and cookProteinStep's
+// fish-instruction branch (already existed for salmon/mackerel/cod) now
+// actually gets reached because `protein` resolves instead of staying ''.
+test('[corpus] a baked cod/haddock dish gets an actual cooking instruction for the fish, not "warm gently"', () => {
   for (const id of ['baked-cod-new-potatoes', 'smoked-haddock-bake', 'cod-sweet-potato-chips']) {
     const meal = mealById(id);
     const method = buildPracticalRecipeSteps(meal).join(' ');
     assert.doesNotMatch(method, /warm everything gently in a pan/i, `${id} should not tell the user to just "warm" raw fish`);
+    assert.match(method, /cook|opaque|flakes/i, `${id} should have an actual cooking instruction for the fish`);
   }
 });
 
@@ -199,7 +223,9 @@ test('[corpus] a baked cod/haddock dish gets an actual cooking instruction for t
 //         actual rice) gets told to "cook the rice" and "fold the cooked
 //         rice through the pan". Same bug family as the earlier fixed
 //         "Veggie"/egg collision, different word. NOT YET FIXED.
-test('[corpus] "rice cakes" (the snack) is not misread as containing the starch "rice"', { todo: 'root cause identified — findIngredient() starch matching treats "rice cakes" as containing "rice"; see audit report' }, () => {
+// FIXED: ingredientRoles.js's findStarch() excludes "rice cakes" (and
+// "cauliflower rice") from matching the "rice" starch family.
+test('[corpus] "rice cakes" (the snack) is not misread as containing the starch "rice"', () => {
   for (const id of ['rice-cakes-cottage-cheese', 'peanut-butter-banana']) {
     const meal = mealById(id);
     const method = buildPracticalRecipeSteps(meal).join(' ');
@@ -214,10 +240,45 @@ test('[corpus] "rice cakes" (the snack) is not misread as containing the starch 
 //         for hot cooked-mince fillings (Turkey Mince Lettuce Cups) — so it
 //         instructs "cook"-ing the prawns further and heating the mayo
 //         "until hot through". NOT YET FIXED.
-test('[corpus] a cold prawn-cocktail lettuce cup is not put through the hot cooked-mince lettuce-cups method', { todo: 'root cause identified — lettuce-cups branch assumes a hot cooked filling regardless of dish; see audit report' }, () => {
+// FIXED: the lettuce-cups branch now only uses the hot cooked-mince
+// template when a mince-style protein (mince/turkey/beef/pork) is actually
+// present; otherwise it uses a cold-assembly template (cook the protein if
+// it needs it, cool, then combine — correct for a prawn cocktail).
+test('[corpus] a cold prawn-cocktail lettuce cup is not put through the hot cooked-mince lettuce-cups method', () => {
   const meal = mealById('prawn-cocktail');
   const method = buildPracticalRecipeSteps(meal).join(' ');
   assert.doesNotMatch(method, /hot through/i, 'a cold prawn cocktail should not be instructed to heat the mayo dressing');
+  assert.doesNotMatch(method, /breaking it up/i, 'mince-style language should not apply to whole prawns');
+});
+
+// ── New findings from the post-fix audit sweep (2026-08) — precisely
+//    diagnosed, but NOT fixed in this phase (out of the approved (a)-(d)
+//    scope). Kept as regression cases for the next quality phase.
+
+// "Lean Beef Mince Lettuce Wraps" (a literal lettuce leaf wrap, no bread)
+// matches the toast/bagel/wrap/sandwich branch purely because its name
+// contains "wraps" — the same class of bug as the lettuce-cups mismatch,
+// a different instance. `carriers` (bread/wrap/tortilla) is then empty, so
+// step one falls back to "Toast or warm the listed ingredients" — nothing
+// is actually toasted or warmed.
+test('[corpus] a lettuce-wrap dish (no bread/tortilla) is not sent through the toast/wrap branch\'s "toast or warm" opening step', { todo: 'newly diagnosed 2026-08 — toast/wrap branch triggers on the word "wrap" in the name regardless of whether a literal wrap/tortilla ingredient is present; out of scope for the (a)-(d) fix, needs its own approval' }, () => {
+  const meal = mealById('beef-lettuce-wraps');
+  const method = buildPracticalRecipeSteps(meal).join(' ');
+  assert.doesNotMatch(method, /toast or warm the listed ingredients/i);
+});
+
+// "Wholemeal Pancakes with Low-Fat Yogurt" and "Protein Waffles with Greek
+// Yogurt" match the yogurt/cereal branch (checked before the pancake
+// branch) purely because "yogurt" is in the name — so raw eggs and flour
+// are "topped" onto a cold yogurt bowl instead of being whisked into a
+// batter and cooked. More serious than a wording quality issue: raw egg is
+// never cooked.
+test('[corpus] a pancake/waffle dish is not routed through the yogurt-bowl branch just because "yogurt" is in its name', { todo: 'newly diagnosed 2026-08 — yogurt/cereal branch is checked before the pancake branch and matches on the word "yogurt" alone; raw eggs end up "topped" on a cold bowl rather than cooked; out of scope for the (a)-(d) fix, needs its own approval (food-safety adjacent — should be prioritised)' }, () => {
+  for (const id of ['wholemeal-pancakes', 'protein-waffles-yogurt']) {
+    const meal = mealById(id);
+    const method = buildPracticalRecipeSteps(meal).join(' ');
+    assert.doesNotMatch(method, /top with[^.]*\beggs?\b/i, `${id}: raw egg should never be "topped" on a cold dish`);
+  }
 });
 
 // ── Whole-library sweep: how many shared meals currently rely on a generic
@@ -229,12 +290,18 @@ test('[corpus] generic-fallback usage across the shared meal library is tracked,
     const method = buildPracticalRecipeSteps(meal).join(' ');
     return GENERIC_PATTERNS.some(pattern => pattern.test(method));
   });
-  // Baseline recorded 2026-08-14: 16 of 169 shared meals hit one of these
-  // two phrases (cod/haddock dishes with no recognised protein, and
-  // lentil/bean dishes whose needsCooking() special-case fires). This
-  // assertion is a ceiling, not a target — it should only go down as the
-  // protein-role and pulse-cooking gaps described in the audit are fixed.
-  assert.ok(affected.length <= 16, `expected at most 16 shared meals still using a generic fallback phrase, found ${affected.length}: ${affected.map(m => m.id).join(', ')}`);
+  // Baseline recorded 2026-08-14: 16 of 169 shared meals (before the
+  // pulse/protein/starch/lettuce-cups fixes). Re-measured 2026-08-14 after
+  // those fixes: 7 (tuna-pasta-bake, mushroom-lentil-shepherds-pie,
+  // spinach-ricotta-pasta, beef-lettuce-wraps, beef-sweet-potato-stew,
+  // chicken-coconut-curry, mushroom-pea-risotto) — all confirmed either
+  // genuinely coherent (a tinned/pre-cooked combination that legitimately
+  // just needs warming through) or a *different*, precisely-diagnosed,
+  // out-of-scope issue tracked separately above. This assertion is a
+  // ceiling, not a target — generic language is not itself the defect (see
+  // the audit report), so it should only go down as further diagnosed gaps
+  // are fixed, not be driven to zero for its own sake.
+  assert.ok(affected.length <= 7, `expected at most 7 shared meals still using a generic fallback phrase, found ${affected.length}: ${affected.map(m => m.id).join(', ')}`);
 });
 
 test('[corpus] deterministic recipe-quality gate and full-library nutrition/plan sanity remain green', () => {

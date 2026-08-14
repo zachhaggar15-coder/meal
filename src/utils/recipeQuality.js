@@ -1,5 +1,17 @@
 import { getCookingIngredientModels } from './cookingQuantities.js';
 import { parseIngredientLine } from './ingredientParser.js';
+import {
+  PROTEIN_FAMILIES,
+  STARCH_FAMILIES,
+  findProtein,
+  findStarch,
+  isPulseProteinFamily,
+  isSoupSideAccompaniment,
+  proteinAliasesFor,
+  pulseNeedsCooking,
+  resolvePulseState,
+  starchAliasesFor,
+} from './ingredientRoles.js';
 
 const PLACEHOLDER_PATTERNS = [
   /\bcook (?:the )?pasta,?\s*rice or noodles\b/i,
@@ -14,28 +26,14 @@ const PLACEHOLDER_PATTERNS = [
   /\bseasoning or sauce\b/i,
 ];
 
+// Used only by validateRecipeQuality's "method mentions X but the
+// ingredient list doesn't have it" cross-check below. Derived from the
+// centralised protein/starch definitions in ingredientRoles.js rather than
+// duplicated, so a protein or starch added there (e.g. cod, haddock) is
+// automatically covered by this cross-check too.
 const INGREDIENT_ALIASES = [
-  ['noodles', ['noodle', 'soba']],
-  ['pasta', ['pasta', 'orzo', 'spaghetti']],
-  ['rice', ['rice']],
-  ['couscous', ['couscous']],
-  ['quinoa', ['quinoa']],
-  ['potato', ['potato']],
-  ['chicken', ['chicken']],
-  ['turkey', ['turkey']],
-  ['beef', ['beef', 'steak', 'sirloin', 'mince']],
-  ['lamb', ['lamb']],
-  ['pork', ['pork']],
-  ['salmon', ['salmon']],
-  ['tuna', ['tuna']],
-  ['prawns', ['prawn']],
-  ['tofu', ['tofu']],
-  ['halloumi', ['halloumi']],
-  ['quorn', ['quorn']],
-  ['falafel', ['falafel']],
-  ['eggs', ['egg']],
-  ['lentils', ['lentil']],
-  ['beans', ['bean']],
+  ...STARCH_FAMILIES.map(([label, aliases]) => [label, aliases]),
+  ...PROTEIN_FAMILIES,
 ];
 
 export function buildPracticalRecipeSteps(meal = {}) {
@@ -45,17 +43,21 @@ export function buildPracticalRecipeSteps(meal = {}) {
   const searchable = `${meal.name || ''} ${ingredientList.join(' ')}`.toLowerCase();
   const name = String(meal.name || '').toLowerCase();
   const prepMinutes = readPrepMinutes(meal);
-  const starch = findIngredient(ingredientSearch, ['noodles', 'pasta', 'rice', 'couscous', 'quinoa', 'potato']);
-  const proteinCandidates = ['chicken', 'turkey', 'beef', 'lamb', 'pork', 'salmon', 'tuna', 'prawns', 'tofu', 'halloumi', 'quorn', 'falafel', 'eggs', 'lentils', 'beans'];
-  const protein = findIngredient(name, proteinCandidates)
-    || findIngredient(ingredientSearch, proteinCandidates);
-  const isNoCook = prepMinutes <= 5 && (!protein || !needsCooking(protein, searchable));
-  const starchDisplayName = findCookingName(cookingIngredients, starchAliases(starch));
+  const starch = findStarch(ingredientSearch);
+  const protein = findProtein(name) || findProtein(ingredientSearch);
+  // A pulse (lentils/beans/chickpeas) acting as the meal's protein needs
+  // state-aware handling: dry needs real cooking, tinned/cooked does not,
+  // and neither is ever "browned" the way mince is (see needsCooking below
+  // and every branch that checks isPulseProtein).
+  const isPulseProtein = isPulseProteinFamily(protein);
+  const pulseState = resolvePulseState(cookingIngredients, protein, canonical => parseIngredientLine(canonical).qualifier);
+  const isNoCook = prepMinutes <= 5 && (!protein || !needsCooking(protein, searchable, pulseState));
+  const starchDisplayName = findCookingName(cookingIngredients, starchAliasesFor(starch));
   const starchName = starch === 'potato' ? starchDisplayName || starch : starch || starchDisplayName;
   const potatoPreparation = starch === 'potato'
     ? resolvePotatoPreparation(meal, ingredientList)
     : null;
-  const proteinDisplayName = findCookingName(cookingIngredients, proteinAliases(protein)) || protein;
+  const proteinDisplayName = findCookingName(cookingIngredients, proteinAliasesFor(protein)) || protein;
   const proteinName = normaliseProteinMethodName(protein, proteinDisplayName);
   const vegetables = findCookingNames(
     cookingIngredients,
@@ -263,8 +265,23 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (name.includes('lettuce cups')) {
-    const mince = findCookingName(cookingIngredients, /mince|turkey|beef|pork/i) || proteinName;
+    const mince = findCookingName(cookingIngredients, /mince|turkey|beef|pork/i);
     const leaves = findCookingName(cookingIngredients, /lettuce|leaves/i) || 'lettuce leaves';
+    // "Lettuce cups" describes a container, not a cooking method — a hot
+    // cooked-mince filling (Turkey Mince Lettuce Cups) and a cold assembled
+    // one (Prawn Cocktail in Lettuce Cups) both use the phrase but need
+    // different templates. Only route through the hot-filling template
+    // when a mince-style protein is actually present.
+    if (!mince) {
+      const filling = withoutNames(remainingNames, [leaves]);
+      return [
+        `Separate, rinse and dry the ${leaves}, keeping them whole so they can hold the filling.`,
+        protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
+          ? `${cookProteinStep(proteinName, { finish: 'Cool slightly, then combine with the remaining ingredients.' })}`
+          : `Combine ${joinNatural(filling)} in a bowl.`,
+        'Spoon the filling into the lettuce leaves and serve immediately.',
+      ];
+    }
     const fillings = findCookingNames(cookingIngredients, /(carrot|pepper|spring onion|peas)/i);
     // "onion" also matches "spring onion" — without excluding fillings here,
     // spring onion is cooked in step two AND stirred in again in step three.
@@ -306,9 +323,11 @@ export function buildPracticalRecipeSteps(meal = {}) {
     const filling = withoutNames(remainingNames, carriers);
     return [
       `${name.includes('sandwich') ? 'Lay out' : 'Toast or warm'} ${joinNatural(carriers)}.`,
-      protein && needsCooking(protein, searchable)
+      protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
         ? `Cook the ${proteinName} in a non-stick pan over medium heat until cooked through, then rest briefly and slice it.`
-        : `Drain, slice or mash ${joinNatural(filling)} as appropriate.`,
+        : isPulseProtein && needsCooking(protein, searchable, pulseState)
+          ? cookProteinStep(proteinName, { dryPulse: true })
+          : `Drain, slice or mash ${joinNatural(filling)} as appropriate.`,
       `Layer ${joinNatural(filling)} evenly, season to taste, and serve or wrap tightly for later.`,
     ];
   }
@@ -328,8 +347,11 @@ export function buildPracticalRecipeSteps(meal = {}) {
     if (eggs.length) {
       steps.push(`Boil the ${joinNatural(eggs)} for 8-9 minutes, then cool under cold water, peel and halve.`);
     }
-    if (protein && needsCooking(protein, searchable)) {
-      steps.push(cookProteinStep(proteinName, { finish: 'Rest briefly before slicing if needed.' }));
+    if (protein && needsCooking(protein, searchable, pulseState)) {
+      steps.push(cookProteinStep(proteinName, {
+        finish: isPulseProtein ? '' : 'Rest briefly before slicing if needed.',
+        dryPulse: isPulseProtein,
+      }));
     } else if (tinIngredients.length) {
       steps.push(drainTinnedStep(tinIngredients));
     }
@@ -370,9 +392,19 @@ export function buildPracticalRecipeSteps(meal = {}) {
     const separateStarchNames = starch && starch !== 'potato'
       ? [starchName, starchDisplayName]
       : [];
+    // A side item (a bread roll next to soup) must never be the object of
+    // "add X and simmer" just because nothing else claimed it — exclude it
+    // from the pot entirely and mention it as a side instead.
+    const accompanimentNames = remainingNames.filter(isSoupSideAccompaniment);
+    // A pulse acting as the protein is never "browned" the way mince is —
+    // it goes straight into the pot and simmers — so it must NOT be
+    // excluded from the final addition step the way an already-handled
+    // protein is; excluding it here (as if step two had cooked it) is what
+    // let dry lentils disappear from the method entirely.
+    const proteinExclusions = isPulseProtein ? [] : [proteinName, proteinDisplayName];
     const additions = withoutNames(
       remainingNames,
-      [...aromatics, ...usableFirmVegetables, ...flavourings, proteinName, proteinDisplayName, ...separateStarchNames],
+      [...aromatics, ...usableFirmVegetables, ...flavourings, ...proteinExclusions, ...separateStarchNames, ...accompanimentNames],
     );
     const preparation = [
       aromatics.length || usableFirmVegetables.length
@@ -384,7 +416,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
     ].filter(Boolean).join(' ');
     return [
       preparation || `Have ${joinNatural(remainingNames)} ready by the hob.`,
-      protein && needsCooking(protein, searchable)
+      protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
         ? `Heat a large pan over medium heat and brown the ${proteinName}${aromatics.length ? ` with ${joinNatural(aromatics)}` : ''} for 5-7 minutes.`
         : aromatics.length || usableFirmVegetables.length
           ? `Heat a large pan over medium heat and soften ${joinNatural([...aromatics, ...usableFirmVegetables])} for 5-7 minutes.`
@@ -392,7 +424,9 @@ export function buildPracticalRecipeSteps(meal = {}) {
       `Stir in ${joinNatural(flavourings)}, then add ${joinNatural(additions)} and simmer gently until tender and thickened.`,
       starch && starch !== 'potato'
         ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true, potatoPreparation })
-        : 'Taste, season and portion for serving.',
+        : accompanimentNames.length
+          ? `Taste, season and serve with ${joinNatural(accompanimentNames)} on the side.`
+          : 'Taste, season and portion for serving.',
     ];
   }
 
@@ -400,11 +434,19 @@ export function buildPracticalRecipeSteps(meal = {}) {
     const nonStarch = withoutNames(remainingNames, [starchName]);
     return [
       cookStarchStep(starchName, { potatoPreparation }),
-      protein && needsCooking(protein, searchable)
+      protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
         ? vegetables.length
           ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })} Add ${joinNatural(vegetables)} and cook until tender.`
           : cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })
-        : `Meanwhile, prepare ${joinNatural(nonStarch)} and warm everything gently in a pan.`,
+        // A dry pulse is not just "warmed" — it needs real simmering time
+        // in liquid to become edible. Keep every non-starch ingredient
+        // named (nonStarch already includes the pulse itself, since
+        // nothing here excludes it) rather than routing through
+        // cookProteinStep, which would drop the aromatics/spices that
+        // belong in the same pot.
+        : isPulseProtein && needsCooking(protein, searchable, pulseState)
+          ? `Meanwhile, simmer ${joinNatural(nonStarch)} together in a pan with enough water or stock to cover, until the ${proteinName} is tender.`
+          : `Meanwhile, prepare ${joinNatural(nonStarch)} and warm everything gently in a pan.`,
       starch === 'potato'
         ? `Serve the ${starchName} with the prepared ingredients${sauces.length ? ` and ${joinNatural(sauces)}` : ''}, then season to taste.`
         : sauces.length
@@ -431,9 +473,11 @@ export function buildPracticalRecipeSteps(meal = {}) {
     vegetables.length
       ? `Slice or chop ${joinNatural(vegetables)} and have the remaining ingredients ready.`
       : `Prepare ${joinNatural(remainingNames)} as described in the ingredient list.`,
-    protein && needsCooking(protein, searchable)
+    protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
       ? `Cook the ${proteinName} in a non-stick pan over medium heat until cooked through.`
-      : 'Cook the firmer vegetables in a non-stick pan over medium heat until tender.',
+      : isPulseProtein && needsCooking(protein, searchable, pulseState)
+        ? cookProteinStep(proteinName, { dryPulse: true })
+        : 'Cook the firmer vegetables in a non-stick pan over medium heat until tender.',
     sauces.length
       ? `Add the remaining ingredients, stir in ${joinNatural(sauces)}, heat through, then taste and serve.`
       : 'Add the remaining ingredients in the order needed to warm them through, then taste and serve.',
@@ -504,21 +548,6 @@ function proseIngredientName(value) {
     .trim();
 }
 
-function starchAliases(starch) {
-  return {
-    noodles: ['noodle', 'soba'],
-    pasta: ['pasta', 'orzo', 'spaghetti'],
-    rice: ['rice'],
-    couscous: ['couscous'],
-    quinoa: ['quinoa'],
-    potato: ['potato'],
-  }[starch] || [];
-}
-
-function proteinAliases(protein) {
-  return INGREDIENT_ALIASES.find(([label]) => label === protein)?.[1] || (protein ? [protein] : []);
-}
-
 function normaliseProteinMethodName(protein, displayName) {
   const name = stripTinnedPrefix(displayName);
   if (protein === 'tofu') return name.replace(/^(?:firm|silken)\s+/i, '') || 'tofu';
@@ -568,18 +597,23 @@ function joinNatural(values, fallback = 'the listed ingredients') {
   return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
 }
 
-function cookProteinStep(proteinName, { prefix = '', finish = '' } = {}) {
+function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = false } = {}) {
   const protein = String(proteinName || 'protein');
   let finishText = finish;
   let instruction;
 
-  if (/prawn/i.test(protein)) {
+  if (dryPulse) {
+    // Dry lentils/beans are not pan-browned like mince — they need real
+    // simmering time in liquid to become tender and safe to eat.
+    instruction = `simmer the ${protein} in a pan with plenty of water or stock for 15-20 minutes, until tender, then drain any excess liquid`;
+    finishText = '';
+  } else if (/prawn/i.test(protein)) {
     instruction = `cook the ${protein} in a non-stick pan over medium heat for 3-4 minutes, turning, until pink and opaque`;
     finishText = '';
   } else if (/halloumi/i.test(protein)) {
     instruction = `cook the ${protein} in a dry non-stick pan for 2-3 minutes per side, until golden`;
     finishText = '';
-  } else if (/(salmon|mackerel|cod|fish|tuna steak)/i.test(protein)) {
+  } else if (/(salmon|mackerel|cod|haddock|sardine|fish|tuna steak)/i.test(protein)) {
     instruction = `cook the ${protein} in a non-stick pan over medium heat until opaque and it flakes easily`;
   } else if (/(mince|tofu|beans|lentils)/i.test(protein)) {
     instruction = `cook the ${protein} in a non-stick pan over medium heat, stirring, until browned and hot through`;
@@ -754,22 +788,19 @@ function normaliseIngredients(value, portionSize, mealName) {
   return mealName ? [String(mealName)] : [];
 }
 
-function findIngredient(searchable, candidates) {
-  for (const candidate of candidates) {
-    const aliases = INGREDIENT_ALIASES.find(([label]) => label === candidate)?.[1] || [candidate];
-    if (aliases.some(alias => hasIngredientPhrase(searchable, alias))) return candidate;
-  }
-  return '';
-}
-
 function readPrepMinutes(meal) {
   if (Number.isFinite(Number(meal.prepMins))) return Number(meal.prepMins);
   const match = String(meal.prep || '').match(/\d+/);
   return match ? Number(match[0]) : 15;
 }
 
-function needsCooking(protein, searchable = '') {
-  if (['beans', 'lentils'].includes(protein)) return false;
+// A pulse (lentils/beans/chickpeas) needs cooking only when it's actually
+// dry — tinned/pre-cooked does not. `pulseState` is resolved once per meal
+// from the ingredient's own canonical name/qualifier (see
+// ingredientRoles.js resolvePulseState) and threaded through here rather
+// than re-derived, so every branch agrees on the same answer.
+function needsCooking(protein, searchable = '', pulseState = null) {
+  if (isPulseProteinFamily(protein)) return pulseState ? pulseNeedsCooking(pulseState) : false;
   if (protein === 'tuna' && /(tinned|canned|tin of|tuna pouch)/.test(searchable)) return false;
   if (protein === 'salmon' && /smoked salmon/.test(searchable)) return false;
   return true;

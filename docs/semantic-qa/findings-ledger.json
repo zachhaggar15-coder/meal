@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-14T13:32:08.651Z",
+  "updatedAt": "2026-08-14T14:53:06.166Z",
   "entries": {
     "qa_65f08241a9324caa": {
       "id": "qa_65f08241a9324caa",
@@ -38,6 +38,44 @@
       "status": "New",
       "humanAssessment": "Uncertain",
       "humanNote": ""
+    },
+    "manual_4ec03162a6a04e55": {
+      "id": "manual_4ec03162a6a04e55",
+      "source": "manual",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "Recipe method",
+      "patternKey": "manual-finding",
+      "severity": "High",
+      "evidence": "Meal-name keyword collisions route dishes through the wrong method template. Confirmed instances: (1) 'Lean Beef Mince Lettuce Wraps' — no bread/tortilla present, but the name contains 'wraps' so it triggers the toast/bagel/wrap/sandwich branch; carriers is empty, producing a nonsensical opening step 'Toast or warm the listed ingredients.' (2) 'Wholemeal Pancakes with Low-Fat Yogurt' and 'Protein Waffles with Greek Yogurt' — the yogurt/cereal branch is checked before the pancake branch and matches on the word 'yogurt' alone, so raw eggs and flour are 'topped' onto a cold yogurt bowl instead of whisked into a batter and cooked. This second case is food-safety adjacent (raw egg never cooked) and should be prioritised. Same architectural class as the already-fixed lettuce-cups (hot mince vs cold prawn) collision — worth a systemic sweep for other meal names that trigger a branch by keyword alone regardless of whether the ingredients actually match that branch's assumptions.",
+      "affectedLocation": "Shared meal library (wholemeal-pancakes, protein-waffles-yogurt, beef-lettuce-wraps)",
+      "firstDetectedAt": "2026-08-14T14:52:39.664Z",
+      "lastDetectedAt": "2026-08-14T14:52:39.664Z",
+      "lastRecheckAt": "",
+      "lastRecheckResult": "",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": "Meal-name keyword collisions route dishes through the wrong method template. Confirmed instances: (1) 'Lean Beef Mince Lettuce Wraps' — no bread/tortilla present, but the name contains 'wraps' so it triggers the toast/bagel/wrap/sandwich branch; carriers is empty, producing a nonsensical opening step 'Toast or warm the listed ingredients.' (2) 'Wholemeal Pancakes with Low-Fat Yogurt' and 'Protein Waffles with Greek Yogurt' — the yogurt/cereal branch is checked before the pancake branch and matches on the word 'yogurt' alone, so raw eggs and flour are 'topped' onto a cold yogurt bowl instead of whisked into a batter and cooked. This second case is food-safety adjacent (raw egg never cooked) and should be prioritised. Same architectural class as the already-fixed lettuce-cups (hot mince vs cold prawn) collision — worth a systemic sweep for other meal names that trigger a branch by keyword alone regardless of whether the ingredients actually match that branch's assumptions.",
+      "potentiallySystemic": true
+    },
+    "manual_5b409c1e8bca0f60": {
+      "id": "manual_5b409c1e8bca0f60",
+      "source": "manual",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "Weekly ingredient practicality",
+      "patternKey": "manual-finding",
+      "severity": "Low",
+      "evidence": "checkSoupStewMissingLiquid non-blocking audit (scripts/audit-recipe-invariants.js) flags 86 soup/stew/curry/chilli occurrences with no stock/water ingredient literally listed. Most look like false positives against the invariant as currently defined (ingredient presence) — the generated method already instructs adding water/stock as a cooking step, and real recipes don't normally list plain water as a shopping ingredient. A minority (e.g. 'Turkey Mince Chilli with Brown Rice' — no tomatoes/stock/sauce base at all) look more genuinely worth reviewing. Recommend refining the invariant to check the METHOD TEXT for a liquid-related instruction rather than the ingredient list before using it for anything beyond non-blocking review evidence.",
+      "affectedLocation": "Legacy + shared meal library, multiple plans",
+      "firstDetectedAt": "2026-08-14T14:52:40.072Z",
+      "lastDetectedAt": "2026-08-14T14:52:40.072Z",
+      "lastRecheckAt": "",
+      "lastRecheckResult": "",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": "checkSoupStewMissingLiquid non-blocking audit (scripts/audit-recipe-invariants.js) flags 86 soup/stew/curry/chilli occurrences with no stock/water ingredient literally listed. Most look like false positives against the invariant as currently defined (ingredient presence) — the generated method already instructs adding water/stock as a cooking step, and real recipes don't normally list plain water as a shopping ingredient. A minority (e.g. 'Turkey Mince Chilli with Brown Rice' — no tomatoes/stock/sauce base at all) look more genuinely worth reviewing. Recommend refining the invariant to check the METHOD TEXT for a liquid-related instruction rather than the ingredient list before using it for anything beyond non-blocking review evidence.",
+      "potentiallySystemic": false
     }
   }
 }
