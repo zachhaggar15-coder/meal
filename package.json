@@ -36,7 +36,7 @@
     "qa:semantic:calibration": "node scripts/create-semantic-qa-calibration.js",
     "qa:admin": "node scripts/qa-admin.js",
     "analytics:weekly:email:dry-run": "node scripts/email-weekly-analytics-report.js --dry-run",
-    "test": "node --test scripts/product-funnel.test.js scripts/nutrition-system.test.js scripts/portion-shares.test.js scripts/cooking-quantities.test.js scripts/seo-operations.test.js scripts/semantic-plan-qa.test.js scripts/qa-ledger.test.js",
+    "test": "node --test scripts/product-funnel.test.js scripts/nutrition-system.test.js scripts/portion-shares.test.js scripts/cooking-quantities.test.js scripts/seo-operations.test.js scripts/semantic-plan-qa.test.js scripts/qa-ledger.test.js scripts/regression-corpus.test.js",
     "test:security": "node scripts/api-guards.test.js",
     "preview": "vite preview",
     "start": "vercel dev"
