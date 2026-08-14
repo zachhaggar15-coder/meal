@@ -4,10 +4,9 @@ export const ACCESSORY_PROBLEM_SELECTED_EVENT = 'accessory_problem_selected';
 export const ACCESSORY_GUIDE_CLICK_EVENT = 'accessory_guide_clicked';
 export const AFFILIATE_BASELINE_DATE = '2026-08-13';
 export const AFFILIATE_BASELINE_TIMESTAMP = '2026-08-13T18:54:50.777Z';
-// Filled with the first production deployment timestamp after the redesigned
-// accessories funnel is live. Until then, reporting falls back to the canonical
-// affiliate boundary above rather than inventing a launch time.
-export const ACCESSORIES_FUNNEL_BASELINE_TIMESTAMP = '';
+// First production deployment containing the problem-led accessories funnel.
+// Earlier accessory events use a different presentation and are non-comparable.
+export const ACCESSORIES_FUNNEL_BASELINE_TIMESTAMP = '2026-08-14T08:55:04.278Z';
 
 export const RECOMMENDATION_SOURCES = Object.freeze([
   'container_buying_guide',
