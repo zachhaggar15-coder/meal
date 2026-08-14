@@ -4,7 +4,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { google } from 'googleapis';
-import { buildAffiliateMeasurement } from '../api/admin-stats.js';
+import {
+  buildAccessoryFunnelMeasurement,
+  buildAffiliateMeasurement,
+} from '../api/admin-stats.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { blogPostsData } from '../src/data/blogPosts.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
@@ -491,7 +494,7 @@ async function fetchCommercialEventRows({ supabaseUrl, serviceKey, rowLimit }) {
   const baseUrl = String(supabaseUrl || '').replace(/\/$/, '');
   const url = new URL(`${baseUrl}/rest/v1/analytics_events`);
   url.searchParams.set('select', 'occurred_at,event_name,path,metadata');
-  url.searchParams.set('event_name', 'in.(page_view,affiliate_product_impression,affiliate_product_click)');
+  url.searchParams.set('event_name', 'in.(page_view,affiliate_product_impression,affiliate_product_click,accessory_problem_selected,accessory_guide_clicked)');
   url.searchParams.set('occurred_at', 'gte.2026-08-13T18:54:50.777Z');
   url.searchParams.set('order', 'occurred_at.desc.nullslast');
   url.searchParams.set('limit', String(rowLimit));
@@ -805,6 +808,7 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const containerGuideCommercial = buildAffiliateMeasurement((commercialEventRows || []).filter(row => (
     row.path === '/blog/best-meal-prep-containers-uk'
   )));
+  const accessoriesFunnel = buildAccessoryFunnelMeasurement(commercialEventRows || []);
 
   const generatedPublicData = {
     generatedAt: range.generatedAt,
@@ -828,6 +832,7 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     fieldVitals,
     shippedChangeReview,
     containerGuideCommercial,
+    accessoriesFunnel,
     seoExperiments,
     semanticQa,
     gaLandingPages: gaRows,
@@ -1494,6 +1499,24 @@ function renderWeeklyReport(analysis) {
   writeAffiliateBreakdown(lines, 'Recommendation source', commercial.byRecommendationSource);
   writeAffiliateBreakdown(lines, 'Device', commercial.byViewport);
 
+  lines.push('## Accessories Problem-led Funnel', '');
+  const accessories = analysis.accessoriesFunnel;
+  lines.push(`- Redesign measurement starts: ${accessories.baselineTimestamp}${accessories.baselineStatus === 'pending_production_deployment' ? ' (temporary canonical-event fallback; replace with the actual redesign deployment timestamp)' : ''}`);
+  lines.push(`- Accessory page views: ${accessories.pageViews}`);
+  lines.push(`- Problem selections: ${accessories.problemSelections}`);
+  lines.push(`- Problem selection rate: ${accessories.pageViews ? `${accessories.problemSelections} selections / ${accessories.pageViews} page views (${accessories.problemSelectionRate}%)` : `unavailable (${accessories.problemSelections} selections / 0 page views)`}`);
+  lines.push(`- Product impressions: ${accessories.impressions}`);
+  lines.push(`- Canonical affiliate clicks: ${accessories.clicks}`);
+  lines.push(`- Affiliate CTR: ${accessories.impressions ? `${accessories.clicks} clicks / ${accessories.impressions} impressions (${accessories.affiliateCtr}%)` : `unavailable (${accessories.clicks} clicks / 0 measured impressions)`}`);
+  lines.push(`- Affiliate clicks per 1,000 accessory-hub views: ${accessories.clicksPerThousandPageViews ?? 'unavailable'}`);
+  lines.push(`- Guide clicks: ${accessories.guideClicks}`);
+  lines.push(`- Sample status: ${accessories.sampleStatus}`);
+  lines.push(`- ${accessories.sampleNote}`);
+  lines.push('- This report is observational. It does not reorder products, rewrite descriptions, or add/remove products.', '');
+  writeAccessoryProblemBreakdown(lines, accessories.byProblem);
+  writeAffiliateBreakdown(lines, 'Accessory placement', accessories.byPlacement);
+  writeAffiliateBreakdown(lines, 'Accessory device', accessories.byViewport);
+
   lines.push('## Plan Quality', '');
   const semanticRun = analysis.semanticQa?.run;
   if (!semanticRun?.sampleSize) {
@@ -1821,7 +1844,7 @@ function sampleFieldVitalRows() {
 }
 
 function sampleCommercialEventRows() {
-  const ts = Date.parse('2026-08-14T12:00:00Z');
+  const ts = Date.now();
   const path = '/blog/best-meal-prep-containers-uk';
   const metadata = {
     product_id: 'budget-compartment-50-pack',
@@ -1831,10 +1854,35 @@ function sampleCommercialEventRows() {
     viewport_category: 'mobile',
     recommendation_source: 'container_buying_guide',
   };
+  const accessoryPath = '/meal-prep-accessories';
+  const accessoryMetadata = {
+    product_id: 'fit-fresh-slim-ice-packs',
+    product_category: 'Reusable ice packs',
+    placement: 'recommendation_card_lead',
+    list_position: 1,
+    selected_problem: 'keep-cold',
+    viewport_category: 'mobile',
+    recommendation_source: 'accessories_hub',
+  };
   return [
     { ts, event_name: 'page_view', path, metadata: {} },
     { ts, event_name: 'affiliate_product_impression', path, metadata },
     { ts, event_name: 'affiliate_product_click', path, metadata },
+    { ts, event_name: 'page_view', path: accessoryPath, metadata: {} },
+    {
+      ts,
+      event_name: 'accessory_problem_selected',
+      path: accessoryPath,
+      metadata: { problem_id: 'keep-cold', problem_label: 'Keep food cold', viewport_category: 'mobile' },
+    },
+    { ts, event_name: 'affiliate_product_impression', path: accessoryPath, metadata: accessoryMetadata },
+    { ts, event_name: 'affiliate_product_click', path: accessoryPath, metadata: accessoryMetadata },
+    {
+      ts,
+      event_name: 'accessory_guide_clicked',
+      path: accessoryPath,
+      metadata: { selected_problem: 'keep-cold', target_route: '/blog/reusable-ice-packs-for-lunch-bags-uk' },
+    },
   ];
 }
 
@@ -1898,6 +1946,20 @@ function writeAffiliateBreakdown(lines, label, rows = []) {
   }
   for (const row of rows) {
     lines.push(`| ${mdCell(row.name)} | ${row.clicks} | ${row.impressions} | ${row.impressions ? `${row.clicks} / ${row.impressions} (${row.affiliateCtr}%)` : 'unavailable'} |`);
+  }
+  lines.push('');
+}
+
+function writeAccessoryProblemBreakdown(lines, rows = []) {
+  lines.push('### Accessory problem', '');
+  lines.push('| Problem | Selections | Clicks | Impressions | Affiliate CTR | Sample status |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | --- |');
+  if (!rows.length) {
+    lines.push('| Awaiting data | 0 | 0 | 0 | unavailable | insufficient_data |', '');
+    return;
+  }
+  for (const row of rows) {
+    lines.push(`| ${mdCell(row.problemLabel)} | ${row.selections} | ${row.clicks} | ${row.impressions} | ${row.impressions ? `${row.clicks} / ${row.impressions} (${row.affiliateCtr}%)` : 'unavailable'} | ${row.sampleStatus} |`);
   }
   lines.push('');
 }

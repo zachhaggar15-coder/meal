@@ -12,6 +12,9 @@ import {
   AFFILIATE_BASELINE_TIMESTAMP,
   AFFILIATE_PRODUCT_CLICK_EVENT,
   AFFILIATE_PRODUCT_IMPRESSION_EVENT,
+  ACCESSORIES_FUNNEL_BASELINE_TIMESTAMP,
+  ACCESSORY_GUIDE_CLICK_EVENT,
+  ACCESSORY_PROBLEM_SELECTED_EVENT,
   getAffiliatePlacementGroup,
 } from '../src/utils/affiliateAnalytics.js';
 
@@ -269,6 +272,7 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
         .map(item => item.events)),
     },
     affiliateMeasurement: buildAffiliateMeasurement(cleanEvents),
+    accessoriesFunnel: buildAccessoryFunnelMeasurement(cleanEvents),
     funnel,
     entrySources: toNameValue(countBy(cleanSessions, 'entry_source')).slice(0, 10),
     topEntryIntents: toNameValue(countBy(cleanSessions, 'entry_intent')).slice(0, 12),
@@ -382,6 +386,73 @@ export function buildAffiliateMeasurement(events) {
       note: 'Historical diagnostics only; never add these to canonical conversions.',
     },
   };
+}
+
+export function buildAccessoryFunnelMeasurement(events, options = {}) {
+  const baselineTimestamp = options.baselineTimestamp
+    || ACCESSORIES_FUNNEL_BASELINE_TIMESTAMP
+    || AFFILIATE_BASELINE_TIMESTAMP;
+  const baselineMs = Date.parse(baselineTimestamp);
+  const current = events.filter(event => (
+    event.path === '/meal-prep-accessories'
+    && event.ts >= baselineMs
+  ));
+  const commercial = buildAffiliateMeasurement(current);
+  const problemSelections = current.filter(event => event.event_name === ACCESSORY_PROBLEM_SELECTED_EVENT);
+  const guideClicks = current.filter(event => event.event_name === ACCESSORY_GUIDE_CLICK_EVENT);
+  const problemIds = unique([
+    ...problemSelections.map(event => event.metadata?.problem_id),
+    ...current.map(event => event.metadata?.selected_problem),
+  ].filter(Boolean));
+
+  const byProblem = problemIds.map(problemId => {
+    const selections = problemSelections.filter(event => event.metadata?.problem_id === problemId);
+    const impressions = current.filter(event => (
+      event.event_name === AFFILIATE_PRODUCT_IMPRESSION_EVENT
+      && event.metadata?.selected_problem === problemId
+    ));
+    const clicks = current.filter(event => (
+      event.event_name === AFFILIATE_PRODUCT_CLICK_EVENT
+      && event.metadata?.selected_problem === problemId
+    ));
+    return {
+      problemId,
+      problemLabel: selections.find(event => event.metadata?.problem_label)?.metadata?.problem_label || problemId,
+      selections: selections.length,
+      impressions: impressions.length,
+      clicks: clicks.length,
+      affiliateCtr: impressions.length ? round((clicks.length / impressions.length) * 100) : null,
+      affiliateCtrNumerator: clicks.length,
+      affiliateCtrDenominator: impressions.length,
+      sampleStatus: classifyAccessorySample(impressions.length),
+    };
+  }).sort((left, right) => right.selections - left.selections || right.impressions - left.impressions);
+
+  const guideCounts = countByMetadata(guideClicks, 'target_route');
+  const pageViews = commercial.pageViews;
+
+  return {
+    ...commercial,
+    baselineTimestamp,
+    baselineStatus: ACCESSORIES_FUNNEL_BASELINE_TIMESTAMP ? 'production_deployment' : 'pending_production_deployment',
+    problemSelectionEvent: ACCESSORY_PROBLEM_SELECTED_EVENT,
+    problemSelections: problemSelections.length,
+    problemSelectionRate: pageViews ? round((problemSelections.length / pageViews) * 100) : null,
+    problemSelectionRateNumerator: problemSelections.length,
+    problemSelectionRateDenominator: pageViews,
+    guideClicks: guideClicks.length,
+    byProblem,
+    byGuideRoute: toNameValue(guideCounts).slice(0, 20),
+    sampleStatus: classifyAccessorySample(commercial.impressions),
+    sampleNote: 'Under 20 product impressions is insufficient data; 20–49 is directional only; 50+ is worth human review. Product ordering never changes automatically.',
+  };
+}
+
+function classifyAccessorySample(impressions) {
+  if (impressions < 20) return 'insufficient_data';
+  if (impressions < 50) return 'directional_only';
+  if (impressions < 200) return 'worth_reviewing';
+  return 'increasingly_useful';
 }
 
 function countByMetadata(events, key, normalise = value => value) {

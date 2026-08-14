@@ -28,7 +28,18 @@ import {
   inferRecommendationSource,
   isAffiliateUrl,
 } from '../src/utils/affiliateAnalytics.js';
-import { buildAffiliateMeasurement } from '../api/admin-stats.js';
+import {
+  buildAccessoryFunnelMeasurement,
+  buildAffiliateMeasurement,
+} from '../api/admin-stats.js';
+import {
+  ACCESSORY_PROBLEMS,
+  ACCESSORY_PRODUCT_IDS,
+  PROMINENT_ACCESSORY_PRODUCT_IDS,
+} from '../src/data/accessoryProblems.js';
+import { blogPostsData } from '../src/data/blogPosts.js';
+import { MEALPREP_PRODUCTS } from '../src/data/mealPrepProducts.js';
+import { CONTAINER_NAV_LINKS } from '../src/data/navigation.js';
 
 test('calculator selections survive in browse URLs', () => {
   assert.equal(
@@ -318,6 +329,91 @@ test('affiliate impression keys deduplicate links within one product presentatio
 
   assert.equal(image, cta);
   assert.equal(getAffiliatePlacementGroup('quick_comparison_snapshot'), 'comparison_section');
+});
+
+test('accessory problem map is bounded, route-valid and uses the maintained 20-product inventory', () => {
+  assert.equal(ACCESSORY_PROBLEMS.length, 8);
+  assert.equal(ACCESSORY_PRODUCT_IDS.length, 20);
+  assert.equal(new Set(ACCESSORY_PRODUCT_IDS).size, 20);
+  assert.equal(new Set(ACCESSORY_PROBLEMS.map(problem => problem.id)).size, 8);
+
+  const containerRoutes = new Set(CONTAINER_NAV_LINKS.map(link => link.to));
+  for (const problem of ACCESSORY_PROBLEMS) {
+    assert.ok(problem.recommendations.length >= 1 && problem.recommendations.length <= 2);
+    assert.equal(new Set(problem.recommendations.map(item => item.productId)).size, problem.recommendations.length);
+
+    for (const recommendation of problem.recommendations) {
+      assert.ok(ACCESSORY_PRODUCT_IDS.includes(recommendation.productId));
+      assert.ok(MEALPREP_PRODUCTS[recommendation.productId]);
+    }
+
+    for (const guide of problem.guides) {
+      if (guide.to.startsWith('/blog/')) {
+        assert.ok(blogPostsData[guide.to.slice('/blog/'.length)], `Missing blog route: ${guide.to}`);
+      } else {
+        assert.ok(containerRoutes.has(guide.to), `Missing container route: ${guide.to}`);
+      }
+      assert.doesNotMatch(guide.label, /^(learn more|useful route|exact guide|search page)$/i);
+    }
+  }
+});
+
+test('every prominent accessory recommendation has explicit trust fields', () => {
+  assert.equal(PROMINENT_ACCESSORY_PRODUCT_IDS.length, 13);
+  for (const productId of PROMINENT_ACCESSORY_PRODUCT_IDS) {
+    const product = MEALPREP_PRODUCTS[productId];
+    for (const field of ['bestFor', 'whyItHelps', 'drawback', 'skipIf']) {
+      assert.ok(product[field]?.trim(), `${productId} is missing ${field}`);
+    }
+  }
+
+  assert.match(MEALPREP_PRODUCTS['fullstar-pro-vegetable-chopper'].skipIf, /knife/i);
+  assert.match(MEALPREP_PRODUCTS['nuoshen-removable-food-labels'].drawback, /do not make.+freez/i);
+  assert.match(MEALPREP_PRODUCTS['thermopro-tp02s-thermometer'].drawback, /storage/i);
+});
+
+test('accessory affiliate context uses one canonical event with stable selected-problem data', () => {
+  const product = { id: 'fit-fresh-slim-ice-packs', name: 'Fit & Fresh ice packs', category: 'Reusable ice packs' };
+  const data = affiliateLinkData({
+    product,
+    sourcePage: 'meal-prep-accessories-problem-keep-cold',
+    placement: 'recommendation_card_lead',
+    listPosition: 1,
+    selectedProblem: 'keep-cold',
+    recommendationSource: 'accessories_hub',
+  });
+
+  assert.equal(data['data-event'], AFFILIATE_PRODUCT_CLICK_EVENT);
+  assert.equal(data['data-selected-problem'], 'keep-cold');
+  assert.equal(data['data-list-position'], 1);
+  assert.equal(data['data-recommendation-source'], 'accessories_hub');
+});
+
+test('accessories funnel keeps denominators and labels small samples without auto-optimising', () => {
+  const baselineTimestamp = '2026-08-14T09:00:00.000Z';
+  const ts = Date.parse(baselineTimestamp) + 1000;
+  const path = '/meal-prep-accessories';
+  const selected = { selected_problem: 'keep-cold', viewport_category: 'mobile' };
+  const report = buildAccessoryFunnelMeasurement([
+    { ts, event_name: 'page_view', path, metadata: {} },
+    { ts, event_name: 'accessory_problem_selected', path, metadata: { problem_id: 'keep-cold', problem_label: 'Keep food cold' } },
+    { ts, event_name: AFFILIATE_PRODUCT_IMPRESSION_EVENT, path, metadata: selected },
+    { ts, event_name: AFFILIATE_PRODUCT_CLICK_EVENT, path, metadata: selected },
+    { ts, event_name: 'accessory_guide_clicked', path, metadata: { target_route: '/blog/reusable-ice-packs-for-lunch-bags-uk' } },
+  ], { baselineTimestamp });
+
+  assert.equal(report.pageViews, 1);
+  assert.equal(report.problemSelections, 1);
+  assert.equal(report.problemSelectionRateNumerator, 1);
+  assert.equal(report.problemSelectionRateDenominator, 1);
+  assert.equal(report.clicks, 1);
+  assert.equal(report.impressions, 1);
+  assert.equal(report.affiliateCtrNumerator, 1);
+  assert.equal(report.affiliateCtrDenominator, 1);
+  assert.equal(report.guideClicks, 1);
+  assert.equal(report.byProblem[0].problemLabel, 'Keep food cold');
+  assert.equal(report.byProblem[0].sampleStatus, 'insufficient_data');
+  assert.match(report.sampleNote, /never changes automatically/i);
 });
 
 test('commercial affiliate reporting retains CTR denominators and deployment boundary', () => {

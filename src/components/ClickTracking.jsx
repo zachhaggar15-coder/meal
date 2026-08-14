@@ -10,6 +10,7 @@ import {
   AFFILIATE_PRODUCT_CLICK_EVENT,
   buildAffiliateEventProperties,
   buildAffiliateImpressionKey,
+  getViewportCategory,
   isAffiliateUrl,
 } from '../utils/affiliateAnalytics.js';
 
@@ -52,6 +53,11 @@ export default function ClickTracking() {
         recommendation_source: target.dataset.recommendationSource,
         placement: target.dataset.placement,
         list_position: target.dataset.listPosition,
+        problem_id: target.dataset.problemId,
+        problem_label: target.dataset.problemLabel,
+        previous_problem: target.dataset.previousProblem,
+        target_route: target.dataset.targetRoute,
+        viewport_category: getViewportCategory(window.innerWidth),
         destination: target.href,
       };
 
