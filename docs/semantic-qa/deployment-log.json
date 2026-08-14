@@ -12,6 +12,12 @@
       "deployedAt": "2026-08-14T15:06:33.952Z",
       "summary": "Recipe-generation root-cause fixes: dry/tinned pulse handling, cod/haddock/mackerel/sardine/chickpea protein vocabulary, rice-cakes starch collision, lettuce-cups template selection, soup/stew accompaniment exclusion. Centralised classifier in src/utils/ingredientRoles.js. Verified live at mealprep.org.uk/meal-plan/1500-calorie-meal-plan (Homemade Lentil Soup — the original bug report example — now correctly names and simmers the lentils and serves the bread roll on the side instead of simmering it).",
       "gate": "npm run check — exit 0"
+    },
+    {
+      "commit": "4d75146",
+      "deployedAt": "2026-08-14T23:38:16.007Z",
+      "summary": "Recipe-quality phase 2: ten shared method-generation defects fixed (lettuce-wrap and pancake/waffle family-selection collisions, waffle-iron step, toast carrier, full-English empty slots, pre-made batter, duplicate starch, stew filler clause, smoothie-bowl toppings, dry-pulse liquid for non-primary pulses). Caesar dressing identity corrected (only intentional nutrition change: 166->180 kcal, 1 recipe / 23 legacy occurrences). Three invariants promoted to blocking. Verified live: Homemade Lentil Soup now states its cooking liquid; Caesar salad shows the specific dressing.",
+      "gate": "npm run check — exit 0 (127 tests, 1404 routes prerendered, 11 audits)"
     }
   ]
 }
