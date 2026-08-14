@@ -6,6 +6,12 @@
       "deployedAt": "2026-08-14T13:58:00.373Z",
       "summary": "Shopping-list dedup/unit-merge, egg-white weight presentation, category fixes (black pepper, green beans), recipe-method fixes (cooking spray, spring onion), diet-label fix, shopping-list checkbox/bullet fix, QA findings ledger + admin CLI, regression corpus. Verified live at mealprep.org.uk/plans/aldi-high-protein-low-cal-1500.",
       "gate": "npm run check (lint, test, test:security, audit:dependencies, build+prerender 1404 routes, check:plans, audit:all) — exit 0"
+    },
+    {
+      "commit": "724cd9551bed49b7fdf3ede6776cd82e45855f00",
+      "deployedAt": "2026-08-14T15:06:33.952Z",
+      "summary": "Recipe-generation root-cause fixes: dry/tinned pulse handling, cod/haddock/mackerel/sardine/chickpea protein vocabulary, rice-cakes starch collision, lettuce-cups template selection, soup/stew accompaniment exclusion. Centralised classifier in src/utils/ingredientRoles.js. Verified live at mealprep.org.uk/meal-plan/1500-calorie-meal-plan (Homemade Lentil Soup — the original bug report example — now correctly names and simmers the lentils and serves the bread roll on the side instead of simmering it).",
+      "gate": "npm run check — exit 0"
     }
   ]
 }
