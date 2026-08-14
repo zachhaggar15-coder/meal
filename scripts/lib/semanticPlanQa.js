@@ -8,10 +8,19 @@ import { buildPlan, buildShoppingList } from '../../src/utils/planBuilder.js';
 import { buildCanonicalLegacyPlan } from '../../src/utils/legacyPlanBuilder.js';
 import { parseIngredientLine } from '../../src/utils/ingredientParser.js';
 import { resolvePotatoPreparation } from '../../src/utils/recipeQuality.js';
+import { buildContainerSetup } from '../../src/utils/containerSetup.js';
+import { PRICING_CONTEXT_CHECKED } from '../../src/data/supermarketProfiles.js';
 import {
   buildCalibrationMetrics,
   readSemanticQaCalibration,
 } from './semanticQaCalibration.js';
+import {
+  ledgerRows,
+  readLedger,
+  recheckRoute as recheckRouteInLedger,
+  upsertAutoFindings,
+  writeLedger,
+} from './semanticQaLedger.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..', '..');
@@ -225,14 +234,41 @@ export async function runWeeklySemanticQa({
   });
   const nextHistory = updateHistory(history, run, reviews, inventory.length);
   const calibration = readSemanticQaCalibration();
-  const dashboard = buildDashboardData({ history: nextHistory, inventory, latestRun: run, calibration });
+  const nextLedger = upsertAutoFindings(readLedger(), reviews, now);
+  const dashboard = buildDashboardData({ history: nextHistory, inventory, latestRun: run, calibration, ledger: nextLedger });
 
   if (persist) {
     writeSemanticQaHistory(nextHistory);
+    writeLedger(nextLedger);
     writeSemanticQaDashboard(dashboard);
   }
 
-  return { run, reviews, systemicIssues, dashboard, history: nextHistory };
+  return { run, reviews, systemicIssues, dashboard, history: nextHistory, ledger: nextLedger };
+}
+
+// Reruns local QA for exactly one route right now, for the admin "Recheck
+// plan" action. Never rewrites the plan or the weekly sample — it only
+// reports still-detected / no-longer-detected / new / unable-to-determine
+// against the findings ledger, matching what "Recheck plan" is specified to
+// do (scripts/qa-admin.js is the CLI entry point for this).
+export function recheckPlanRoute(route, { ledger = readLedger(), now = new Date(), persist = true } = {}) {
+  const assessRoute = targetRoute => {
+    const inventory = buildPlanInventory();
+    const candidate = inventory.find(item => item.route === targetRoute);
+    if (!candidate) throw new Error(`No plan found for route ${targetRoute}`);
+    const hydrated = hydratePlanForQa(candidate);
+    // assessPlanLocally alone (outside the full weekly-run merge path) does
+    // not stamp findingId — compute it the same way mergeReviews does, so
+    // this reconciles against the same IDs the ledger was written with.
+    return assessPlanLocally(hydrated, now).findings.map(item => ({
+      ...item,
+      findingId: item.findingId || findingId(candidate.route, item),
+    }));
+  };
+
+  const { ledger: nextLedger, result } = recheckRouteInLedger(ledger, route, assessRoute, now);
+  if (persist) writeLedger(nextLedger);
+  return { ledger: nextLedger, result };
 }
 
 export function assessPlanLocally(plan, now = new Date()) {
@@ -247,8 +283,93 @@ export function assessPlanLocally(plan, now = new Date()) {
 
   findings.push(...assessPlanVariety(plan, planContext));
   findings.push(...assessShoppingList(plan));
+  findings.push(...assessWeeklyIngredientAccumulation(plan));
+  findings.push(...assessPurchaseFormatOddities(plan));
+  findings.push(...assessContainerCountOutlier(plan));
+  findings.push(...assessCostConfidence(now));
 
   return finaliseReview(plan, findings, now, 'local');
+}
+
+// A repeated meal is allowed (breakfast repetition is a deliberate product
+// choice — see planBuilder.js), but the resulting weekly purchase quantity
+// for a single ingredient can still be impractical. This never blocks or
+// changes plan generation; it only surfaces the accumulation as evidence for
+// human review, per the "weekly ingredient accumulation" QA concept.
+const ACCUMULATION_THRESHOLDS = { g: 1200, ml: 1200, item: 30 };
+
+function assessWeeklyIngredientAccumulation(plan) {
+  const findings = [];
+  const shopping = plan.shoppingList || {};
+  for (const [category, items] of Object.entries(shopping)) {
+    for (const item of items || []) {
+      const match = String(item).match(/^(.+?)\s+(\d+(?:\.\d+)?)(g|ml|kg|l)\b/i)
+        || String(item).match(/^(.+?)\s+(\d+(?:\.\d+)?)(?:\s|$)(?!\w)/i);
+      if (!match) continue;
+      const [, label, amountRaw, unitRaw] = match;
+      let amount = Number(amountRaw);
+      let unit = (unitRaw || 'item').toLowerCase();
+      if (unit === 'kg') { amount *= 1000; unit = 'g'; }
+      if (unit === 'l') { amount *= 1000; unit = 'ml'; }
+      const threshold = ACCUMULATION_THRESHOLDS[unit];
+      if (!threshold || amount < threshold) continue;
+      findings.push(finding('Medium', 'weekly ingredient practicality', 'weekly-ingredient-accumulation',
+        `${label.trim()} totals ${item.match(/\(about[^)]*\)/i)?.[0] || `${amountRaw}${unitRaw || ''}`} for the week (${category}) — review whether this accumulated quantity is still a practical single shop, especially if driven by a repeated meal.`,
+        'Weekly shopping list', 'medium', 'uncertain'));
+    }
+  }
+  return findings;
+}
+
+// Catches shopping lines that are mathematically correct but read as
+// mechanical optimiser output rather than something a person would write on
+// a shopping list — e.g. unusually precise fractional spoon measures. The
+// shopping formatter already rounds every spoon amount to a quarter-unit
+// (1.25 tsp, 2.75 tbsp), so this only fires on precision beyond that —
+// a safety net for a formatting regression, not the normal case.
+function assessPurchaseFormatOddities(plan) {
+  const findings = [];
+  const shopping = plan.shoppingList || {};
+  const flat = Object.values(shopping).flat();
+  for (const item of flat) {
+    const oddPrecision = String(item).match(/\b(\d+\.\d{3,})\s*(tsp|tbsp)\b/i);
+    if (oddPrecision) {
+      findings.push(finding('Low', 'weekly ingredient practicality', 'purchase-format-oddity',
+        `"${item}" uses an over-precise spoon measurement (${oddPrecision[1]} ${oddPrecision[2]}) that reads as optimiser output rather than a shopping instruction.`,
+        'Weekly shopping list', 'medium', 'uncertain'));
+    }
+  }
+  return findings;
+}
+
+// The container recommendation currently sizes off total weekly meals
+// rather than meals stored *simultaneously* (see containerSetup.js) — this
+// flags implausibly large recommendations as review evidence without
+// changing the algorithm itself, which needs a separate approved change.
+function assessContainerCountOutlier(plan) {
+  try {
+    const setup = buildContainerSetup({ weeklyPlan: plan.days });
+    if (setup.containerCount > 15) {
+      return [finding('Medium', 'container recommendation', 'container-count-outlier',
+        `Recommends ${setup.containerCount} containers, which likely assumes zero reuse across the week rather than concurrently stored meals.`,
+        'Container recommendation', 'medium', 'template/systemic')];
+    }
+  } catch {
+    // Container sizing needs a fully hydrated plan; skip quietly if unavailable.
+  }
+  return [];
+}
+
+const COST_CONFIDENCE_MAX_DAYS = 120;
+
+function assessCostConfidence(now) {
+  const checkedMs = Date.parse(PRICING_CONTEXT_CHECKED);
+  if (!Number.isFinite(checkedMs)) return [];
+  const ageDays = (Number(now) - checkedMs) / 86400000;
+  if (ageDays <= COST_CONFIDENCE_MAX_DAYS) return [];
+  return [finding('Low', 'cost estimate', 'cost-confidence-stale',
+    `Displayed budget ranges are keyed to pricing context last checked ${PRICING_CONTEXT_CHECKED}, which is over ${Math.floor(ageDays)} days old.`,
+    'Weekly cost estimate', 'medium', 'template/systemic')];
 }
 
 function assessMeal(plan, day, meal) {
@@ -421,7 +542,7 @@ function mealStyleMismatch(name, method, potatoState) {
   return '';
 }
 
-function hydratePlanForQa(candidate) {
+export function hydratePlanForQa(candidate) {
   let days;
   let shoppingList;
   if (candidate.planType === 'generated') {
@@ -828,7 +949,7 @@ function updateHistory(history, run, reviews, totalPlans) {
   return next;
 }
 
-export function buildDashboardData({ history, inventory, latestRun, calibration = readSemanticQaCalibration() }) {
+export function buildDashboardData({ history, inventory, latestRun, calibration = readSemanticQaCalibration(), ledger = readLedger() }) {
   const plans = inventory || buildPlanInventory();
   const perPlan = history?.perPlan || {};
   const everSampled = Object.keys(perPlan).length;
@@ -847,7 +968,8 @@ export function buildDashboardData({ history, inventory, latestRun, calibration 
       patternKey: item.patternKey,
       issue: item.explanation,
       scope: item.scope,
-      reviewStatus: item.reviewStatus || history?.reviewStatuses?.[item.findingId] || 'New',
+      reviewStatus: ledger?.entries?.[item.findingId]?.status || item.reviewStatus || history?.reviewStatuses?.[item.findingId] || 'New',
+      humanAssessment: ledger?.entries?.[item.findingId]?.humanAssessment || 'Uncertain',
       affectedLocation: item.affectedLocation,
     })))
     .sort((left, right) => SEVERITY_ORDER[right.severity] - SEVERITY_ORDER[left.severity])
@@ -885,6 +1007,23 @@ export function buildDashboardData({ history, inventory, latestRun, calibration 
     })),
     breakdowns: buildBreakdowns(latestReviews),
     recentFindings,
+    findingsLedger: ledgerRows(ledger).slice(0, 200).map(entry => ({
+      id: entry.id,
+      source: entry.source,
+      route: entry.route,
+      category: entry.category,
+      severity: entry.severity,
+      evidence: entry.evidence,
+      affectedLocation: entry.affectedLocation,
+      firstDetectedAt: entry.firstDetectedAt,
+      lastDetectedAt: entry.lastDetectedAt,
+      lastRecheckAt: entry.lastRecheckAt,
+      lastRecheckResult: entry.lastRecheckResult,
+      resolvedAt: entry.resolvedAt,
+      status: entry.status,
+      humanAssessment: entry.humanAssessment,
+      humanNote: entry.humanNote,
+    })),
     systemicIssues: latestRun?.systemicIssues || [],
     calibration: {
       ...buildCalibrationMetrics(calibration),

@@ -205,6 +205,38 @@ test('meal-name matching is boundary-aware and recognises common beef aliases', 
   );
 });
 
+test('egg white omelette methods do not re-serve the eggs or cooking spray as accompaniments', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Egg White Omelette with Peppers',
+    prep: '10 min',
+    ingredients: [
+      'Egg whites 7.75', 'Mixed peppers 127g', 'Onion 0.75',
+      'Olive oil spray, optional light coating (excluded from nutrition estimate)',
+      'Mixed herbs 1.25 tsp',
+    ],
+  }).join(' ');
+
+  assert.doesNotMatch(method, /eggs? whites?,/i, 'egg whites should not be listed as something served alongside the eggs');
+  assert.doesNotMatch(method, /spray/i, 'cooking spray is a pan aid, not a serving ingredient');
+  assert.match(method, /serve with mixed herbs/i);
+});
+
+test('turkey lettuce cups cook spring onion once, not once as an aromatic and once as a filling', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Turkey Mince Lettuce Cups with Hoisin',
+    prep: '12 min',
+    ingredients: [
+      'Turkey mince lean 229g', 'Romaine lettuce leaves 5', 'Spring onion 2.5',
+      'Hoisin sauce 25g', 'Sesame seeds 1.25 tsp', 'Carrot grated 64g',
+    ],
+  });
+  const stirInStep = method.find(step => /^Stir in/i.test(step));
+  const cookStep = method.find(step => /^Cook the/i.test(step));
+
+  assert.match(stirInStep, /spring onion/i);
+  assert.doesNotMatch(cookStep, /spring onion/i, 'spring onion should only be introduced once, in the stir-in step');
+});
+
 test('complete shared and editorial meal libraries never prepare an absent material ingredient', () => {
   const assertConsistent = (meal, label) => {
     const recipe = meal.recipe || buildPracticalRecipeSteps(meal);

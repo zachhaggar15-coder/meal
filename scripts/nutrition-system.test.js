@@ -156,6 +156,53 @@ test('shopping classification is phrase-aware and follows a shopper-friendly tax
   assert.ok(shopping.dairy.some(item => /Cottage cheese/i.test(item)));
 });
 
+test('multi-word herb and spice names are not shadowed by a shorter produce keyword', () => {
+  const shopping = shoppingListFor([
+    'Black pepper, to taste', 'White pepper, to taste', 'Mixed peppers 100g', 'Green beans 100g',
+  ]);
+
+  assert.ok(shopping.herbs.some(item => /Black pepper/i.test(item)));
+  assert.ok(shopping.herbs.some(item => /White pepper/i.test(item)));
+  assert.ok(shopping.vegetables.some(item => /Mixed peppers/i.test(item)));
+  assert.ok(shopping.vegetables.some(item => /Green beans/i.test(item)));
+  assert.ok(!shopping.vegetables.some(item => /pepper/i.test(item) && !/mixed peppers/i.test(item)));
+  assert.ok(!shopping.extras.some(item => /green beans/i.test(item)));
+});
+
+test('egg whites are purchased by weight rather than as a whole-item count', () => {
+  const shopping = shoppingListFor(['Egg whites 6', 'Egg whites 5']);
+  const all = Object.values(shopping).flat();
+
+  assert.ok(all.includes('Egg whites 370g (about 363g used)'));
+  assert.ok(!all.some(item => /^Egg whites \d+(\.\d+)?\s*$/.test(item)), 'egg whites should not be a bare whole-item count');
+});
+
+test('the same ingredient stated as a weight in one recipe and a count in another merges into one purchase line', () => {
+  const shopping = shoppingListFor(['Cherry tomatoes 209g', 'Cherry tomatoes 10', 'Cucumber 52g', 'Cucumber half']);
+  const all = Object.values(shopping).flat();
+
+  assert.equal(all.filter(item => /^Cherry tomatoes\b/i.test(item)).length, 1);
+  assert.equal(all.filter(item => /^Cucumber\b/i.test(item)).length, 1);
+  assert.ok(all.some(item => /^Cherry tomatoes \d+g/i.test(item)));
+  assert.ok(all.some(item => /^Cucumber \d+g/i.test(item)));
+});
+
+test('olive oil stated in teaspoons in one recipe and tablespoons in another merges into one line', () => {
+  const shopping = shoppingListFor(['Olive oil 1 tsp', 'Olive oil 1 tbsp']);
+  const all = Object.values(shopping).flat();
+
+  assert.equal(all.filter(item => /^Olive oil\b/i.test(item)).length, 1);
+});
+
+test('measured shopping quantities never use "at least" wording', () => {
+  const shopping = shoppingListFor([
+    'Turkey mince lean 450g', 'Tinned tomatoes 1300g', 'Mixed herbs 7.75 tsp', 'Beef stock 270ml',
+  ]);
+  const all = Object.values(shopping).flat();
+
+  assert.ok(!all.some(item => /\bat least\b/i.test(item)));
+});
+
 test('shopping purchase presentation rounds countable quantities up and shows expected use', () => {
   const shopping = shoppingListFor([
     'Onion 0.36',
@@ -175,8 +222,9 @@ test('shopping purchase presentation rounds countable quantities up and shows ex
   assert.ok(all.includes('Wholemeal bread 10 slices (about 9 1/4 used)'));
   assert.ok(all.includes('Snack mix 1 pack (about 1/2 used)'));
   assert.ok(all.includes('1 small roll'));
-  assert.ok(all.includes('Semi-skimmed milk at least 1300ml'));
-  assert.ok(all.includes('Peanut butter at least 1.25 tsp'));
+  assert.ok(all.includes('Semi-skimmed milk 1300ml (about 1271ml used)'));
+  assert.ok(all.includes('Peanut butter 1.25 tsp (about 1.15 tsp used)'));
+  assert.ok(!all.some(item => /\bat least\b/i.test(item)));
 });
 
 test('shopping presentation never mutates ingredients or changes nutrition totals', () => {

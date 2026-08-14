@@ -10,6 +10,7 @@ import {
 } from './nutrition.js';
 import { getCookingIngredientDisplay } from './cookingQuantities.js';
 import { buildPracticalRecipeSteps } from './recipeQuality.js';
+import { NUTRITION_TABLE } from '../data/nutritionTable.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -298,7 +299,7 @@ function pickDinnerForLunch(dinners, seed, lunch, usedIds = new Set()) {
 const PROTEIN_KW    = ['chicken','beef','steak','sirloin','turkey','pork','bacon','tuna','salmon','mackerel','cod','sardine','prawn','egg','tofu','lentil','chickpea','black bean','kidney bean','quorn','tempeh','mince','falafel','whey protein','protein powder','vegan protein powder','pea protein'];
 const CARB_KW       = ['bread','rice','pasta','oat','potato','tortilla','roll','pitta','noodle','flour','wraps','granola','quinoa','couscous','orzo','soba'];
 const DAIRY_KW      = ['milk','yogurt','yoghurt','cheese','cream','butter','skyr','ricotta','halloumi','cottage cheese','mozzarella','parmesan','feta','creme fraiche','crème fraîche','mascarpone','kefir'];
-const VEG_KW        = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','leaf','leaves','kale','cucumber','celery','avocado','mushroom','butternut squash','sweet potato','parsnip','pea','edamame','corn','bean sprout','cabbage','leek','asparagus','watercress','rocket','mixed veg','frozen veg','pak choi','bok choy','aubergine','coleslaw','radish','fennel','beetroot','turnip','swede'];
+const VEG_KW        = ['spinach','broccoli','pepper','courgette','tomato','carrot','onion','lettuce','leaf','leaves','kale','cucumber','celery','avocado','mushroom','butternut squash','sweet potato','parsnip','pea','edamame','corn','bean sprout','green bean','runner bean','cabbage','leek','asparagus','watercress','rocket','mixed veg','frozen veg','pak choi','bok choy','aubergine','coleslaw','radish','fennel','beetroot','turnip','swede'];
 const FRUIT_KW      = ['banana','apple','orange','mango','berry','strawberry','blueberry','raspberry','grape','peach','pear','plum','melon','pineapple','pomegranate','kiwi','apricot','nectarine','grapefruit','dates','raisins','dried fruit','dried mango','dried apricot'];
 const HERB_KW       = ['garlic','ginger','chilli','cumin','turmeric','paprika','cinnamon','oregano','basil','thyme','rosemary','coriander','parsley','mixed herbs','bay leaf','black pepper','white pepper','cayenne','nutmeg','cardamom','clove','star anise','fenugreek','chive','dill','mint','tarragon','sage','fennel seed','caraway','allspice','za\'atar','harissa','smoked paprika','ground coriander','ground cumin','curry powder','garam masala','five spice','mixed spice'];
 const CONDIMENT_KW  = ['olive oil','vegetable oil','sunflower oil','coconut oil','sesame oil','rapeseed oil','soy sauce','tamari','honey','mayo','mayonnaise','mustard','ketchup','vinegar','dressing','paste','stock','gravy','miso','sriracha','tabasco','worcestershire','fish sauce','oyster sauce','hoisin','teriyaki','tahini','pesto','salsa','relish','chutney','jam','hummus','peanut butter','almond butter','nut butter','hot sauce','sweet chilli','reduced sugar sauce'];
@@ -324,25 +325,39 @@ function categoriseIngredient(ing) {
   const cached = SHOPPING_CATEGORY_CACHE.get(categoryKey);
   if (cached) return cached;
 
+  // A phrase can match keywords from more than one family (e.g. "black
+  // pepper" matches herbs' "black pepper" AND vegetables' "pepper", since
+  // "pepper" is a substring token of "black pepper"). The most specific
+  // (longest) keyword match wins rather than the first family checked, so
+  // multi-word herb/spice names are not shadowed by shorter produce names.
+  let bestCategory = 'extras';
+  let bestLength = 0;
   for (const [category, keywordTokenGroups] of SHOPPING_CATEGORY_FAMILIES) {
-    if (matchesIngredientFamily(categoryKey, keywordTokenGroups)) {
-      SHOPPING_CATEGORY_CACHE.set(categoryKey, category);
-      return category;
+    const matchLength = longestMatchingKeywordLength(categoryKey, keywordTokenGroups);
+    if (matchLength > bestLength) {
+      bestLength = matchLength;
+      bestCategory = category;
     }
   }
-  SHOPPING_CATEGORY_CACHE.set(categoryKey, 'extras');
-  return 'extras';
+  SHOPPING_CATEGORY_CACHE.set(categoryKey, bestCategory);
+  return bestCategory;
 }
 
-function matchesIngredientFamily(normalisedIngredient, keywordTokenGroups) {
+function longestMatchingKeywordLength(normalisedIngredient, keywordTokenGroups) {
   const ingredientTokens = normalisedIngredient.split(' ').filter(Boolean);
-  return keywordTokenGroups.some(keywordTokens => {
-    if (!keywordTokens.length || keywordTokens.length > ingredientTokens.length) return false;
+  let longest = 0;
 
-    return ingredientTokens.some((_, start) => keywordTokens.every((keywordToken, offset) => (
+  for (const keywordTokens of keywordTokenGroups) {
+    if (!keywordTokens.length || keywordTokens.length > ingredientTokens.length) continue;
+    if (keywordTokens.length <= longest) continue;
+
+    const matches = ingredientTokens.some((_, start) => keywordTokens.every((keywordToken, offset) => (
       ingredientTokenMatches(ingredientTokens[start + offset], keywordToken)
     )));
-  });
+    if (matches) longest = keywordTokens.length;
+  }
+
+  return longest;
 }
 
 function ingredientTokenMatches(ingredientToken, keywordToken) {
@@ -379,13 +394,37 @@ export function buildShoppingList(plan) {
   return Object.fromEntries(
     Object.entries(grouped).map(([cat, items]) => [
       cat,
-      [...items.values()].map(formatShoppingIngredient),
+      mergeConvertibleDuplicates([...items.values()]).map(formatShoppingIngredient),
     ]),
   );
 }
 
+// A small number of ingredients are only ever a sensible *purchase* unit in
+// one form, even though recipes can state them either as a count or as a
+// weight (e.g. "6 egg whites" vs a gram amount after portion scaling).
+// Nobody buys "35 individual egg whites" — liquid/separated egg white is
+// bought by weight/volume — so counted occurrences are normalised to grams
+// up front using the same gramsEach figure the nutrition table already uses,
+// before aggregation, rather than left as a whole-item count.
+const KNOWN_ITEM_TO_GRAMS = {
+  'egg white': NUTRITION_TABLE['egg white']?.gramsEach || 33,
+  'egg whites': NUTRITION_TABLE['egg white']?.gramsEach || 33,
+};
+
+function applyKnownUnitOverride(parsed) {
+  if (parsed.unit !== 'item' || parsed.amount === null) return parsed;
+  const gramsEach = KNOWN_ITEM_TO_GRAMS[buildShoppingKey(parsed.label)];
+  if (!gramsEach) return parsed;
+  return {
+    ...parsed,
+    amount: parsed.amount * gramsEach,
+    unit: 'g',
+    key: `${buildShoppingKey(parsed.label)}|g|${buildShoppingKey(parsed.suffix)}`,
+  };
+}
+
 function addShoppingIngredient(group, ingredient) {
-  const parsed = parseShoppingIngredient(ingredient);
+  const parsed = applyKnownUnitOverride(parseShoppingIngredient(ingredient));
   const existing = group.get(parsed.key);
 
   if (!existing) {
@@ -401,6 +440,52 @@ function addShoppingIngredient(group, ingredient) {
   if (parsed.amount === null && existing.amount === null) {
     existing.count += 1;
   }
+}
+
+// Different recipes can state the same ingredient in incompatible units —
+// grams in one meal, a whole-item count in another (e.g. "209g cherry
+// tomatoes" and "10 cherry tomatoes") — which produces two separate,
+// confusing purchase lines for one thing to buy. Where a verified
+// gramsEach figure exists (the same data nutrition calculations already
+// use), fold the counted line into the weighed one rather than leaving a
+// duplicate. Ingredients with no such figure, or with more than the two
+// convertible unit forms present, are left untouched — safer than guessing.
+function mergeConvertibleDuplicates(items) {
+  const buckets = new Map();
+  for (const item of items) {
+    const identityKey = `${buildShoppingKey(item.label)}|${buildShoppingKey(item.suffix)}`;
+    const bucket = buckets.get(identityKey) || [];
+    bucket.push(item);
+    buckets.set(identityKey, bucket);
+  }
+
+  const merged = [];
+  for (const bucket of buckets.values()) {
+    merged.push(...(bucket.length > 1 ? combineConvertibleItems(bucket) : bucket));
+  }
+  return merged;
+}
+
+function combineConvertibleItems(bucket) {
+  const gramItem = bucket.find(item => item.unit === 'g');
+  const countItem = bucket.find(item => item.unit === 'item');
+  const others = bucket.filter(item => item !== gramItem && item !== countItem);
+  if (others.length || !gramItem || !countItem) return bucket;
+
+  const gramsEach = NUTRITION_TABLE[buildShoppingKey(countItem.label)]?.gramsEach;
+  if (!gramsEach) return bucket;
+
+  const label = gramItem.label;
+  const suffix = gramItem.suffix;
+  return [{
+    key: `${buildShoppingKey(label)}|g|${buildShoppingKey(suffix)}`,
+    label,
+    amount: gramItem.amount + (countItem.amount * gramsEach),
+    unit: 'g',
+    suffix,
+    count: 1,
+    amountFirst: false,
+  }];
 }
 
 function parseShoppingIngredient(ingredient) {
@@ -478,7 +563,23 @@ function normaliseMeasuredAmount(amount, unit) {
   const lowerUnit = unit.toLowerCase();
   if (lowerUnit === 'kg') return { amount: amount * 1000, unit: 'g' };
   if (lowerUnit === 'l') return { amount: amount * 1000, unit: 'ml' };
+  // tbsp and tsp are the same spoon measure at a fixed ratio (1 tbsp = 3
+  // tsp). Recipes state small liquid/spoon amounts in either one, so without
+  // this an ingredient like olive oil can appear as two separate purchase
+  // lines — one in tsp, one in tbsp — for the same thing to buy.
+  if (lowerUnit === 'tbsp') return { amount: amount * 3, unit: 'tsp' };
   return { amount, unit: lowerUnit };
+}
+
+// tsp is the canonical aggregation unit (see normaliseMeasuredAmount above),
+// but a shopping line in double-digit teaspoons reads oddly — recipes and
+// shoppers alike think in tablespoons past a certain size. This only affects
+// display; aggregation and the underlying amount are unchanged.
+function toShoppingDisplayUnit(amount, unit, roundUp) {
+  if (unit !== 'tsp' || amount < 3) return { amount, unit };
+  const tbsp = amount / 3;
+  const rounded = roundUp ? Math.ceil(tbsp / 0.25) * 0.25 : Math.round(tbsp / 0.25) * 0.25;
+  return { amount: rounded, unit: 'tbsp' };
 }
 
 function formatShoppingIngredient(item) {
@@ -490,19 +591,31 @@ function formatShoppingIngredient(item) {
   const purchaseAmount = countable
     ? Math.max(1, Math.ceil(item.amount - Number.EPSILON))
     : roundShoppingMeasurementUp(item.amount, item.unit);
+  const roundedUp = purchaseAmount > item.amount + 1e-9;
   const amount = item.unit === 'item'
     ? String(purchaseAmount)
     : isCountUnit(item.unit)
       ? `${purchaseAmount} ${formatCountUnit(item.unit, purchaseAmount)}`
-      : `${purchaseAmount > item.amount ? 'at least ' : ''}${formatMeasuredAmount(purchaseAmount, item.unit)}`;
+      : formatMeasuredForDisplay(purchaseAmount, item.unit, true);
   const suffix = item.suffix ? ` ${item.suffix}` : '';
-  const usage = countable && purchaseAmount > item.amount
-    ? ` (about ${formatApproximateUse(item.amount)} used)`
+  // For measured units, the purchase and "used" amounts both pass through
+  // the same tsp→tbsp display rounding, so a small difference in the
+  // canonical amount can round to an identical display string (e.g. both
+  // "3.75 tbsp"). Showing "(about 3.75 tbsp used)" next to "3.75 tbsp" reads
+  // as a contradiction, so it's suppressed when the two texts match.
+  const usedDisplay = countable ? formatApproximateUse(item.amount) : formatMeasuredForDisplay(item.amount, item.unit, false);
+  const usage = roundedUp && (countable || usedDisplay !== amount)
+    ? ` (about ${usedDisplay} used)`
     : '';
   const purchaseText = item.amountFirst
     ? `${amount} ${item.label}${suffix}`
     : `${item.label} ${amount}${suffix}`;
   return `${purchaseText}${usage}`.trim();
+}
+
+function formatMeasuredForDisplay(amount, unit, roundUp) {
+  const display = toShoppingDisplayUnit(amount, unit, roundUp);
+  return formatMeasuredAmount(display.amount, display.unit);
 }
 
 function roundShoppingMeasurementUp(value, unit) {

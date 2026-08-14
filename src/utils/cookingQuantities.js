@@ -361,7 +361,10 @@ function pluraliseCountedIngredient(ingredient, amount) {
   }
 
   const replacements = [
-    [/^egg\b/i, 'eggs'],
+    // Negative lookahead keeps "egg whites" (already plural-invariant) from
+    // being mangled into "eggs whites" — this only pluralises the standalone
+    // "egg" ingredient (optionally with a trailing qualifier like ", boiled").
+    [/^egg\b(?!\s*whites?)/i, 'eggs'],
     [/^spring onion\b/i, 'spring onions'],
     [/^onion\b/i, 'onions'],
     [/^banana\b/i, 'bananas'],

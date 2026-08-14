@@ -247,7 +247,7 @@ function SemanticQaSection({ semanticQa }) {
 
       <DataTable
         title="Recent Findings"
-        note="Open a route for manual verification. Medium means review suggested, not a failed plan. Review status is persisted by the QA history file."
+        note="Open a route for manual verification. Medium means review suggested, not a failed plan. Assessment (was this a real issue?) and Status (workflow state) are independent — see scripts/qa-admin.js to update either. Run node scripts/qa-admin.js recheck <route> to re-run checks for one plan without changing it."
         rows={semanticQa.recentFindings || []}
         columns={[
           { key: 'severity', label: 'Severity' },
@@ -255,9 +255,30 @@ function SemanticQaSection({ semanticQa }) {
           { key: 'affectedLocation', label: 'Location' },
           { key: 'issue', label: 'Evidence' },
           { key: 'scope', label: 'Scope' },
+          { key: 'humanAssessment', label: 'Assessment' },
           { key: 'reviewStatus', label: 'Status' },
         ]}
         empty="No findings in the latest sample."
+      />
+
+      <DataTable
+        title="Historical & Manual Findings"
+        note="Every finding ever detected (auto) or added by hand (manual), kept after a fix rather than deleted. 'Latest recheck' reflects node scripts/qa-admin.js recheck <route>; 'Resolved' is set automatically when a recheck no longer detects it, but Status/Assessment stay under human control (node scripts/qa-admin.js set-status / set-assessment / add-finding)."
+        rows={semanticQa.findingsLedger || []}
+        columns={[
+          { key: 'source', label: 'Source' },
+          { key: 'severity', label: 'Severity' },
+          { key: 'route', label: 'Plan', render: row => <a href={row.route} target="_blank" rel="noreferrer">{truncate(row.route, 44)}</a> },
+          { key: 'category', label: 'Category' },
+          { key: 'affectedLocation', label: 'Location' },
+          { key: 'evidence', label: 'Evidence', render: row => truncate(row.evidence, 90) },
+          { key: 'firstDetectedAt', label: 'Detected', render: row => dateOnly(row.firstDetectedAt) },
+          { key: 'humanAssessment', label: 'Assessment' },
+          { key: 'status', label: 'Status' },
+          { key: 'lastRecheckResult', label: 'Latest recheck', render: row => row.lastRecheckResult || 'Not rechecked' },
+          { key: 'resolvedAt', label: 'Resolved', render: row => dateOnly(row.resolvedAt) || '—' },
+        ]}
+        empty="No findings recorded yet."
       />
 
       <DataTable

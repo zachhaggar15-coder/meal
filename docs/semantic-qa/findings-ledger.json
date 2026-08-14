@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-14T12:55:09.784Z",
+  "entries": {
+    "qa_65f08241a9324caa": {
+      "id": "qa_65f08241a9324caa",
+      "source": "auto",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "weekly ingredient practicality",
+      "patternKey": "weekly-ingredient-accumulation",
+      "severity": "Medium",
+      "evidence": "Tinned tomatoes totals (about 1280g used) for the week (vegetables) — review whether this accumulated quantity is still a practical single shop, especially if driven by a repeated meal.",
+      "affectedLocation": "Weekly shopping list",
+      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckResult": "new",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": ""
+    },
+    "qa_d3d9213bfa4a6232": {
+      "id": "qa_d3d9213bfa4a6232",
+      "source": "auto",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "container recommendation",
+      "patternKey": "container-count-outlier",
+      "severity": "Medium",
+      "evidence": "Recommends 23 containers, which likely assumes zero reuse across the week rather than concurrently stored meals.",
+      "affectedLocation": "Container recommendation",
+      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckResult": "new",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": ""
+    }
+  }
+}

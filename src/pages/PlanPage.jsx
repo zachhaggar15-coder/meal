@@ -981,7 +981,7 @@ function _PlanQuickFacts({ plan }) {
     { label: 'Budget', value: `${plan.summary.budgetRange}/week estimate` },
     { label: 'Prep style', value: plan.effortLabel },
     { label: 'Includes', value: '7 days, recipes, macros, PDF export and shopping list' },
-    { label: 'Diet', value: plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType) },
+    { label: 'Diet', value: plan.dietType === 'standard' ? 'No specific dietary restriction' : cap(plan.dietType) },
   ];
 
   return (
@@ -1503,7 +1503,7 @@ function PrintablePlanSummary({ plan, marketLabel }) {
         <span>Cook amount: {plan.totalPortionLabel || '1'} portions</span>
         <span>Calories: {plan.summary?.calorieRange || `~${plan.calories} kcal/day per person`}</span>
         <span>Budget: {plan.summary?.budgetRange || plan.priceEstimate} total</span>
-        <span>Diet: {plan.dietType === 'standard' ? 'All diets' : cap(plan.dietType)}</span>
+        <span>Diet: {plan.dietType === 'standard' ? 'No specific dietary restriction' : cap(plan.dietType)}</span>
       </div>
 
       {plan.household?.hasMixedPortions && (

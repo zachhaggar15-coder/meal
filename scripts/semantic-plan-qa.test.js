@@ -124,6 +124,43 @@ test('shopping semantic checks do not misclassify green beans through an unsafe 
   assert.ok(!review.findings.some(item => item.patternKey === 'shopping-category-protein'));
 });
 
+test('a large weekly ingredient total is surfaced as review evidence, not an automatic failure', () => {
+  const plan = semanticPlan({
+    shoppingList: { protein: [], carbs: [], vegetables: ['Tinned tomatoes 1300g (about 1280g used)'], dairy: [], extras: [] },
+  });
+  const review = assessPlanLocally(plan, NOW);
+  const accumulation = review.findings.find(item => item.patternKey === 'weekly-ingredient-accumulation');
+
+  assert.ok(accumulation);
+  assert.equal(accumulation.severity, 'Medium');
+  assert.equal(review.overallStatus, 'Review suggested');
+});
+
+test('a small, ordinary weekly ingredient total does not trigger the accumulation flag', () => {
+  const plan = semanticPlan({
+    shoppingList: { protein: [], carbs: [], vegetables: ['Cherry tomatoes 210g (about 200g used)'], dairy: [], extras: [] },
+  });
+  const review = assessPlanLocally(plan, NOW);
+  assert.ok(!review.findings.some(item => item.patternKey === 'weekly-ingredient-accumulation'));
+});
+
+test('a container recommendation that assumes zero reuse across the week is flagged as an outlier', () => {
+  const days = Array.from({ length: 7 }, (_, index) => ({
+    day: `Day ${index + 1}`,
+    meals: [
+      { type: 'Breakfast', name: 'Egg white omelette' },
+      { type: 'Lunch', name: 'Chicken bowl' },
+      { type: 'Dinner', name: 'Turkey bolognese' },
+    ],
+  }));
+  const plan = semanticPlan({ days });
+  const review = assessPlanLocally(plan, NOW);
+  const outlier = review.findings.find(item => item.patternKey === 'container-count-outlier');
+
+  assert.ok(outlier);
+  assert.match(outlier.explanation, /\d+ containers/);
+});
+
 test('explicitly prepared potato state is flagged when a method contradicts it', () => {
   const plan = semanticPlan({
     days: [{

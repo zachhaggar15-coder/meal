@@ -305,7 +305,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The method mentions potato, but no matching ingredient is listed.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Tuna Nicoise Salad"
+      "affectedLocation": "Thursday — Lunch: Tuna Nicoise Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_9ec20e2eeff3f8de",
@@ -317,7 +318,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup"
+      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_5b0dd4fb66aef124",
@@ -329,7 +331,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "beef is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad"
+      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_ed62d8f27f8fd46d",
@@ -341,7 +344,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup"
+      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_281f29a76204f943",
@@ -353,7 +357,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "beef is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad"
+      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f1fd5f910fd15a2d",
@@ -365,7 +370,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "chickpea is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Chickpea & Spinach Salad"
+      "affectedLocation": "Monday — Lunch: Chickpea & Spinach Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_8c87f472c995a0a8",
@@ -377,7 +383,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Dinner: Tofu & Vegetable Stir-Fry"
+      "affectedLocation": "Monday — Dinner: Tofu & Vegetable Stir-Fry",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_b9ef5c4b48dc829f",
@@ -389,7 +396,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "bean is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Black Bean Tacos"
+      "affectedLocation": "Thursday — Lunch: Black Bean Tacos",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_397cc9da5fa5b880",
@@ -401,7 +409,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Lentil & Roasted Veg Bowl"
+      "affectedLocation": "Saturday — Lunch: Lentil & Roasted Veg Bowl",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_0e371ee5af0b450d",
@@ -413,7 +422,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "chickpea is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Caprese & Chickpea Salad"
+      "affectedLocation": "Sunday — Lunch: Caprese & Chickpea Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_96c8ec76dcdc0612",
@@ -425,7 +435,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Tuna & Egg White Salad"
+      "affectedLocation": "Monday — Lunch: Tuna & Egg White Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_e362c705b980083b",
@@ -437,7 +448,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Dinner: Chicken Breast with Lentils & Greens"
+      "affectedLocation": "Monday — Dinner: Chicken Breast with Lentils & Greens",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_85ec4ecd2e0cc884",
@@ -449,7 +461,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Dinner: Lean Beef Stir-Fry"
+      "affectedLocation": "Thursday — Dinner: Lean Beef Stir-Fry",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_767ce511348d9cd2",
@@ -461,7 +474,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "chickpea is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Chicken & Chickpea Power Salad"
+      "affectedLocation": "Friday — Lunch: Chicken & Chickpea Power Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_9d5be1d584c7ceb0",
@@ -473,7 +487,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "cod is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils"
+      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_9d5be1d584c7ceb0",
@@ -485,7 +500,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils"
+      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_b7f591407baf4e6d",
@@ -497,7 +513,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta"
+      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_92f6fb4c0a3ebf27",
@@ -509,7 +526,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_047e2c0fcdc72d96",
@@ -521,7 +539,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Cucumber 4 slices (about 3 3/4 used) (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_047e2c0fcdc72d96",
@@ -533,7 +552,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil at least 2 tbsp (condiments); Olive oil at least 4.25 tsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_5928f25ddb88b90f",
@@ -545,7 +565,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Monday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_bbe32f62abc1715a",
@@ -557,7 +578,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Tuesday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_6ff815daf88ce093",
@@ -569,7 +591,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Dinner: Butternut Squash and Lentil Soup with Bread"
+      "affectedLocation": "Friday — Dinner: Butternut Squash and Lentil Soup with Bread",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f1eb5a6c3a7a43ba",
@@ -581,7 +604,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta"
+      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_9270fbea194d63ce",
@@ -593,7 +617,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_803cb18c37488dbb",
@@ -605,7 +630,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Green Lentil and Roasted Sweet Potato Bowl"
+      "affectedLocation": "Tuesday — Lunch: Green Lentil and Roasted Sweet Potato Bowl",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_6a92151255c2c4dd",
@@ -617,7 +643,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f256bb82a1b52822",
@@ -629,7 +656,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Sunday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_474bfef7e66b58e1",
@@ -641,7 +669,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_e998ef9a55cd65de",
@@ -653,7 +682,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta"
+      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_e8ef10232477e118",
@@ -665,7 +695,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Wednesday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_8c2c5a9ec9465024",
@@ -677,7 +708,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Dinner: Butternut Squash and Lentil Soup with Bread"
+      "affectedLocation": "Wednesday — Dinner: Butternut Squash and Lentil Soup with Bread",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_8be9eb8b9378ca74",
@@ -689,7 +721,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Green Lentil and Roasted Sweet Potato Bowl"
+      "affectedLocation": "Friday — Lunch: Green Lentil and Roasted Sweet Potato Bowl",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_8ec4851d9c86dfb2",
@@ -701,7 +734,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Cucumber 3 slices (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f42594d033067329",
@@ -713,7 +747,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "salmon is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Smoked Salmon and Quinoa Salad"
+      "affectedLocation": "Tuesday — Lunch: Smoked Salmon and Quinoa Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_23897335d40098e5",
@@ -725,7 +760,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Dinner: Butternut Squash and Lentil Soup with Bread"
+      "affectedLocation": "Sunday — Dinner: Butternut Squash and Lentil Soup with Bread",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_632f5a17ecbc97c6",
@@ -737,7 +773,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil 2.5 tbsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_632f5a17ecbc97c6",
@@ -749,7 +786,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Honey at least 3.5 tbsp (condiments); Honey at least 1.25 tsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_68de551fb139ac81",
@@ -761,7 +799,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Monday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_56ef8b34f5a91d86",
@@ -773,7 +812,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f482b2efb576e84b",
@@ -785,7 +825,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil 2 tsp (condiments); Olive oil at least 1.25 tbsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_0e9bc16706942064",
@@ -797,7 +838,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Dinner: Butternut Squash and Lentil Soup with Bread"
+      "affectedLocation": "Thursday — Dinner: Butternut Squash and Lentil Soup with Bread",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_b7473288b136660b",
@@ -809,7 +851,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "salmon is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Smoked Salmon and Quinoa Salad"
+      "affectedLocation": "Saturday — Lunch: Smoked Salmon and Quinoa Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_229825f937f7b591",
@@ -821,7 +864,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Cucumber 10 slices (vegetables); Cucumber 2 (about 1 1/2 used) (vegetables).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_cd1e1949479591d9",
@@ -833,7 +877,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_5c3f281b48c5c941",
@@ -845,7 +890,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Green Lentil and Roasted Sweet Potato Bowl"
+      "affectedLocation": "Wednesday — Lunch: Green Lentil and Roasted Sweet Potato Bowl",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_65da7894323d06cd",
@@ -857,7 +903,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Baked Falafel and Salad Pitta"
+      "affectedLocation": "Friday — Lunch: Baked Falafel and Salad Pitta",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_a7a1cf83f072a5b4",
@@ -869,7 +916,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f2ae02352eae26e6",
@@ -881,7 +929,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil at least 1 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f9062ea5cad63665",
@@ -893,7 +942,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Thursday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_311319d763884ae5",
@@ -905,7 +955,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Tuesday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_b0c14c7b21033f8c",
@@ -917,7 +968,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Green Lentil and Halloumi Bowl"
+      "affectedLocation": "Thursday — Lunch: Green Lentil and Halloumi Bowl",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_a9dc402eee533416",
@@ -929,7 +981,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Vegetable Frittata Slice with Green Salad"
+      "affectedLocation": "Saturday — Lunch: Vegetable Frittata Slice with Green Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_321c14e6a1d20811",
@@ -941,7 +994,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_fe3740e55faeea72",
@@ -953,7 +1007,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Tuesday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_029d32f6a3dba192",
@@ -965,7 +1020,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Wednesday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_34e8af20420c54e7",
@@ -977,7 +1033,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Thursday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_81121a9b971291d2",
@@ -989,7 +1046,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Friday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_f8bf7e9c6ea2aef4",
@@ -1001,7 +1059,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Lean Beef Stir-Fry with Brown Rice"
+      "affectedLocation": "Friday — Lunch: Lean Beef Stir-Fry with Brown Rice",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_4de8b7cb3345b178",
@@ -1013,7 +1072,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Vegetable Frittata Slice with Green Salad"
+      "affectedLocation": "Saturday — Lunch: Vegetable Frittata Slice with Green Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_d36ca8842909db48",
@@ -1025,7 +1085,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Sunday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_9ecebf7ef54277c0",
@@ -1037,7 +1098,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil at least 2.25 tsp (condiments); Olive oil at least 1.75 tbsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_0108d79d83501bc8",
@@ -1049,7 +1111,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_c265f4d984cf259a",
@@ -1061,7 +1124,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Dinner: Butternut Squash and Lentil Soup with Bread"
+      "affectedLocation": "Monday — Dinner: Butternut Squash and Lentil Soup with Bread",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_5db71a076f76206c",
@@ -1073,7 +1137,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Baked Falafel and Salad Pitta"
+      "affectedLocation": "Saturday — Lunch: Baked Falafel and Salad Pitta",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_d50a7021ca371c33",
@@ -1085,7 +1150,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Sunday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_a643c2028bf86920",
@@ -1097,7 +1163,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup"
+      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_dd38ed5ea1718d96",
@@ -1109,7 +1176,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_451a6b0ce8c95278",
@@ -1121,7 +1189,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_109799faaaec8415",
@@ -1133,7 +1202,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta"
+      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_a29bb873afc480b3",
@@ -1145,7 +1215,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "bean is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Salmon Fillet with New Potatoes and Green Beans"
+      "affectedLocation": "Monday — Lunch: Salmon Fillet with New Potatoes and Green Beans",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_3b5fb01fba206040",
@@ -1157,7 +1228,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Dinner: Lentil and Turkey Sausage Casserole"
+      "affectedLocation": "Tuesday — Dinner: Lentil and Turkey Sausage Casserole",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_49cf29e94b0d2e65",
@@ -1169,7 +1241,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "chickpea is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Grilled Chicken and Chickpea Power Salad"
+      "affectedLocation": "Wednesday — Lunch: Grilled Chicken and Chickpea Power Salad",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_91153129d167d357",
@@ -1181,7 +1254,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Dinner: Butternut Squash and Lentil Soup with Bread"
+      "affectedLocation": "Wednesday — Dinner: Butternut Squash and Lentil Soup with Bread",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_e8a93b8bdfd6283b",
@@ -1193,7 +1267,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy"
+      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_176fc41d0893c2af",
@@ -1205,7 +1280,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll"
+      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_49e70c9b143fcb97",
@@ -1217,7 +1293,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Cucumber 1 (about 1/2 used) (vegetables); Cucumber slices 7 (vegetables).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_49e70c9b143fcb97",
@@ -1229,7 +1306,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "Potential duplicate purchase entries: Olive oil at least 3 tsp (condiments); Olive oil at least 2 tbsp (condiments).",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list"
+      "affectedLocation": "Weekly shopping list",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_099cc73ac68ca23f",
@@ -1241,7 +1319,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "lentil is central to the meal name but is not clearly used in the method.",
       "scope": "uncertain",
       "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Green Lentil and Halloumi Bowl"
+      "affectedLocation": "Monday — Lunch: Green Lentil and Halloumi Bowl",
+      "humanAssessment": "Uncertain"
     },
     {
       "id": "qa_eae0e6a9abda42b1",
@@ -1253,7 +1332,8 @@ export const SEMANTIC_QA_DASHBOARD = {
       "issue": "The meal is called a salad, but the method does not assemble one.",
       "scope": "template/systemic",
       "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Dinner: Tuna and Sweet Potato Fishcakes with Salad"
+      "affectedLocation": "Wednesday — Dinner: Tuna and Sweet Potato Fishcakes with Salad",
+      "humanAssessment": "Uncertain"
     }
   ],
   "systemicIssues": [
@@ -1820,5 +1900,41 @@ export const SEMANTIC_QA_DASHBOARD = {
         "humanSeverity": "Unreviewed"
       }
     ]
-  }
+  },
+  "findingsLedger": [
+    {
+      "id": "qa_65f08241a9324caa",
+      "source": "auto",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "weekly ingredient practicality",
+      "severity": "Medium",
+      "evidence": "Tinned tomatoes totals (about 1280g used) for the week (vegetables) — review whether this accumulated quantity is still a practical single shop, especially if driven by a repeated meal.",
+      "affectedLocation": "Weekly shopping list",
+      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckResult": "new",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": ""
+    },
+    {
+      "id": "qa_d3d9213bfa4a6232",
+      "source": "auto",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "container recommendation",
+      "severity": "Medium",
+      "evidence": "Recommends 23 containers, which likely assumes zero reuse across the week rather than concurrently stored meals.",
+      "affectedLocation": "Container recommendation",
+      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckResult": "new",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": ""
+    }
+  ]
 };

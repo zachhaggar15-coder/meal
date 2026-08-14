@@ -66,9 +66,14 @@ export function buildPracticalRecipeSteps(meal = {}) {
     /(dressing|sauce|pesto|paste|glaze|hummus|tahini|yogurt|cream cheese|salsa|oil)/i,
   );
   const tinIngredients = findCookingNames(cookingIngredients, /\b(tinned|canned)\b/i);
-  const remainingNames = cookingIngredients.map(item => (
-    proseIngredientName(item.displayIngredient || item.ingredient)
-  ));
+  // Cooking spray/oil used only to grease a pan is a cooking aid, not
+  // something served or plated — it should never turn up in a "serve with…"
+  // sentence. Drop it before any branch below builds those sentences.
+  const remainingNames = cookingIngredients
+    .filter(item => !/\bspray\b/i.test(item.displayIngredient || item.ingredient || ''))
+    .map(item => (
+      proseIngredientName(item.displayIngredient || item.ingredient)
+    ));
 
   if (name.includes('overnight') || name.includes('chia')) {
     const bases = findCookingNames(cookingIngredients, /(oats|chia|milk|yogurt|kefir)/i);
@@ -260,12 +265,14 @@ export function buildPracticalRecipeSteps(meal = {}) {
   if (name.includes('lettuce cups')) {
     const mince = findCookingName(cookingIngredients, /mince|turkey|beef|pork/i) || proteinName;
     const leaves = findCookingName(cookingIngredients, /lettuce|leaves/i) || 'lettuce leaves';
-    const aromatics = findCookingNames(cookingIngredients, /(garlic|ginger|onion)/i);
     const fillings = findCookingNames(cookingIngredients, /(carrot|pepper|spring onion|peas)/i);
+    // "onion" also matches "spring onion" — without excluding fillings here,
+    // spring onion is cooked in step two AND stirred in again in step three.
+    const aromatics = withoutNames(findCookingNames(cookingIngredients, /(garlic|ginger|onion)/i), fillings);
     const sauce = findCookingNames(cookingIngredients, /(hoisin|soy sauce|tamari)/i);
     return [
       `Separate, rinse and dry the ${leaves}, keeping them whole so they can hold the filling.`,
-      `Cook the ${mince} with ${joinNatural(aromatics)} in a large non-stick pan, breaking it up, until browned.`,
+      `Cook the ${mince}${aromatics.length ? ` with ${joinNatural(aromatics)}` : ''} in a large non-stick pan, breaking it up, until browned.`,
       `Stir in ${joinNatural([...fillings, ...sauce])} and cook for 2-3 minutes until hot through.`,
       'Spoon the filling into the lettuce leaves and serve immediately.',
     ];
@@ -273,8 +280,11 @@ export function buildPracticalRecipeSteps(meal = {}) {
 
   if (/\beggs?\b/.test(name) || protein === 'eggs' || name.includes('omelette')) {
     const carrier = findCookingNames(cookingIngredients, /(bread|toast|bagel|pitta)/i);
+    // Matches both the whole-egg ingredient and egg whites — either way it's
+    // the thing already cooked in the step above, not something "served
+    // with" the dish.
     const accompaniments = withoutNames(remainingNames, [
-      ...findCookingNames(cookingIngredients, /^eggs?$/i),
+      ...findCookingNames(cookingIngredients, /^eggs?(\s+whites?)?$/i),
       ...vegetables,
       ...carrier,
     ]);
