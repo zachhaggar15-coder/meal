@@ -75,14 +75,13 @@ export default function SiteSearch({
       <button className="site-search-submit" type="submit">Search</button>
 
       {showResults && (
-        <div className="site-search-results" role="listbox" aria-label="Search suggestions">
+        <div className="site-search-results" aria-label="Search suggestions">
           {results.length > 0 ? (
             results.map(result => (
               <Link
                 key={result.to}
                 to={result.to}
                 className="site-search-result"
-                role="option"
                 onMouseDown={event => event.preventDefault()}
                 onClick={() => handleResultClick(result)}
               >
@@ -95,7 +94,6 @@ export default function SiteSearch({
             <Link
               to={`/browse?search=${encodeURIComponent(trimmedQuery)}`}
               className="site-search-result"
-              role="option"
               onMouseDown={event => event.preventDefault()}
               onClick={() => handleResultClick({
                 title: `Search plans for ${trimmedQuery}`,

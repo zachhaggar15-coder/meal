@@ -205,6 +205,7 @@ const ROUTES = uniqueRoutes([
   '/mealprep-plus',
   '/saved-plans',
   '/about',
+  '/methodology',
   '/contact',
   '/feedback',
   '/privacy',

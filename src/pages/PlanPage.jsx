@@ -15,12 +15,16 @@ import PlanSaveButton from '../components/PlanSaveButton.jsx';
 import RecipeDetails from '../components/RecipeDetails.jsx';
 import TickableShoppingList from '../components/TickableShoppingList.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
+import AllergenNote from '../components/AllergenNote.jsx';
+import StorageSafetyNote from '../components/StorageSafetyNote.jsx';
+import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
-import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, LIBRARY_VALIDATED_ON, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { formatContentDate } from '../utils/contentDates.js';
 import { track } from '../utils/analytics.js';
 import {
   buildPlanReference,
@@ -526,6 +530,15 @@ export default function PlanPage() {
     </section>
   );
 
+  // Allergen awareness is derived from the plan's own ingredient lines, so it
+  // always reflects the plan actually on screen (including household scaling
+  // and any AI edit) rather than a stored label.
+  const allergenSummary = mergeAllergenSummaries(
+    (displayPlan.plan || []).flatMap(day => (day.meals || []).map(meal => (
+      resolveAllergens(meal.ingredients || [])
+    ))),
+  );
+
   const shoppingListSection = (
     <section id="shopping-list" className="plan-shopping-section">
       <div className="plan-shopping-header">
@@ -561,6 +574,10 @@ export default function PlanPage() {
         listClassName="shopping-items"
         groupLabel={catLabel}
       />
+      <div className="plan-guidance-grid">
+        <AllergenNote summary={allergenSummary} />
+        <StorageSafetyNote />
+      </div>
     </section>
   );
 
@@ -592,7 +609,9 @@ export default function PlanPage() {
         <h1 className="plan-page-h1">{plan.title}</h1>
         <p className="plan-page-intro">{plan.intro}</p>
         <p className="content-byline">
-          Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed: 2 July 2026.
+          Built by <Link to="/about">{SITE_AUTHOR_NAME}</Link> from a curated UK meal library.
+          Plan data last validated {formatContentDate(LIBRARY_VALIDATED_ON)}.{' '}
+          <Link to="/methodology">How plans are built and checked</Link>.
         </p>
 
         <PlanOverview plan={displayPlan} sourcePlan={plan} />
@@ -924,7 +943,7 @@ export default function PlanPage() {
         </div>
 
         <TrustBox
-          reviewed="2 July 2026"
+          validated={formatContentDate(LIBRARY_VALIDATED_ON)}
           note="Plans are generated from a curated UK meal library, then rendered with deterministic shopping lists, recipes, calorie estimates and supermarket-specific notes. They are general meal-planning information, not medical advice."
         />
 
@@ -1281,8 +1300,7 @@ function buildPlanCollectionJsonLd(plan, planImageUrl) {
     description: plan.seo.description,
     url: plan.seo.canonical,
     image: [planImageUrl],
-    datePublished: '2026-06-01',
-    dateModified: '2026-07-02',
+    dateModified: LIBRARY_VALIDATED_ON,
     author: AUTHOR_JSON_LD,
     publisher: {
       '@type': 'Organization',

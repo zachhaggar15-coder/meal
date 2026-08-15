@@ -310,6 +310,7 @@ export const FOOTER_GROUPS = [
     label: 'Company',
     items: [
       { to: '/about', label: 'About' },
+      { to: '/methodology', label: 'Methodology' },
       { to: '/contact', label: 'Contact' },
       { to: '/privacy', label: 'Privacy' },
       { to: '/terms', label: 'Terms' },

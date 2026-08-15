@@ -169,7 +169,7 @@ export const SUPERMARKET_PROFILES = {
     prepStrengths: [
       'The widest catalogue of any UK grocer, so speciality and diet-specific ingredients are rarely a blocker.',
       'Delivery slots and a saved trolley make repeating the same weekly prep shop straightforward.',
-      'Long product life on delivery is guaranteed, which helps plans that shop once and cook across the week.',
+      'Ocado publishes a minimum-life-on-delivery policy, which suits plans that shop once and cook across the week. Check the current policy before relying on it.',
     ],
     watchOuts: [
       'Delivery fees and minimum basket sizes change the real cost of a small weekly shop.',
@@ -221,7 +221,7 @@ export const SUPERMARKET_PROFILES = {
     loyalty: null,
     positioning: 'Built from ingredients stocked by every major UK supermarket, using average UK pricing rather than one retailer.',
     prepStrengths: [
-      'Every ingredient is available nationwide, so the plan works wherever you shop.',
+      'Ingredients are chosen from staples that most UK supermarkets carry, so the plan should work wherever you shop, though ranges still vary by store.',
       'Easy to swap to a specific retailer later without changing the meals.',
       'Costs reflect a mid-market average rather than the cheapest or priciest store.',
     ],

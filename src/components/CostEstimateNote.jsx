@@ -19,7 +19,7 @@ export default function CostEstimateNote({
         and does not precisely price every pack-size leftover. Brands, offers, substitutions,
         pack sizes and regional prices will change what you pay.
       </p>
-      <Link to="/about#meal-plan-costs">How meal-plan costs are estimated</Link>
+      <Link to="/methodology#costs">How meal-plan costs are estimated</Link>
     </aside>
   );
 }

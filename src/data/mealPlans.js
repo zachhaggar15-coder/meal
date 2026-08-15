@@ -672,7 +672,7 @@ export const mealPlansData = {
       'Track protein, not just calories. Hitting your protein target is more important than tracking every macronutrient on this plan.',
     ],
     faq: [
-      { q: 'How much protein do I need per day to lose fat without losing muscle?', a: 'Most research suggests 1.6–2.2 g of protein per kg of body weight. For an 80 kg person, that is 128–176 g per day. This plan targets the higher end to maximise muscle preservation.' },
+      { q: 'How much protein do I need per day to lose fat without losing muscle?', a: 'A commonly used planning range is 1.6–2.2 g of protein per kg of body weight. For an 80 kg person, that is 128–176 g per day. This plan targets the higher end, which is the usual choice when the aim is to hold onto muscle in a calorie deficit.' },
       { q: 'Is high protein safe for kidneys?', a: 'For healthy adults with no known kidney disease, higher-protein meal plans are not usually treated as a special kidney concern, but this is still general information. If you have kidney disease, reduced kidney function, diabetes, pregnancy, or clinical dietary needs, ask your GP or dietitian before increasing protein.' },
       { q: 'Can I follow this plan if I do not eat meat?', a: 'Yes, though it requires more planning. High-protein vegetarian sources include eggs, Greek yogurt, cottage cheese, tofu, edamame, and protein powder. See our vegetarian plan for more ideas.' },
     ],
@@ -874,7 +874,7 @@ export const mealPlansData = {
     planLabel: 'Vegetarian Low Calorie',
     targetCalories: 1500,
     intro: 'Losing weight on a vegetarian diet is entirely achievable — and often easier than people expect. Plant-based proteins like eggs, Greek yogurt, tofu, legumes, and cottage cheese are filling, nutritious, and widely available at UK supermarkets. This 7-day vegetarian low calorie meal plan is designed for UK shoppers, targeting 1,500 calories per day with a strong emphasis on protein to keep you satisfied and support a healthy metabolism. Every meal uses ingredients you can pick up at Tesco, Aldi, Sainsbury\'s, or Asda.',
-    whyThisPlan: 'A well-planned vegetarian diet is associated with lower body weight, reduced risk of type 2 diabetes, and better heart health, according to the British Dietetic Association. The key to losing weight as a vegetarian is ensuring adequate protein — without meat, it is easy to fill up on carbohydrate-heavy foods that push you over your calorie target. This plan solves that by building every meal around a protein anchor — eggs, tofu, lentils, chickpeas, or dairy — before adding vegetables and complex carbs. You will hit 75–90 g of protein per day, which is appropriate for weight loss in most adults.',
+    whyThisPlan: 'A well-planned vegetarian diet can be a straightforward way to eat more fibre and pulses without much effort. The key to losing weight as a vegetarian is ensuring adequate protein — without meat, it is easy to fill up on carbohydrate-heavy foods that push you over your calorie target. This plan solves that by building every meal around a protein anchor — eggs, tofu, lentils, chickpeas, or dairy — before adding vegetables and complex carbs. You will hit 75–90 g of protein per day, which is appropriate for weight loss in most adults.',
     tips: [
       'Eggs are one of the cheapest and most protein-dense foods available. Keep a batch of hard-boiled eggs in the fridge for quick lunches and snacks.',
       'Tinned chickpeas, lentils, and kidney beans are nutritional powerhouses. Buy several tins a week — they store for years and cost around 60–80p each.',
@@ -949,7 +949,7 @@ export const mealPlansData = {
     planLabel: 'Vegan Low Calorie',
     targetCalories: 1500,
     intro: 'Losing weight on a vegan diet is entirely achievable and often easier than people expect. Plant-based proteins like tofu, legumes, nuts, seeds, and plant-based alternatives are filling, nutritious, and widely available at all UK supermarkets. This 7-day vegan low calorie meal plan is designed for UK shoppers, targeting 1,500 calories per day with a strong emphasis on protein and fibre to keep you satisfied and support a healthy metabolism. Every meal uses ingredients you can pick up at Tesco, Aldi, Sainsbury\'s, or Asda.',
-    whyThisPlan: 'A well-planned vegan diet is associated with lower body weight, reduced risk of type 2 diabetes, and better heart health. The key to losing weight on a vegan diet is ensuring adequate protein and fibre — without animal products, it is easy to fill up on carbohydrate-heavy foods that push you over your calorie target. This plan solves that by building every meal around a protein anchor — tofu, lentils, chickpeas, or nuts — before adding vegetables and complex carbs. You will hit 60–70 g of protein per day, which is appropriate for weight loss in most adults.',
+    whyThisPlan: 'A well-planned vegan diet naturally leans on beans, lentils, tofu and wholegrains, which is a fibre-rich starting point. The key to losing weight on a vegan diet is ensuring adequate protein and fibre — without animal products, it is easy to fill up on carbohydrate-heavy foods that push you over your calorie target. This plan solves that by building every meal around a protein anchor — tofu, lentils, chickpeas, or nuts — before adding vegetables and complex carbs. You will hit 60–70 g of protein per day, which is appropriate for weight loss in most adults.',
     tips: [
       'Firm tofu is your best friend — press it to remove moisture, then pan-fry or bake for better texture and flavour absorption.',
       'Tinned chickpeas, lentils, and beans are nutritional powerhouses. Buy several tins a week — they store for years and cost around 60–80p each.',
@@ -1568,7 +1568,7 @@ export const mealPlansData = {
     ],
     faq: [
       { q: 'How many calories does a gym beginner need?', a: '1,800 calories works well for most beginner gym-goers who want to lose fat while building some muscle. If you are aiming purely for muscle gain, calculate your TDEE and eat at or slightly above maintenance.' },
-      { q: 'How much protein do I need as a gym beginner?', a: 'Research suggests 1.6–2.0 g per kg of body weight is optimal for muscle building. For an 80 kg beginner, that is 128–160 g per day. This plan targets 110–130 g, which is a solid starting point.' },
+      { q: 'How much protein do I need as a gym beginner?', a: 'A commonly used planning range is 1.6–2.0 g per kg of body weight. For an 80 kg beginner, that is 128–160 g per day. This plan targets 110–130 g, which is a workable starting point rather than a maximum.' },
       { q: 'Should I eat before or after the gym?', a: 'Both. A carbohydrate-containing snack before (banana, oats) fuels your session. A protein-rich meal after (chicken and rice, protein shake, Greek yogurt) supports recovery. Total daily protein matters more than exact timing.' },
     ],
     related: [

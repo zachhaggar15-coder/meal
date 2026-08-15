@@ -30,6 +30,12 @@
       "deployedAt": "2026-08-15T17:10:04.320Z",
       "summary": "Flavour completeness closed out. Safe phase: 12 legacy recipes had seasonings restored from their own descriptions using the zero-nutrition to-taste convention. Material phase: site-wide description-vs-data audit found 39 material omissions (all legacy, none shared); 26 high-confidence corrections applied with quantities from sibling recipes — Paneer curry +200ml tomato curry sauce, 2 roasts +gravy, 3 stir-fries +soy sauce, vegan bowl +tahini (drift), 6 tomato bases, 6 named dressings, Parmesan, spinach/cucumber/tomato. New generic gravy nutrition entry added. 2 vague-veg descriptions aligned to data rather than inventing proportions. Flavour patterns 26 -> 5. Verified live: Paneer & Spinach Curry now has a real curry base in ingredients, method and shopping list.",
       "gate": "npm run check — exit 0 (139 tests, 1404 routes, 11 audits)"
+    },
+    {
+      "commit": "fcc50ee",
+      "deployedAt": "2026-08-16T00:00:00.000Z",
+      "summary": "Routing hotfix: supermarket goal cards opened a different plan than they advertised (\"Lidl Weight Loss Plan\" -> \"Lidl Very Cheap Batch Cook Weight Loss Plan\"). Root cause was an inverted effort tie-break in a duplicated additive scorer (batch +6 vs standard +5, 94 beats 93), plus cards synthesising their own heading instead of showing the destination's title. Replaced both chooser resolvers with one lexicographic canonical resolver (src/utils/planRecommendation.js); cards now display the destination plan's own title; unmatched combinations are named rather than silently dropped. 348 combinations audited, 0 mismatches after. Production verified: 231 cards across 32 routes, 133 destinations, 0 title mismatches.",
+      "gate": "npm run check - exit 0 (156 tests, 1406 routes, 11 audits)"
     }
   ]
 }

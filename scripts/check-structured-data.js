@@ -241,7 +241,7 @@ function productRichResultEligibility(product) {
 
   return {
     ok: false,
-    reason: 'review author must be a Person or Team with a name',
+    reason: 'review author must be a Person or Organization with a name',
   };
 }
 
@@ -253,7 +253,10 @@ function isGoogleCompatibleReviewAuthor(author) {
   if (!author || typeof author !== 'object') return false;
 
   const types = toArray(author['@type']);
-  const hasAllowedType = types.includes('Person') || types.includes('Team');
+  // Google accepts only Person or Organization for a review author.
+  // 'Team' is not a schema.org type at all and was silently permitted here
+  // while the site emitted it.
+  const hasAllowedType = types.includes('Person') || types.includes('Organization');
   return hasAllowedType && typeof author.name === 'string' && author.name.trim().length > 0;
 }
 

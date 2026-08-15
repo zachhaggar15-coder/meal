@@ -251,7 +251,7 @@ export const blogPostsData = {
           'Blueberries: 57 kcal per 100 g. High in antioxidants; Tesco and Aldi both sell 150 g punnets for around £1–1.50.',
           'Raspberries: 52 kcal per 100 g. High in fibre; excellent frozen for smoothies and yogurt toppings.',
           'Watermelon: 30 kcal per 100 g. Very high water content; extremely filling for minimal calories.',
-          'Grapefruit: 42 kcal per 100 g. Some evidence suggests it supports satiety; a good breakfast addition.',
+          'Grapefruit: 42 kcal per 100 g. High water content for very few calories, which makes it a filling breakfast addition.',
         ],
       },
       {
@@ -546,7 +546,7 @@ export const blogPostsData = {
     title: 'How to Meal Plan for Weight Loss UK — 5-Step Guide',
     description: 'Learn how to meal plan for weight loss in the UK. Calculate calories, build a shopping list, batch cook, and track results. Generate your free AI meal plan.',
     h1: 'How to Meal Plan for Weight Loss — A UK Beginner\'s Guide',
-    intro: 'Meal planning is one of the most powerful tools for weight loss. Studies show that people who plan their meals in advance eat fewer calories, make healthier choices, and are significantly less likely to give up on their diet compared to those who decide what to eat in the moment. This step-by-step guide explains exactly how to start meal planning for weight loss in the UK — from calculating your calorie target to building your first shopping list.',
+    intro: 'Meal planning is one of the most practical tools for weight loss, because it moves the decision away from the moment you are hungry and tired. Deciding on Sunday what Wednesday looks like means the calorie maths is done once, the shopping matches the plan, and there is something to eat when willpower is low. This step-by-step guide explains exactly how to start meal planning for weight loss in the UK — from calculating your calorie target to building your first shopping list.',
     sections: [
       {
         h2: 'Why Meal Planning Works for Weight Loss',
@@ -1134,7 +1134,7 @@ export const blogPostsData = {
       {
         h2: 'Protein Timing: Does It Matter?',
         paragraphs: [
-          'Research suggests that distributing protein across meals (rather than eating most of it in one sitting) optimises muscle protein synthesis. Aim for 30–50 g of protein per meal across 3–4 eating occasions. There is good evidence for a protein-rich meal within two hours of resistance training to maximise muscle retention.',
+          'Spreading protein across the day rather than eating most of it in one sitting is the widely used practical approach: aim for roughly 30–50 g per meal across 3–4 eating occasions. Total daily protein matters more than precise timing, so treat a protein-containing meal near training as useful rather than essential.',
           'The anabolic window (the idea that you must eat protein immediately post-workout or lose all gains) is largely overstated. What matters most is total daily protein intake — not timing. If you eat enough protein across the day, the exact timing is a minor detail.',
         ],
       },
@@ -1583,7 +1583,7 @@ export const blogPostsData = {
       {
         h2: 'Why Protein at Breakfast Matters',
         paragraphs: [
-          'Protein is the most satiating macronutrient — it triggers a greater release of fullness hormones (GLP-1 and PYY) than fat or carbohydrate, and suppresses ghrelin (the hunger hormone) more effectively than either. Studies show that adults who eat a high-protein breakfast (25+ g) consume an average of 135–200 fewer calories at lunch compared to those who eat a low-protein breakfast of the same calorie content.',
+          'Protein is generally the most filling of the three macronutrients for the calories it costs, which is why a higher-protein breakfast tends to leave you reaching for less before lunch. That is the whole reason the plans on this site anchor every meal around a protein source rather than around carbohydrate.',
           'For weight loss, muscle building, or simply staying energised and focused through a working morning, starting the day with 30–40 g of protein is one of the most evidence-backed dietary strategies available.',
         ],
       },
@@ -1690,7 +1690,7 @@ export const blogPostsData = {
           'Extra-virgin olive oil: a practical unsaturated fat for dressings and lower-temperature cooking; it should not be compared with medicine.',
           'Berries (blueberries, strawberries, raspberries, blackberries): fruit containing fibre and a range of polyphenols. Fresh and frozen both work in meal prep.',
           'Leafy greens (spinach, kale, rocket): rich in vitamin K, magnesium, and carotenoids, all of which help modulate inflammatory responses.',
-          'Walnuts and almonds: provide omega-3 ALA (plant-based), vitamin E, and polyphenols. A 30 g daily portion consistently reduces inflammatory markers in clinical trials.',
+          'Walnuts and almonds: provide omega-3 ALA (plant-based), vitamin E and polyphenols. A 30 g portion is the usual practical serving — easy to add to yogurt or porridge without pushing the day’s calories up much.',
           'Turmeric: a flavouring that can add variety to curries, soups and grains. Normal culinary use is not equivalent to a curcumin supplement or an anti-inflammatory medicine.',
           'Green tea: an optional unsweetened drink; evidence about specific clinical effects does not make it a treatment.',
           'Wholegrains (oats, brown rice, quinoa): provide resistant starch and fibre that feed beneficial gut bacteria, reducing gut permeability and systemic inflammation.',
@@ -1817,7 +1817,7 @@ export const blogPostsData = {
     faq: [
       { q: 'What should I eat during menopause to manage weight?', a: 'Build meals around adequate protein, vegetables, fibre-rich carbohydrates and suitable portions. Calorie needs and safe deficits vary, so use the calculator only as a starting estimate and seek individual advice where health or medication affects weight.' },
       { q: 'Which foods help with menopause hot flushes?', a: 'No food can be promised to treat hot flushes. Soy foods and ground flaxseed can fit a balanced diet, but evidence and individual responses vary; discuss persistent symptoms with a GP.' },
-      { q: 'How much calcium do I need during menopause?', a: 'The NHS recommends 700mg of calcium per day for adults, but many experts recommend 1,000–1,200mg for postmenopausal women to support bone density. Best UK sources: low-fat Greek yogurt (120mg/100g), skimmed milk (120mg/100ml), tinned sardines with bones (350mg/100g), and kale (150mg/100g cooked).' },
+      { q: 'How much calcium do I need during menopause?', a: 'The NHS recommends 700mg of calcium per day for adults, and does not set a separate higher figure for postmenopausal women — if you have been told you need more, that advice should come from your GP rather than a website. Best UK sources: low-fat Greek yogurt (120mg/100g), skimmed milk (120mg/100ml), tinned sardines with bones (350mg/100g), and kale (150mg/100g cooked).' },
     ],
   },
 
@@ -2022,7 +2022,7 @@ export const blogPostsData = {
         h2: 'Best Snacks for Different Goals',
         paragraphs: [
           'For maximum protein in minimal calories: tinned tuna (24 g protein per 100 kcal) and 0% Greek yogurt (20 g protein per 115 kcal) are the standout options. Both are significantly cheaper than protein bars and more nutritious.',
-          'For maximum fullness: cottage cheese and Greek yogurt score highest on satiety indices relative to their calorie cost. Studies show dairy protein (casein in particular) is among the most satiating macronutrients per calorie.',
+          'For maximum fullness: cottage cheese and Greek yogurt give you the most protein for the fewest calories of any everyday snack in a UK supermarket, which is what makes them hard to beat here — 200 g of 0% Greek yogurt is around 20 g of protein for about 110 kcal.',
           'For convenience (no refrigeration needed): oatcakes with individual nut butter sachets, rice cakes, a banana, or a small bag of mixed nuts are all shelf-stable and portable. Useful for office snacks, travel, and post-gym.',
         ],
       },
@@ -2064,7 +2064,7 @@ export const blogPostsData = {
         h2: 'Hitting Protein on a Vegan Diet',
         paragraphs: [
           'Plant proteins are generally less bioavailable than animal proteins and lower in one or more essential amino acids. This does not mean you cannot build muscle or maintain weight on a vegan diet — but it does mean you need to be more deliberate about combining protein sources and hitting a slightly higher total intake to account for lower bioavailability.',
-          'The research suggests vegan athletes and dieters aim for 1.8–2.2 g of protein per kg of body weight — somewhat higher than the 1.6–2.0 g/kg recommended for omnivores. For a 70 kg person, that means 126–154 g of protein per day from plant sources.',
+          'A commonly used range for vegan athletes and dieters is 1.8–2.2 g of protein per kg of body weight, slightly above the 1.6–2.0 g/kg typically used for omnivores, because plant proteins are less concentrated and more varied in amino acid profile. For a 70 kg person, that means 126–154 g of protein per day from plant sources.',
           'The key is variety. By combining different plant protein sources (legumes + wholegrains, soy + nuts, tofu + seeds), you ensure a full complement of essential amino acids across the day. You do not need to combine them within every meal — daily totals are what matters.',
         ],
       },
@@ -2170,7 +2170,7 @@ export const blogPostsData = {
     ],
     faq: [
       { q: 'How do vegetarians get 100g of protein per day?', a: 'A practical daily structure: 200g 0% Greek yogurt at breakfast (20g) + 2 boiled eggs (12g) + tray bake with chickpeas and halloumi at lunch (30g) + cottage cheese snack (22g) + scrambled tofu with edamame at dinner (28g) = 112g protein. This is achievable on a 1,500–1,800 kcal budget.' },
-      { q: 'Is a vegetarian diet good for weight loss?', a: 'Yes. Multiple studies show vegetarians have lower average body weights than omnivores. The key is anchoring meals around protein-rich vegetarian foods (Greek yogurt, eggs, cottage cheese, tofu, legumes) rather than relying on carbohydrates and cheese, which can make it easy to overconsume calories.' },
+      { q: 'Is a vegetarian diet good for weight loss?', a: 'It can be. A vegetarian diet is not automatically lower in calories — cheese, pastry and refined carbohydrates make it easy to go the other way. The key is anchoring meals around protein-rich vegetarian foods (Greek yogurt, eggs, cottage cheese, tofu, legumes) rather than relying on carbohydrates and cheese, which can make it easy to overconsume calories.' },
       { q: 'What is the cheapest way to eat vegetarian and high protein in the UK?', a: 'Build your protein base around eggs (~22p each), low-fat cottage cheese (~£1 per 300g), dried lentils (~75p per 500g), tinned chickpeas (~55p per 400g tin), and own-brand Greek yogurt (~£1.20 per 500g). These provide the best protein per pound spent and are available at every UK supermarket.' },
     ],
   },
@@ -2186,7 +2186,7 @@ export const blogPostsData = {
         h2: 'How Many Calories Do You Need to Build Muscle?',
         paragraphs: [
           'Building muscle requires a calorie surplus — eating slightly more than your Total Daily Energy Expenditure (TDEE). However, the size of the surplus matters. A very large surplus (500+ calories above TDEE per day) accelerates fat gain significantly faster than muscle gain, since muscle can only be built at a limited rate regardless of calorie intake.',
-          'The research suggests an optimal surplus of 200–300 calories per day above TDEE for most natural trainees. This "lean bulk" approach maximises muscle-to-fat gain ratio. For a moderately active 80 kg man with a TDEE of 2,500 kcal, this means eating 2,700–2,800 kcal per day.',
+          'A modest surplus of roughly 200–300 calories per day above TDEE is the usual starting point for natural trainees. The logic of this "lean bulk" approach is simple: a bigger surplus does not build muscle faster, it just adds more fat alongside it. For a moderately active 80 kg man with a TDEE of 2,500 kcal, this means eating 2,700–2,800 kcal per day.',
           'Track your weight weekly. You should gain approximately 0.2–0.4 kg per week on an effective muscle-building plan. Faster than this and you are gaining primarily fat; slower and your calorie surplus is too small.',
         ],
       },

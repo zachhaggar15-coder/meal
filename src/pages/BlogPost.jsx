@@ -13,6 +13,8 @@ import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
 import TrustBox from '../components/TrustBox.jsx';
+import ContentByline from '../components/ContentByline.jsx';
+import { contentProvenance, schemaDates } from '../utils/contentDates.js';
 import NotFound from './NotFound.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
 import {
@@ -21,7 +23,7 @@ import {
 } from '../data/seoOpportunityPages.js';
 import { generateBlogImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 import { BUDGET_CONTAINERS, MID_RANGE_CONTAINERS, MEAL_PREP_STICKERS } from '../data/offers.js';
-import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { buildBlogNextStep } from '../utils/contextualJourney.js';
 
@@ -45,8 +47,7 @@ export default function BlogPost() {
       '@type': 'Article',
       headline: data.h1,
       description: data.description,
-      datePublished: data.published || '2026-05-28',
-      dateModified: data.modified || '2026-05-30',
+      ...schemaDates(data),
       author: AUTHOR_JSON_LD,
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk', email: SITE_CONTACT_EMAIL },
       about: [
@@ -94,8 +95,7 @@ export default function BlogPost() {
       name: recipe.name,
       description: recipe.description,
       author: AUTHOR_JSON_LD,
-      datePublished: data.published || '2026-05-28',
-      dateModified: data.modified || '2026-05-30',
+      ...schemaDates(data),
       image: ogImageUrl,
       recipeCategory: recipe.category || 'Main course',
       recipeCuisine: recipe.cuisine || 'British',
@@ -138,10 +138,7 @@ export default function BlogPost() {
           <h1>{data.h1}</h1>
           <p className="content-intro">{data.intro}</p>
           {!useBuyingGuideFlow && (
-            <p className="content-byline">
-              Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
-              {data.reviewed || data.modified || '17 June 2026'}.
-            </p>
+            <ContentByline record={data} />
           )}
           {quickAnswer && !useBuyingGuideFlow && (
             <aside className="quick-answer-box" aria-label="Quick answer">
@@ -178,7 +175,13 @@ export default function BlogPost() {
 
           {hasCustomBlogImage(slug) && !useBuyingGuideFlow && (
             <figure className="blog-hero-image blog-hero-image--after-answer">
-              <img src={ogImageUrl} alt={`${data.h1} guide`} />
+              <img
+                src={ogImageUrl}
+                alt={`${data.h1} guide`}
+                width={1200}
+                height={630}
+                decoding="async"
+              />
             </figure>
           )}
           {data.affiliateDisclosure && (
@@ -197,10 +200,7 @@ export default function BlogPost() {
                 compact
                 recommendationSource="container_buying_guide"
               />
-              <p className="content-byline">
-                Written and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
-                {data.reviewed || data.modified || '17 June 2026'}.
-              </p>
+              <ContentByline record={data} />
             </>
           )}
           {!useBuyingGuideFlow && <ContextualLinks blocks={data.contextualLinks} />}
@@ -359,7 +359,7 @@ export default function BlogPost() {
           {showTrustBox && (
             <TrustBox
               sources={sources}
-              reviewed={data.reviewed || data.modified || '17 June 2026'}
+              {...contentProvenance(data)}
               note={data.trustNote}
             />
           )}

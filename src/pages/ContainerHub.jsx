@@ -161,7 +161,6 @@ const jsonLd = [
     description:
       'Compare the best meal prep containers UK: budget plastic tubs, mid-range glass boxes, leakproof lunch containers and premium meal prep sets.',
     url: 'https://www.mealprep.org.uk/meal-prep-containers',
-    dateModified: '2026-07-02',
     author: {
       '@type': 'Organization',
       name: 'MealPrep.org.uk',

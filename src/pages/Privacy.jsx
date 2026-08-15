@@ -16,7 +16,7 @@ export default function Privacy() {
     <>
       <SEO
         title="Privacy Policy | MealPrep.org.uk"
-        description="Privacy information for MealPrep.org.uk, including analytics, feedback forms, affiliate links and contact details."
+        description="What MealPrep.org.uk collects, which analytics providers we use, how consent works, what is stored in your browser, and how to contact us."
         canonical="/privacy"
         jsonLd={jsonLd}
       />
@@ -30,59 +30,143 @@ export default function Privacy() {
         <SiteLogo variant="page" className="page-header-logo" />
         <h1>Privacy Policy</h1>
         <p className="content-intro">
-          MealPrep.org.uk is a free UK meal-planning website. This page explains the basic data
-          handling used for analytics, feedback and affiliate links.
+          MealPrep.org.uk is a free UK meal-planning website. There are no user accounts and we
+          do not sell data. This page names every third party that can receive data from your
+          visit, and explains what is stored on your own device.
         </p>
 
         <section>
-          <h2>Analytics</h2>
+          <h2>What runs before you choose</h2>
           <p>
-            We use optional, privacy-conscious site analytics to understand which pages are useful
-            and where people find broken or confusing journeys. Analytics data is used in aggregate
-            to improve pages, navigation and search visibility.
+            Nothing optional. Until you accept analytics, no analytics or measurement provider is
+            loaded at all — the scripts are not on the page, so they cannot set cookies or receive
+            your visit. If your browser sends a Do Not Track signal, analytics stay off regardless
+            of what the banner says.
           </p>
+          <p>
+            The site is hosted on Vercel, so your request reaches Vercel&rsquo;s servers in order
+            for the page to be delivered at all. That is unavoidable for any hosted website.
+          </p>
+        </section>
+
+        <section>
+          <h2>Analytics providers we use</h2>
+          <p>
+            If you accept analytics, these providers are loaded. They are named here so you can
+            read their own policies before deciding:
+          </p>
+          <ul className="content-bullets">
+            <li>
+              <strong>Google Analytics 4</strong> — page views and interaction events. Google may
+              set cookies and processes data under its own terms.{' '}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google privacy policy
+              </a>
+            </li>
+            <li>
+              <strong>Ahrefs Web Analytics</strong> — cookieless traffic measurement.{' '}
+              <a
+                href="https://ahrefs.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ahrefs privacy policy
+              </a>
+            </li>
+            <li>
+              <strong>Vercel Analytics</strong> — cookieless page-performance and traffic
+              measurement from our host.{' '}
+              <a
+                href="https://vercel.com/legal/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Vercel privacy policy
+              </a>
+            </li>
+            <li>
+              <strong>Our own event log</strong> — the anonymous events described below are sent
+              to our own server rather than to an analytics company, and stored in a{' '}
+              <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
+                Supabase
+              </a>{' '}
+              database we control. Your browser never contacts Supabase directly.
+            </li>
+          </ul>
           <p>
             If analytics are accepted, we may record anonymous session events such as page views,
-            button and link clicks, internal searches, scroll depth, headings or sections that enter
-            the viewport, approximate time spent on a page, referrer type, device category and
-            viewport size. We do not use this behaviour log to store email addresses, payment
-            details, sensitive health information or typed meal-plan form answers.
+            button and link clicks, internal searches, scroll depth, sections that enter the
+            viewport, approximate time spent on a page, referrer type, device category, viewport
+            size and page-speed measurements. We do not put email addresses, payment details,
+            health information or typed meal-plan form answers into this behaviour log.
+          </p>
+          <p>
+            You can change your mind at any time by clearing this site&rsquo;s stored data in your
+            browser settings, which resets the choice and stops the providers loading again.
           </p>
         </section>
 
         <section>
-          <h2>Plans saved on your device</h2>
+          <h2>Advertising</h2>
           <p>
-            If you save a plan, tick shopping-list items, adjust household portions or continue a
-            quiz, that progress is stored locally in your browser. It is not uploaded to a user
-            account. You can remove saved plans from the saved-plans page, or clear this website's
-            stored data in your browser settings.
+            <strong>MealPrep.org.uk does not currently show advertising.</strong> No advertising
+            script is loaded on any page, including before consent. If that changes, this page
+            will be updated before any ad code goes live to name the advertising provider,
+            describe the cookies involved and explain the consent choice you will be given.
           </p>
         </section>
 
         <section>
-          <h2>Feedback and Contact</h2>
+          <h2>Things stored on your device</h2>
           <p>
-            If you submit feedback or email us, we use the information you provide to review the
-            relevant page, answer the enquiry or correct an issue. Do not send sensitive medical
-            details through the feedback form.
+            Saved plans, shopping-list ticks, household portion settings, quiz progress and your
+            analytics choice are stored in your browser&rsquo;s local storage. They stay on that
+            device, are not uploaded to an account, and expire after a year. You can remove saved
+            plans from the <Link to="/saved-plans">saved plans</Link> page, or clear this
+            website&rsquo;s stored data in your browser settings to remove all of it.
           </p>
         </section>
 
         <section>
-          <h2>Affiliate Links</h2>
+          <h2>Things you send us</h2>
           <p>
-            Some container and product links may be affiliate links. If you click one, the retailer
-            may receive standard referral information and set its own cookies under its privacy
-            policy.
+            If you submit feedback, request a plan by email or join the MealPrep+ waitlist, we
+            receive what you typed and the email address you gave, and use it to answer you,
+            deliver what you asked for, or fix the page in question. Email is delivered through{' '}
+            <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+              Resend
+            </a>
+            . Please do not send medical details through these forms.
           </p>
         </section>
 
         <section>
-          <h2>Contact</h2>
+          <h2>Affiliate links</h2>
           <p>
-            Questions about privacy or corrections can be sent to{' '}
-            <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>.
+            Some container and accessory links are Amazon UK affiliate links. If you click one,
+            Amazon receives standard referral information and applies its own cookies and privacy
+            policy from that point on. We record that a click happened, but not who you are. See
+            our <Link to="/terms">terms</Link> for how affiliate commission works.
+          </p>
+        </section>
+
+        <section>
+          <h2>Your rights and contact</h2>
+          <p>
+            You can ask what we hold about you, ask for it to be corrected or deleted, or object to
+            processing, by emailing{' '}
+            <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>. Because there are no
+            accounts and the behaviour log is anonymous, in most cases the practical answer is that
+            everything tied to you is already on your own device and clearing site data removes it.
+            If you are unhappy with how we have handled a privacy question you can complain to the{' '}
+            <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener noreferrer">
+              Information Commissioner&rsquo;s Office
+            </a>
+            .
           </p>
         </section>
       </div>

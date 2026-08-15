@@ -16,13 +16,19 @@ import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import PlanSaveButton from '../components/PlanSaveButton.jsx';
 import RecipeDetails from '../components/RecipeDetails.jsx';
 import TickableShoppingList from '../components/TickableShoppingList.jsx';
+import AllergenNote from '../components/AllergenNote.jsx';
+import StorageSafetyNote from '../components/StorageSafetyNote.jsx';
+import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js';
+import { splitIngredientText } from '../utils/nutrition.js';
 import NotFound from './NotFound.jsx';
 import { mealPlansData } from '../data/mealPlans.js';
 import { generateMealPlanImageUrl } from '../utils/imageGenerator.js';
 import { buildShoppingList } from '../utils/planBuilder.js';
 import { buildCanonicalLegacyPlan, canonicaliseLegacyMeal } from '../utils/legacyPlanBuilder.js';
 import { sumNutrition } from '../utils/nutrition.js';
-import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import ContentByline from '../components/ContentByline.jsx';
+import { schemaDates } from '../utils/contentDates.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
 import {
@@ -70,6 +76,13 @@ export default function MealPlanPage() {
   }, [slug, data]);
 
   const shoppingList = useMemo(() => buildShoppingList(plan), [plan]);
+  // Same derivation as the generated plans — see src/utils/allergens.js. Legacy
+  // meals store their quantities as a comma-separated portion_size string.
+  const allergenSummary = useMemo(() => mergeAllergenSummaries(
+    (plan || []).flatMap(day => (day.meals || []).map(meal => resolveAllergens(
+      Array.isArray(meal.ingredients) ? meal.ingredients : splitIngredientText(meal.portion_size || ''),
+    ))),
+  ), [plan]);
   const avgProtein = plan.length
     ? Math.round(plan.reduce((s, d) => s + d.totals.protein, 0) / plan.length)
     : null;
@@ -162,8 +175,7 @@ export default function MealPlanPage() {
       '@type': 'Article',
       headline: data.h1,
       description: data.description,
-      datePublished: data.published || '2026-05-28',
-      dateModified: data.modified || '2026-05-30',
+      ...schemaDates(data),
       author: AUTHOR_JSON_LD,
       publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk', email: SITE_CONTACT_EMAIL },
       mainEntityOfPage: {
@@ -245,7 +257,7 @@ export default function MealPlanPage() {
                     </span>
                   </div>
                   <p className="plan-meal-desc">{meal.desc}</p>
-                  <RecipeDetails meal={meal} />
+                  <RecipeDetails meal={meal} headingLevel={4} />
                   <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(activeDayIdx, j, newMeal)} />
                 </div>
               ))}
@@ -290,6 +302,10 @@ export default function MealPlanPage() {
         listClassName="shopping-items"
         groupLabel={group => group.charAt(0).toUpperCase() + group.slice(1)}
       />
+      <div className="plan-guidance-grid">
+        <AllergenNote summary={allergenSummary} />
+        <StorageSafetyNote />
+      </div>
       <EmailPlanCapture
         plan={{
           slug,
@@ -323,10 +339,7 @@ export default function MealPlanPage() {
 
         <SiteLogo variant="page" className="page-header-logo" />
         <h1>{data.h1}</h1>
-        <p className="content-byline">
-          Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
-          {data.reviewed || data.modified || '17 June 2026'}.
-        </p>
+        <ContentByline record={data} verb="Built" />
 
         <section className="legacy-plan-overview" aria-label="Plan overview">
           <div>
@@ -394,7 +407,8 @@ export default function MealPlanPage() {
         <details className="plan-summary-card legacy-plan-summary-detail">
           <summary>More plan and cost details</summary>
           <h2>Plan at a glance</h2>
-          <table className="plan-summary-table">
+          <div className="content-table-wrap">
+            <table className="plan-summary-table">
             <tbody>
               <tr>
                 <th scope="row">Calories</th>
@@ -454,6 +468,7 @@ export default function MealPlanPage() {
               )}
             </tbody>
           </table>
+          </div>
           <p className="plan-summary-personalise">
             Not quite right?{' '}
             <Link
@@ -603,7 +618,7 @@ export default function MealPlanPage() {
                     </span>
                   </div>
                   <p className="plan-meal-desc">{meal.desc}</p>
-                  <RecipeDetails meal={meal} />
+                  <RecipeDetails meal={meal} headingLevel={4} />
                   <MealPromptBox meal={meal} onSwap={newMeal => handleSwap(i, j, newMeal)} />
                 </div>
               ))}

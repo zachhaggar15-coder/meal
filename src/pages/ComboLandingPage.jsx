@@ -3,6 +3,7 @@ import SEO from '../components/SEO.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
+import { contentProvenance, schemaDates } from '../utils/contentDates.js';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
@@ -36,7 +37,7 @@ export default function ComboLandingPage({ page }) {
       name: page.h1,
       description: page.description,
       url: `https://www.mealprep.org.uk${page.path}`,
-      dateModified: page.reviewed,
+      ...schemaDates({ published: page.published, modified: page.modified }),
       isPartOf: {
         '@type': 'WebSite',
         name: 'MealPrep.org.uk',
@@ -208,7 +209,7 @@ export default function ComboLandingPage({ page }) {
             </ul>
           </>
         )}
-        <TrustBox sources={DEFAULT_SOURCES} reviewed={page.reviewed} />
+        <TrustBox sources={DEFAULT_SOURCES} {...contentProvenance(page)} />
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
+import './quality.css';
 import AnalyticsConsentBanner from './components/AnalyticsConsentBanner.jsx';
 import BehaviorAnalytics from './components/BehaviorAnalytics.jsx';
 import ClickTracking from './components/ClickTracking.jsx';
@@ -28,6 +29,7 @@ const ToolsPage = lazy(() => import('./pages/ToolsPage.jsx'));
 const MealPrepPlus = lazy(() => import('./pages/MealPrepPlus.jsx'));
 const SavedPlans = lazy(() => import('./pages/SavedPlans.jsx'));
 const About = lazy(() => import('./pages/About.jsx'));
+const Methodology = lazy(() => import('./pages/Methodology.jsx'));
 const Contact = lazy(() => import('./pages/Contact.jsx'));
 const Feedback = lazy(() => import('./pages/Feedback.jsx'));
 const Privacy = lazy(() => import('./pages/Privacy.jsx'));
@@ -92,6 +94,7 @@ export default function App() {
               <Route path="/mealprep-plus" element={<MealPrepPlus />} />
               <Route path="/saved-plans" element={<SavedPlans />} />
               <Route path="/about" element={<About />} />
+              <Route path="/methodology" element={<Methodology />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/privacy" element={<Privacy />} />

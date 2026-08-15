@@ -43,6 +43,24 @@ export default function About() {
         </p>
 
         <section>
+          <h2>Who runs this site</h2>
+          <p>
+            MealPrep.org.uk is an independent UK site, not a brand, retailer or clinical service.
+            It is run by a small editorial team, funded by Amazon UK affiliate commission on some
+            container and accessory links, and free to use with no account and no paywall. Nobody
+            here is a dietitian, nutritionist or doctor, and we do not claim to be — where a page
+            leans on public health guidance it links to the NHS or Food Standards Agency source so
+            you can read it directly.
+          </p>
+          <p>
+            If you want the detail of how the plans, nutrition figures, shopping lists and cost
+            estimates are actually produced, that is set out in full on the{' '}
+            <Link to="/methodology">methodology page</Link>, including what the site cannot
+            guarantee.
+          </p>
+        </section>
+
+        <section>
           <h2>Editorial Approach</h2>
           <p>
             Guides are written for realistic UK supermarket shopping and reviewed for clarity,
@@ -90,17 +108,15 @@ export default function About() {
         <section id="meal-plan-costs">
           <h2>How Our Meal-Plan Costs Are Estimated</h2>
           <p>
-            Weekly costs on generated plans are broad planning ranges based on the plan's
-            budget tier and the UK supermarket it targets. They are not a live basket quote
-            and should not be read as the exact amount charged at checkout.
+            Weekly costs are broad planning ranges based on the plan&rsquo;s budget tier and the UK
+            supermarket it targets. They are not a live basket quote, they can assume small amounts
+            of cupboard staples are already available, and they cannot price every pack-size
+            leftover. Your actual spend changes with brands, pack sizes, substitutions, promotions
+            and regional prices.
           </p>
           <p>
-            The range can assume that small amounts of common cupboard staples, such as oil,
-            seasoning or sauces, are already available. It also cannot precisely account for
-            every pack-size leftover. Your actual spend will change with the brands and pack
-            sizes you choose, substitutions, promotions, regional prices and what is already
-            in your kitchen. Check the current shelf or online price before shopping when the
-            exact total matters.
+            The tiers themselves, and everything the estimate does not claim, are set out on the{' '}
+            <Link to="/methodology#costs">methodology page</Link>.
           </p>
         </section>
 
@@ -108,9 +124,10 @@ export default function About() {
           <h2>Contact and Corrections</h2>
           <p>
             For editorial corrections, source questions, product updates or business enquiries,
-            contact <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>. Corrections
-            are prioritised when they affect safety, nutrition context, prices, availability or
-            whether a page still reflects current UK supermarket meal prep.
+            contact <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a>, or use the{' '}
+            <Link to="/contact">contact page</Link> or <Link to="/feedback">feedback form</Link>.
+            Corrections are prioritised when they affect safety, nutrition context, prices,
+            availability or whether a page still reflects current UK supermarket meal prep.
           </p>
         </section>
 

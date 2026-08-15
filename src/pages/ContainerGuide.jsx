@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import { SITE_AUTHOR_NAME, SITE_AUTHOR_URL } from '../constants/site.js';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
@@ -15,7 +16,6 @@ import {
   getContainerProduct,
   getContainerProducts,
 } from '../data/containerProducts.js';
-import { SITE_AUTHOR_NAME, SITE_AUTHOR_URL } from '../constants/site.js';
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -138,7 +138,7 @@ export default function ContainerGuide() {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     },
-    ...products.map(product => buildProductReviewJsonLd(product, canonical)),
+    ...products.map(product => buildProductJsonLd(product, canonical)),
   ];
 
   return (
@@ -322,7 +322,20 @@ function productJsonLdId(canonical, product) {
   return `https://www.mealprep.org.uk${canonical}#product-${product.id}`;
 }
 
-function buildProductReviewJsonLd(product, canonical) {
+// Product structured data for the buying guide.
+//
+// The review describes assessment that genuinely exists on the page — the
+// summary, buy-if, avoid-if, pros and cons are all rendered to the reader — and
+// deliberately carries no reviewRating, price, availability or aggregateRating,
+// because the site maintains none of those. The page itself states that the
+// assessment "follow[s] current Amazon listing or manufacturer information, not
+// hands-on testing", so the markup is not a stronger claim than the visible
+// content.
+//
+// The author was previously '@type': 'Team', which is not a schema.org type and
+// is not one of the two types Google accepts for a review author (Person or
+// Organization). An editorial team is an Organization, not a Person.
+function buildProductJsonLd(product, canonical) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -334,9 +347,9 @@ function buildProductReviewJsonLd(product, canonical) {
     url: product.href,
     review: {
       '@type': 'Review',
-      name: `${product.shortName || product.name} review`,
+      name: `${product.shortName || product.name} assessment`,
       author: {
-        '@type': 'Team',
+        '@type': 'Organization',
         name: SITE_AUTHOR_NAME,
         url: SITE_AUTHOR_URL,
       },

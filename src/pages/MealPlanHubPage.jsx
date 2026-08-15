@@ -4,8 +4,11 @@ import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
-import PopularSearches from '../components/PopularSearches.jsx';
+import HubContextPanel from '../components/HubContextPanel.jsx';
+import { buildHubContextLinks, buildHubDataSummary } from '../utils/hubContext.js';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
+import { contentProvenance, schemaDates } from '../utils/contentDates.js';
+import ContentByline from '../components/ContentByline.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
 import ComboLandingPage from './ComboLandingPage.jsx';
@@ -17,7 +20,7 @@ import {
 } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { chooseHubVisual } from '../data/visualAssets.js';
-import { AUTHOR_JSON_LD, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
+import { AUTHOR_JSON_LD, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const ALL_PLANS = getAllPlanMeta();
@@ -65,6 +68,15 @@ export default function MealPlanHubPage() {
   const sources = hub.sources || DEFAULT_SOURCES;
   const supportingGuides = hub.supportingGuides || DEFAULT_SUPPORTING_GUIDES;
   const hubVisual = chooseHubVisual(hub);
+  // Replaces the identical 16-link "Popular UK searches" block that appeared on
+  // every hub. Both the summary and the links are derived from this hub's own
+  // matched plans, so each hub now says something only it can say.
+  const hubSummary = buildHubDataSummary(matchingPlans);
+  const hubContextLinks = buildHubContextLinks({
+    hub,
+    allHubs: MEAL_PLAN_HUBS,
+    plans: matchingPlans,
+  });
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -72,7 +84,7 @@ export default function MealPlanHubPage() {
       name: hub.h1,
       description: hub.description,
       url: `https://www.mealprep.org.uk${canonical}`,
-      dateModified: hub.modified || '2026-07-02',
+      ...schemaDates(hub),
       author: AUTHOR_JSON_LD,
       publisher: {
         '@type': 'Organization',
@@ -140,10 +152,7 @@ export default function MealPlanHubPage() {
           <span className="offer-kicker">{hub.kicker}</span>
           <h1>{hub.h1}</h1>
           <p className="content-intro">{hub.intro}</p>
-          <p className="content-byline">
-            Built and reviewed by <Link to="/about">{SITE_AUTHOR_NAME}</Link>. Last materially reviewed:{' '}
-            {hub.reviewed || '17 June 2026'}.
-          </p>
+          <ContentByline record={hub} verb="Built" />
           <div className="meal-hub-stats" aria-label="Page highlights">
             <span>
               {usingFallbackPlans
@@ -210,10 +219,10 @@ export default function MealPlanHubPage() {
 
         <PageHeroVisual visual={hubVisual} className="meal-hub-hero-visual meal-hub-hero-visual--after-plans" priority />
 
-        <PopularSearches
-          title="Popular UK searches"
-          intro="Related guides and plan hubs for calorie targets, printable PDFs, supermarket shopping and meal prep kit."
-          className="popular-searches--hub"
+        <HubContextPanel
+          heading={hub.h1 || hub.title}
+          summary={hubSummary}
+          links={hubContextLinks}
         />
 
         {hub.sections.map(section => (
@@ -301,7 +310,7 @@ export default function MealPlanHubPage() {
             ) : null;
           })}
         </ul>
-        <TrustBox sources={sources} reviewed={hub.reviewed || '17 June 2026'} />
+        <TrustBox sources={sources} {...contentProvenance(hub)} />
       </div>
       <WaitlistSection sourcePage="meal-plan-hub" />
       <Footer />

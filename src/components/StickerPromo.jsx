@@ -16,7 +16,14 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
           data-affiliate-category="meal-prep-containers"
           data-product-name={offer.name}
         >
-          <img src={offer.image} alt={offer.imageAlt || offer.name} />
+          <img
+            src={offer.image}
+            alt={offer.imageAlt || offer.name}
+            width={offer.imageWidth}
+            height={offer.imageHeight}
+            loading="lazy"
+            decoding="async"
+          />
         </a>
       )}
       <div className="sticker-promo-text">
