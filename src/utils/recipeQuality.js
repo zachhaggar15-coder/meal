@@ -7,6 +7,7 @@ import {
   findProtein,
   findStarch,
   hasCookingLiquid,
+  isAlreadyPreparedIngredient,
   isDryPulseName,
   isPulseProteinFamily,
   isSoupSideAccompaniment,
@@ -16,12 +17,18 @@ import {
   starchAliasesFor,
 } from './ingredientRoles.js';
 
+// Shared vegetable vocabulary, extended from the actual ingredient
+// inventory across every recipe source. The original list omitted green
+// beans, celery, parsnips, sweetcorn, leek, asparagus, squash,
+// cauliflower, edamame and the "mixed veg" style names, so those were
+// silently dropped from chopping/roasting steps and ended up in generic
+// "serve with" clauses instead.
+const VEGETABLE_PATTERN = /(\bpepper|\bspinach|\bbroccoli|\btomato|\bonion|\bmushroom|\bcourgette|\bcarrot|\bkale|\bpeas\b|\bcabbage|\baubergine|\bcucumber|\bavocado|\bpotato|\blettuce|\brocket|\bleaves|\bwatercress|\bgreen bean|\bcelery|\bparsnip|\bsweetcorn|\bleek|\basparagus|\bsquash\b|\bcauliflower|\bpak choi|\bbok choy|\bedamame|\bbeansprout|\bveg\b|\bgreens\b|\bbeetroot|\bswede\b|\bturnip|\bradish|\bfennel)/i;
+
 // The bread-style carrier a toast/wrap/sandwich dish is built on. "toast"
 // belongs here because legacy plans name the ingredient itself that way
 // ("1 slice wholemeal toast") — without it, an avocado-toast method opened
 // with "Toast or warm the listed ingredients" because it found no carrier.
-// One shared constant rather than the three near-identical copies this
-// replaced.
 const BREAD_CARRIER_PATTERN = /(bread|toast|bagel|wrap|tortilla|pitta|roll)/i;
 
 const PLACEHOLDER_PATTERNS = [
@@ -72,7 +79,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
   const proteinName = normaliseProteinMethodName(protein, proteinDisplayName);
   const vegetables = findCookingNames(
     cookingIngredients,
-    /(\bpepper|\bspinach|\bbroccoli|\btomato|\bonion|\bmushroom|\bcourgette|\bcarrot|\bkale|\bpeas\b|\bcabbage|\baubergine|\bcucumber|\bavocado|\bpotato|\blettuce|\brocket|\bleaves|\bwatercress)/i,
+    VEGETABLE_PATTERN,
   );
   const sauces = findCookingNames(
     cookingIngredients,
@@ -91,12 +98,16 @@ export function buildPracticalRecipeSteps(meal = {}) {
   if (name.includes('overnight') || name.includes('chia')) {
     const bases = findCookingNames(cookingIngredients, /(oats|chia|milk|yogurt|kefir)/i);
     const toppings = withoutNames(remainingNames, bases);
+    // Name the loosening liquid the user actually has. Only literal milk
+    // earns the word "milk"; a kefir/yogurt base is loosened with itself.
+    const looseningLiquid = findCookingName(cookingIngredients, /\bmilk\b/i)
+      || findCookingName(cookingIngredients, /\b(kefir|yogurt)\b/i);
     return [
       `Stir ${joinNatural(bases)} together in a lidded jar or container.`,
       'Stir well, cover and chill for at least 4 hours or overnight.',
       toppings.length
-        ? `Stir again before eating, then add ${joinNatural(toppings)}. Loosen with a splash of milk if needed.`
-        : 'Stir again before eating and loosen with a splash of milk if needed.',
+        ? `Stir again before eating, then add ${joinNatural(toppings)}.${looseningLiquid ? ` Loosen with a splash of ${looseningLiquid} if needed.` : ''}`
+        : `Stir again before eating${looseningLiquid ? ` and loosen with a splash of ${looseningLiquid} if needed` : ''}.`,
     ];
   }
 
@@ -377,7 +388,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
     return [
       `${name.includes('sandwich') ? 'Lay out' : 'Toast or warm'} ${joinNatural(carriers)}.`,
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
-        ? `Cook the ${proteinName} in a non-stick pan over medium heat until cooked through, then rest briefly and slice it.`
+        ? cookProteinStep(proteinName, { finish: isAlreadyPreparedIngredient(proteinName) ? '' : 'Rest briefly, then slice it.' })
         : isPulseProtein && needsCooking(protein, searchable, pulseState)
           ? cookProteinStep(proteinName, { dryPulse: true })
           : `Drain, slice or mash ${joinNatural(filling)} as appropriate.`,
@@ -385,17 +396,75 @@ export function buildPracticalRecipeSteps(meal = {}) {
     ];
   }
 
+  // Stir-fry: previously fell through to the starch branch and produced a
+  // plain "cook in a non-stick pan" with no stir/toss action at all, so a
+  // dish named stir-fry never actually stir-fried.
+  if (/\bstir[- ]?fry\b/.test(name)) {
+    const stirVegetables = withoutNames(vegetables, [starchName, starchDisplayName]);
+    const stirSauces = sauces.filter(item => !/\boil\b/i.test(item));
+    // Only tell the user to heat oil when oil is actually an ingredient —
+    // otherwise the method implies a purchase the shopping list never made.
+    const stirOil = findCookingName(cookingIngredients, /\boil\b/i);
+    const panPhrase = stirOil
+      ? `Heat the ${stirOil} in a wok or large frying pan over high heat`
+      : 'Heat a wok or large frying pan over high heat';
+    const steps = [];
+    if (starch) steps.push(cookStarchStep(starchName, { potatoPreparation, displayName: starchDisplayName }));
+    steps.push(
+      protein && needsCooking(protein, searchable, pulseState)
+        ? `${panPhrase} and stir-fry the ${proteinName} for 3-4 minutes, until browned and cooked through.`
+        : `${panPhrase}.`,
+    );
+    if (stirVegetables.length) {
+      steps.push(`Add ${joinNatural(stirVegetables)} and stir-fry over high heat for 3-4 minutes, keeping everything moving so it stays crisp.`);
+    }
+    steps.push(
+      stirSauces.length
+        ? `Stir in ${joinNatural(stirSauces)}, toss to coat and serve${starch ? ` with the ${starchName}` : ''}.`
+        : `Season, toss to combine and serve${starch ? ` with the ${starchName}` : ''}.`,
+    );
+    return steps;
+  }
+
+  // Roast / tray bake: previously fell through to the generic branch and
+  // produced "cook in a non-stick pan" for a dish whose name promises the
+  // oven — and, for a nut roast, never cooked the main component at all.
+  if (/\broast\b|\btray ?bake\b/.test(name) && !/\bpotato\b/.test(name)) {
+    const roastVegetables = withoutNames(vegetables, [proteinName, proteinDisplayName]);
+    const centrepiece = proteinName || findCookingName(cookingIngredients, /nut roast|roast/i) || 'the main ingredient';
+    const extras = withoutNames(remainingNames, [...roastVegetables, proteinName, proteinDisplayName, centrepiece]);
+    return [
+      'Heat the oven to 200°C (180°C fan).',
+      roastVegetables.length
+        ? `Cut ${joinNatural(roastVegetables)} into even pieces, spread on a roasting tray and roast for 25-30 minutes, turning once, until tender and lightly browned.`
+        : 'Line a roasting tray ready for the main ingredients.',
+      `Roast the ${centrepiece} until cooked through and piping hot, adding it to the tray so it finishes at the same time as the vegetables.`,
+      extras.length
+        ? `Serve with ${joinNatural(extras)}, then season to taste.`
+        : 'Rest briefly, then season to taste and serve.',
+    ];
+  }
+
   if (name.includes('salad') || name.includes('bowl')) {
     const leafy = findCookingNames(cookingIngredients, /leaves|lettuce|rocket|watercress|spinach/i);
+    // Ready-prepared or pre-cut vegetables (a roasted veg mix, frozen
+    // peas, trimmed green beans) don't need a "slice or chop" step — but
+    // they were previously excluded here and then never mentioned again,
+    // silently dropping a real 150g ingredient out of the method. They are
+    // kept aside and named in the assembly step instead.
+    const readyVegetables = withoutNames(
+      vegetables.filter(item => /(peas|mixed veg|green beans|\bveg\b)/i.test(item) || isAlreadyPreparedIngredient(item)),
+      [...leafy, starchName, starchDisplayName],
+    );
     const choppedVegetables = withoutNames(
-      vegetables.filter(item => !/(peas|mixed veg|green beans)/i.test(item)),
+      vegetables.filter(item => !/(peas|mixed veg|green beans|\bveg\b)/i.test(item) && !isAlreadyPreparedIngredient(item)),
       [...leafy, starchName],
     );
     const carriers = findCookingNames(cookingIngredients, BREAD_CARRIER_PATTERN);
     const eggs = findCookingNames(cookingIngredients, /^eggs?$/i);
     const steps = [];
     if (starch) {
-      steps.push(cookStarchStep(starchName, { cool: true, potatoPreparation }));
+      steps.push(cookStarchStep(starchName, { cool: true, potatoPreparation, displayName: starchDisplayName }));
     }
     if (eggs.length) {
       steps.push(`Boil the ${joinNatural(eggs)} for 8-9 minutes, then cool under cold water, peel and halve.`);
@@ -422,7 +491,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
     }
     const hasDressing = sauces.some(item => /dressing/i.test(item));
     steps.push(
-      `Arrange everything in a bowl${sauces.length ? ` and finish with ${joinNatural(sauces)}` : ''}.${hasDressing ? ' Keep the dressing separate if packing ahead.' : ''}`,
+      `Arrange everything in a bowl${readyVegetables.length ? `, adding ${joinNatural(readyVegetables)}` : ''}${sauces.length ? `${readyVegetables.length ? ', then' : ' and'} finish with ${joinNatural(sauces)}` : ''}.${hasDressing ? ' Keep the dressing separate if packing ahead.' : ''}`,
     );
     return steps.slice(0, 5);
   }
@@ -476,7 +545,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
           : 'Heat a large pan over medium heat.',
       buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames }),
       starch && starch !== 'potato'
-        ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true, potatoPreparation })
+        ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true, potatoPreparation, displayName: starchDisplayName })
         : accompanimentNames.length
           ? `Taste, season and serve with ${joinNatural(accompanimentNames)} on the side.`
           : 'Taste, season and portion for serving.',
@@ -488,11 +557,16 @@ export function buildPracticalRecipeSteps(meal = {}) {
     // step one already cooks it, so leaving "wholemeal pasta (dry weight)"
     // in this list made step two re-"prepare" the very thing just cooked.
     const nonStarch = withoutNames(remainingNames, [starchName, starchDisplayName]);
+    const panVegetables = withoutNames(vegetables, [starchName, starchDisplayName]);
     return [
-      cookStarchStep(starchName, { potatoPreparation }),
+      cookStarchStep(starchName, { potatoPreparation, displayName: starchDisplayName }),
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
         ? vegetables.length
-          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })} Add ${joinNatural(vegetables)} and cook until tender.`
+          // The vegetable pattern also matches potato, which is the starch
+          // already cooked in step one — without excluding it the method
+          // said "Boil the potatoes… then add potatoes and cook until
+          // tender", cooking the same ingredient twice.
+          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })}${panVegetables.length ? ` Add ${joinNatural(panVegetables)} and cook until tender.` : ''}`
           : cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })
         // A dry pulse is not just "warmed" — it needs real simmering time
         // in liquid to become edible. Keep every non-starch ingredient
@@ -501,7 +575,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
         // cookProteinStep, which would drop the aromatics/spices that
         // belong in the same pot.
         : isPulseProtein && needsCooking(protein, searchable, pulseState)
-          ? `Meanwhile, simmer ${joinNatural(nonStarch)} together in a pan with enough water or stock to cover, until the ${proteinName} is tender.`
+          ? `Meanwhile, simmer ${joinNatural(nonStarch)} together in a pan with enough ${cookingLiquidWord(remainingNames)} to cover, until tender.`
           : `Meanwhile, prepare ${joinNatural(nonStarch)} and warm everything gently in a pan.`,
       starch === 'potato'
         ? `Serve the ${starchName} with the prepared ingredients${sauces.length ? ` and ${joinNatural(sauces)}` : ''}, then season to taste.`
@@ -658,7 +732,7 @@ function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, r
     ? pulseState === PULSE_STATE.DRY
     : additions.some(item => isDryPulseName(item));
   const needsLiquidNote = dryPulseInPot && !hasCookingLiquid(remainingNames);
-  const liquidClause = needsLiquidNote ? ' with enough water or stock to cover' : '';
+  const liquidClause = needsLiquidNote ? ` with enough ${cookingLiquidWord(remainingNames)} to cover` : '';
   // When every ingredient has already been named in an earlier step there
   // is genuinely nothing left to add — saying "add the listed ingredients"
   // then reads as filler that hides nothing but helps no one. Drop the
@@ -672,6 +746,16 @@ function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, r
   return flavourings.length
     ? `Stir in ${joinNatural(flavourings)}, then add ${additionsText}${liquidClause} and simmer gently until tender and thickened.`
     : `Add ${additionsText}${liquidClause} and simmer gently until tender and thickened.`;
+}
+
+// Names the cooking liquid the user actually has. Stock is only mentioned
+// when a stock ingredient really exists in the recipe — otherwise the
+// method would imply the shopping list included stock the user never
+// bought. Water is the honest default and needs no shopping entry.
+function cookingLiquidWord(ingredientNames) {
+  return (ingredientNames || []).some(item => /\b(stock|broth|bouillon)\b/i.test(String(item || '')))
+    ? 'stock'
+    : 'water';
 }
 
 function drainTinnedStep(values) {
@@ -696,15 +780,22 @@ function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = fal
   let finishText = finish;
   let instruction;
 
-  if (dryPulse) {
+  // An ingredient whose own name declares it already cooked ("baked
+  // falafel", "baked tofu") must not be given a from-raw instruction —
+  // the same principle resolvePotatoPreparation applies to potatoes,
+  // generalised to any ingredient carrying a declared state.
+  if (isAlreadyPreparedIngredient(protein)) {
+    instruction = `warm the ${protein} through in a non-stick pan or oven until piping hot`;
+    finishText = '';
+  } else if (dryPulse) {
     // Dry lentils/beans are not pan-browned like mince — they need real
     // simmering time in liquid to become tender and safe to eat.
-    instruction = `simmer the ${protein} in a pan with plenty of water or stock for 15-20 minutes, until tender, then drain any excess liquid`;
+    instruction = `simmer the ${protein} in a pan with plenty of water for 15-20 minutes, until tender, then drain any excess liquid`;
     finishText = '';
   } else if (/prawn/i.test(protein)) {
     instruction = `cook the ${protein} in a non-stick pan over medium heat for 3-4 minutes, turning, until pink and opaque`;
     finishText = '';
-  } else if (/halloumi/i.test(protein)) {
+  } else if (/(halloumi|paneer)/i.test(protein)) {
     instruction = `cook the ${protein} in a dry non-stick pan for 2-3 minutes per side, until golden`;
     finishText = '';
   } else if (/(salmon|mackerel|cod|haddock|sardine|fish|tuna steak)/i.test(protein)) {
@@ -721,14 +812,34 @@ function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = fal
   return `${prefix}${firstLetter}${ending}`;
 }
 
+function capitaliseFirst(value) {
+  const text = String(value || '');
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 function cookStarchStep(starchName, {
   prefix = '',
   cool = false,
   serveAlongside = false,
   potatoPreparation = null,
+  displayName = '',
 } = {}) {
   const starch = String(starchName || 'starch');
   let instruction;
+
+  // An ingredient stated as already cooked ("quinoa (cooked)") must not be
+  // told to cook from scratch — the same declared-state principle
+  // potatoInstruction already applies, extended to the other starches.
+  // starchName is often just the family word ("quinoa"), so the declared
+  // state lives on the display name ("quinoa (cooked)") — check both.
+  if (/\bcooked\b/i.test(`${starch} ${displayName}`) && !/potato/i.test(starch)) {
+    const cleanName = String(displayName || starch)
+      .replace(/\s*[(,]?\s*\bcooked\b\)?/i, '')
+      .replace(/\s+/g, ' ')
+      .trim() || starch;
+    const readyInstruction = `have the cooked ${cleanName} ready, reheating gently if serving hot`;
+    return `${prefix}${prefix ? readyInstruction : capitaliseFirst(readyInstruction)}.`;
+  }
 
   if (/potato/i.test(starch)) {
     instruction = potatoInstruction(starch, potatoPreparation);

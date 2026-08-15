@@ -223,7 +223,12 @@ test('shopping purchase presentation rounds countable quantities up and shows ex
   assert.ok(all.includes('Snack mix 1 pack (about 1/2 used)'));
   assert.ok(all.includes('1 small roll'));
   assert.ok(all.includes('Semi-skimmed milk 1300ml (about 1271ml used)'));
-  assert.ok(all.includes('Peanut butter 1.25 tsp (about 1.15 tsp used)'));
+  // A 0.1 tsp shortfall is below anything a cook can measure, so the
+  // usage note is suppressed for spoon units — it was pure optimiser
+  // precision on every spice line. Gram/ml lines keep their note (above),
+  // where the shortfall genuinely affects what you buy.
+  assert.ok(all.includes('Peanut butter 1.25 tsp'));
+  assert.ok(!all.some(item => /Peanut butter[^|]*\(about/.test(item)));
   assert.ok(!all.some(item => /\bat least\b/i.test(item)));
 });
 

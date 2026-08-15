@@ -604,13 +604,28 @@ function formatShoppingIngredient(item) {
   // "3.75 tbsp"). Showing "(about 3.75 tbsp used)" next to "3.75 tbsp" reads
   // as a contradiction, so it's suppressed when the two texts match.
   const usedDisplay = countable ? formatApproximateUse(item.amount) : formatMeasuredForDisplay(item.amount, item.unit, false);
-  const usage = roundedUp && (countable || usedDisplay !== amount)
+  // Spoon measures don't deserve sub-teaspoon reporting: "Paprika 1 tsp
+  // (about 0.95 tsp used)" is optimiser precision no cook can act on, and
+  // the note adds noise to every spice line in the list. Only report the
+  // shortfall when it is large enough to actually change what you buy.
+  const usage = roundedUp && (countable || usedDisplay !== amount) && !isNegligibleSpoonGap(item, purchaseAmount)
     ? ` (about ${usedDisplay} used)`
     : '';
   const purchaseText = item.amountFirst
     ? `${amount} ${item.label}${suffix}`
     : `${item.label} ${amount}${suffix}`;
   return `${purchaseText}${usage}`.trim();
+}
+
+// True when the gap between what you buy and what the recipes use is
+// smaller than a cook could practically measure — half a teaspoon.
+// Spoon units only; grams and millilitres keep their usage note, where a
+// shortfall genuinely affects the shop.
+function isNegligibleSpoonGap(item, purchaseAmount) {
+  const unit = String(item.unit || '').toLowerCase();
+  if (unit !== 'tsp' && unit !== 'tbsp') return false;
+  const teaspoons = unit === 'tbsp' ? 3 : 1;
+  return (Number(purchaseAmount) - Number(item.amount)) * teaspoons < 0.5;
 }
 
 function formatMeasuredForDisplay(amount, unit, roundUp) {

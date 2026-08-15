@@ -21,6 +21,7 @@ import {
   checkHydrationWithoutMedium,
   checkRawProteinWithoutCooking,
 } from './lib/recipeInvariants.js';
+import { isAlreadyPreparedIngredient } from '../src/utils/ingredientRoles.js';
 
 function mealById(id) {
   const meal = MEALS.find(item => item.id === id);
@@ -218,14 +219,19 @@ test('[corpus] the standard-diet plan label is not rendered as the misleading "A
   assert.match(source, /No specific dietary restriction/);
 });
 
-// ── 19. Unrealistic container recommendation (intentionally NOT fixed —
-//         pending a separate approved model; the detector staying accurate
-//         is what this locks in) ──────────────────────────────────────────
-test('[corpus] the container-count-outlier detector still flags the known 23-container Aldi plan', async () => {
+// ── 19. Unrealistic container recommendation — FIXED 2026-08. The count
+//         now models simultaneously stored portions (derived from plan
+//         structure and fridge-safe storage windows) rather than one
+//         container per meal of the week, so the Aldi plan that once
+//         recommended 23 no longer trips the outlier detector.
+test('[corpus] the known 23-container Aldi plan no longer trips the container-count-outlier detector', async () => {
   const { assessPlanLocally, hydratePlanForQa, buildPlanInventory } = await import('./lib/semanticPlanQa.js');
   const candidate = buildPlanInventory().find(item => item.planId === 'aldi-high-protein-low-cal-1500');
   const review = assessPlanLocally(hydratePlanForQa(candidate), new Date());
-  assert.ok(review.findings.some(item => item.patternKey === 'container-count-outlier'));
+  assert.ok(
+    !review.findings.some(item => item.patternKey === 'container-count-outlier'),
+    'the container count should now be realistic for this plan',
+  );
 });
 
 // ── 20. Undercooked fish: proteinCandidates/INGREDIENT_ALIASES in
@@ -380,8 +386,8 @@ test('[corpus] a full English with no beans or bread never emits an empty ingred
     ingredients: ['Eggs 2', 'Turkey rashers 60g', 'Mushrooms 100g', 'Tomatoes 100g'],
   });
   const method = steps.join(' ');
-  assert.doesNotMatch(method, /the\s+\./, 'no "the ." from an empty name');
-  assert.doesNotMatch(method, /the\s{2,}/, 'no "the  " double space from an empty name');
+  assert.doesNotMatch(method, /\bthe\s+\./, 'no "the ." from an empty name');
+  assert.doesNotMatch(method, /\bthe\s{2,}/, 'no "the  " double space from an empty name');
   assert.doesNotMatch(method, /warm the\s+gently/i);
 });
 
@@ -498,4 +504,119 @@ test('[corpus][invariant] no meal is routed through a method family incompatible
     }
   }
   assert.deepEqual(offenders, [], `family/ingredient incompatibility: ${offenders.join(' | ')}`);
+});
+
+// ── Phase-3 discoveries (2026-08): found by exploratory library-wide
+//    scanning, NOT from a supplied example. Each pairs a specific
+//    regression with a general property covering unseen members of the
+//    same failure class.
+
+test('[corpus] a ready-to-eat pulse product is never simmered from dry and drained', () => {
+  const method = buildPracticalRecipeSteps(mealById('baked-beans-toast')).join(' ');
+  assert.doesNotMatch(method, /simmer[^.]*15-20 minutes/i, 'baked beans are already cooked in sauce');
+  assert.doesNotMatch(method, /drain any excess liquid/i);
+});
+
+test('[corpus][property] no ingredient declaring itself already cooked is given a from-raw instruction', () => {
+  const offenders = [];
+  const check = (label, ingredients, method) => {
+    for (const raw of ingredients || []) {
+      if (!isAlreadyPreparedIngredient(raw)) continue;
+      const head = String(raw).replace(/[\d.]+\s*\w*\s*/, '').split(/[,(]/)[0].trim().split(/\s+/).pop();
+      if (!head || head.length < 4) continue;
+      const fromRaw = new RegExp(`\b(boil|simmer|roast|bake)\b[^.]{0,40}\b${head}`, 'i');
+      if (fromRaw.test(method)) offenders.push(`${label}: ${raw}`);
+    }
+  };
+  for (const meal of MEALS) check(meal.id, meal.ingredients, buildPracticalRecipeSteps(meal).join(' '));
+  assert.deepEqual(offenders, [], `already-prepared ingredient cooked from raw: ${offenders.join(' | ')}`);
+});
+
+test('[corpus][property] the method never names a material ingredient the recipe does not contain', () => {
+  // Water, salt and pepper are the only permitted method-only basics.
+  const MATERIAL = ['stock', 'broth', 'butter', 'cream', 'honey', 'breadcrumbs', 'wine'];
+  const offenders = [];
+  for (const meal of MEALS) {
+    const method = buildPracticalRecipeSteps(meal).join(' ').toLowerCase();
+    const ing = (meal.ingredients || []).join(' ').toLowerCase();
+    for (const word of MATERIAL) {
+      if (new RegExp(`\b${word}\b`).test(method) && !new RegExp(`\b${word}`).test(ing)) {
+        offenders.push(`${meal.id}: "${word}"`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `method invents a material ingredient: ${offenders.join(' | ')}`);
+});
+
+test('[corpus] a dish named as a roast is actually roasted, and its centrepiece is cooked', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Nut Roast with Roasted Veg',
+    ingredients: ['Nut roast 150g', 'Carrot 150g', 'Parsnip 150g'],
+  }).join(' ');
+  assert.match(method, /oven/i);
+  assert.match(method, /roast the nut roast/i, 'the centrepiece must itself be cooked');
+});
+
+test('[corpus] a dish named as a stir-fry actually stir-fries', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Lean Beef Stir-Fry',
+    ingredients: ['Lean beef strips 200g', 'Brown rice 35g dry', 'Broccoli 150g', 'Peppers 100g'],
+  }).join(' ');
+  assert.match(method, /stir-fry/i);
+  assert.match(method, /wok|high heat/i);
+});
+
+test('[corpus] an already-cooked starch is not told to cook from its packet', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Tofu & Quinoa Buddha Bowl',
+    ingredients: ['Baked tofu 150g', 'Quinoa 80g cooked', 'Roasted peppers 100g'],
+  }).join(' ');
+  assert.doesNotMatch(method, /cook the quinoa according to/i);
+  assert.match(method, /cooked quinoa ready/i);
+});
+
+test('[corpus][property] a vegetable ingredient is never silently dropped from its method', () => {
+  // Asserts real generator behaviour rather than duplicating the
+  // vocabulary: if a vegetable-like ingredient exists, the method must
+  // mention it somewhere. Guards the class of bug where an unrecognised
+  // vegetable (green beans, parsnip, celery, "mixed frozen veg") vanishes
+  // from chopping/roasting steps entirely.
+  const offenders = [];
+  for (const meal of MEALS) {
+    const method = buildPracticalRecipeSteps(meal).join(' ').toLowerCase();
+    for (const raw of meal.ingredients || []) {
+      const name = String(raw).toLowerCase();
+      if (!/\b(green bean|parsnip|celery|sweetcorn|leek|asparagus|cauliflower|pak choi|edamame|beansprout|beetroot|swede|turnip|radish|fennel|veg)\b/.test(name)) continue;
+      const head = name.replace(/[\d.]+\s*\w*/g, '').replace(/[(),]/g, ' ').trim().split(/\s+/).filter(w => w.length > 3).pop();
+      if (!head) continue;
+      const stem = head.replace(/(ies|es|s)$/, '');
+      if (stem.length > 2 && !method.includes(stem)) offenders.push(`${meal.id}: ${raw}`);
+    }
+  }
+  assert.deepEqual(offenders, [], `vegetable dropped from its method: ${offenders.join(' | ')}`);
+});
+
+// ── Container recommendation ────────────────────────────────────────────
+test('[corpus] container count reflects simultaneously stored meals, not every meal of the week', async () => {
+  const { buildContainerSetup } = await import('../src/utils/containerSetup.js');
+  const seed = INDEXABLE_PLAN_SEEDS.find(item => item.slug === 'aldi-high-protein-low-cal-1500');
+  const { buildPlan } = await import('../src/utils/planBuilder.js');
+  const plan = buildPlan(seed);
+  const setup = buildContainerSetup({ plan, weeklyPlan: plan.plan, formValues: {} });
+  assert.ok(setup.containerCount < setup.prepMealCount, 'nobody needs one container per meal of the week');
+  assert.ok(setup.containerCount >= 3 && setup.containerCount <= 18, `expected a realistic container count, got ${setup.containerCount}`);
+});
+
+test('[corpus][property] no plan recommends more containers than it has prep meals', async () => {
+  const { buildContainerSetup } = await import('../src/utils/containerSetup.js');
+  const { buildPlan } = await import('../src/utils/planBuilder.js');
+  const offenders = [];
+  for (const seed of INDEXABLE_PLAN_SEEDS.filter((_, index) => index % 37 === 0)) {
+    const plan = buildPlan(seed);
+    const setup = buildContainerSetup({ plan, weeklyPlan: plan.plan, formValues: {} });
+    if (setup.prepMealCount > 6 && setup.containerCount >= setup.prepMealCount) {
+      offenders.push(`${seed.slug}: ${setup.containerCount} containers for ${setup.prepMealCount} meals`);
+    }
+  }
+  assert.deepEqual(offenders, [], `container count not reduced below whole-week meal count: ${offenders.join(' | ')}`);
 });

@@ -38,6 +38,7 @@ export const PROTEIN_FAMILIES = [
   ['prawns', ['prawn']],
   ['tofu', ['tofu']],
   ['halloumi', ['halloumi']],
+  ['paneer', ['paneer']],
   ['quorn', ['quorn']],
   ['falafel', ['falafel']],
   ['eggs', ['egg']],
@@ -118,7 +119,39 @@ export function isDryPulseName(displayName) {
   const text = String(displayName || '');
   if (!isPulseIngredient(text)) return false;
   if (/\b(tinned|canned|cooked)\b/i.test(text)) return false;
+  if (isPreparedPulseProduct(text)) return false;
   return /\bdry\b/i.test(text) || !/\b(weight|drained)\b/i.test(text);
+}
+
+// Pulse-based products sold ready to eat, already cooked in sauce or
+// brine. They contain a pulse word and carry no "tinned"/"cooked" marker,
+// so a naive dry-pulse test treats them as dry and tells the user to
+// simmer them for 20 minutes and drain — nonsense for a tin of baked
+// beans. Kept as an explicit, auditable list because these are product
+// names, not something inference can safely derive.
+const PREPARED_PULSE_PRODUCTS = /\b(baked beans|refried beans|mushy peas|bean salad|hummus|falafel|beansprouts?|bean sprouts?)\b/i;
+
+export function isPreparedPulseProduct(name) {
+  return PREPARED_PULSE_PRODUCTS.test(String(name || ''));
+}
+
+// ── Already-prepared ingredients ─────────────────────────────────────────
+//
+// An ingredient whose own name declares it already cooked ("Falafel 4
+// baked", "150g baked tofu", "Courgette 1 roasted") must not then be given
+// a from-raw cooking instruction. This generalises the preparation-state
+// handling that previously existed only for potatoes
+// (resolvePotatoPreparation) to any ingredient carrying the same kind of
+// declared state.
+const PREPARED_STATE_PATTERN = /\b(baked|roasted|grilled|cooked|pre-cooked|chargrilled|smoked|poached)\b/i;
+// Product names where the word is part of the product, not a state the
+// user is expected to have already performed.
+const PREPARED_FALSE_FRIENDS = /\b(baked beans|smoked salmon|smoked mackerel|smoked haddock|smoked tofu|baked bean)\b/i;
+
+export function isAlreadyPreparedIngredient(name) {
+  const text = String(name || '');
+  if (PREPARED_FALSE_FRIENDS.test(text)) return false;
+  return PREPARED_STATE_PATTERN.test(text);
 }
 
 // Reuses the SAME structured signals the rest of the app already has for
@@ -130,6 +163,9 @@ export function isDryPulseName(displayName) {
 // convention (`'red lentils': 'red lentils dry'`).
 export function classifyPulseState(name, qualifier) {
   const text = String(name || '');
+  // Ready-to-eat pulse products (baked beans, hummus) are already cooked
+  // even though nothing in the name says "tinned" or "cooked".
+  if (isPreparedPulseProduct(text)) return PULSE_STATE.COOKED;
   if (/\b(tinned|canned)\b/i.test(text)) return PULSE_STATE.TINNED;
   const cleanQualifier = String(qualifier || '').toLowerCase();
   if (cleanQualifier === 'cooked' || cleanQualifier === 'drained') return PULSE_STATE.COOKED;
