@@ -18,6 +18,12 @@
       "deployedAt": "2026-08-14T23:38:16.007Z",
       "summary": "Recipe-quality phase 2: ten shared method-generation defects fixed (lettuce-wrap and pancake/waffle family-selection collisions, waffle-iron step, toast carrier, full-English empty slots, pre-made batter, duplicate starch, stew filler clause, smoothie-bowl toppings, dry-pulse liquid for non-primary pulses). Caesar dressing identity corrected (only intentional nutrition change: 166->180 kcal, 1 recipe / 23 legacy occurrences). Three invariants promoted to blocking. Verified live: Homemade Lentil Soup now states its cooking liquid; Caesar salad shows the specific dressing.",
       "gate": "npm run check — exit 0 (127 tests, 1404 routes prerendered, 11 audits)"
+    },
+    {
+      "commit": "124856e",
+      "deployedAt": "2026-08-15T11:06:54.485Z",
+      "summary": "Phase 3 proactive defect discovery: 14 defects found by library-wide scanning (not from supplied examples). Prepared-state (baked beans simmered+drained, baked falafel/tofu re-cooked, cooked quinoa re-cooked); two missing recipe families (roast, stir-fry); material-ingredient invention (stock x64, milk, oil); classifier gaps (paneer, 21 vegetables, dropped roasted mixed veg); shopping spice over-precision; container count 23->11 via simultaneous-storage model. Verified live: stir-fry stir-fries, roast uses oven, lentil soup says water not stock, 11 containers, spice lines clean, 390px mobile clean.",
+      "gate": "npm run check — exit 0 (136 tests, 1404 routes, 11 audits)"
     }
   ]
 }
