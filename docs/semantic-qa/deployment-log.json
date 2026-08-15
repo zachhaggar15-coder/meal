@@ -24,6 +24,12 @@
       "deployedAt": "2026-08-15T11:06:54.485Z",
       "summary": "Phase 3 proactive defect discovery: 14 defects found by library-wide scanning (not from supplied examples). Prepared-state (baked beans simmered+drained, baked falafel/tofu re-cooked, cooked quinoa re-cooked); two missing recipe families (roast, stir-fry); material-ingredient invention (stock x64, milk, oil); classifier gaps (paneer, 21 vegetables, dropped roasted mixed veg); shopping spice over-precision; container count 23->11 via simultaneous-storage model. Verified live: stir-fry stir-fries, roast uses oven, lentil soup says water not stock, 11 containers, spice lines clean, 390px mobile clean.",
       "gate": "npm run check — exit 0 (136 tests, 1404 routes, 11 audits)"
+    },
+    {
+      "commit": "2c8bfe5",
+      "deployedAt": "2026-08-15T17:10:04.320Z",
+      "summary": "Flavour completeness closed out. Safe phase: 12 legacy recipes had seasonings restored from their own descriptions using the zero-nutrition to-taste convention. Material phase: site-wide description-vs-data audit found 39 material omissions (all legacy, none shared); 26 high-confidence corrections applied with quantities from sibling recipes — Paneer curry +200ml tomato curry sauce, 2 roasts +gravy, 3 stir-fries +soy sauce, vegan bowl +tahini (drift), 6 tomato bases, 6 named dressings, Parmesan, spinach/cucumber/tomato. New generic gravy nutrition entry added. 2 vague-veg descriptions aligned to data rather than inventing proportions. Flavour patterns 26 -> 5. Verified live: Paneer & Spinach Curry now has a real curry base in ingredients, method and shopping list.",
+      "gate": "npm run check — exit 0 (139 tests, 1404 routes, 11 audits)"
     }
   ]
 }
