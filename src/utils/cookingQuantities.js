@@ -97,9 +97,13 @@ function formatCookingDisplay({ canonical, parsed, ingredient }) {
       .trim();
     const optional = /optional/i.test(canonical);
     const practicalNote = /spray/i.test(cleaned) ? 'as needed' : 'to taste';
-    const text = optional && !/\b(to taste|as needed)\b/i.test(cleaned)
-      ? `${cleaned}, ${practicalNote}`
-      : cleaned;
+    // These names land mid-sentence ("stir in cumin, to taste"), so a
+    // leading capital reads as a proper noun. normaliseIngredientName below
+    // restores the genuine ones (Weetabix, Quorn, Greek, Medjool).
+    const lowered = cleaned.charAt(0).toLowerCase() + cleaned.slice(1);
+    const text = optional && !/\b(to taste|as needed)\b/i.test(lowered)
+      ? `${lowered}, ${practicalNote}`
+      : lowered;
     return {
       quantity: optional ? practicalNote : '',
       ingredient: normaliseIngredientName(text),

@@ -235,7 +235,11 @@ export function starchAliasesFor(family) {
 // general-purpose "is this bread" check (branches that ARE about the bread —
 // toast, wraps, sandwiches — already handle it as the point of the dish,
 // not an accompaniment, and don't consult this).
-const ACCOMPANIMENT_PATTERN = /\b(bread roll|wholemeal roll|rye roll|dinner roll|roll)\b/i;
+// Bread served alongside a bowl, in any of the forms the data uses: a
+// roll, or a slice/wedge of bread. Without the slice forms, "1 slice
+// wholemeal bread" was simmered into a lentil soup — the same defect the
+// roll wording already guarded against.
+const ACCOMPANIMENT_PATTERN = /\b(bread roll|wholemeal roll|rye roll|dinner roll|roll|slices? (?:of )?\w*\s*bread|\w*\s*bread slices?|wedge of \w*\s*bread)\b/i;
 
 export function isSoupSideAccompaniment(name) {
   return ACCOMPANIMENT_PATTERN.test(String(name || ''));

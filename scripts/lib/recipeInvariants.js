@@ -144,7 +144,11 @@ export function checkFamilyValidity(name, ingredients, methodText) {
 // Deliberately structural, NOT a judgement about taste. Only applied to
 // savoury dishes that involve real cooking — a boiled egg or a yogurt pot
 // legitimately needs nothing here.
-const FLAVOUR_COMPONENT = /\b(garlic|ginger|onion|shallot|leek|celery|chilli|herbs?|spices?|paprika|cumin|turmeric|cinnamon|oregano|basil|thyme|rosemary|coriander|parsley|dill|mint|masala|ras el hanout|curry|stock|soy sauce|tamari|miso|pesto|harissa|tahini|mustard|vinegar|balsamic|glaze|honey|maple|lemon|lime|dressing|sauce|salsa|hoisin|sriracha|mayo|hummus|cheese|parmesan|feta|halloumi|cheddar|mozzarella|ricotta|tomato|olive oil|sesame|peanut butter|nutritional yeast)\b/i;
+// Trailing \b is deliberately omitted on pluralisable nouns: "\btomato\b"
+// does not match "tomatoes", which previously flagged dishes that plainly
+// had a tomato base. Coconut milk is a genuine curry sauce base and was
+// missing entirely.
+const FLAVOUR_COMPONENT = /\b(garlic|ginger|onion|shallot|leek|celery|chilli|herb|spice|paprika|cumin|turmeric|cinnamon|oregano|basil|thyme|rosemary|coriander|parsley|dill|mint|masala|ras el hanout|curry|stock|soy sauce|tamari|miso|pesto|harissa|tahini|mustard|vinegar|balsamic|glaze|gravy|honey|maple|lemon|lime|dressing|sauce|salsa|hoisin|sriracha|mayo|hummus|cheese|parmesan|feta|halloumi|cheddar|mozzarella|ricotta|tomato|coconut milk|coconut cream|olive oil|sesame|peanut butter|nutritional yeast|pickle|kimchi|olives?)/i;
 const SAVOURY_COOKED = /(curry|chilli|stew|soup|bake|roast|stir-fry|risotto|bolognese|casserole|dahl|dal|pie|traybake|hash)/i;
 
 export function checkFlavourCompleteness(name, ingredients) {

@@ -234,6 +234,7 @@ export const NUTRITION_TABLE = {
   'raita':                  { kcal100: 60, pro100: 3 },
   'curry paste':            { kcal100: 250, pro100: 5 },
   'tikka paste':            { kcal100: 250, pro100: 5 },
+  'gravy':                  { kcal100: 25, pro100: 0.6, basis: 'ml' }, // added 2026-08-15: thin gravy made up from granules, generic UK preparation strength — not a branded product; flagged for label verification
   'tomato curry sauce':     { kcal100: 78, pro100: 1.5, basis: 'ml' }, // corrected 2026-07-06: Sharwood's UK jarred curry sauce labels (Jalfrezi/Rogan Josh/Balti)
   'miso paste':             { kcal100: 200, pro100: 12 },
   'coconut milk':           { kcal100: 190, pro100: 2, basis: 'ml' },
@@ -481,6 +482,7 @@ export const NUTRITION_MACRO_OVERRIDES = {
   raita: { fat100: 2, carb100: 5, fibre100: 0 },
   'curry paste': { fat100: 21.3, carb100: 11.3, fibre100: 3 },
   'tikka paste': { fat100: 21, carb100: 12, fibre100: 3 },
+  'gravy': { fat100: 0.8, carb100: 3.8, fibre100: 0.1 },
   'tomato curry sauce': { fat100: 3, carb100: 10, fibre100: 1.5 },
   'miso paste': { fat100: 6, carb100: 26, fibre100: 5 },
   'coconut milk': { fat100: 19, carb100: 3, fibre100: 0.5 },
@@ -747,6 +749,7 @@ export const NUTRITION_SYNONYMS = {
   'raita': 'raita',
   'curry paste': 'curry paste',
   'tikka paste': 'tikka paste',
+  'gravy': 'gravy', 'vegetarian gravy': 'gravy', 'vegan gravy': 'gravy',
   'tomato curry sauce': 'tomato curry sauce',
   'miso paste': 'miso paste',
   'coconut milk': 'coconut milk', 'tinned coconut milk light': 'coconut milk light',

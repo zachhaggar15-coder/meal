@@ -29,6 +29,19 @@ const VEGETABLE_PATTERN = /(\bpepper|\bspinach|\bbroccoli|\btomato|\bonion|\bmus
 // belongs here because legacy plans name the ingredient itself that way
 // ("1 slice wholemeal toast") — without it, an avocado-toast method opened
 // with "Toast or warm the listed ingredients" because it found no carrier.
+// Vegetables that need no knife work: sold ready-trimmed, frozen or
+// pre-cut. They belong in the pot but never in a "peel and chop" step.
+const READY_TO_USE_VEGETABLE = /\b(sweetcorn|frozen|green beans?|beansprouts?|edamame|mixed veg|stir-fry veg|peas)\b/i;
+
+// Herbs, spices and citrus that season a dish rather than form its body.
+const SEASONING_PATTERN = /\b(herbs?|spices?|cumin|coriander|turmeric|paprika|cinnamon|oregano|basil|thyme|rosemary|parsley|dill|mint|chilli|cayenne|masala|ras el hanout|garam|nutmeg|lemon juice|lime juice|zest)\b/i;
+
+// What a soup/stew/curry "stirs in" to build its base: liquid and sauce
+// bases plus the whole seasoning vocabulary above. The earlier short list
+// omitted turmeric, coriander, ginger and the rest, so those were never
+// stirred in and got duplicated into the "have ready" step instead.
+const FLAVOURING_PATTERN = /\b(paste|powder|stock|tomato|coconut milk|sauce|passata|ginger|herbs?|spices?|cumin|coriander|turmeric|paprika|cinnamon|oregano|basil|thyme|rosemary|parsley|dill|mint|chilli|cayenne|masala|ras el hanout|garam|nutmeg)\b/i;
+
 const BREAD_CARRIER_PATTERN = /(bread|toast|bagel|wrap|tortilla|pitta|roll)/i;
 
 const PLACEHOLDER_PATTERNS = [
@@ -477,7 +490,13 @@ export function buildPracticalRecipeSteps(meal = {}) {
     } else if (tinIngredients.length) {
       steps.push(drainTinnedStep(tinIngredients));
     }
-    if (choppedVegetables.length || leafy.length) {
+    // A bowl or salad whose name promises roasted vegetables has to
+    // actually roast them — otherwise "Lentil & Roasted Veg Bowl" just
+    // chops raw squash into a bowl.
+    const roastableVegetables = withoutNames(choppedVegetables, leafy);
+    if (/\broast(ed)?\b/.test(name) && roastableVegetables.length) {
+      steps.push(`Heat the oven to 200°C (180°C fan). Cut ${joinNatural(roastableVegetables)} into even pieces and roast for 25-30 minutes, until tender and lightly browned, then leave to cool slightly.`);
+    } else if (choppedVegetables.length || leafy.length) {
       if (leafy.length && choppedVegetables.length) {
         steps.push(`Rinse ${joinNatural(leafy)}, then slice or chop ${joinNatural(choppedVegetables)}.`);
       } else if (leafy.length) {
@@ -498,16 +517,20 @@ export function buildPracticalRecipeSteps(meal = {}) {
 
   if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup')) {
     const aromatics = findCookingNames(cookingIngredients, /(onion|garlic|ginger|celery|carrot)/i);
+    // Sweetcorn, frozen veg blends, green beans and similar arrive ready to
+    // use — "peel and chop sweetcorn into even pieces" is nonsense. They
+    // still belong in the pot, just not in the knife-work step.
     const firmVegetables = withoutNames(
       vegetables.filter(item => (
         !/(spinach|leaves|peas|watercress|rocket)/i.test(item)
         && !/\b(tinned|canned)\b/i.test(item)
+        && !READY_TO_USE_VEGETABLE.test(item)
       )),
       aromatics,
     );
     const flavourings = findCookingNames(
       cookingIngredients,
-      /(paste|powder|paprika|cumin|masala|herbs|stock|tomato|coconut milk|sauce)/i,
+      FLAVOURING_PATTERN,
     );
     const usableFirmVegetables = withoutNames(firmVegetables, flavourings);
     const pulseTins = tinIngredients.filter(item => /(bean|chickpea|lentil)/i.test(item));
@@ -537,7 +560,10 @@ export function buildPracticalRecipeSteps(meal = {}) {
         : '',
     ].filter(Boolean).join(' ');
     return [
-      preparation || `Have ${joinNatural(remainingNames)} ready by the hob.`,
+      // Anything named in a later step (flavourings stirred in, the starch
+      // cooked separately) must not also appear in this "have ready"
+      // fallback, or the same ingredient is listed twice.
+      preparation || `Have ${joinNatural(withoutNames(remainingNames, [...flavourings, ...separateStarchNames, ...accompanimentNames]))} ready by the hob.`,
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
         ? `Heat a large pan over medium heat and brown the ${proteinName}${aromatics.length ? ` with ${joinNatural(aromatics)}` : ''} for 5-7 minutes.`
         : aromatics.length || usableFirmVegetables.length
@@ -558,6 +584,14 @@ export function buildPracticalRecipeSteps(meal = {}) {
     // in this list made step two re-"prepare" the very thing just cooked.
     const nonStarch = withoutNames(remainingNames, [starchName, starchDisplayName]);
     const panVegetables = withoutNames(vegetables, [starchName, starchDisplayName]);
+    // Seasonings a recipe genuinely lists (lemon, dill, herbs) were dropped
+    // entirely by this branch, which only ever names the protein and
+    // vegetables — so a salmon "baked with lemon and dill" never mentioned
+    // either. Surface them in the serving step.
+    const seasonings = withoutNames(
+      findCookingNames(cookingIngredients, SEASONING_PATTERN),
+      [...panVegetables, ...sauces, proteinName, proteinDisplayName, starchName, starchDisplayName],
+    );
     return [
       cookStarchStep(starchName, { potatoPreparation, displayName: starchDisplayName }),
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
@@ -578,9 +612,9 @@ export function buildPracticalRecipeSteps(meal = {}) {
           ? `Meanwhile, simmer ${joinNatural(nonStarch)} together in a pan with enough ${cookingLiquidWord(remainingNames)} to cover, until tender.`
           : `Meanwhile, prepare ${joinNatural(nonStarch)} and warm everything gently in a pan.`,
       starch === 'potato'
-        ? `Serve the ${starchName} with the prepared ingredients${sauces.length ? ` and ${joinNatural(sauces)}` : ''}, then season to taste.`
-        : sauces.length
-          ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural(sauces)}, and heat through before serving.`
+        ? `Serve the ${starchName} with the prepared ingredients${seasoningClause(seasonings, sauces)}, then season to taste.`
+        : sauces.length || seasonings.length
+          ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural([...sauces, ...seasonings])}, and heat through before serving.`
           : `Fold the cooked ${starchName} through the pan, season to taste and serve hot.`,
     ];
   }
@@ -752,6 +786,13 @@ function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, r
 // when a stock ingredient really exists in the recipe — otherwise the
 // method would imply the shopping list included stock the user never
 // bought. Water is the honest default and needs no shopping entry.
+// Joins sauces and seasonings into a natural "and X" clause for a serving
+// step, or nothing when the dish has neither.
+function seasoningClause(seasonings, sauces) {
+  const items = uniqueNames([...(sauces || []), ...(seasonings || [])]);
+  return items.length ? ` and ${joinNatural(items)}` : '';
+}
+
 function cookingLiquidWord(ingredientNames) {
   return (ingredientNames || []).some(item => /\b(stock|broth|bouillon)\b/i.test(String(item || '')))
     ? 'stock'
@@ -768,11 +809,32 @@ function drainTinnedStep(values) {
 }
 
 function joinNatural(values, fallback = 'the listed ingredients') {
-  const items = uniqueNames(values);
+  const items = collapseRepeatedToTaste(uniqueNames(values));
   if (!items.length) return fallback;
   if (items.length === 1) return items[0];
   if (items.length === 2) return `${items[0]} and ${items[1]}`;
   return `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`;
+}
+
+// "lemon juice, to taste and dill, to taste" reads badly. When more than
+// one seasoning carries the same qualifier, state it once at the end:
+// "lemon juice and dill, to taste".
+function collapseRepeatedToTaste(items) {
+  const QUALIFIER = /,\s*(to taste|as needed)$/i;
+  const qualified = items.filter(item => QUALIFIER.test(item));
+  if (qualified.length < 2) return items;
+  const qualifier = qualified[0].match(QUALIFIER)[1];
+  if (!qualified.every(item => item.match(QUALIFIER)[1].toLowerCase() === qualifier.toLowerCase())) return items;
+
+  const stripped = [];
+  let inserted = false;
+  for (const item of items) {
+    if (!QUALIFIER.test(item)) { stripped.push(item); continue; }
+    const bare = item.replace(QUALIFIER, '');
+    // Attach the qualifier to the last one only.
+    if (item === qualified.at(-1)) { stripped.push(`${bare}, ${qualifier}`); inserted = true; } else stripped.push(bare);
+  }
+  return inserted ? stripped : items;
 }
 
 function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = false } = {}) {

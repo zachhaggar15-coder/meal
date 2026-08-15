@@ -620,3 +620,65 @@ test('[corpus][property] no plan recommends more containers than it has prep mea
   }
   assert.deepEqual(offenders, [], `container count not reduced below whole-week meal count: ${offenders.join(' | ')}`);
 });
+
+// ── Description ↔ structured-data drift (phase-4) ───────────────────────
+// A recipe's public description promising a material component that its
+// ingredient data omits. High-confidence mappings only: each pairing is a
+// specific named ingredient, not a loose keyword.
+test('[corpus][property] a description promising a material ingredient is backed by the ingredient data', () => {
+  const PROMISES = [
+    ['gravy', /\bgravy\b/i, /\bgravy\b/i],
+    ['tahini', /\btahini\b/i, /\btahini\b/i],
+    ['soy sauce', /\bsoy sauce\b/i, /\b(soy sauce|tamari)\b/i],
+    // An oil-plus-acid pairing (olive oil + balsamic) is itself a dressing,
+    // so it satisfies the promise without a bottled "dressing" ingredient.
+    ['a named dressing', /\b(lemon|balsamic|tahini|mint|caesar|ginger-soy|lemon-garlic)[- ]?\w*\s*dressing\b/i, /\b(dressing|tahini|sauce|mayo|glaze|vinegar|vinaigrette)\b/i],
+    ['a curry base', /\b(tomato-based curry|curry sauce|curry paste)\b/i, /\b(curry sauce|curry paste|curry powder|tomato|coconut milk|masala)\b/i],
+    ['parmesan', /\bparmesan\b/i, /\bparmesan\b/i],
+  ];
+  const offenders = [];
+  const seen = new Set();
+  for (const [, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const meal of day.meals || []) {
+        const key = `${meal.name}|${meal.portion_size}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const desc = String(meal.desc || '');
+        const ing = String(meal.portion_size || '').toLowerCase();
+        for (const [label, promise, satisfied] of PROMISES) {
+          if (promise.test(desc) && !satisfied.test(ing)) offenders.push(`${meal.name}: promises ${label}`);
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders, [], `description promises a material ingredient the data omits: ${offenders.join(' | ')}`);
+});
+
+test('[corpus] Paneer & Spinach Curry actually has a curry base and cooks like a curry', () => {
+  const seen = [];
+  for (const [, plan] of Object.entries(mealPlansData)) {
+    for (const day of plan.plan || []) {
+      for (const meal of day.meals || []) {
+        if (meal.name !== 'Paneer & Spinach Curry') continue;
+        seen.push(meal);
+      }
+    }
+  }
+  assert.ok(seen.length, 'expected the Paneer & Spinach Curry this case documents');
+  for (const meal of seen) {
+    assert.match(meal.portion_size, /curry sauce/i, 'a curry needs a curry base in its ingredient data');
+    const method = (canonicaliseLegacyMeal(meal).recipe || []).join(' ');
+    assert.match(method, /curry sauce/i, 'the method must use the curry base');
+    assert.match(method, /simmer/i);
+  }
+});
+
+test('[corpus] a bowl or salad promising roasted vegetables actually roasts them', () => {
+  const method = buildPracticalRecipeSteps({
+    name: 'Lentil & Roasted Veg Bowl',
+    ingredients: ['Butternut squash 150g', 'Courgette 150g', 'Peppers 150g', 'Green lentils 120g cooked', 'Tahini 1 tbsp'],
+  }).join(' ');
+  assert.match(method, /oven/i);
+  assert.match(method, /roast/i);
+});
