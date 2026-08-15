@@ -4,6 +4,8 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
+import { recommendPlanForIntent } from '../utils/planRecommendation.js';
+import { planCardTitle } from '../utils/planCardMeta.js';
 import {
   buildBrowsePlanUrl,
   getCalorieChoice,
@@ -35,12 +37,17 @@ export default function ChoiceLandingPage({ mode }) {
 
   if (!config?.choice) return <NotFound />;
 
-  const cards = config.cards
-    .map(card => ({
-      ...card,
-      plan: chooseBestPlan(card.filters, card.defaultCalories),
-    }))
-    .filter(card => card.plan);
+  const resolvedCards = config.cards.map(card => ({
+    ...card,
+    plan: recommendPlanForIntent(ALL_PLANS, {
+      ...card.filters,
+      targetCalories: card.defaultCalories,
+    }),
+  }));
+  const cards = resolvedCards.filter(card => card.plan);
+  // Combinations with no plan are named rather than silently dropped, so a
+  // reader can see why a goal is missing instead of assuming the page is broken.
+  const unavailableCards = resolvedCards.filter(card => !card.plan);
   const chooserVisual = chooseChooserVisual({ mode, choice: config.choice });
 
   const selfUrl = config.selfUrl || config.canonical;
@@ -132,7 +139,7 @@ export default function ChoiceLandingPage({ mode }) {
                     {card.plan.calories.toLocaleString('en-GB')} kcal
                   </span>
                 </div>
-                <h2>{toTitleCase(card.heading)}</h2>
+                <h2>{toTitleCase(planCardTitle(card.plan.title))}</h2>
                 <p>{card.description}</p>
                 <div className="plan-chooser-meta">
                   <span>{toTitleCase(marketLabel(card.plan.supermarket))}</span>
@@ -165,6 +172,19 @@ export default function ChoiceLandingPage({ mode }) {
         </section>
 
         <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual plan-chooser-visual--after-grid" priority />
+
+        {unavailableCards.length > 0 && (
+          <section className="choice-index-note">
+            <h2>{toTitleCase('Not available for this choice yet')}</h2>
+            <p>
+              We do not have a{' '}
+              {formatChoiceList(unavailableCards.map(card => card.label.toLowerCase()))} plan for{' '}
+              {config.defaultValue} yet. The plan browser can show the closest alternatives across
+              other supermarkets.
+            </p>
+            <Link className="btn-secondary" to={config.changeUrl}>See the closest alternatives</Link>
+          </section>
+        )}
 
         <section className="choice-index-note">
           <h2>{toTitleCase('Want a different combination?')}</h2>
@@ -285,34 +305,6 @@ function buildCaloriesConfig(value) {
       highlight: false,
     })),
   };
-}
-
-function chooseBestPlan(filters, defaultCalories) {
-  const candidates = ALL_PLANS.filter(plan => {
-    if (filters.goal && plan.goal !== filters.goal) return false;
-    if (filters.supermarket && plan.supermarket !== filters.supermarket) return false;
-    if (filters.dietType && plan.dietType !== filters.dietType) return false;
-    if (filters.calories && plan.calories !== Number(filters.calories)) return false;
-    return true;
-  });
-
-  if (!candidates.length) return null;
-
-  return [...candidates].sort((a, b) => (
-    scorePlan(b, defaultCalories, filters) - scorePlan(a, defaultCalories, filters)
-  ))[0];
-}
-
-function scorePlan(plan, defaultCalories, filters) {
-  let score = 0;
-  const calorieGap = Math.abs(plan.calories - Number(defaultCalories || plan.calories));
-  score -= calorieGap / 10;
-  if (plan.calories === Number(defaultCalories)) score += 80;
-  if (plan.supermarket === 'any') score += filters.supermarket ? 0 : 8;
-  if (plan.dietType === 'standard') score += filters.dietType ? 0 : 8;
-  if (plan.effort === 'batch') score += 6;
-  if (plan.effort === 'standard') score += 5;
-  return score;
 }
 
 function marketLabel(value) {

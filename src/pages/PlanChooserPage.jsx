@@ -4,6 +4,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
+import { recommendPlanForIntent } from '../utils/planRecommendation.js';
 import {
   buildBrowsePlanUrl,
   getGoalChoice,
@@ -24,7 +25,11 @@ export default function PlanChooserPage() {
   const options = INDEXED_SUPERMARKET_CHOICES
     .map(market => ({
       market,
-      plan: chooseBestPlan(goalChoice.value, market.value, goalChoice.defaultCalories),
+      plan: recommendPlanForIntent(ALL_PLANS, {
+        goal: goalChoice.value,
+        supermarket: market.value,
+        targetCalories: goalChoice.defaultCalories,
+      }),
     }))
     .filter(option => option.plan);
 
@@ -148,29 +153,6 @@ export default function PlanChooserPage() {
       </div>
     </>
   );
-}
-
-function chooseBestPlan(goal, supermarket, defaultCalories) {
-  const candidates = ALL_PLANS.filter(plan => (
-    plan.goal === goal && plan.supermarket === supermarket
-  ));
-
-  if (!candidates.length) return null;
-
-  return [...candidates].sort((a, b) => (
-    scorePlan(b, defaultCalories) - scorePlan(a, defaultCalories)
-  ))[0];
-}
-
-function scorePlan(plan, defaultCalories) {
-  let score = 0;
-  const calorieGap = Math.abs(plan.calories - defaultCalories);
-  score -= calorieGap / 10;
-  if (plan.calories === defaultCalories) score += 80;
-  if (plan.dietType === 'standard') score += 12;
-  if (plan.effort === 'standard') score += 8;
-  if (plan.effort === 'batch') score += 5;
-  return score;
 }
 
 function cap(value) {
