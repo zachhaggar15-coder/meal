@@ -10,7 +10,7 @@ import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { PLAN_COUNT } from '../data/planSeeds.js';
-import { BROWSE_PAGE_SIZE, buildBrowsePagePath } from '../data/browsePagination.js';
+import { BROWSE_PAGE_SIZE, buildBrowsePagePath, buildBrowsePageWindow } from '../data/browsePagination.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
@@ -231,8 +231,8 @@ export default function BrowsePlans() {
   const pageStartIndex = (currentPage - 1) * BROWSE_PAGE_SIZE;
   const shown = filtered.slice(pageStartIndex, pageStartIndex + BROWSE_PAGE_SIZE);
   const pageNumbers = useMemo(() => (
-    Array.from({ length: pageCount }, (_, index) => index + 1)
-  ), [pageCount]);
+    buildBrowsePageWindow(currentPage, pageCount)
+  ), [currentPage, pageCount]);
   const canonicalPath = !hasActiveFilters ? buildBrowsePagePath(currentPage) : '/browse';
   const pageTitleSuffix = currentPage > 1 && !hasActiveFilters ? ` - Page ${currentPage}` : '';
   const browseDescription = currentPage > 1 && !hasActiveFilters
@@ -384,9 +384,17 @@ export default function BrowsePlans() {
                     Next &rarr;
                   </span>
                 )}
-                <div className="browse-page-links" aria-label="All browse pages">
-                  {pageNumbers.map(pageNumber => (
-                    pageNumber === currentPage ? (
+                <div className="browse-page-links" aria-label="Browse pages">
+                  {pageNumbers.map((pageNumber, index) => (
+                    pageNumber === 'gap' ? (
+                      <span
+                        key={`gap-${index}`}
+                        className="browse-page-gap"
+                        aria-hidden="true"
+                      >
+                        &hellip;
+                      </span>
+                    ) : pageNumber === currentPage ? (
                       <span
                         key={pageNumber}
                         className="browse-page-number browse-page-number--active"
@@ -399,6 +407,7 @@ export default function BrowsePlans() {
                         key={pageNumber}
                         className="browse-page-number"
                         to={buildBrowsePagePath(pageNumber)}
+                        aria-label={`Page ${pageNumber} of ${pageCount}`}
                       >
                         {pageNumber}
                       </Link>

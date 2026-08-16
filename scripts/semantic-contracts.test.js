@@ -191,3 +191,62 @@ test('no generated hub copy mismatches its indefinite article', () => {
   }
   assert.deepEqual(offenders, []);
 });
+
+// ── Price freshness ─────────────────────────────────────────────────────────
+
+test('the price-vintage detector reads dates the way the copy writes them (control)', async () => {
+  const { findPriceVintages, findStalePrices } = await import('./lib/priceVintage.js');
+  const now = new Date('2026-08-16T00:00:00Z');
+
+  for (const [copy, year, month] of [
+    ['using in-store prices collected in February 2025.', 2025, 2],
+    ['Prices are correct at March 2026.', 2026, 3],
+    ['using online prices as of early 2025.', 2025, 2],
+    ['using prices as of late 2024.', 2024, 10],
+  ]) {
+    const [vintage] = findPriceVintages(copy);
+    assert.ok(vintage, `no vintage read from "${copy}"`);
+    assert.equal(vintage.year, year);
+    assert.equal(vintage.month, month);
+  }
+
+  // Positive: the defect as it stood — 18 months of drift, undisclosed.
+  assert.equal(findStalePrices(
+    [{ id: 'comparison', text: 'prices as of early 2025.' }], { now },
+  ).length, 1);
+
+  // Negative: recent prices, old-but-disclosed prices, and a year that is not
+  // a price at all.
+  assert.deepEqual(findStalePrices(
+    [{ id: 'recent', text: 'Prices checked in July 2026.' }], { now },
+  ), []);
+  assert.deepEqual(findStalePrices(
+    [{ id: 'disclosed', text: 'prices collected in February 2025. Read the totals as a snapshot; check shelf prices before shopping.' }],
+    { now },
+  ), []);
+  assert.deepEqual(findStalePrices(
+    [{ id: 'unrelated', text: 'The plan was published in 2023 and still works.' }], { now },
+  ), []);
+});
+
+test('no page presents year-old prices as if they were current', async () => {
+  const { findStalePrices } = await import('./lib/priceVintage.js');
+  const { blogPostsData } = await import('../src/data/blogPosts.js');
+
+  const pages = Object.entries(blogPostsData).map(([slug, post]) => ({
+    id: `/blog/${slug}`,
+    text: [
+      post.intro,
+      ...(post.sections || []).flatMap(section => [
+        ...(section.paragraphs || []),
+        ...(section.bullets || []).map(bullet => (Array.isArray(bullet) ? bullet.join(' ') : bullet)),
+      ]),
+    ].filter(item => typeof item === 'string').join(' '),
+  }));
+
+  const stale = findStalePrices(pages);
+  assert.deepEqual(
+    stale.map(item => `${item.id}: "${item.phrase}" is ${item.monthsOld} months old`),
+    [],
+  );
+});

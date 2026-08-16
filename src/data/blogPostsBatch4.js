@@ -406,7 +406,7 @@ export const blogPostsBatch4Data = {
   // ── 6. Lunch bags ─────────────────────────────────────────────────────────
   'best-lunch-bags-for-meal-prep-uk': containerPost({
     title: 'Best Lunch Bags for Meal Prep UK',
-    description: 'Best insulated lunch bags for meal prep UK: what to look for for carrying multiple containers, keeping food cold on a commute, and easy-clean linings.',
+    description: 'Best insulated lunch bags for meal prep UK: what to look for when carrying multiple containers, keeping food cold on a commute, and easy-clean linings.',
     h1: 'Best Lunch Bags for Meal Prep UK',
     intro: 'The container matters for the food itself, but the bag matters for getting it to work in one piece and at a safe temperature. This guide covers what to actually look for in a meal prep lunch bag, separate from the containers that go inside it.',
     quickAnswer: {

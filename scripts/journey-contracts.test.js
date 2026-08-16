@@ -322,3 +322,55 @@ test('pages that explain a limitation link to where it is explained in full', ()
     assert.ok(read(file).includes(target), `${file} should link to ${target}`);
   }
 });
+
+// ── Browse pagination ───────────────────────────────────────────────────────
+//
+// 1,059 plans at 24 a page is 45 pages. Listing every number put 44 links in
+// the footer of all 45 pages, at 32px each: too many to scan, too small to tap,
+// and about two thousand internal links carrying no information.
+
+test('the browse pagination window stays small on every page', async () => {
+  const { buildBrowsePageWindow, BROWSE_PAGE_SIZE } = await import('../src/data/browsePagination.js');
+  const pageCount = Math.ceil(getAllPlanMeta().length / BROWSE_PAGE_SIZE);
+  assert.ok(pageCount > 20, `expected many pages, got ${pageCount}`);
+
+  for (let page = 1; page <= pageCount; page += 1) {
+    const window = buildBrowsePageWindow(page, pageCount);
+    const numbers = window.filter(entry => entry !== 'gap');
+
+    assert.ok(window.length <= 9, `page ${page} renders ${window.length} controls`);
+    assert.ok(numbers.includes(1), `page ${page} loses the route to page 1`);
+    assert.ok(numbers.includes(pageCount), `page ${page} loses the route to the last page`);
+    assert.ok(numbers.includes(page), `page ${page} does not mark itself`);
+
+    // Ascending, no duplicates, and never a gap standing in for one page.
+    let previous = 0;
+    for (let index = 0; index < window.length; index += 1) {
+      const entry = window[index];
+      if (entry === 'gap') {
+        const next = window[index + 1];
+        assert.ok(typeof next === 'number' && next - previous > 2,
+          `page ${page} hides a single page behind an ellipsis`);
+        continue;
+      }
+      assert.ok(entry > previous, `page ${page} window is not ascending`);
+      previous = entry;
+    }
+  }
+});
+
+test('every browse page number resolves to a route the build serves', async () => {
+  const { buildBrowsePageWindow, buildBrowsePagePath, buildBrowsePageRoutes, BROWSE_PAGE_SIZE } =
+    await import('../src/data/browsePagination.js');
+  const total = getAllPlanMeta().length;
+  const pageCount = Math.ceil(total / BROWSE_PAGE_SIZE);
+  const served = new Set(['/browse', ...buildBrowsePageRoutes(total)]);
+
+  for (let page = 1; page <= pageCount; page += 1) {
+    for (const entry of buildBrowsePageWindow(page, pageCount)) {
+      if (entry === 'gap') continue;
+      const href = buildBrowsePagePath(entry);
+      assert.ok(served.has(href), `page ${page} links ${href}, which the build does not emit`);
+    }
+  }
+});

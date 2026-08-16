@@ -792,7 +792,7 @@ export const blogPostsData = {
             ['Eggs (12 pack)', '12 eggs', 'Breakfasts, snacks, fried rice, omelettes'],
             ['Tinned tuna in spring water', '4 × 145 g tins', 'Jacket potatoes, wraps, lunchboxes'],
             ['0% fat Greek yogurt', '2 × 500 g tubs', 'Breakfast bowls, snacks, protein sauces'],
-            ['Dried red lentils', '500 g bag', 'Dhal, soups, curries — batch batch in bulk'],
+            ['Dried red lentils', '500 g bag', 'Dhal, soups, curries — batch cook in bulk'],
             ['Rolled oats', '1 kg bag', 'Overnight oats, porridge, protein oats'],
             ['Brown rice', '500 g bag', 'Meal prep base for lunches and dinners'],
             ['Frozen mixed veg', '1 kg bag', 'Side dishes, stir-fries, rice bowls'],
@@ -935,13 +935,13 @@ export const blogPostsData = {
         h2: 'What We Are Comparing',
         paragraphs: [
           'The comparison is based on a standard one-person, one-week high-protein meal prep basket: 1 kg chicken breast, 12 eggs, 500 g 0% Greek yogurt, 1 kg rolled oats, 1 kg brown rice, 4 tins tuna in spring water, 500 g frozen broccoli, 200 g baby spinach, 300 g salmon fillets, and 500 g wholemeal bread. This basket provides approximately 5–6 days of main protein sources for 1,600–2,000 kcal/day eating.',
-          'Prices are own-brand or equivalent where possible, using in-store or online prices as of early 2025. Individual prices fluctuate with promotions.',
+          'Prices are own-brand or equivalent where possible, using in-store and online prices collected in February 2025. That is far enough back that the totals below should be read as a snapshot, not as this week’s shelf price — UK grocery prices have moved since, and they have not moved evenly across the supermarkets.',
         ],
       },
       {
         h2: 'Supermarket Rankings: Cheapest to Most Expensive',
         paragraphs: [
-          'Approximate total for the standard basket at each supermarket:',
+          'Approximate total for the standard basket at each supermarket, priced in February 2025. Treat the order as the finding and the totals as indicative: the gap between the discounters and the big four has been consistent for years, whereas the absolute figures have almost certainly risen since they were collected. Check shelf prices before you plan a shop around them.',
         ],
         bullets: [
           '1st — Aldi: ~£28–32. Consistently the cheapest on almost every staple in the basket. The only limitation is that Aldi does not always stock fresh salmon, so this may push some shoppers to supplement elsewhere.',

@@ -4778,6 +4778,16 @@ details[open] .faq-question::after { content: '▴'; }
   justify-content: center;
   margin-top: 4px;
 }
+.browse-page-gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  min-height: 44px;
+  color: var(--text-muted, #6b7280);
+  user-select: none;
+}
+
 .browse-page-number {
   align-items: center;
   background: #fff;
@@ -4785,12 +4795,14 @@ details[open] .faq-question::after { content: '▴'; }
   border-radius: 6px;
   color: #374151;
   display: inline-flex;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  height: 32px;
+  /* 44px: with 44 numbers crammed in a row these were 32px and unhittable on a
+     phone. The window keeps the count small enough to give each a real target. */
+  min-height: 44px;
   justify-content: center;
-  min-width: 32px;
-  padding: 0 8px;
+  min-width: 44px;
+  padding: 0 10px;
   text-decoration: none;
 }
 .browse-page-number:hover {
