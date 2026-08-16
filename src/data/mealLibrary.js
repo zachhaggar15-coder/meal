@@ -1674,7 +1674,11 @@ export const MEALS = [
   },
   {
     id: 'cod-chickpea-stew',
-    name: 'Baked Cod and Chickpea Stew',
+    // Was "Baked Cod and Chickpea Stew". Nothing about it is baked: 400g of
+    // tinned tomatoes is a braising liquid, there is no tray component, and the
+    // id has always said stew. The method was right and the title was wrong, so
+    // the word came off rather than an oven step going in.
+    name: 'Cod and Chickpea Stew',
     type: 'dinner',
     cal: 553,
     pro: 58,

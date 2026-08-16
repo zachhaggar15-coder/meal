@@ -264,10 +264,23 @@ test('a title that says baked produces something baked', () => {
     const steps = buildPracticalRecipeSteps(meal).join(' ');
     if (!/oven|bake|roast/i.test(steps)) offenders.push(name);
   }
-  // "Baked Cod and Chickpea Stew" is a known naming conflict rather than a
-  // method defect: it is a stew, and stewing the cod is the right method for
-  // the dish. Listed explicitly so it cannot grow silently.
-  assert.deepEqual(offenders, ['Baked Cod and Chickpea Stew']);
+  // No exceptions. The last one, "Baked Cod and Chickpea Stew", was resolved by
+  // correcting the title rather than by bolting an oven step onto a stew.
+  assert.deepEqual(offenders, []);
+});
+
+test('regression: the cod and chickpea stew is named as the stew it is', () => {
+  // It shipped as "Baked Cod and Chickpea Stew" across 130 plans while its
+  // method — correctly — browned the cod and simmered it in tinned tomatoes.
+  // The id had said `cod-chickpea-stew` all along.
+  const stew = allRecipes().find(item => /cod and chickpea stew/i.test(item.name));
+  assert.ok(stew, 'the cod and chickpea stew is missing from the corpus');
+  assert.equal(stew.name, 'Cod and Chickpea Stew');
+  assert.doesNotMatch(stew.name, /baked/i, 'the title must not promise baking');
+
+  const steps = buildPracticalRecipeSteps(stew.meal).join(' ');
+  assert.match(steps, /simmer/i, 'a stew has to simmer');
+  assert.doesNotMatch(steps, /heat the oven|bake for/i, 'a stew is not baked');
 });
 
 test('a title that says No-Bake never turns the oven on', () => {
@@ -299,4 +312,50 @@ test('regression: a pasta bake is finished in the oven', () => {
   const steps = buildPracticalRecipeSteps(bake.meal).join(' ');
   assert.match(steps, /oven/i, 'a bake needs an oven');
   assert.match(steps, /ovenproof dish|bake for/i, 'it has to be assembled and baked');
+});
+
+// Title words that name a defining cooking method.
+//
+// These are promoted from the ad-hoc checks the adversarial pass used, and only
+// the ones where the rule is genuinely unambiguous: if a title says a dish is
+// toasted, wrapped, poached or cut into wedges, the method has to do that. They
+// are cheap to keep and they cover part of the 182 recipes that have no full
+// family contract — coverage, not a claim that the other rules exist.
+//
+// Deliberately NOT promoted: "grilled" (the site legitimately offers a pan or
+// griddle alternative) and "stew"/"bowl" (serving vessels, not methods).
+const METHOD_TITLE_CONTRACTS = [
+  { word: 'toast', name: /\btoast(?:ed)?\b/i, method: /toast|grill/i },
+  { word: 'wrap', name: /\bwrap\b/i, method: /wrap|fill|roll|fold/i },
+  { word: 'wedges', name: /\bwedges\b/i, method: /wedge|cut|oven|roast|bake/i },
+  { word: 'poached', name: /\bpoach(?:ed)?\b/i, method: /poach|simmer|water/i },
+];
+
+test('a title naming a cooking method gets that method', () => {
+  const offenders = [];
+  let checked = 0;
+  for (const { name, meal } of allRecipes()) {
+    const steps = buildPracticalRecipeSteps(meal).join(' ');
+    for (const contract of METHOD_TITLE_CONTRACTS) {
+      if (!contract.name.test(name)) continue;
+      checked += 1;
+      if (!contract.method.test(steps)) {
+        offenders.push(`${name} — title says ${contract.word}, method does not`);
+      }
+    }
+  }
+  assert.ok(checked > 25, `expected these contracts to cover real recipes, got ${checked}`);
+  assert.deepEqual(offenders, []);
+});
+
+test('the method-title contracts fail when the method is wrong (control)', () => {
+  // Positive control: a toast recipe whose method never toasts.
+  const toast = METHOD_TITLE_CONTRACTS.find(c => c.word === 'toast');
+  assert.ok(toast.name.test('Poached Eggs on Toast'));
+  assert.ok(!toast.method.test('Fry the eggs and serve with bread.'),
+    'a method with no toasting must not satisfy the contract');
+  assert.ok(toast.method.test('Toast the bread, then top with the eggs.'));
+
+  // Negative control: the contract must not fire on an unrelated title.
+  assert.ok(!toast.name.test('Cod and Chickpea Stew'));
 });
