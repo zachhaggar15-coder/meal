@@ -234,7 +234,7 @@ export const NUTRITION_TABLE = {
   'raita':                  { kcal100: 60, pro100: 3 },
   'curry paste':            { kcal100: 250, pro100: 5 },
   'tikka paste':            { kcal100: 250, pro100: 5 },
-  'gravy':                  { kcal100: 25, pro100: 0.6, basis: 'ml' }, // added 2026-08-15: thin gravy made up from granules, generic UK preparation strength — not a branded product; flagged for label verification
+  'gravy':                  { kcal100: 25, pro100: 0.6, basis: 'ml' }, // verified 2026-08-16 against UK gravy-granule labels as prepared: Bisto Traditional 26 kcal (0.9g fat, 4.0g carb, <1g protein), Bisto Vegetable 24 kcal, Bisto Reduced Salt 28 kcal per 100ml. 25 kcal sits mid-range for a standard made-up gravy; the 'for sausages' style (~42 kcal) is a deliberate outlier and is not represented. Generic value, not a specific product.
   'tomato curry sauce':     { kcal100: 78, pro100: 1.5, basis: 'ml' }, // corrected 2026-07-06: Sharwood's UK jarred curry sauce labels (Jalfrezi/Rogan Josh/Balti)
   'miso paste':             { kcal100: 200, pro100: 12 },
   'coconut milk':           { kcal100: 190, pro100: 2, basis: 'ml' },

@@ -418,7 +418,7 @@ export function getTopMatches(answers, n = 3) {
     ? scoreExactMacroCandidates(enrichedAnswers)
     : INDEXABLE_PLAN_SEEDS
         .map(seed => ({ seed, score: scorePlan(seed, enrichedAnswers) }))
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score || comparePlanPreference(a.seed, b.seed));
 
   return scored.slice(0, n).map(({ seed, score, macrosGrams }) => {
     const actualMacros = macrosGrams || getSeedMacroGrams(seed);
@@ -443,9 +443,40 @@ export function getTopMatches(answers, n = 3) {
     matchDetails,
     matchSummary:  buildMatchSummary(matchDetails),
     compromises,
-    isExactMatch:  compromises.length === 0,
+    // Every dimension the user expressed must actually be satisfied. This used
+    // to be `compromises.length === 0`, which tolerated anything inside the
+    // near-miss thresholds — a 1,800 kcal plan came back flagged as an exact
+    // match for a 1,500 kcal request. The rendered card was already honest
+    // (matchSummary said "5 exact · 1 close"), but the flag itself overstated,
+    // and it is part of the public result shape.
+    isExactMatch:  compromises.length === 0 && matchDetails.every(item => item.status === 'exact'),
     };
   });
+}
+
+// Deterministic tie-break for equally-scoring plans.
+//
+// The main ranking path sorted on score alone, so plans on the same score were
+// left in whatever order they happened to occupy in INDEXABLE_PLAN_SEEDS.
+// Reversing that array changed the recommendation — aldi-weight-loss-1500
+// became aldi-weight-loss-1500-lower-sugar-v4 — which is the same failure class
+// as the chooser routing defect: an accidental ordering deciding which member
+// of an equally-good set the user is shown, and favouring a variant carrying
+// attributes the user never asked for.
+//
+// Ties now resolve the way src/utils/planRecommendation.js resolves them:
+// prefer the least specialised plan, then the slug, so the answer depends only
+// on the plans themselves. The macro path already tie-broke on slug; this
+// extends the same guarantee to the default path and to the candidate pool that
+// feeds exact macro matching.
+function slugSegmentCount(slug) {
+  return String(slug || '').split('-').length;
+}
+
+function comparePlanPreference(a, b) {
+  const specificity = slugSegmentCount(a.slug) - slugSegmentCount(b.slug);
+  if (specificity !== 0) return specificity;
+  return String(a.slug).localeCompare(String(b.slug));
 }
 
 function scoreExactMacroCandidates(answers) {
@@ -461,7 +492,8 @@ function scoreExactMacroCandidates(answers) {
   }).sort((a, b) => (
     b.priority - a.priority ||
     b.baseScore - a.baseScore ||
-    b.roughMacroScore - a.roughMacroScore
+    b.roughMacroScore - a.roughMacroScore ||
+    comparePlanPreference(a.seed, b.seed)
   ));
 
   return roughScored
@@ -479,7 +511,7 @@ function scoreExactMacroCandidates(answers) {
     .sort((a, b) => (
       b.score - a.score ||
       b.macroScore - a.macroScore ||
-      String(a.seed.slug).localeCompare(String(b.seed.slug))
+      comparePlanPreference(a.seed, b.seed)
     ));
 }
 
