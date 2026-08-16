@@ -1,3 +1,5 @@
+import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
+
 const REVIEWED_DATE = '18 June 2026';
 
 const COMMON_NUTRITION_SOURCES = [
@@ -135,7 +137,7 @@ function createSupermarketHub({ key, label, budgetNote, relatedSlugs = ['weight-
     supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList, GUIDE_LINKS.containers],
     faq: [
       {
-        q: `Can I use a ${label} plan at another supermarket?`,
+        q: `Can I use ${indefiniteArticleFor(label)} ${label} plan at another supermarket?`,
         a: 'Yes. Ingredients are common UK supermarket foods, but exact products and prices may differ.',
       },
       {

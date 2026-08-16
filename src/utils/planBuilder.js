@@ -103,7 +103,11 @@ export const MACRO_GRAMS = {
 // to an attribute the meal-selection algorithm already treats as meaningful.
 const EMPHASIS_CONTEXT = {
   'lean-protein': {
-    rationale: 'Meals lean on lower-fat protein — chicken breast, white fish, egg whites, low-fat dairy — so protein stays high without pushing calories up, which matters when the goal is fat loss without losing muscle.',
+    // Emphasis is chosen independently of goal, so this sentence is rendered on
+    // muscle-gain, bodybuilding and recomp plans too. Naming fat loss here put
+    // fat-loss copy on 64 gain-type plans. Describe what the emphasis does —
+    // protein density per calorie — and let the goal copy state the goal.
+    rationale: 'Meals lean on lower-fat protein — chicken breast, white fish, egg whites, low-fat dairy — so each meal carries more protein for the calories it costs, leaving room to hit the day\'s target without relying on volume alone.',
     distinguisher: 'the meal selection is biased toward lower-fat protein sources rather than just hitting a protein number however it can',
     proteinSwaps: [
       'Add extra egg whites (3–4) to a breakfast instead of whole eggs — protein without the extra fat',
@@ -201,23 +205,23 @@ function getEmphasisContext(emphasis) {
 const GOAL_BEST_FOR = {
   'weight-loss': 'Anyone aiming for a sustainable calorie deficit',
   'high-protein-low-cal': 'Higher-protein meal planning within a lower-calorie target',
-  'muscle-gain': 'Building muscle with a calorie surplus',
+  'muscle-gain': 'Muscle building, at a higher daily calorie target',
   'budget-fat-loss': 'Budget-conscious fat loss on ~£30/week',
   'cheap-student': 'Students on a tight budget',
   'busy-professional': 'Minimal daily cooking, batch prep',
   'low-effort': 'Simple meals with minimal cooking',
   'vegetarian-low-cal': 'Vegetarians cutting calories',
-  'vegan-low-cal': 'Vegans in a calorie deficit',
+  'vegan-low-cal': 'Vegans working to a lower daily calorie target',
   'high-protein-vegetarian': 'High-protein meat-free eating',
   'pescatarian': 'Fish and plant-based meals',
   'budget-bodybuilding': 'Budget-focused muscle building',
   'gym-beginner': 'New to structured gym nutrition',
   'cheap-high-protein': 'Maximum protein on a tight budget',
-  'maintenance': 'Maintaining current weight at a balanced ~2,000 kcal/day',
+  'maintenance': 'Steady, balanced eating around a ~2,000 kcal/day target',
   'anti-inflammatory': 'Mediterranean-style planning with oily fish, plants and whole foods',
   'menopause-nutrition': 'General meal planning with protein, fibre and calcium-rich foods',
   'endurance-athlete': 'Fuelling running and endurance training with higher-carb meals',
-  'body-recomp': 'Body recomposition with high protein and slightly higher calories',
+  'body-recomp': 'Body recomposition: high protein with a moderate calorie target',
   'cutting': 'A structured lower-calorie, higher-protein plan for active adults',
 };
 

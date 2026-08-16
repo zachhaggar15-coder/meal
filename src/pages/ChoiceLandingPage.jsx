@@ -5,6 +5,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
+import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 import { recommendPlanForIntent } from '../utils/planRecommendation.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
 import {
@@ -220,7 +221,7 @@ function buildSupermarketConfig(slug) {
     kicker: 'Choose your goal',
     selfUrl: `/choose-supermarket/${choice.value}`,
     canonical: resolveCanonical(`/choose-supermarket/${choice.value}`, `/meal-plans/${choice.value}`),
-    description: `Choose a ${choice.label} meal plan by goal, calories and diet type, including weight loss, high protein and muscle gain options.`,
+    description: `Choose ${indefiniteArticleFor(choice.label)} ${choice.label} meal plan by goal, calories and diet type, including weight loss, high protein and muscle gain options.`,
     intro: `${choice.description} Pick the goal first, then open the suggested plan or change calories before choosing.`,
     defaultLabel: 'Current supermarket:',
     defaultValue: choice.label,
@@ -290,7 +291,7 @@ function buildCaloriesConfig(value) {
     kicker: 'Choose your goal',
     selfUrl: `/choose-calories/${choice.value}`,
     canonical: resolveCanonical(`/choose-calories/${choice.value}`, `/meal-plans/${choice.value}-calorie`),
-    description: `Choose a ${choice.label} UK meal plan by goal and supermarket, with printable PDFs, macros and shopping lists.`,
+    description: `Choose ${indefiniteArticleFor(choice.label)} ${choice.label} UK meal plan by goal and supermarket, with printable PDFs, macros and shopping lists.`,
     intro: `${choice.description} Pick a goal first, then use More options if you want a different supermarket or diet type.`,
     defaultLabel: 'Current calorie target:',
     defaultValue: `${choice.calories.toLocaleString('en-GB')} kcal/day`,

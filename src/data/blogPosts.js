@@ -343,7 +343,7 @@ export const blogPostsData = {
     title: 'High Protein Low Calorie Meals UK: 30 Easy Ideas',
     description: 'The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Generate a free personalised plan.',
     h1: 'High Protein Low Calorie Meals for UK Weight Loss',
-    intro: 'Eating high-protein, low-calorie meals is the most effective dietary strategy for losing fat while keeping hunger at bay and preserving muscle mass. The challenge is finding meals that actually taste good, can be prepared quickly, and use affordable UK supermarket ingredients. This guide provides practical meal ideas for breakfast, lunch, dinner, and snacks — all high in protein, all under 500 calories per serving.',
+    intro: 'Meals that are high in protein but moderate in calories are a practical way to eat fewer calories without feeling short-changed, because protein is comparatively filling for the calories it costs. The challenge is finding meals that actually taste good, can be prepared quickly, and use affordable UK supermarket ingredients. This guide provides practical meal ideas for breakfast, lunch, dinner, and snacks. Breakfasts, lunches and snacks come in under 500 calories a serving; the dinners run a little higher, at roughly 450-560 kcal, because they are built to finish the day satisfied.',
     sections: [
       {
         h2: 'Why High Protein Matters for Weight Loss',
@@ -355,7 +355,7 @@ export const blogPostsData = {
       {
         h2: 'High Protein Low Calorie Breakfasts',
         paragraphs: [
-          'Breakfast is a great opportunity to load up on protein early, reducing cravings throughout the day. These options each deliver 20–35 g of protein for under 400 calories:',
+          'Breakfast is a great opportunity to load up on protein early, reducing cravings throughout the day. These options each deliver 25–40 g of protein for around 200–400 calories:',
         ],
         bullets: [
           'Greek yogurt protein bowl: 200 g 0% Greek yogurt + 1 scoop protein powder + berries = ~350 kcal, 40 g protein. Takes 3 minutes.',
@@ -368,7 +368,7 @@ export const blogPostsData = {
       {
         h2: 'High Protein Low Calorie Lunches',
         paragraphs: [
-          'A high-protein lunch keeps energy levels stable in the afternoon and prevents the mid-afternoon energy crash that leads many people to reach for snacks. These lunches are quick to prepare — most under 10 minutes — and pack 30–50 g of protein:',
+          'A high-protein lunch keeps energy levels stable in the afternoon and prevents the mid-afternoon energy crash that leads many people to reach for snacks. These lunches are quick to prepare — most under 10 minutes — and pack 30–55 g of protein:',
         ],
         bullets: [
           'Tuna & chickpea salad: 2 tins tuna + tinned chickpeas + spinach + lemon dressing = ~420 kcal, 55 g protein.',
@@ -394,7 +394,7 @@ export const blogPostsData = {
       {
         h2: 'High Protein Snacks Under 200 Calories',
         paragraphs: [
-          'Choosing high-protein snacks keeps you from reaching for high-sugar options between meals. These snacks each deliver at least 15 g of protein for under 200 kcal:',
+          'Choosing high-protein snacks keeps you from reaching for high-sugar options between meals. These snacks each deliver at least 13 g of protein for under 200 kcal:',
         ],
         bullets: [
           '0% Greek yogurt (200 g): ~115 kcal, 20 g protein.',
@@ -421,7 +421,7 @@ export const blogPostsData = {
       { slug: 'how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit', type: 'blog' },
     ],
     faq: [
-      { q: 'How much protein do I need to lose weight?', a: 'For fat loss while preserving muscle, aim for 1.6–2.2 g of protein per kg of body weight per day. For a 70 kg person that is 112–154 g of protein daily. High protein intake reduces hunger and prevents muscle loss during a calorie deficit.' },
+      { q: 'How much protein do I need to lose weight?', a: 'For fat loss while preserving muscle, aim for 1.6–2.2 g of protein per kg of body weight per day. For a 70 kg person that is 112–154 g of protein daily. Higher protein intakes are commonly used when eating fewer calories, on the basis that protein is comparatively filling and helps hold on to muscle. How much either effect matters varies from person to person.' },
       { q: 'What are the best high protein low calorie meals for the UK?', a: 'The best options use affordable UK staples: grilled chicken breast with rice and broccoli (~500 kcal, 55g protein), baked salmon with sweet potato (~520 kcal, 52g protein), and tuna chickpea salad (~420 kcal, 55g protein).' },
       { q: 'Can I get enough protein without eating meat?', a: 'Yes. 0% Greek yogurt (10g per 100g), eggs (6.3g each), cottage cheese (12g per 100g), edamame (11g per 100g), and tofu (8–10g per 100g) are all high-protein vegetarian options widely available in UK supermarkets.' },
     ],

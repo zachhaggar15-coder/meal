@@ -178,6 +178,12 @@ export function buildPracticalRecipeSteps(meal = {}) {
     ];
   }
 
+  // Bark has to be tested before the yogurt-bowl branch below, which matches
+  // on the word "yogurt" and would otherwise claim the dish first — which is
+  // exactly what happened: "Frozen Greek Yogurt and Berry Bark" was served as
+  // a bowl of yogurt with berries on top, never frozen or broken.
+  if (/\bbark\b/.test(name)) return buildFrozenBarkSteps(cookingIngredients, remainingNames);
+
   if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
     const bases = findCookingNames(cookingIngredients, /(yogurt|skyr|kefir|weetabix|bran flakes|granola|milk|cereal)/i);
     const toppings = withoutNames(remainingNames, bases);
@@ -386,9 +392,14 @@ export function buildPracticalRecipeSteps(meal = {}) {
       vegetables.length
         ? `Slice or chop ${joinNatural(vegetables)}, then cook them in a non-stick pan over medium heat until softened.`
         : 'Crack the eggs into a bowl, season lightly and whisk with a fork.',
+      // An omelette or frittata is beaten egg set in a pan. When the recipe has
+      // vegetables the step above cooks those instead of whisking, so a dish
+      // named as an omelette never told the reader to beat the eggs at all.
       name.includes('boiled') || name.includes('poached')
         ? 'Cook the eggs to your preferred set: 5-6 minutes for soft-boiled, or poach gently until the whites are set.'
-        : 'Cook the eggs in a non-stick pan over medium heat, stirring for a scramble or folding for an omelette.',
+        : /omelette|frittata/.test(name)
+          ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
+          : 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.',
       carrier.length
         ? `Toast ${joinNatural(carrier)}, then serve with the eggs${accompaniments.length ? ` and ${joinNatural(accompaniments)}` : ''}.`
         : `Season to taste and serve${accompaniments.length ? ` with ${joinNatural(accompaniments)}` : ''}.`,
@@ -406,6 +417,48 @@ export function buildPracticalRecipeSteps(meal = {}) {
           ? cookProteinStep(proteinName, { dryPulse: true })
           : `Drain, slice or mash ${joinNatural(filling)} as appropriate.`,
       `Layer ${joinNatural(filling)} evenly, season to taste, and serve or wrap tightly for later.`,
+    ];
+  }
+
+  // Shepherd's/cottage pie: a filling under a topping, browned in the oven.
+  // The generic path warmed the filling and served the mash beside it, which
+  // is the same ingredients arranged as something else entirely.
+  if (/\b(shepherd'?s|cottage)\s+pie\b/.test(name)) {
+    const topping = findCookingName(cookingIngredients, /mash|potato/i) || 'the mash';
+    const fillingParts = withoutNames(remainingNames, [topping]);
+    const liquid = findCookingName(cookingIngredients, /stock|broth/i);
+    const fillingWithoutLiquid = withoutNames(fillingParts, [liquid].filter(Boolean));
+    return [
+      'Heat the oven to 200°C (180°C fan).',
+      fillingWithoutLiquid.length
+        ? `Cook ${joinNatural(fillingWithoutLiquid)} in a pan over medium heat until softened and hot through.`
+        : 'Prepare the filling in a pan over medium heat.',
+      liquid
+        ? `Add ${liquid} and simmer for 8-10 minutes, until the filling has thickened and is no longer loose.`
+        : 'Simmer until the filling has thickened and is no longer loose.',
+      `Season the filling, then tip it into an ovenproof dish and level the surface.`,
+      `Spread the ${topping} evenly over the top, right to the edges so the filling is sealed in, and rough up the surface with a fork.`,
+      'Bake for 20-25 minutes, until the topping is golden and the filling is bubbling at the edges. Rest for 5 minutes before serving.',
+    ];
+  }
+
+  // Risotto: cooking the rice separately to packet instructions and folding it
+  // through afterwards produces rice with sauce, not risotto. The defining
+  // action is absorbing the liquid gradually.
+  if (/\brisotto\b/.test(name)) {
+    const rice = findCookingName(cookingIngredients, /rice/i) || 'the rice';
+    const aromatics = findCookingNames(cookingIngredients, /onion|shallot|garlic|leek/i);
+    const liquid = findCookingName(cookingIngredients, /stock|broth/i) || 'hot stock';
+    const extras = withoutNames(remainingNames, [rice, liquid, ...aromatics]);
+    return [
+      aromatics.length
+        ? `Soften ${joinNatural(aromatics)} in a wide pan over medium heat for 3-4 minutes.`
+        : 'Warm a wide pan over medium heat.',
+      `Stir in the ${rice} and cook for 1 minute so the grains are coated.`,
+      `Add the ${liquid} a ladleful at a time, stirring often and letting each addition be absorbed before adding the next. This takes about 18-20 minutes, until the rice is creamy but still has a little bite.`,
+      extras.length
+        ? `Stir through ${joinNatural(extras)}, season to taste and serve straight away.`
+        : 'Season to taste and serve straight away.',
     ];
   }
 
@@ -442,7 +495,13 @@ export function buildPracticalRecipeSteps(meal = {}) {
   // Roast / tray bake: previously fell through to the generic branch and
   // produced "cook in a non-stick pan" for a dish whose name promises the
   // oven — and, for a nut roast, never cooked the main component at all.
-  if (/\broast\b|\btray ?bake\b/.test(name) && !/\bpotato\b/.test(name)) {
+  // Only fire the whole-dish roast branch when the dish itself is the roast —
+  // a name starting with "Roast(ed)", a tray bake, or a nut roast. Previously
+  // `\broast\b` also failed to match "Roasted", so "Roasted Spiced Chickpeas"
+  // fell through to a cold assembly branch and was never roasted at all.
+  // Dishes that merely have a roasted side ("Grilled Chicken with Roasted
+  // Mediterranean Veg") are handled further down, so the chicken stays grilled.
+  if (/^roast(?:ed)?\b|\btray ?bake\b|\bnut roast\b/.test(name) && !/\bpotato\b/.test(name)) {
     const roastVegetables = withoutNames(vegetables, [proteinName, proteinDisplayName]);
     const centrepiece = proteinName || findCookingName(cookingIngredients, /nut roast|roast/i) || 'the main ingredient';
     const extras = withoutNames(remainingNames, [...roastVegetables, proteinName, proteinDisplayName, centrepiece]);
@@ -567,7 +626,12 @@ export function buildPracticalRecipeSteps(meal = {}) {
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
         ? `Heat a large pan over medium heat and brown the ${proteinName}${aromatics.length ? ` with ${joinNatural(aromatics)}` : ''} for 5-7 minutes.`
         : aromatics.length || usableFirmVegetables.length
-          ? `Heat a large pan over medium heat and soften ${joinNatural([...aromatics, ...usableFirmVegetables])} for 5-7 minutes.`
+          // A soup or stew named for roasted vegetables gets its flavour from
+          // roasting them first. Softening them in the pan makes a different,
+          // milder dish from the one on the label.
+          ? (/roast(?:ed)?/.test(name) && usableFirmVegetables.length
+            ? `Heat the oven to 200°C (180°C fan) and roast ${joinNatural(usableFirmVegetables)} for 25-30 minutes, until tender and caramelised at the edges. Meanwhile soften ${aromatics.length ? joinNatural(aromatics) : 'the aromatics'} in a large pan over medium heat.`
+            : `Heat a large pan over medium heat and soften ${joinNatural([...aromatics, ...usableFirmVegetables])} for 5-7 minutes.`)
           : 'Heat a large pan over medium heat.',
       buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames }),
       starch && starch !== 'potato'
@@ -584,6 +648,11 @@ export function buildPracticalRecipeSteps(meal = {}) {
     // in this list made step two re-"prepare" the very thing just cooked.
     const nonStarch = withoutNames(remainingNames, [starchName, starchDisplayName]);
     const panVegetables = withoutNames(vegetables, [starchName, starchDisplayName]);
+    // "Grilled Chicken with Roasted Mediterranean Veg" promises roasted
+    // vegetables. Softening them in the pan alongside the protein delivers a
+    // different dish from the one named, so honour the roast for the side
+    // while leaving the protein's own cooking method alone.
+    const nameRoastsVegetables = /roast(?:ed)?/.test(name);
     // Seasonings a recipe genuinely lists (lemon, dill, herbs) were dropped
     // entirely by this branch, which only ever names the protein and
     // vegetables — so a salmon "baked with lemon and dill" never mentioned
@@ -600,7 +669,11 @@ export function buildPracticalRecipeSteps(meal = {}) {
           // already cooked in step one — without excluding it the method
           // said "Boil the potatoes… then add potatoes and cook until
           // tender", cooking the same ingredient twice.
-          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })}${panVegetables.length ? ` Add ${joinNatural(panVegetables)} and cook until tender.` : ''}`
+          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })}${panVegetables.length
+            ? (nameRoastsVegetables
+              ? ` Meanwhile roast ${joinNatural(panVegetables)} at 200°C (180°C fan) for 25-30 minutes, until tender and lightly browned.`
+              : ` Add ${joinNatural(panVegetables)} and cook until tender.`)
+            : ''}`
           : cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })
         // A dry pulse is not just "warmed" — it needs real simmering time
         // in liquid to become edible. Keep every non-starch ingredient
@@ -1000,7 +1073,11 @@ function findPotatoQualifier(ingredients) {
     if (parsedState) return parsedState;
 
     const text = String(ingredient || '').toLowerCase();
-    const explicitState = text.match(/(?:^|[\s,(])(raw|boiled|baked|jacket|mashed|roast(?:ed)?|cooked|prepared)(?=[\s,)]|$)/i)?.[1];
+    // `mash` and `purée` are the noun forms of an already-performed
+    // preparation. Matching only the adjective ("mashed") meant an ingredient
+    // written as "Sweet potato mash" fell through to `raw`, and the method then
+    // told the reader to cut the mash into chunks and boil it.
+    const explicitState = text.match(/(?:^|[\s,(])(raw|boiled|baked|jacket|mashed|mash|pur[ée]e[d]?|roast(?:ed)?|cooked|prepared)(?=[\s,)]|$)/i)?.[1];
     const normalised = normalisePotatoState(explicitState);
     if (normalised) return normalised;
   }
@@ -1078,4 +1155,23 @@ function hasExpectedQuantity(value) {
   if (/\bexcluded from nutrition estimate\b/i.test(text)) return true;
   if (/\b(to taste|pinch|drop|handful|half|quarter)\b/i.test(text)) return true;
   return /\d/.test(text);
+}
+
+// Frozen bark is defined by being spread flat, frozen solid and broken into
+// shards. Kept as a named builder so its branch can sit ahead of the
+// yogurt-bowl branch, which matches on the word "yogurt" and would otherwise
+// claim the dish first.
+function buildFrozenBarkSteps(cookingIngredients, remainingNames) {
+  const base = findCookingName(cookingIngredients, /yogurt|skyr|quark|chocolate/i)
+    || remainingNames[0] || 'the base';
+  const toppings = withoutNames(remainingNames, [base]);
+  return [
+    'Line a tray or shallow container with baking paper.',
+    `Spread the ${base} over the paper in an even layer about 1cm thick.`,
+    toppings.length
+      ? `Scatter ${joinNatural(toppings)} over the top and press them in lightly.`
+      : 'Level the surface so it freezes evenly.',
+    'Freeze flat for at least 3-4 hours, until solid.',
+    'Break into shards and serve straight from the freezer. Keep any leftovers frozen.',
+  ];
 }
