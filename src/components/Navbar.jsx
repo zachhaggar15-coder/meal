@@ -22,6 +22,7 @@ const TOP_TABS = [
   { to: '/tools', label: 'Tools', match: path => path === '/tools' },
   { to: '/mealprep-plus', label: 'MealPrep+', match: path => path === '/mealprep-plus' },
   { to: '/saved-plans', label: 'Saved', match: path => path === '/saved-plans' },
+  { to: '/feedback', label: 'Feedback', match: path => path === '/feedback' },
 ];
 
 export default function Navbar({ menuOpen = false, onMenuToggle }) {

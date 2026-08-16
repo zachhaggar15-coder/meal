@@ -7,6 +7,7 @@ import {
 } from '../api/_guards.js';
 import { adminTokenFromHeaders, escCsv } from '../api/admin-stats.js';
 import { resolveEmailPlan } from '../api/email-plan.js';
+import { cleanSenderEmail } from '../api/feedback.js';
 
 function makeReq({ body = {}, headers = {}, ip = '203.0.113.10', ua = 'guard-test' } = {}) {
   return {
@@ -104,3 +105,35 @@ run().catch((err) => {
   console.error(err);
   process.exitCode = 1;
 });
+
+// The feedback form's optional reply address is placed in the Reply-To header,
+// which makes it the one free-text field on the site that could carry a second
+// header if it were passed through unchecked.
+{
+  for (const good of ['zach@example.co.uk', 'a.b+tag@mail.example.com']) {
+    assert.equal(cleanSenderEmail(good), good, `${good} should be accepted`);
+  }
+
+  // Absent is fine — feedback never requires an address.
+  for (const blank of [undefined, null, '', '   ']) {
+    assert.equal(cleanSenderEmail(blank), '', 'a missing address must not be an error');
+  }
+
+  // Present but unusable returns null so the caller can say so.
+  const LF = String.fromCharCode(10);
+  const CR = String.fromCharCode(13);
+  for (const bad of [
+    `zach@example.com${LF}Bcc: victim@example.com`,
+    `zach@example.com${CR}${LF}To: someone@example.com`,
+    'zach@example.com, other@example.com',
+    'Zach <zach@example.com>',
+    'zach@example.com; drop',
+    'not-an-email',
+    'zach@localhost',
+    `${'a'.repeat(250)}@example.com`,
+  ]) {
+    assert.equal(cleanSenderEmail(bad), null, `should reject: ${JSON.stringify(bad)}`);
+  }
+
+  console.log('feedback reply-address validation: ok');
+}

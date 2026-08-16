@@ -4234,6 +4234,33 @@ details[open] .faq-question::after { content: '▴'; }
   background: #f1f5f9;
   color: #64748b;
 }
+/* Matches .feedback-textarea so the optional email sits in the same form. */
+.feedback-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #fff;
+  color: #111827;
+  line-height: 1.45;
+  font: inherit;
+}
+.feedback-input::placeholder {
+  color: #94a3b8;
+}
+.feedback-input:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+  border-color: #2563eb;
+}
+.feedback-input:disabled {
+  background: #f1f5f9;
+  color: #64748b;
+}
+.feedback-optional {
+  font-weight: 400;
+  color: #64748b;
+}
 .feedback-submit {
   align-self: flex-start;
   background: #2563eb;

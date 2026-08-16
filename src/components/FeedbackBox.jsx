@@ -12,10 +12,16 @@ export default function FeedbackBox({
   description = 'Seen something off with this plan? Send a quick note and we will review it.',
   label = 'What should we improve?',
   placeholder = 'Missing ingredient, confusing recipe, better swap idea...',
+  // Off by default: the in-page boxes on plan pages are meant to be a two-second
+  // note, and an address field there would only slow that down. The standalone
+  // form turns it on, because that is where someone writing at length is most
+  // likely to want an answer.
+  showEmail = false,
 }) {
   const feedbackId = useId();
   const honeypotId = useId();
   const [feedback, setFeedback] = useState('');
+  const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
@@ -37,6 +43,7 @@ export default function FeedbackBox({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           feedback: feedbackText,
+          email: showEmail ? email.trim() : '',
           source: window.location.href,
           website,
         }),
@@ -50,6 +57,7 @@ export default function FeedbackBox({
       }
 
       setFeedback('');
+      setEmail('');
       setWebsite('');
       setStatus('sent');
       setMessage(data?.provider === 'server-log'
@@ -95,6 +103,30 @@ export default function FeedbackBox({
           disabled={sending}
           required
         />
+        {showEmail && (
+          <>
+            <label className="feedback-label" htmlFor={`${feedbackId}-email`}>
+              Your email <span className="feedback-optional">(optional, only if you want a reply)</span>
+            </label>
+            <input
+              id={`${feedbackId}-email`}
+              className="feedback-input"
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (status === 'error') {
+                  setStatus('idle');
+                  setMessage('');
+                }
+              }}
+              placeholder="you@example.com"
+              autoComplete="email"
+              maxLength={254}
+              disabled={sending}
+            />
+          </>
+        )}
         <label className="feedback-honeypot" htmlFor={honeypotId}>
           Website
         </label>

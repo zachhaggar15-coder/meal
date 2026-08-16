@@ -21,6 +21,9 @@ export default async function handler(req, res) {
 
   const body = parseBody(req.body);
   const feedback = typeof body.feedback === 'string' ? body.feedback.trim() : '';
+  // Optional: if someone wants a reply they can leave an address. Feedback is
+  // accepted without one, so the field never becomes a barrier to sending.
+  const senderEmail = cleanSenderEmail(body.email);
   const source = cleanMeta(body.source || req.headers.referer || '');
   const userAgent = cleanMeta(req.headers['user-agent'] || '');
 
@@ -36,12 +39,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: `Feedback must be ${MAX_FEEDBACK_LENGTH} characters or fewer.` });
   }
 
+  if (senderEmail === null) {
+    return res.status(400).json({ error: 'That email address does not look right. Leave it blank if you do not want a reply.' });
+  }
+
   const subject = 'MealPrep.org.uk feedback';
   const payload = {
     site: 'MealPrep.org.uk',
     type: 'feedback',
     submittedAt: new Date().toISOString(),
     feedback,
+    email: senderEmail || '',
     source: source || 'Unknown',
     userAgent: userAgent || 'Unknown',
   };
@@ -75,6 +83,7 @@ export default async function handler(req, res) {
     '',
     feedback,
     '',
+    `Reply to: ${senderEmail || 'Not supplied'}`,
     `Source: ${source || 'Unknown'}`,
     `User agent: ${userAgent || 'Unknown'}`,
   ].join('\n');
@@ -82,6 +91,7 @@ export default async function handler(req, res) {
     <h2>New MealPrep.org.uk feedback</h2>
     <p>${escapeHtml(feedback).replace(/\n/g, '<br>')}</p>
     <hr>
+    <p><strong>Reply to:</strong> ${escapeHtml(senderEmail || 'Not supplied')}</p>
     <p><strong>Source:</strong> ${escapeHtml(source || 'Unknown')}</p>
     <p><strong>User agent:</strong> ${escapeHtml(userAgent || 'Unknown')}</p>
   `;
@@ -96,7 +106,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from,
         to: recipients,
-        reply_to: replyTo,
+        reply_to: senderEmail || replyTo,
         subject,
         text,
         html,
@@ -165,6 +175,26 @@ function parseBody(body) {
 
 function cleanMeta(value) {
   return String(value || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 500);
+}
+
+/**
+ * Validates a reply address supplied by whoever sent the feedback.
+ *
+ * This value ends up in the Reply-To header, so it is the one field on the
+ * form an attacker could use to inject a second header. Anything containing a
+ * newline, a comma, angle brackets or a space is rejected outright rather than
+ * stripped — a single clean address or nothing.
+ *
+ * @returns {string} the address, '' when none was given, or null when it is
+ *   present but not usable, so the caller can say so instead of dropping it.
+ */
+export function cleanSenderEmail(value) {
+  if (value === undefined || value === null) return '';
+  const trimmed = String(value).trim();
+  if (!trimmed) return '';
+  if (trimmed.length > 254) return null;
+  if (/[\r\n,;<>\s"']/.test(trimmed)) return null;
+  return /^[^@]+@[^@.]+(?:\.[^@.]+)+$/.test(trimmed) ? trimmed : null;
 }
 
 function cleanEmailHeader(value, fallback) {
