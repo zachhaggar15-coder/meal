@@ -920,7 +920,14 @@ function buildIntro(seed, averageMacros) {
 // ── FAQs ──────────────────────────────────────────────────────────────────────
 
 function buildFaqs(seed, averageMacros) {
-  const mkt = seed.supermarket === 'any' ? 'a generic UK supermarket average' : getMarketLabel(seed.supermarket);
+  // One label cannot fill three different grammatical slots. "the X shopping
+  // list" wants a bare noun; "designed for X" and "available at X" want a
+  // determiner, which a brand name supplies by itself and a generic noun does
+  // not. Using a single string for both produced "the a generic UK supermarket
+  // average shopping list" on every plan built for no particular shop.
+  const genericMarket = seed.supermarket === 'any';
+  const mkt = genericMarket ? 'generic UK supermarket' : getMarketLabel(seed.supermarket);
+  const mktPhrase = genericMarket ? 'a generic UK supermarket' : mkt;
   const gl = (GOAL_LABELS[seed.goal] || seed.goal).toLowerCase();
   const emphasisContext = getEmphasisContext(seed.emphasis);
   const profile = getSupermarketProfile(seed.supermarket);
@@ -930,7 +937,7 @@ function buildFaqs(seed, averageMacros) {
   return [
     {
       q: `How much does this ${gl} plan cost per week?`,
-      a: `This plan is designed for ${mkt} and typically costs ${BUDGET_ESTIMATES[seed.budget]} per week for one person, depending on what you already have at home. ${profile.loyalty ? `${profile.loyalty} can reduce this further.` : 'Buying in bulk and choosing own-brand items can reduce this further.'}`,
+      a: `This plan is designed for ${mktPhrase} and typically costs ${BUDGET_ESTIMATES[seed.budget]} per week for one person, depending on what you already have at home. ${profile.loyalty ? `${profile.loyalty} can reduce this further.` : 'Buying in bulk and choosing own-brand items can reduce this further.'}`,
     },
     {
       q: `How much protein does this plan provide per day?`,
@@ -953,8 +960,8 @@ function buildFaqs(seed, averageMacros) {
     {
       q: `Is this plan suitable for ${seed.dietType === 'standard' ? 'beginners' : seed.dietType + ' eaters'}?`,
       a: seed.dietType === 'standard'
-        ? `Yes. Recipes are rated ${EFFORT_LABELS[seed.effort] || seed.effort} and use ingredients available at ${mkt} — no specialist equipment or advanced technique is needed.`
-        : `Yes. Every meal in this plan is ${seed.dietType}, using ingredients readily available from ${mkt}.`,
+        ? `Yes. Recipes are rated ${EFFORT_LABELS[seed.effort] || seed.effort} and use ingredients available at ${mktPhrase} — no specialist equipment or advanced technique is needed.`
+        : `Yes. Every meal in this plan is ${seed.dietType}, using ingredients readily available from ${mktPhrase}.`,
     },
   ];
 }

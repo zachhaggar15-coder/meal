@@ -250,3 +250,53 @@ test('no page presents year-old prices as if they were current', async () => {
     [],
   );
 });
+
+// ── Titles that name a cooking method ───────────────────────────────────────
+//
+// Found by the final adversarial pass, which asked which recipes could still
+// produce something other than their title. The family contracts covered 86 of
+// 268 recipes; these defects were all in the other 182.
+
+test('a title that says baked produces something baked', () => {
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    if (!/\bbaked?\b/i.test(name) || /no.?bake/i.test(name)) continue;
+    const steps = buildPracticalRecipeSteps(meal).join(' ');
+    if (!/oven|bake|roast/i.test(steps)) offenders.push(name);
+  }
+  // "Baked Cod and Chickpea Stew" is a known naming conflict rather than a
+  // method defect: it is a stew, and stewing the cod is the right method for
+  // the dish. Listed explicitly so it cannot grow silently.
+  assert.deepEqual(offenders, ['Baked Cod and Chickpea Stew']);
+});
+
+test('a title that says No-Bake never turns the oven on', () => {
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    if (!/no.?bake/i.test(name)) continue;
+    const steps = buildPracticalRecipeSteps(meal).join(' ');
+    if (/heat the oven|bake for/i.test(steps)) offenders.push(name);
+  }
+  assert.deepEqual(offenders, []);
+});
+
+test('regression: no-cook protein balls are mixed, rolled and chilled', () => {
+  // This recipe was given "Cook the firmer vegetables in a non-stick pan until
+  // tender" — a step naming ingredients it does not contain, in a dish whose
+  // title says it is not cooked.
+  const balls = allRecipes().find(item => /No-Bake.*Balls/i.test(item.name));
+  assert.ok(balls, 'the no-bake protein balls recipe is missing');
+  const steps = buildPracticalRecipeSteps(balls.meal).join(' ');
+  assert.match(steps, /roll into/i, 'balls have to be rolled');
+  assert.match(steps, /chill|fridge/i, 'they have to be chilled to set');
+  assert.doesNotMatch(steps, /vegetables/i, 'there are no vegetables in this recipe');
+  assert.doesNotMatch(steps, /heat the oven/i, 'a no-bake recipe must not be baked');
+});
+
+test('regression: a pasta bake is finished in the oven', () => {
+  const bake = allRecipes().find(item => /Pasta Bake/i.test(item.name));
+  assert.ok(bake, 'the pasta bake recipe is missing');
+  const steps = buildPracticalRecipeSteps(bake.meal).join(' ');
+  assert.match(steps, /oven/i, 'a bake needs an oven');
+  assert.match(steps, /ovenproof dish|bake for/i, 'it has to be assembled and baked');
+});

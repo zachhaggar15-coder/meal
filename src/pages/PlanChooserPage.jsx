@@ -14,6 +14,7 @@ import {
 import { chooseChooserVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 
 const ALL_PLANS = getAllPlanMeta();
 
@@ -40,7 +41,7 @@ export default function PlanChooserPage() {
   const pageUrl = `/choose-plan/${goalChoice.value}`;
   const title = toTitleCase(`${goalChoice.label} Meal Plans by Supermarket`);
   const marketList = options.map(option => option.market.label).join(', ');
-  const description = `Choose a ${goalChoice.label.toLowerCase()} meal plan for ${marketList}, with printable PDFs and shopping lists.`;
+  const description = `Choose ${indefiniteArticleFor(goalChoice.label)} ${goalChoice.label.toLowerCase()} meal plan for ${marketList}, with printable PDFs and shopping lists.`;
   const chooserVisual = chooseChooserVisual({ goalChoice });
 
   const jsonLd = [

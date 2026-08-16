@@ -1616,6 +1616,12 @@ const topics = [
     h1: 'Aldi Low Calorie Food Ideas UK: Budget Meals and Snacks',
     intro: 'Aldi has no "healthy eating" range. There is no Aldi equivalent of Tesco Healthy Living or Sainsbury\'s Balanced For You — no badge on the packet telling you a product belongs in a diet. For low-calorie shopping that turns out to be an advantage rather than a gap, because a range badge is a marketing decision and the nutrition panel is not, and a shop with no badges forces you to read the only thing that was ever going to tell you the truth.',
     quickAnswer: 'Good Aldi low-calorie food ideas include chicken breast, lean mince, tuna, eggs, skyr-style yogurt, cottage cheese, oats, potatoes, salad bags, frozen veg, berries, soup, rice cakes and chopped tomatoes. Build meals with protein first and measure calorie-dense extras.',
+    // Sends the reader to the Aldi plans the article's advice actually
+    // applies to, rather than only to sibling articles.
+    related: [
+      { slug: 'aldi-weight-loss-1500', label: 'Aldi 1,500 kcal Weight Loss Plan', type: 'plan' },
+      { slug: 'aldi-high-protein-low-cal-1500', label: 'Aldi High Protein Low Cal Plan', type: 'plan' },
+    ],
     formulaIntro: 'The strongest Aldi low-calorie basket starts with staples. Buy the foods you can use in three different ways, not the one-off product with no plan.',
     extraSections: [
       {

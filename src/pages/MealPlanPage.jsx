@@ -31,6 +31,7 @@ import ContentByline from '../components/ContentByline.jsx';
 import { schemaDates } from '../utils/contentDates.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
+import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 import {
   buildPlanReference,
   readPlanProgress,
@@ -498,7 +499,9 @@ export default function MealPlanPage() {
           />
         )}
 
-        <h2>Why Choose a {data.planLabel} Meal Plan?</h2>
+        {/* The label is interpolated, so the article has to follow the
+            label’s sound: "an Aldi plan", "a Tesco plan". */}
+        <h2>Why Choose {indefiniteArticleFor(data.planLabel)} {data.planLabel} Meal Plan?</h2>
         <p>{data.whyThisPlan}</p>
 
         {data.suitability && (

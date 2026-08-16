@@ -73,6 +73,9 @@ export function buildPracticalRecipeSteps(meal = {}) {
   const ingredientSearch = ingredientList.join(' ').toLowerCase();
   const searchable = `${meal.name || ''} ${ingredientList.join(' ')}`.toLowerCase();
   const name = String(meal.name || '').toLowerCase();
+  // A title that says a dish is baked is a promise about how it is cooked.
+  // Guarded against "No-Bake", where the absence of an oven is the point.
+  const titleBakes = /\bbaked?\b/i.test(name) && !/no.?bake/i.test(name);
   const prepMinutes = readPrepMinutes(meal);
   const starch = findStarch(ingredientSearch);
   const protein = findProtein(name) || findProtein(ingredientSearch);
@@ -183,6 +186,14 @@ export function buildPracticalRecipeSteps(meal = {}) {
   // exactly what happened: "Frozen Greek Yogurt and Berry Bark" was served as
   // a bowl of yogurt with berries on top, never frozen or broken.
   if (/\bbark\b/.test(name)) return buildFrozenBarkSteps(cookingIngredients, remainingNames);
+
+  // Energy/protein balls are mixed, rolled and chilled — never cooked. The
+  // generic branch gave "No-Bake Peanut Butter Oat Protein Balls" a step that
+  // pan-cooked "the firmer vegetables", a phrase describing ingredients the
+  // recipe does not contain, in a dish whose title says it is not cooked.
+  if (/\b(?:balls?|bites?)\b/.test(name) && !/\b(?:meatball|fishball)/.test(name)) {
+    return buildNoCookBallSteps(remainingNames, name);
+  }
 
   if (name.includes('yogurt') || name.includes('cereal') || name.includes('weetabix') || name.includes('bran flakes')) {
     const bases = findCookingNames(cookingIngredients, /(yogurt|skyr|kefir|weetabix|bran flakes|granola|milk|cereal)/i);
@@ -412,7 +423,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
     return [
       `${name.includes('sandwich') ? 'Lay out' : 'Toast or warm'} ${joinNatural(carriers)}.`,
       protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
-        ? cookProteinStep(proteinName, { finish: isAlreadyPreparedIngredient(proteinName) ? '' : 'Rest briefly, then slice it.' })
+        ? cookProteinStep(proteinName, { ovenBaked: titleBakes, finish: isAlreadyPreparedIngredient(proteinName) ? '' : 'Rest briefly, then slice it.' })
         : isPulseProtein && needsCooking(protein, searchable, pulseState)
           ? cookProteinStep(proteinName, { dryPulse: true })
           : `Drain, slice or mash ${joinNatural(filling)} as appropriate.`,
@@ -545,6 +556,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
       steps.push(cookProteinStep(proteinName, {
         finish: isPulseProtein ? '' : 'Rest briefly before slicing if needed.',
         dryPulse: isPulseProtein,
+        ovenBaked: titleBakes,
       }));
     } else if (tinIngredients.length) {
       steps.push(drainTinnedStep(tinIngredients));
@@ -653,6 +665,9 @@ export function buildPracticalRecipeSteps(meal = {}) {
     // different dish from the one named, so honour the roast for the side
     // while leaving the protein's own cooking method alone.
     const nameRoastsVegetables = /roast(?:ed)?/.test(name);
+    // A title beginning "Baked ..." is a promise about the protein, not a
+    // description of the tray it is served with.
+    const nameBakesProtein = titleBakes;
     // Seasonings a recipe genuinely lists (lemon, dill, herbs) were dropped
     // entirely by this branch, which only ever names the protein and
     // vegetables — so a salmon "baked with lemon and dill" never mentioned
@@ -669,12 +684,12 @@ export function buildPracticalRecipeSteps(meal = {}) {
           // already cooked in step one — without excluding it the method
           // said "Boil the potatoes… then add potatoes and cook until
           // tender", cooking the same ingredient twice.
-          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })}${panVegetables.length
+          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein })}${panVegetables.length
             ? (nameRoastsVegetables
               ? ` Meanwhile roast ${joinNatural(panVegetables)} at 200°C (180°C fan) for 25-30 minutes, until tender and lightly browned.`
               : ` Add ${joinNatural(panVegetables)} and cook until tender.`)
             : ''}`
-          : cookProteinStep(proteinName, { prefix: 'Meanwhile, ' })
+          : cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein })
         // A dry pulse is not just "warmed" — it needs real simmering time
         // in liquid to become edible. Keep every non-starch ingredient
         // named (nonStarch already includes the pulse itself, since
@@ -688,7 +703,9 @@ export function buildPracticalRecipeSteps(meal = {}) {
         ? `Serve the ${starchName} with the prepared ingredients${seasoningClause(seasonings, sauces)}, then season to taste.`
         : sauces.length || seasonings.length
           ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural([...sauces, ...seasonings])}, and heat through before serving.`
-          : `Fold the cooked ${starchName} through the pan, season to taste and serve hot.`,
+          : titleBakes
+            ? `Heat the oven to 200C/180C fan. Fold the cooked ${starchName} through the pan, tip into an ovenproof dish, and bake for 20-25 minutes until bubbling and golden on top.`
+            : `Fold the cooked ${starchName} through the pan, season to taste and serve hot.`,
     ];
   }
 
@@ -910,10 +927,20 @@ function collapseRepeatedToTaste(items) {
   return inserted ? stripped : items;
 }
 
-function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = false } = {}) {
+function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = false, ovenBaked = false } = {}) {
   const protein = String(proteinName || 'protein');
   let finishText = finish;
   let instruction;
+
+  // "Baked Cod with New Potatoes" pan-fried its cod. Same failure as the
+  // roasted-vegetable one: the title names a cooking method and the generic
+  // branch ignores it, so the reader is given a different dish from the one
+  // they chose. When the name says baked, the protein goes in the oven.
+  if (ovenBaked && !isAlreadyPreparedIngredient(protein) && !dryPulse) {
+    return `${prefix}heat the oven to 200C/180C fan. Bake the ${protein} for 12-18 minutes, `
+      + `until cooked through and it flakes or slices easily.${finish ? ` ${finish}` : ''}`
+      .replace(/^([a-z])/, (m) => (prefix ? m : m.toUpperCase()));
+  }
 
   // An ingredient whose own name declares it already cooked ("baked
   // falafel", "baked tofu") must not be given a from-raw instruction —
@@ -1173,5 +1200,21 @@ function buildFrozenBarkSteps(cookingIngredients, remainingNames) {
       : 'Level the surface so it freezes evenly.',
     'Freeze flat for at least 3-4 hours, until solid.',
     'Break into shards and serve straight from the freezer. Keep any leftovers frozen.',
+  ];
+}
+
+// Protein and energy balls: combine, roll, chill. Nothing here is cooked, and
+// for a title that says "No-Bake" the absence of heat is the whole point.
+function buildNoCookBallSteps(ingredientNames, name) {
+  const items = (ingredientNames || []).filter(Boolean);
+  const listed = items.length ? joinNatural(items) : 'the ingredients';
+  const chilled = /\bno.?bake\b/i.test(name) ? 'without any baking' : 'until firm';
+
+  return [
+    `Put ${listed} in a bowl and mix to a thick, sticky dough that holds together when pressed.`,
+    'If the mixture is too dry to hold, add a teaspoon of water or milk at a time; if too wet, add a little more oats.',
+    'Roll into even balls, roughly a heaped tablespoon each.',
+    `Chill in the fridge for at least 30 minutes to set ${chilled}.`,
+    'Keep refrigerated in an airtight container and eat within 5 days.',
   ];
 }

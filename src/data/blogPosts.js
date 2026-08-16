@@ -208,13 +208,13 @@ export const blogPostsData = {
         h2: 'Why Food Choice Matters on a Calorie Deficit',
         paragraphs: [
           'Two people can both eat 1,500 calories per day and have completely different experiences — one constantly hungry and low in energy, the other satisfied and performing well. The difference almost always comes down to food choices. A diet of processed, low-nutrient foods provides the same number of calories as one built around whole foods, but leaves you far hungrier and more likely to give up.',
-          'The most effective low-calorie foods share three characteristics: they are high in protein or fibre (or both), they have a high volume relative to their calorie count, and they are genuinely satisfying to eat. The foods below tick all of those boxes and are all widely available and affordable in UK supermarkets.',
+          'The low-calorie foods that tend to work best share three characteristics: they are high in protein or fibre (or both), they have a high volume relative to their calorie count, and they are genuinely satisfying to eat. The foods below tick all of those boxes and are all widely available and affordable in UK supermarkets.',
         ],
       },
       {
         h2: 'Best Low-Calorie Protein Foods',
         paragraphs: [
-          'Protein is the most important macronutrient for weight loss. It keeps you fuller for longer, has the highest thermic effect (meaning you burn more calories digesting it), and preserves muscle mass during a calorie deficit. The following are the best high-protein, low-calorie options in UK supermarkets:',
+          'Protein is the macronutrient that does the most work during weight loss. It keeps you fuller for longer, has the highest thermic effect (meaning you burn more calories digesting it), and preserves muscle mass during a calorie deficit. The following are the best high-protein, low-calorie options in UK supermarkets:',
         ],
         bullets: [
           'Chicken breast (skinless): ~165 kcal and 31 g protein per 100 g. The ultimate lean protein. Available from all major UK supermarkets, usually £5–8 per kg.',
@@ -706,7 +706,7 @@ export const blogPostsData = {
       {
         h2: 'Why Protein Matters on a Budget Diet',
         paragraphs: [
-          'Protein is the most important macronutrient for body composition. It helps preserve muscle mass during a calorie deficit, keeps you full for longer than carbohydrates or fat, and has the highest thermic effect — meaning your body burns roughly 25–30% of protein calories just digesting it. For weight loss or muscle gain, aiming for roughly 1.6–2.2 g of protein per kilogram of bodyweight is a common sports-nutrition planning range, but individual needs vary.',
+          'Protein is the macronutrient that does the most work when you are eating less. It helps preserve muscle mass during a calorie deficit, keeps you full for longer than carbohydrates or fat, and has the highest thermic effect — meaning your body burns roughly 25–30% of protein calories just digesting it. For weight loss or muscle gain, aiming for roughly 1.6–2.2 g of protein per kilogram of bodyweight is a common sports-nutrition planning range, but individual needs vary.',
           'The challenge is that many high-protein foods — premium steak, smoked salmon, protein bars — are expensive. But UK supermarkets stock a surprising range of genuinely cheap protein sources that rival expensive options on a per-gram basis. The key is knowing which items to look for.',
         ],
       },
@@ -1160,7 +1160,7 @@ export const blogPostsData = {
     ],
     faq: [
       { q: 'How much protein should I eat per day to lose fat?', a: 'For fat loss while preserving muscle, many active adults use 1.6–2.2 g of protein per kg of body weight per day. A 75 kg person would plan roughly 120–165 g daily. Use the higher end mainly when also doing regular resistance training.' },
-      { q: 'Does eating more protein really help with weight loss?', a: 'Yes. Multiple randomised controlled trials show that increasing protein to 30% of total calories reduces daily calorie intake by an average of 400–440 calories without conscious restriction — because protein is significantly more satiating than carbohydrates or fat.' },
+      { q: 'Does eating more protein really help with weight loss?', a: 'It often helps, though not by magic. Protein is more filling per calorie than carbohydrate or fat, so raising it tends to reduce how much people eat overall without consciously trying. How large that effect is varies a lot between individuals, and it does not override total calories.' },
       { q: 'When is the best time to eat protein?', a: 'Total daily protein intake matters more than timing. Distributing protein across 3–4 meals (30–50g per meal) optimises muscle protein synthesis throughout the day. Consuming 30–40g within two hours of resistance training is beneficial for muscle repair and growth.' },
     ],
   },
@@ -1248,7 +1248,7 @@ export const blogPostsData = {
     title: 'How Many Calories to Lose Weight UK? (2025 Guide)',
     description: 'How many calories do you need to lose weight in the UK? Calculate your TDEE, choose a safe deficit, and see expected weekly fat loss. Generate a free UK meal plan.',
     h1: 'How Many Calories Do You Need to Lose Weight?',
-    intro: 'The single most important number in weight loss is your calorie target. But knowing your target requires understanding three concepts: your Basal Metabolic Rate (BMR), your Total Daily Energy Expenditure (TDEE), and your ideal calorie deficit. This guide explains exactly how to calculate all three, how to choose a safe deficit range, and how to convert that into a realistic weight loss timeline — with worked examples for UK adults across different body sizes and activity levels.',
+    intro: 'Weight loss comes down to a calorie target more than anything else on the plate. But knowing your target requires understanding three concepts: your Basal Metabolic Rate (BMR), your Total Daily Energy Expenditure (TDEE), and your ideal calorie deficit. This guide explains exactly how to calculate all three, how to choose a safe deficit range, and how to convert that into a realistic weight loss timeline — with worked examples for UK adults across different body sizes and activity levels.',
     sections: [
       {
         h2: 'The Science of Weight Loss: Calories In vs. Calories Out',
@@ -1481,7 +1481,7 @@ export const blogPostsData = {
     title: 'Meal Prep for Beginners UK: How to Start & Save £100',
     description: 'A complete beginner\'s guide to meal prep in the UK. How to start, what to batch cook, which containers to use, and how to save £100+ per month on food. Generate a free meal plan.',
     h1: 'Meal Prep for Beginners UK — How to Start and Save Money on Food',
-    intro: "Meal prep is the single most effective habit for eating healthily and saving money in the UK. Spending two to three hours cooking on a Sunday can set up the week, with the first couple of days kept chilled and later portions frozen, reducing the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
+    intro: "Meal prep is one of the few habits that makes eating well and spending less easier at the same time. Spending two to three hours cooking on a Sunday can set up the week, with the first couple of days kept chilled and later portions frozen, reducing the daily temptation of takeaways, meal deals, and snack purchases that drain your food budget and sabotage your diet. This guide covers everything a complete beginner needs to start meal prepping in the UK — what to cook, how to store it, and what to expect in your first few weeks.",
     affiliateDisclosure: 'As an Amazon Associate I earn from qualifying purchases. Product prices and availability can change on Amazon UK.',
     productRecommendations: {
       title: 'Containers to start with',
