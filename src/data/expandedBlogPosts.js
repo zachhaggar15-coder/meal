@@ -2102,42 +2102,50 @@ export const expandedBlogPostsData = {
     title: 'Morrisons Meal Prep UK',
     description: 'Morrisons meal prep guide for UK shoppers, covering protein staples, Market Street options, budget meals and weekly planning.',
     h1: 'Morrisons Meal Prep UK',
-    intro: 'Morrisons is useful for meal prep because it combines normal supermarket staples with fresh counters in many stores. That makes it a good fit for people who want simple weekly meals without relying only on packaged products.',
+    intro: 'Most supermarket meal prep guides are interchangeable, because most supermarkets sell the same things in the same packs. Morrisons is the exception worth writing about, and the reason is Market Street: in a store with counters you can buy 480 g of chicken thigh because that is what the week needs, instead of buying two 300 g packs and throwing 120 g away.',
     sections: [
       {
-        h2: 'What Morrisons does well',
+        h2: 'Buy the weight, not the pack',
         paragraphs: [
-          'Look for own-brand oats, eggs, Greek-style yogurt, cottage cheese, chicken, lean mince, fish, tinned tuna, beans, potatoes, frozen veg, salad, and fresh fruit.',
-          'Where available, Market Street counters can help with fish, meat, and fresh options, but the cheapest meal prep still comes from basic own-brand staples.',
+          'Fixed pack sizes are the quiet tax on meal prep. A plan asks for 750 g of chicken across five lunches; the shelf sells 650 g packs; you buy two, and the surplus either becomes an unplanned sixth portion or goes off in the drawer. Every supermarket has this problem. Morrisons, in the stores that still have staffed Market Street counters, does not — you ask for the number and you get the number.',
+          'That matters most where the plan is precise and the ingredient is expensive: chicken thighs, lean mince, salmon and white fish. Over a week it is the difference between shopping to your plan and shopping to the packaging, and it removes the most common reason a costed plan comes in over budget.',
+          'It cuts the other way too. Counters are priced per kilo at a rate that is usually above the equivalent pre-packed line, so buying everything there will cost you more than it saves. Use the counter for the two or three items where the exact weight is worth paying for, and take the ordinary shelf pack for oats, eggs, yogurt, beans, rice and frozen veg, where a round pack size costs you nothing.',
+        ],
+      },
+      {
+        h2: 'The other genuinely Morrisons thing: they make a lot of it themselves',
+        paragraphs: [
+          'Morrisons is unusual among the big supermarkets in owning much of its own food production — its own bakeries, its own meat processing, its own fresh food sites. For a shopper this shows up in one practical way: the own-label fresh ranges are deep and consistently stocked, because the supply chain is theirs rather than a third party’s.',
+          'The practical read for meal prep is to treat Morrisons own-label as the default rather than the fallback. The place the premium "The Best" range earns its price is a meal you will eat plain and notice — a fish fillet, a piece of steak — not something going into a chilli with tinned tomatoes and cumin over it.',
         ],
       },
       {
         h2: 'Morrisons meal prep comparison',
         paragraphs: [
-          'Morrisons is strongest when you use the full supermarket range for staples and add fresh-counter options where they genuinely improve the week.',
+          'The question at Morrisons is not what to buy but where in the store to buy it, because the same protein is available three ways at three prices.',
         ],
         table: {
-          headers: ['Shopping style', 'Best for', 'Watch out'],
+          headers: ['Where you buy it', 'Best for', 'Meal prep note'],
           rows: [
-            ['Own-brand staples', 'Oats, eggs, yogurt, beans, potatoes, rice', 'Still compare larger pack prices against discount supermarkets'],
-            ['Fresh counters', 'Fish, meat, and flexible protein choices', 'Can lift the weekly cost if every meal uses premium items'],
-            ['Frozen and tinned', 'Backup meals, soups, chilli, tuna lunches', 'Check cupboard stock before buying duplicates'],
-            ['Family batch cooking', 'Bolognese, curry, traybakes, jacket potatoes', 'Portion before storing so leftovers become lunches'],
+            ['Market Street counter', 'Chicken thighs, lean mince, salmon, white fish', 'Buy the exact gram weight your plan asks for. Costs more per kilo, so use it where precision saves more than the premium'],
+            ['Own-label shelf packs', 'Oats, eggs, Greek-style yogurt, cottage cheese, beans, rice, potatoes', 'Deep own-label range and reliably in stock. A round pack size wastes nothing on a store-cupboard staple'],
+            ['"The Best" premium own-label', 'A fillet or steak you will eat plain', 'Wasted on anything that goes under a sauce — the ordinary line cooks the same in a chilli'],
+            ['Frozen and tinned', 'Frozen veg, tinned tuna, pulses, backup meals', 'The safety net for the day the plan collapses. Check the cupboard before you buy duplicates'],
           ],
         },
       },
       {
-        h2: 'Meal ideas',
+        h2: 'A week that uses the counter properly',
         paragraphs: [
-          'Morrisons works well for fish and potato boxes, chicken traybakes, turkey chilli, tuna pasta salad, lentil soup, cottage cheese snack plates, and Greek yogurt breakfasts.',
-          'Use seasonal vegetables when they are good value and frozen veg when fresh prices creep up.',
+          'A workable Morrisons week buys one counter item and lets the shelf carry the rest: ask for the exact weight of chicken thighs for three dinners, then build the remaining days on eggs, tinned tuna, Greek-style yogurt, beans and lentils.',
+          'Meals that suit this: chicken and potato traybakes, turkey or lentil chilli, tuna pasta salad, fish with roasted vegetables, cottage cheese snack plates, and overnight oats for the breakfasts. Seasonal vegetables when they are good value, frozen when the fresh price climbs.',
         ],
       },
       {
         h2: 'How to keep costs controlled',
         paragraphs: [
-          'Avoid building every meal around premium fresh-counter items. Use them for one or two meals, then let eggs, tuna, yogurt, beans, chicken, and lentils carry the rest of the week.',
-          'Batch cooking helps because larger packs and multi-buy staples become easier to use before they spoil.',
+          'The failure mode at Morrisons is the counter, not the shop. Building every meal around freshly cut premium protein will put the weekly total well above what the same plan costs at Aldi or Lidl. One or two counter items a week is the level where you get the precision without the premium.',
+          'Batch cooking helps for the ordinary reason — larger staple packs get used before they spoil — and it pairs well with counter buying, because you can ask for the exact weight a batch recipe needs rather than scaling the recipe to fit a pack.',
         ],
       },
     ],
@@ -2327,13 +2335,21 @@ export const expandedBlogPostsData = {
     title: 'Aldi High Protein Shopping List UK',
     description: 'Aldi high protein shopping list for UK meal prep with eggs, chicken, yogurt, tuna, cottage cheese, lentils, beans and budget meals.',
     h1: 'Aldi High Protein Shopping List UK',
-    intro: 'Aldi is one of the easiest places to build a cheap high-protein shop. The best basket is not complicated: buy reliable staples, repeat simple meals, and use sauces and spices for variety.',
+    intro: 'The useful thing about an Aldi shopping list is that it keeps working. A big-four supermarket stocks tens of thousands of lines and rotates them constantly, so a list written in January sends you looking for products that have moved, changed pack size or gone. Aldi carries a fraction of that number, nearly all own-label, and the core range barely moves — which means the list below is a list you can reuse every week rather than rewrite.',
     sections: [
       {
-        h2: 'High-protein Aldi staples',
+        h2: 'Why a narrow range is an advantage here',
         paragraphs: [
-          'Look for eggs, chicken, turkey mince, tinned tuna, Greek-style yogurt, cottage cheese, milk, tofu when stocked, lentils, beans, chickpeas, frozen fish, frozen veg, oats, rice, potatoes, wraps, and salad.',
-          "Aldi is strongest when you keep the plan simple. If you need specialist products, pair Aldi with Tesco, Asda, or Sainsbury's for top-ups.",
+          'Aldi stocks roughly a couple of thousand product lines against thirty thousand or so at a full-size Tesco. That sounds like a limitation and for some shopping it is. For a high-protein list it is the opposite: there is usually one own-label Greek-style yogurt rather than nine, so "Greek yogurt" is an unambiguous instruction instead of a decision to make in the aisle.',
+          'It also makes the prices stable enough to plan around. Aldi does not run a loyalty scheme or a shifting wall of personalised offers, so the shelf price is the price — you are not choosing between a Clubcard price, a base price and a multibuy on three variants of the same tub.',
+          'The corollary is the Specialbuys aisle in the middle of the store, which is the one part of Aldi you cannot plan around. It rotates weekly and whatever protein product is there this week may not be there next week. Enjoy it if it appears, but never write it into a recurring list.',
+        ],
+      },
+      {
+        h2: 'The own-label names worth knowing',
+        paragraphs: [
+          'Aldi sells almost everything under its own brands, so a list that says "Greek yogurt" works but a list that knows the brand names works faster. Brooklea is the dairy line and covers the Greek-style yogurt, the skyr and the high-protein pots — that is the section doing most of the work in a high-protein Aldi basket, because the protein per pound there is as good as anything in the shop.',
+          'The Super 6 is the other Aldi-specific thing worth building around: a rotating selection of fruit and vegetables at a reduced price, changed every couple of weeks. It will not carry your protein, but it is the cheapest way to keep the volume in high-protein meals varied, and it is worth checking before you finalise the vegetables on the list.',
         ],
       },
       {
@@ -2352,10 +2368,17 @@ export const expandedBlogPostsData = {
         },
       },
       {
-        h2: 'A useful weekly list',
+        h2: 'The reusable weekly list',
         paragraphs: [
-          'For one person, start with oats, Greek yogurt, eggs, chicken, turkey mince, tuna, rice, potatoes, wraps, frozen broccoli, salad, peppers, onions, apples, bananas, and a couple of sauces.',
-          'This can cover yogurt breakfasts, egg wraps, chicken rice bowls, turkey chilli, tuna potatoes, and snack plates.',
+          'For one person: oats, Brooklea Greek-style yogurt, eggs, chicken breast, turkey mince, tinned tuna, cottage cheese, rice, potatoes, wraps, frozen broccoli, salad, peppers, onions, apples, bananas, and a couple of sauces.',
+          'That covers yogurt breakfasts, egg wraps, chicken rice bowls, turkey chilli, tuna jacket potatoes and snack plates — and because the range is stable, it is the same list next week. Vary it by swapping the Super 6 vegetables rather than by rewriting the protein.',
+        ],
+      },
+      {
+        h2: 'What Aldi will not do, and what to pair it with',
+        paragraphs: [
+          'The narrow range that makes the list reliable also means some things are simply not there. Tofu, tempeh, specialist protein powders, most free-from lines and the more unusual cuts of meat are either absent or intermittent. Fresh fish is the significant gap for a high-protein shop — the frozen fish range is solid, the fresh counter does not exist.',
+          'The sensible pattern is not to abandon Aldi for those items but to accept a monthly top-up elsewhere. Do the repeatable protein staples at Aldi every week and pick up the specialist items at a big-four store when you happen to be passing, rather than doing two full shops.',
         ],
       },
       {

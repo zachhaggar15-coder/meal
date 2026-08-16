@@ -237,6 +237,12 @@ function ideaPost(topic) {
         ],
         bullets: topic.formula,
       },
+      // Everything above and below this point is the same shape for every
+      // topic, which is what makes the template worth having — and also what
+      // made the supermarket posts interchangeable, with the retailer's name
+      // doing all the differentiating. `extraSections` is where a post says
+      // something true of its subject and nothing else.
+      ...(topic.extraSections || []),
       {
         h2: `Best foods for ${shortName}`,
         paragraphs: [
@@ -1608,9 +1614,19 @@ const topics = [
     title: 'Aldi Low Calorie Food Ideas UK: Budget Meals and Snacks',
     description: 'Aldi low calorie food ideas UK: budget supermarket staples, meal ideas, snacks and shopping list prompts for lower-calorie weeks.',
     h1: 'Aldi Low Calorie Food Ideas UK: Budget Meals and Snacks',
-    intro: 'Aldi is built for simple repeatable baskets: lean protein, potatoes, oats, frozen veg, yogurt, tins and salad. That is exactly what lower-calorie eating needs when you want useful food rather than expensive perfection.',
+    intro: 'Aldi has no "healthy eating" range. There is no Aldi equivalent of Tesco Healthy Living or Sainsbury\'s Balanced For You — no badge on the packet telling you a product belongs in a diet. For low-calorie shopping that turns out to be an advantage rather than a gap, because a range badge is a marketing decision and the nutrition panel is not, and a shop with no badges forces you to read the only thing that was ever going to tell you the truth.',
     quickAnswer: 'Good Aldi low-calorie food ideas include chicken breast, lean mince, tuna, eggs, skyr-style yogurt, cottage cheese, oats, potatoes, salad bags, frozen veg, berries, soup, rice cakes and chopped tomatoes. Build meals with protein first and measure calorie-dense extras.',
     formulaIntro: 'The strongest Aldi low-calorie basket starts with staples. Buy the foods you can use in three different ways, not the one-off product with no plan.',
+    extraSections: [
+      {
+        h2: 'What Aldi specifically gives you, and where it costs you',
+        paragraphs: [
+          'Two parts of the Aldi range do real work here. The first is Brooklea, the own-label dairy line, and particularly the 0% fat Greek-style yogurt and the skyr pots — high protein, low calorie, cheap, and the most useful thing in the shop for eating less without noticing it as much. The second is the Super 6, the rotating fruit-and-veg promotion. Vegetables are how a smaller number of calories still fills a plate, and the Super 6 is the cheapest way to stop that becoming monotonous.',
+          'The narrow range helps in a way that is easy to miss. A big supermarket puts a wall of diet-branded products in front of you, most of which are ordinary food at a premium and some of which are not even lower in calories. Aldi largely does not stock them, so a low-calorie basket assembles itself out of plain ingredients more or less by default.',
+          'Where it costs you is the middle aisle. Specialbuys rotate weekly and sit on the route to the tills, and they are the one part of an Aldi shop no plan survives. The other honest limitation is fresh fish: there is no counter, so if lean white fish is your main low-calorie protein, you are buying it frozen or buying it somewhere else.',
+        ],
+      },
+    ],
     formula: [
       'Use chicken, tuna, eggs, yogurt and lean mince as protein anchors.',
       'Use potatoes, oats, wraps or rice in clear portions.',
