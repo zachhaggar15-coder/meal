@@ -428,6 +428,8 @@ export const blogPostsData = {
   },
 
   'tesco-low-calorie-shopping-list': {
+
+    supermarkets: ['tesco'],
     published: '2026-05-28',
     title: 'Tesco Low Calorie Shopping List UK: What to Buy',
     description: 'The ultimate Tesco low calorie shopping list for UK weight loss. Best Tesco own-brand protein foods, vegetables, and snacks with prices and calorie counts. Generate your free plan.',
@@ -821,6 +823,8 @@ export const blogPostsData = {
   },
 
   'aldi-vs-tesco-meal-prep': {
+
+    supermarkets: ['aldi', 'tesco'],
     published: '2026-05-28',
     title: 'Aldi vs Tesco for Meal Prep UK: Which Is Cheaper?',
     description: 'Aldi vs Tesco for meal prep — head-to-head price comparison on chicken, eggs, oats, yogurt, and frozen veg. Which UK supermarket wins for high-protein weight loss? Generate a free plan.',
@@ -887,6 +891,8 @@ export const blogPostsData = {
   },
 
   'cheapest-uk-supermarket-meal-prep': {
+
+    supermarkets: ['aldi', 'lidl', 'asda'],
     published: '2026-05-28',
     modified: '2026-07-05',
     title: 'Cheapest UK Supermarket for Meal Prep: 7 Compared',
@@ -2454,6 +2460,8 @@ export const blogPostsData = {
   },
 
   'sainsburys-meal-prep-uk': {
+
+    supermarkets: ['sainsburys'],
     published: '2026-05-30',
     title: "Sainsbury's Meal Prep UK: Best Own-Brand Picks & Weekly Plan",
     description: "Sainsbury's meal prep UK — best own-brand protein, vegetables, and staples for high-protein calorie-controlled eating. Prices, calorie counts, and a full weekly plan. Generate a free plan.",
@@ -2515,6 +2523,8 @@ export const blogPostsData = {
   },
 
   'asda-meal-prep-uk': {
+
+    supermarkets: ['asda'],
     published: '2026-05-30',
     title: 'Asda Meal Prep UK: Best Budget Picks for High-Protein Eating',
     description: 'Asda meal prep UK — best own-brand protein, frozen veg, and staples for calorie-controlled eating. Prices, calorie counts, and a weekly plan. Generate a free Asda meal plan.',

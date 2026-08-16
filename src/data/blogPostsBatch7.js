@@ -211,6 +211,9 @@ function ideaPost(topic) {
     published: PUBLISHED,
     modified: PUBLISHED,
     reviewed: REVIEWED,
+    // Retailer-intent topics already declare which store they are about; carry
+    // it through so editorial pages can show researched evidence for it.
+    ...(topic.supermarketSlug ? { supermarkets: [topic.supermarketSlug] } : {}),
     title: topic.title,
     description: topic.description,
     h1: topic.h1,

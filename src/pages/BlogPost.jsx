@@ -14,6 +14,7 @@ import PopularGuides from '../components/PopularGuides.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
 import TrustBox from '../components/TrustBox.jsx';
 import ContentByline from '../components/ContentByline.jsx';
+import SupermarketEvidence from '../components/SupermarketEvidence.jsx';
 import { contentProvenance, schemaDates } from '../utils/contentDates.js';
 import NotFound from './NotFound.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
@@ -203,6 +204,11 @@ export default function BlogPost() {
               <ContentByline record={data} />
             </>
           )}
+          {/* Retailer evidence sits directly under the intro on supermarket-intent
+              articles, so the store-specific substance comes before the general
+              advice rather than after it. */}
+          {!useBuyingGuideFlow && <SupermarketEvidence supermarkets={data.supermarkets} />}
+
           {!useBuyingGuideFlow && <ContextualLinks blocks={data.contextualLinks} />}
 
           {data.productRecommendations && !useBuyingGuideFlow && (

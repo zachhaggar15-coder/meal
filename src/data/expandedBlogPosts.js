@@ -2041,6 +2041,8 @@ export const expandedBlogPostsData = {
   }),
 
   'lidl-meal-prep-uk': post({
+
+    supermarkets: ['lidl'],
     title: 'Lidl Meal Prep UK: Budget Shopping and Meal Ideas',
     description: 'Lidl meal prep UK guide with budget staples, high-protein shopping ideas, meal prep meals and realistic weekly planning tips.',
     h1: 'Lidl Meal Prep UK',
@@ -2095,6 +2097,8 @@ export const expandedBlogPostsData = {
   }),
 
   'morrisons-meal-prep-uk': post({
+
+    supermarkets: ['morrisons'],
     title: 'Morrisons Meal Prep UK',
     description: 'Morrisons meal prep guide for UK shoppers, covering protein staples, Market Street options, budget meals and weekly planning.',
     h1: 'Morrisons Meal Prep UK',
@@ -2149,45 +2153,49 @@ export const expandedBlogPostsData = {
   }),
 
   'iceland-meal-prep-uk': post({
+
+    supermarkets: ['iceland'],
     title: 'Iceland Meal Prep UK: Frozen Food Meal Planning',
     description: 'Iceland meal prep UK guide using frozen protein, vegetables, rice, fish, chicken and budget-friendly freezer meals.',
     h1: 'Iceland Meal Prep UK',
-    intro: 'Iceland is underrated for meal prep if you use it as a freezer-first supermarket rather than a ready-meal shop. Frozen protein and vegetables can make healthy eating cheaper and easier to keep on hand.',
+    intro: 'Iceland is the one UK supermarket where the whole protein shop can be frozen, and that changes how meal prep works. Instead of buying a fresh pack you must use within days, you take out the number of portions you are cooking and put the bag back. That solves the two things that usually break a meal-prep week: waste, and being locked into cooking everything at once.',
     sections: [
       {
-        h2: 'What to buy at Iceland',
+        h2: 'Buy the bag, not the pack',
         paragraphs: [
-          'Look for frozen chicken, fish, prawns, vegetables, rice, fruit, lean mince where available, and plain ingredients that can become meals. Ready meals can have a place, but they should not be the whole plan.',
-          'Frozen veg is the real advantage. It reduces waste and makes it easier to add volume to chilli, curry, stir-fries, omelettes, soups, and pasta.',
+          'Iceland sells its own-label chicken breast fillets frozen and bagged in 1kg and 1.2kg sizes, with a mini-fillet bag alongside them. That is the single most useful thing about the shop for meal prep. A 1kg bag is roughly five to seven portions you can draw down one at a time, so a plan that says 150g of chicken on Wednesday does not oblige you to open 650g of fresh chicken on Sunday.',
+          'The same logic runs through the frozen fish, prawn and vegetable ranges. Buy the format that lets you take out a portion, and the usual meal-prep failure — good intentions on Sunday, a bin liner on Friday — largely disappears.',
+          'Iceland also carries an exclusive Slimming World frozen range. Whatever you make of the brand, it is a genuinely calorie-controlled line you cannot buy from the other supermarkets, and it is useful as a backup meal on a day the plan falls apart.',
         ],
       },
       {
         h2: 'Iceland meal prep comparison',
         paragraphs: [
-          'Iceland works best as a freezer-first shop. The table below separates the useful meal prep staples from the convenience items that need a little more care.',
+          'Frozen is not one category. What matters for meal prep is whether an item comes out of the bag ready to portion, or arrives already cooked, coated or sauced — because that decides whether you can weigh it against a plan.',
         ],
         table: {
           headers: ['Iceland option', 'Best use', 'Meal prep note'],
           rows: [
-            ['Frozen protein', 'Fish, chicken, prawns, and quick dinners', 'Check whether the product is raw, cooked, coated, or sauced'],
-            ['Frozen vegetables', 'Stir-fries, soups, chilli, curry, omelettes', 'Excellent for reducing waste and adding volume'],
-            ['Frozen fruit', 'Smoothies, yogurt bowls, porridge toppings', 'Use measured portions if calories matter'],
-            ['Ready meals', 'Emergency backup meals', 'Compare protein and calories before making them the plan'],
+            ['Bagged raw fillets (chicken, fish, prawns)', 'The backbone of a weekly plan', 'Weighs like fresh, so plan quantities transfer directly. This is the format to build around'],
+            ['Coated or sauced frozen protein', 'Occasional dinners', 'The coating and sauce carry most of the calories, so it will not match a plan written around plain protein'],
+            ['Frozen vegetables', 'Bulking out chilli, curry, stir-fries and soups', 'No prep loss and no spoilage clock, so the amount you buy is the amount you eat'],
+            ['Frozen fruit', 'Overnight oats, yogurt bowls, smoothies', 'Weigh it frozen - a handful is a much larger portion than it looks'],
+            ['Slimming World and other ready meals', 'A backup for the day the plan collapses', 'Calorie-controlled and labelled, but built around their portion sizes rather than yours'],
           ],
         },
       },
       {
-        h2: 'Meal prep ideas',
+        h2: 'How a freezer-first week actually runs',
         paragraphs: [
-          'Try fish with potatoes and peas, chicken stir-fry with frozen veg, prawn rice bowls, turkey or beef chilli with frozen peppers, and smoothie packs with frozen berries.',
-          'Iceland also works well as a backup shop. Keep frozen veg, fish, chicken, and rice available so a missed supermarket trip does not become takeaway night.',
+          'The practical difference is that you stop cooking a week in one session. Take out three portions of chicken on Sunday for the first half of the week, cook those, and leave the rest in the bag. On Wednesday take out the next three. Nothing has been sitting in the fridge since Sunday, which is also the safer way to do it — chilled cooked food should be eaten within two days.',
+          'That suits the plans on this site that lean on repeated components: fish with potatoes and peas, chicken and frozen veg stir-fries, prawn rice bowls, chilli built on frozen peppers. Each of those is assembled from bags rather than from a single big cook.',
         ],
       },
       {
         h2: 'What to supplement elsewhere',
         paragraphs: [
-          'Depending on your local store, you may want oats, fresh salad, eggs, Greek yogurt, beans, and fruit from Aldi, Lidl, Tesco, or Asda.',
-          'The strongest plan uses Iceland for freezer staples and another supermarket for fresh basics.',
+          'Iceland keeps its fresh and frozen ranges as separate hierarchies, which is a fair reflection of how most people use it: a freezer shop, not a whole shop. Oats, eggs, Greek yogurt, salad, beans and fruit are usually a second stop.',
+          'That is not a failing of the store so much as the honest way to plan around it. Buy the protein and vegetables that benefit from being frozen at Iceland, and the short-life fresh basics wherever you normally shop.',
         ],
       },
     ],
@@ -2197,8 +2205,9 @@ export const expandedBlogPostsData = {
       { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners', type: 'blog' },
     ],
     faq: [
-      { q: 'Can you meal prep from Iceland?', a: 'Yes. Use frozen protein, vegetables, fish, rice, and fruit as the base, then supplement fresh staples where needed.' },
-      { q: 'Is frozen veg good for meal prep?', a: 'Yes. It is convenient, reduces waste, and is easy to add to most cooked meals.' },
+      { q: 'Can you meal prep from Iceland?', a: 'Yes, and the bagged frozen format suits it better than most supermarkets. Build the plan on bagged raw protein and frozen vegetables, then buy short-life fresh basics — eggs, yogurt, salad, fruit — elsewhere.' },
+      { q: 'Is frozen chicken as good as fresh for meal prep?', a: 'For planning purposes, plain frozen fillets behave like fresh: same weights, same nutrition, no spoilage clock once they are back in the freezer. The difference is coated or sauced products, where the coating carries calories the plan has not accounted for.' },
+      { q: 'Should I cook the whole week at once from frozen?', a: 'No, and this is the advantage of a bagged format. Take out the portions for the next two days, cook those, and leave the rest frozen. Cooked food kept chilled should be eaten within two days, so a full-week Sunday cook is the wrong shape regardless of where you shop.' },
     ],
   }),
 
@@ -2257,6 +2266,8 @@ export const expandedBlogPostsData = {
   }),
 
   'tesco-clubcard-meal-prep-uk': post({
+
+    supermarkets: ['tesco'],
     title: 'Tesco Clubcard Meal Prep UK',
     description: 'Tesco Clubcard meal prep guide with smart ways to use offers, own-brand staples and high-protein shopping without overspending.',
     h1: 'Tesco Clubcard Meal Prep UK',
@@ -2311,6 +2322,8 @@ export const expandedBlogPostsData = {
   }),
 
   'aldi-high-protein-shopping-list-uk': post({
+
+    supermarkets: ['aldi'],
     title: 'Aldi High Protein Shopping List UK',
     description: 'Aldi high protein shopping list for UK meal prep with eggs, chicken, yogurt, tuna, cottage cheese, lentils, beans and budget meals.',
     h1: 'Aldi High Protein Shopping List UK',
@@ -2521,6 +2534,8 @@ export const expandedBlogPostsData = {
   }),
 
   'aldi-vs-lidl-meal-prep': post({
+
+    supermarkets: ['aldi', 'lidl'],
     title: 'Aldi vs Lidl Meal Prep UK: Which Is Better for Weekly Plans?',
     description: 'A practical Aldi vs Lidl meal prep comparison for UK shoppers, covering protein, frozen foods, staples, price control and weekly shopping lists.',
     h1: 'Aldi vs Lidl Meal Prep UK',

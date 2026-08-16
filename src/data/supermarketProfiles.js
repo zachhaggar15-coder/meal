@@ -12,6 +12,14 @@
 // the plan's budget tier, not from here.
 //
 // Sources checked 2026-07-20: The Grocer, Which?, Grocery Gazette, Retail Gazette.
+//
+// `mealPrepEvidence` was added 2026-08-16 after an audit found that supermarket-
+// named articles would survive a find-and-replace of the store name. Each entry
+// is researched from the retailer's own site, records the URL and the date it
+// was checked, and deliberately holds durable facts — named ranges, product
+// formats, store structures — rather than prices or stock levels, which decay
+// within weeks. `angle` is the single reason someone would choose that retailer
+// for meal prep specifically.
 
 export const PRICING_CONTEXT_CHECKED = '2026-07-20';
 
@@ -31,6 +39,17 @@ export const SUPERMARKET_PROFILES = {
       'Ranges rotate and stock varies by store, so plan a fallback for any single named product.',
       'Fewer speciality and free-from lines than the big four, which matters for restrictive diets.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'aldi.co.uk category pages',
+      sourceUrl: 'https://www.aldi.co.uk/products/higher-protein-food-drink/k/1588161424510127',
+      angle: 'A short list done cheaply. Aldi carries one or two options per line rather than ten, which is a constraint when you want a specific product and an advantage when you just want the week bought quickly.',
+      findings: [
+        'Aldi lists a dedicated Higher Protein Food & Drink category online, so protein-led products are grouped rather than scattered through the aisles.',
+        'The Slimwell range groups lower-calorie prepared products in one place.',
+        'Specially Selected is the premium own-label tier; Everyday Essentials is the value tier.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 
@@ -49,6 +68,17 @@ export const SUPERMARKET_PROFILES = {
       'Middle-aisle stock is not reliable for weekly planning — treat it as a bonus, not a staple.',
       'Store-to-store availability varies more than at the big four.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'lidl.co.uk product and category pages',
+      sourceUrl: 'https://www.lidl.co.uk/c/high-protein/a10036613',
+      angle: 'Lidl is the discounter to pick when the plan leans on high-protein dairy, because its own-brand dairy line covers that specifically rather than incidentally.',
+      findings: [
+        'Milbona is the own-brand dairy label, and its high-protein line is unusually broad for a discounter: High Protein Skyr, High Protein Greek Style Yoghurt, Fat Free High Protein Yoghurt and a High Protein Drink are all listed as own-brand.',
+        'Lidl groups these under a dedicated High Protein category online rather than leaving them in general dairy.',
+        'Deluxe is the premium own-label tier.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 
@@ -67,6 +97,17 @@ export const SUPERMARKET_PROFILES = {
       'Non-Clubcard prices are noticeably higher; the card is effectively required to hit the budget estimate.',
       'The Stockwell & Co economy tier has been shrinking, so some value lines have moved up a tier.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'tesco.com own-label and Clubcard Prices pages',
+      sourceUrl: 'https://www.tesco.com/shop/en-GB/buylists/new-ranges/new-tesco-own-label-products/tesco-high-protein-range',
+      angle: 'Tesco is the tier-shopping supermarket: the same meal can be built at three different price points without leaving own-label, which is what makes it forgiving if your budget moves mid-month.',
+      findings: [
+        'Own-label runs across distinct tiers — Stockwell & Co for cupboard staples, the standard Tesco line, Hearty Food Co for prepared family dishes, and Tesco Finest at the top.',
+        'Tesco lists its own High Protein range as a named own-label range rather than a filter.',
+        'Clubcard Prices apply across own-label including fresh meat and fish, so the shelf price and the price you pay can differ materially.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 
@@ -85,6 +126,17 @@ export const SUPERMARKET_PROFILES = {
       'Just Essentials lines sell out quickly and availability is inconsistent.',
       'Rewards pays into a wallet rather than reducing the shop at the till, so it will not lower this week\'s bill.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'asda.com and corporate.asda.com',
+      sourceUrl: 'https://www.asda.com/groceries/just-essentials',
+      angle: 'Asda is the one to choose when the whole basket has to come from the value tier, because Just Essentials reaches into fresh meat and fish rather than stopping at cupboard goods.',
+      findings: [
+        'Just Essentials by Asda spans fresh meat, fish and poultry, bakery, frozen and cupboard staples — the value tier is not limited to ambient goods, which matters when protein is the expensive part of a plan.',
+        'Asda launched a high-protein ready-meal range in 2026 formulated to be high in protein and to carry at least 80g of fruit or vegetables per 250g meal.',
+        'Asda Rewards pays into a cashback wallet rather than discounting at the till, so it does not reduce the price of this week&rsquo;s shop.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 
@@ -103,6 +155,17 @@ export const SUPERMARKET_PROFILES = {
       'Without a Nectar card the effective basket cost is meaningfully higher.',
       'The Stamford Street value range has been trimmed, so fewer economy lines than a couple of years ago.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'about.sainsburys.co.uk and sainsburys.co.uk',
+      sourceUrl: 'https://www.about.sainsburys.co.uk/news/latest-news/2023/12-07-2023-sainsburys-nectr-prices-offers-savings-on-meat-fish-poultry',
+      angle: 'At Sainsbury&rsquo;s the loyalty card is not a rounding error. Nectar Prices reach meat, fish and poultry, which is where a high-protein plan spends most of its money.',
+      findings: [
+        'Nectar Prices apply to meat, fish and poultry, not only to cupboard and treat lines, so the protein element of a plan is where the member price matters most.',
+        'Taste the Difference is the premium own-label tier; Stamford Street Co is the consolidated value tier.',
+        'Nectar Prices are excluded at Sainsbury&rsquo;s Local, so a top-up shop will not carry the same prices as a main shop.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 
@@ -121,6 +184,17 @@ export const SUPERMARKET_PROFILES = {
       'The Savers range has been cut back, with some lines moved to standard pricing.',
       'Counter service is not available in every store or at every hour.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'morrisons.com Market Street pages',
+      sourceUrl: 'https://www.morrisons.com/inspiration/shopping-at-morrisons/market-street-hub',
+      angle: 'Morrisons is the one supermarket where you can ask for the exact cut and weight you want, which removes the usual meal-prep problem of packs that do not divide into your portions.',
+      findings: [
+        'Market Street butchery counters cut beef, lamb, pork, turkey and chicken to order — a joint tied, a steak trimmed, a chicken deboned — rather than only selling fixed prepacks.',
+        'Morrisons states it has more than 1,200 Market Street trained staff across its stores.',
+        'Savers is the value own-label tier and The Best is the premium tier.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 
@@ -139,6 +213,17 @@ export const SUPERMARKET_PROFILES = {
       'Limited fresh produce and store-cupboard range — most plans need a second shop elsewhere.',
       'Freezer space is the practical constraint, not budget.',
     ],
+    mealPrepEvidence: {
+      checked: '2026-08-16',
+      source: 'iceland.co.uk product and category pages',
+      sourceUrl: 'https://www.iceland.co.uk/frozen/frozen-meat-and-chicken/chicken',
+      angle: 'Iceland solves the portioning problem rather than the price problem. Bagged frozen protein lets you take out exactly the number of portions you are cooking, which is the opposite of a fresh pack that has to be used within days.',
+      findings: [
+        'Own-label chicken breast fillets are sold frozen and bagged in 1kg and 1.2kg sizes, plus a mini-fillet bag, so portions come out of the freezer individually instead of committing you to a whole pack.',
+        'Iceland stocks an exclusive Slimming World frozen range, which is the clearest example of a calorie-controlled line you cannot buy from the other supermarkets.',
+        'The site separates a frozen and a fresh hierarchy, so the fresh basics a plan still needs are a distinct shop rather than an afterthought.',
+      ],
+    },
     minBudgetTier: 'very-cheap',
   },
 

@@ -299,3 +299,95 @@ details > summary.tappable-summary {
   align-items: center;
   min-height: 44px;
 }
+
+/* ── Supermarket evidence on editorial pages ──────────────────────────────── */
+
+.supermarket-evidence {
+  margin: 28px 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.supermarket-evidence h2 {
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+}
+
+.supermarket-evidence-block + .supermarket-evidence-block {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.supermarket-evidence-block h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.supermarket-evidence-angle {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.supermarket-evidence-findings {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.supermarket-evidence-findings li {
+  margin-bottom: 6px;
+}
+
+.supermarket-evidence-plans h4 {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+}
+
+.supermarket-evidence-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.supermarket-evidence-stats li {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+.supermarket-evidence-stats strong {
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.supermarket-evidence-stats span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.supermarket-evidence-plan-copy {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.supermarket-evidence-source {
+  margin: 0;
+  padding: 8px 10px;
+  border-left: 3px solid var(--border);
+  background: var(--bg);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
