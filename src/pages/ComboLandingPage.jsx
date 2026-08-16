@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
 import TrustBox, { DEFAULT_SOURCES } from '../components/TrustBox.jsx';
@@ -211,6 +212,7 @@ export default function ComboLandingPage({ page }) {
         )}
         <TrustBox sources={DEFAULT_SOURCES} {...contentProvenance(page)} />
       </div>
+      <Footer />
     </>
   );
 }

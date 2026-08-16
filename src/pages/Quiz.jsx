@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { PLAN_COUNT } from '../data/planSeeds.js';
 import { track } from '../utils/analytics.js';
@@ -464,6 +465,7 @@ export default function Quiz() {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

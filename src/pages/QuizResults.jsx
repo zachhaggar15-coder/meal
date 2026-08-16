@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
@@ -255,6 +256,7 @@ export default function QuizResults() {
           <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT} Plans</Link>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

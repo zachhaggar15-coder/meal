@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
 import PopularSearches from '../components/PopularSearches.jsx';
@@ -474,6 +475,7 @@ export default function BrowsePlans() {
           </div>
         </section>
       </div>
+      <Footer />
     </>
   );
 }

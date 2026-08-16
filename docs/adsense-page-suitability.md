@@ -91,5 +91,12 @@ of enabling ads.
    convention, so an error or empty state cannot become inventory.
 6. **`ads.txt`** already exists at `/ads.txt` with the publisher ID and needs no
    change.
-7. **Re-run the performance audit** after enabling. The current budget
+7. **Reduce promotional density on container articles first.** Measured
+   16 August 2026: 22 pages carry affiliate and product modules amounting to
+   45-48% of their main content. No ads run there today and those pages are
+   classified ad-free above, so nothing is breached. But adding ad units to a
+   page already approaching half promotional content would breach the
+   inventory-value policy, so that ratio must come down before any ad is placed
+   on them.
+8. **Re-run the performance audit** after enabling. The current budget
    (198.5 KB initial JS gzip) does not include an ad script.

@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import NotFound from './NotFound.jsx';
@@ -151,6 +152,7 @@ export default function PlanChooserPage() {
 
         <PageHeroVisual visual={chooserVisual} className="plan-chooser-visual plan-chooser-visual--after-grid" priority />
       </div>
+      <Footer />
     </>
   );
 }

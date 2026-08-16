@@ -1,5 +1,6 @@
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SEO from '../components/SEO.jsx';
+import Footer from '../components/Footer.jsx';
 
 export default function Feedback() {
   return (
@@ -27,6 +28,7 @@ export default function Feedback() {
           placeholder="What should we fix, add, simplify or explain better?"
         />
       </div>
+      <Footer />
     </>
   );
 }
