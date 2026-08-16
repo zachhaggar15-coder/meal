@@ -391,3 +391,124 @@ details > summary.tappable-summary {
   line-height: 1.55;
   color: var(--muted);
 }
+
+/* Product spec plate
+   ------------------
+   Replaces the Amazon product photography that had to be removed. It is not a
+   placeholder standing in for a missing image: a studio shot of a stack of tubs
+   told the reader nothing the product name did not, whereas material, capacity
+   and price band are what actually decide the purchase. Sized to sit in the
+   same slot the image occupied so the card grids keep their rhythm. */
+.product-spec-plate {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--spec-plate-border, #dbe3ea);
+  border-radius: 10px;
+  background: var(--spec-plate-bg, #f6f8fa);
+  min-height: 116px;
+  justify-content: center;
+}
+
+.product-spec-plate-badge {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #065f46;
+  background: #d7f5e5;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+
+.product-spec-plate-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.product-spec-plate-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  border-bottom: 1px dotted #cbd5e1;
+  padding-bottom: 5px;
+}
+.product-spec-plate-row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.product-spec-plate-row dt {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 0;
+}
+
+.product-spec-plate-row dd {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+}
+
+.product-spec-plate-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 5px;
+}
+.product-spec-plate-points li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.86rem;
+  color: #1f2937;
+}
+.product-spec-plate-points li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #059669;
+  font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  .product-spec-plate {
+    --spec-plate-border: #334155;
+    --spec-plate-bg: #1e293b;
+  }
+  .product-spec-plate-row dd { color: #e2e8f0; }
+  .product-spec-plate-points li { color: #cbd5e1; }
+  .product-spec-plate-row { border-bottom-color: #475569; }
+}
+
+/* The container comparison card used to be a thumbnail beside a body, and on
+   narrow screens App.css squeezes that image column to 150px and then 100px.
+   A spec plate is text, so 100px turned two short rows into a 638px tower.
+   Where the card carries a plate instead of a photo, it stacks. */
+.content-page .container-direct-card--specs {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+}
+
+@media (max-width: 900px) {
+  .content-page .container-direct-card--specs {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+
+  .content-page .container-direct-card--specs .container-direct-media {
+    border-right: 0;
+    border-bottom: 1px solid #dfcfb3;
+    min-height: 0;
+    padding: 14px;
+  }
+}

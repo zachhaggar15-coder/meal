@@ -697,6 +697,9 @@ export default function ToolsPage() {
                 {containerCopy.guideLabel}
               </Link>
             </div>
+            {/* The Associates agreement requires the disclosure wherever a
+                tagged link is shown. This panel had one and no disclosure. */}
+            <p className="affiliate-disclosure">{containerOffer.disclosure}</p>
           </section>
 
           <section id="shopping-budget-estimator" className="tool-panel">

@@ -1,6 +1,7 @@
 import { AFFILIATE_DISCLOSURE, getMealPrepProducts } from '../data/mealPrepProducts.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
+import ProductSpecPlate from './ProductSpecPlate.jsx';
 
 // Generic (non-container) product recommendation cards: slow cookers, rice
 // cookers, scales, blenders, freezer bags, vacuum sealers, cookbooks.
@@ -80,7 +81,7 @@ export default function ProductPicks({
       <div className="product-picks-grid">
         {products.map((product, index) => (
           <article key={product.id} className="product-pick-card">
-            {showImages && product.image && (
+            {showImages && (
               <a
                 className="product-pick-image"
                 href={product.href}
@@ -94,14 +95,7 @@ export default function ProductPicks({
                   recommendationSource,
                 })}
               >
-                <img
-                  src={product.image}
-                  alt={product.imageAlt || product.name}
-                  width={product.imageWidth}
-                  height={product.imageHeight}
-                  loading="lazy"
-                  decoding="async"
-                />
+                <ProductSpecPlate product={product} />
               </a>
             )}
             <div className="product-pick-top">

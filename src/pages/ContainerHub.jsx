@@ -214,7 +214,6 @@ export default function ContainerHub() {
         title="Meal Prep Containers UK: Compare 3 Sizes First"
         description="Compare three common UK meal prep container setups first: cheap plastic multipacks, five glass lunch boxes and larger 10-piece glass sets."
         canonical="/meal-prep-containers"
-        ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
         jsonLd={jsonLd}
       />
 

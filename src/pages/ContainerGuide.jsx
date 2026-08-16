@@ -147,7 +147,6 @@ export default function ContainerGuide() {
         title={`${guide.title} | MealPrep.org.uk`}
         description={guide.description}
         canonical={canonical}
-        ogImage={`https://www.mealprep.org.uk${guide.heroImage}`}
         jsonLd={jsonLd}
       />
 
@@ -341,7 +340,6 @@ function buildProductJsonLd(product, canonical) {
     '@type': 'Product',
     '@id': productJsonLdId(canonical, product),
     name: product.name,
-    image: product.image,
     description: product.summary,
     sku: product.asin,
     url: product.href,

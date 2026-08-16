@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
+import ProductSpecPlate from './ProductSpecPlate.jsx';
 
 export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 'unknown', compact = false }) {
   return (
     <aside className={`sticker-promo${compact ? ' sticker-promo--compact' : ''}`}>
-      {offer.image && (
+      {(offer.proofPoints || []).length > 0 && (
         <a
           href={offer.href}
           target="_blank"
@@ -16,14 +17,7 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
           data-affiliate-category="meal-prep-containers"
           data-product-name={offer.name}
         >
-          <img
-            src={offer.image}
-            alt={offer.imageAlt || offer.name}
-            width={offer.imageWidth}
-            height={offer.imageHeight}
-            loading="lazy"
-            decoding="async"
-          />
+          <ProductSpecPlate product={offer} />
         </a>
       )}
       <div className="sticker-promo-text">

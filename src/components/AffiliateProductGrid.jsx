@@ -3,6 +3,7 @@ import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import ContainerQuickComparison from './ContainerQuickComparison.jsx';
 import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
+import ProductSpecPlate from './ProductSpecPlate.jsx';
 
 export default function AffiliateProductGrid({
   title = 'Recommended meal prep containers',
@@ -57,16 +58,7 @@ export default function AffiliateProductGrid({
         {products.map((product, index) => (
           <article key={product.name} className={`affiliate-product-card${compact ? ' affiliate-product-card--compact' : ''}`}>
             {!compact && (
-              <div className="affiliate-product-media">
-                <img
-                  src={product.image}
-                  alt={product.imageAlt || `${product.name} meal prep containers`}
-                  width={product.imageWidth}
-                  height={product.imageHeight}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
+              <ProductSpecPlate product={product} className="affiliate-product-media" />
             )}
             <div className="affiliate-product-body">
               <span className="affiliate-product-badge">{product.badge}</span>

@@ -3,6 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { MEAL_PREP_STICKERS, BUDGET_CONTAINERS } from '../data/offers.js';
+import ProductSpecPlate from '../components/ProductSpecPlate.jsx';
 
 const glassContainerJsonLd = [
   {
@@ -31,7 +32,6 @@ export default function Stickers() {
         title="Glass Meal Prep Container Deal UK | Quick Compare"
         description="See a glass meal prep container pick quickly, compare it with a budget plastic alternative, then scroll for deeper buying notes."
         canonical="/glass-meal-prep-containers"
-        ogImage="https://www.mealprep.org.uk/meal-containers-ad.jpg"
         jsonLd={glassContainerJsonLd}
       />
       <div className="page content-page product-placement-page">
@@ -91,7 +91,7 @@ export default function Stickers() {
             data-source-page="glass-container-image"
             data-offer={MEAL_PREP_STICKERS.name}
           >
-            <img src={MEAL_PREP_STICKERS.image} alt="BOROHOUSE 10-pack glass food storage containers" />
+            <ProductSpecPlate product={MEAL_PREP_STICKERS} />
           </a>
         </section>
 
@@ -124,7 +124,7 @@ export default function Stickers() {
               data-source-page="glass-container-product-card-img"
               data-offer={MEAL_PREP_STICKERS.name}
             >
-              <img src={MEAL_PREP_STICKERS.image} alt={MEAL_PREP_STICKERS.imageAlt} className="product-card-img" />
+              <ProductSpecPlate product={MEAL_PREP_STICKERS} className="product-card-img" />
             </a>
             <div className="sticker-product-card-inner">
               <span className="product-badge product-badge--premium">Glass - Premium</span>
@@ -162,7 +162,7 @@ export default function Stickers() {
               data-source-page="glass-container-product-card-img"
               data-offer={BUDGET_CONTAINERS.name}
             >
-              <img src={BUDGET_CONTAINERS.image} alt={BUDGET_CONTAINERS.imageAlt} className="product-card-img" />
+              <ProductSpecPlate product={BUDGET_CONTAINERS} className="product-card-img" />
             </a>
             <div className="sticker-product-card-inner">
               <span className="product-badge product-badge--budget">Plastic - Budget</span>

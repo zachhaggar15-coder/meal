@@ -19,7 +19,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Reusable plastic',
     bestFor: 'Bulk weekday lunches, freezer portions, and beginner meal prep',
     href: amazonProductUrl('Vinsani-Compartment-Containers-Reusable-Stackable', 'B0DN32KNK3'),
-    image: 'https://m.media-amazon.com/images/I/71pUFJ5k6+L._AC_SL1500_.jpg',
     badge: 'Best starter pack',
     summary:
       'A large divided-container pack for people who want low cost per tub and enough boxes for serious batch cooking.',
@@ -38,7 +37,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'BPA-free plastic',
     bestFor: 'Simple one-compartment lunches and stacked fridge storage',
     href: amazonProductUrl('Igluu-Containers-Reusable-Stackable-Dishwasher', 'B073N49WSY'),
-    image: 'https://m.media-amazon.com/images/I/81oVaOv3bEL._AC_SL1500_.jpg',
     badge: 'Best simple plastic set',
     summary:
       'A practical reusable-plastic option for people who prefer one open compartment instead of dividers.',
@@ -57,7 +55,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'BPA-free plastic',
     bestFor: 'Portion-controlled lunches where foods need to stay separate',
     href: amazonProductUrl('Harbour-Housewares-Reusable-Containers-Compartment', 'B0H2HQBZ8S'),
-    image: 'https://m.media-amazon.com/images/I/81UNEItUwAL._AC_SL1500_.jpg',
     badge: 'Best divided budget pick',
     summary:
       'A divided budget set for classic protein, carb, and vegetable meal prep without moving up to glass.',
@@ -76,7 +73,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Plastic',
     bestFor: 'Cheap lunch boxes, leftovers, snacks, and flexible kitchen storage',
     href: amazonProductUrl('Rubbermaid-TakeAlongs-Storage-Containers-2115739', 'B098KJHWVD'),
-    image: 'https://m.media-amazon.com/images/I/81t0ns3i7CL._AC_SL1500_.jpg',
     badge: 'Best flexible starter kit',
     summary:
       'A low-cost rectangular set for kitchens that need tubs for lunches, snacks, sauces, and leftovers.',
@@ -95,7 +91,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Plastic',
     bestFor: 'Macro-style portions where each food group stays separate',
     href: amazonProductUrl('Compartment-Meal-Prep-Containers-Lids', 'B0GY1TXBRK'),
-    image: 'https://m.media-amazon.com/images/I/710t7TThBcL._AC_SL1500_.jpg',
     badge: 'Best macro layout',
     summary:
       'A divided plastic option for gym-style prep, structured lunches, and predictable portions.',
@@ -114,7 +109,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Plastic',
     bestFor: 'High-volume batch cooking, freezer portions, and shared households',
     href: amazonProductUrl('Dealusy-100-Piece-Containers-Leakproof-Dishwasher', 'B0D3HYC8H1'),
-    image: 'https://m.media-amazon.com/images/I/71oB3+94jBL._AC_SL1500_.jpg',
     badge: 'Best big multipack',
     summary:
       'A high-count plastic set for buyers who want lots of usable tubs rather than a premium material.',
@@ -133,7 +127,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Silicone',
     bestFor: 'Flat-freezing soup, sauce, cooked mince and larger batch portions',
     href: amazonProductUrl('Moonmoon-Reusable-Silicone-Extra-1500ml', 'B09WDYT3L3'),
-    image: 'https://m.media-amazon.com/images/I/61OPQFv8ckL._AC_SY300_SX300_QL70_ML2_.jpg',
     imageAlt: 'Moonmoon 1500ml reusable silicone freezer bags',
     badge: 'Best large freezer bag',
     summary:
@@ -154,7 +147,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Silicone',
     bestFor: 'A starter freezer-bag set for meals, smoothie packs, snacks and sauces',
     href: amazonProductUrl('Moonmoon-Reusable-Silicone-Leakproof-Freezer', 'B0GR6DNKMS'),
-    image: 'https://m.media-amazon.com/images/I/61Pr09Ub2-L._AC_SY300_SX300_QL70_ML2_.jpg',
     imageAlt: 'Moonmoon mixed reusable silicone freezer bags',
     badge: 'Best mixed starter set',
     summary:
@@ -175,7 +167,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Silicone',
     bestFor: 'Single-portion freezer meals, smoothie packs and smaller batch portions',
     href: amazonProductUrl('Moonmoon-Reusable-Silicone-Leakproof-Resealable', 'B0CR6P2PLD'),
-    image: 'https://m.media-amazon.com/images/I/71-SHzP1SqL._AC_SY300_SX300_QL70_ML2_.jpg',
     imageAlt: 'Moonmoon 900ml reusable silicone freezer bags',
     badge: 'Best single-portion bag',
     summary:
@@ -196,7 +187,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Silicone',
     bestFor: 'Meal-sized freezer prep with smaller bags for snacks, sides and sauces',
     href: amazonProductUrl('Brighter-Goods-Container-Microwave-Dishwasher', 'B0G2M4VW8X'),
-    image: 'https://m.media-amazon.com/images/I/61v5QLjiz7L._AC_SY300_SX300_QL70_ML2_.jpg',
     imageAlt: 'Brighter Goods reusable silicone freezer bag set',
     badge: 'Best mixed-size alternative',
     summary:
@@ -217,7 +207,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Silicone',
     bestFor: 'Larger flat-freezer portions, family batch cooking and sauce-heavy meals',
     href: amazonProductUrl('Tuffa-Reusable-Silicone-Food-Storage', 'B0FTHLL9RT'),
-    image: 'https://m.media-amazon.com/images/I/512p-v4LrzL._AC_SY300_SX300_QL70_ML2_.jpg',
     imageAlt: 'Tuffa 1.5L reusable silicone freezer bags',
     badge: 'Best big-batch set',
     summary:
@@ -238,7 +227,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'A balanced glass upgrade without paying premium-set prices',
     href: amazonProductUrl('Harbour-Housewares-Glass-Containers-Airtight', 'B0DXQ8WSRP'),
-    image: 'https://m.media-amazon.com/images/I/81mK-4MZ-XL._AC_SL1500_.jpg',
     badge: 'Best balanced glass set',
     summary:
       'A strong mid-range pick for people moving from plastic to glass meal prep containers.',
@@ -257,7 +245,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'Leak-resistant glass lunches and oven-to-fridge meal prep',
     href: amazonProductUrl('MFY-Glass-Containers-Lids-Reusable', 'B0F1YLJPL6'),
-    image: 'https://m.media-amazon.com/images/I/919s6bJjoWL._AC_SL1500_.jpg',
     badge: 'Best known glass pick',
     summary:
       'A popular glass meal prep format for anyone who wants identical lunch-sized containers.',
@@ -276,7 +263,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'Brand-led glass lunches and leftovers with secure lids',
     href: amazonProductUrl('Pyrex-Freshlock-Glass-Storage-Containers', 'B0BLPBV2MW'),
-    image: 'https://m.media-amazon.com/images/I/71ASFq5TvnL._AC_SL1500_.jpg',
     badge: 'Best brand confidence',
     summary:
       'A recognisable glass brand choice for buyers who value familiar lids, bases, and replacement options.',
@@ -295,7 +281,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Borosilicate glass',
     bestFor: 'A compact glass set for weekday lunches and leftovers',
     href: amazonProductUrl('5-Pack-Food-storage-glass-containers', 'B06Y31WGWR'),
-    image: 'https://m.media-amazon.com/images/I/716EF6j6r2L._AC_SL1500_.jpg',
     badge: 'Best compact glass set',
     summary:
       'A mid-range borosilicate glass set for buyers who want practical lunch boxes without a large 10-pack.',
@@ -314,7 +299,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'Batch-cooked lunches that need sturdy glass bases',
     href: amazonProductUrl('5-Pack-Food-storage-glass-containers', 'B07JK1LGHQ'),
-    image: 'https://m.media-amazon.com/images/I/916+D-0w5cL._AC_UL320_.jpg',
     badge: 'Best sturdy feel',
     summary:
       'A mid-range glass set to compare when you want durability and matching lunch portions.',
@@ -333,7 +317,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'Glass meal prep with mixed sizes for lunches and leftovers',
     href: amazonProductUrl('Susukkie-Glass-Food-Storage-Containers', 'B0DBGCLZ1K'),
-    image: 'https://m.media-amazon.com/images/I/71bGQUg89NL._AC_SL1500_.jpg',
     badge: 'Best mixed glass option',
     summary:
       'A useful middle ground for buyers who want glass containers for lunches, sides, snacks, and leftovers.',
@@ -352,7 +335,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Borosilicate glass',
     bestFor: 'A fuller glass setup for serious weekly meal prep',
     href: amazonProductUrl('BOROHOUSE-10-Pack-Glass-Storage-Containers', 'B0FFH1DW9W'),
-    image: 'https://m.media-amazon.com/images/I/71umtWE-9mL._AC_SL1500_.jpg',
     badge: 'Best full-week glass set',
     summary:
       'A larger glass set for meal preppers who want enough containers for lunches, dinners, and leftovers.',
@@ -371,7 +353,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Stainless steel and glass mix',
     bestFor: 'Commuters who want a premium lunch setup',
     href: amazonProductUrl('Black-Blum-Meal-Prep-Set', 'B0BYPF5TV8'),
-    image: 'https://m.media-amazon.com/images/I/710LgYRcuFL._AC_SL1500_.jpg',
     badge: 'Best premium commute pick',
     summary:
       'A premium route for buyers who want something more designed and durable than basic plastic tubs.',
@@ -390,7 +371,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'Premium seals and mixed home storage',
     href: amazonProductUrl('OXO-Good-Grips-Container-4-Piece', 'B075GRTNN6'),
-    image: 'https://m.media-amazon.com/images/I/71St+tcXeIL._AC_SL1500_.jpg',
     badge: 'Best premium seal',
     summary:
       'A premium mixed glass set for people who care most about seal quality and long-term feel.',
@@ -409,7 +389,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Premium plastic (leak-focused)',
     bestFor: 'Leak-resistant premium leftovers and meal prep',
     href: amazonProductUrl('Rubbermaid-Brilliance-Storage-Container-Set', 'B08B7GLYZC'),
-    image: 'https://m.media-amazon.com/images/I/81T0-lmYxPL._AC_SL1500_.jpg',
     badge: 'Best leak focus',
     summary:
       'A premium storage option to compare if your main frustration is weak lids or messy bags.',
@@ -428,7 +407,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Plastic',
     bestFor: 'Small kitchens where cupboard space matters',
     href: amazonProductUrl('Joseph-Nest-Lock-Storage-Containers', 'B00IJBCBPE'),
-    image: 'https://m.media-amazon.com/images/I/81SwhLzNoIL._AC_SL1500_.jpg',
     badge: 'Best space saver',
     summary:
       'A premium plastic option for buyers who want neat nesting storage more than glass reheating.',
@@ -447,7 +425,6 @@ export const CONTAINER_PRODUCTS = {
     material: 'Glass',
     bestFor: 'Brand-led premium glass storage with secure lids',
     href: amazonProductUrl('Pyrex-Freshlock-Glass-Storage-Containers', 'B08V8CMQWS'),
-    image: 'https://images-na.ssl-images-amazon.com/images/P/B08V8CMQWS.01._SL1500_.jpg',
     badge: 'Best branded glass set',
     summary:
       'A premium Pyrex route for people replacing plastic with a long-term glass storage system.',
@@ -735,7 +712,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     summaryText:
       'Compare six glass-focused Amazon UK picks for work lunches, reheating, stain resistance and fuller weekly prep.',
     heroProductId: 'harbour-housewares-glass-5-pack',
-    heroImage: '/meal-containers-ad.jpg',
     intro:
       'Glass meal prep containers are the cleanest upgrade when plastic tubs are staining, smelling, or feeling flimsy after repeated reheating. Start with five lunch-sized boxes if you mainly prep work lunches, then move to a larger glass set when you prep lunches, dinners and leftovers together.',
     productIds: [
@@ -795,7 +771,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     summaryText:
       'Compare plastic Amazon UK picks for low cost, light commuting, divided portions and high-volume freezer prep.',
     heroProductId: 'budget-compartment-50-pack',
-    heroImage: '/budget-containers-ad.jpg',
     intro:
       'Plastic meal prep containers are the practical route when you need lots of boxes quickly. They are light, cheap and easy to stack, which makes them useful for beginners, students, family batch cooking and freezer portions.',
     productIds: [
@@ -855,7 +830,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     summaryText:
       'Compare containers with stronger lid designs for commuting, sauces, soup-style meals and bag-friendly lunches.',
     heroProductId: 'rubbermaid-brilliance-glass',
-    heroImage: '/meal-containers-ad.jpg',
     intro:
       'Leakproof meal prep containers matter most when food travels. If you carry chilli, curry, salad dressing, soup-style meals or overnight oats, lid reliability is more important than a big box count.',
     productIds: [
@@ -915,7 +889,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     summaryText:
       'Compare freezer-friendly container sets for bulk cooking, leftovers, sauces and weekly portion rotation.',
     heroProductId: 'deli-twist-lid-tubs',
-    heroImage: '/budget-containers-ad.jpg',
     intro:
       'Freezer-safe meal prep containers are best when you cook in batches and rotate portions through the week. The right set should stack neatly, label easily and avoid wasting freezer space.',
     productIds: [
@@ -982,7 +955,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     productGridIntro:
       'Each reusable freezer-bag pick is chosen for a different job: large flat-freezer portions, single servings, smoothie packs, sauce storage, or a mixed set to use alongside rigid containers.',
     heroProductId: 'moonmoon-1500ml-silicone-bags',
-    heroImage: '/budget-containers-ad.jpg',
     intro:
       'Freezer bags are not a replacement for every meal prep container. They are the extra tool that solves flat-freezing: soup, sauce, cooked mince, smoothie packs and batch portions that would waste space in rigid tubs. Use bags for freezer storage and keep glass or plastic boxes for lunches you eat from directly.',
     productIds: [
@@ -1059,7 +1031,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     summaryText:
       'Compare lunch-friendly containers for office reheating, commuting, fridge stacking and five-day work prep.',
     heroProductId: 'harbour-housewares-glass-5-pack',
-    heroImage: '/meal-containers-ad.jpg',
     intro:
       'Meal prep boxes for work should be easy to carry, easy to stack in a fridge and simple to reheat. The best starting point is usually five rectangular lunch containers around 900ml to 1 litre.',
     productIds: [
@@ -1119,7 +1090,6 @@ const LONG_TAIL_CONTAINER_GUIDES = {
     summaryText:
       'Compare larger Amazon UK container sets for lunches, dinners, family prep and freezer rotation.',
     heroProductId: 'borohouse-10-pack-glass',
-    heroImage: '/meal-containers-ad.jpg',
     intro:
       'Large meal prep container sets are for people who already cook in bulk. They make sense when five lunch boxes are not enough and you need coverage for dinners, leftovers, snacks or freezer portions too.',
     productIds: [
@@ -1180,7 +1150,6 @@ export const CONTAINER_GUIDES = {
     kicker: 'Budget buying guide',
     priceBand: 'Around \u00a315-\u00a325 target',
     heroProductId: 'budget-compartment-50-pack',
-    heroImage: '/budget-containers-ad.jpg',
     intro:
       'Budget meal prep containers are best when you need a lot of plastic tubs quickly: weekday lunches, freezer portions, student cooking, or a first attempt at batch cooking. Prioritise quantity, stackability, and sensible lid fit over premium materials, and check the live Amazon price before buying.',
     productIds: [
@@ -1238,7 +1207,6 @@ export const CONTAINER_GUIDES = {
     kicker: 'Best balance',
     priceBand: '\u00a315-\u00a330 target',
     heroProductId: 'harbour-housewares-glass-5-pack',
-    heroImage: '/meal-containers-ad.jpg',
     intro:
       'Mid range is the sweet spot for most UK meal preppers. You can step up from plastic into glass, get better lids, avoid staining, and still keep the purchase sensible.',
     productIds: [
@@ -1296,7 +1264,6 @@ export const CONTAINER_GUIDES = {
     kicker: 'Premium buying guide',
     priceBand: '\u00a330+ target',
     heroProductId: 'borohouse-10-pack-glass',
-    heroImage: '/meal-containers-ad.jpg',
     intro:
       'Premium meal prep containers are for people who already batch cook consistently and want a long-term system: enough containers for lunches and dinners, stronger lids, better cupboard organisation, and materials that feel good after months of use.',
     productIds: [

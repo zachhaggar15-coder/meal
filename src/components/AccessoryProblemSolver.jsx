@@ -108,8 +108,6 @@ function ProblemResult({ problem }) {
         {problem.guidance.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
       </div>
 
-      <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
-
       <div className={`accessory-recommendation-grid${problem.recommendations.length === 1 ? ' accessory-recommendation-grid--single' : ''}`}>
         {problem.recommendations.map((recommendation, index) => (
           <RecommendationCard
@@ -169,7 +167,6 @@ function AccessoryCatalogue({ isOpen, onToggle, selectedProblem }) {
 
       {isOpen && (
         <div id="accessory-catalogue-products" className="accessory-catalogue-products">
-          {!selectedProblem && <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>}
           {selectedProblem && (
             <p className="accessory-catalogue-note">
               {selectedProblem.recommendations.length} selected {selectedProblem.recommendations.length === 1 ? 'recommendation remains' : 'recommendations remain'} in the decision panel above; the other {catalogueProducts.length} products are listed here.
@@ -234,6 +231,13 @@ export default function AccessoryProblemSolver() {
             Choose the part of meal prep you want to make easier. We’ll show the most relevant option first, plus an alternative only where it genuinely helps.
           </p>
         </div>
+
+        {/* The disclosure used to appear only once a problem was selected or
+            the catalogue was opened, so this page could serve twenty tagged
+            affiliate links with nothing disclosed at all. The Associates
+            agreement wants it wherever those links are, so it is stated up
+            front and the two conditional copies below are redundant. */}
+        <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
 
         <div className="accessory-problem-selector" aria-label="Choose a meal-prep problem">
           {ACCESSORY_PROBLEMS.map(problem => {

@@ -6,6 +6,7 @@ import {
 } from '../data/containerProducts.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
+import ProductSpecPlate from './ProductSpecPlate.jsx';
 
 function resolveComparisonItems({ picks, productIds, fallbackSearch }) {
   if (picks?.length) {
@@ -100,15 +101,8 @@ export default function ContainerQuickComparison({
 
       <div className={`container-direct-grid container-direct-grid--${Math.min(items.length, 3)}`}>
         {items.map(({ product, searchedFor, sizeLabel, sizeFocus, fit, guidePath }, index) => (
-          <article key={product.id} className="container-direct-card">
-            <div className="container-direct-media">
-              <img
-                src={product.image}
-                alt={product.imageAlt || `${product.shortName} meal prep containers`}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
+          <article key={product.id} className="container-direct-card container-direct-card--specs">
+            <ProductSpecPlate product={product} className="container-direct-media" />
             <div className="container-direct-body">
               <span className="container-search-chip">Best for: {searchedFor}</span>
               <CardHeadingTag>{sizeLabel}</CardHeadingTag>
