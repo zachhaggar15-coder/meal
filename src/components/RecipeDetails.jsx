@@ -33,9 +33,6 @@ export default function RecipeDetails({ meal = {}, children = null, headingLevel
                 <li key={`${ingredient}-${index}`}>{ingredient}</li>
               ))}
             </ul>
-            <p className="plan-recipe-quantity-note">
-              Cooking measures are rounded for ease; nutrition and plan totals use the precise calculated quantities.
-            </p>
           </section>
         ) : null}
 

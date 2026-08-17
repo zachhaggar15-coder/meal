@@ -25,14 +25,71 @@ const FISHCAKE_CANONICAL = [
 ];
 
 test('awkward optimisation quantities become practical cooking measures', () => {
+  // A reference weight survives only where the quantity word does not tell a
+  // cook what to reach for. "2 generous handfuls" needs one; "1 medium sweet
+  // potato" and "1 standard tin" do not, and a second number beside them is
+  // one more thing to disagree with.
   assert.deepEqual(getCookingIngredientDisplay(FISHCAKE_CANONICAL), [
-    '1 standard tin of tuna, drained (about 125g)',
-    '1 medium sweet potato, cooked and mashed (about 175g)',
+    '1 standard tin of tuna, drained',
+    '1 medium sweet potato, cooked and mashed',
     '2 spring onions',
     '1 egg',
     '2 generous handfuls mixed leaves (about 50g)',
     '1 tbsp lemon dressing',
   ]);
+});
+
+test('a tin fraction and its weight can never contradict each other', () => {
+  // These lines used to state a share of a tin and a gram amount that were not
+  // the same quantity: "1 standard tin of tomatoes (about 475g)" asked for 75g
+  // more than a 400g tin holds, and "about ¼ of a standard tin of tomatoes
+  // (about 150g)" called 37% of a tin a quarter — the ⅓ candidate printed as
+  // "¼" because the fraction formatter only renders quarters.
+  //
+  // The tin share is now the only quantity stated, so the tin size implies the
+  // grams and there is no second number to disagree with. An amount that no
+  // quarter-step share describes falls back to plain grams rather than
+  // rounding a lie into place.
+  const display = value => getCookingIngredientDisplay([value])[0];
+
+  assert.equal(display('Tinned tomatoes 400g'), '1 standard tin of tomatoes');
+  assert.equal(display('Tinned tomatoes 600g'), '1½ standard tins of tomatoes');
+  assert.equal(display('Tinned chickpeas 120g'), '½ of a standard tin of chickpeas, drained');
+  assert.equal(display('Tinned tomatoes 150g'), '150g tomatoes');
+
+  for (const grams of [65, 90, 120, 150, 175, 200, 240, 300, 400, 475, 600, 700]) {
+    for (const food of ['tomatoes', 'chickpeas', 'tuna']) {
+      const line = display(`Tinned ${food} ${grams}g`);
+      const statesTin = /\btins?\b/.test(line);
+      const statesGrams = /\d+g\b/.test(line);
+      assert.ok(
+        statesTin !== statesGrams,
+        `"${line}" states both a tin count and a weight, which can disagree`,
+      );
+    }
+  }
+});
+
+test('practical quantities are stated confidently, not hedged', () => {
+  // "about 275g oats" reads as an estimate the cook should second-guess. It is
+  // not: 275g IS the instruction, already rounded from the optimiser's 281g.
+  // Hedging belongs on quantities that genuinely vary — a handful, a whole
+  // vegetable, a share of a tin — and those keep it.
+  assert.equal(getCookingIngredientDisplay(['Oats 281g'])[0], '275g oats');
+  assert.equal(getCookingIngredientDisplay(['Gravy 97ml'])[0], '95ml gravy');
+  assert.equal(getCookingIngredientDisplay(['Steak 194g'])[0], '200g steak');
+  assert.equal(getCookingIngredientDisplay(['Mushrooms 97g'])[0], '100g mushrooms');
+  assert.match(getCookingIngredientDisplay(['Mixed leaves 53g'])[0], /^2 generous handfuls/);
+});
+
+test('counted produce is counted, not counted and then weighed', () => {
+  // "1 apple (220g)" makes a shopper check a weight they will never act on.
+  assert.equal(getCookingIngredientDisplay(['Apple 1'])[0], '1 apple');
+  assert.equal(getCookingIngredientDisplay(['Banana 1'])[0], '1 banana');
+  assert.equal(getCookingIngredientDisplay(['Sweet potato 176g'])[0], '1 medium sweet potato');
+  // …but produce you cut a share off keeps its anchor, because "½ a cauliflower"
+  // is not a portion size anyone can picture.
+  assert.match(getCookingIngredientDisplay(['Broccoli 175g'])[0], /\(about 175g\)$/);
 });
 
 test('cooking display retains the untouched canonical calculation quantity', () => {
@@ -91,7 +148,15 @@ test('all shared recipes use the presentation layer without raw quantity dumps',
     const method = recipe.join(' ');
 
     assert.ok(cooking.length > 0, `${meal.name} has cooking ingredients`);
-    assert.ok(recipe.length >= 3, `${meal.name} has a complete method`);
+    // A method must exist and every step must do something. It must NOT be
+    // three steps long: this assertion used to demand three, and a bag of
+    // beef jerky met the quota by being told to cook until cooked through.
+    // "No preparation needed — eat as it comes" is the complete and correct
+    // method for that dish.
+    assert.ok(recipe.length > 0, `${meal.name} has a method`);
+    for (const step of recipe) {
+      assert.ok(step.trim().length > 0, `${meal.name} has no empty step`);
+    }
     assert.doesNotMatch(cooking.join(' '), /\bexcluded from nutrition estimate\b/i);
     assert.doesNotMatch(cooking.join(' '), /\b\d+\.\d+\b/, `${meal.name} has no decimal cooking count`);
     assert.ok(

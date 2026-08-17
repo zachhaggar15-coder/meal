@@ -10,6 +10,7 @@ import {
   isAlreadyPreparedIngredient,
   isDryPulseName,
   isPulseProteinFamily,
+  isReadyToEatIngredient,
   isSoupSideAccompaniment,
   proteinAliasesFor,
   pulseNeedsCooking,
@@ -67,7 +68,19 @@ const INGREDIENT_ALIASES = [
   ...PROTEIN_FAMILIES,
 ];
 
+/**
+ * A recipe method, with the kitchen treated as one shared space.
+ *
+ * The steps themselves are assembled per component — the potato builder knows
+ * about potatoes, the fish builder about fish — which is why they used to
+ * contradict each other about the oven. resolveApplianceState reconciles them
+ * once they are all on the page.
+ */
 export function buildPracticalRecipeSteps(meal = {}) {
+  return resolveApplianceState(buildComponentSteps(meal));
+}
+
+function buildComponentSteps(meal = {}) {
   const ingredientList = normaliseIngredients(meal.ingredients, meal.portion_size, meal.name);
   const cookingIngredients = getCookingIngredientModels(ingredientList);
   const ingredientSearch = ingredientList.join(' ').toLowerCase();
@@ -111,7 +124,10 @@ export function buildPracticalRecipeSteps(meal = {}) {
       proseIngredientName(item.displayIngredient || item.ingredient)
     ));
 
-  if (name.includes('overnight') || name.includes('chia')) {
+  // Bircher is the soaked one. Without it here the dish fell through to the
+  // assembly branch and was stirred together and eaten immediately, which is
+  // muesli — the soaking is the whole difference.
+  if (name.includes('overnight') || name.includes('chia') || name.includes('bircher')) {
     const bases = findCookingNames(cookingIngredients, /(oats|chia|milk|yogurt|kefir)/i);
     const toppings = withoutNames(remainingNames, bases);
     // Name the loosening liquid the user actually has. Only literal milk
@@ -137,7 +153,7 @@ export function buildPracticalRecipeSteps(meal = {}) {
       : [];
     const base = withoutNames(remainingNames, toppings);
     return [
-      `Put ${joinNatural(base)} in a blender.`,
+      `Put ${joinNatural(base)} in a blender, or in a jug if you are using a stick blender.`,
       'Blend until completely smooth, adding a small splash of water or milk only if needed.',
       isBowl
         ? `Pour into a bowl${toppings.length ? ` and top with ${joinNatural(toppings)}` : ''}, then serve cold.`
@@ -172,8 +188,13 @@ export function buildPracticalRecipeSteps(meal = {}) {
     const isWaffle = name.includes('waffle');
     return [
       `Whisk ${joinNatural(batter)} into a smooth batter and leave it to stand for 2 minutes.`,
+      // Most kitchens do not own a waffle iron, and a recipe that assumes one
+      // is a recipe most readers cannot cook. The alternative is stated
+      // honestly: the same batter makes good pancakes, and they are pancakes —
+      // calling them waffles because the batter matched would be a lie about
+      // what the reader ends up with.
       isWaffle
-        ? 'Cook in a preheated waffle iron until golden and crisp, in batches if needed.'
+        ? 'Cook in a preheated waffle iron until golden and crisp, in batches if needed. No waffle iron? Cook the batter as pancakes in a lightly greased non-stick pan, 1-2 minutes per side — they will not be crisp, but they taste the same.'
         : 'Lightly grease a non-stick pan, then cook small pancakes for 1-2 minutes per side.',
       toppings.length
         ? `Serve with ${joinNatural(toppings)}.`
@@ -535,12 +556,18 @@ export function buildPracticalRecipeSteps(meal = {}) {
     // they were previously excluded here and then never mentioned again,
     // silently dropping a real 150g ingredient out of the method. They are
     // kept aside and named in the assembly step instead.
+    // Which vegetables need knife work. This asked its own inline question —
+    // peas, mixed veg, green beans — while the curry branch below asked the
+    // same question of the shared READY_TO_USE_VEGETABLE list. The two
+    // disagreed, so edamame and sweetcorn simmered untouched in a curry but
+    // were told to be "sliced or chopped" in a bowl. One list, both places.
+    const isReadyToUse = item => READY_TO_USE_VEGETABLE.test(item) || isAlreadyPreparedIngredient(item);
     const readyVegetables = withoutNames(
-      vegetables.filter(item => /(peas|mixed veg|green beans|\bveg\b)/i.test(item) || isAlreadyPreparedIngredient(item)),
+      vegetables.filter(isReadyToUse),
       [...leafy, starchName, starchDisplayName],
     );
     const choppedVegetables = withoutNames(
-      vegetables.filter(item => !/(peas|mixed veg|green beans|\bveg\b)/i.test(item) && !isAlreadyPreparedIngredient(item)),
+      vegetables.filter(item => !isReadyToUse(item)),
       [...leafy, starchName],
     );
     const carriers = findCookingNames(cookingIngredients, BREAD_CARRIER_PATTERN);
@@ -710,32 +737,98 @@ export function buildPracticalRecipeSteps(meal = {}) {
   }
 
   if (isNoCook) {
-    const drainables = findCookingNames(cookingIngredients, /^(tinned|canned)\b|beans|chickpeas|lentils/i);
-    const fresh = withoutNames(remainingNames, [...drainables, ...sauces]);
-    return [
-      drainables.length
-        ? drainTinnedStep(drainables)
-        : `Slice or portion ${joinNatural(fresh)} as needed.`,
-      drainables.length && fresh.length
-        ? `Slice or portion ${joinNatural(fresh)} as needed.`
-        : 'Have a bowl or lidded container ready.',
-      `Assemble everything in the bowl or container${sauces.length ? `, adding ${joinNatural(sauces)} just before eating` : ''}.`,
-    ];
+    return buildNoCookSteps({ cookingIngredients, remainingNames, sauces });
   }
+
+  // "Add the remaining ingredients in the order needed to warm them through"
+  // asks the reader to work out both which ingredients are left and what order
+  // they need — the two things a method exists to tell them. The ingredients
+  // are known here, so name them: whatever the earlier steps have not already
+  // dealt with.
+  // Both spellings of the protein: the method calls it "tofu", the ingredient
+  // list calls it "firm tofu", and matching only one left it cooked in step
+  // two and added again in step three.
+  const alreadyNamed = [...vegetables, proteinName, proteinDisplayName].filter(Boolean);
+  const leftovers = withoutNames(remainingNames, [...alreadyNamed, ...sauces]);
+  // A dry pulse cannot be "warmed through". Dry red lentils in a casserole
+  // were being given the same one-line finish as a pinch of paprika, which
+  // would have left them raw. They need liquid and twenty minutes, whatever
+  // the dish is called.
+  const dryPulses = leftovers.filter(isDryPulseName);
+  const quickAdditions = withoutNames(leftovers, dryPulses);
+  const finish = dryPulses.length
+    ? `Add ${joinNatural([...dryPulses, ...quickAdditions])} with enough ${cookingLiquidWord(remainingNames)} to cover, and simmer for 20-25 minutes until the ${joinNatural(dryPulses)} are tender${sauces.length ? `, stirring in ${joinNatural(sauces)} at the end` : ''}. Season to taste and serve.`
+    : quickAdditions.length && sauces.length
+      ? `Add ${joinNatural(quickAdditions)}, stir in ${joinNatural(sauces)} and heat through, then taste and serve.`
+      : quickAdditions.length
+        ? `Add ${joinNatural(quickAdditions)} and warm through, then taste and serve.`
+        : sauces.length
+          ? `Stir in ${joinNatural(sauces)} and heat through, then taste and serve.`
+          : 'Season to taste and serve.';
 
   return [
     vegetables.length
-      ? `Slice or chop ${joinNatural(vegetables)} and have the remaining ingredients ready.`
-      : `Prepare ${joinNatural(remainingNames)} as described in the ingredient list.`,
+      ? `Slice or chop ${joinNatural(vegetables)} and have everything else to hand.`
+      : `Have ${joinNatural(remainingNames)} to hand.`,
     protein && needsCooking(protein, searchable, pulseState) && !isPulseProtein
       ? `Cook the ${proteinName} in a non-stick pan over medium heat until cooked through.`
       : isPulseProtein && needsCooking(protein, searchable, pulseState)
         ? cookProteinStep(proteinName, { dryPulse: true })
         : 'Cook the firmer vegetables in a non-stick pan over medium heat until tender.',
-    sauces.length
-      ? `Add the remaining ingredients, stir in ${joinNatural(sauces)}, heat through, then taste and serve.`
-      : 'Add the remaining ingredients in the order needed to warm them through, then taste and serve.',
+    finish,
   ];
+}
+
+// ── Appliance state ──────────────────────────────────────────────────────
+//
+// Each component of a method is built by the code that understands that
+// component: potatoes by the potato builder, fish by the protein builder. None
+// of them knew what the others had already done to the kitchen, so a tray bake
+// told you to roast sweet potato at 200°C and then, in the next breath, to heat
+// the oven to 200°C for the cod. The oven was already hot. You cannot preheat
+// an oven twice.
+//
+// This pass reads the steps as one sequence and reconciles them:
+//   * the first step that uses the oven carries the preheat;
+//   * a later step at the SAME temperature drops its preheat, because the oven
+//     is already there;
+//   * a later step at a DIFFERENT temperature adjusts it rather than
+//     pretending the oven was off.
+const OVEN_PREHEAT = /(?:^|(?<=\.\s)|(?<=,\s))([Hh]eat the oven to )(\d{3})\s*°?C\s*\(?(?:\/|\()?\s*(\d{3})\s*°?C fan\)?\.?\s*/;
+const OVEN_TEMPERATURE = /(\d{3})\s*°?C\s*[/(]\s*(\d{3})\s*°?C fan\)?/;
+
+export function resolveApplianceState(steps) {
+  let ovenTemperature = null;
+  return (steps || []).map(rawStep => {
+    let step = String(rawStep);
+    const preheat = step.match(OVEN_PREHEAT);
+
+    if (preheat) {
+      const temperature = preheat[2];
+      if (ovenTemperature === null) {
+        ovenTemperature = temperature;
+      } else if (ovenTemperature === temperature) {
+        // Already hot. Drop the instruction, then repair the sentence around
+        // the hole it leaves: "Meanwhile, heat the oven to 200C. Bake the cod"
+        // must become "Meanwhile, bake the cod", not "Meanwhile, Bake the cod".
+        const before = step.slice(0, preheat.index);
+        const after = step.slice(preheat.index + preheat[0].length);
+        step = before + (before.trim()
+          ? after.charAt(0).toLowerCase() + after.slice(1)
+          : after.charAt(0).toUpperCase() + after.slice(1));
+      } else {
+        step = step.replace(OVEN_PREHEAT, `Turn the oven to ${preheat[2]}°C (${preheat[3]}°C fan). `);
+        ovenTemperature = temperature;
+      }
+      return step.replace(/\s{2,}/g, ' ').trim();
+    }
+
+    // A step that names an oven temperature without a preheat verb ("roast at
+    // 200°C…") still turns the oven on, so it claims the oven state.
+    const stated = step.match(OVEN_TEMPERATURE);
+    if (stated && ovenTemperature === null) ovenTemperature = stated[1];
+    return step;
+  });
 }
 
 export function validateRecipeQuality(meal = {}) {
@@ -887,6 +980,66 @@ function cookingLiquidWord(ingredientNames) {
   return (ingredientNames || []).some(item => /\b(stock|broth|bouillon)\b/i.test(String(item || '')))
     ? 'stock'
     : 'water';
+}
+
+// Foods you spoon, pour, scatter or simply eat rather than cut. Telling a
+// reader to "slice or portion skyr, walnuts, banana and honey as needed" asks
+// them to slice three things that cannot be sliced in order to reach the one
+// that can — and "slice or portion lean beef jerky" is the same mistake the
+// cooking instruction made, in a quieter voice.
+const NOT_SLICEABLE = /\b(yogurt|yoghurt|skyr|quark|cottage cheese|cream cheese|honey|syrup|nut butter|peanut butter|almond butter|tahini|oil|dressing|sauce|pesto|hummus|houmous|powder|seeds|granola|oats|milk|kefir|jam|salt|pepper|herbs?|spices?|cinnamon|vanilla|jerky|biltong|nuts|walnuts|peanuts|almonds|cashews|rice cakes?|oatcakes?|crackers?|smoked salmon|juice|zest|vinegar|stock|water|raisins|sultanas|dried \w+|chocolate|chips)\b/i;
+
+// Things you put a topping ON rather than stir a topping INTO.
+const CARRIER_PATTERN = /\b(rice cakes?|oatcakes?|crackers?|toast|bread|bagel|pitta|wrap|tortilla|roll)\b/i;
+
+// An assembled dish with no cooking still has real steps: drain the tin, cut
+// the cucumber, put it together. A single ready-to-eat food does not, and the
+// method used to invent three anyway — "Prepare lean beef jerky as described
+// in the ingredient list", then cook it, then "Add the remaining ingredients"
+// when there were none. Filler is not neutral: it made a cured, dried,
+// ready-to-eat food look like something to fry.
+//
+// Every step below has to earn its place. If none do, say so plainly rather
+// than padding to a three-step shape the UI never actually required.
+function buildNoCookSteps({ cookingIngredients, remainingNames, sauces }) {
+  const drainables = findCookingNames(cookingIngredients, /^(tinned|canned)\b|beans|chickpeas|lentils/i);
+  const fresh = withoutNames(remainingNames, [...drainables, ...sauces]);
+  const sliceable = fresh.filter(name => !NOT_SLICEABLE.test(name));
+  const steps = [];
+
+  if (drainables.length) steps.push(drainTinnedStep(drainables));
+  if (sliceable.length) steps.push(`Slice or portion ${joinNatural(sliceable)} as needed.`);
+
+  if (remainingNames.length > 1) {
+    const carriers = remainingNames.filter(name => CARRIER_PATTERN.test(name));
+    const toppings = withoutNames(remainingNames, carriers);
+
+    if (carriers.length && toppings.length) {
+      // Rice cakes and cottage cheese are not stirred together in a bowl.
+      steps.push(`Top ${joinNatural(carriers)} with ${joinNatural(toppings)} and serve.`);
+    } else {
+      // A dressing named in its own clause must not also appear in the list it
+      // is being held back from — "Combine carrot and hummus…, adding hummus
+      // just before eating" told the reader to add it twice.
+      const held = sauces.filter(sauce => remainingNames.includes(sauce));
+      const combined = held.length ? withoutNames(remainingNames, held) : remainingNames;
+      // "Combine" needs at least two things to combine.
+      const verb = combined.length > 1 ? 'Combine' : 'Put';
+      steps.push(
+        combined.length
+          ? `${verb} ${joinNatural(combined)} in a bowl or lidded container${
+            held.length ? `, adding ${joinNatural(held)} just before eating` : ''
+          }.`
+          : `Put ${joinNatural(remainingNames)} in a bowl or lidded container.`,
+      );
+    }
+  } else if (steps.length) {
+    steps.push('Serve straight away, or cover and chill until you need it.');
+  } else {
+    steps.push('No preparation needed — eat as it comes.');
+  }
+
+  return steps;
 }
 
 function drainTinnedStep(values) {
@@ -1172,8 +1325,10 @@ function readPrepMinutes(meal) {
 // than re-derived, so every branch agrees on the same answer.
 function needsCooking(protein, searchable = '', pulseState = null) {
   if (isPulseProteinFamily(protein)) return pulseState ? pulseNeedsCooking(pulseState) : false;
-  if (protein === 'tuna' && /(tinned|canned|tin of|tuna pouch)/.test(searchable)) return false;
-  if (protein === 'salmon' && /smoked salmon/.test(searchable)) return false;
+  // A food that arrives edible is never cooked "until cooked through". This
+  // used to name tinned tuna and smoked salmon individually, which left every
+  // other ready-to-eat protein — jerky above all — being sent to the pan.
+  if (isReadyToEatIngredient(searchable)) return false;
   return true;
 }
 

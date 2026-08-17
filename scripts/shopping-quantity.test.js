@@ -1,8 +1,7 @@
 // Practical shopping-quantity presentation.
 //
-// The shopping list is allowed to read like a human wrote it while the
-// arithmetic underneath stays exact. These tests pin both halves of that: the
-// tolerance behaves sensibly at the boundary, and nothing canonical moved.
+// A shopping list gives one number: what to put in the trolley. The arithmetic
+// underneath stays exact. These tests pin both halves of that.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -10,77 +9,119 @@ import {
   buildShoppingList,
   getAllPlanMeta,
   getPlanBySlug,
-  isPracticallySamePurchaseQuantity,
 } from '../src/utils/planBuilder.js';
+import { getCookingIngredientModels } from '../src/utils/cookingQuantities.js';
 
-// ── The tolerance itself ─────────────────────────────────────────────────────
+// ── One number per line ──────────────────────────────────────────────────────
 
-test('a trivial gap on a large purchase is treated as the same quantity', () => {
-  // Suppression cases: the reader learns nothing from being told these.
-  const same = [
-    [199, 200, 'g'],
-    [198, 200, 'g'],
-    [498, 500, 'ml'],
-    [247, 250, 'ml'],
-    [990, 1000, 'g'],
-    [200, 200, 'g'],
-    [0.95, 1, 'tsp'],
-    [2.9, 3, 'tsp'],
-  ];
-  for (const [used, purchase, unit] of same) {
-    assert.equal(
-      isPracticallySamePurchaseQuantity(used, purchase, unit),
-      true,
-      `${used}/${purchase}${unit} should read as one quantity`,
-    );
+test('no shopping line reports a second "used" quantity beside what to buy', () => {
+  // The purchase amount is the exact amount rounded UP to a shoppable step, so
+  // the gap a "(about X used)" note reported was always smaller than one
+  // rounding step — the rounding restated, never a fact about the recipes.
+  // Counted lines were worse: "Eggs 10 (about 9¼ used)" and "Garlic 14 cloves
+  // (about 13½ used)" invited a cook to measure a quarter of an egg.
+  const offenders = [];
+  for (const meta of getAllPlanMeta().slice(0, 250)) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan?.shoppingList) continue;
+    for (const items of Object.values(plan.shoppingList)) {
+      for (const line of items) {
+        if (/\bused\)/.test(line)) offenders.push(`${meta.slug}: ${line}`);
+      }
+    }
   }
+  assert.deepEqual(offenders.slice(0, 8), []);
 });
 
-test('a gap that leaves a real remainder is always reported', () => {
-  // Preservation cases: the reader needs to know what will be left over.
-  const different = [
-    [195, 200, 'g'],   // 2.5% — above the proportional tolerance
-    [190, 200, 'g'],   // 5%
-    [340, 500, 'g'],   // the worked example from the brief
-    [750, 1000, 'g'],
-    [980, 1000, 'g'],  // 2% of 1kg is 20g, which is a real amount of food
-    [45, 50, 'g'],     // 5g absolute, but a tenth of the item
-    [90, 100, 'ml'],
-  ];
-  for (const [used, purchase, unit] of different) {
-    assert.equal(
-      isPracticallySamePurchaseQuantity(used, purchase, unit),
-      false,
-      `${used}/${purchase}${unit} leaves a meaningful remainder and must stay visible`,
-    );
+test('a shopping line never asks for a fraction of a countable thing', () => {
+  // You cannot buy, or use, a quarter of an egg.
+  const offenders = [];
+  for (const meta of getAllPlanMeta().slice(0, 250)) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan?.shoppingList) continue;
+    for (const items of Object.values(plan.shoppingList)) {
+      for (const line of items) {
+        if (/[¼½¾]|\b\d+\/\d+\b/.test(line)) offenders.push(`${meta.slug}: ${line}`);
+      }
+    }
   }
+  assert.deepEqual(offenders.slice(0, 8), []);
 });
 
-test('a small absolute gap is still reported when it is a large share of the item', () => {
-  // The failure the brief warns about: hiding 45g/50g because "it is only 5g".
-  assert.equal(isPracticallySamePurchaseQuantity(45, 50, 'g'), false);
-  assert.equal(isPracticallySamePurchaseQuantity(18, 20, 'g'), false);
-  // …while the same 5g on a large purchase is genuinely irrelevant.
-  assert.equal(isPracticallySamePurchaseQuantity(495, 500, 'g'), true);
-});
+test('buying enough is never sacrificed to make the number look tidy', () => {
+  // The one thing worse than an ugly quantity is a short one. Whatever the
+  // presentation does, the purchase amount must cover what the week's recipes
+  // actually ask a cook to use.
+  const shortfalls = [];
+  for (const meta of getAllPlanMeta().slice(0, 60)) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan?.plan) continue;
 
-test('count units keep whole-item differences visible', () => {
-  // One egg, pepper or roll left over matters however small the number is.
-  for (const unit of ['item', 'items', 'egg', 'eggs', 'slice', 'slices', 'tin', 'tins']) {
-    assert.equal(
-      isPracticallySamePurchaseQuantity(5, 6, unit),
-      false,
-      `${unit}: a whole item of difference must not be hidden`,
-    );
-    assert.equal(isPracticallySamePurchaseQuantity(1, 2, unit), false);
+    // What the recipes, as printed, tell the cook to take out of the cupboard.
+    const usedGrams = new Map();
+    for (const day of plan.plan) {
+      for (const meal of day.meals || []) {
+        for (const model of getCookingIngredientModels(meal.ingredients || [])) {
+          const grams = model.canonicalQuantity?.quantityGrams;
+          if (!Number.isFinite(grams)) continue;
+          const key = model.ingredient.toLowerCase();
+          usedGrams.set(key, (usedGrams.get(key) || 0) + grams);
+        }
+      }
+    }
+
+    // One ingredient can legitimately occupy several lines — sweet potato
+    // bought whole and bought to mash are separate jobs — so compare totals,
+    // not lines. Ingredients measured in spoons anywhere are skipped: their
+    // grams-per-spoon varies by food and this test is about quantity, not
+    // unit conversion.
+    const boughtGrams = new Map();
+    const spoonMeasured = new Set();
+    for (const items of Object.values(plan.shoppingList || {})) {
+      for (const line of items) {
+        const measured = /^(.+?)\s(\d+(?:\.\d+)?)\s*(g|tsp|tbsp)\b/.exec(line);
+        if (!measured) continue;
+        const key = measured[1].toLowerCase();
+        if (measured[3] !== 'g') { spoonMeasured.add(key); continue; }
+        boughtGrams.set(key, (boughtGrams.get(key) || 0) + Number(measured[2]));
+      }
+    }
+
+    for (const [key, used] of usedGrams) {
+      if (spoonMeasured.has(key)) continue;
+      const bought = boughtGrams.get(key);
+      if (bought === undefined) continue;
+      if (bought + 1e-6 < used) {
+        shortfalls.push(`${meta.slug}: buy ${bought.toFixed(0)}g of ${key}, recipes use ${used.toFixed(0)}g`);
+      }
+    }
   }
+  assert.deepEqual(shortfalls.slice(0, 8), []);
 });
 
-test('the helper refuses nonsense rather than guessing', () => {
-  assert.equal(isPracticallySamePurchaseQuantity(NaN, 200, 'g'), false);
-  assert.equal(isPracticallySamePurchaseQuantity(199, 0, 'g'), false);
-  assert.equal(isPracticallySamePurchaseQuantity(199, undefined, 'g'), false);
-  assert.equal(isPracticallySamePurchaseQuantity(199, 200, undefined), false);
+test('one food never occupies two lines under a reordered name', () => {
+  // This is a shortfall bug wearing a cosmetic disguise. "Reduced-fat cheddar
+  // 35g" and "Cheddar reduced-fat 30g" sat in one category of one list, and a
+  // shopper who read either line bought 35g for recipes needing 57g.
+  const offenders = [];
+  for (const meta of getAllPlanMeta().slice(0, 250)) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan?.shoppingList) continue;
+    const byTokens = new Map();
+    for (const items of Object.values(plan.shoppingList)) {
+      for (const line of items) {
+        const label = line.replace(/\s\d.*$/, '').trim();
+        if (!label) continue;
+        const key = label.toLowerCase().split(/\s+/).sort().join(' ');
+        if (!byTokens.has(key)) byTokens.set(key, new Set());
+        byTokens.get(key).add(label);
+      }
+    }
+    for (const labels of byTokens.values()) {
+      if (labels.size > 1) offenders.push(`${meta.slug}: ${[...labels].join(' / ')}`);
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 8), []);
 });
 
 // ── Rendered output ──────────────────────────────────────────────────────────
@@ -104,34 +145,6 @@ test('shopping lines never contain the artefacts of a suppressed suffix', () => 
     }
   }
   assert.deepEqual(failures.slice(0, 8), []);
-});
-
-test('a usage note only survives where the difference is genuinely material', () => {
-  const offenders = [];
-  for (const meta of getAllPlanMeta().slice(0, 200)) {
-    const plan = getPlanBySlug(meta.slug);
-    if (!plan?.shoppingList) continue;
-    for (const items of Object.values(plan.shoppingList)) {
-      for (const line of items) {
-        const match = /^(.*?)\s\(about\s(.+?)\sused\)$/.exec(line);
-        if (!match) continue;
-        // Only compare where both halves are a plain gram/ml amount.
-        const buy = /([\d.]+)\s*(g|ml)\b/i.exec(match[1]);
-        const use = /([\d.]+)\s*(g|ml)\b/i.exec(match[2]);
-        if (!buy || !use || buy[2].toLowerCase() !== use[2].toLowerCase()) continue;
-        // Both halves are display values, already rounded for readability, so
-        // the true canonical gap can be up to a unit larger than it looks.
-        // Only flag a line when it is unambiguously inside the tolerance even
-        // after allowing for that rounding.
-        const displayedGap = Number(buy[1]) - Number(use[1]);
-        const worstCaseGap = displayedGap + 1;
-        if (isPracticallySamePurchaseQuantity(Number(buy[1]) - worstCaseGap, Number(buy[1]), buy[2])) {
-          offenders.push(line);
-        }
-      }
-    }
-  }
-  assert.deepEqual(offenders.slice(0, 8), [], 'these lines should have been simplified');
 });
 
 // ── Presentation only: nothing canonical may move ────────────────────────────

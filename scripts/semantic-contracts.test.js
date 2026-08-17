@@ -20,13 +20,18 @@ import fs from 'node:fs';
 
 import { MEALS } from '../src/data/mealLibrary.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
-import { buildPracticalRecipeSteps } from '../src/utils/recipeQuality.js';
+import { buildPracticalRecipeSteps, resolveApplianceState } from '../src/utils/recipeQuality.js';
 import { splitIngredientText } from '../src/utils/nutrition.js';
 import { checkFamilyContracts, familiesFor } from './lib/recipeFamilies.js';
 import { findNumericContradictions } from './lib/numericPromises.js';
 import { indefiniteArticleFor } from '../src/utils/indefiniteArticle.js';
 import { getAllPlanMeta, getPlanBySlug, conflictsWithDiet } from '../src/utils/planBuilder.js';
-import { sharedPrimaryProteins, primaryProteinSignature } from '../src/utils/ingredientRoles.js';
+import {
+  findProtein,
+  isReadyToEatIngredient,
+  primaryProteinSignature,
+  sharedPrimaryProteins,
+} from '../src/utils/ingredientRoles.js';
 import { MEAL_PLAN_HUBS } from '../src/data/mealPlanHubs.js';
 
 /** Every distinct recipe across the shared library and legacy editorial plans. */
@@ -613,4 +618,125 @@ test('the collision detector reacts to a repeated protein (control)', () => {
       meal('Tuna Salad', ['Tinned tuna 145g', 'Mixed leaves 80g']),
       meal('Salmon with New Potatoes', ['Salmon fillet 150g', 'New potatoes 250g']),
     ), []);
+});
+
+// ── Human realism: would a person actually shop, cook and eat this? ────────
+//
+// The contracts above ask whether a page delivers what it promises. These ask
+// something blunter: whether the instruction is one a human could follow. Each
+// defect below shipped, and each was technically valid — the nutrition was
+// right, the ingredients were real, the steps parsed.
+
+test('a food that arrives edible is never told to cook', () => {
+  // Lean Beef Jerky: "Cook the lean beef jerky in a non-stick pan over medium
+  // heat until cooked through." Jerky is cured and dried. The instruction was
+  // reachable because the only guard was a two-name exception list.
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    const steps = buildPracticalRecipeSteps(meal);
+    for (const ingredient of meal.ingredients || []) {
+      if (!isReadyToEatIngredient(ingredient)) continue;
+      const food = String(ingredient).replace(/\s*[\d.].*$/, '').trim().toLowerCase();
+      if (!food) continue;
+      const cooked = steps.some(step => (
+        new RegExp(`cook the ${food}\b|cook ${food}\b.{0,40}until cooked through`, 'i').test(step)
+      ));
+      if (cooked) offenders.push(`${name}: ${food}`);
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('the ready-to-eat resolver knows a cure from a cooking method (control)', () => {
+  // "Smoked" is not a state. Two of these are eaten as they come and one still
+  // needs a pan, so a substring rule on the word would have been worse than no
+  // rule at all.
+  assert.equal(isReadyToEatIngredient('Smoked salmon 100g'), true);
+  assert.equal(isReadyToEatIngredient('Smoked mackerel fillet 130g'), true);
+  assert.equal(isReadyToEatIngredient('Smoked haddock fillet 180g'), false);
+  assert.equal(isReadyToEatIngredient('Smoked paprika 1 tsp'), false);
+  assert.equal(isReadyToEatIngredient('Lean beef jerky 40g'), true);
+  assert.equal(isReadyToEatIngredient('Chicken breast 200g'), false);
+});
+
+test('an oven is never preheated twice', () => {
+  // "Roast the sweet potato at 200°C… Meanwhile, heat the oven to 200°C and
+  // bake the cod." The oven was already hot. Component builders each knew
+  // their own ingredient and nothing about the kitchen they shared.
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    const steps = buildPracticalRecipeSteps(meal);
+    const preheats = steps.filter(step => /heat the oven to/i.test(step)).length;
+    if (preheats > 1) offenders.push(`${name}: ${preheats} preheats`);
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('the appliance-state pass reacts to a duplicate preheat (control)', () => {
+  // Same temperature: the second instruction goes, and the sentence it was
+  // part of still reads.
+  assert.deepEqual(
+    resolveApplianceState([
+      'Roast the potato at 200°C (180°C fan) until tender.',
+      'Meanwhile, heat the oven to 200C/180C fan. Bake the cod for 15 minutes.',
+    ]),
+    [
+      'Roast the potato at 200°C (180°C fan) until tender.',
+      'Meanwhile, bake the cod for 15 minutes.',
+    ],
+  );
+  // Different temperature: the oven is adjusted, not preheated from cold.
+  const changed = resolveApplianceState([
+    'Heat the oven to 200°C (180°C fan). Roast the vegetables.',
+    'Heat the oven to 180°C (160°C fan). Bake the crumble.',
+  ]);
+  assert.match(changed[1], /^Turn the oven to 180°C/);
+});
+
+test('no method pads itself with a step that says nothing', () => {
+  // Filler is not harmless. "Prepare the jerky as described in the ingredient
+  // list" and "Add the remaining ingredients" existed to reach three steps,
+  // and the shape they filled is what made frying a cured meat look normal.
+  const FILLER = [
+    /as described in the ingredient list/i,
+    /\badd the remaining ingredients\b/i,
+    /^have a bowl or lidded container ready/i,
+    /\bcook until done\b/i,
+  ];
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    for (const step of buildPracticalRecipeSteps(meal)) {
+      if (FILLER.some(pattern => pattern.test(step))) offenders.push(`${name}: ${step}`);
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('a method never asks for equipment most kitchens lack without an alternative', () => {
+  const SPECIALIST = /\b(waffle iron|air fryer|food processor|slow cooker|pressure cooker|spiralizer|panini press)\b/i;
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    const steps = buildPracticalRecipeSteps(meal).join(' ');
+    if (!SPECIALIST.test(steps)) continue;
+    // An alternative has to actually be offered, not merely implied.
+    if (!/\bno |without a |if you (?:do not|don't)|instead|alternatively\b/i.test(steps)) {
+      offenders.push(name);
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('the method protein resolver reads a source, not a cut (control)', () => {
+  // The same failure the diversity resolver was rebuilt to eliminate was still
+  // live in the resolver that drives cooking instructions, where it produced
+  // advice rather than a mislabel: a mozzarella and tomato salad was fried,
+  // because "beef tomato" answered "beef".
+  assert.equal(findProtein('Beef tomato 1'), '');
+  assert.equal(findProtein('Cauliflower steak 200g'), '');
+  assert.equal(findProtein('Chicken stock 300ml'), '');
+  assert.equal(findProtein('Quorn mince 200g'), 'quorn');
+  assert.equal(findProtein('Tuna steak 150g'), 'tuna');
+  assert.equal(findProtein('Turkey mince 200g'), 'turkey');
+  // …and a real protein is still found beside a phrase that is not one.
+  assert.equal(findProtein('Baked Cod with New Potatoes and Green Beans'), 'cod');
 });

@@ -7,6 +7,11 @@ const FRACTIONS = new Map([
   [0.75, '\u00be'],
 ]);
 
+// `showGrams` marks the produce whose count does NOT tell a cook what to put in
+// the pan. "1 medium apple" is a complete instruction; a shopper gains nothing
+// from being told it weighs 150g. But the big produce below gets broken up
+// rather than used whole, and half a cauliflower is not a portion size anyone
+// can picture, so those keep a reference weight.
 const PRODUCE_EQUIVALENTS = [
   { pattern: /^sweet potato$/, grams: 180, label: 'medium sweet potato' },
   { pattern: /^(?:red )?onion$/, grams: 150, label: ingredient => `medium ${ingredient}` },
@@ -14,10 +19,10 @@ const PRODUCE_EQUIVALENTS = [
   { pattern: /^mixed peppers$/, grams: 150, label: 'pepper' },
   { pattern: /^courgette$/, grams: 200, label: 'medium courgette' },
   { pattern: /^(?:carrot|carrot grated)$/, grams: 80, label: 'medium carrot' },
-  { pattern: /^broccoli$/, grams: 300, label: 'small head of broccoli', massNoun: true },
-  { pattern: /^cauliflower$/, grams: 600, label: 'medium cauliflower' },
-  { pattern: /^cucumber$/, grams: 300, label: 'cucumber' },
-  { pattern: /^butternut squash$/, grams: 700, label: 'medium butternut squash' },
+  { pattern: /^broccoli$/, grams: 300, label: 'small head of broccoli', massNoun: true, showGrams: true },
+  { pattern: /^cauliflower$/, grams: 600, label: 'medium cauliflower', showGrams: true },
+  { pattern: /^cucumber$/, grams: 300, label: 'cucumber', showGrams: true },
+  { pattern: /^butternut squash$/, grams: 700, label: 'medium butternut squash', showGrams: true },
   { pattern: /^parsnip$/, grams: 100, label: 'medium parsnip' },
   { pattern: /^beef tomato$/, grams: 150, label: 'large beef tomato' },
   { pattern: /^tomato$/, grams: 100, label: 'medium tomato' },
@@ -180,13 +185,18 @@ function formatMeasuredDisplay(parsed, ingredient) {
     };
   }
 
+  // These amounts are already the practical, rounded number: 275g of oats, not
+  // the 281g the optimiser calculated. Prefixing "about" tells a cook the
+  // quantity is uncertain when it is nothing of the kind — it is a deliberate
+  // instruction, and 275g is what the scales should read. Genuine variability
+  // (a handful, a whole vegetable, a fraction of a tin) is expressed by the
+  // unit itself elsewhere in this file, and keeps its hedge.
   const roundedAmount = unit === 'g'
     ? roundMeasuredGrams(grams, ingredient)
     : unit === 'ml'
       ? roundTo(amount, amount < 100 ? 5 : 25)
       : roundTo(amount, 0.05);
-  const prefix = differsMeaningfully(roundedAmount, amount) ? 'about ' : '';
-  const quantity = `${prefix}${formatNumber(roundedAmount)}${unit}`;
+  const quantity = `${formatNumber(roundedAmount)}${unit}`;
   const displayIngredient = applyQualifier(ingredient, parsed.qualifier);
 
   return {
@@ -243,6 +253,26 @@ function formatExplicitTin(canonical) {
   return { quantity, ingredient, text };
 }
 
+// A tin is the useful instruction only when the amount really is a tin, or a
+// share of one a cook can eyeball. Two things used to go wrong here.
+//
+// The tin count and the gram note contradicted each other, because the count
+// was snapped to a clean fraction while the note reported the raw canonical
+// amount. That produced lines like "1 standard tin of tomatoes (about 475g)" —
+// 75g more than a 400g tin holds — and "about ¼ of a standard tin of tomatoes
+// (about 150g)", which is both a quarter and 37% of the same tin. Whichever
+// number a shopper trusted, the other one was wrong.
+//
+// The fractions on offer made it worse: ⅓ and ⅔ were candidates, but the
+// fraction formatter rounds to quarters, so a third of a tin printed as "¼".
+//
+// Now the tin phrasing is used only when a quarter-step fraction genuinely
+// describes the amount, and the fraction is the only quantity stated — the tin
+// size implies the grams, so there is no second number to disagree with it.
+// Anything that does not land near a clean share falls back to plain grams,
+// which is honest and still shoppable.
+const TIN_RATIO_TOLERANCE = 0.15;
+
 function formatTinnedDisplay(ingredient, grams, qualifier) {
   const cleanIngredient = ingredient
     .replace(/^tinned\s+/i, '')
@@ -256,22 +286,27 @@ function formatTinnedDisplay(ingredient, grams, qualifier) {
       : 240;
   const ratio = grams / standardTinGrams;
   const practicalRatio = nearestTinRatio(ratio);
-  const roundedGrams = roundMeasuredGrams(grams, cleanIngredient);
   const drained = !/(tomato|coconut milk)/.test(cleanIngredient);
   const qualifierText = qualifier && !/drain/i.test(qualifier)
     ? `, ${qualifier}`
     : '';
+  const suffix = `${cleanIngredient}${drained ? ', drained' : ''}${qualifierText}`;
 
-  let quantity;
-  if (practicalRatio === 1) quantity = '1 standard tin';
-  else if (practicalRatio === 2) quantity = '2 standard tins';
-  else if (practicalRatio > 1) quantity = `about ${formatMixedFraction(practicalRatio)} tins`;
-  else quantity = `about ${formatMixedFraction(practicalRatio)} of a standard tin`;
+  if (Math.abs(practicalRatio - ratio) > ratio * TIN_RATIO_TOLERANCE) {
+    const quantity = `${formatNumber(roundMeasuredGrams(grams, cleanIngredient))}g`;
+    return { quantity, ingredient: cleanIngredient, text: `${quantity} ${suffix}` };
+  }
+
+  const quantity = practicalRatio === 1
+    ? '1 standard tin'
+    : practicalRatio > 1
+      ? `${formatMixedFraction(practicalRatio)} standard tins`
+      : `${formatMixedFraction(practicalRatio)} of a standard tin`;
 
   return {
     quantity,
     ingredient: cleanIngredient,
-    text: `${quantity} of ${cleanIngredient}${drained ? ', drained' : ''}${qualifierText} (about ${roundedGrams}g)`,
+    text: `${quantity} of ${suffix}`,
   };
 }
 
@@ -300,11 +335,12 @@ function formatProduceDisplay(produce, ingredient, grams, qualifier) {
     ? baseLabel
     : pluraliseCountedIngredient(baseLabel, practicalRatio);
   const displayIngredient = applyQualifier(countedLabel, qualifier);
+  const gramNote = produce.showGrams ? ` (about ${roundedGrams}g)` : '';
 
   return {
     quantity,
     ingredient: displayIngredient,
-    text: `${quantity} ${displayIngredient} (about ${roundedGrams}g)`,
+    text: `${quantity} ${displayIngredient}${gramNote}`,
   };
 }
 
@@ -333,8 +369,10 @@ function roundMeasuredGrams(value, ingredient) {
   return roundTo(grams, 50);
 }
 
+// Quarter steps only. formatMixedFraction renders quarters, so offering ⅓ and
+// ⅔ here just produced a fraction that printed as something else.
 function nearestTinRatio(value) {
-  const options = [0.25, 1 / 3, 0.5, 2 / 3, 0.75, 1, 1.5, 2];
+  const options = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
   return options.reduce((best, option) => (
     Math.abs(option - value) < Math.abs(best - value) ? option : best
   ), options[0]);
@@ -432,10 +470,6 @@ function normaliseIngredientName(value) {
     .replace(/\bgreek\b/gi, 'Greek')
     .replace(/\bmedjool\b/gi, 'Medjool')
     .trim();
-}
-
-function differsMeaningfully(displayAmount, canonicalAmount) {
-  return Math.abs(Number(displayAmount) - Number(canonicalAmount)) >= 0.5;
 }
 
 function isTinnedIngredient(ingredient) {

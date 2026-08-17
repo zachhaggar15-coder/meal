@@ -729,93 +729,38 @@ function formatShoppingIngredient(item) {
   const purchaseAmount = countable
     ? Math.max(1, Math.ceil(item.amount - Number.EPSILON))
     : roundShoppingMeasurementUp(item.amount, item.unit);
-  const roundedUp = purchaseAmount > item.amount + 1e-9;
   const amount = item.unit === 'item'
     ? String(purchaseAmount)
     : isCountUnit(item.unit)
       ? `${purchaseAmount} ${formatCountUnit(item.unit, purchaseAmount)}`
       : formatMeasuredForDisplay(purchaseAmount, item.unit, true);
   const suffix = item.suffix ? ` ${item.suffix}` : '';
-  // For measured units, the purchase and "used" amounts both pass through
-  // the same tsp→tbsp display rounding, so a small difference in the
-  // canonical amount can round to an identical display string (e.g. both
-  // "3.75 tbsp"). Showing "(about 3.75 tbsp used)" next to "3.75 tbsp" reads
-  // as a contradiction, so it's suppressed when the two texts match.
-  const usedDisplay = countable ? formatApproximateUse(item.amount) : formatMeasuredForDisplay(item.amount, item.unit, false);
-  // Spoon measures don't deserve sub-teaspoon reporting: "Paprika 1 tsp
-  // (about 0.95 tsp used)" is optimiser precision no cook can act on, and
-  // the note adds noise to every spice line in the list. Only report the
-  // shortfall when it is large enough to actually change what you buy.
-  const usage = roundedUp && (countable || usedDisplay !== amount) && !isNegligibleSpoonGap(item, purchaseAmount)
-    ? ` (about ${usedDisplay} used)`
-    : '';
   const purchaseText = item.amountFirst
     ? `${amount} ${item.label}${suffix}`
     : `${item.label} ${amount}${suffix}`;
-  return `${purchaseText}${usage}`.trim();
+  return purchaseText.trim();
 }
 
-// Is the difference between what you buy and what the recipes use worth
-// telling a shopper about?
+// A shopping list gives you ONE number: what to put in the trolley.
 //
-// This is a PRESENTATION rule only. The canonical amount stays exactly as
-// calculated — nutrition, macros, plan balancing and aggregation all continue
-// to use `item.amount`. All that changes is whether the rendered line adds
-// "(about X used)".
+// It used to give two — "Chicken breast 1350g (about 1336g used)" — and the
+// second one could never be worth reading, because of where it came from. The
+// purchase amount is the canonical amount rounded UP to the nearest shoppable
+// step by roundShoppingMeasurementUp below: 1g under 25g, rising to 50g past a
+// kilo. So the gap the note reported was always smaller than one rounding
+// step. It was not a fact about the recipes; it was the rounding, restated.
 //
-// Measured on the live library (8,926 distinct lines carrying a usage note):
-// the median gram gap is 4g at 2.3%, and 24% of lines sat at 2g or less.
-// "Chicken breast 200g (about 199g used)" is the shape of a quarter of them,
-// and it tells a shopper nothing.
+// Counted items were worse. "Eggs 10 (about 9¼ used)" and "Garlic 14 cloves
+// (about 13½ used)" invited a cook to measure a quarter of an egg and half a
+// clove — precision that exists only because a week's meals were summed and
+// the total happened to land off a whole number.
 //
-// An absolute threshold alone is wrong, because 5g on a 50g portion is a tenth
-// of the item. A percentage alone is wrong too, because 1% of 1kg is 10g and
-// nobody needs to be told. So the rule requires both to be trivial, with the
-// absolute allowance growing for larger purchases:
+// Both are gone. Buy 1350g of chicken; buy 10 eggs. Nutrition, macros, plan
+// balancing and aggregation are untouched and still use the exact amount.
 //
-//   suppress when   gap <= 2% of the purchase
-//             and   gap <= max(5 units, 1% of the purchase)
-//
-//   200g buy / 199g used  -> 0.5%, 1g            -> hidden
-//   500ml buy / 498ml used -> 0.4%, 2ml          -> hidden
-//   1kg buy / 990g used   -> 1.0%, 10g <= 10g    -> hidden
-//   200g buy / 195g used  -> 2.5%                -> shown
-//   50g buy / 45g used    -> 10%                 -> shown
-//   500g buy / 340g used  -> 32%                 -> shown
-//
-// Count units are deliberately excluded: one whole egg, pepper or roll left
-// over is meaningful however small the number looks, so those always report.
-const PRACTICAL_GAP_PERCENT = 2;
-const PRACTICAL_GAP_FLOOR = { g: 5, ml: 5, kg: 0.005, l: 0.005 };
-
-export function isPracticallySamePurchaseQuantity(usedAmount, purchaseAmount, unit) {
-  const used = Number(usedAmount);
-  const purchase = Number(purchaseAmount);
-  if (!Number.isFinite(used) || !Number.isFinite(purchase) || purchase <= 0) return false;
-
-  const gap = purchase - used;
-  if (gap <= 0) return true;
-
-  const lowerUnit = String(unit || '').toLowerCase();
-
-  // Spoon measures: unchanged behaviour — anything under half a teaspoon is
-  // below what a cook can measure anyway.
-  if (lowerUnit === 'tsp' || lowerUnit === 'tbsp') {
-    const teaspoons = lowerUnit === 'tbsp' ? 3 : 1;
-    return gap * teaspoons < 0.5;
-  }
-
-  const floor = PRACTICAL_GAP_FLOOR[lowerUnit];
-  if (floor === undefined) return false; // count units and anything unrecognised
-
-  const percent = (gap / purchase) * 100;
-  const allowance = Math.max(floor, purchase * 0.01);
-  return percent <= PRACTICAL_GAP_PERCENT && gap <= allowance + 1e-9;
-}
-
-function isNegligibleSpoonGap(item, purchaseAmount) {
-  return isPracticallySamePurchaseQuantity(item.amount, purchaseAmount, item.unit);
-}
+// Where purchase and use genuinely diverge, the divergence is in packs rather
+// than grams — a tin you open and half use — and that is expressed by the tin
+// itself in cookingQuantities.js, not by a decimal in brackets.
 
 function formatMeasuredForDisplay(amount, unit, roundUp) {
   const display = toShoppingDisplayUnit(amount, unit, roundUp);
@@ -840,24 +785,6 @@ function roundShoppingMeasurementUp(value, unit) {
   return Math.ceil((amount - Number.EPSILON) / increment) * increment;
 }
 
-function formatApproximateUse(value) {
-  const options = [
-    [0.25, '1/4'], [1 / 3, '1/3'], [0.5, '1/2'], [2 / 3, '2/3'], [0.75, '3/4'],
-  ];
-  const amount = Number(value);
-  const whole = Math.floor(amount);
-  const fraction = amount - whole;
-  const [matchedValue, matchedText] = options.reduce((best, option) => (
-    Math.abs(option[0] - fraction) < Math.abs(best[0] - fraction) ? option : best
-  ), options[0]);
-
-  if (fraction < 0.125) return whole ? String(whole) : 'less than 1/4';
-  const fractionText = Math.abs(matchedValue - fraction) <= 0.18
-    ? matchedText
-    : formatFractionAmount(fraction);
-  return whole ? `${whole} ${fractionText}` : fractionText;
-}
-
 function normaliseShoppingIngredient(ing) {
   if (typeof ing === 'object' && ing !== null) {
     const name = ing.item || ing.name || '';
@@ -867,15 +794,27 @@ function normaliseShoppingIngredient(ing) {
   return String(ing || '').trim();
 }
 
+// Two lines for one food is not a cosmetic problem: it makes the list SHORT.
+// "Reduced-fat cheddar 35g" and "Cheddar reduced-fat 30g" sat in the same
+// category of the same list, and a shopper who read either one bought 35g for
+// recipes that use 57g. The two spellings came from the meal library naming one
+// cheese two ways, which is fixed at source — but relying on every future
+// ingredient being spelled consistently is how this happened the first time.
+//
+// Word order does not change what a food is, so it does not change the key
+// either. "Frozen mixed veg" and "Mixed frozen veg" aggregate as one line
+// whichever way a recipe happens to say it.
 function buildShoppingKey(ing) {
-  return ing
+  const cleaned = ing
     .toLowerCase()
     .replace(/\([^)]*\)/g, '')
     .replace(/\b\d+(\.\d+)?\s*(g|kg|ml|l|tsp|tbsp|cup|cups|x|medium|small|large|tin|tins|slice|slices|scoop|scoops|pack|packs)\b/g, '')
     .replace(/^\d+(\.\d+)?\s*/, '')
     .replace(/\b\d+(\.\d+)?\b/g, '')
     .replace(/\s+/g, ' ')
-    .trim() || ing.toLowerCase();
+    .trim();
+  if (!cleaned) return ing.toLowerCase();
+  return cleaned.split(' ').sort().join(' ');
 }
 
 // ── SEO metadata ──────────────────────────────────────────────────────────────

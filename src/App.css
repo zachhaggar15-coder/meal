@@ -9200,24 +9200,47 @@ textarea {
 }
 
 .plan-meal-recipe summary {
+  align-items: center;
   color: var(--editorial-ink);
+  cursor: pointer;
   display: inline-flex;
   font-size: 0.84rem;
   font-weight: 800;
   gap: 8px;
+  /* A disclosure control is something people tap. */
+  min-height: 44px;
   padding: 0;
 }
 
+.plan-meal-recipe summary:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid var(--editorial-ink);
+  outline-offset: 3px;
+}
+
+/* Drawn from two borders rather than typed as a character. This rendered as
+   `content: ">"` closed and `content: "v"` open — a greater-than sign and a
+   lowercase letter V, which is what they looked like next to the word
+   "Recipe". A chevron should be a shape, and it should turn. */
 .plan-meal-recipe summary::after {
-  color: var(--editorial-muted);
-  content: ">";
+  border-bottom: 2px solid var(--editorial-muted);
+  border-right: 2px solid var(--editorial-muted);
+  content: "";
+  display: inline-block;
   float: none;
-  font-size: 0.75rem;
+  height: 0.4em;
   margin-left: 4px;
+  transform: translateY(-0.15em) rotate(45deg);
+  transition: transform 150ms ease;
+  width: 0.4em;
 }
 
 .plan-meal-recipe[open] summary::after {
-  content: "v";
+  transform: translateY(0.1em) rotate(-135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plan-meal-recipe summary::after { transition: none; }
 }
 
 .plan-meal-recipe ol {
@@ -13937,15 +13960,6 @@ textarea {
   color: #8b9f78;
   content: "\2022";
   font-weight: 900;
-}
-
-.plan-recipe-quantity-note {
-  border-top: 1px solid #ded1bc;
-  color: #6b6255;
-  font-size: 0.72rem;
-  line-height: 1.45;
-  margin: 12px 0 0;
-  padding-top: 10px;
 }
 
 .plan-recipe-method ol {

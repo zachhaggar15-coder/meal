@@ -173,7 +173,7 @@ test('egg whites are purchased by weight rather than as a whole-item count', () 
   const shopping = shoppingListFor(['Egg whites 6', 'Egg whites 5']);
   const all = Object.values(shopping).flat();
 
-  assert.ok(all.includes('Egg whites 370g (about 363g used)'));
+  assert.ok(all.includes('Egg whites 370g'));
   assert.ok(!all.some(item => /^Egg whites \d+(\.\d+)?\s*$/.test(item)), 'egg whites should not be a bare whole-item count');
 });
 
@@ -203,7 +203,7 @@ test('measured shopping quantities never use "at least" wording', () => {
   assert.ok(!all.some(item => /\bat least\b/i.test(item)));
 });
 
-test('shopping purchase presentation rounds countable quantities up and shows expected use', () => {
+test('shopping purchase presentation rounds countable quantities up to what you buy', () => {
   const shopping = shoppingListFor([
     'Onion 0.36',
     'Peppers 1.14',
@@ -216,20 +216,23 @@ test('shopping purchase presentation rounds countable quantities up and shows ex
   ]);
   const all = Object.values(shopping).flat();
 
-  assert.ok(all.includes('Onion 1 (about 1/3 used)'));
-  assert.ok(all.includes('Peppers 2 (about 1 1/4 used)'));
-  assert.ok(all.includes('Avocado 1 (about 1/2 used)'));
-  assert.ok(all.includes('Wholemeal bread 10 slices (about 9 1/4 used)'));
-  assert.ok(all.includes('Snack mix 1 pack (about 1/2 used)'));
+  // Each line states the one number a shopper acts on. The amount the recipes
+  // consume is still exact underneath — it just is not a second quantity in
+  // brackets, because the gap it reported was only ever the rounding-up this
+  // same line performs.
+  assert.ok(all.includes('Onion 1'));
+  assert.ok(all.includes('Peppers 2'));
+  assert.ok(all.includes('Avocado 1'));
+  assert.ok(all.includes('Wholemeal bread 10 slices'));
+  assert.ok(all.includes('Snack mix 1 pack'));
   assert.ok(all.includes('1 small roll'));
-  assert.ok(all.includes('Semi-skimmed milk 1300ml (about 1271ml used)'));
-  // A 0.1 tsp shortfall is below anything a cook can measure, so the
-  // usage note is suppressed for spoon units — it was pure optimiser
-  // precision on every spice line. Gram/ml lines keep their note (above),
-  // where the shortfall genuinely affects what you buy.
+  assert.ok(all.includes('Semi-skimmed milk 1300ml'));
   assert.ok(all.includes('Peanut butter 1.25 tsp'));
-  assert.ok(!all.some(item => /Peanut butter[^|]*\(about/.test(item)));
+  assert.ok(!all.some(item => /\(about/.test(item)));
   assert.ok(!all.some(item => /\bat least\b/i.test(item)));
+  // Rounding is always up: a shopping list that sends you home short is worse
+  // than one that leaves a little over.
+  assert.ok(!all.some(item => /\bOnion 0\b/.test(item)));
 });
 
 test('shopping presentation never mutates ingredients or changes nutrition totals', () => {
@@ -246,7 +249,10 @@ test('shopping presentation never mutates ingredients or changes nutrition total
 
   assert.deepEqual(ingredients, sourceSnapshot);
   assert.deepEqual(nutritionAfter, nutritionBefore);
-  assert.ok(Object.values(shopping).flat().some(item => item === 'Eggs 2 (about 1 1/4 used)'));
+  // 1.14 eggs is a real canonical amount (a week's meals summed), and the
+  // shopping line rounds it up to the 2 you actually buy — without inviting
+  // anyone to measure the quarter.
+  assert.ok(Object.values(shopping).flat().some(item => item === 'Eggs 2'));
 });
 
 test('representative generated plans use whole purchase counts in shopping lists', () => {

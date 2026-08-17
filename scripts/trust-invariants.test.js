@@ -20,7 +20,8 @@ import {
 import { formatContentDate, schemaDates, toIsoDate } from '../src/utils/contentDates.js';
 import { getAllPlanMeta, getPlanBySlug } from '../src/utils/planBuilder.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
-import { splitIngredientText } from '../src/utils/nutrition.js';
+import { computeMealNutritionRaw, splitIngredientText } from '../src/utils/nutrition.js';
+import { MEALS } from '../src/data/mealLibrary.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
@@ -73,6 +74,28 @@ test('every generated plan resolves its allergens with nothing left unclassified
     }
   }
   assert.deepEqual(failures.slice(0, 10), []);
+});
+
+test('every ingredient name in the shared library resolves to nutrition data', () => {
+  // An ingredient name is a lookup key, not just a label. Tidying "Turkey
+  // breast slices" to "Cooked turkey breast slices" — a change that reads as
+  // purely editorial — silently dropped the nutrition table's match and took
+  // ten plans' calories for that meal to zero. Nothing failed loudly: the
+  // totals were still numbers, just smaller.
+  //
+  // The allergen invariant above caught it, but only obliquely. This says what
+  // actually broke, straight away.
+  const failures = [];
+  for (const meal of MEALS) {
+    const { unmatched } = computeMealNutritionRaw(meal.ingredients || []);
+    if (unmatched.length) failures.push(`${meal.id}: ${unmatched.join(' | ')}`);
+  }
+  assert.deepEqual(failures.slice(0, 10), []);
+});
+
+test('the nutrition-resolution check notices an unknown ingredient (control)', () => {
+  const { unmatched } = computeMealNutritionRaw(['Reduced-fat cheddar 30g', 'Nonexistent food 50g']);
+  assert.deepEqual(unmatched, ['Nonexistent food 50g']);
 });
 
 test('every legacy editorial plan resolves its allergens too', () => {

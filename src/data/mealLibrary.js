@@ -717,7 +717,7 @@ export const MEALS = [
     prepMins: 30,
     diet: 'pescatarian',
     tags: ['budget', 'batch-friendly', 'high-protein'],
-    ingredients: ['Tinned tuna in spring water 145g', 'Wholemeal pasta 100g dry', 'Sweetcorn 100g', 'Tinned tomatoes 200g', 'Cheddar reduced-fat 30g'],
+    ingredients: ['Tinned tuna in spring water 145g', 'Wholemeal pasta 100g dry', 'Sweetcorn 100g', 'Tinned tomatoes 200g', 'Reduced-fat cheddar 30g'],
   },
   {
     id: 'tofu-vegetable-curry',
@@ -728,7 +728,7 @@ export const MEALS = [
     prepMins: 25,
     diet: 'vegan',
     tags: ['high-protein'],
-    ingredients: ['Firm tofu 200g', 'Tinned chickpeas 100g', 'Mixed frozen veg 200g', 'Tinned coconut milk light 200ml', 'Curry paste 30g', 'Brown rice 80g dry'],
+    ingredients: ['Firm tofu 200g', 'Tinned chickpeas 100g', 'Frozen mixed veg 200g', 'Tinned coconut milk light 200ml', 'Curry paste 30g', 'Brown rice 80g dry'],
   },
   {
     id: 'chicken-stir-fry-noodles',

@@ -57,17 +57,47 @@ export function isPulseProteinFamily(family) {
   return PULSE_PROTEIN_FAMILIES.has(family);
 }
 
+// Which protein a dish's METHOD revolves around — the thing that gets browned,
+// baked or simmered. A narrower question than "what protein is in this", and
+// the answer drives real instructions, so a wrong one is not cosmetic.
+//
+// It used to be answered by its own keyword list, which read `steak` and
+// `mince` as beef. Everything the protein-diversity work found wrong with that
+// list was equally wrong here, and here it reached the page as cooking advice:
+//
+//   beef tomato      -> beef  -> a mozzarella and tomato salad fried in a pan
+//   cauliflower steak-> beef
+//   tuna steak       -> beef
+//   Quorn mince      -> beef
+//   chicken stock    -> chicken (a stock cube, treated as the dish's protein)
+//
+// So identity now comes from the one resolver that already knows a source from
+// a cut, and this function only decides whether the identity it returns is
+// something a method should cook.
+const METHOD_PROTEIN_BY_IDENTITY = new Map([
+  // Cooked as the centre of the dish.
+  ['chicken', 'chicken'], ['turkey', 'turkey'], ['duck', 'duck'], ['beef', 'beef'],
+  ['lamb', 'lamb'], ['pork', 'pork'], ['venison', 'venison'],
+  ['salmon', 'salmon'], ['tuna', 'tuna'], ['cod', 'cod'], ['haddock', 'haddock'],
+  ['pollock', 'pollock'], ['mackerel', 'mackerel'], ['sardines', 'sardine'],
+  ['prawns', 'prawns'], ['crab', 'crab'], ['mussels', 'mussels'], ['squid', 'squid'],
+  ['tofu', 'tofu'], ['tempeh', 'tempeh'], ['seitan', 'seitan'], ['quorn', 'quorn'],
+  ['falafel', 'falafel'], ['halloumi', 'halloumi'], ['paneer', 'paneer'],
+  ['eggs', 'eggs'],
+  ['lentils', 'lentils'], ['beans', 'beans'], ['chickpeas', 'chickpeas'],
+
+  // Present as protein, but never the thing a method cooks: they are stirred
+  // in, scattered over or layered. Mapping them to '' is what stops a caprese
+  // salad being fried.
+  ['cheese', ''], ['feta', ''], ['ricotta', ''], ['cottage-cheese', ''],
+  ['greek-yogurt', ''], ['edamame', ''], ['anchovies', ''],
+  ['protein-powder', ''], ['nut-butter', ''], ['nuts-seeds', ''],
+]);
+
 export function findProtein(searchText) {
-  const text = String(searchText || '').toLowerCase();
-  for (const [family, aliases] of PROTEIN_FAMILIES) {
-    // "beans" as a protein family means an actual pulse (kidney/black/
-    // cannellini/mixed/baked beans) — not green beans (a vegetable) or
-    // edamame/beansprouts, which this same exclusion list already keeps
-    // out of pulse-state classification below.
-    if (family === 'beans' && !isPulseIngredient(text)) continue;
-    if (aliases.some(alias => hasWordPhrase(text, alias))) return family;
-  }
-  return '';
+  const identity = resolveProteinIdentity(searchText);
+  if (!identity) return '';
+  return METHOD_PROTEIN_BY_IDENTITY.get(identity) ?? '';
 }
 
 export function proteinAliasesFor(family) {
@@ -152,6 +182,93 @@ export function isAlreadyPreparedIngredient(name) {
   const text = String(name || '');
   if (PREPARED_FALSE_FRIENDS.test(text)) return false;
   return PREPARED_STATE_PATTERN.test(text);
+}
+
+// ── Supply state: how a food arrives from the shop ───────────────────────
+//
+// Distinct from isAlreadyPreparedIngredient above, which reads a state the
+// RECIPE declares ("Courgette 1 roasted"). This reads a state the FOOD has
+// before anyone touches it: beef jerky is cured and dried, and no recipe
+// needs to say so.
+//
+// The rule this exists to enforce is small and absolute: a food that arrives
+// edible must never be told to cook until cooked through. That instruction
+// was reaching the page — "Cook the lean beef jerky in a non-stick pan over
+// medium heat until cooked through" — because the only thing standing
+// between jerky and a frying pan was a two-line exception list naming tinned
+// tuna and smoked salmon. Anything nobody had thought of was assumed raw.
+//
+// Matching is phrase-first, for the same reason the protein resolver strips
+// form words before matching a source. "Smoked" is not a state:
+//
+//   smoked salmon    -> ready to eat (cured; eaten as it comes)
+//   smoked mackerel  -> ready to eat (hot-smoked; already cooked)
+//   smoked haddock   -> RAW (cold-smoked, and still needs cooking)
+//   smoked paprika   -> not a protein at all
+//
+// so a substring rule on "smoked" would have poisoned a fish that genuinely
+// needs cooking. Every entry below is a phrase, and the raw exceptions are
+// tested first.
+export const PREPARATION_STATE = {
+  RAW: 'raw',
+  READY_TO_EAT: 'ready-to-eat',
+};
+
+// Foods carrying a ready-to-eat-looking word that are nonetheless raw.
+const SUPPLY_STATE_RAW_EXCEPTIONS = [
+  /\bsmoked haddock\b/i,
+  /\bsmoked cod\b/i,
+  // Halloumi is safe to eat cold, but frying it is the entire point of
+  // putting it in a recipe, so it is treated as needing the pan.
+  /\bhalloumi\b/i,
+  /\bsmoked tofu\b/i,
+];
+
+const SUPPLY_STATE_READY_TO_EAT = [
+  // Cured and dried
+  /\b(jerky|biltong|salami|prosciutto|parma ham|pepperoni)\b/i,
+  // Smoked fish sold to be eaten as it comes
+  /\bsmoked (salmon|mackerel|trout)\b/i,
+  // Tinned fish — already cooked in the tin
+  /\btinned (tuna|salmon|sardines?|mackerel)\b/i,
+  /\btuna (pouch|in spring water|in brine)\b/i,
+  // Cultured and soft dairy sold in pots
+  /\b(yogurt|yoghurt|skyr|quark|cottage cheese|cream cheese|protein pudding)\b/i,
+  // Ready dips and spreads
+  /\b(hummus|houmous|guacamole|tzatziki|pesto|olives)\b/i,
+  // Packaged snacks
+  /\b(protein bar|rice cakes?|oatcakes?|crackers?|granola)\b/i,
+  /\b(nuts|walnuts|peanuts|almonds|cashews|pistachios)\b/i,
+  /\bdried (fruit|blueberries|cranberries|apricots|dates|mango)\b/i,
+  // Cooked deli meat. "Turkey breast slices" and "chicken tikka" are named
+  // here rather than corrected in the meal library, because the library's
+  // ingredient names are lookup keys: renaming them to "Cooked turkey breast
+  // slices" made the nutrition table miss them and silently zeroed the
+  // calories of ten plans. What the food IS belongs in this resolver; the
+  // library keeps the name the nutrition data knows it by.
+  /\b(cooked|sliced) (ham|chicken|turkey)\b/i,
+  /\bturkey breast slices\b/i,
+  /\bchicken tikka\b/i,
+  /\bdeli\b/i,
+];
+
+/**
+ * How a food arrives from the shop, before any recipe step touches it.
+ * Returns PREPARATION_STATE.READY_TO_EAT only for foods that are edible as
+ * bought; everything else is RAW, which is the safe default.
+ */
+export function resolvePreparationState(name) {
+  const text = String(name || '');
+  if (SUPPLY_STATE_RAW_EXCEPTIONS.some(pattern => pattern.test(text))) {
+    return PREPARATION_STATE.RAW;
+  }
+  return SUPPLY_STATE_READY_TO_EAT.some(pattern => pattern.test(text))
+    ? PREPARATION_STATE.READY_TO_EAT
+    : PREPARATION_STATE.RAW;
+}
+
+export function isReadyToEatIngredient(name) {
+  return resolvePreparationState(name) === PREPARATION_STATE.READY_TO_EAT;
 }
 
 // Reuses the SAME structured signals the rest of the app already has for
@@ -366,7 +483,9 @@ const NOT_A_PROTEIN_SOURCE = new RegExp([
   '\\bsoy\\s+sauce\\b',
   '\\bcocoa\\s+butter\\b',
   '\\bbutter\\s?nut\\b',
-].join('|'), 'i');
+// Global: a line can carry more than one of these ("green beans and soy
+// sauce"), and masking only the first would leave the second to match.
+].join('|'), 'gi');
 
 // A plant qualifier means any meat word that follows names what the product
 // imitates, not what it is: "vegan sausage" and "plant-based mince" must never
@@ -406,14 +525,23 @@ function stripFormWords(text) {
  */
 export function proteinIdentityCandidates(text) {
   const raw = String(text || '').toLowerCase();
-  if (!raw || NOT_A_PROTEIN_SOURCE.test(raw)) return [];
-  const stripped = stripFormWords(raw);
+  if (!raw) return [];
+  // A phrase that only looks like a protein disqualifies ITSELF, not the
+  // sentence it sits in. Rejecting the whole string was survivable while this
+  // only ever saw one ingredient line at a time, but "Baked Cod with New
+  // Potatoes and Green Beans" is a single string too — and the green beans
+  // were enough to hide the cod, leaving a fish dish with no fish to cook.
+  // Masking the phrase answers both questions correctly: the beans still name
+  // no protein, and the cod is still there.
+  const masked = raw.replace(NOT_A_PROTEIN_SOURCE, ' ').replace(/\s+/g, ' ').trim();
+  if (!masked) return [];
+  const stripped = stripFormWords(masked);
   if (!stripped) return [];
 
   const imitation = PLANT_IMITATION.test(raw);
   const found = [];
   for (const [family, aliases] of PRIMARY_PROTEIN_SOURCES) {
-    if (family === 'beans' && !isPulseIngredient(raw)) continue;
+    if (family === 'beans' && !isPulseIngredient(masked)) continue;
     if (!aliases.some(alias => hasWordPhrase(stripped, alias))) continue;
     // "Vegan sausage" names no animal; drop animal families rather than let
     // the imitated meat win.

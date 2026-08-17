@@ -2,7 +2,14 @@
 // non-blocking audit (scripts/audit-recipe-invariants.js) and the
 // regression corpus so both use one definition rather than drifting
 // copies — the same centralisation principle applied to ingredient roles.
-import { RAW_PROTEINS_REQUIRING_A_COOK_STEP, hasCookingLiquid, isSoupSideAccompaniment } from '../../src/utils/ingredientRoles.js';
+import {
+  RAW_PROTEINS_REQUIRING_A_COOK_STEP,
+  hasCookingLiquid,
+  isAlreadyPreparedIngredient,
+  isReadyToEatIngredient,
+  isSoupSideAccompaniment,
+  resolveProteinIdentity,
+} from '../../src/utils/ingredientRoles.js';
 
 const NEGLIGIBLE_EXCEPTION = /\b(excluded from nutrition estimate|optional|to taste|garnish|spray|as needed)\b/i;
 const COOK_VERB_PATTERN = /\b(cook|cooked|bake|baked|grill|grilled|fry|fried|simmer|simmered|roast|roasted|poach|poached|boil|boiled|brown|browned)\b/i;
@@ -56,21 +63,46 @@ export function checkCoreIngredientOmission(mealName, ingredients, methodText) {
 }
 
 // ── Check 2: a raw protein requiring a cook step has no cooking verb near it ──
+//
+// A food-safety invariant, so precision matters in BOTH directions: a missed
+// raw chicken is dangerous, and a false alarm on a cured or cooked product
+// trains people to ignore the check.
+//
+// It used to ask whether the name-and-ingredients blob CONTAINED a protein
+// word, then excuse itself if a preparation word happened to sit within twenty
+// characters. Both halves were unsound. "Beef tomato" and "beef jerky"
+// contained "beef", so a caprese salad and a bag of jerky were reported as
+// uncooked raw meat; meanwhile "cooked rice with chicken breast" would have
+// been excused, because "cooked" was near enough to "chicken".
+//
+// Now each ingredient is resolved on its own, by the same resolver the rest of
+// the app uses: what protein IS this, and does it arrive edible?
 export function checkRawProteinWithoutCooking(name, ingredients, methodText) {
-  const nameLower = name.toLowerCase();
-  const text = `${nameLower} ${(ingredients || []).join(' ')}`.toLowerCase();
-  const flaggedProteins = [];
-  for (const protein of RAW_PROTEINS_REQUIRING_A_COOK_STEP) {
-    if (!text.includes(protein)) continue;
-    // Already-prepared exceptions that legitimately need no further cooking.
-    if (/(smoked|tinned|canned|cooked|pre-cooked)\s+\w*\s*/i.test(text) && text.includes(`${protein}`)) {
-      // Only skip if the protein word itself is adjacent to a prepared marker.
-      const preparedNear = new RegExp(`(smoked|tinned|canned|cooked)[^,]{0,20}${protein}|${protein}[^,]{0,20}(smoked|tinned|canned|cooked)`, 'i');
-      if (preparedNear.test(text)) continue;
-    }
-    if (!COOK_VERB_PATTERN.test(methodText)) flaggedProteins.push(protein);
+  if (COOK_VERB_PATTERN.test(methodText)) return [];
+
+  const lines = [...(ingredients || [])];
+  const flagged = new Set();
+  for (const line of lines) {
+    const text = String(line);
+    if (isReadyToEatIngredient(text)) continue;
+    if (isAlreadyPreparedIngredient(text)) continue;
+    const identity = resolveProteinIdentity(text);
+    if (identity && RAW_PROTEINS_REQUIRING_A_COOK_STEP.has(identity)) flagged.add(identity);
   }
-  return flaggedProteins;
+
+  // A dish can name its protein only in the title ("Roast Chicken Dinner"),
+  // so the title is checked too — but as one phrase, resolved the same way.
+  const titleIdentity = resolveProteinIdentity(name);
+  if (
+    titleIdentity
+    && RAW_PROTEINS_REQUIRING_A_COOK_STEP.has(titleIdentity)
+    && !isReadyToEatIngredient(name)
+    && !lines.some(line => isReadyToEatIngredient(String(line)))
+  ) {
+    flagged.add(titleIdentity);
+  }
+
+  return [...flagged];
 }
 
 // ── Check 3: a dish needing hydration has no cooking medium IN THE METHOD ─
