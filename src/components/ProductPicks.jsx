@@ -35,7 +35,12 @@ export default function ProductPicks({
         <div className="product-quick-compare" aria-label={`${title} quick comparison`}>
           <div className="product-quick-head">
             <span className="offer-kicker">Quick comparison</span>
-            <h3>{toTitleCase(title)}: compare first</h3>
+            {/* The ": compare first" suffix used to be appended here, which read
+                as "Insulated Meal Prep Bags To Compare: compare first" on the
+                guides whose own title already says "to compare". The kicker
+                above and the line below both already say what this block is
+                for, so the descriptive title stands on its own. */}
+            <h3>{toTitleCase(title)}</h3>
             <p>See the main difference before reading the full product notes.</p>
           </div>
           <div className="product-quick-grid">

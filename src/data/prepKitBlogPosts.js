@@ -721,7 +721,8 @@ export const prepKitBlogPostsData = {
       {
         h2: 'What to write on a freezer label',
         paragraphs: [
-          'Write the meal name, date cooked, portion size and any reheating note. If a meal is for someone else, add allergens or a short warning like spicy, contains nuts or dairy.',
+          'Write the meal name, date cooked, portion size and any reheating note. If a meal is for someone else, note the allergens as well as anything like spicy or very salty.',
+          'One caveat on that. Shorthand like "contains nuts" is fine for ordinary household organisation, but it is not enough for anyone with a diagnosed food allergy. Keep the actual ingredient list for those meals rather than relying on a label, and remember that cross-contact during preparation — shared boards, utensils, pans and oil — is not something a sticker can record. The Food Standards Agency publishes guidance on the 14 major allergens and on avoiding cross-contamination at home.',
           'Use a marker that stays readable when cold and damp. A label that smudges after one day in the freezer is worse than no label because it creates false confidence.',
         ],
       },

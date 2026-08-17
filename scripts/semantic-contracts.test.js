@@ -16,6 +16,7 @@
 // the incident that taught us that.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 
 import { MEALS } from '../src/data/mealLibrary.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
@@ -24,7 +25,7 @@ import { splitIngredientText } from '../src/utils/nutrition.js';
 import { checkFamilyContracts, familiesFor } from './lib/recipeFamilies.js';
 import { findNumericContradictions } from './lib/numericPromises.js';
 import { indefiniteArticleFor } from '../src/utils/indefiniteArticle.js';
-import { getAllPlanMeta, getPlanBySlug } from '../src/utils/planBuilder.js';
+import { getAllPlanMeta, getPlanBySlug, conflictsWithDiet } from '../src/utils/planBuilder.js';
 import { MEAL_PLAN_HUBS } from '../src/data/mealPlanHubs.js';
 
 /** Every distinct recipe across the shared library and legacy editorial plans. */
@@ -110,7 +111,18 @@ test('the family checker reacts to a broken method (control)', () => {
 
 // ── Plan goal → copy ────────────────────────────────────────────────────────
 
-const ASSERTS_PHYSIOLOGY = /\b(?:is a|creates a|puts you in a) (?:calorie )?(?:surplus|deficit)\b|\byour maintenance\b/i;
+// Widened after the homepage calorie shortcuts were found labelling 1,800 kcal
+// "Moderate deficit" and 2,000 kcal "Maintenance or light deficit". The old
+// pattern only caught verb forms ("creates a deficit"), so a bare noun label
+// sitting against a number slipped straight through, and so did the recomp
+// copy's "near-maintenance".
+const ASSERTS_PHYSIOLOGY = new RegExp([
+  '\\b(?:is a|creates a|puts you in a) (?:calorie )?(?:surplus|deficit)\\b',
+  '\\byour maintenance\\b',
+  '\\bnear-?maintenance\\b',
+  '\\bcalories stay close to maintenance\\b',
+  '^(?:moderate |light |slight )?(?:calorie )?(?:deficit|surplus)\\b',
+].join('|'), 'i');
 
 test('no plan asserts a calorie surplus or deficit it cannot know', () => {
   // The site never asks for the reader's energy expenditure, so it cannot know
@@ -358,4 +370,166 @@ test('the method-title contracts fail when the method is wrong (control)', () =>
 
   // Negative control: the contract must not fire on an unrelated title.
   assert.ok(!toast.name.test('Cod and Chickpea Stew'));
+});
+
+// ── Plan copy vs the plan's own structured attributes ───────────────────────
+//
+// The two tests above check generated copy against the plan's *goal*. Diet is
+// the sibling attribute and was never checked, so a vegan plan could open with
+// "protein comes from whole foods — fish, eggs, dairy" and suggest "add an
+// extra tin of fish", while every meal on the page was vegan. 653 plan/field
+// combinations were affected. This generalises the same idea to diet, over
+// every user-visible copy field rather than a hand-picked few.
+
+const COPY_FIELDS = ['intro', 'faq', 'swaps', 'summary', 'storeGuide', 'prepPlan', 'seo', 'title'];
+
+test('no plan recommends food its own diet rules out', () => {
+  const offenders = [];
+  let checked = 0;
+  for (const meta of getAllPlanMeta()) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan || meta.dietType === 'standard') continue;
+    checked += 1;
+    for (const field of COPY_FIELDS) {
+      const value = typeof plan[field] === 'string' ? plan[field] : JSON.stringify(plan[field]);
+      const conflict = conflictsWithDiet(value, meta.dietType);
+      if (conflict) offenders.push(`${meta.slug} [${field}] names "${conflict}" on a ${meta.dietType} plan`);
+    }
+  }
+  assert.ok(checked > 250, `expected to cover the non-standard plans, got ${checked}`);
+  assert.deepEqual(offenders.slice(0, 8), []);
+});
+
+test('the diet-copy detector fires on real conflicts and not on compatible food (control)', () => {
+  // Positive: the exact sentences that shipped.
+  assert.ok(conflictsWithDiet('protein comes from whole foods — fish, eggs, dairy', 'vegan'));
+  assert.ok(conflictsWithDiet('Use frozen chicken breast instead of fresh', 'vegetarian'));
+  assert.ok(conflictsWithDiet('Swap a carb portion for extra chicken breast', 'pescatarian'));
+  assert.ok(conflictsWithDiet('Mediterranean-style planning with oily fish', 'vegan'));
+
+  // Negative: plant analogues and absence-of-food phrasing are compatible, and
+  // flagging them would make the invariant useless.
+  assert.ok(!conflictsWithDiet('use soya milk rather than other plant milks', 'vegan'));
+  assert.ok(!conflictsWithDiet('Quorn Mince Bolognese', 'vegetarian'));
+  assert.ok(!conflictsWithDiet('High-protein meat-free eating', 'vegetarian'));
+  assert.ok(!conflictsWithDiet('Oat Biscuits with Peanut Butter', 'vegan'));
+  assert.ok(!conflictsWithDiet('extra white fish or prawns', 'pescatarian'));
+  assert.ok(!conflictsWithDiet('grilled chicken breast', 'standard'));
+});
+
+// ── Batch-prep storage must not contradict the safety component ─────────────
+
+test('batch-prep instructions never contradict the two-day chilled limit', () => {
+  // StorageSafetyNote tells the reader to eat chilled leftovers within 48 hours
+  // or freeze them. The batch generator said "keep Monday to Wednesday portions
+  // in the fridge and freeze later-week portions if you prefer fresher storage"
+  // — three days, with freezing offered as a preference — on the same page.
+  const UNSAFE = [
+    /Monday to Wednesday portions in the fridge/i,
+    /freeze[^.]{0,40}if you prefer fresher/i,
+    /fridge[^.]{0,30}\b(?:most|rest) of the week/i,
+  ];
+  const offenders = [];
+  for (const meta of getAllPlanMeta()) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan?.prepPlan) continue;
+    const text = JSON.stringify(plan.prepPlan);
+    for (const pattern of UNSAFE) {
+      if (pattern.test(text)) offenders.push(`${meta.slug}: ${pattern}`);
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+
+  // Control: the detector must still recognise the wording that shipped.
+  assert.ok(UNSAFE[0].test('Keep Monday to Wednesday portions in the fridge and freeze later.'));
+  assert.ok(UNSAFE[1].test('freeze later-week portions if you prefer fresher storage'));
+});
+
+test('batch plans state the two-day limit and treat freezing as a safety step', () => {
+  const batch = getAllPlanMeta().find(m => getPlanBySlug(m.slug)?.prepPlan?.steps?.length);
+  assert.ok(batch, 'expected at least one plan with a prep plan');
+  const text = JSON.stringify(getPlanBySlug(batch.slug).prepPlan);
+  assert.match(text, /within two days/i, 'the chilled limit has to be stated');
+  assert.match(text, /not a freshness preference/i, 'freezing is a safety decision');
+});
+
+// ── Fixed calorie numbers must not assert an energy-balance state ───────────
+//
+// A kcal figure alone cannot tell anyone whether they are in a deficit; that
+// depends on energy expenditure the site never asks for. The homepage shortcuts
+// labelled 1,500 "Fat loss", 1,800 "Moderate deficit" and 2,000 "Maintenance or
+// light deficit" regardless of who was reading.
+
+function sourceFiles() {
+  const roots = ['src/pages', 'src/components', 'src/data'];
+  const out = [];
+  for (const root of roots) {
+    for (const entry of fs.readdirSync(root, { recursive: true, withFileTypes: true })) {
+      if (entry.isFile() && /\.(?:js|jsx)$/.test(entry.name)) {
+        out.push(`${entry.parentPath || entry.path}/${entry.name}`);
+      }
+    }
+  }
+  return out;
+}
+
+test('no surface ties an energy-balance state to a calorie number alone', () => {
+  const UNQUALIFIED = /[0-9],?[0-9]{3}\s*(?:kcal|calories)?[^.<>]{0,45}?\b(?:moderate |light )?(?:calorie )?(?:deficit|surplus)\b/gi;
+  const QUALIFIERS = /\b(?:TDEE|depends|expenditure|for many|for most|some|often|usually|typically|varies|rough guide|average|your own|individual|between|if you|may|can be)\b/i;
+
+  const offenders = [];
+  for (const file of sourceFiles()) {
+    const text = fs.readFileSync(file, 'utf8');
+    for (const match of text.matchAll(UNQUALIFIED)) {
+      // A match running across a quote or newline is two unrelated fields
+      // (a date next to an article title), not a sentence.
+      if (/["'`\r\n]/.test(match[0])) continue;
+      // Qualification usually sits in the sentence around the number, not
+      // inside the fragment that matched.
+      // A worked example states its TDEE once and then lists several lines
+      // under it, so the qualification can sit well before the match.
+      const from = Math.max(0, match.index - 700);
+      if (QUALIFIERS.test(text.slice(from, match.index + match[0].length + 120))) continue;
+      offenders.push(`${file}: "${match[0].trim()}"`);
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 6), []);
+});
+
+test('the energy-balance detector catches the labels that shipped (control)', () => {
+  assert.ok(ASSERTS_PHYSIOLOGY.test('Moderate deficit'));
+  assert.ok(ASSERTS_PHYSIOLOGY.test('a near-maintenance calorie target'));
+  assert.ok(ASSERTS_PHYSIOLOGY.test('calories stay close to maintenance'));
+  // Neutral descriptions of what a target is have to stay allowed, or the
+  // invariant just deletes the useful part of the shortcut.
+  assert.ok(!ASSERTS_PHYSIOLOGY.test('Lower target — most popular for weight loss'));
+  assert.ok(!ASSERTS_PHYSIOLOGY.test('Higher target — usually chosen for muscle gain'));
+});
+
+// ── Active UI copy must not describe features the reader cannot see ─────────
+
+test('plan copy only refers to sections the active renderer renders', () => {
+  const source = fs.readFileSync('src/pages/PlanPage.jsx', 'utf8');
+  assert.match(source, /const SHOW_LEGACY_PLAN_RENDERER = false;/,
+    'this test assumes the legacy renderer is disabled');
+
+  // "The swap section keeps the page usable..." is only honest while the swaps
+  // section sits outside the disabled legacy block. If it is ever moved inside,
+  // this fails and the copy has to change with it.
+  const legacyStart = source.indexOf('SHOW_LEGACY_PLAN_RENDERER && (');
+  const swapsAt = source.indexOf('plan-swaps-section');
+  assert.ok(swapsAt > -1, 'the swaps section must exist for the copy to be honest');
+  assert.ok(swapsAt > legacyStart, 'unexpected ordering');
+});
+
+// ── Accessory comparison headings ───────────────────────────────────────────
+
+test('the quick-comparison heading does not repeat itself', () => {
+  const component = fs.readFileSync('src/components/ProductPicks.jsx', 'utf8');
+  // Titles like "Insulated meal prep bags to compare" met an appended
+  // ": compare first" and rendered as "...To Compare: compare first".
+  assert.doesNotMatch(component, /<h3>[^<]*: compare first/i,
+    'the duplicative suffix is back in the heading');
+  assert.match(component, /<h3>\{toTitleCase\(title\)\}<\/h3>/,
+    'the descriptive title should stand on its own');
 });

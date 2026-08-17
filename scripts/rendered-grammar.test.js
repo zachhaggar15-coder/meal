@@ -41,8 +41,14 @@ function pages() {
 
 // Words whose written form starts with a vowel letter and whose spoken form
 // starts with a vowel sound — the two have to agree for "a"/"an" to be right.
-const NEEDS_AN = /\ba (?=(?:Aldi|Asda|Iceland|Ocado|M&S|anti-inflammatory|endurance|hour|honest)\b)/;
-const NEEDS_A = /\ban (?=(?:Tesco|Lidl|Waitrose|Morrisons|Co-op|Sainsbury|generic|budget|one-pot)\b)/;
+//
+// These were case-sensitive, so they could only ever catch an article in the
+// middle of a sentence. "A Aldi weight loss plan at 1,500 calories" opened a
+// paragraph on every generated plan page and matched neither — the detector was
+// blind to the sentence-initial case, which is exactly where a capitalised
+// template defect lands. Both are case-insensitive now.
+const NEEDS_AN = /\ba (?=(?:Aldi|Asda|Iceland|Ocado|M&S|anti-inflammatory|endurance|hour|honest)\b)/i;
+const NEEDS_A = /\ban (?=(?:Tesco|Lidl|Waitrose|Morrisons|Co-op|Sainsbury|generic|budget|one-pot)\b)/i;
 // A determiner immediately followed by another determiner.
 const DOUBLE_DETERMINER = /\bthe (?:a|an|the)\b|\ba (?:a|an|the)\b|\ban (?:a|an|the)\b/i;
 
@@ -79,6 +85,9 @@ test('the detectors still fire on the defects they were built for (control)', ()
   // Positive controls: the exact strings that shipped.
   assert.ok(NEEDS_AN.test('Why Choose a Aldi 1800 Calorie Meal Plan?'));
   assert.ok(NEEDS_AN.test('Start with a anti-inflammatory plan'));
+  // The sentence-initial forms the detector used to be blind to.
+  assert.ok(NEEDS_AN.test('A Aldi weight loss plan at 1,500 calories is useful'));
+  assert.ok(NEEDS_A.test('An Tesco plan is cheaper'));
   assert.ok(DOUBLE_DETERMINER.test('summarises all 7 days at 1,800 kcal/day, the a generic UK supermarket'));
   assert.ok(NEEDS_A.test('Can I use an Tesco plan elsewhere?'));
 

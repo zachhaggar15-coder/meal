@@ -1387,7 +1387,7 @@ export const expandedBlogPostsData = {
       {
         h2: 'Storage rhythm',
         paragraphs: [
-          'Keep Monday to Wednesday meals in the fridge and freeze later-week portions if needed. Cool cooked food quickly, store it covered, and reheat until piping hot when serving hot meals.',
+          'Refrigerate only what you will eat within two days and freeze the rest straight away — that is a safety limit, not a freshness preference. Cool cooked food quickly and get it into the fridge within one to two hours, store it covered, and reheat until piping hot right through.',
           'Label freezer tubs with the meal and date. This tiny habit prevents the mysterious frozen block problem.',
         ],
       },

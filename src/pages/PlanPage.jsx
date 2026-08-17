@@ -41,6 +41,7 @@ import {
 } from '../utils/portionShares.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import NotFound from './NotFound.jsx';
+import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -58,6 +59,13 @@ const HOUSEHOLD_MODES = [
 ];
 const MAX_HOUSEHOLD_MEMBERS = 6;
 const SHOW_LEGACY_PLAN_RENDERER = false;
+
+// Sentence-initial indefinite article. The shared helper is phonetic — "an
+// Aldi", "a Waitrose" — but returns lowercase, and this one opens a sentence.
+function sentenceArticleFor(value) {
+  const article = indefiniteArticleFor(value);
+  return article.charAt(0).toUpperCase() + article.slice(1);
+}
 
 const GOAL_HUB_SLUGS = {
   'weight-loss': 'weight-loss',
@@ -1238,8 +1246,9 @@ function PlanQualityNotes({ plan }) {
         <article>
           <h3>What this plan is for</h3>
           <p>
-            A {market} {plan.goalLabel.toLowerCase()} plan at {calorieText} calories is useful when
-            someone wants a printable week before shopping, not just a generic diet article.
+            {sentenceArticleFor(market)} {market} {plan.goalLabel.toLowerCase()} plan at {calorieText} calories
+            is useful when someone wants a printable week before shopping, not just a generic
+            diet article.
           </p>
         </article>
         <article>

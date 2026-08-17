@@ -179,8 +179,8 @@ const EMPHASIS_CONTEXT = {
     ],
   },
   'recomp-protein': {
-    rationale: 'Protein sits high relative to a near-maintenance calorie target — the aim is building muscle and losing fat at the same time, which needs more protein than either goal alone.',
-    distinguisher: 'protein is set higher than a typical weight-loss plan while calories stay close to maintenance',
+    rationale: 'Protein sits high relative to the calorie target — the aim is building muscle and losing fat at the same time, which needs more protein than either goal alone. Whether that target sits above or below your own maintenance depends on your energy needs.',
+    distinguisher: 'protein is set higher than a typical weight-loss plan without cutting calories as hard',
     proteinSwaps: [
       'Add 2–3 extra egg whites to breakfast rather than increasing portion size across the board',
       'Use a protein shake as a between-meal top-up instead of an extra carb-based snack',
@@ -198,8 +198,135 @@ const EMPHASIS_CONTEXT = {
   },
 };
 
-function getEmphasisContext(emphasis) {
-  return EMPHASIS_CONTEXT[emphasis] || EMPHASIS_CONTEXT['lean-protein'];
+// ── Diet-aware copy ───────────────────────────────────────────────────────────
+//
+// Meal *selection* has always respected the plan's diet. The prose generated
+// alongside it did not: emphasis is chosen independently of diet, so a vegan
+// plan could explain itself with "protein comes from whole foods — fish, eggs,
+// dairy" and offer "add an extra tin of fish" as a suggestion. The meals were
+// vegan throughout; the sentence under the H1 contradicted them.
+//
+// Foods each diet rules out. Deliberately excludes plant analogues, which are
+// compatible: "soya milk", "oat milk", "vegan cheese", "plant-based mince".
+const PLANT_QUALIFIER = '(?<!\\bplant[- ])(?<!\\bplant-based )(?<!\\bvegan )(?<!\\bsoya )(?<!\\bsoy )(?<!\\bsoy-)(?<!\\boat )(?<!\\balmond )(?<!\\bcoconut )(?<!\\bmeat-free )(?<!\\bdairy-free )(?<!\\bno )(?<!\\bpeanut )(?<!\\bnut )(?<!\\bcashew )(?<!\\bquorn )(?<!\\btofu )(?<!\\bmeat-free )(?<!\\bmeatless )(?<!\\bveggie )(?<!\\bvegetarian )';
+// "meat-free", "dairy-free" and "fish-free" describe the absence of the food,
+// so the word appearing there is compatible copy, not a contradiction.
+const FREE_SUFFIX = '(?!\\s*-\\s*free)(?!-free)(?! free\\b)(?! alternative)(?! substitute)(?! analogue)';
+const MEAT = 'chicken|beef|pork|lamb|turkey|bacon|ham|mince|meat|steak|sausages?';
+const FISH = 'fish|salmon|tuna|cod|prawns?|mackerel|sardines?|anchov(?:y|ies)|seafood';
+const ANIMAL = 'eggs?|egg whites?|dairy|yogurt|yoghurt|quark|cottage cheese|cheese|halloumi|feta|whey|milk|butter|honey';
+
+const DIET_EXCLUDED_FOODS = {
+  vegan: new RegExp(`${PLANT_QUALIFIER}\\b(?:${MEAT}|${FISH}|${ANIMAL})\\b${FREE_SUFFIX}`, 'i'),
+  vegetarian: new RegExp(`${PLANT_QUALIFIER}\\b(?:${MEAT}|${FISH})\\b${FREE_SUFFIX}`, 'i'),
+  pescatarian: new RegExp(`${PLANT_QUALIFIER}\\b(?:${MEAT})\\b${FREE_SUFFIX}`, 'i'),
+  standard: null,
+};
+
+/** Does this sentence recommend something the diet rules out? */
+export function conflictsWithDiet(text, dietType) {
+  const excluded = DIET_EXCLUDED_FOODS[dietType];
+  if (!excluded || typeof text !== 'string') return null;
+  const match = excluded.exec(text);
+  return match ? match[0] : null;
+}
+
+// Diet-appropriate protein suggestions, used to top up a list after the
+// incompatible lines have been filtered out, so a vegan reader still gets three
+// usable suggestions rather than a short or empty section.
+const DIET_PROTEIN_SWAPS = {
+  vegan: [
+    'Stir a scoop of plant protein into porridge, oats or a smoothie for an easy 20g',
+    'Add extra firm tofu, tempeh or edamame to any bowl or stir-fry',
+    'Keep tinned lentils, chickpeas and black beans in to bulk out a meal at low cost',
+    'Use soya milk rather than other plant milks — it carries roughly three times the protein',
+  ],
+  vegetarian: [
+    'Add a couple of eggs or a portion of cottage cheese as a whole-food protein top-up',
+    'Use 0% fat Greek yogurt or quark in place of standard yogurt — same volume, far more protein',
+    'Stir extra tinned lentils or chickpeas through a curry, chilli or salad',
+    'Swap standard cheese for a portion of paneer or halloumi in a lunch salad',
+  ],
+  pescatarian: [
+    'Keep tinned tuna, mackerel or sardines in for a fast protein top-up with no cooking',
+    'Add extra white fish or prawns to a bowl, curry or pasta dish',
+    'Use 0% fat Greek yogurt or quark instead of standard yogurt for more protein',
+    'Add a couple of eggs or extra firm tofu when a meal runs light on protein',
+  ],
+};
+
+/** Drop suggestions the diet rules out, topping the list back up to `keep`. */
+function adaptSuggestions(suggestions, dietType, keep = 3) {
+  if (!DIET_EXCLUDED_FOODS[dietType]) return suggestions;
+  const compatible = (suggestions || []).filter(s => !conflictsWithDiet(s, dietType));
+  if (compatible.length >= keep) return compatible.slice(0, keep);
+  const topUp = (DIET_PROTEIN_SWAPS[dietType] || []).filter(s => !compatible.includes(s));
+  return [...compatible, ...topUp].slice(0, keep);
+}
+
+// Where the default rationale names specific foods, a diet needs its own
+// sentence rather than a filtered one — you cannot delete "fish, eggs, dairy"
+// from the middle of an explanation and still have it read.
+const EMPHASIS_BY_DIET = {
+  'lean-protein': {
+    vegan: {
+      rationale: 'Meals lean on lower-fat plant protein — tofu, tempeh, seitan, pulses and soya — so each meal carries more protein for the calories it costs, leaving room to hit the day\'s target without relying on volume alone.',
+      distinguisher: 'the meal selection is biased toward higher-protein plant foods rather than just hitting a protein number however it can',
+    },
+    vegetarian: {
+      rationale: 'Meals lean on lower-fat vegetarian protein — egg whites, low-fat dairy, tofu and pulses — so each meal carries more protein for the calories it costs, leaving room to hit the day\'s target without relying on volume alone.',
+    },
+    pescatarian: {
+      rationale: 'Meals lean on lower-fat protein — white fish, prawns, egg whites and low-fat dairy — so each meal carries more protein for the calories it costs, leaving room to hit the day\'s target without relying on volume alone.',
+    },
+  },
+  'frozen-friendly': {
+    vegan: {
+      rationale: 'Meals are built around ingredients that freeze well — frozen vegetables, edamame, frozen fruit and freezer-friendly bases — so a weekly shop keeps for longer and less goes to waste.',
+    },
+    vegetarian: {
+      rationale: 'Meals are built around ingredients that freeze well — frozen vegetables, frozen fruit, tofu and freezer-friendly bases — so a weekly shop keeps for longer and less goes to waste.',
+    },
+  },
+  'low-cal-swaps': {
+    vegan: {
+      rationale: 'Every meal already carries at least one lower-calorie swap — cauliflower rice, extra tofu or pulses instead of extra carbs, lighter plant milks — to keep calories down without cutting protein.',
+    },
+  },
+  'whole-food': {
+    vegan: {
+      rationale: 'Protein comes from whole foods — pulses, tofu, tempeh, nuts and seeds — rather than protein powders or bars, in line with the whole-food approach this plan takes throughout.',
+    },
+    vegetarian: {
+      rationale: 'Protein comes from whole foods — eggs, dairy, pulses and tofu — rather than protein powders or bars, in line with the whole-food approach this plan takes throughout.',
+    },
+  },
+};
+
+// Goal descriptions name foods as well, and goal is orthogonal to diet, so the
+// anti-inflammatory line opened every vegan anti-inflammatory plan with "oily
+// fish". Only the goals whose wording names a food need a variant.
+const GOAL_BEST_FOR_BY_DIET = {
+  'anti-inflammatory': {
+    vegan: 'Mediterranean-style planning built on plants, pulses and whole foods',
+    vegetarian: 'Mediterranean-style planning with plants, pulses and whole foods',
+  },
+};
+
+function getGoalBestFor(goal, dietType = 'standard') {
+  return GOAL_BEST_FOR_BY_DIET[goal]?.[dietType]
+    || GOAL_BEST_FOR[goal]
+    || 'General healthy eating';
+}
+
+function getEmphasisContext(emphasis, dietType = 'standard') {
+  const base = EMPHASIS_CONTEXT[emphasis] || EMPHASIS_CONTEXT['lean-protein'];
+  const override = EMPHASIS_BY_DIET[emphasis]?.[dietType] || {};
+  return {
+    ...base,
+    ...override,
+    proteinSwaps: adaptSuggestions(base.proteinSwaps, dietType),
+  };
 }
 
 const GOAL_BEST_FOR = {
@@ -905,9 +1032,9 @@ function getMarketLabel(supermarket) {
 function buildIntro(seed, averageMacros) {
   const mkt = getMarketLabel(seed.supermarket);
   const profile = getSupermarketProfile(seed.supermarket);
-  const emphasisContext = getEmphasisContext(seed.emphasis);
+  const emphasisContext = getEmphasisContext(seed.emphasis, seed.dietType);
   const dailyProtein = Math.round(averageMacros?.protein || 0);
-  const bestFor = GOAL_BEST_FOR[seed.goal] || 'General healthy eating';
+  const bestFor = getGoalBestFor(seed.goal, seed.dietType);
   const caloriesText = seed.calories.toLocaleString('en-GB');
 
   const marketClause = seed.supermarket === 'any'
@@ -929,7 +1056,7 @@ function buildFaqs(seed, averageMacros) {
   const mkt = genericMarket ? 'generic UK supermarket' : getMarketLabel(seed.supermarket);
   const mktPhrase = genericMarket ? 'a generic UK supermarket' : mkt;
   const gl = (GOAL_LABELS[seed.goal] || seed.goal).toLowerCase();
-  const emphasisContext = getEmphasisContext(seed.emphasis);
+  const emphasisContext = getEmphasisContext(seed.emphasis, seed.dietType);
   const profile = getSupermarketProfile(seed.supermarket);
   const dailyProtein = Math.round(averageMacros?.protein || 0);
   const caloriesText = seed.calories.toLocaleString('en-GB');
@@ -971,10 +1098,13 @@ function buildFaqs(seed, averageMacros) {
 function buildSwaps(seed) {
   const isBudget = seed.budget === 'very-cheap' || seed.budget === 'budget';
   const profile = getSupermarketProfile(seed.supermarket);
-  const emphasisContext = getEmphasisContext(seed.emphasis);
+  const emphasisContext = getEmphasisContext(seed.emphasis, seed.dietType);
 
   return {
-    cheaper: [
+    // These were hardcoded around salmon and chicken, so a vegan plan was told
+    // to buy frozen chicken breast. Filtered against the plan's own diet, with
+    // diet-appropriate savings put back in their place.
+    cheaper: adaptSuggestions([
       seed.supermarket === 'any'
         ? 'Buy own-brand rolled oats, rice, pasta and tins — nutritionally identical to branded, at any supermarket'
         : `Buy ${profile.label}'s ${profile.valueRange} range for rice, pasta, oats and tins — nutritionally identical to standard lines, at the lowest price point in store`,
@@ -984,7 +1114,7 @@ function buildSwaps(seed) {
         : `Switch to ${profile.label}'s value range across the board rather than mid-tier lines`,
       'Use frozen chicken breast instead of fresh (saves ~£1.50/week, same protein)',
       'Swap fresh berries for frozen mixed berries (same nutrients, fraction of the cost)',
-    ],
+    ], seed.dietType, 5),
     higherProtein: emphasisContext.proteinSwaps,
     vegetarian: seed.dietType === 'standard' ? [
       'Replace chicken with Quorn fillets or diced firm tofu',
@@ -1048,7 +1178,14 @@ function buildBatchPrepPlan(seed, plan) {
     steps.push(`Portion snacks in advance: ${joinNames(snacks)}.`);
   }
 
-  steps.push('Keep Monday to Wednesday portions in the fridge and freeze later-week portions if you prefer fresher storage.');
+  // Was "keep Monday to Wednesday portions in the fridge and freeze later-week
+  // portions if you prefer fresher storage" — three days chilled, with freezing
+  // offered as a preference. StorageSafetyNote on the same page says two days,
+  // or freeze. Food Standards Agency guidance is the two-day one.
+  steps.push('Cool everything quickly and get it into the fridge within one to two hours.');
+  steps.push('Refrigerate only the portions you will eat within two days — freeze the rest '
+    + 'straight away, and move each one to the fridge the night before you need it. '
+    + 'Freezing the later part of the week is a food-safety step, not a freshness preference.');
 
   return {
     title: 'Sunday batch-cook plan',
@@ -1320,7 +1457,7 @@ export function buildPlan(seed) {
 
     summary: {
       supermarkets:    seed.supermarket === 'any' ? 'Generic UK supermarket' : getMarketLabel(seed.supermarket),
-      bestFor:         GOAL_BEST_FOR[seed.goal]  || 'General healthy eating',
+      bestFor:         getGoalBestFor(seed.goal, seed.dietType),
       prepDifficulty:  EFFORT_LABELS[seed.effort]  || seed.effort,
       calorieRange:    `~${seed.calories} kcal/day`,
       budgetRange:     BUDGET_ESTIMATES[seed.budget],
@@ -1351,7 +1488,11 @@ function buildStoreGuide(seed) {
     positioning: profile.positioning,
     valueRange: profile.valueRange,
     loyalty: profile.loyalty,
-    prepStrengths: profile.prepStrengths,
+    // Presented as why this shop suits this plan, so "large fresh meat and
+    // mince packs" has no business on a vegan one.
+    prepStrengths: (profile.prepStrengths || []).filter(
+      strength => !conflictsWithDiet(strength, seed.dietType),
+    ),
     watchOuts: profile.watchOuts,
     checked: PRICING_CONTEXT_CHECKED,
   };

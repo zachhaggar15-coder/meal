@@ -179,8 +179,13 @@ export default function ChoiceLandingPage({ mode }) {
           <section className="choice-index-note">
             <h2>{toTitleCase('Not available for this choice yet')}</h2>
             <p>
-              We do not have a{' '}
-              {formatChoiceList(unavailableCards.map(card => card.label.toLowerCase()))} plan for{' '}
+              {/* Two defects lived in this sentence: the article was hardcoded
+                  before a list whose first item can start with a vowel sound
+                  ("a Iceland"), and lowercasing flattened brand names into
+                  "iceland, waitrose, ocado, m&s and co-op". Supermarket labels
+                  are proper nouns and keep their capitals. */}
+              We do not have {indefiniteArticleFor(unavailableCards[0]?.label)}{' '}
+              {formatChoiceList(unavailableCards.map(card => card.label))} plan for{' '}
               {config.defaultValue} yet. The plan browser can show the closest alternatives across
               other supermarkets.
             </p>

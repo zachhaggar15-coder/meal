@@ -341,19 +341,19 @@ export default function Home() {
           <div className="calorie-nav-links">
             <Link to="/meal-plan/1500-calorie-meal-plan" className="calorie-nav-card">
               <strong>1,500 kcal</strong>
-              <span>Fat loss — most popular target</span>
+              <span>Lower target — most popular for weight loss</span>
             </Link>
             <Link to="/meal-plan/1800-calorie-meal-plan" className="calorie-nav-card">
               <strong>1,800 kcal</strong>
-              <span>Moderate deficit — active adults</span>
+              <span>Moderate target — often chosen by active adults</span>
             </Link>
             <Link to="/meal-plan/2000-calorie-meal-plan" className="calorie-nav-card">
               <strong>2,000 kcal</strong>
-              <span>Maintenance or light deficit</span>
+              <span>Middle target — maintenance or gentle loss</span>
             </Link>
             <Link to="/meal-plan/2500-calorie-meal-plan" className="calorie-nav-card">
               <strong>2,500 kcal</strong>
-              <span>Muscle gain and bulking</span>
+              <span>Higher target — usually chosen for muscle gain</span>
             </Link>
           </div>
         </section>
