@@ -11,6 +11,7 @@ import QuizNudge from '../components/QuizNudge.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
+import PlanCard from '../components/PlanCard.jsx';
 import PlanSaveButton from '../components/PlanSaveButton.jsx';
 import RecipeDetails from '../components/RecipeDetails.jsx';
 import TickableShoppingList from '../components/TickableShoppingList.jsx';
@@ -925,20 +926,17 @@ export default function PlanPage() {
         {plan.relatedSlugs.length > 0 && (
           <section className="plan-related-section">
             <h2>Related Meal Plans</h2>
-            <div className="related-plans-grid">
+            {/* The shared browse card, not a bespoke one. These were bare
+                title links, so the alternatives could not be compared on the
+                things that distinguish them. */}
+            <div className="browse-grid plan-related-grid">
               {plan.relatedSlugs.map(r => (
-                <Link
+                <PlanCard
                   key={r.slug}
-                  to={`/plans/${r.slug}`}
-                  className="related-plan-card"
-                  data-event="related_plan_clicked"
-                  data-plan-slug={r.slug}
-                  data-source-page={`plan-${plan.slug}`}
-                  data-page-type="plan"
-                  data-cta-location="related_plans"
-                >
-                  {r.title}
-                </Link>
+                  plan={r}
+                  sourcePage={`plan-${plan.slug}`}
+                  ctaLocation="related_plans"
+                />
               ))}
             </div>
           </section>
@@ -977,8 +975,31 @@ function SummaryItem({ label, value }) {
   );
 }
 
+// The seven days as they were actually built, not the target they were built
+// towards. The two agree on this corpus, which is the point of checking: an
+// average read off the plan stays honest if a day ever drifts, whereas a
+// restated target cannot.
+function dailyAverages(days) {
+  const list = Array.isArray(days) ? days.filter(day => day?.totals) : [];
+  if (!list.length) return null;
+  const mean = key => Math.round(
+    list.reduce((total, day) => total + Number(day.totals[key] || 0), 0) / list.length,
+  );
+  return {
+    kcal: mean('kcal'),
+    protein: mean('protein'),
+    carbs: mean('carbs'),
+    fats: mean('fats'),
+    fibre: mean('fibre'),
+  };
+}
+
 function PlanOverview({ plan, sourcePlan }) {
   const market = MKT_LABEL[sourcePlan.supermarket] || sourcePlan.supermarket;
+  const average = dailyAverages(plan.plan) || {
+    kcal: sourcePlan.calories,
+    ...(sourcePlan.macrosGrams || {}),
+  };
 
   return (
     <section className="plan-overview" aria-labelledby="plan-overview-heading">
@@ -992,9 +1013,21 @@ function PlanOverview({ plan, sourcePlan }) {
       <div className="plan-overview-grid">
         <SummaryItem label="Supermarket" value={market} />
         <SummaryItem label="Goal" value={sourcePlan.goalLabel} />
-        <SummaryItem label="Daily calories" value={`~${sourcePlan.calories.toLocaleString('en-GB')} kcal`} />
-        <SummaryItem label="Daily protein" value={`~${sourcePlan.macrosGrams?.protein || 0}g`} />
         <SummaryItem label="Weekly cost" value={`${plan.priceEstimate} estimate`} />
+      </div>
+      {/* Calories alone, plus protein alone, left a reader to guess the rest of
+          the plate. All four are stated, and labelled as averages, because
+          individual days vary by design. */}
+      <div className="plan-daily-average">
+        <span className="plan-daily-average-label">Daily average across the 7 days</span>
+        <div className="plan-daily-average-values">
+          <span><strong>{average.kcal.toLocaleString('en-GB')}</strong> kcal</span>
+          <span><strong>{average.protein}g</strong> protein</span>
+          <span><strong>{average.carbs}g</strong> carbs</span>
+          <span><strong>{average.fats}g</strong> fat</span>
+          {Number.isFinite(average.fibre) && <span><strong>{average.fibre}g</strong> fibre</span>}
+        </div>
+        <p className="plan-daily-average-note">Individual days vary around these figures.</p>
       </div>
       <CostEstimateNote supermarket={market} compact />
     </section>

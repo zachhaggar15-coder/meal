@@ -80,13 +80,19 @@ const STEPS = [
   {
     id: 'budget',
     question: "What's your weekly food budget?",
-    hint: 'For one person.',
+    hint: 'Per person, per week.',
     type: 'single',
     options: [
-      { value: 'very-cheap', label: 'Very cheap', desc: 'Under £30/week' },
-      { value: 'budget', label: 'Budget', desc: '£30-40/week' },
-      { value: 'moderate', label: 'Moderate', desc: '£40-55/week' },
-      { value: 'flexible', label: 'Flexible', desc: '£55+/week' },
+      { value: 'very-cheap', label: 'Very cheap', desc: 'Under £30 per person, per week' },
+      { value: 'budget', label: 'Budget', desc: '£30-40 per person, per week' },
+      { value: 'moderate', label: 'Moderate', desc: '£40-55 per person, per week' },
+      // Two different answers used to share one option. This tier was labelled
+      // "Flexible", so a reader who meant "I don't mind what it costs" picked
+      // the most expensive band and was ranked towards the priciest plans.
+      // "Higher budget" says what the band is; "No preference" is the answer
+      // that was missing, and it removes budget from the ranking entirely.
+      { value: 'flexible', label: 'Higher budget', desc: '£55+ per person, per week' },
+      { value: 'no-preference', label: 'No preference', desc: "Budget won't affect your matches" },
     ],
   },
   {

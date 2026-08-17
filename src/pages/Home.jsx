@@ -308,28 +308,34 @@ export default function Home() {
         {/* ── How it works ─────────────────────────────────────────────────── */}
         <section className="how-it-works">
           <h2 className="section-title">How it works</h2>
-          <div className="hiw-steps">
-            <div className="hiw-step">
-              <span className="hiw-num">1</span>
-              <strong>Take the quiz</strong>
-              <p>7 quick questions about your goal, diet, supermarket, calories, budget, and effort.</p>
-            </div>
-            <div className="hiw-step">
-              <span className="hiw-num">2</span>
+          {/* An ordered list, because it is one. The steps used to be four
+              equal boxes whose numbers were styled as the same tiny grey
+              kicker as every other label on the page, so nothing said these
+              happened in sequence. Step two also led with the machinery — "we
+              rank all 1,059 plans" — which describes our work, not the
+              reader's. */}
+          <ol className="hiw-steps">
+            <li className="hiw-step">
+              <span className="hiw-num" aria-hidden="true">1</span>
+              <strong>Tell us what you need</strong>
+              <p>Seven quick questions: your goal, diet, supermarket, calories, budget and how much cooking you want to do.</p>
+            </li>
+            <li className="hiw-step">
+              <span className="hiw-num" aria-hidden="true">2</span>
               <strong>Get matched</strong>
-              <p>We rank all {PLAN_COUNT} plans against your answers and show your top 3 matches.</p>
-            </div>
-            <div className="hiw-step">
-              <span className="hiw-num">3</span>
-              <strong>View your plan</strong>
-              <p>Full 7-day meal plan, shopping list, macros, cost estimate, and swaps.</p>
-            </div>
-            <div className="hiw-step">
-              <span className="hiw-num">4</span>
-              <strong>Customise with AI</strong>
-              <p>Edit any meal using natural language — make it vegan, cheaper, or higher protein.</p>
-            </div>
-          </div>
+              <p>You get the three plans that fit your answers best, each one saying plainly where it fits and where it does not.</p>
+            </li>
+            <li className="hiw-step">
+              <span className="hiw-num" aria-hidden="true">3</span>
+              <strong>Follow your plan</strong>
+              <p>Seven days of meals with recipes, a shopping list you can tick off, daily macros and a cost estimate.</p>
+            </li>
+            <li className="hiw-step">
+              <span className="hiw-num" aria-hidden="true">4</span>
+              <strong>Change what does not suit you</strong>
+              <p>Swap any meal in plain English — cheaper, vegan, higher protein — and the plan updates around it.</p>
+            </li>
+          </ol>
           <div className="hiw-cta">
             <Link to="/quiz" className="btn-primary">Find my meal plan</Link>
           </div>

@@ -71,7 +71,16 @@ const CALORIE_OPTIONS = [
   ['3000', '3,000 kcal'],
   ['3500', '3,500 kcal'],
 ];
-const BUDGET_OPTIONS = [['very-cheap', 'Very cheap'], ['budget', 'Budget'], ['moderate', 'Moderate'], ['flexible', 'Flexible']];
+// Must stay in step with the quiz's own budget question: the £55+ tier is a
+// budget, not an absence of one, and "no preference" is a separate answer that
+// takes budget out of the ranking.
+const BUDGET_OPTIONS = [
+  ['very-cheap', 'Very cheap'],
+  ['budget', 'Budget'],
+  ['moderate', 'Moderate'],
+  ['flexible', 'Higher budget'],
+  ['no-preference', 'No preference'],
+];
 const EFFORT_OPTIONS = Object.entries(EFFORT_LABELS);
 
 export default function QuizResults() {
@@ -176,6 +185,14 @@ export default function QuizResults() {
           <div className="result-card-score">{best.matchSummary}</div>
           <h2 className="result-card-title">{planCardTitle(best.title)}</h2>
           <p className="result-card-reason">{best.matchReason}</p>
+          {/* When the library genuinely has nothing near the calories asked
+              for, that is the headline, not a line item folded in among the
+              agreements. It also has to say what to do next. */}
+          {best.noCloseCalorieMatch && (
+            <p className="result-card-shortfall" role="status">
+              {best.calorieShortfallNote}
+            </p>
+          )}
           <CompromiseNote compromises={best.compromises} />
           <MatchDetails details={best.matchDetails} />
 
@@ -189,7 +206,7 @@ export default function QuizResults() {
             )}
           </div>
 
-          <MacroBars macros={best.macrosGrams || best.macros} />
+          <MacroSummary macros={best.macrosGrams || best.macros} />
 
           <Link
             to={`/plans/${best.slug}?source=quiz`}
@@ -326,29 +343,34 @@ function MatchDetails({ details }) {
   );
 }
 
-function MacroBars({ macros }) {
-  const maxByMacro = { protein: 220, carbs: 320, fats: 120, fibre: 50 };
+// These were filled horizontal bars, and a filled bar is a promise: reach the
+// end and you have done the thing. There was nothing at the end. The bars ran
+// against fixed maxima — 220g protein, 320g carbs, 120g fat, 50g fibre — that
+// were not the reader's targets, not anybody's targets, and not stated
+// anywhere on the page. A plan showing protein two thirds along was not two
+// thirds of the way to anything; it was 144g of protein.
+//
+// So the page says 144g of protein. A progress metaphor belongs to a real,
+// named target, and there isn't one here.
+function MacroSummary({ macros }) {
+  const parts = [
+    { key: 'protein', label: 'protein' },
+    { key: 'carbs',   label: 'carbs' },
+    { key: 'fats',    label: 'fat' },
+    { key: 'fibre',   label: 'fibre' },
+  ].filter(({ key }) => Number.isFinite(Number(macros?.[key])));
+
+  if (!parts.length) return null;
 
   return (
-    <div className="macro-bars">
-      {[
-        { key: 'protein', label: 'Protein' },
-        { key: 'carbs',   label: 'Carbs' },
-        { key: 'fats',    label: 'Fats' },
-        { key: 'fibre',   label: 'Fibre' },
-      ].map(({ key, label }) => (
-        <div className="macro-bar-row" key={key}>
-          <span className="macro-bar-label">{label}</span>
-          <div className="macro-bar-track">
-            <div
-              className="macro-bar-fill"
-              style={{ width: `${Math.min(100, Math.round(((macros[key] || 0) / maxByMacro[key]) * 100))}%` }}
-            />
-          </div>
-          <span className="macro-bar-pct">{macros[key] || 0}g</span>
-        </div>
+    <p className="result-macro-summary">
+      <span className="result-macro-summary-lead">Daily average</span>
+      {parts.map(({ key, label }) => (
+        <span className="result-macro-summary-item" key={key}>
+          <strong>{macros[key]}g</strong> {label}
+        </span>
       ))}
-    </div>
+    </p>
   );
 }
 

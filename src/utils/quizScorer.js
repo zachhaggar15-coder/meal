@@ -35,7 +35,17 @@ const RELATED_GOALS = {
 };
 
 const EFFORT_ORDER = ['minimal', 'low', 'standard', 'batch', 'high-variety'];
+// The plan seeds' own budget tiers, cheapest first. `flexible` is a tier name
+// in the plan data (the £55+ one) and is left alone here; what changed is the
+// QUIZ, which used to offer that tier under the word "Flexible" and had no way
+// at all to say "budget does not matter to me".
 const BUDGET_ORDER = ['very-cheap', 'budget', 'moderate', 'flexible'];
+export const BUDGET_NO_PREFERENCE = 'no-preference';
+
+/** True when the answer means "do not rank on budget at all". */
+export function isBudgetUnweighted(answer) {
+  return !answer || answer === BUDGET_NO_PREFERENCE || answer === 'any' || answer === 'unsure';
+}
 const MARKET_LABELS = {
   aldi: 'Aldi',
   lidl: 'Lidl',
@@ -107,7 +117,12 @@ function scoreBasePlan(seed, answers) {
   }
 
   // ── Budget (5pts) ──
-  if (answers.budget) {
+  // "No preference" has to mean no preference. The old top option was labelled
+  // "Flexible" while sitting at the top of this ordered scale, so a reader who
+  // meant "I don't mind" was scored as "I want the most expensive tier" — the
+  // one answer that should remove budget from the ranking was quietly the
+  // strongest budget signal available.
+  if (answers.budget && !isBudgetUnweighted(answers.budget)) {
     const si = BUDGET_ORDER.indexOf(seed.budget);
     const ai = BUDGET_ORDER.indexOf(answers.budget);
     const diff = Math.abs(si - ai);
@@ -115,6 +130,7 @@ function scoreBasePlan(seed, answers) {
     else if (diff === 1)  score += Math.round(W_BUDGET * 0.5);
     // else 0
   } else {
+    // Every plan scores the same here, so budget cannot move the ranking.
     score += Math.round(W_BUDGET * 0.5);
   }
 
@@ -208,6 +224,55 @@ function cosineSimilarity(a, b) {
 // worth W_CALORIES of the base total. Labelling that "Great Match" is
 // misleading, so hard constraints cap the label regardless of overall score.
 const CALORIE_NEAR_MISS = 300;
+
+// ── Calorie distance ──────────────────────────────────────────────────────
+//
+// Calories are not a preference like a supermarket. Asda instead of Tesco is an
+// inconvenience; 1,800 kcal instead of 2,500 is a different diet, and no amount
+// of agreement elsewhere makes up for it. Points could, though: calories were
+// worth 15 and the supermarket 20, so a plan 700 kcal out at the right shop
+// outranked one at the right calories at the wrong shop. Asking for 2,500
+// returned 1,800, summarised as "5 exact · 1 trade-off".
+//
+// Measured across 34,560 quiz outcomes before this changed: 27.9% landed more
+// than 500 kcal from what was asked for, and the worst was 2,100 kcal out.
+//
+// The bands come from the corpus, not from taste. Plans exist at 1,400, 1,500,
+// 1,600, 1,800, 2,000, 2,200, 2,500, 3,000 and 3,500 kcal, so adjacent levels
+// sit 100-500 apart, and the same absolute gap means less at the top of that
+// range than the bottom: 300 kcal is a fifth of a 1,500 plan and a tenth of a
+// 3,000 one. Hence a floor with a proportional term above it.
+export const CALORIE_DISTANCE = {
+  EXACT: 'exact',
+  VERY_CLOSE: 'very-close',
+  NEARBY: 'nearby',
+  MISMATCHED: 'mismatched',
+};
+
+const CALORIE_VERY_CLOSE = 150;
+const CALORIE_NEARBY_FLOOR = 300;
+const CALORIE_NEARBY_SHARE = 0.12;
+
+export function calorieDistanceBand(target, planCalories) {
+  const wanted = Number(target);
+  const got = Number(planCalories);
+  if (!Number.isFinite(wanted) || !Number.isFinite(got)) return CALORIE_DISTANCE.NEARBY;
+
+  const diff = Math.abs(got - wanted);
+  if (diff === 0) return CALORIE_DISTANCE.EXACT;
+  if (diff <= CALORIE_VERY_CLOSE) return CALORIE_DISTANCE.VERY_CLOSE;
+  if (diff <= Math.max(CALORIE_NEARBY_FLOOR, wanted * CALORIE_NEARBY_SHARE)) {
+    return CALORIE_DISTANCE.NEARBY;
+  }
+  return CALORIE_DISTANCE.MISMATCHED;
+}
+
+/** The calorie target the answers ask for, or null when none was given. */
+export function requestedCalories(answers = {}) {
+  if (!answers.calories || answers.calories === 'unsure') return null;
+  const target = parseInt(answers.calories, 10);
+  return Number.isFinite(target) ? target : null;
+}
 
 function matchLabel(score, compromises = []) {
   const hasHardMiss = compromises.some(item => item.severity === 'hard');
@@ -349,7 +414,10 @@ function buildMatchDetails(seed, answers, macrosGrams = null) {
     }
   }
 
-  if (answers.budget) {
+  // Saying "no preference" must not then produce a budget verdict. Reporting a
+  // plan as "outside your budget choice" when the reader made none is the same
+  // mistake as scoring them for the top tier.
+  if (!isBudgetUnweighted(answers.budget)) {
     const seedIndex = BUDGET_ORDER.indexOf(seed.budget);
     const answerIndex = BUDGET_ORDER.indexOf(answers.budget);
     const diff = Math.abs(seedIndex - answerIndex);
@@ -358,8 +426,8 @@ function buildMatchDetails(seed, answers, macrosGrams = null) {
       label: 'Budget',
       status: diff === 0 ? 'exact' : (diff === 1 ? 'close' : 'tradeoff'),
       text: diff === 0
-        ? `${BUDGET_ESTIMATES[seed.budget]}/week matches your budget band.`
-        : `${BUDGET_ESTIMATES[seed.budget]}/week is ${diff === 1 ? 'one band from' : 'outside'} your budget choice.`,
+        ? `${BUDGET_ESTIMATES[seed.budget]} per person, per week matches your budget band.`
+        : `${BUDGET_ESTIMATES[seed.budget]} per person, per week is ${diff === 1 ? 'one band from' : 'outside'} your budget choice.`,
     });
   }
 
@@ -414,11 +482,54 @@ export function getTopMatches(answers, n = 3) {
   if (answers.diet === 'vegan'       && !answers.goal) enrichedAnswers.goal = 'vegan-low-cal';
 
   const useExactMacroMatch = enrichedAnswers.macros && enrichedAnswers.macroMode === 'custom-grams';
-  const scored = useExactMacroMatch
+  const allScored = useExactMacroMatch
     ? scoreExactMacroCandidates(enrichedAnswers)
     : INDEXABLE_PLAN_SEEDS
         .map(seed => ({ seed, score: scorePlan(seed, enrichedAnswers) }))
         .sort((a, b) => b.score - a.score || comparePlanPreference(a.seed, b.seed));
+
+  // Two constraints are not preferences, and they are not equal to each other.
+  //
+  // Diet is the harder of the two: someone who says vegan is not accepting a
+  // meat plan at any calorie count, so diet is filtered first and calories are
+  // only ever applied inside what is left. Get that order wrong and tightening
+  // calories starts handing vegans chicken — a 2,000 kcal vegan plan would be
+  // out of band for a 3,000 kcal request, leaving a 3,000 kcal meat plan to win.
+  //
+  // Calories come second, and are a bound rather than a tie-break. A plan
+  // outside the band cannot win on points collected elsewhere, however many it
+  // collects — that is the whole defect. It is still shown when nothing inside
+  // the band exists, but labelled as the compromise it is.
+  const dietRestricted = enrichedAnswers.diet && enrichedAnswers.diet !== 'standard';
+  const dietMatched = dietRestricted
+    ? allScored.filter(({ seed }) => seed.dietType === enrichedAnswers.diet)
+    : allScored;
+  const pool = dietMatched.length ? dietMatched : allScored;
+
+  const target = requestedCalories(enrichedAnswers);
+  const withinBand = target === null
+    ? pool
+    : pool.filter(({ seed }) => (
+      calorieDistanceBand(target, seed.calories) !== CALORIE_DISTANCE.MISMATCHED
+    ));
+  const noCloseMatch = target !== null && withinBand.length === 0;
+  // When nothing is in band, proximity becomes the ranking rather than one
+  // term in it. Otherwise the fallback answers a 3,500 kcal request with a
+  // 1,400 kcal plan — because it happens to share the goal — while the note
+  // beside it truthfully says the nearest targets are 2,000 and 3,000.
+  const scored = noCloseMatch
+    ? [...pool].sort((a, b) => (
+      Math.abs(a.seed.calories - target) - Math.abs(b.seed.calories - target)
+        || b.score - a.score
+        || comparePlanPreference(a.seed, b.seed)
+    ))
+    : withinBand;
+  const closestAvailable = noCloseMatch
+    ? [...new Set(pool.map(({ seed }) => seed.calories))]
+      .sort((a, b) => Math.abs(a - target) - Math.abs(b - target))
+      .slice(0, 2)
+      .sort((a, b) => a - b)
+    : [];
 
   return scored.slice(0, n).map(({ seed, score, macrosGrams }) => {
     const actualMacros = macrosGrams || getSeedMacroGrams(seed);
@@ -441,7 +552,13 @@ export function getTopMatches(answers, n = 3) {
     matchLabel:    matchLabel(score, compromises),
     matchReason:   buildMatchReason(seed, enrichedAnswers, actualMacros),
     matchDetails,
-    matchSummary:  buildMatchSummary(matchDetails),
+    // A 700 kcal miss counted as one "trade-off" beside five "exact" dimensions,
+    // so the headline read "5 exact · 1 trade-off" — five agreements outvoting
+    // the one thing the reader actually asked for. When the calories are not
+    // close, that is the summary.
+    matchSummary: noCloseMatch
+      ? `${Math.abs(seed.calories - target).toLocaleString('en-GB')} kcal from your target`
+      : buildMatchSummary(matchDetails),
     compromises,
     // Every dimension the user expressed must actually be satisfied. This used
     // to be `compromises.length === 0`, which tolerated anything inside the
@@ -450,6 +567,19 @@ export function getTopMatches(answers, n = 3) {
     // (matchSummary said "5 exact · 1 close"), but the flag itself overstated,
     // and it is part of the public result shape.
     isExactMatch:  compromises.length === 0 && matchDetails.every(item => item.status === 'exact'),
+    // How far this plan's calories are from the request, as a band rather than
+    // a score, so a caller can say "not close" without re-deriving it.
+    calorieBand:   target === null ? null : calorieDistanceBand(target, seed.calories),
+    // True only when the library genuinely has nothing near the request. The
+    // results page must say so rather than presenting the gap as a trade-off
+    // among others — "5 exact · 1 trade-off" is what a 700 kcal miss used to
+    // look like.
+    noCloseCalorieMatch: noCloseMatch,
+    calorieShortfallNote: noCloseMatch
+      ? `No plan in the library is close to ${target.toLocaleString('en-GB')} kcal. The nearest targets are ${
+        closestAvailable.map(value => `${value.toLocaleString('en-GB')} kcal`).join(' and ')
+      } — pick one of those, or set a custom target near them.`
+      : '',
     };
   });
 }

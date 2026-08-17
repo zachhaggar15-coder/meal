@@ -260,7 +260,7 @@ export default function Methodology() {
                 <tr><th scope="row">Very cheap</th><td>£20–£30</td></tr>
                 <tr><th scope="row">Budget</th><td>£30–£40</td></tr>
                 <tr><th scope="row">Moderate</th><td>£40–£55</td></tr>
-                <tr><th scope="row">Flexible</th><td>£50–£70</td></tr>
+                <tr><th scope="row">Higher budget</th><td>£50–£70</td></tr>
               </tbody>
             </table>
           </div>

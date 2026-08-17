@@ -1088,12 +1088,27 @@ function getRelatedSlugs(seed) {
     2,
   );
 
+  // Related plans are offered as alternatives, so they have to carry the things
+  // an alternative is judged on. Passing only the title left a reader choosing
+  // between four names, with the calories, store and cost — the whole reason
+  // one of them might suit better — left off the card.
   const seen = new Set([seed.slug]);
   const related = [];
   for (const s of [...same_goal_diff_market, ...same_market_diff_cal]) {
     if (!seen.has(s.slug)) {
       seen.add(s.slug);
-      related.push({ slug: s.slug, title: s.title });
+      related.push({
+        slug: s.slug,
+        title: s.title,
+        goal: s.goal,
+        goalLabel: GOAL_LABELS[s.goal] || s.goal,
+        supermarket: s.supermarket,
+        calories: s.calories,
+        dietType: s.dietType,
+        effort: s.effort,
+        priceEstimate: BUDGET_ESTIMATES[s.budget],
+        macrosGrams: getSeedMacroGrams(s),
+      });
     }
   }
   return related.slice(0, 4);

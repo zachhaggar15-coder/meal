@@ -3245,23 +3245,11 @@ input:focus, select:focus {
 }
 
 /* Macro bars (shared) */
-.macro-bars { margin: 12px 0; display: flex; flex-direction: column; gap: 6px; }
-.macro-bar-row { display: flex; align-items: center; gap: 8px; }
-.macro-bar-label { font-size: 0.78rem; color: #6b7280; width: 56px; flex-shrink: 0; }
-.macro-bar-track {
-  flex: 1;
-  height: 6px;
-  background: #e5e7eb;
-  border-radius: 3px;
-  overflow: hidden;
-}
-.macro-bar-fill {
-  height: 100%;
-  background: #2563eb;
-  border-radius: 3px;
-  transition: width 0.3s;
-}
-.macro-bar-pct { font-size: 0.75rem; color: #6b7280; width: 34px; text-align: right; }
+/* The macro bars that used to live here are gone, along with the .macro-track
+   and .macro-fill pair below that nothing had rendered for some time. A filled
+   bar says "get to the end"; these filled against fixed maxima that were not
+   anyone's target, so the fill level meant nothing. The numbers are stated
+   plainly instead — see .result-macro-summary. */
 
 /* ═══════════════════════════════════════════════════════════════════════════
    PLAN PAGE (/plans/:slug)
@@ -8445,14 +8433,20 @@ body {
   display: grid;
   gap: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
+/* The vertical rules between steps used to be the only thing separating them,
+   which made four stages of one process look like four unrelated panels. The
+   connector through the step numbers does that job now. */
 .hiw-step {
   background: transparent;
   border: 0;
-  border-right: 1px solid var(--editorial-line);
   border-radius: 0;
   box-shadow: none;
+  overflow: hidden;
   padding: 24px 18px 24px 0;
 }
 
@@ -8462,7 +8456,10 @@ body {
   background: transparent;
 }
 
-.hiw-num,
+/* .hiw-num deliberately no longer shares this rule. As one more 0.62rem grey
+   uppercase kicker it was indistinguishable from the step's own label, which
+   is what made four sequential steps read as four unrelated boxes. It is
+   styled as a step marker below. */
 .offer-kicker,
 .lime-tag,
 .bpc-goal-tag,
@@ -8480,6 +8477,41 @@ body {
   font-weight: 800;
   padding: 0;
   text-transform: uppercase;
+}
+
+/* The step marker: a filled numeral that reads as a position in a sequence,
+   with a rule running from it towards the next step so the eye is carried
+   1 -> 2 -> 3 -> 4 rather than stopping at four separate panels. */
+.hiw-num {
+  align-items: center;
+  background: var(--editorial-ink);
+  border-radius: 50%;
+  color: var(--editorial-paper);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  font-weight: 800;
+  height: 30px;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  text-transform: none;
+  width: 30px;
+}
+
+.hiw-num::after {
+  background: var(--editorial-line);
+  content: "";
+  height: 1px;
+  left: calc(100% + 8px);
+  position: absolute;
+  top: 50%;
+  width: 100vw;
+}
+
+/* The last step leads nowhere, so its connector is removed. */
+.hiw-step:last-child .hiw-num::after {
+  display: none;
 }
 
 .hiw-step strong {
@@ -8910,16 +8942,6 @@ textarea {
   color: var(--editorial-paper);
 }
 
-.macro-bar-track,
-.macro-track {
-  background: rgba(255, 253, 248, 0.2);
-}
-
-.macro-bar-fill,
-.macro-fill {
-  background: var(--editorial-paper);
-}
-
 .plan-shopping-section {
   display: grid;
   gap: 22px;
@@ -9052,6 +9074,12 @@ textarea {
   .hiw-steps,
   .trust-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Once the steps wrap, a line running rightwards from each number no longer
+     points at the next step. */
+  .hiw-num::after {
+    display: none;
   }
 
   .quiz-options {
@@ -9236,6 +9264,10 @@ textarea {
 }
 
 .plan-meal-recipe[open] summary::after {
+  /* An earlier rule in this file still sets `content: '▴'` for the open state.
+     Same specificity, so only the properties this rule names actually win —
+     without resetting content, that triangle rendered on top of the chevron. */
+  content: "";
   transform: translateY(0.1em) rotate(-135deg);
 }
 
@@ -13202,33 +13234,47 @@ textarea {
   margin: 4px 0 0;
 }
 
-.quiz-results-page .result-card--best .macro-bars {
-  gap: 9px;
+.quiz-results-page .result-card--best .result-macro-summary {
   grid-area: macros;
-  margin: 6px 0 0;
+}
+
+.result-macro-summary {
+  align-items: baseline;
+  color: var(--editorial-muted, #6b7280);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  gap: 4px 14px;
+  margin: 10px 0 0;
+}
+
+.result-macro-summary-lead {
+  color: var(--editorial-muted, #6b7280);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   width: 100%;
 }
 
-.quiz-results-page .result-card--best .macro-bar-row {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 64px minmax(110px, 1fr) 44px;
+.result-macro-summary-item strong {
+  color: var(--editorial-ink, #111827);
+  font-weight: 800;
 }
 
-.quiz-results-page .result-card--best .macro-bar-label,
-.quiz-results-page .result-card--best .macro-bar-pct {
-  color: var(--editorial-muted);
-  font-size: 0.78rem;
-}
-
-.quiz-results-page .result-card--best .macro-bar-track {
-  background: var(--editorial-soft);
-  border: 1px solid var(--editorial-line);
-  height: 8px;
-}
-
-.quiz-results-page .result-card--best .macro-bar-fill {
-  background: var(--editorial-ink);
+/* A calorie target the library cannot meet is a caution, not a failure, and
+   it carries the next thing to do — so it reads as guidance rather than an
+   error. */
+.result-card-shortfall {
+  background: #fff8ec;
+  border: 1px solid #e8c98a;
+  border-left: 4px solid #c8871a;
+  border-radius: 6px;
+  color: #5c4310;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  margin: 10px 0 0;
+  padding: 10px 12px;
 }
 
 .quiz-results-page .result-card--best .result-card-cta {
@@ -13562,8 +13608,43 @@ textarea {
 .plan-overview-grid {
   display: grid;
   gap: 1px;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   overflow: hidden;
+}
+
+.plan-daily-average {
+  border-top: 1px solid var(--editorial-line, #e2e8f0);
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
+.plan-daily-average-label {
+  color: var(--editorial-muted, #6b7280);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.plan-daily-average-values {
+  color: var(--editorial-muted, #6b7280);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  gap: 4px 18px;
+  margin-top: 6px;
+}
+
+.plan-daily-average-values strong {
+  color: var(--editorial-ink, #111827);
+  font-weight: 800;
+}
+
+.plan-daily-average-note {
+  color: var(--editorial-muted, #6b7280);
+  font-size: 0.76rem;
+  margin: 6px 0 0;
 }
 
 .plan-overview-grid .plan-summary-item {

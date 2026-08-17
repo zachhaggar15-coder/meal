@@ -18,7 +18,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { getTopMatches } from '../src/utils/quizScorer.js';
+import { CALORIE_DISTANCE, calorieDistanceBand, getTopMatches } from '../src/utils/quizScorer.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { getAllPlanMeta, getPlanBySlug } from '../src/utils/planBuilder.js';
 
@@ -361,4 +361,125 @@ test('results are ranked by score, best first', () => {
     const sorted = [...scores].sort((a, b) => b - a);
     assert.deepEqual(scores, sorted, `${profile.name}: results are not ordered by score`);
   }
+});
+
+// ── Calories are a bound, not a preference ────────────────────────────────
+//
+// Asking for 2,500 kcal returned an 1,800 kcal plan, headlined "5 exact ·
+// 1 trade-off". Calories were worth 15 points and the supermarket 20, so five
+// agreements elsewhere outvoted the one number the reader actually chose.
+// Across 34,560 outcomes, 27.9% landed more than 500 kcal from the request and
+// the worst was 2,100 kcal out.
+
+function everyCalorieOutcome() {
+  const levels = [...new Set(INDEXABLE_PLAN_SEEDS.map(seed => seed.calories))].sort((a, b) => a - b);
+  const goals = [...new Set(INDEXABLE_PLAN_SEEDS.map(seed => seed.goal))];
+  const diets = [...new Set(INDEXABLE_PLAN_SEEDS.map(seed => seed.dietType))];
+  const outcomes = [];
+  for (const goal of goals) {
+    for (const diet of diets) {
+      for (const calories of levels) {
+        for (const supermarket of ['aldi', 'tesco', 'waitrose', 'any']) {
+          const answers = { goal, diet, supermarket, calories: String(calories), budget: 'moderate', effort: 'standard' };
+          const [winner] = getTopMatches(answers, 1);
+          if (winner) outcomes.push({ answers, winner, target: calories });
+        }
+      }
+    }
+  }
+  return outcomes;
+}
+
+test('a materially wrong calorie target never wins while an acceptable one exists', () => {
+  // The bound is the band, not the exact number. Giving up 100 kcal to get the
+  // supermarket someone asked for is a fair trade and the result says so;
+  // giving up 700 kcal is not a trade, it is a different diet. So the contract
+  // is that a MISMATCHED plan cannot win whenever any in-band plan the reader
+  // could eat exists at all.
+  const offenders = [];
+  for (const { answers, winner, target } of everyCalorieOutcome()) {
+    if (calorieDistanceBand(target, winner.calories) !== CALORIE_DISTANCE.MISMATCHED) continue;
+    const acceptable = INDEXABLE_PLAN_SEEDS.find(seed => (
+      seed.dietType === answers.diet
+      && calorieDistanceBand(target, seed.calories) !== CALORIE_DISTANCE.MISMATCHED
+    ));
+    if (acceptable) {
+      offenders.push(
+        `${answers.goal}/${answers.diet}/${answers.supermarket} asked ${target}: `
+        + `got ${winner.calories} (${winner.slug}) while ${acceptable.slug} was ${acceptable.calories}`,
+      );
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('the calorie bands are drawn where the corpus actually has plans (control)', () => {
+  // Plans exist at 1,400 / 1,500 / 1,600 / 1,800 / 2,000 / 2,200 / 2,500 /
+  // 3,000 / 3,500, so a band has to tolerate one step without tolerating four.
+  assert.equal(calorieDistanceBand(2500, 2500), CALORIE_DISTANCE.EXACT);
+  assert.equal(calorieDistanceBand(1500, 1600), CALORIE_DISTANCE.VERY_CLOSE);
+  assert.equal(calorieDistanceBand(1500, 1800), CALORIE_DISTANCE.NEARBY);
+  // The reported defect: 2,500 asked for, 1,800 returned.
+  assert.equal(calorieDistanceBand(2500, 1800), CALORIE_DISTANCE.MISMATCHED);
+  // The same absolute gap means less higher up the range: 330 kcal is within
+  // a tenth of a 3,000 plan and nearly a quarter of a 1,400 one.
+  assert.equal(calorieDistanceBand(3000, 3330), CALORIE_DISTANCE.NEARBY);
+  assert.equal(calorieDistanceBand(1400, 1730), CALORIE_DISTANCE.MISMATCHED);
+});
+
+test('a plan far from the requested calories is never presented as a match', () => {
+  // If the library has nothing close, the result has to say so. What it must
+  // not do is fold a 1,500 kcal gap in among five agreements and call the
+  // whole thing a trade-off.
+  const offenders = [];
+  for (const { winner, target } of everyCalorieOutcome()) {
+    const diff = Math.abs(winner.calories - target);
+    if (diff <= 300) continue;
+    if (!winner.noCloseCalorieMatch) {
+      offenders.push(`${winner.slug}: ${diff} kcal out but not flagged as a distant match`);
+      continue;
+    }
+    if (winner.isExactMatch) offenders.push(`${winner.slug}: ${diff} kcal out but flagged exact`);
+    if (!/kcal from your target/.test(winner.matchSummary)) {
+      offenders.push(`${winner.slug}: ${diff} kcal out but summarised "${winner.matchSummary}"`);
+    }
+    if (!winner.calorieShortfallNote) offenders.push(`${winner.slug}: no relaxation guidance`);
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('a restricted diet is never traded away to get closer to a calorie target', () => {
+  // The hazard created by tightening calories: a 2,000 kcal vegan plan is out
+  // of band for a 3,000 kcal request, which would leave a 3,000 kcal meat plan
+  // to win. Diet is the harder constraint and is filtered first.
+  const offenders = [];
+  for (const diet of ['vegan', 'vegetarian', 'pescatarian']) {
+    for (const calories of ['1400', '1800', '2500', '3000', '3500']) {
+      const [winner] = getTopMatches(
+        { goal: 'muscle-gain', diet, supermarket: 'tesco', calories, budget: 'moderate', effort: 'standard' },
+        1,
+      );
+      if (winner && winner.dietType !== diet) {
+        offenders.push(`${diet} @ ${calories} kcal -> ${winner.slug} (${winner.dietType})`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, []);
+});
+
+test('choosing no budget preference changes nothing about the ranking', () => {
+  // "Flexible" used to be the £55+ tier, so the answer that meant "I don't
+  // mind" was the strongest budget signal on offer.
+  const base = { goal: 'muscle-gain', diet: 'standard', supermarket: 'tesco', calories: '2500', effort: 'standard' };
+  const unset = getTopMatches(base, 3).map(match => match.slug);
+  const noPreference = getTopMatches({ ...base, budget: 'no-preference' }, 3).map(match => match.slug);
+  assert.deepEqual(noPreference, unset);
+
+  // …and it produces no budget verdict, because none was asked for.
+  const [match] = getTopMatches({ ...base, budget: 'no-preference' }, 1);
+  assert.equal(match.matchDetails.some(detail => detail.type === 'budget'), false);
+
+  // Control: a real budget answer still ranks and still explains itself.
+  const [priced] = getTopMatches({ ...base, budget: 'very-cheap' }, 1);
+  assert.equal(priced.matchDetails.some(detail => detail.type === 'budget'), true);
 });

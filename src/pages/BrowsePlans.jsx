@@ -85,12 +85,15 @@ const CALORIES = [
   { value: '3500', label: '~3,500 kcal' },
 ];
 
+// Per person, per week — as everywhere else the site quotes a cost. "Flexible"
+// named the most expensive tier, which read as "no strong feelings" while
+// filtering to the priciest plans.
 const BUDGETS = [
   { value: '',           label: 'Any budget' },
-  { value: 'very-cheap', label: 'Very cheap (£20–30)' },
-  { value: 'budget',     label: 'Budget (£30–40)' },
-  { value: 'moderate',   label: 'Moderate (£40–55)' },
-  { value: 'flexible',   label: 'Flexible (£55+)' },
+  { value: 'very-cheap', label: 'Very cheap (£20–30 pp/week)' },
+  { value: 'budget',     label: 'Budget (£30–40 pp/week)' },
+  { value: 'moderate',   label: 'Moderate (£40–55 pp/week)' },
+  { value: 'flexible',   label: 'Higher budget (£55+ pp/week)' },
 ];
 
 const EFFORTS = [
