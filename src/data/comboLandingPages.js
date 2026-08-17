@@ -1,3 +1,4 @@
+import { conflictsWithDiet } from '../utils/planBuilder.js';
 const REVIEWED_DATE = '22 June 2026';
 
 export const SUPERMARKET_EVIDENCE = {
@@ -418,8 +419,14 @@ export const COMBO_LANDING_PAGES = {
 
 export const COMBO_LANDING_SLUGS = Object.keys(COMBO_LANDING_PAGES);
 
-export function getSupermarketEvidence(supermarket) {
-  return SUPERMARKET_EVIDENCE[supermarket] || SUPERMARKET_EVIDENCE.any;
+export function getSupermarketEvidence(supermarket, dietType = 'standard') {
+  const evidence = SUPERMARKET_EVIDENCE[supermarket] || SUPERMARKET_EVIDENCE.any;
+  if (!evidence?.notes?.length) return evidence;
+  // These notes name example foods, and they render on every plan page. On a
+  // vegan plan, "low-cost staples such as ... eggs ... chicken and Greek-style
+  // yogurt" is describing a basket the reader is not shopping for.
+  const notes = evidence.notes.filter(note => !conflictsWithDiet(note, dietType));
+  return { ...evidence, notes: notes.length ? notes : evidence.notes.slice(0, 1) };
 }
 
 export function filterPlansForCombo(plans, comboPage) {

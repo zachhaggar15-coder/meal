@@ -1192,7 +1192,7 @@ function MealPortionBreakdown({ portions = [] }) {
 }
 
 function SupermarketEvidence({ plan }) {
-  const evidence = getSupermarketEvidence(plan.supermarket);
+  const evidence = getSupermarketEvidence(plan.supermarket, plan.dietType);
 
   return (
     <section className="supermarket-evidence" aria-labelledby="plan-evidence-heading">
