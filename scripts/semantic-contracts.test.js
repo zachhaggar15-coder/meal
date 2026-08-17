@@ -26,9 +26,16 @@ import { checkFamilyContracts, familiesFor } from './lib/recipeFamilies.js';
 import { findNumericContradictions } from './lib/numericPromises.js';
 import { indefiniteArticleFor } from '../src/utils/indefiniteArticle.js';
 import { getAllPlanMeta, getPlanBySlug, conflictsWithDiet } from '../src/utils/planBuilder.js';
+import { sharedPrimaryProteins, primaryProteinSignature } from '../src/utils/ingredientRoles.js';
 import { MEAL_PLAN_HUBS } from '../src/data/mealPlanHubs.js';
 
 /** Every distinct recipe across the shared library and legacy editorial plans. */
+const MEAL_RECORDS = new Map(MEALS.map(meal => [meal.name, meal]));
+/** Plan days carry rendered meals; look up the record that has ingredients. */
+function mealRecord(planMeal) {
+  return MEAL_RECORDS.get(planMeal?.name) || planMeal;
+}
+
 function allRecipes() {
   const seen = new Set();
   const recipes = [];
@@ -532,4 +539,78 @@ test('the quick-comparison heading does not repeat itself', () => {
     'the duplicative suffix is back in the heading');
   assert.match(component, /<h3>\{toTitleCase\(title\)\}<\/h3>/,
     'the descriptive title should stand on its own');
+});
+
+// ── Same-day lunch/dinner protein diversity ─────────────────────────────────
+//
+// Weekly repetition is fine and often deliberate — batch cooking, repeated
+// breakfasts, ingredient reuse. What a reader notices as lazy is eating the
+// same principal protein at both main meals on one day.
+//
+// The generator always had a hook for this (pickDinnerForLunch), but it asked
+// planBuilder's own MAIN_PROTEIN_KW list, which contained eleven meat and fish
+// words. Every vegan and vegetarian main meal answered "no protein", so the
+// check short-circuited and did nothing on the diets with the smallest pools:
+// 638 collisions across 393 plans. See scripts/protein-identity.test.js for the
+// resolver this now depends on.
+
+test('no plan serves the same principal protein at lunch and dinner on one day', () => {
+  const offenders = [];
+  let planDays = 0;
+  for (const meta of getAllPlanMeta()) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan) continue;
+    for (const day of plan.plan || []) {
+      planDays += 1;
+      const lunch = (day.meals || []).find(m => /lunch/i.test(m.type));
+      const dinner = (day.meals || []).find(m => /dinner/i.test(m.type));
+      if (!lunch || !dinner) continue;
+      const shared = sharedPrimaryProteins(mealRecord(lunch), mealRecord(dinner));
+      if (shared.length) {
+        offenders.push(`${meta.slug} ${day.day}: ${lunch.name} + ${dinner.name} both ${shared.join('/')}`);
+      }
+    }
+  }
+  assert.ok(planDays > 7000, `expected the whole corpus, got ${planDays} plan-days`);
+  assert.deepEqual(offenders.slice(0, 8), []);
+});
+
+test('a restricted pool still offers enough proteins to alternate', () => {
+  // The residual failures were three vegan high-protein plans whose entire
+  // tagged dinner pool was three tofu dishes, so no arrangement of the week
+  // could avoid tofu twice in a day. If a pool ever narrows like that again,
+  // this catches it before the collision test does.
+  const thin = [];
+  for (const meta of getAllPlanMeta()) {
+    const plan = getPlanBySlug(meta.slug);
+    if (!plan) continue;
+    const families = new Set();
+    for (const day of plan.plan || []) {
+      for (const meal of day.meals || []) {
+        if (!/lunch|dinner/i.test(meal.type)) continue;
+        for (const family of primaryProteinSignature(mealRecord(meal))) families.add(family);
+      }
+    }
+    // Two is the real floor: you only need two proteins to alternate lunch and
+    // dinner. Batch plans legitimately sit at two — repeated bases across the
+    // week, cross-paired within each day — and carry no collisions.
+    if (families.size < 2) thin.push(`${meta.slug}: only ${[...families].join(', ')}`);
+  }
+  assert.deepEqual(thin.slice(0, 5), []);
+});
+
+test('the collision detector reacts to a repeated protein (control)', () => {
+  const meal = (name, ingredients) => ({ name, ingredients });
+  // Positive: the exact shape that shipped on 393 plans.
+  assert.deepEqual(
+    sharedPrimaryProteins(
+      meal('Baked Tofu and Tahini Buddha Bowl', ['Firm tofu 200g', 'Quinoa 80g dry']),
+      meal('Tofu and Vegetable Curry with Brown Rice', ['Firm tofu 200g', 'Brown rice 80g dry']),
+    ), ['tofu']);
+  // Negative: a varied day must stay clean, and fish must not collapse to one.
+  assert.deepEqual(
+    sharedPrimaryProteins(
+      meal('Tuna Salad', ['Tinned tuna 145g', 'Mixed leaves 80g']),
+      meal('Salmon with New Potatoes', ['Salmon fillet 150g', 'New potatoes 250g']),
+    ), []);
 });

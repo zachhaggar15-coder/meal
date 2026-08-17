@@ -11,6 +11,7 @@ import {
 import { getCookingIngredientDisplay } from './cookingQuantities.js';
 import { buildPracticalRecipeSteps } from './recipeQuality.js';
 import { NUTRITION_TABLE } from '../data/nutritionTable.js';
+import { sharedPrimaryProteins, primaryProteinSignature } from './ingredientRoles.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -381,12 +382,18 @@ function pick(arr, seed) {
 }
 
 // Main protein keywords in priority order — used to avoid same-protein lunch+dinner on one day
-const MAIN_PROTEIN_KW = ['chicken', 'turkey', 'beef', 'pork', 'lamb', 'tuna', 'salmon', 'mackerel', 'cod', 'sardine', 'prawn'];
+// Was MAIN_PROTEIN_KW: eleven meat and fish words, checked with a substring
+// match. Every vegan and vegetarian lunch and dinner in the library returned
+// null under it, so the collision guard below short-circuited and did nothing
+// for precisely the diets with the smallest protein pools. It also read `mince`
+// and `steak` as beef, so turkey and tuna dishes registered as beef.
+// ingredientRoles now owns this; see primaryProteinSignature there.
+// A week of lunches and dinners cannot avoid same-day repetition if the pool
+// offers fewer than two genuinely different proteins to alternate between.
+const MIN_DISTINCT_PROTEINS = 3;
 
-function getMainProtein(meal) {
-  if (!meal) return null;
-  const text = (meal.ingredients || []).join(' ').toLowerCase();
-  return MAIN_PROTEIN_KW.find(p => text.includes(p)) || null;
+function mealsShareProtein(a, b) {
+  return sharedPrimaryProteins(a, b).length > 0;
 }
 
 function isBatchPlan(seed) {
@@ -416,12 +423,12 @@ function pickDifferent(arr, seed, usedIds = new Set()) {
 }
 
 function pickDinnerForLunch(dinners, seed, lunch, usedIds = new Set()) {
-  const lunchProtein = getMainProtein(lunch);
   for (let offset = 0; offset < dinners.length; offset += 1) {
     const dinner = pick(dinners, seed + offset);
     if (!dinner || usedIds.has(dinner.id)) continue;
-    if (!lunchProtein || getMainProtein(dinner) !== lunchProtein) return dinner;
+    if (!mealsShareProtein(lunch, dinner)) return dinner;
   }
+  // Nothing in the pool avoids it — keep a valid plan rather than none.
   return pickDifferent(dinners, seed, usedIds);
 }
 
@@ -1325,7 +1332,40 @@ export function buildPlanDays(seed) {
     const pool = eligible.filter(meal => meal.type === type);
     if (!requireHighProtein) return pool;
     const qualifying = pool.filter(meal => meal.tags?.includes('high-protein'));
-    return qualifying.length ? qualifying : pool;
+    if (!qualifying.length) return pool;
+
+    // The high-protein tag is applied by hand, and on a restricted diet it can
+    // leave a pool that is technically high in protein but built on one
+    // ingredient: the vegan high-protein dinner pool was three meals, all tofu,
+    // which made a tofu lunch and a tofu dinner unavoidable however the week
+    // was arranged. Meanwhile a 47g chickpea curry and a 42g bean chilli sat
+    // just outside the tag. Where the tagged pool cannot offer two distinct
+    // proteins, admit the next-highest-protein meals until it can — they are
+    // comparable on protein, and identical on diet, budget and effort.
+    const distinctProteins = new Set();
+    for (const meal of qualifying) {
+      for (const family of primaryProteinSignature(meal)) distinctProteins.add(family);
+    }
+    if (distinctProteins.size >= MIN_DISTINCT_PROTEINS) return qualifying;
+
+    // Rank by protein DENSITY, not grams. Sorting by absolute protein admitted
+    // meals that were high in protein but also high in calories, which pushed
+    // several vegan high-protein plans below the 20%-of-energy bar their own
+    // label depends on. A candidate has to hold the line the tagged pool sets.
+    const density = meal => ((meal.pro || 0) * 4) / Math.max(1, meal.cal || 1);
+    const bar = Math.min(...qualifying.map(density));
+    const topUp = pool
+      .filter(meal => !qualifying.includes(meal) && density(meal) >= bar)
+      .sort((a, b) => density(b) - density(a));
+    const widened = [...qualifying];
+    for (const meal of topUp) {
+      const adds = [...primaryProteinSignature(meal)].some(f => !distinctProteins.has(f));
+      if (!adds) continue;
+      widened.push(meal);
+      for (const family of primaryProteinSignature(meal)) distinctProteins.add(family);
+      if (distinctProteins.size >= MIN_DISTINCT_PROTEINS) break;
+    }
+    return widened;
   };
   const breakfasts = forType('breakfast');
   const lunches    = forType('lunch');

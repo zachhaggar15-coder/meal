@@ -38,9 +38,15 @@ test('field vital ratings use Core Web Vitals thresholds', () => {
 });
 
 test('all composition clusters receive stable route-level review records', () => {
+  // These counts are a snapshot of how much duplicate plan composition exists.
+  // They moved when the same-day protein-diversity fix landed: because the
+  // generator now picks a dinner that differs from the day's lunch, plans that
+  // used to converge on the same meals no longer do. Exact clusters fell 31->29
+  // and near-duplicate pairs 43->24. The assertions stay exact — only the
+  // recorded state changed, and it changed in the direction we want.
   const clusters = buildPlanCompositionClusters();
-  assert.equal(clusters.exactCompositionClusters.length, 31);
-  assert.equal(clusters.nearDuplicateClusters.length, 43);
+  assert.equal(clusters.exactCompositionClusters.length, 29);
+  assert.equal(clusters.nearDuplicateClusters.length, 24);
 
   const first = clusters.exactCompositionClusters[0];
   const review = buildCompositionTrafficReview({
@@ -55,10 +61,10 @@ test('all composition clusters receive stable route-level review records', () =>
     ],
   });
 
-  assert.equal(review.coverage.exactClusters, 31);
-  assert.equal(review.coverage.nearDuplicatePairs, 43);
-  assert.equal(review.clusters.length, 74);
-  assert.equal(new Set(review.clusters.map(item => item.reviewId)).size, 74);
+  assert.equal(review.coverage.exactClusters, 29);
+  assert.equal(review.coverage.nearDuplicatePairs, 24);
+  assert.equal(review.clusters.length, 53);
+  assert.equal(new Set(review.clusters.map(item => item.reviewId)).size, 53);
   assert.equal(review.clusters.find(item => item.reviewId === first.reviewId)?.status, 'review_consolidation');
 });
 

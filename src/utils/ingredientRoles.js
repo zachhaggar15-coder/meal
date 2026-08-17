@@ -265,3 +265,228 @@ function hasWordPhrase(text, phrase) {
   const pluralSuffix = /[a-z]$/.test(target) && !target.endsWith('s') ? '(?:s|es)?' : '';
   return new RegExp(`(?:^| )${escaped}${pluralSuffix}(?=$| )`).test(normalised);
 }
+
+// ── Primary-protein identity (meal-level) ────────────────────────────────────
+//
+// PROTEIN_FAMILIES above answers "how must this ingredient be cooked?". This
+// answers a different question — "what would a person say this meal is built
+// on?" — and is the single source of truth for meal-level protein identity.
+//
+// It exists because planBuilder carried its own MAIN_PROTEIN_KW list of eleven
+// meat and fish words. Every vegan and vegetarian lunch and dinner in the
+// library resolved to "no protein" under it, which silently disabled the
+// same-day diversity check for exactly the diets with the smallest pools.
+//
+// The design rule that matters: a protein's identity comes from its SOURCE,
+// never from its FORM. "Mince" is a shape, not an animal. Treating form words
+// as identifiers is what made "Turkey mince", "Quorn mince" and "Tuna steak"
+// all resolve to beef. A new ingredient such as "duck mince" therefore needs no
+// new rule — duck is a source, mince is a form.
+
+// Words describing cut, shape, cure or packaging. These NEVER identify a
+// protein on their own, and are stripped before matching so no source rule can
+// borrow them.
+const PROTEIN_FORM_WORDS = [
+  'mince', 'minced', 'steak', 'steaks', 'fillet', 'fillets', 'breast', 'breasts',
+  'thigh', 'thighs', 'leg', 'legs', 'wing', 'wings', 'chop', 'chops', 'loin',
+  'tenderloin', 'shoulder', 'rashers', 'strips', 'chunks', 'diced', 'sliced',
+  'slices', 'shredded', 'pulled', 'burger', 'burgers', 'patty', 'patties',
+  'meatball', 'meatballs', 'sausage', 'sausages', 'jerky', 'nuggets', 'goujons',
+  'smoked', 'tinned', 'canned', 'frozen', 'fresh', 'dried', 'cooked', 'raw',
+  'lean', 'reduced-fat', 'low-fat', 'light', 'firm', 'silken', 'extra', 'back',
+];
+
+// Source identifiers: the actual animal, plant or product. A cut name appears
+// here only where it names one species unambiguously — sirloin and brisket are
+// always beef, bacon and gammon are always pork.
+export const PRIMARY_PROTEIN_SOURCES = [
+  ['chicken', ['chicken']],
+  ['turkey', ['turkey']],
+  ['duck', ['duck']],
+  ['lamb', ['lamb', 'mutton']],
+  ['pork', ['pork', 'bacon', 'gammon', 'chorizo', 'prosciutto', 'pancetta', 'salami', 'ham']],
+  ['beef', ['beef', 'sirloin', 'rump', 'brisket', 'ribeye']],
+  ['venison', ['venison']],
+
+  ['salmon', ['salmon']],
+  ['tuna', ['tuna']],
+  ['cod', ['cod']],
+  ['haddock', ['haddock']],
+  ['pollock', ['pollock', 'pollack']],
+  ['mackerel', ['mackerel']],
+  ['sardines', ['sardine', 'sardines']],
+  ['anchovies', ['anchovy', 'anchovies']],
+  ['prawns', ['prawn', 'prawns', 'shrimp']],
+  ['crab', ['crab']],
+  ['mussels', ['mussel', 'mussels']],
+  ['squid', ['squid', 'calamari']],
+
+  ['tofu', ['tofu']],
+  ['tempeh', ['tempeh']],
+  ['seitan', ['seitan']],
+  ['quorn', ['quorn', 'mycoprotein']],
+  ['falafel', ['falafel']],
+  ['edamame', ['edamame']],
+
+  ['eggs', ['egg', 'eggs']],
+  ['halloumi', ['halloumi']],
+  ['paneer', ['paneer']],
+  ['feta', ['feta']],
+  ['cottage-cheese', ['cottage cheese']],
+  ['greek-yogurt', ['greek yogurt', 'greek-style yogurt', 'skyr', 'quark']],
+  ['ricotta', ['ricotta']],
+  ['cheese', ['mozzarella', 'cheddar', 'parmesan', 'cream cheese', 'goats cheese', 'cheese']],
+
+  ['lentils', ['lentil', 'lentils', 'dahl', 'dhal']],
+  // Culinary beans share one identity on purpose: a black-bean lunch and a
+  // kidney-bean dinner is the same plate twice to the person eating it.
+  ['beans', ['bean', 'beans']],
+  ['chickpeas', ['chickpea', 'chickpeas', 'hummus', 'houmous']],
+
+  ['protein-powder', ['protein powder', 'whey', 'pea protein']],
+  ['nut-butter', ['peanut butter', 'almond butter', 'cashew butter', 'nut butter']],
+  ['nuts-seeds', ['almond', 'almonds', 'walnut', 'walnuts', 'peanut', 'peanuts',
+    'cashew', 'cashews', 'pistachio', 'seeds', 'nuts']],
+];
+
+// Phrases that read like a protein but are not one. "Beef stock" is not beef
+// and "Beef tomato" is a tomato; green beans are a vegetable; plant milks are
+// not dairy; "butternut" is not butter.
+const NOT_A_PROTEIN_SOURCE = new RegExp([
+  '\\b(?:beef|chicken|vegetable|fish|lamb|ham)\\s+stock\\b',
+  '\\bstock\\s+(?:cube|pot)\\b',
+  '\\bbroth\\b',
+  '\\bbeef\\s+tomato\\b',
+  '\\b(?:green|runner|broad)\\s+beans?\\b',
+  '\\bbean\\s?sprouts?\\b',
+  '\\b(?:coconut|oat|almond|soya|soy|rice|hemp)\\s+milk\\b',
+  '\\begg\\s?plant\\b',
+  '\\begg\\s+wash\\b',
+  '\\b(?:fish|oyster)\\s+sauce\\b',
+  '\\bsoy\\s+sauce\\b',
+  '\\bcocoa\\s+butter\\b',
+  '\\bbutter\\s?nut\\b',
+].join('|'), 'i');
+
+// A plant qualifier means any meat word that follows names what the product
+// imitates, not what it is: "vegan sausage" and "plant-based mince" must never
+// resolve to pork or beef.
+const PLANT_IMITATION = /\b(?:vegan|vegetarian|veggie|plant[- ]based|meat[- ]free|meatless)\b/i;
+const PLANT_SOURCES = new Set(['tofu', 'tempeh', 'seitan', 'quorn', 'falafel', 'edamame',
+  'lentils', 'beans', 'chickpeas', 'nuts-seeds', 'nut-butter', 'protein-powder']);
+
+// A specific source and the generic word it contains are the same ingredient,
+// not two competing matches. Declaring the relationship keeps the corpus audit
+// meaningful: any remaining multi-family line is a genuine ambiguity.
+const SUBSUMED_PARENT = new Map([
+  ['cottage-cheese', 'cheese'],
+  ['ricotta', 'cheese'],
+  ['feta', 'cheese'],
+  ['halloumi', 'cheese'],
+  ['paneer', 'cheese'],
+  ['greek-yogurt', 'cheese'],
+  ['nut-butter', 'nuts-seeds'],
+]);
+
+function escapeForRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function stripFormWords(text) {
+  let out = String(text || '').toLowerCase();
+  for (const form of PROTEIN_FORM_WORDS) {
+    out = out.replace(new RegExp(`\\b${escapeForRegExp(form)}\\b`, 'g'), ' ');
+  }
+  return out.replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Every source rule a piece of text matches, most specific first. Exposed so
+ * the alias-collision audit can see what competed, not only what won.
+ */
+export function proteinIdentityCandidates(text) {
+  const raw = String(text || '').toLowerCase();
+  if (!raw || NOT_A_PROTEIN_SOURCE.test(raw)) return [];
+  const stripped = stripFormWords(raw);
+  if (!stripped) return [];
+
+  const imitation = PLANT_IMITATION.test(raw);
+  const found = [];
+  for (const [family, aliases] of PRIMARY_PROTEIN_SOURCES) {
+    if (family === 'beans' && !isPulseIngredient(raw)) continue;
+    if (!aliases.some(alias => hasWordPhrase(stripped, alias))) continue;
+    // "Vegan sausage" names no animal; drop animal families rather than let
+    // the imitated meat win.
+    if (imitation && !PLANT_SOURCES.has(family)) continue;
+    found.push(family);
+  }
+  // Drop any family that a more specific match already subsumes.
+  const parents = new Set(found.map(family => SUBSUMED_PARENT.get(family)).filter(Boolean));
+  return found.filter(family => !parents.has(family));
+}
+
+/** The single canonical protein a piece of text names, or '' for none. */
+export function resolveProteinIdentity(text) {
+  return proteinIdentityCandidates(text)[0] || '';
+}
+
+// Below this a protein is a garnish, not a basis: parmesan over pasta, a spoon
+// of yogurt in a dressing, seeds on a bowl. Two meals must not read as
+// repetitive because both happen to carry 20g of cheese.
+const PRIMARY_GRAMS = 75;
+const PRIMARY_ML = 150;
+
+function statedAmount(line) {
+  const grams = /(\d+(?:\.\d+)?)\s*g\b/i.exec(line);
+  if (grams) return { value: Number(grams[1]), unit: 'g' };
+  const ml = /(\d+(?:\.\d+)?)\s*ml\b/i.exec(line);
+  if (ml) return { value: Number(ml[1]), unit: 'ml' };
+  if (/\b(?:tbsp|tsp)\b/i.test(line)) return { value: 0, unit: 'spoon' };
+  const count = /(\d+(?:\.\d+)?)\s*$/.exec(String(line).trim());
+  if (count) return { value: Number(count[1]), unit: 'count' };
+  return null;
+}
+
+function isPrimaryAmount(amount, family) {
+  if (!amount) return true;                        // no amount stated
+  if (amount.unit === 'spoon') return false;       // a spoonful is a garnish
+  if (amount.unit === 'g') return amount.value >= PRIMARY_GRAMS;
+  if (amount.unit === 'ml') return amount.value >= PRIMARY_ML;
+  if (family === 'eggs') return amount.value >= 2; // one egg is a topping
+  return true;
+}
+
+/**
+ * The protein families a meal is genuinely built on, as a Set.
+ *
+ * Structured ingredient lines decide it. The meal's own title only promotes an
+ * ingredient the quantity thresholds would otherwise call incidental, and acts
+ * as a fallback when the ingredient list yields nothing at all.
+ */
+export function primaryProteinSignature(meal) {
+  if (!meal) return new Set();
+  const lines = Array.isArray(meal.ingredients) ? meal.ingredients : [];
+  const named = resolveProteinIdentity(meal.name);
+  const signature = new Set();
+  let namedAppears = false;
+
+  for (const line of lines) {
+    const family = resolveProteinIdentity(line);
+    if (!family) continue;
+    if (family === named) namedAppears = true;
+    if (isPrimaryAmount(statedAmount(String(line)), family)) signature.add(family);
+  }
+
+  // "Smoked Salmon Bagel" with 60g of salmon is still a salmon meal.
+  if (named && namedAppears) signature.add(named);
+  // Legacy meals sometimes carry prose portions rather than parsed lines.
+  if (!signature.size && named) signature.add(named);
+  return signature;
+}
+
+/** The families two meals genuinely share; empty means the day reads as varied. */
+export function sharedPrimaryProteins(mealA, mealB) {
+  const a = primaryProteinSignature(mealA);
+  const b = primaryProteinSignature(mealB);
+  return [...a].filter(family => b.has(family));
+}
