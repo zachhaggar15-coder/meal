@@ -9,7 +9,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { BROWSE_PAGE_SIZE, buildBrowsePagePath, buildBrowsePageWindow } from '../data/browsePagination.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
@@ -21,7 +21,7 @@ import { trackEvent } from '../utils/analytics.js';
 // Browse only links to indexed, prerendered plan pages. The larger synthetic
 // coverage pool is kept out of public links so Google and users never land on
 // plan URLs that the static build does not serve as detail pages.
-const ALL_PLANS = getAllPlanMeta();
+const ALL_PLANS = getAllPlanMeta({ calculateMacros: false });
 const PLAN_INDEX_LIMIT = 3;
 
 const GOALS = [

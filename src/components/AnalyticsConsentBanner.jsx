@@ -24,8 +24,8 @@ export default function AnalyticsConsentBanner() {
       <div className="analytics-consent-copy">
         <strong>Help improve MealPrep.org.uk?</strong>
         <span>
-          Optional analytics show which pages, clicks and journeys are useful. We do not store
-          email addresses or typed form answers in this behaviour log.
+          Optional analytics show which pages, clicks and journeys are useful. Quiz-answer URLs,
+          exact calorie and macro targets, email addresses and typed form answers are not stored.
         </span>
       </div>
       <div className="analytics-consent-actions">

@@ -23,7 +23,10 @@ export function normaliseLegacyIngredients(value, portionSize, mealName) {
 }
 
 export function canonicaliseLegacyMeal(meal = {}, portionScale = 1) {
-  const baseIngredients = normaliseLegacyIngredients(meal.ingredients, meal.portion_size, meal.name);
+  const baseIngredients = addApprovedLegacyFlavouring(
+    meal.name,
+    normaliseLegacyIngredients(meal.ingredients, meal.portion_size, meal.name),
+  );
   const ingredients = scaleIngredientsForPortion(baseIngredients, portionScale);
   const nutrition = computeMealNutrition(ingredients);
   const mealWithIngredients = {
@@ -40,6 +43,12 @@ export function canonicaliseLegacyMeal(meal = {}, portionScale = 1) {
     ...mealWithIngredients,
     recipe: buildPracticalRecipeSteps(mealWithIngredients),
   };
+}
+
+function addApprovedLegacyFlavouring(mealName, ingredients) {
+  const needsMixedHerbs = /^(?:Grilled Chicken with Roasted Mediterranean Veg|Grilled Lean Beef Steak with Roasted Veg|Roast Chicken & Roasted Veg)$/i.test(String(mealName || ''));
+  if (!needsMixedHerbs || ingredients.some(item => /\bherbs?\b/i.test(item))) return ingredients;
+  return [...ingredients, 'Mixed herbs 1 tsp'];
 }
 
 export function buildCanonicalLegacyPlan(plan, targetCalories) {

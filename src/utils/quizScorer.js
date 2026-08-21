@@ -1,5 +1,6 @@
 import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
 import { GOAL_LABELS, BUDGET_ESTIMATES, MACRO_PROFILES, MACRO_GRAMS, getSeedMacroGrams } from './planBuilder.js';
+import { macroMatchStatus } from './macroTargets.js';
 
 // ── Weights ───────────────────────────────────────────────────────────────────
 const W_GOAL        = 30;
@@ -339,9 +340,13 @@ function buildMatchReason(seed, answers, macrosGrams = null) {
     if (diff <= 300) parts.push(`~${seed.calories} kcal target`);
   }
   if (answers.macros && answers.macroMode === 'custom-grams' && macrosGrams) {
-    const macroBits = [];
-    if (Number.isFinite(macrosGrams.protein)) macroBits.push(`${macrosGrams.protein}g protein`);
-    if (Number.isFinite(macrosGrams.carbs)) macroBits.push(`${macrosGrams.carbs}g carbs`);
+    const macroBits = [
+      ['protein', 'protein'],
+      ['carbs', 'carbs'],
+      ['fats', 'fat'],
+      ['fibre', 'fibre'],
+    ].filter(([key]) => Number.isFinite(Number(macrosGrams[key])))
+      .map(([key, label]) => `${macrosGrams[key]}g ${label}`);
     if (macroBits.length) parts.push(`averages about ${macroBits.join(' and ')}`);
   }
   if (parts.length === 0) return 'Closest match across your preferences.';
@@ -446,16 +451,12 @@ function buildMatchDetails(seed, answers, macrosGrams = null) {
   }
 
   if (answers.macros && answers.macroMode === 'custom-grams' && macrosGrams) {
-    const proteinDiff = Math.abs(Number(macrosGrams.protein || 0) - Number(answers.macros.protein || 0));
-    const carbsDiff = Math.abs(Number(macrosGrams.carbs || 0) - Number(answers.macros.carbs || 0));
-    const status = proteinDiff <= 15 && carbsDiff <= 25
-      ? 'exact'
-      : (proteinDiff <= 30 && carbsDiff <= 50 ? 'close' : 'tradeoff');
+    const status = macroMatchStatus(answers.macros, macrosGrams);
     details.push({
       type: 'macros',
       label: 'Macros',
       status,
-      text: `About ${macrosGrams.protein}g protein and ${macrosGrams.carbs}g carbs per day.`,
+      text: `About ${macrosGrams.protein}g protein, ${macrosGrams.carbs}g carbs, ${macrosGrams.fats}g fat and ${macrosGrams.fibre}g fibre per day.`,
     });
   }
 

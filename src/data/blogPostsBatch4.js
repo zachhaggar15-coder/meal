@@ -2,7 +2,7 @@
 // slugs that were already referenced from Blog.jsx's category lists but never written,
 // and three cover freshly-researched high-demand topics with no existing coverage
 // (air fryer meal prep, chicken and rice, overnight oats).
-import { AFFILIATE_DISCLOSURE } from './containerProducts.js';
+import { AFFILIATE_DISCLOSURE } from './affiliateDisclosure.js';
 
 const PUBLISHED = '2026-07-10';
 

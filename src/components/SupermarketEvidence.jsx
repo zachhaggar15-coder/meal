@@ -46,7 +46,7 @@ export default function SupermarketEvidence({ supermarkets = [] }) {
 
           {context.planSummary && (
             <div className="supermarket-evidence-plans">
-              <h4>{toTitleCase(`${context.label} plans on this site`)}</h4>
+              <h3>{toTitleCase(`${context.label} plans on this site`)}</h3>
               <ul className="supermarket-evidence-stats">
                 <li>
                   <strong>{context.planSummary.planCount.toLocaleString('en-GB')}</strong>

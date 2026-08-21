@@ -386,8 +386,8 @@ function AnalyticsSection({ analytics }) {
         <StatCard label="Clicks logged" value={number(overview.clicks)} />
         <StatCard label="Internal searches" value={number(overview.internalSearches)} />
         <StatCard label="Outbound clicks" value={number(overview.outboundClicks)} />
-        <StatCard label="Avg engaged time" value={`${number(overview.avgEngagedSeconds)}s`} />
-        <StatCard label="Avg max scroll" value={`${number(overview.avgMaxScrollDepth)}%`} />
+        <StatCard label="Avg engaged time" value={`${number(overview.avgEngagedSeconds)}s`} detail={`${number(overview.engagementSamples)} measured sessions`} />
+        <StatCard label="Avg max scroll" value={`${number(overview.avgMaxScrollDepth)}%`} detail={`${number(overview.scrollSamples)} measured sessions`} />
         <StatCard label="Avg exploration" value={`${number(overview.avgExplorationScore)}/100`} />
         <StatCard label="Return visits" value={number(overview.returnVisits)} />
         <StatCard label="Plan saves" value={number(overview.savedPlanActions)} />
@@ -432,9 +432,9 @@ function AnalyticsSection({ analytics }) {
         rows={coreWebVitals.routes || []}
         columns={[
           { key: 'route', label: 'Route', render: row => truncate(row.route, 54) },
-          { key: 'inp', label: 'INP p75', render: row => formatMilliseconds(row.inp) },
-          { key: 'lcp', label: 'LCP p75', render: row => formatMilliseconds(row.lcp) },
-          { key: 'cls', label: 'CLS p75', render: row => row.cls ?? '-' },
+          { key: 'inp', label: 'INP p75', render: row => row.dataStatus === 'measured' ? formatMilliseconds(row.inp) : 'Insufficient data' },
+          { key: 'lcp', label: 'LCP p75', render: row => row.dataStatus === 'measured' ? formatMilliseconds(row.lcp) : 'Insufficient data' },
+          { key: 'cls', label: 'CLS p75', render: row => row.dataStatus === 'measured' ? row.cls ?? '-' : 'Insufficient data' },
           { key: 'sessions', label: 'Sessions' },
           { key: 'samples', label: 'Samples' },
         ]}
@@ -495,7 +495,8 @@ function AnalyticsSection({ analytics }) {
       <JourneyList title="Exploration Beyond Entry Intent" journeys={analytics.explorationLeaders || []} compact />
 
       <p className="admin-note">
-        Sample window: latest {number(analytics.sample?.events)} events and {number(analytics.sample?.sessions)} sessions.
+        Sample window: last {number(analytics.sample?.windowDays)} days, with {number(analytics.sample?.events)} events
+        from {number(analytics.sample?.sessions)} observed sessions. Sessions without sampled events are excluded from averages.
       </p>
     </section>
   );

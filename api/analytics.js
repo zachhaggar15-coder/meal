@@ -11,6 +11,10 @@ import {
   assertSerializedSize,
   sendGuardError,
 } from './_guards.js';
+import {
+  sanitiseAnalyticsPath,
+  sanitiseAnalyticsUrl,
+} from '../src/utils/analyticsSanitisation.js';
 
 const MAX_EVENTS_PER_REQUEST = 25;
 const MAX_METADATA_BYTES = 12 * 1024;
@@ -202,12 +206,12 @@ function cleanText(value, maxLength) {
 function cleanPath(value) {
   const text = cleanText(value, 700);
   if (!text) return null;
-  if (text.startsWith('/')) return text;
+  if (text.startsWith('/')) return sanitiseAnalyticsPath(text).slice(0, 700);
   try {
     const url = new URL(text);
-    return `${url.pathname}${url.search}`.slice(0, 700);
+    return sanitiseAnalyticsPath(url.href).slice(0, 700);
   } catch {
-    return text.slice(0, 700);
+    return sanitiseAnalyticsPath(text).slice(0, 700);
   }
 }
 
@@ -219,7 +223,7 @@ function cleanUrl(value, maxLength) {
     if (!['http:', 'https:'].includes(url.protocol)) return null;
     url.username = '';
     url.password = '';
-    return url.toString().slice(0, maxLength);
+    return sanitiseAnalyticsUrl(url.toString()).slice(0, maxLength);
   } catch {
     return text.slice(0, maxLength);
   }

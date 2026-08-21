@@ -15,7 +15,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 
@@ -378,7 +378,8 @@ export default function Home() {
                     <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="featured-plan-link">
                       <img
                         src={cardVisual.src}
-                        alt={`${p.label} meal plan`}
+                        alt=""
+                        aria-hidden="true"
                         width={cardVisual.width || 1200}
                         height={cardVisual.height || 675}
                         loading="lazy"

@@ -42,7 +42,10 @@ export const BUDGET_ESTIMATES = {
   'very-cheap': '£20–30',
   'budget': '£30–40',
   'moderate': '£40–55',
-  'flexible': '£50–70',
+  // Legacy plan data uses `flexible` for the highest food-budget tier. Public
+  // copy calls it High budget so it cannot be confused with the quiz's
+  // separate "Flexible / no budget preference" answer.
+  'flexible': '£55+',
 };
 
 const SUPERMARKET_LABELS = {
@@ -428,8 +431,50 @@ function pickDinnerForLunch(dinners, seed, lunch, usedIds = new Set()) {
     if (!dinner || usedIds.has(dinner.id)) continue;
     if (!mealsShareProtein(lunch, dinner)) return dinner;
   }
+  // If diversity within the week and same-day protein diversity conflict,
+  // keep the lunch/dinner proteins distinct. Repeating a valid dinner is less
+  // harmful than serving the same principal protein twice in one day.
+  for (let offset = 0; offset < dinners.length; offset += 1) {
+    const dinner = pick(dinners, seed + offset);
+    if (dinner && !mealsShareProtein(lunch, dinner)) return dinner;
+  }
   // Nothing in the pool avoids it — keep a valid plan rather than none.
   return pickDifferent(dinners, seed, usedIds);
+}
+
+function pickDinnerWithinWeeklyLimit(dinners, seed, lunch, usage, maxUses) {
+  let bestCompatible = null;
+  let bestCompatibleUses = Infinity;
+  for (let offset = 0; offset < dinners.length; offset += 1) {
+    const dinner = pick(dinners, seed + offset);
+    if (!dinner || (usage.get(dinner.id) || 0) >= maxUses) continue;
+    const uses = usage.get(dinner.id) || 0;
+    if (!mealsShareProtein(lunch, dinner) && uses < bestCompatibleUses) {
+      bestCompatible = dinner;
+      bestCompatibleUses = uses;
+      if (uses === 0) break;
+    }
+  }
+  if (bestCompatible) return bestCompatible;
+  for (let offset = 0; offset < dinners.length; offset += 1) {
+    const dinner = pick(dinners, seed + offset);
+    if (dinner && (usage.get(dinner.id) || 0) < maxUses) return dinner;
+  }
+  return pickDinnerForLunch(dinners, seed, lunch);
+}
+
+function stableStringOffset(value) {
+  let hash = 2166136261;
+  for (const char of String(value || '')) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function routeSelectionStride(slug, mealType) {
+  const strides = [5, 7, 11, 13, 17, 19];
+  return strides[stableStringOffset(`${slug}:${mealType}:stride`) % strides.length];
 }
 
 // ── Shopping list builder ──────────────────────────────────────────────────────
@@ -520,10 +565,13 @@ export function buildShoppingList(plan) {
 
   for (const day of plan) {
     for (const meal of day.meals) {
-      for (const rawIng of meal.calculationIngredients || meal.ingredients || []) {
+      // The shopping list must cover the quantities the cook can actually see.
+      // Calculation ingredients retain unrounded internal values for nutrition,
+      // while displayed recipe quantities are rounded to practical measures.
+      for (const rawIng of meal.ingredients || meal.calculationIngredients || []) {
         const ing = normaliseShoppingIngredient(rawIng);
         if (!ing) continue;
-        const cat = categoriseIngredient(ing);
+        const cat = categoriseIngredient(stripShoppingPreparation(ing));
         addShoppingIngredient(grouped[cat], ing);
       }
     }
@@ -547,11 +595,52 @@ export function buildShoppingList(plan) {
 const KNOWN_ITEM_TO_GRAMS = {
   'egg white': NUTRITION_TABLE['egg white']?.gramsEach || 33,
   'egg whites': NUTRITION_TABLE['egg white']?.gramsEach || 33,
+  'mixed peppers': 150,
 };
 
+const WHOLE_ITEMS_BOUGHT_BY_WEIGHT = new Set(['cucumber', 'cherry tomato', 'olives']);
+
+const KNOWN_TSP_TO_GRAMS = {
+  // Match the conservative household conversion used by the displayed
+  // cooking quantities so the consolidated purchase can never be short.
+  'chia seeds': 5,
+  'peanut butter': (NUTRITION_TABLE['peanut butter']?.gramsPerTbsp || 16) / 3,
+  tahini: 5,
+};
+
+const KNOWN_COUNT_UNIT_TO_GRAMS = {
+  'romaine lettuce': { leaf: 10 },
+};
+
+const PURCHASE_PACK_FORMATS = [
+  { matches: key => /\btinned\b/.test(key) && /\btomato/.test(key), size: 400, unit: 'g', noun: 'tin' },
+  { matches: key => key === 'coconut light milk' || key === 'coconut milk', size: 400, unit: 'ml', noun: 'tin' },
+  { matches: key => key === 'milk oat', size: 1000, unit: 'ml', noun: 'carton' },
+  { matches: key => /\bmilk\b/.test(key), size: 1000, unit: 'ml', noun: 'carton' },
+  { matches: key => key === 'cherry tomato', size: 300, unit: 'g', noun: 'pack' },
+  { matches: key => key === 'olives', size: 300, unit: 'g', noun: 'jar' },
+];
+
 function applyKnownUnitOverride(parsed) {
-  if (parsed.unit !== 'item' || parsed.amount === null) return parsed;
-  const gramsEach = KNOWN_ITEM_TO_GRAMS[buildShoppingKey(parsed.label)];
+  if (parsed.amount === null) return parsed;
+  const identity = buildShoppingKey(parsed.label);
+  if (identity === 'garlic' && parsed.unit === 'item') {
+    return {
+      ...parsed,
+      unit: 'clove',
+      key: `${identity}|clove|${buildShoppingKey(parsed.suffix)}`,
+    };
+  }
+  const nutrition = nutritionForShoppingLabel(parsed.label);
+  const tspGrams = parsed.unit === 'tsp' ? KNOWN_TSP_TO_GRAMS[normaliseIngredientPhrase(parsed.label)] : null;
+  const unitGrams = KNOWN_COUNT_UNIT_TO_GRAMS[normaliseIngredientPhrase(parsed.label)]?.[parsed.unit]
+    || (WHOLE_ITEMS_BOUGHT_BY_WEIGHT.has(identity)
+      ? nutrition?.unitGrams?.[parsed.unit] || nutrition?.unitGrams?.[`${parsed.unit}s`]
+      : null);
+  const gramsEach = (parsed.unit === 'item' || isCountUnit(parsed.unit) ? KNOWN_ITEM_TO_GRAMS[identity] : null)
+    || (WHOLE_ITEMS_BOUGHT_BY_WEIGHT.has(identity) && parsed.unit === 'item' ? nutrition?.gramsEach : null)
+    || unitGrams
+    || tspGrams;
   if (!gramsEach) return parsed;
   return {
     ...parsed,
@@ -628,6 +717,12 @@ function combineConvertibleItems(bucket) {
 
 function parseShoppingIngredient(ingredient) {
   const cleaned = cleanPortionScaleText(ingredient);
+  const leadingMeasured = cleaned.match(/^(\d+(?:\.\d+)?)\s*(kg|g|ml|l|tbsp|tsp)\s+(.+)$/i);
+  if (leadingMeasured) {
+    const [, amount, unit, label] = leadingMeasured;
+    const normalised = normaliseMeasuredAmount(Number(amount), unit);
+    return buildParsedIngredient(label, normalised.amount, normalised.unit);
+  }
   const leadingCountWithGramNote = cleaned.match(/^(\d+(?:\.\d+)?)\s+(.+?)\s*\(\s*\d+(?:\.\d+)?\s*g[^)]*\)$/i);
   if (leadingCountWithGramNote) {
     const [, amount, label] = leadingCountWithGramNote;
@@ -660,6 +755,13 @@ function parseShoppingIngredient(ingredient) {
   const trailingCount = cleaned.match(/^(.*?)(\d+(?:\.\d+)?)(\s+(?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled))?$/i);
   if (trailingCount) {
     const [, prefix, amount, suffix = ''] = trailingCount;
+    const embeddedUnit = prefix.trim().match(/\b([a-z]+s?)\s*$/i)?.[1];
+    const labelBeforeUnit = embeddedUnit
+      ? prefix.trim().slice(0, -embeddedUnit.length).trim()
+      : '';
+    if (isCountUnit(embeddedUnit) && labelBeforeUnit) {
+      return buildParsedIngredient(labelBeforeUnit, Number(amount), embeddedUnit, suffix);
+    }
     return buildParsedIngredient(prefix, Number(amount), 'item', suffix);
   }
 
@@ -677,24 +779,51 @@ function parseShoppingIngredient(ingredient) {
     return buildParsedIngredient(label, Number(amount), 'item');
   }
 
-  const key = buildShoppingKey(cleaned);
-  return { key, label: cleaned, amount: null, unit: '', suffix: '', count: 1 };
+  const label = stripShoppingPreparation(cleaned);
+  const key = buildShoppingKey(label);
+  return { key, label, amount: null, unit: '', suffix: '', count: 1 };
 }
 
 function buildParsedIngredient(prefix, amount, unit, suffix = '', amountFirst = false) {
-  const label = prefix.trim();
-  const cleanSuffix = suffix.trim();
-  const key = `${buildShoppingKey(label)}|${unit}|${buildShoppingKey(cleanSuffix)}`;
+  const label = stripShoppingPreparation(prefix.trim());
+  const cleanSuffix = stripShoppingPreparation(suffix.trim());
+  const normalisedUnit = normaliseCountUnit(unit);
+  const key = `${buildShoppingKey(label)}|${normalisedUnit}|${buildShoppingKey(cleanSuffix)}`;
 
   return {
     key,
     label,
     amount,
-    unit,
+    unit: normalisedUnit,
     suffix: cleanSuffix,
     count: 1,
     amountFirst,
   };
+}
+
+function stripShoppingPreparation(value) {
+  return String(value || '')
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(/^(basil|parsley|coriander|mint)\s+(?:leaves|fresh)(?=,|$)/i, '$1')
+    .replace(/^\s*(?:roasted|grated|mashed|cooked|chopped|diced|sliced|frozen|fresh)\s+/i, '')
+    .replace(/^garlic\s+cloves?(?=,|$)/i, 'Garlic')
+    .replace(/(?:,?\s+|^)(?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled|peeled|chopped|diced|sliced|dry|tinned|canned)\s*$/i, '')
+    .trim();
+}
+
+function nutritionForShoppingLabel(label) {
+  const key = normaliseIngredientPhrase(label)
+    .replace(/\b(?:tinned|canned|fresh|frozen|light|reduced fat|low fat)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return NUTRITION_TABLE[key] || NUTRITION_TABLE[normaliseIngredientPhrase(label)] || NUTRITION_TABLE[buildShoppingKey(label)];
+}
+
+function normaliseCountUnit(unit) {
+  const value = String(unit || '').toLowerCase();
+  const irregular = { leaves: 'leaf' };
+  if (irregular[value]) return irregular[value];
+  return isCountUnit(value) && value.endsWith('s') ? value.slice(0, -1) : value;
 }
 
 function normaliseMeasuredAmount(amount, unit) {
@@ -714,6 +843,14 @@ function normaliseMeasuredAmount(amount, unit) {
 // shoppers alike think in tablespoons past a certain size. This only affects
 // display; aggregation and the underlying amount are unchanged.
 function toShoppingDisplayUnit(amount, unit, roundUp) {
+  if (unit === 'g' && amount >= 1000) {
+    const kg = amount / 1000;
+    return { amount: roundUp ? Math.ceil(kg / 0.05) * 0.05 : Math.round(kg / 0.05) * 0.05, unit: 'kg' };
+  }
+  if (unit === 'ml' && amount >= 1000) {
+    const litres = amount / 1000;
+    return { amount: roundUp ? Math.ceil(litres / 0.05) * 0.05 : Math.round(litres / 0.05) * 0.05, unit: 'L' };
+  }
   if (unit !== 'tsp' || amount < 3) return { amount, unit };
   const tbsp = amount / 3;
   const rounded = roundUp ? Math.ceil(tbsp / 0.25) * 0.25 : Math.round(tbsp / 0.25) * 0.25;
@@ -726,6 +863,8 @@ function formatShoppingIngredient(item) {
   }
 
   const countable = item.unit === 'item' || isCountUnit(item.unit);
+  const packaged = formatPurchasePack(item);
+  if (packaged) return packaged;
   const purchaseAmount = countable
     ? Math.max(1, Math.ceil(item.amount - Number.EPSILON))
     : roundShoppingMeasurementUp(item.amount, item.unit);
@@ -739,6 +878,40 @@ function formatShoppingIngredient(item) {
     ? `${amount} ${item.label}${suffix}`
     : `${item.label} ${amount}${suffix}`;
   return purchaseText.trim();
+}
+
+function formatPurchasePack(item) {
+  const identity = buildShoppingKey(item.label);
+  if (identity === 'stock vegetable' && item.unit === 'ml') {
+    const cubes = Math.max(1, Math.ceil(item.amount / 500));
+    const made = cubes * 500;
+    return `${item.label} ${cubes} ${cubes === 1 ? 'cube' : 'cubes'} (makes ${formatPackAmount(made, 'ml')}; ${formatPackAmount(item.amount, 'ml')} required)`;
+  }
+
+  const format = PURCHASE_PACK_FORMATS.find(candidate => candidate.matches(identity)
+    && candidate.unit === item.unit);
+  if (!format) {
+    if (identity === 'cucumber' && item.unit === 'g') {
+      const count = Math.max(1, Math.ceil(item.amount / 300));
+      return `${item.label} ${count} (${formatPackAmount(item.amount, 'g')} required)`;
+    }
+    return '';
+  }
+
+  const count = Math.max(1, Math.ceil(item.amount / format.size));
+  const capacity = count * format.size;
+  const packAmount = formatPackAmount(format.size, format.unit);
+  const noun = count === 1 ? format.noun : `${format.noun}s`;
+  const required = Math.abs(capacity - item.amount) > 0.5
+    ? ` (${formatPackAmount(item.amount, item.unit)} required)`
+    : '';
+  return `${item.label} ${count} x ${packAmount} ${noun}${required}`;
+}
+
+function formatPackAmount(amount, unit) {
+  if (unit === 'ml' && amount >= 1000 && amount % 1000 === 0) return `${amount / 1000}L`;
+  if (unit === 'g' && amount >= 1000 && amount % 1000 === 0) return `${amount / 1000}kg`;
+  return formatMeasuredAmount(amount, unit);
 }
 
 // A shopping list gives you ONE number: what to put in the trolley.
@@ -807,6 +980,7 @@ function normaliseShoppingIngredient(ing) {
 function buildShoppingKey(ing) {
   const cleaned = ing
     .toLowerCase()
+    .replace(/\btinned\s+coconut\s+milk\b/g, 'coconut milk')
     .replace(/\([^)]*\)/g, '')
     .replace(/\b\d+(\.\d+)?\s*(g|kg|ml|l|tsp|tbsp|cup|cups|x|medium|small|large|tin|tins|slice|slices|scoop|scoops|pack|packs)\b/g, '')
     .replace(/^\d+(\.\d+)?\s*/, '')
@@ -814,7 +988,8 @@ function buildShoppingKey(ing) {
     .replace(/\s+/g, ' ')
     .trim();
   if (!cleaned) return ing.toLowerCase();
-  return cleaned.split(' ').sort().join(' ');
+  const identityAliases = { eggs: 'egg', tomatoes: 'tomato' };
+  return cleaned.split(' ').map(token => identityAliases[token] || token).sort().join(' ');
 }
 
 // ── SEO metadata ──────────────────────────────────────────────────────────────
@@ -1247,6 +1422,14 @@ const STORE_INDEX_OFFSETS = {
   any: 259,
 };
 
+// A route-level nudge is reserved for the rare case where two otherwise
+// different indexed variants converge on virtually the same seven-day menu.
+// The catalogue audit verifies this map exhaustively rather than relying on
+// titles or retailer copy to disguise a duplicate composition.
+const PLAN_VARIETY_OFFSETS = {
+  'asda-vegan-low-cal-1500-wholegrain-v3': 11,
+};
+
 function storeIndexOffset(supermarket) {
   return STORE_INDEX_OFFSETS[supermarket] ?? 0;
 }
@@ -1300,8 +1483,6 @@ export function buildPlanDays(seed) {
     for (const meal of qualifying) {
       for (const family of primaryProteinSignature(meal)) distinctProteins.add(family);
     }
-    if (distinctProteins.size >= MIN_DISTINCT_PROTEINS) return qualifying;
-
     // Rank by protein DENSITY, not grams. Sorting by absolute protein admitted
     // meals that were high in protein but also high in calories, which pushed
     // several vegan high-protein plans below the 20%-of-energy bar their own
@@ -1314,10 +1495,14 @@ export function buildPlanDays(seed) {
     const widened = [...qualifying];
     for (const meal of topUp) {
       const adds = [...primaryProteinSignature(meal)].some(f => !distinctProteins.has(f));
-      if (!adds) continue;
+      // Once the minimum protein-family diversity is present, keep up to five
+      // equally protein-dense alternatives as composition variety. This stops
+      // every route in a narrow vegetarian bucket cycling through the same
+      // otherwise-valid meal set in a different order.
+      if (!adds && widened.length >= qualifying.length + 5) continue;
       widened.push(meal);
       for (const family of primaryProteinSignature(meal)) distinctProteins.add(family);
-      if (distinctProteins.size >= MIN_DISTINCT_PROTEINS) break;
+      if (distinctProteins.size >= MIN_DISTINCT_PROTEINS && widened.length >= qualifying.length + 5) break;
     }
     return widened;
   };
@@ -1336,32 +1521,53 @@ export function buildPlanDays(seed) {
   // plans sharing a mealSetIndex start at the same point in the pool and land on
   // near-identical weeks even after biasing, which is the duplicate-content
   // problem this is meant to solve.
-  const base = (seed.mealSetIndex * 37) + storeIndexOffset(seed.supermarket);
+  const base = (seed.mealSetIndex * 37)
+    + storeIndexOffset(seed.supermarket)
+    + (PLAN_VARIETY_OFFSETS[seed.slug] || 0);
+  const breakfastBase = base + stableStringOffset(
+    `${seed.slug}:${seed.goal}:${seed.supermarket}:breakfast:v2`,
+  );
+  const lunchBase = base + stableStringOffset(`${seed.slug}:lunch`);
+  const dinnerBase = base + stableStringOffset(`${seed.slug}:dinner`);
+  const snackBase = base + stableStringOffset(`${seed.slug}:snack`);
+  const lunchStride = routeSelectionStride(seed.slug, 'lunch');
+  const dinnerStride = routeSelectionStride(seed.slug, 'dinner');
+  const snackStride = routeSelectionStride(seed.slug, 'snack');
 
   // Pick 2 breakfasts for the whole week: primary (Mon–Fri) and secondary (Sat–Sun).
   // This mirrors real UK meal-prep behaviour and keeps the week feeling coherent.
-  const bPrimary = pick(breakfastPool, base);
-  let bSecondary = pick(breakfastPool, base + 13);
-  if (bSecondary.id === bPrimary.id) bSecondary = pick(breakfastPool, base + 7);
+  const bPrimary = pick(breakfastPool, breakfastBase);
+  const secondaryBreakfastSeed = breakfastBase
+    + stableStringOffset(`${seed.slug}:${seed.supermarket}:weekend-breakfast`);
+  let bSecondary = pick(breakfastPool, secondaryBreakfastSeed);
+  if (bSecondary.id === bPrimary.id) bSecondary = pick(breakfastPool, secondaryBreakfastSeed + 7);
 
-  const batchLunch = batchPlan ? pick(lunchPool, base + 3) : null;
-  const batchWeekendLunch = batchPlan ? pickDifferent(lunchPool, base + 17, new Set([batchLunch?.id])) : null;
-  const batchDinnerA = batchPlan ? pickDinnerForLunch(dinnerPool, base + 7, batchLunch) : null;
-  const batchDinnerB = batchPlan ? pickDinnerForLunch(dinnerPool, base + 29, batchLunch, new Set([batchDinnerA?.id])) : null;
-  const batchSnackA = batchPlan ? pick(snackPool, base + 13) : null;
-  const batchSnackB = batchPlan ? pickDifferent(snackPool, base + 19, new Set([batchSnackA?.id])) : null;
-  const batchSnackC = batchPlan ? pickDifferent(snackPool, base + 29, new Set([batchSnackA?.id, batchSnackB?.id])) : null;
-  const batchSnackD = batchPlan ? pickDifferent(snackPool, base + 41, new Set([batchSnackA?.id, batchSnackB?.id, batchSnackC?.id])) : null;
+  const batchLunch = batchPlan ? pick(lunchPool, lunchBase + 3) : null;
+  const batchWeekendLunch = batchPlan ? pickDifferent(lunchPool, lunchBase + 17, new Set([batchLunch?.id])) : null;
+  const batchDinnerA = batchPlan ? pickDinnerForLunch(dinnerPool, dinnerBase + 7, batchLunch) : null;
+  const batchDinnerB = batchPlan ? pickDinnerForLunch(dinnerPool, dinnerBase + 29, batchLunch, new Set([batchDinnerA?.id])) : null;
+  const batchSnackA = batchPlan ? pick(snackPool, snackBase + 13) : null;
+  const batchSnackB = batchPlan ? pickDifferent(snackPool, snackBase + 19, new Set([batchSnackA?.id])) : null;
+  const batchSnackC = batchPlan ? pickDifferent(snackPool, snackBase + 29, new Set([batchSnackA?.id, batchSnackB?.id])) : null;
+  const batchSnackD = batchPlan ? pickDifferent(snackPool, snackBase + 41, new Set([batchSnackA?.id, batchSnackB?.id, batchSnackC?.id])) : null;
+  const dinnerUsage = new Map();
+  const maxDinnerUses = batchPlan ? 4 : 3;
 
   const plan = DAYS.map((day, di) => {
-    const s = base + di * 11;
+    const lunchSeed = lunchBase + (di * lunchStride) + stableStringOffset(`${seed.slug}:lunch:${di}`);
+    const dinnerSeed = dinnerBase + (di * dinnerStride) + stableStringOffset(`${seed.slug}:dinner:${di}`);
+    const snackSeed = snackBase + (di * snackStride) + stableStringOffset(`${seed.slug}:snack:${di}`);
     const b = di < 5 ? bPrimary : bSecondary; // Mon–Fri primary, Sat–Sun secondary
-    const l = batchPlan && di < 5 ? batchLunch : batchPlan ? batchWeekendLunch : pick(lunchPool, s + 3);
-    const d = batchPlan && di < 5
+    const l = batchPlan && di < 5 ? batchLunch : batchPlan ? batchWeekendLunch : pick(lunchPool, lunchSeed + 3);
+    const preferredDinner = batchPlan && di < 5
       ? (di % 2 === 0 ? batchDinnerA : batchDinnerB)
-      : batchPlan
-        ? pickDinnerForLunch(dinnerPool, s + 7, l)
-        : pickDinnerForLunch(dinnerPool, s + 7, l);
+      : null;
+    const d = preferredDinner
+      && !mealsShareProtein(l, preferredDinner)
+      && (dinnerUsage.get(preferredDinner.id) || 0) < maxDinnerUses
+      ? preferredDinner
+      : pickDinnerWithinWeeklyLimit(dinnerPool, dinnerSeed + 7, l, dinnerUsage, maxDinnerUses);
+    if (d) dinnerUsage.set(d.id, (dinnerUsage.get(d.id) || 0) + 1);
 
     const mealList = [b, l, d].filter(Boolean);
 
@@ -1373,7 +1579,7 @@ export function buildPlanDays(seed) {
       if (!snackPool.length) return;
       const snack = batchPlan && di < 5
         ? batchSnack
-        : pickDifferent(snackPool, s + offset, usedSnackIds);
+        : pickDifferent(snackPool, snackSeed + offset, usedSnackIds);
       if (!snack) return;
       mealList.push(snack);
       usedSnackIds.add(snack.id);
@@ -1839,7 +2045,7 @@ export function getPlanBySlug(slug) {
   return seed ? buildPlan(seed) : null;
 }
 
-export function getAllPlanMeta() {
+export function getAllPlanMeta({ calculateMacros = false } = {}) {
   return INDEXABLE_PLAN_SEEDS.map(seed => ({
     slug:          seed.slug,
     title:         seed.title,
@@ -1853,7 +2059,12 @@ export function getAllPlanMeta() {
     emphasis:      seed.emphasis,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
-    macrosGrams:   getSeedMacroGrams(seed),
+    // Catalogue surfaces use the declared profile without constructing 1,059
+    // complete seven-day plans during page load. Detail pages and quiz results
+    // calculate the selected plans from their recipes through their own paths.
+    macrosGrams:   calculateMacros
+      ? getSeedMacroGrams(seed)
+      : (MACRO_GRAMS[seed.emphasis] || MACRO_GRAMS['lean-protein']),
   }));
 }
 

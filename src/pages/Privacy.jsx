@@ -101,7 +101,9 @@ export default function Privacy() {
             If analytics are accepted, we may record anonymous session events such as page views,
             button and link clicks, internal searches, scroll depth, sections that enter the
             viewport, approximate time spent on a page, referrer type, device category, viewport
-            size and page-speed measurements. We do not put email addresses, payment details,
+            size and page-speed measurements. Quiz completion is recorded only as broad modes,
+            such as preset versus custom targets; answer-bearing URLs and exact calorie or macro
+            targets are removed before storage. We do not put email addresses, payment details,
             health information or typed meal-plan form answers into this behaviour log.
           </p>
           <p>

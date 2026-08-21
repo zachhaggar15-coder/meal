@@ -1,4 +1,4 @@
-import { AFFILIATE_DISCLOSURE } from './containerProducts.js';
+import { AFFILIATE_DISCLOSURE } from './affiliateDisclosure.js';
 
 const PUBLISHED = '2026-06-17';
 

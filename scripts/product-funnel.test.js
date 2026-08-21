@@ -372,6 +372,20 @@ test('every prominent accessory recommendation has explicit trust fields', () =>
   assert.match(MEALPREP_PRODUCTS['thermopro-tp02s-thermometer'].drawback, /storage/i);
 });
 
+test('accessory product images have reserved dimensions and non-keyword-stuffed alt text', () => {
+  for (const productId of ACCESSORY_PRODUCT_IDS) {
+    const product = MEALPREP_PRODUCTS[productId];
+    if (!product.image) continue;
+
+    assert.match(product.image, /^\/images\/products\/accessories\//, `${productId} image is not a local asset`);
+    assert.ok(Number.isFinite(product.imageWidth) && product.imageWidth > 0, `${productId} missing imageWidth`);
+    assert.ok(Number.isFinite(product.imageHeight) && product.imageHeight > 0, `${productId} missing imageHeight`);
+    assert.ok(product.imageAlt?.trim(), `${productId} missing imageAlt`);
+    assert.ok(product.imageAlt.length < 120, `${productId} imageAlt looks keyword-stuffed`);
+    assert.doesNotMatch(product.imageAlt, /\b(best|cheap|uk|amazon)\b/i, `${productId} imageAlt looks keyword-stuffed`);
+  }
+});
+
 test('accessory affiliate context uses one canonical event with stable selected-problem data', () => {
   const product = { id: 'fit-fresh-slim-ice-packs', name: 'Fit & Fresh ice packs', category: 'Reusable ice packs' };
   const data = affiliateLinkData({

@@ -27,6 +27,11 @@ import { BUDGET_CONTAINERS, MID_RANGE_CONTAINERS, MEAL_PREP_STICKERS } from '../
 import { AUTHOR_JSON_LD, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { buildBlogNextStep } from '../utils/contextualJourney.js';
+import {
+  getEditorialSources,
+  getPriceClaimMeta,
+  getPriceSources,
+} from '../utils/editorialSafeguards.js';
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -35,7 +40,9 @@ export default function BlogPost() {
   if (!data) return <NotFound />;
 
   const ogImageUrl = generateBlogImageUrl(slug, data.title);
-  const sources = data.sources || [];
+  const sources = getEditorialSources(data, slug);
+  const priceClaim = getPriceClaimMeta(data);
+  const priceSources = getPriceSources(data, slug);
   const showTrustBox = data.trustNote !== false;
   const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
   const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
@@ -140,6 +147,26 @@ export default function BlogPost() {
           <p className="content-intro">{data.intro}</p>
           {!useBuyingGuideFlow && (
             <ContentByline record={data} />
+          )}
+          {priceClaim && (
+            <aside className="price-freshness-note" aria-label="Price freshness note">
+              <strong>Price note:</strong>{' '}
+              {priceClaim.stale
+                ? 'Treat the prices on this page as historical examples, not current quotes.'
+                : `These are planning examples dated ${priceClaim.dated}, not live checkout prices.`}
+              {' '}Pack sizes, offers and availability change, so check the current retailer listing before buying.
+              {priceSources.length > 0 && (
+                <span>
+                  {' '}Check:{' '}
+                  {priceSources.map((source, index) => (
+                    <span key={source.url}>
+                      <a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a>
+                      {index < priceSources.length - 1 ? ', ' : ''}
+                    </span>
+                  ))}.
+                </span>
+              )}
+            </aside>
           )}
           {quickAnswer && !useBuyingGuideFlow && (
             <aside className="quick-answer-box" aria-label="Quick answer">

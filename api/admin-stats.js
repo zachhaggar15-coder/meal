@@ -17,6 +17,13 @@ import {
   ACCESSORY_PROBLEM_SELECTED_EVENT,
   getAffiliatePlacementGroup,
 } from '../src/utils/affiliateAnalytics.js';
+import {
+  sanitiseAnalyticsPath,
+  sanitiseAnalyticsUrl,
+} from '../src/utils/analyticsSanitisation.js';
+
+const ANALYTICS_WINDOW_DAYS = 30;
+const MIN_ROUTE_VITAL_SESSIONS = 5;
 
 const WAITLIST_SELECT = [
   'email',
@@ -136,12 +143,13 @@ async function readWaitlistRows(supabaseUrl, headers) {
 
 async function loadAnalyticsStats(supabaseUrl, headers) {
   try {
+    const since = new Date(Date.now() - ANALYTICS_WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
     const [events, sessions, vitalEvents] = await Promise.all([
-      readAnalyticsEvents(supabaseUrl, headers, 5000),
-      readAnalyticsSessions(supabaseUrl, headers, 1000),
-      readAnalyticsEvents(supabaseUrl, headers, 10000, 'web_vital'),
+      readAnalyticsEvents(supabaseUrl, headers, 5000, '', since),
+      readAnalyticsSessions(supabaseUrl, headers, 1000, since),
+      readAnalyticsEvents(supabaseUrl, headers, 10000, 'web_vital', since),
     ]);
-    return buildAnalyticsStats(events, sessions, vitalEvents);
+    return buildAnalyticsStats(events, sessions, vitalEvents, { since, windowDays: ANALYTICS_WINDOW_DAYS });
   } catch (err) {
     console.error('Analytics stats unavailable:', err.message || err);
     return {
@@ -151,21 +159,23 @@ async function loadAnalyticsStats(supabaseUrl, headers) {
   }
 }
 
-async function readAnalyticsEvents(supabaseUrl, headers, limit, eventName = '') {
+async function readAnalyticsEvents(supabaseUrl, headers, limit, eventName = '', since = '') {
   const url = restUrl(supabaseUrl, 'analytics_events', {
     select: ANALYTICS_EVENT_SELECT,
     order: 'occurred_at.desc.nullslast',
     limit: String(limit),
     ...(eventName ? { event_name: `eq.${eventName}` } : {}),
+    ...(since ? { occurred_at: `gte.${since}` } : {}),
   });
   return fetchJson(url, headers, 'analytics_events');
 }
 
-async function readAnalyticsSessions(supabaseUrl, headers, limit) {
+async function readAnalyticsSessions(supabaseUrl, headers, limit, since = '') {
   const url = restUrl(supabaseUrl, 'analytics_sessions', {
     select: ANALYTICS_SESSION_SELECT,
     order: 'last_seen_at.desc',
     limit: String(limit),
+    ...(since ? { last_seen_at: `gte.${since}` } : {}),
   });
   return fetchJson(url, headers, 'analytics_sessions');
 }
@@ -207,16 +217,26 @@ function buildWaitlistStats(rows) {
   };
 }
 
-function buildAnalyticsStats(events, sessions, vitalEvents = []) {
+export function buildAnalyticsStats(events, sessions, vitalEvents = [], options = {}) {
   const cleanEvents = events
     .map(event => ({
       ...event,
+      path: sanitiseAnalyticsPath(event.path || ''),
+      target_href: sanitiseAnalyticsUrl(event.target_href || ''),
       ts: dateValue(event.occurred_at || event.received_at),
       metadata: event.metadata && typeof event.metadata === 'object' ? event.metadata : {},
     }))
     .filter(event => event.ts && !String(event.path || '').startsWith('/admin'));
 
-  const cleanSessions = sessions.filter(session => !String(session.entry_path || '').startsWith('/admin'));
+  const observedSessionIds = new Set(cleanEvents.map(event => event.session_id).filter(Boolean));
+  const cleanSessions = sessions
+    .filter(session => !String(session.entry_path || '').startsWith('/admin'))
+    .filter(session => observedSessionIds.has(session.session_id))
+    .map(session => ({
+      ...session,
+      entry_path: sanitiseAnalyticsPath(session.entry_path || ''),
+      entry_intent: looksLikeQuizPayload(session.entry_intent) ? 'quiz' : session.entry_intent,
+    }));
   const grouped = groupEventsBySession(cleanEvents, cleanSessions);
   const journeys = [...grouped.values()]
     .map(buildJourneySummary)
@@ -224,7 +244,6 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
 
   const pageViews = cleanEvents.filter(event => event.event_name === 'page_view');
   const clickEvents = cleanEvents.filter(isClickEvent);
-  const exitEvents = cleanEvents.filter(event => event.event_name === 'page_exit');
   const sectionEvents = cleanEvents.filter(event => event.event_name === 'content_section_viewed');
   const searchEvents = cleanEvents.filter(isSearchEvent);
   const outboundClicks = cleanEvents.filter(event => (
@@ -239,8 +258,9 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
   const returnEvents = cleanEvents.filter(event => event.event_name === 'return_visit');
   const funnel = buildFunnelSummary(cleanEvents);
 
-  const engagedSeconds = sum(exitEvents.map(event => Number(event.active_time_ms || 0))) / 1000;
-  const sessionsWithEvents = journeys.length || cleanSessions.length || 1;
+  const engagementJourneys = journeys.filter(journey => journey.hasEngagementMeasurement);
+  const scrollJourneys = journeys.filter(journey => journey.hasScrollMeasurement);
+  const engagedSeconds = sum(engagementJourneys.map(journey => journey.engagedSeconds));
 
   return {
     configured: true,
@@ -248,8 +268,11 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
     sample: {
       events: cleanEvents.length,
       sessions: cleanSessions.length,
+      sourceSessions: sessions.length,
       eventLimit: 5000,
       sessionLimit: 1000,
+      since: options.since || null,
+      windowDays: options.windowDays || null,
     },
     overview: {
       sessions: cleanSessions.length || grouped.size,
@@ -262,8 +285,10 @@ function buildAnalyticsStats(events, sessions, vitalEvents = []) {
       internalSearches: searchEvents.length,
       sectionsSeen: sectionEvents.length,
       avgPagesPerSession: round(avg(journeys.map(journey => journey.pageCount))),
-      avgEngagedSeconds: round(engagedSeconds / sessionsWithEvents),
-      avgMaxScrollDepth: round(avg(journeys.map(journey => journey.maxScrollDepth))),
+      avgEngagedSeconds: round(engagedSeconds / (engagementJourneys.length || 1)),
+      engagementSamples: engagementJourneys.length,
+      avgMaxScrollDepth: round(avg(scrollJourneys.map(journey => journey.maxScrollDepth))),
+      scrollSamples: scrollJourneys.length,
       avgExplorationScore: round(avg(journeys.map(journey => journey.explorationScore))),
       returnVisits: unique(returnEvents.map(event => event.session_id)).length,
       savedPlanActions: funnel.find(item => item.event === 'plan_saved')?.events || 0,
@@ -516,7 +541,14 @@ function buildCoreWebVitals(events) {
   }
 
   const routes = [...routeMap.values()]
-    .map(row => ({ ...row, sessions: row.sessions.size }))
+    .map(row => {
+      const sessions = row.sessions.size;
+      return {
+        ...row,
+        sessions,
+        dataStatus: sessions >= MIN_ROUTE_VITAL_SESSIONS ? 'measured' : 'insufficient_data',
+      };
+    })
     .sort((left, right) => (right.inp || 0) - (left.inp || 0) || right.samples - left.samples)
     .slice(0, 30);
 
@@ -526,7 +558,7 @@ function buildCoreWebVitals(events) {
     summary,
     routes,
     note: events.length
-      ? 'p75 values from consented real-user visits; route decisions need a representative sample.'
+      ? `p75 values from consented visits in the reporting window. Route ratings require at least ${MIN_ROUTE_VITAL_SESSIONS} sessions.`
       : 'Collection is active. Values appear after consented production visits.',
   };
 }
@@ -610,6 +642,7 @@ function buildJourneySummary(group) {
   const clicks = events.filter(isClickEvent);
   const searches = events.filter(isSearchEvent);
   const exits = events.filter(event => event.event_name === 'page_exit');
+  const scrollEvents = events.filter(event => event.event_name === 'scroll_depth');
   const sections = events.filter(event => event.event_name === 'content_section_viewed');
   const maxScrollDepth = max(events.map(event => Number(event.scroll_depth || 0)));
   const engagedMs = sum(exits.map(event => Number(event.active_time_ms || 0)));
@@ -642,6 +675,8 @@ function buildJourneySummary(group) {
     sectionCount: sections.length,
     maxScrollDepth,
     engagedSeconds: round(engagedMs / 1000),
+    hasEngagementMeasurement: exits.length > 0,
+    hasScrollMeasurement: scrollEvents.length > 0 || maxScrollDepth > 0,
     explorationScore,
     timeline: journeyTimeline(events).slice(-14),
   };
@@ -906,6 +941,15 @@ function iso(value) {
 
 function shortSession(sessionId) {
   return String(sessionId || '').replace(/^sess_/, '').slice(0, 10);
+}
+
+function looksLikeQuizPayload(value) {
+  const text = String(value || '');
+  // Earlier analytics stored the compact base64 quiz payload as an intent.
+  // Even a very small answer object can be shorter than 40 characters, so
+  // identify the JSON-base64 prefix and alphabet instead of relying on size.
+  return text.length >= 12
+    && /^(?:eyJ|e30)[A-Za-z0-9_-]*={0,2}$/.test(text);
 }
 
 export function adminTokenFromHeaders(req) {

@@ -16,6 +16,7 @@ import {
   getViewportCategory,
 } from '../utils/affiliateAnalytics.js';
 import { trackEvent } from '../utils/analytics.js';
+import ProductSpecPlate from './ProductSpecPlate.jsx';
 
 const accessoryProducts = getMealPrepProducts(ACCESSORY_PRODUCT_IDS);
 const productById = new Map(accessoryProducts.map(product => [product.id, product]));
@@ -25,6 +26,15 @@ const REHEATING_GUIDES = [
   { to: '/blog/glass-vs-plastic-meal-prep-containers', label: 'Compare glass and plastic containers' },
   { to: '/blog/microwave-safe-meal-prep-containers-uk', label: 'Read the microwave-safe container guide' },
 ];
+
+// Was a product photo. The accessory images were Amazon listing shots stored in
+// public/, which the Associates programme does not allow, so the slot now shows
+// the specs that actually distinguish one lunch bag or thermometer from another.
+function ProductImage({ product, className }) {
+  // tone="plain": the accessory cards already print the category in their
+  // topline, so using it as a badge here would just say it twice.
+  return <ProductSpecPlate product={product} className={className} tone="plain" />;
+}
 
 function guideTrackingData(problemId, route, placement) {
   return {
@@ -43,6 +53,11 @@ function RecommendationCard({ recommendation, problem, index }) {
 
   return (
     <article className="accessory-recommendation-card" data-accessory-product={product.id}>
+      <ProductImage
+        product={product}
+        className="accessory-recommendation-image"
+        loading={index === 0 ? 'eager' : 'lazy'}
+      />
       <div className="accessory-recommendation-topline">
         <span>{recommendation.role}</span>
         <small>{product.category}</small>
@@ -175,10 +190,13 @@ function AccessoryCatalogue({ isOpen, onToggle, selectedProblem }) {
           <div className="accessory-catalogue-grid">
             {catalogueProducts.map(({ product, originalPosition }) => (
               <article key={product.id} className="accessory-catalogue-card" data-accessory-product={product.id}>
-                <div>
-                  <span>{product.category}</span>
-                  <h3>{product.name}</h3>
-                  <p>{product.bestFor}</p>
+                <div className="accessory-catalogue-card-main">
+                  <ProductImage product={product} className="accessory-catalogue-thumb" />
+                  <div>
+                    <span>{product.category}</span>
+                    <h3>{product.name}</h3>
+                    <p>{product.bestFor}</p>
+                  </div>
                 </div>
                 <a
                   href={product.href}
@@ -232,11 +250,10 @@ export default function AccessoryProblemSolver() {
           </p>
         </div>
 
-        {/* The disclosure used to appear only once a problem was selected or
-            the catalogue was opened, so this page could serve twenty tagged
-            affiliate links with nothing disclosed at all. The Associates
-            agreement wants it wherever those links are, so it is stated up
-            front and the two conditional copies below are redundant. */}
+        {/* The disclosure used to appear only once a problem was selected or the
+            catalogue opened, so the page could serve twenty tagged affiliate
+            links with nothing disclosed. The Associates agreement wants it
+            visible wherever those links are, so it is stated up front. */}
         <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
 
         <div className="accessory-problem-selector" aria-label="Choose a meal-prep problem">

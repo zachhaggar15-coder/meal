@@ -62,7 +62,9 @@ export default function EmailPlanCapture({
           website,
           planSlug: plan.slug,
           householdMembers,
-          source: typeof window !== 'undefined' ? window.location.href : sourcePage,
+          // Only identify the surface that sent the request. The browser URL
+          // can contain encoded quiz answers and must never leave the device.
+          source: String(sourcePage || 'plan').replace(/[^a-z0-9/_-]/gi, '').slice(0, 80),
         }),
       });
       const data = await response.json().catch(() => ({}));

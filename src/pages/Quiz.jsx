@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { track } from '../utils/analytics.js';
 import {
   QUIZ_DRAFT_KEY,
@@ -11,6 +11,7 @@ import {
   QUIZ_LAST_ANSWERS_KEY,
   encodeQuizAnswers,
 } from '../utils/quizStorage.js';
+import { validateMacroCalorieConsistency } from '../utils/macroTargets.js';
 
 const STEPS = [
   {
@@ -92,7 +93,7 @@ const STEPS = [
       // "Higher budget" says what the band is; "No preference" is the answer
       // that was missing, and it removes budget from the ranking entirely.
       { value: 'flexible', label: 'Higher budget', desc: '£55+ per person, per week' },
-      { value: 'no-preference', label: 'No preference', desc: "Budget won't affect your matches" },
+      { value: 'no-preference', label: 'Flexible / no budget preference', desc: "Budget won't affect your matches" },
     ],
   },
   {
@@ -235,6 +236,15 @@ export default function Quiz() {
       parsed[field.key] = Math.round(value);
     }
 
+    const consistency = validateMacroCalorieConsistency(parsed, answers.calories);
+    if (!consistency.valid) {
+      setMacroError(
+        `Those protein, carbohydrate and fat targets provide about ${consistency.impliedCalories.toLocaleString('en-GB')} kcal, `
+        + `which is too far from your ${consistency.targetCalories.toLocaleString('en-GB')} kcal target. Adjust the macros or go back and change calories.`,
+      );
+      return;
+    }
+
     const next = { ...answers, macros: parsed, macroMode: 'custom-grams' };
     setAnswers(next);
     submitQuiz(next);
@@ -255,12 +265,12 @@ export default function Quiz() {
       window.localStorage.removeItem(QUIZ_DRAFT_KEY);
     }
     track.quizCompleted({
-      goal: finalAnswers.goal,
-      supermarket: finalAnswers.supermarket,
-      calorie_target: finalAnswers.calories,
-      protein_target: finalAnswers.macros?.protein,
       page_type: 'quiz',
       cta_location: 'quiz_final_step',
+      calorie_mode: STEPS.find(item => item.id === 'calories')?.options?.some(option => option.value === finalAnswers.calories)
+        ? 'preset'
+        : 'custom',
+      macro_mode: finalAnswers.macros ? 'custom' : 'recommended',
     });
     const encoded = encodeQuizAnswers(finalAnswers);
     navigate(`/quiz/results?q=${encoded}`);

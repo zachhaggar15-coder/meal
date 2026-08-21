@@ -2,7 +2,7 @@ import blogSearchIndex from './blogSearchIndex.json' with { type: 'json' };
 import { COMBO_LANDING_PAGES } from './comboLandingPages.js';
 import { CONTAINER_GUIDE_GROUPS } from './containerProducts.js';
 import { MEAL_PLAN_HUBS } from './mealPlanHubs.js';
-import { PLAN_COUNT } from './planSeeds.js';
+import { PLAN_COUNT } from './planCatalogMeta.js';
 import {
   buildCalorieChooserPath,
   buildDietChooserPath,
@@ -13,7 +13,6 @@ import {
   GOAL_CHOOSER_ITEMS,
   INDEXED_SUPERMARKET_CHOICES,
 } from './planChooser.js';
-import { getAllPlanMeta } from '../utils/planBuilder.js';
 
 export { PLAN_COUNT };
 
@@ -514,23 +513,8 @@ function buildSiteSearchIndex() {
       keywords: post.keywords,
       priority: 55,
     })),
-    ...getAllPlanMeta().map(plan => ({
-      title: plan.title,
-      to: `/plans/${plan.slug}`,
-      type: 'Plan',
-      description: `${plan.goalLabel} plan, ${plan.calories.toLocaleString('en-GB')} kcal, ${plan.priceEstimate}/week.`,
-      keywords: [
-        plan.goalLabel,
-        plan.goal,
-        plan.supermarket,
-        plan.dietType,
-        plan.calories,
-        plan.budget,
-        plan.effort,
-        plan.emphasis,
-      ].join(' '),
-      priority: 45,
-    })),
+    // Individual plans remain searchable in the full plan browser. Loading all
+    // seed records here made every page download the catalogue before search.
   ];
 
   const unique = new Map();

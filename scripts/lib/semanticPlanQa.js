@@ -7,6 +7,7 @@ import { mealPlansData } from '../../src/data/mealPlans.js';
 import { buildPlan, buildShoppingList } from '../../src/utils/planBuilder.js';
 import { buildCanonicalLegacyPlan } from '../../src/utils/legacyPlanBuilder.js';
 import { parseIngredientLine } from '../../src/utils/ingredientParser.js';
+import { isReadyToEatIngredient } from '../../src/utils/ingredientRoles.js';
 import { resolvePotatoPreparation } from '../../src/utils/recipeQuality.js';
 import { buildContainerSetup } from '../../src/utils/containerSetup.js';
 import { PRICING_CONTEXT_CHECKED } from '../../src/data/supermarketProfiles.js';
@@ -35,7 +36,9 @@ const REVIEW_STATUSES = new Set(['New', 'Investigating', 'Fixed', 'Accepted', 'F
 const CORE_FAMILIES = [
   ['chicken', ['chicken']],
   ['turkey', ['turkey']],
-  ['beef', ['beef', 'steak', 'sirloin', 'mince']],
+  // "Mince" is a format, not a beef identity: Quorn, turkey and plant mince
+  // must be resolved by what they are actually made from.
+  ['beef', ['beef', 'steak', 'sirloin']],
   ['pork', ['pork', 'bacon', 'ham']],
   ['tuna', ['tuna']],
   ['salmon', ['salmon']],
@@ -74,6 +77,7 @@ const SYSTEMIC_HELPERS = {
   'shopping-category-protein': 'src/utils/planBuilder.js shopping classifier',
   'shopping-duplicate-alias': 'src/utils/planBuilder.js shopping aggregation',
   'shopping-core-ingredient-missing': 'src/utils/planBuilder.js shopping aggregation',
+  'shopping-ingredient-missing': 'src/utils/planBuilder.js shopping aggregation',
 };
 
 export function buildPlanInventory() {
@@ -307,6 +311,10 @@ function assessWeeklyIngredientAccumulation(plan) {
         || String(item).match(/^(.+?)\s+(\d+(?:\.\d+)?)(?:\s|$)(?!\w)/i);
       if (!match) continue;
       const [, label, amountRaw, unitRaw] = match;
+      // Kilograms/litres and explicit multipacks are already expressed as a
+      // realistic purchase. The advisory is for bare optimiser totals, not
+      // ordinary bulk sizes.
+      if (/\bx\b|\b(?:cubes?|makes)\b/i.test(item) || /^(?:kg|l)$/i.test(unitRaw || '')) continue;
       let amount = Number(amountRaw);
       let unit = (unitRaw || 'item').toLowerCase();
       if (unit === 'kg') { amount *= 1000; unit = 'g'; }
@@ -348,8 +356,12 @@ function assessPurchaseFormatOddities(plan) {
 // changing the algorithm itself, which needs a separate approved change.
 function assessContainerCountOutlier(plan) {
   try {
-    const setup = buildContainerSetup({ weeklyPlan: plan.days });
-    if (setup.containerCount > 15) {
+    const explicitlyBatch = (plan.modifiers || []).some(value => String(value).toLowerCase() === 'batch');
+    const setup = buildContainerSetup({
+      plan: { weekly_plan: plan.days, effort: explicitlyBatch ? 'batch' : 'standard' },
+    });
+    const practicalCeiling = explicitlyBatch ? 20 : 15;
+    if (setup.containerCount > practicalCeiling) {
       return [finding('Medium', 'container recommendation', 'container-count-outlier',
         `Recommends ${setup.containerCount} containers, which likely assumes zero reuse across the week rather than concurrently stored meals.`,
         'Container recommendation', 'medium', 'template/systemic')];
@@ -395,7 +407,10 @@ function assessMeal(plan, day, meal) {
       findings.push(finding('High', 'ingredient-method consistency', 'method-core-ingredient-missing',
         `The method mentions ${family}, but no matching ingredient is listed.`, location, 'high', 'template/systemic'));
     }
-    if (named && present && !mentioned && methodSteps.length) {
+    const matchingIngredients = ingredients.filter(item => aliases.some(alias => hasPhrase(normalise(item), alias)));
+    const readyToEatHandled = matchingIngredients.some(isReadyToEatIngredient)
+      && /\b(no preparation needed|eat as (?:it|they) (?:comes?|are)|serve|portion|have .+ ready)\b/.test(methodText);
+    if (named && present && !mentioned && methodSteps.length && !readyToEatHandled) {
       findings.push(finding('Medium', 'ingredient-method consistency', 'important-ingredient-unused',
         `${family} is central to the meal name but is not clearly used in the method.`, location, 'medium', 'uncertain'));
     }
@@ -403,15 +418,7 @@ function assessMeal(plan, day, meal) {
 
   const potatoState = resolvePotatoPreparation(meal);
   if (potatoState.declared && potatoState.state !== 'raw') {
-    const contradictions = {
-      baked: /\bboil\b|\bmash\b|\broast\b/,
-      jacket: /\bboil\b|\bmash\b|\broast\b/,
-      mashed: /\bboil\b|\bbake\b|\broast\b/,
-      roast: /\bboil\b|\bbake\b|\bmash\b/,
-      boiled: /\bbake\b|\broast\b|\bmash\b/,
-      prepared: /\bboil\b|\bbake\b|\broast\b|\bmash\b/,
-    }[potatoState.state];
-    if (contradictions?.test(methodText)) {
+    if (hasDirectPotatoStateContradiction(potatoState.state, methodSteps)) {
       findings.push(finding('High', 'ingredient-method consistency', 'potato-state-contradiction',
         `The method contradicts the declared ${potatoState.state} potato state.`, location, 'high', 'template/systemic'));
     }
@@ -423,7 +430,7 @@ function assessMeal(plan, day, meal) {
       'The method repeats an identical instruction.', location, 'high', 'template/systemic'));
   }
 
-  const styleMismatch = mealStyleMismatch(nameText, methodText, potatoState);
+  const styleMismatch = mealStyleMismatch(nameText, methodText, ingredientText, potatoState);
   if (styleMismatch) {
     findings.push(finding('Medium', 'meal-name coherence', 'meal-style-method-mismatch',
       styleMismatch, location, 'medium', 'template/systemic'));
@@ -448,6 +455,27 @@ function assessMeal(plan, day, meal) {
   }
 
   return findings;
+}
+
+function hasDirectPotatoStateContradiction(state, methodSteps) {
+  const forbidden = {
+    baked: ['boil', 'mash', 'roast'],
+    jacket: ['boil', 'mash', 'roast'],
+    mashed: ['boil', 'mash', 'roast'],
+    roast: ['boil', 'mash'],
+    boiled: ['roast', 'mash'],
+    prepared: ['boil', 'mash', 'roast'],
+  }[state] || [];
+  if (!forbidden.length) return false;
+
+  return (methodSteps || []).some(step => {
+    const sentence = normalise(step);
+    if (!/\b(potato|potatoes|mash)\b/.test(sentence)) return false;
+    return forbidden.some(verb => (
+      new RegExp(`(?:^|[.;]\\s*|then\\s+|and\\s+)${verb}(?:ed|ing)?\\s+(?:the\\s+)?(?:[a-z-]+\\s+){0,3}(?:potato|potatoes|mash)\\b`).test(sentence)
+      || new RegExp(`\\b(?:potato|potatoes)\\b.{0,30}\\bthen\\s+${verb}(?:ed|ing)?\\b`).test(sentence)
+    ));
+  });
 }
 
 function assessPlanVariety(plan, planContext) {
@@ -499,7 +527,7 @@ function assessShoppingList(plan) {
   const shoppingAliases = new Map();
   for (const [category, items] of Object.entries(shopping)) {
     for (const item of items || []) {
-      const key = shoppingAliasKey(item);
+      const key = shoppingAliasKey(item, true);
       if (!key) continue;
       const rows = shoppingAliases.get(key) || [];
       rows.push({ category, item });
@@ -511,6 +539,25 @@ function assessShoppingList(plan) {
     findings.push(finding('Medium', 'shopping-list usability', 'shopping-duplicate-alias',
       `Potential duplicate purchase entries: ${rows.map(row => `${row.item} (${row.category})`).join('; ')}.`,
       'Weekly shopping list', 'medium', 'uncertain'));
+  }
+
+  const shoppingKeys = new Set(flatShopping.map(item => shoppingAliasKey(item)).filter(Boolean));
+  const missingIngredients = new Map();
+  for (const day of plan.days || []) {
+    for (const meal of day.meals || []) {
+      // Reconcile the consolidated list against the ingredient lines a cook
+      // sees, not the higher-precision values retained only for nutrition.
+      for (const ingredient of meal.ingredients || meal.calculationIngredients || []) {
+        const key = shoppingAliasKey(ingredient);
+        if (!key || shoppingKeys.has(key)) continue;
+        if (!missingIngredients.has(key)) missingIngredients.set(key, ingredient);
+      }
+    }
+  }
+  for (const ingredient of missingIngredients.values()) {
+    findings.push(finding('Critical', 'shopping-list usability', 'shopping-ingredient-missing',
+      `${ingredient} is required by a recipe but has no matching purchase line in the consolidated shopping list.`,
+      'Weekly shopping list', 'high', 'template/systemic'));
   }
 
   const ingredientText = normalise(plan.days.flatMap(day => day.meals || [])
@@ -528,7 +575,7 @@ function assessShoppingList(plan) {
   return findings;
 }
 
-function mealStyleMismatch(name, method, potatoState) {
+function mealStyleMismatch(name, method, ingredients, potatoState) {
   if (/\bjacket potato\b/.test(name)) {
     const prepared = potatoState.declared && ['baked', 'jacket'].includes(potatoState.state);
     if (!prepared && !/(bake|oven)/.test(method)) return 'The meal is called a jacket potato, but the method never bakes it.';
@@ -537,7 +584,16 @@ function mealStyleMismatch(name, method, potatoState) {
   if (/\bstir[ -]?fry\b/.test(name) && !/(stir[ -]?fry|(?:pan|wok).{0,80}\bstir(?:ring)?\b|\bstir(?:ring)?\b.{0,80}(?:pan|wok))/.test(method)) {
     return 'The meal is called a stir-fry, but the method does not use a stir-fry step.';
   }
-  if (/\bsalad\b/.test(name) && !/(arrange|toss|combine|bowl|salad)/.test(method)) return 'The meal is called a salad, but the method does not assemble one.';
+  if (/\bsalad\b/.test(name)) {
+    const explicitAssembly = /(arrange|toss|combine|bowl|salad)/.test(method);
+    const saladComponents = /\b(leaves|lettuce|rocket|watercress|spinach)\b/.test(ingredients)
+      && /\b(dressing|vinaigrette|oil|lemon|lime|vinegar|hummus|yogurt)\b/.test(ingredients);
+    const componentAssembly = saladComponents
+      && /\b(serve|layer|fill|spoon|top|finish|add)\b/.test(method)
+      && /\b(leaves|lettuce|rocket|watercress|spinach|dressing|vinaigrette|hummus)\b/.test(method);
+    if (!explicitAssembly && !componentAssembly) return 'The meal is called a salad, but the method does not assemble one.';
+  }
+
   if (/\bcurry\b/.test(name) && !/(simmer|curry|paste|sauce|pan)/.test(method)) return 'The meal is called a curry, but the method does not build or simmer a curry.';
   return '';
 }
@@ -803,9 +859,13 @@ function finaliseReview(plan, findings, now, assessmentSource) {
   const highestSeverity = cleanFindings.reduce((highest, item) => (
     SEVERITY_ORDER[item.severity] > SEVERITY_ORDER[highest] ? item.severity : highest
   ), 'None');
-  const status = ['Critical', 'High'].includes(highestSeverity)
+  const actionableFindings = cleanFindings.filter(isActionableFinding);
+  const highestActionableSeverity = actionableFindings.reduce((highest, item) => (
+    SEVERITY_ORDER[item.severity] > SEVERITY_ORDER[highest] ? item.severity : highest
+  ), 'None');
+  const status = ['Critical', 'High'].includes(highestActionableSeverity)
     ? 'Review required'
-    : ['Medium', 'Low'].includes(highestSeverity)
+    : highestActionableSeverity === 'Medium'
       ? 'Review suggested'
       : 'Pass';
   return {
@@ -821,12 +881,21 @@ function finaliseReview(plan, findings, now, assessmentSource) {
     semanticQaDate: new Date(now).toISOString(),
     overallStatus: status,
     highestSeverity,
+    highestActionableSeverity,
     findingCount: cleanFindings.length,
+    actionableFindingCount: actionableFindings.length,
+    advisoryCount: cleanFindings.length - actionableFindings.length,
     findings: cleanFindings,
     confidence: reviewConfidence(cleanFindings),
     sourceHash: plan.sourceHash,
     assessmentSource,
   };
+}
+
+function isActionableFinding(item) {
+  if (!item || item.severity === 'Low') return false;
+  if (item.scope === 'uncertain' && SEVERITY_ORDER[item.severity] <= SEVERITY_ORDER.Medium) return false;
+  return true;
 }
 
 export function aggregateSystemicIssues(reviews, priorRuns = [], now = new Date()) {
@@ -876,6 +945,7 @@ function buildRunRecord({ reviews, systemicIssues, now, weekSeed, model, modelSt
   }
   const passed = reviews.filter(review => review.overallStatus === 'Pass').length;
   const flagged = reviews.length - passed;
+  const plansWithoutFlags = reviews.filter(review => review.findingCount === 0).length;
   const manualReviewRoutes = reviews
     .filter(review => review.overallStatus !== 'Pass')
     .sort((left, right) => SEVERITY_ORDER[right.highestSeverity] - SEVERITY_ORDER[left.highestSeverity])
@@ -888,7 +958,7 @@ function buildRunRecord({ reviews, systemicIssues, now, weekSeed, model, modelSt
     passed,
     flagged,
     passRate: reviews.length ? round((passed / reviews.length) * 100, 1) : 0,
-    plansWithoutFlagsRate: reviews.length ? round((passed / reviews.length) * 100, 1) : 0,
+    plansWithoutFlagsRate: reviews.length ? round((plansWithoutFlags / reviews.length) * 100, 1) : 0,
     severity,
     systemicIssues,
     systemicIssueCount: systemicIssues.length,
@@ -1245,13 +1315,28 @@ function ingredientSignature(meal) {
     .join('|');
 }
 
-function shoppingAliasKey(value) {
-  return normalise(value)
-    .replace(/\b(?:at least|about|used|standard|small|medium|large|tinned|canned|fresh|frozen)\b/g, ' ')
+export function shoppingAliasKey(value, preserveTinned = false) {
+  // Remove recipe-only notes before punctuation is normalised away. Doing
+  // this afterwards leaves the words inside parentheses in the alias, so an
+  // ingredient such as "lemon juice (excluded from nutrition estimate)"
+  // cannot match the perfectly valid "Lemon juice" shopping entry.
+  let cleaned = normalise(String(value || '').replace(/\([^)]*\)/g, ' '))
+    .replace(/\bx\d+\b/g, ' ')
+    .replace(/\b\d+(?:\.\d+)?\s*(?:kg|g|ml|l|tbsp|tsp)\b/g, ' ')
+    .replace(/\b(?:at least|about|used|required|makes|standard|small|medium|large|fresh|frozen|baked|cooked|roasted|grated|mashed|peeled|chopped|diced|sliced|soft|hard|boiled|drained|rinsed|dry)\b/g, ' ')
+    .replace(/\b(?:half|quarter)\b/g, ' ')
     .replace(/\b\d+(?:\.\d+)?\b/g, ' ')
-    .replace(/\b(?:kg|g|ml|l|tbsp|tsp|tin|tins|pack|packs|slice|slices)\b/g, ' ')
+    .replace(/\b(?:x|kg|g|ml|l|tbsp|tsp|tin|tins|pack|packs|carton|cartons|jar|jars|cube|cubes|slice|slices|stalk|stalks|clove|cloves|leaf|leaves|scoop|scoops|rasher|rashers|fillet|fillets)\b/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+  if (!preserveTinned) cleaned = cleaned.replace(/\b(?:tinned|canned)\b/g, ' ').replace(/\s+/g, ' ').trim();
+  const singular = {
+    eggs: 'egg', rolls: 'roll', pittas: 'pitta', olives: 'olive', peppers: 'pepper',
+    lentils: 'lentil', tomatoes: 'tomato', beans: 'bean', berries: 'berry',
+    sausages: 'sausage', wraps: 'wrap', tortillas: 'tortilla', crackers: 'cracker',
+    onions: 'onion', mushrooms: 'mushroom', courgettes: 'courgette', carrots: 'carrot',
+  };
+  return cleaned.split(' ').filter(Boolean).map(token => singular[token] || token).sort().join(' ');
 }
 
 function inferSupermarket(value) {

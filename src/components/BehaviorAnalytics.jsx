@@ -9,6 +9,11 @@ import {
 } from '../utils/analytics.js';
 import { observeWebVitals } from '../utils/webVitals.js';
 import { isAffiliateUrl } from '../utils/affiliateAnalytics.js';
+import {
+  analyticsSearchIntent,
+  sanitiseAnalyticsPath,
+  sanitiseAnalyticsUrl,
+} from '../utils/analyticsSanitisation.js';
 
 const SESSION_KEY = 'mealprep_analytics_session_id';
 const ENTRY_KEY = 'mealprep_analytics_entry';
@@ -350,7 +355,7 @@ function createTracker(getPath) {
 
 function currentPath(locationRef) {
   const current = locationRef.current;
-  return `${current.pathname}${current.search}`;
+  return sanitiseAnalyticsPath(`${current.pathname}${current.search}`);
 }
 
 function isTrackablePath(path) {
@@ -402,11 +407,11 @@ function buildEntryContext(path) {
   const url = new URL(window.location.href);
   const referrer = document.referrer || '';
   const referrerHost = referrer ? safeUrl(referrer)?.host || '' : '';
-  const searchIntent = url.searchParams.get('search') || url.searchParams.get('q') || url.searchParams.get('utm_term') || '';
+  const searchIntent = analyticsSearchIntent(url.href);
 
   return {
     entry_path: path,
-    entry_url: url.href,
+    entry_url: sanitiseAnalyticsUrl(url.href),
     entry_title: document.title,
     entry_referrer: referrer,
     entry_referrer_host: referrerHost,

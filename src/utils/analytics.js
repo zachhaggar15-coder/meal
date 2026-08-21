@@ -1,3 +1,5 @@
+import { sanitiseAnalyticsPath } from './analyticsSanitisation.js';
+
 const DEFAULT_GA_MEASUREMENT_ID = 'G-SRW78FVYWM';
 const ENV = import.meta.env || {};
 const GA_MEASUREMENT_ID = ENV.VITE_GA_MEASUREMENT_ID || DEFAULT_GA_MEASUREMENT_ID;
@@ -57,7 +59,7 @@ export function trackPageView(path) {
   if (typeof window === 'undefined') return;
   initAnalytics();
 
-  const pagePath = path || `${window.location.pathname}${window.location.search}`;
+  const pagePath = sanitiseAnalyticsPath(path || `${window.location.pathname}${window.location.search}`);
   if (hasAnalyticsConsent()) {
     window.gtag?.('event', 'page_view', {
       page_path: pagePath,

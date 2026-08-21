@@ -8,6 +8,7 @@ import {
   isAlreadyPreparedIngredient,
   isReadyToEatIngredient,
   isSoupSideAccompaniment,
+  proteinAliasesFor,
   resolveProteinIdentity,
 } from '../../src/utils/ingredientRoles.js';
 
@@ -38,6 +39,10 @@ const COMMON_AROMATIC = /\b(garlic|ginger|lemon|lime)\b/i;
 // excludes seasonings/aromatics/negligibles that are legitimately not
 // named individually. Still non-blocking — see the report for precision.
 export function checkCoreIngredientOmission(mealName, ingredients, methodText) {
+  const materialIngredients = (ingredients || []).filter(isMaterialIngredient);
+  if (materialIngredients.length === 1 && /\bno preparation needed\b|\beat as (?:it|they) (?:comes?|are)\b/i.test(methodText)) {
+    return [];
+  }
   const flagged = [];
   const haystack = methodText.toLowerCase();
   for (const raw of ingredients || []) {
@@ -77,9 +82,36 @@ export function checkCoreIngredientOmission(mealName, ingredients, methodText) {
 //
 // Now each ingredient is resolved on its own, by the same resolver the rest of
 // the app uses: what protein IS this, and does it arrive edible?
-export function checkRawProteinWithoutCooking(name, ingredients, methodText) {
-  if (COOK_VERB_PATTERN.test(methodText)) return [];
+// Any cooking verb anywhere satisfied this check, so a method that boiled the
+// pasta counted as having dealt with the chicken. That is how raw chicken
+// breast reached the page "prepared… and warmed everything gently in a pan"
+// beside pasta the method really did cook.
+//
+// Requiring the verb in the protein's own sentence is too strict the other
+// way: eggs whisked into a batter are cooked as pancakes, and a binding egg in
+// a fishcake is cooked as a fishcake. Both are correct, and neither sentence
+// names the egg beside a cooking verb.
+//
+// So the check targets the actual failure — a raw protein handed to a phrase
+// that means "we did not know what to do with this" — and asks whether
+// anything else in the method cooks it.
+const WEAK_HANDLING = /\b(prepare|warm)\b[^.]*\bwarm (everything|them|it)\b[^.]*\bgently\b|\bwarm everything gently\b/i;
 
+function isHandledWeakly(methodText, identity) {
+  const aliases = [identity, ...(proteinAliasesFor(identity) || [])].filter(Boolean);
+  const sentences = String(methodText).split(/(?<=[.!?])\s+/);
+  const weak = sentences.filter(sentence => WEAK_HANDLING.test(sentence)
+    && aliases.some(alias => new RegExp(`\\b${alias}`, 'i').test(sentence)));
+  if (!weak.length) return false;
+  // Cooked properly somewhere else in the same method? Then it is fine.
+  return !sentences.some(sentence => (
+    !WEAK_HANDLING.test(sentence)
+    && COOK_VERB_PATTERN.test(sentence)
+    && aliases.some(alias => new RegExp(`\\b${alias}`, 'i').test(sentence))
+  ));
+}
+
+export function checkRawProteinWithoutCooking(name, ingredients, methodText) {
   const lines = [...(ingredients || [])];
   const flagged = new Set();
   for (const line of lines) {
@@ -102,7 +134,10 @@ export function checkRawProteinWithoutCooking(name, ingredients, methodText) {
     flagged.add(titleIdentity);
   }
 
-  return [...flagged];
+  // Two ways a raw protein goes uncooked: the method never cooks anything, or
+  // it cooks other things and fobs this one off.
+  const nothingIsCooked = !COOK_VERB_PATTERN.test(methodText);
+  return [...flagged].filter(identity => nothingIsCooked || isHandledWeakly(methodText, identity));
 }
 
 // ── Check 3: a dish needing hydration has no cooking medium IN THE METHOD ─
@@ -180,7 +215,7 @@ export function checkFamilyValidity(name, ingredients, methodText) {
 // does not match "tomatoes", which previously flagged dishes that plainly
 // had a tomato base. Coconut milk is a genuine curry sauce base and was
 // missing entirely.
-const FLAVOUR_COMPONENT = /\b(garlic|ginger|onion|shallot|leek|celery|chilli|herb|spice|paprika|cumin|turmeric|cinnamon|oregano|basil|thyme|rosemary|coriander|parsley|dill|mint|masala|ras el hanout|curry|stock|soy sauce|tamari|miso|pesto|harissa|tahini|mustard|vinegar|balsamic|glaze|gravy|honey|maple|lemon|lime|dressing|sauce|salsa|hoisin|sriracha|mayo|hummus|cheese|parmesan|feta|halloumi|cheddar|mozzarella|ricotta|tomato|coconut milk|coconut cream|olive oil|sesame|peanut butter|nutritional yeast|pickle|kimchi|olives?)/i;
+const FLAVOUR_COMPONENT = /\b(garlic|ginger|onion|shallot|leek|celery|chilli|herb|spice|paprika|cumin|turmeric|cinnamon|oregano|basil|thyme|rosemary|coriander|parsley|dill|mint|masala|ras el hanout|curry|stock|soy sauce|tamari|miso|pesto|harissa|tahini|mustard|vinegar|balsamic|glaze|gravy|honey|maple|lemon|lime|dressing|sauce|salsa|hoisin|sriracha|mayo|hummus|cheese|parmesan|feta|halloumi|cheddar|mozzarella|ricotta|tomato|coconut milk|coconut cream|olive oil|sesame|peanut butter|nutritional yeast|pickle|kimchi|olives?|baked beans|eggs?)/i;
 const SAVOURY_COOKED = /(curry|chilli|stew|soup|bake|roast|stir-fry|risotto|bolognese|casserole|dahl|dal|pie|traybake|hash)/i;
 
 export function checkFlavourCompleteness(name, ingredients) {

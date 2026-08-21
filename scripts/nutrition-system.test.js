@@ -183,8 +183,8 @@ test('the same ingredient stated as a weight in one recipe and a count in anothe
 
   assert.equal(all.filter(item => /^Cherry tomatoes\b/i.test(item)).length, 1);
   assert.equal(all.filter(item => /^Cucumber\b/i.test(item)).length, 1);
-  assert.ok(all.some(item => /^Cherry tomatoes \d+g/i.test(item)));
-  assert.ok(all.some(item => /^Cucumber \d+g/i.test(item)));
+  assert.ok(all.some(item => /^Cherry tomatoes \d+ x 300g packs? \(\d+g required\)$/i.test(item)));
+  assert.ok(all.some(item => /^Cucumber \d+ \(\d+g required\)$/i.test(item)));
 });
 
 test('olive oil stated in teaspoons in one recipe and tablespoons in another merges into one line', () => {
@@ -226,8 +226,8 @@ test('shopping purchase presentation rounds countable quantities up to what you 
   assert.ok(all.includes('Wholemeal bread 10 slices'));
   assert.ok(all.includes('Snack mix 1 pack'));
   assert.ok(all.includes('1 small roll'));
-  assert.ok(all.includes('Semi-skimmed milk 1300ml'));
-  assert.ok(all.includes('Peanut butter 1.25 tsp'));
+  assert.ok(all.includes('Semi-skimmed milk 2 x 1L cartons (1271ml required)'));
+  assert.ok(all.includes('Peanut butter 7g'));
   assert.ok(!all.some(item => /\(about/.test(item)));
   assert.ok(!all.some(item => /\bat least\b/i.test(item)));
   // Rounding is always up: a shopping list that sends you home short is worse

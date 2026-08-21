@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 function hasAny(value, needles) {

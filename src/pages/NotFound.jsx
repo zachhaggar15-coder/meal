@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 
 export default function NotFound() {
   return (

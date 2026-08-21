@@ -133,7 +133,9 @@ test('a large weekly ingredient total is surfaced as review evidence, not an aut
 
   assert.ok(accumulation);
   assert.equal(accumulation.severity, 'Medium');
-  assert.equal(review.overallStatus, 'Review suggested');
+  assert.equal(review.overallStatus, 'Pass');
+  assert.equal(review.actionableFindingCount, 0);
+  assert.equal(review.advisoryCount, 1);
 });
 
 test('a small, ordinary weekly ingredient total does not trigger the accumulation flag', () => {
@@ -144,7 +146,7 @@ test('a small, ordinary weekly ingredient total does not trigger the accumulatio
   assert.ok(!review.findings.some(item => item.patternKey === 'weekly-ingredient-accumulation'));
 });
 
-test('a container recommendation that assumes zero reuse across the week is flagged as an outlier', () => {
+test('container recommendations account for reuse across the week', () => {
   const days = Array.from({ length: 7 }, (_, index) => ({
     day: `Day ${index + 1}`,
     meals: [
@@ -157,8 +159,7 @@ test('a container recommendation that assumes zero reuse across the week is flag
   const review = assessPlanLocally(plan, NOW);
   const outlier = review.findings.find(item => item.patternKey === 'container-count-outlier');
 
-  assert.ok(outlier);
-  assert.match(outlier.explanation, /\d+ containers/);
+  assert.equal(outlier, undefined);
 });
 
 test('explicitly prepared potato state is flagged when a method contradicts it', () => {
@@ -180,6 +181,28 @@ test('explicitly prepared potato state is flagged when a method contradicts it',
   const contradiction = review.findings.find(item => item.patternKey === 'potato-state-contradiction');
   assert.ok(contradiction);
   assert.equal(contradiction.severity, 'High');
+});
+
+test('prepared mash can be baked as the topping of an assembled pie', () => {
+  const plan = semanticPlan({
+    days: [{
+      day: 'Monday',
+      meals: [{
+        type: 'Dinner',
+        name: "Mushroom and Lentil Shepherd's Pie",
+        preparation: { potato: 'mashed' },
+        ingredients: ['200g cooked lentils', '250g sweet potato mash'],
+        calculationIngredients: ['200g cooked lentils', '250g sweet potato mash'],
+        cookingIngredients: ['200g cooked lentils', '250g sweet potato mash'],
+        recipe: [
+          'Spread the sweet potato mash over the cooked filling.',
+          'Bake the pie for 20 minutes until the topping is golden.',
+        ],
+      }],
+    }],
+  });
+  const review = assessPlanLocally(plan, NOW);
+  assert.equal(review.findings.some(item => item.patternKey === 'potato-state-contradiction'), false);
 });
 
 test('repeated patterns are aggregated as potential systemic issues with first-detected history', () => {

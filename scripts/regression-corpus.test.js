@@ -449,6 +449,41 @@ test('[corpus] a smoothie bowl keeps its crunchy toppings out of the blender and
 // scripts/audit-recipe-invariants.js: both still carry real false
 // positives, and flavour gaps need ingredient additions, which is a
 // product decision, not a method fix.)
+test('[corpus] the raw-protein check reacts to the case that shipped (control)', () => {
+  // "Chicken and Wholemeal Pasta with Pesto" cooked its pasta and then said
+  // "prepare chicken breast… and warm everything gently in a pan". The check
+  // passed it, because a cooking verb appeared somewhere in the method — the
+  // pasta's. A detector that cannot tell those apart is not protecting anyone.
+  assert.deepEqual(
+    checkRawProteinWithoutCooking(
+      'Chicken and Wholemeal Pasta with Pesto',
+      ['Chicken breast 200g', 'Wholemeal pasta 90g dry', 'Parmesan 10g'],
+      'Cook the pasta according to its packet instructions, then drain if needed.'
+      + ' Meanwhile, prepare chicken breast, green pesto and parmesan and warm everything gently in a pan.',
+    ),
+    ['chicken'],
+  );
+  // …while a protein cooked inside a preparation it becomes is not a defect:
+  // the egg in a pancake batter is cooked as a pancake.
+  assert.deepEqual(
+    checkRawProteinWithoutCooking(
+      'Wholemeal Pancakes',
+      ['Eggs 2', 'Wholemeal flour 60g'],
+      'Whisk wholemeal flour and eggs into a smooth batter.'
+      + ' Lightly grease a non-stick pan, then cook small pancakes for 1-2 minutes per side.',
+    ),
+    [],
+  );
+  // And a method that cooks nothing at all still has to answer for raw meat.
+  assert.deepEqual(
+    checkRawProteinWithoutCooking(
+      'Chicken Salad', ['Chicken breast 200g', 'Lettuce 40g'],
+      'Slice the lettuce. Arrange everything in a bowl.',
+    ),
+    ['chicken'],
+  );
+});
+
 test('[corpus][invariant] no raw protein anywhere in the library lacks a cooking step', () => {
   const offenders = [];
   for (const meal of MEALS) {

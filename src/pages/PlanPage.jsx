@@ -21,7 +21,7 @@ import StorageSafetyNote from '../components/StorageSafetyNote.jsx';
 import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, LIBRARY_VALIDATED_ON, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
@@ -1531,7 +1531,7 @@ function getBudgetAssumption(budget) {
   if (budget === 'very-cheap') return 'Very cheap plans repeat staples and avoid niche products.';
   if (budget === 'budget') return 'Budget plans keep variety while still prioritising own-brand and batch-friendly ingredients.';
   if (budget === 'moderate') return 'Moderate plans allow more convenience items and variety without becoming premium-only.';
-  return 'Flexible-budget plans can use more varied proteins, higher-calorie extras and convenience foods.';
+  return 'High-budget plans can use more varied proteins, higher-calorie extras and convenience foods.';
 }
 
 function getEffortAssumption(effort) {

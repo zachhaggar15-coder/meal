@@ -3,7 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { generateBlogCardImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 
 const CATEGORY_ORDER = [

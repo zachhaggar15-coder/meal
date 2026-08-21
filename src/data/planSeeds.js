@@ -815,7 +815,7 @@ const COVERAGE_BUDGET_TITLE = {
   'very-cheap': 'Very Cheap',
   budget: 'Budget',
   moderate: 'Moderate Budget',
-  flexible: 'Flexible Budget',
+  flexible: 'High Budget',
 };
 
 function buildDeepExpansionSeeds(targetCount) {

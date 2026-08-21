@@ -5,7 +5,7 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
-import { PLAN_COUNT } from '../data/planSeeds.js';
+import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { track } from '../utils/analytics.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
 import {
@@ -79,7 +79,7 @@ const BUDGET_OPTIONS = [
   ['budget', 'Budget'],
   ['moderate', 'Moderate'],
   ['flexible', 'Higher budget'],
-  ['no-preference', 'No preference'],
+  ['no-preference', 'Flexible / no budget preference'],
 ];
 const EFFORT_OPTIONS = Object.entries(EFFORT_LABELS);
 
@@ -123,11 +123,8 @@ export default function QuizResults() {
     track.quizResultViewed({
       result_slug: best.slug,
       plan_slug: best.slug,
-      supermarket: best.supermarket,
-      goal: best.goal,
-      calorie_target: best.calories,
-      protein_target: best.macrosGrams?.protein,
       page_type: 'quiz_results',
+      calorie_match_band: best.calorieMatch?.band || 'unknown',
     });
   }, [best]);
 

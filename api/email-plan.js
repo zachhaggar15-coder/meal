@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     : 1;
 
   const plan = scalePlanForHousehold(basePlan, householdMembers);
-  const source = cleanMeta(body.source || req.headers.referer || '', 500);
+  const source = sanitisePlanEmailSource(body.source);
   const subject = `Your ${plan.title} meal plan`;
   const planUrl = basePlan.seo?.canonical || `${SITE_URL}/plans/${basePlan.slug}`;
   const text = buildPlanEmailText({ plan, planUrl, source });
@@ -92,6 +92,13 @@ export default async function handler(req, res) {
       error: 'Could not send the email right now. Please try again in a minute.',
     });
   }
+}
+
+export function sanitisePlanEmailSource(value) {
+  return cleanMeta(value, 80)
+    .split(/[?#]/, 1)[0]
+    .replace(/[^a-z0-9/_-]/gi, '')
+    .slice(0, 80);
 }
 
 export function resolveEmailPlan(slug) {

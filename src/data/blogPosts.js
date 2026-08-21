@@ -1245,7 +1245,7 @@ export const blogPostsData = {
 
   'how-many-calories-to-lose-weight': {
     published: '2026-05-28',
-    title: 'How Many Calories to Lose Weight UK? (2025 Guide)',
+    title: 'How Many Calories to Lose Weight UK? (2026 Guide)',
     description: 'How many calories do you need to lose weight in the UK? Calculate your TDEE, choose a safe deficit, and see expected weekly fat loss. Generate a free UK meal plan.',
     h1: 'How Many Calories Do You Need to Lose Weight?',
     intro: 'Weight loss comes down to a calorie target more than anything else on the plate. But knowing your target requires understanding three concepts: your Basal Metabolic Rate (BMR), your Total Daily Energy Expenditure (TDEE), and your ideal calorie deficit. This guide explains exactly how to calculate all three, how to choose a safe deficit range, and how to convert that into a realistic weight loss timeline — with worked examples for UK adults across different body sizes and activity levels.',
@@ -1772,7 +1772,7 @@ export const blogPostsData = {
           'These nutrients are the most important to focus on during and after menopause:',
         ],
         bullets: [
-          'Calcium (700–1,200 mg/day): essential for bone density protection. Best UK sources: low-fat Greek yogurt (120 mg per 100 g), skimmed milk (120 mg per 100 ml), tinned sardines with bones (350 mg per 100 g), kale (150 mg per 100 g cooked), and fortified plant milks.',
+          'Calcium (700 mg/day for adults): the NHS does not set a separate higher target for postmenopausal women. If a clinician has advised a different intake for your bone health, follow that individual advice. Useful food sources include milk, yogurt, tinned sardines with bones, kale, and calcium-fortified alternatives.',
           'Vitamin D (10 mcg/day minimum, 25 mcg recommended): works with calcium for bone health and immune function. UK sunlight is insufficient October–April, so supplementation is recommended by NHS. Also found in oily fish, eggs, and fortified foods.',
           'Protein (1.2–1.6 g/kg body weight/day): essential to counteract muscle loss. Higher than general adult recommendations. Distribute across meals (30+ g per meal) to maximise muscle protein synthesis.',
           'Omega-3 fatty acids (EPA/DHA): reduce cardiovascular risk and may reduce hot flush frequency. From oily fish (salmon, mackerel, sardines) 2–3 times per week.',

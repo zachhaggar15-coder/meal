@@ -9329,6 +9329,23 @@ textarea {
   font-weight: 800;
 }
 
+.price-freshness-note {
+  margin: -10px 0 24px;
+  padding: 12px 14px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 10px;
+  background: var(--editorial-soft);
+  color: var(--editorial-muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.price-freshness-note strong,
+.price-freshness-note a {
+  color: var(--editorial-ink);
+  font-weight: 800;
+}
+
 .nav-quiz-btn,
 .btn-secondary,
 .btn-hero-secondary,
@@ -14189,6 +14206,27 @@ textarea {
   background: #f8fafc;
 }
 
+.accessory-recommendation-image {
+  align-items: center;
+  aspect-ratio: 4 / 3;
+  background: #f2efe7;
+  border: 1px solid #dbe4ef;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.accessory-recommendation-image img {
+  background: #fff;
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+  width: 100%;
+}
+
 .accessory-recommendation-topline {
   display: flex;
   flex-wrap: wrap;
@@ -14330,6 +14368,34 @@ textarea {
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   background: #f8fafc;
+}
+
+.accessory-catalogue-card-main {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.accessory-catalogue-thumb {
+  align-items: center;
+  background: #f2efe7;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  display: flex;
+  flex: 0 0 auto;
+  height: 48px;
+  justify-content: center;
+  overflow: hidden;
+  width: 48px;
+}
+
+.accessory-catalogue-thumb img {
+  background: #fff;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+  width: 100%;
 }
 
 .accessory-catalogue-card span {

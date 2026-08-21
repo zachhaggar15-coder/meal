@@ -82,13 +82,7 @@ export function buildContainerSetup({
   const hasReheatMeals = hasSaucyMeals || days.some(day => (day.meals || []).some(isReheatFriendlyMeal));
   const inferredBudget = budget || inferBudget(plan, formValues);
   const recommendation = getContainerRecommendation({
-    // Deliberately the pre-existing whole-week figure, NOT the corrected
-    // simultaneous-storage count above. The commercial tier thresholds
-    // (count >= 16 -> premium, etc.) were calibrated against this number
-    // and feed a container experiment currently in its measurement
-    // period; re-scaling the user-facing count must not silently move
-    // every plan into a different product tier mid-experiment.
-    containerCount: Math.max(3, Math.ceil(baseMealCount * portionMultiplier) + Number(spareContainers || 0)),
+    containerCount,
     budget: inferredBudget,
     useCase: useCase || (hasReheatMeals ? 'microwave' : 'work'),
     material: material || (hasReheatMeals ? 'glass' : 'either'),
@@ -105,7 +99,29 @@ export function buildContainerSetup({
     recommendation,
     hasSaucyMeals,
     hasReheatMeals,
-    copy: CONTAINER_TIER_COPY[recommendation],
+    copy: buildContainerCopy(recommendation, containerCount),
+  };
+}
+
+function buildContainerCopy(recommendation, containerCount) {
+  const base = CONTAINER_TIER_COPY[recommendation] || CONTAINER_TIER_COPY['mid-range'];
+  if (recommendation === 'premium') {
+    const sets = Math.ceil(containerCount / 10);
+    return {
+      ...base,
+      setup: `Use ${sets === 1 ? 'one' : sets} 10-container ${sets === 1 ? 'set' : 'sets'} to provide at least ${containerCount} main meal spaces, then add the separate small tubs shown above.`,
+    };
+  }
+  if (recommendation === 'mid-range') {
+    const sets = Math.ceil(containerCount / 5);
+    return {
+      ...base,
+      setup: `Use ${sets === 1 ? 'one' : sets} five-container glass ${sets === 1 ? 'pack' : 'packs'} to provide at least ${containerCount} main meal spaces, then add the separate small tubs shown above.`,
+    };
+  }
+  return {
+    ...base,
+    setup: `Choose a reusable multipack containing at least ${containerCount} main containers, then add the separate small tubs shown above.`,
   };
 }
 
@@ -142,7 +158,11 @@ function getPortionMultiplier(plan) {
 function inferBudget(plan, formValues) {
   const budget = String(plan?.budget || formValues?.budget || '').toLowerCase();
   if (budget.includes('cheap') || budget.includes('budget')) return 'low';
-  if (budget.includes('premium') || budget.includes('flexible')) return 'premium';
+  // A food budget does not determine what storage material someone needs.
+  // `flexible` is the legacy id for high-budget plans, while the quiz's
+  // no-preference answer must be entirely neutral. Only an explicit premium
+  // container preference reaches this branch.
+  if (budget.includes('premium')) return 'premium';
   return 'mid';
 }
 
@@ -151,7 +171,7 @@ function inferBudget(plan, formValues) {
 // once than on a plan cooked fresh every couple of days.
 function isBatchStylePlan(plan, days) {
   const effort = String(plan?.effort || '').toLowerCase();
-  if (effort === 'batch') return true;
+  if (effort) return effort === 'batch';
   if (plan?.prepPlan) return true;
   // Repeated main meals across the week are the practical signature of
   // batch cooking even when the plan is not labelled that way.
