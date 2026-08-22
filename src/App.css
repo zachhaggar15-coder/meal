@@ -13967,17 +13967,55 @@ textarea {
   list-style: none;
 }
 
+/* Three meanings, three colours, used the same way everywhere they appear:
+   a dimension the plan matches, one it nearly matches, one it does not.
+   The colours already existed but only reached a 21px badge, so every row of
+   the breakdown had the same pale background and the list read as uniform —
+   an exact match and a trade-off looked alike until you inspected the glyph.
+   The row now carries its own meaning, led by a colour bar down its edge, so
+   the shape of the compromise is legible without reading a word of it. */
+.result-match-breakdown {
+  --match-exact-edge: #256744;
+  --match-exact-wash: #eef5f0;
+  --match-exact-badge: #dfece3;
+  /* The border only has to clear 3:1 as a non-text element, so it can stay
+     saturated; the glyph sits on the badge and has to clear 4.5:1, so it is a
+     darker ink. Same hue, two jobs. */
+  --match-close-edge: #a9741a;
+  --match-close-ink: #755312;
+  --match-close-wash: #fdf6e6;
+  --match-close-badge: #fff0c7;
+  --match-tradeoff-edge: #9a382f;
+  --match-tradeoff-wash: #fdefed;
+  --match-tradeoff-badge: #fde2df;
+}
+
 .result-match-breakdown li {
   display: grid;
   grid-template-columns: 24px 96px minmax(0, 1fr);
   align-items: start;
   gap: 7px;
-  padding: 8px 10px;
+  padding: 8px 10px 8px 12px;
   border-radius: 9px;
-  background: #f6f8f7;
+  border-left: 4px solid var(--match-exact-edge);
+  background: var(--match-exact-wash);
   color: #46534b;
   font-size: 0.84rem;
   line-height: 1.45;
+}
+
+/* Qualified with `li` deliberately: the base row rule above is
+   `.result-match-breakdown li`, a class plus an element, which outranks a bare
+   class. Without matching that specificity these two never applied and every
+   row stayed green. */
+.result-match-breakdown li.result-match-breakdown__close {
+  border-left-color: var(--match-close-edge);
+  background: var(--match-close-wash);
+}
+
+.result-match-breakdown li.result-match-breakdown__tradeoff {
+  border-left-color: var(--match-tradeoff-edge);
+  background: var(--match-tradeoff-wash);
 }
 
 .result-match-breakdown strong {
@@ -13990,19 +14028,19 @@ textarea {
   width: 21px;
   height: 21px;
   border-radius: 50%;
-  background: #dfece3;
-  color: #256744;
+  background: var(--match-exact-badge);
+  color: var(--match-exact-edge);
   font-weight: 900;
 }
 
 .result-match-breakdown__close .result-match-symbol {
-  background: #fff0c7;
-  color: #755312;
+  background: var(--match-close-badge);
+  color: var(--match-close-ink);
 }
 
 .result-match-breakdown__tradeoff .result-match-symbol {
-  background: #fde2df;
-  color: #9a382f;
+  background: var(--match-tradeoff-badge);
+  color: var(--match-tradeoff-edge);
 }
 
 .result-match-details {
