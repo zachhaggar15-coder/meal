@@ -45,6 +45,11 @@ const FLAVOURING_PATTERN = /\b(paste|powder|stock|tomato|coconut milk|sauce|pass
 
 const BREAD_CARRIER_PATTERN = /(bread|toast|bagel|wrap|tortilla|pitta|roll)/i;
 
+// Produce that is served raw in every dish this library builds. Deliberately
+// short: spinach and tomatoes are genuinely cooked elsewhere, so they are not
+// here. Avocado, salad leaves and cucumber never are.
+const RAW_ONLY_VEGETABLE = /\b(avocado|mixed leaves|lettuce|rocket|watercress|cucumber)\b/i;
+
 const PLACEHOLDER_PATTERNS = [
   /\bcook (?:the )?pasta,?\s*rice or noodles\b/i,
   /\badd (?:your )?chosen protein\b/i,
@@ -123,6 +128,17 @@ function buildComponentSteps(meal = {}) {
     /(dressing|sauce|pesto|paste|glaze|hummus|tahini|yogurt|cream cheese|crème fraîche|creme fraiche|cheddar|parmesan|\bcheese\b|\bmilk\b|salsa|oil|mayo|mayonnaise|tamari|soy sauce)/i,
   );
   const tinIngredients = findCookingNames(cookingIngredients, /\b(tinned|canned)\b/i);
+  // The cooking display drops the word "tinned" on purpose — "¾ of a standard
+  // tin of tomatoes" does not need to say it twice. Every check that followed
+  // then asked the DISPLAY name whether it was tinned, got "no", and sent a
+  // tin of tomatoes to "peel and chop into even pieces" and on to soften in
+  // the pan like a fresh one. Ask the canonical line instead, once, here.
+  const tinnedDisplayNames = new Set(
+    cookingIngredients
+      .filter(model => /\b(tinned|canned)\b/i.test(`${model.ingredient || ''} ${model.canonical || ''}`))
+      .map(model => proseIngredientName(model.displayIngredient || model.ingredient)),
+  );
+  const isTinnedName = name => tinnedDisplayNames.has(name);
   // Cooking spray/oil used only to grease a pan is a cooking aid, not
   // something served or plated — it should never turn up in a "serve with…"
   // sentence. Drop it before any branch below builds those sentences.
@@ -434,10 +450,24 @@ function buildComponentSteps(meal = {}) {
       ...vegetables,
       ...carrier,
     ]);
+    // Not everything in a dish with eggs goes in the pan. This step softened
+    // whatever the vegetable pattern matched, so avocado on toast was sliced
+    // and fried, and a cold Buddha bowl fried its avocado, mixed leaves and
+    // cherry tomatoes together. These are prepared and served, not cooked.
+    const panVegetables = vegetables.filter(item => !RAW_ONLY_VEGETABLE.test(item));
+    const rawVegetables = vegetables.filter(item => RAW_ONLY_VEGETABLE.test(item));
+    const prepareRaw = rawVegetables.length
+      ? ` Slice ${joinNatural(rawVegetables)} and set aside.`
+      : '';
     return [
-      vegetables.length
-        ? `Slice or chop ${joinNatural(vegetables)}, then cook them in a non-stick pan over medium heat until softened.`
-        : 'Crack the eggs into a bowl, season lightly and whisk with a fork.',
+      panVegetables.length
+        ? `Slice or chop ${joinNatural(panVegetables)}, then cook them in a non-stick pan over medium heat until softened.${prepareRaw}`
+        // No mention of the eggs here: the step below always deals with them,
+        // and naming them twice had the reader whisking one bowl of eggs and
+        // then beating another.
+        : rawVegetables.length
+          ? `Slice ${joinNatural(rawVegetables)} and set aside.`
+          : 'Crack the eggs into a bowl, season lightly and whisk with a fork.',
       // An omelette or frittata is beaten egg set in a pan. When the recipe has
       // vegetables the step above cooks those instead of whisking, so a dish
       // named as an omelette never told the reader to beat the eggs at all.
@@ -641,7 +671,7 @@ function buildComponentSteps(meal = {}) {
     const firmVegetables = withoutNames(
       vegetables.filter(item => (
         !/(spinach|leaves|peas|watercress|rocket)/i.test(item)
-        && !/\b(tinned|canned)\b/i.test(item)
+        && !isTinnedName(item)
         && !READY_TO_USE_VEGETABLE.test(item)
       )),
       aromatics,
@@ -782,7 +812,12 @@ function buildComponentSteps(meal = {}) {
   // Both spellings of the protein: the method calls it "tofu", the ingredient
   // list calls it "firm tofu", and matching only one left it cooked in step
   // two and added again in step three.
-  const alreadyNamed = [...vegetables, proteinName, proteinDisplayName].filter(Boolean);
+  // Same tin problem as the curry branch: the display name has already lost
+  // the word "tinned", so a casserole opened by chopping a tin of tomatoes.
+  // Anything held back from the knife must still be named by the finish step
+  // below — drop it from both and the ingredient vanishes from the method.
+  const choppable = vegetables.filter(item => !isTinnedName(item) && !RAW_ONLY_VEGETABLE.test(item));
+  const alreadyNamed = [...choppable, proteinName, proteinDisplayName].filter(Boolean);
   const leftovers = withoutNames(remainingNames, [...alreadyNamed, ...sauces]);
   // A dry pulse cannot be "warmed through". Dry red lentils in a casserole
   // were being given the same one-line finish as a pinch of paprika, which
@@ -801,8 +836,8 @@ function buildComponentSteps(meal = {}) {
           : 'Season to taste and serve.';
 
   return [
-    vegetables.length
-      ? `Slice or chop ${joinNatural(vegetables)} and have everything else to hand.`
+    choppable.length
+      ? `Slice or chop ${joinNatural(choppable)} and have everything else to hand.`
       : `Have ${joinNatural(remainingNames)} to hand.`,
     protein && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein
       ? `Cook the ${proteinName} in a non-stick pan over medium heat until cooked through.`

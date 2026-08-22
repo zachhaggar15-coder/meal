@@ -741,3 +741,86 @@ test('the method protein resolver reads a source, not a cut (control)', () => {
   // …and a real protein is still found beside a phrase that is not one.
   assert.equal(findProtein('Baked Cod with New Potatoes and Green Beans'), 'cod');
 });
+
+test('a tinned ingredient is never peeled, chopped or softened like a fresh one', () => {
+  // The cooking display drops the word "tinned" — "¾ of a standard tin of
+  // tomatoes" says it once already — and the knife-work filters then asked the
+  // display name whether it was tinned. It always said no, so a chilli opened
+  // with "Peel and chop onion, tomatoes and red pepper into even pieces" and
+  // went on to soften the tin's contents in the pan for 5-7 minutes.
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    const tinned = (meal.ingredients || [])
+      .filter(line => /\b(tinned|canned)\b/i.test(String(line)))
+      .map(line => String(line).replace(/\b(tinned|canned)\b/gi, '').replace(/[\d.].*$/, '').trim().toLowerCase())
+      .filter(Boolean);
+    if (!tinned.length) continue;
+    for (const step of buildPracticalRecipeSteps(meal)) {
+      // Only the sentence doing the cutting counts. "Peel and chop onion into
+      // even pieces. Drain and rinse the beans." is two sentences and the
+      // second one is correct — scanning the whole step called it a defect.
+      for (const sentence of step.split(/(?<=\.)\s+/)) {
+        if (!/\b(peel and chop|slice or chop|soften)\b/i.test(sentence)) continue;
+        for (const food of tinned) {
+          if (sentence.toLowerCase().includes(food)) offenders.push(`${name}: ${sentence}`);
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('produce that is only ever eaten raw is never cooked', () => {
+  // "Slice or chop avocado, then cook them in a non-stick pan until softened",
+  // and a cold Buddha bowl frying its avocado, mixed leaves and cherry
+  // tomatoes together. The vegetable pattern matched them, so the pan claimed
+  // them. The list is deliberately short — spinach and tomatoes really are
+  // cooked in other dishes.
+  const RAW_ONLY = /\b(avocado|mixed leaves|lettuce|rocket|watercress|cucumber)\b/i;
+  // Matched against the shape the generator actually writes — the list of
+  // things being prepared, immediately followed by the instruction to cook
+  // them — rather than against any co-occurrence of a salad word and the word
+  // "cook". "…make the raita, then chill while you cook" contains both and is
+  // perfectly correct: the cooking there belongs to the chicken.
+  const PREPARE_THEN_COOK = /(?:slice or chop|peel and chop|slice)\s+([^.]*?),\s*then\s+(?:cook|fry|soften|saut[eé])/gi;
+  const offenders = [];
+  for (const { name, meal } of allRecipes()) {
+    for (const step of buildPracticalRecipeSteps(meal)) {
+      for (const match of step.matchAll(PREPARE_THEN_COOK)) {
+        if (RAW_ONLY.test(match[1])) offenders.push(`${name}: ${match[0]}`);
+      }
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 5), []);
+});
+
+test('the raw-produce and tinned detectors both still fire (control)', () => {
+  // A detector that quietly stops matching is worse than no detector, so both
+  // are run against the exact strings that shipped, and against the correct
+  // wording they were confused by.
+  const RAW_ONLY = /\b(avocado|mixed leaves|lettuce|rocket|watercress|cucumber)\b/i;
+  const PREPARE_THEN_COOK = /(?:slice or chop|peel and chop|slice)\s+([^.]*?),\s*then\s+(?:cook|fry|soften|saut[eé])/i;
+
+  const shipped = 'Slice or chop avocado, mixed leaves and cherry tomatoes, then cook them in a non-stick pan over medium heat until softened.';
+  const caught = shipped.match(PREPARE_THEN_COOK);
+  assert.ok(caught && RAW_ONLY.test(caught[1]), 'the raw-produce detector must still catch the frying of a salad');
+
+  // …and must not fire on the sentence that made an earlier version cry wolf.
+  const raita = 'Stir low-fat yogurt, cucumber and mint together to make the raita, then chill while you cook.';
+  const falsePositive = raita.match(PREPARE_THEN_COOK);
+  assert.ok(!falsePositive, 'cooking that belongs to another ingredient is not a defect');
+
+  const fried = buildPracticalRecipeSteps({
+    name: 'Avocado and Eggs on Toast',
+    ingredients: ['Avocado half', 'Eggs 2', 'Wholemeal bread 2 slices'],
+  }).join(' ');
+  assert.doesNotMatch(fried, /avocado[^.]{0,40}(cook|fry|soften)/i);
+
+  const chilli = buildPracticalRecipeSteps({
+    name: 'Three-Bean Vegetable Chilli',
+    ingredients: ['Mixed beans tinned 400g', 'Tinned tomatoes 400g', 'Onion 1', 'Red pepper 1'],
+  });
+  const knifeStep = chilli.find(step => /peel and chop|slice or chop/i.test(step)) || '';
+  assert.doesNotMatch(knifeStep, /tomato/i, 'a tin of tomatoes must not be chopped');
+  assert.match(chilli.join(' '), /tomato/i, '…but the tomatoes must still reach the pot');
+});
