@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-14T23:23:30.888Z",
+  "updatedAt": "2026-08-21T10:19:43.487Z",
   "entries": {
     "qa_65f08241a9324caa": {
       "id": "qa_65f08241a9324caa",
@@ -91,9 +91,9 @@
       "lastRecheckAt": "",
       "lastRecheckResult": "",
       "resolvedAt": "",
-      "status": "New",
-      "humanAssessment": "Uncertain",
-      "humanNote": "STRUCTURAL FLAVOUR COMPLETENESS - PRODUCT/DATA DECISION, NOT A METHOD BUG. The non-blocking audit (scripts/audit-recipe-invariants.js) flags 202 occurrences across 26 distinct recipe patterns where a savoury cooked dish carries no recognised flavour component at all (no aromatic, herb, spice, stock, sauce, acid or seasoning ingredient). Clear examples: 'Baked Salmon with Broccoli & New Potatoes' (salmon + broccoli + potatoes, nothing else); 'Roast Chicken Breast with Root Veg' (chicken + parsnips + carrots); 'Grilled Chicken with Roasted Mediterranean Veg' (chicken + rice + mixed veg). These are nutritionally valid and now cookable, but read as under-specified food rather than a recipe a person would write. Resolving this requires ADDING material ingredients to the meal data, which changes canonical nutrition - explicitly a product decision outside the method-generation scope, so no change was made. Recommend deciding whether to (a) add negligible-calorie seasoning ingredients that are excluded from nutrition, (b) add real ingredients and accept the nutrition delta, or (c) accept these as intentionally minimal. Full list: node scripts/audit-recipe-invariants.js",
+      "status": "Fixed",
+      "humanAssessment": "True issue",
+      "humanNote": "Approved flavour coverage has been implemented and the full recipe invariant now passes.",
       "potentiallySystemic": true
     }
   }

@@ -24,6 +24,7 @@ import {
 
 const ANALYTICS_WINDOW_DAYS = 30;
 const MIN_ROUTE_VITAL_SESSIONS = 5;
+export const PERFORMANCE_BASELINE_TIMESTAMP = '2026-08-22T06:02:32.193Z';
 
 const WAITLIST_SELECT = [
   'email',
@@ -144,12 +145,19 @@ async function readWaitlistRows(supabaseUrl, headers) {
 async function loadAnalyticsStats(supabaseUrl, headers) {
   try {
     const since = new Date(Date.now() - ANALYTICS_WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString();
+    const vitalSince = Date.parse(PERFORMANCE_BASELINE_TIMESTAMP) > Date.parse(since)
+      ? PERFORMANCE_BASELINE_TIMESTAMP
+      : since;
     const [events, sessions, vitalEvents] = await Promise.all([
       readAnalyticsEvents(supabaseUrl, headers, 5000, '', since),
       readAnalyticsSessions(supabaseUrl, headers, 1000, since),
-      readAnalyticsEvents(supabaseUrl, headers, 10000, 'web_vital', since),
+      readAnalyticsEvents(supabaseUrl, headers, 10000, 'web_vital', vitalSince),
     ]);
-    return buildAnalyticsStats(events, sessions, vitalEvents, { since, windowDays: ANALYTICS_WINDOW_DAYS });
+    return buildAnalyticsStats(events, sessions, vitalEvents, {
+      since,
+      windowDays: ANALYTICS_WINDOW_DAYS,
+      performanceBaseline: vitalSince,
+    });
   } catch (err) {
     console.error('Analytics stats unavailable:', err.message || err);
     return {
@@ -317,7 +325,7 @@ export function buildAnalyticsStats(events, sessions, vitalEvents = [], options 
       })),
     contentSeen: topContentSections(sectionEvents).slice(0, 20),
     scrollDepthByPage: scrollDepthByPage(cleanEvents).slice(0, 15),
-    coreWebVitals: buildCoreWebVitals(vitalEvents),
+    coreWebVitals: buildCoreWebVitals(vitalEvents, options.performanceBaseline),
     sessionJourneys: journeys.slice(0, 25),
     explorationLeaders: journeys
       .filter(journey => journey.explorationScore > 0)
@@ -500,7 +508,7 @@ function metricRow(value, clicks, impressions) {
   };
 }
 
-function buildCoreWebVitals(events) {
+function buildCoreWebVitals(events, performanceBaseline = '') {
   const valuesByMetric = new Map();
   const valuesByRoute = new Map();
 
@@ -535,6 +543,7 @@ function buildCoreWebVitals(events) {
   for (const entry of valuesByRoute.values()) {
     const row = routeMap.get(entry.route) || { route: entry.route, samples: 0, sessions: new Set() };
     row[entry.name.toLowerCase()] = percentile(entry.values, 0.75);
+    row[`${entry.name.toLowerCase()}Sessions`] = entry.sessions.size;
     row.samples += entry.values.length;
     for (const session of entry.sessions) row.sessions.add(session);
     routeMap.set(entry.route, row);
@@ -543,10 +552,14 @@ function buildCoreWebVitals(events) {
   const routes = [...routeMap.values()]
     .map(row => {
       const sessions = row.sessions.size;
+      const values = { ...row };
+      delete values.sessions;
       return {
-        ...row,
+        ...values,
         sessions,
-        dataStatus: sessions >= MIN_ROUTE_VITAL_SESSIONS ? 'measured' : 'insufficient_data',
+        lcpStatus: (row.lcpSessions || 0) >= MIN_ROUTE_VITAL_SESSIONS ? 'measured' : 'insufficient_data',
+        inpStatus: (row.inpSessions || 0) >= MIN_ROUTE_VITAL_SESSIONS ? 'measured' : 'insufficient_data',
+        clsStatus: (row.clsSessions || 0) >= MIN_ROUTE_VITAL_SESSIONS ? 'measured' : 'insufficient_data',
       };
     })
     .sort((left, right) => (right.inp || 0) - (left.inp || 0) || right.samples - left.samples)
@@ -558,7 +571,7 @@ function buildCoreWebVitals(events) {
     summary,
     routes,
     note: events.length
-      ? `p75 values from consented visits in the reporting window. Route ratings require at least ${MIN_ROUTE_VITAL_SESSIONS} sessions.`
+      ? `p75 values from consented visits${performanceBaseline ? ` since ${performanceBaseline.slice(0, 10)}` : ' in the reporting window'}. Each route metric requires at least ${MIN_ROUTE_VITAL_SESSIONS} sessions for that metric.`
       : 'Collection is active. Values appear after consented production visits.',
   };
 }

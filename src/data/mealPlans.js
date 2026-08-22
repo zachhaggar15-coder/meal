@@ -1093,7 +1093,7 @@ export const mealPlansData = {
     planLabel: 'Tesco High Protein',
     targetCalories: 1550,
     intro: 'Tesco is one of the best UK supermarkets for high-protein eating — the own-brand range includes chicken breast, tinned tuna, 0% fat Greek yogurt, low-fat cottage cheese, and protein yogurt pots, all at very competitive prices with frequent Clubcard discounts. This 7-day plan delivers 140–170 g of protein per day at around 1,500–1,600 calories, using only ingredients available at Tesco. Estimated weekly cost is £40–50, or closer to £35–45 with Clubcard Prices.',
-    whyThisPlan: 'Tesco\'s range makes it particularly easy to hit high protein targets. The High Protein Yogurt range (Arla, Tesco own) offers 15–20 g of protein per pot; the lean chicken breast is regularly on Clubcard Price; and the 0% fat Greek yogurt is a go-to high-protein, low-calorie staple. Spreading 140–170 g of protein across four meals or eating occasions is the most effective approach for muscle preservation during fat loss.',
+    whyThisPlan: 'Tesco\'s range makes it particularly easy to hit high protein targets. The High Protein Yogurt range (Arla, Tesco own) offers 15–20 g of protein per pot; the lean chicken breast is often available on Clubcard Price; and 0% fat Greek yogurt is a practical high-protein, low-calorie staple. Spreading protein across several meals or eating occasions can support muscle preservation during fat loss.',
     tips: [
       'Tesco High Protein Yogurt pots provide 15–20 g of protein for around 130 kcal each — ideal as a mid-morning or post-workout snack.',
       'Stock up on Tesco Tinned Tuna in Spring Water when it is on Clubcard Price. Tuna is one of the highest-protein, lowest-calorie, and cheapest foods at Tesco.',

@@ -12,6 +12,8 @@ import { getCookingIngredientDisplay } from './cookingQuantities.js';
 import { buildPracticalRecipeSteps } from './recipeQuality.js';
 import { NUTRITION_TABLE } from '../data/nutritionTable.js';
 import { sharedPrimaryProteins, primaryProteinSignature } from './ingredientRoles.js';
+import { PLAN_MACRO_INDEX } from '../data/planMacroIndex.js';
+import { DIET_EXCLUDED_FOODS, conflictsWithDiet } from './dietCompatibility.js';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
@@ -210,30 +212,10 @@ const EMPHASIS_CONTEXT = {
 // dairy" and offer "add an extra tin of fish" as a suggestion. The meals were
 // vegan throughout; the sentence under the H1 contradicted them.
 //
-// Foods each diet rules out. Deliberately excludes plant analogues, which are
-// compatible: "soya milk", "oat milk", "vegan cheese", "plant-based mince".
-const PLANT_QUALIFIER = '(?<!\\bplant[- ])(?<!\\bplant-based )(?<!\\bvegan )(?<!\\bsoya )(?<!\\bsoy )(?<!\\bsoy-)(?<!\\boat )(?<!\\balmond )(?<!\\bcoconut )(?<!\\bmeat-free )(?<!\\bdairy-free )(?<!\\bno )(?<!\\bpeanut )(?<!\\bnut )(?<!\\bcashew )(?<!\\bquorn )(?<!\\btofu )(?<!\\bmeat-free )(?<!\\bmeatless )(?<!\\bveggie )(?<!\\bvegetarian )';
-// "meat-free", "dairy-free" and "fish-free" describe the absence of the food,
-// so the word appearing there is compatible copy, not a contradiction.
-const FREE_SUFFIX = '(?!\\s*-\\s*free)(?!-free)(?! free\\b)(?! alternative)(?! substitute)(?! analogue)';
-const MEAT = 'chicken|beef|pork|lamb|turkey|bacon|ham|mince|meat|steak|sausages?';
-const FISH = 'fish|salmon|tuna|cod|prawns?|mackerel|sardines?|anchov(?:y|ies)|seafood';
-const ANIMAL = 'eggs?|egg whites?|dairy|yogurt|yoghurt|quark|cottage cheese|cheese|halloumi|feta|whey|milk|butter|honey';
-
-const DIET_EXCLUDED_FOODS = {
-  vegan: new RegExp(`${PLANT_QUALIFIER}\\b(?:${MEAT}|${FISH}|${ANIMAL})\\b${FREE_SUFFIX}`, 'i'),
-  vegetarian: new RegExp(`${PLANT_QUALIFIER}\\b(?:${MEAT}|${FISH})\\b${FREE_SUFFIX}`, 'i'),
-  pescatarian: new RegExp(`${PLANT_QUALIFIER}\\b(?:${MEAT})\\b${FREE_SUFFIX}`, 'i'),
-  standard: null,
-};
-
-/** Does this sentence recommend something the diet rules out? */
-export function conflictsWithDiet(text, dietType) {
-  const excluded = DIET_EXCLUDED_FOODS[dietType];
-  if (!excluded || typeof text !== 'string') return null;
-  const match = excluded.exec(text);
-  return match ? match[0] : null;
-}
+// Diet-compatibility vocabulary lives in ./dietCompatibility.js so that the
+// nav can use it without pulling in the plan generator — see the note there.
+// Re-exported because callers have always imported it from planBuilder.
+export { conflictsWithDiet };
 
 // Diet-appropriate protein suggestions, used to top up a list after the
 // incompatible lines have been filtered out, so a vegan reader still gets three
@@ -2059,12 +2041,12 @@ export function getAllPlanMeta({ calculateMacros = false } = {}) {
     emphasis:      seed.emphasis,
     priceEstimate: BUDGET_ESTIMATES[seed.budget],
     macros:        MACRO_PROFILES[seed.emphasis] || MACRO_PROFILES['lean-protein'],
-    // Catalogue surfaces use the declared profile without constructing 1,059
-    // complete seven-day plans during page load. Detail pages and quiz results
-    // calculate the selected plans from their recipes through their own paths.
+    // Catalogue surfaces read generated recipe-derived averages, so search,
+    // hubs and cards agree with the detailed plan without rebuilding the full
+    // catalogue in a visitor's browser.
     macrosGrams:   calculateMacros
       ? getSeedMacroGrams(seed)
-      : (MACRO_GRAMS[seed.emphasis] || MACRO_GRAMS['lean-protein']),
+      : (PLAN_MACRO_INDEX[seed.slug] || getSeedMacroGrams(seed)),
   }));
 }
 

@@ -183,6 +183,7 @@ test('the numeric promise detector catches the defects it was built for (control
     [['These meals are all under 500 calories per serving:', 'Cod with sweet potato = ~450 kcal, 40 g protein.'], 'compliant example'],
     [['Aim for 130–150 g of protein per day.', 'Greek yogurt (200 g): ~115 kcal, 20 g protein.'], 'daily target'],
     [['These options each deliver 20–35 g of protein:', 'Chicken breast: 31 g protein per 100 g.'], 'per-100g figure'],
+    [['These prices compare cost per 25–30 g of protein.', 'Cooked lentils (200 g): 18 g protein.'], 'cost comparison'],
   ];
   for (const [blocks, label] of negatives) {
     assert.deepEqual(findNumericContradictions(blocks), [], `${label} must not be flagged`);

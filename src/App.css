@@ -4140,8 +4140,31 @@ input:focus, select:focus {
   align-items: center;
 }
 .faq-question::-webkit-details-marker { display: none; }
-.faq-question::after { content: '▾'; font-size: 0.75rem; color: #6b7280; margin-left: 8px; }
-details[open] .faq-question::after { content: '▴'; }
+/* The same chevron the recipe disclosure uses, for the same reasons: one shape
+   that turns, rather than two different glyphs swapped in and out. Disclosures
+   across the site should behave identically whatever they hide. */
+.faq-question::after {
+  border-bottom: 2px solid #6b7280;
+  border-right: 2px solid #6b7280;
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.4em;
+  /* Rotation is the only thing that changes between the two states, so the
+     chevron turns on the spot instead of drifting up and down as it turns. */
+  margin: 0 0.15em 0.15em 8px;
+  transform: rotate(45deg);
+  transition: transform 150ms ease;
+  width: 0.4em;
+}
+details[open] .faq-question::after { transform: rotate(-135deg); }
+.faq-question:focus-visible {
+  outline: 2px solid var(--editorial-ink, #111827);
+  outline-offset: -2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-question::after { transition: none; }
+}
 .faq-answer { padding: 12px 16px; font-size: 0.875rem; color: #374151; line-height: 1.6; margin: 0; border-top: 1px solid #e2e8f0; }
 
 /* Related plans */
@@ -9257,8 +9280,10 @@ textarea {
   display: inline-block;
   float: none;
   height: 0.4em;
-  margin-left: 4px;
-  transform: translateY(-0.15em) rotate(45deg);
+  /* Rotation is the only thing that changes between the two states, so the
+     chevron turns on the spot rather than drifting as it turns. */
+  margin: 0 0.15em 0.15em 4px;
+  transform: rotate(45deg);
   transition: transform 150ms ease;
   width: 0.4em;
 }
@@ -9268,7 +9293,7 @@ textarea {
      Same specificity, so only the properties this rule names actually win —
      without resetting content, that triangle rendered on top of the chevron. */
   content: "";
-  transform: translateY(0.1em) rotate(-135deg);
+  transform: rotate(-135deg);
 }
 
 @media (prefers-reduced-motion: reduce) {

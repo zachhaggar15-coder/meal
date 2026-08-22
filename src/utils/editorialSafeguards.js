@@ -68,7 +68,7 @@ export function getEditorialSources(record = {}, slug = '') {
 
 export function getPriceClaimMeta(record = {}, now = new Date()) {
   if (!hasSpecificPriceClaims(record)) return null;
-  const dateValue = record.priceChecked || record.reviewed || record.modified || record.published;
+  const dateValue = record.priceChecked;
   const iso = toIsoDate(dateValue);
   const ageDays = iso ? Math.floor((Number(now) - Date.parse(`${iso}T00:00:00Z`)) / 86400000) : null;
   return {

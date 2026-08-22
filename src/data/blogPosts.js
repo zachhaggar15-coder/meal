@@ -10,7 +10,7 @@ import { prepKitBlogPostsData } from './prepKitBlogPosts.js';
 // Static content for SEO blog posts.
 // Each entry keyed by URL slug.
 
-export const blogPostsData = {
+const rawBlogPostsData = {
   ...containerBlogPostsData,
   ...expandedBlogPostsData,
   ...blogPostsBatch4Data,
@@ -1101,7 +1101,7 @@ export const blogPostsData = {
     title: 'How Much Protein When Dieting UK? (With Examples)',
     description: 'How much protein do you need when dieting in the UK? Exact targets for men and women, why protein matters for fat loss, and the best UK supermarket sources to hit your goal. Generate a free plan.',
     h1: 'How Much Protein Do You Need When Dieting?',
-    intro: 'Protein intake is arguably the single most important dietary variable during a fat loss diet. Get it right and you preserve muscle, stay fuller for longer, and lose predominantly fat. Get it wrong and the weight you lose is a mix of fat and muscle — leaving you lighter but softer, with a slower metabolism. This guide explains exactly how much protein to eat when dieting, with practical UK food examples to hit your daily target.',
+    intro: 'Protein intake is an important dietary variable during a fat loss diet. Getting enough can help preserve muscle and support fullness while you lose weight. This guide explains how much protein to eat when dieting, with practical UK food examples to hit your daily target.',
     sections: [
       {
         h2: 'Why Protein Is So Important When Dieting',
@@ -1584,7 +1584,7 @@ export const blogPostsData = {
     title: 'High Protein Breakfast UK: 12 Ideas (30g+, Under 400 kcal)',
     description: '12 high-protein breakfast ideas for UK adults — 30g+ protein, under 400 kcal, using everyday Tesco, Aldi, and Asda ingredients. With prep times and calorie counts. Generate a free plan.',
     h1: 'High Protein Breakfast UK — 12 Quick Ideas with 30g+ Protein',
-    intro: 'A high-protein breakfast is one of the most powerful tools for controlling hunger, preserving muscle mass, and supporting weight loss throughout the day. Research consistently shows that eating 25–40 g of protein at breakfast reduces appetite for 4–6 hours, lowers daily calorie intake, and reduces evening snacking compared to low-protein alternatives. These 12 ideas use everyday UK supermarket ingredients and each provides at least 30 g of protein in under 400 calories.',
+    intro: 'A high-protein breakfast can support fullness and help preserve muscle while losing weight. Some studies associate a higher-protein breakfast with better appetite control than lower-protein alternatives, although individual responses vary. The comparison below gives 12 practical ideas using everyday UK supermarket ingredients.',
     sections: [
       {
         h2: 'Why Protein at Breakfast Matters',
@@ -1597,21 +1597,22 @@ export const blogPostsData = {
         h2: 'The 12 Best High-Protein UK Breakfasts',
         paragraphs: [
           'All options below are available using ingredients from Tesco, Aldi, Sainsbury\'s, or Asda. Calorie counts are approximate based on 2025 own-brand nutritional data.',
+          'Every breakfast in this table provides at least 30 g of protein and remains under 400 kcal.',
         ],
         table: {
           headers: ['Breakfast', 'Protein', 'Calories', 'Prep Time'],
           rows: [
             ['4 scrambled eggs on 2 slices wholemeal toast', '34 g', '380 kcal', '5 min'],
-            ['200 g 0% Greek yogurt + 30 g whey protein + mixed berries', '43 g', '320 kcal', '2 min'],
+            ['200 g 0% Greek yogurt + 30 g whey powder + mixed berries', '43 g', '320 kcal', '2 min'],
             ['3-egg omelette with 50 g reduced-fat feta and spinach', '32 g', '310 kcal', '8 min'],
-            ['200 g cottage cheese on 2 rice cakes + sliced cucumber', '28 g', '230 kcal', '3 min'],
+            ['250 g cottage cheese on 2 rice cakes + sliced cucumber', '34 g', '270 kcal', '3 min'],
             ['100 g smoked salmon + 2 poached eggs + 1 wholemeal toast', '38 g', '370 kcal', '8 min'],
-            ['Overnight oats: 60 g oats + 200 g 0% Greek yogurt + 20 g protein powder', '40 g', '390 kcal', '5 min (night before)'],
+            ['Overnight oats: 60 g oats + 200 g 0% Greek yogurt + 20 g whey powder', '40 g', '390 kcal', '5 min (night before)'],
             ['4 egg whites + 1 whole egg scrambled with 50 g turkey rashers', '34 g', '250 kcal', '8 min'],
-            ['200 g skyr + 30 g granola + 100 g strawberries', '26 g', '320 kcal', '3 min'],
+            ['250 g skyr + 30 g granola + 100 g strawberries', '31 g', '355 kcal', '3 min'],
             ['Chicken breast wrap: 100 g cold chicken + wholemeal wrap + spinach + mustard', '42 g', '380 kcal', '5 min'],
             ['Protein pancakes: 1 banana + 2 eggs + 1 scoop protein powder', '35 g', '350 kcal', '12 min'],
-            ['Full-fat 0% Greek yogurt bowl: 300 g yogurt + 100 g mixed berries + chia seeds', '31 g', '290 kcal', '3 min'],
+            ['0% Greek yogurt bowl: 300 g yogurt + 100 g mixed berries + chia seeds', '31 g', '290 kcal', '3 min'],
             ['2 slices wholemeal toast + 200 g low-fat cottage cheese + sliced tomato', '30 g', '340 kcal', '3 min'],
           ],
         },
@@ -1654,8 +1655,8 @@ export const blogPostsData = {
       {
         h2: 'High-Protein Breakfasts for Muscle Building',
         paragraphs: [
-          'For muscle building, a higher-calorie breakfast (350–500 kcal) with 40+ g of protein is appropriate. The key difference from weight loss is that you want more total calories, not fewer — so larger portions of oats, an extra egg, or a banana alongside your protein source are all recommended.',
-          'If you train in the morning, consuming 30–40 g of protein within two hours of your session maximises muscle protein synthesis. Overnight oats with added protein powder, a large egg-and-smoked-salmon breakfast, or a protein yogurt bowl are all good post-training options.',
+          'For muscle building, you can adapt the listed breakfasts with larger portions of oats, an extra egg, or a banana when your overall energy target calls for it.',
+          'If you train in the morning, a protein-containing breakfast after your session can support muscle protein synthesis. Overnight oats with added protein powder, a large egg-and-smoked-salmon breakfast, or a protein yogurt bowl are practical options.',
         ],
       },
     ],
@@ -2247,7 +2248,7 @@ export const blogPostsData = {
     faq: [
       { q: 'How much should I eat to build muscle?', a: 'Aim for a calorie surplus of 200–300 kcal per day above your TDEE. This produces roughly 0.2–0.4 kg per week of weight gain, of which most should be muscle if protein intake (1.6–2.2g/kg/day) and training are consistent. A larger surplus (500+ kcal/day) accelerates fat gain more than muscle gain.' },
       { q: 'How long does it take to build noticeable muscle?', a: 'Most beginners see noticeable muscle definition within 8–12 weeks of consistent resistance training with adequate protein. Significant changes in body composition take 3–6 months. Natural muscle gain is slow — approximately 1–2 kg of lean muscle per month is achievable for beginners; 0.25–0.5 kg per month for more experienced lifters.' },
-      { q: 'Is chicken and rice good for muscle building?', a: 'Yes — it is one of the most effective muscle-building meals available. 200g chicken breast (62g protein) with 80g dry brown rice (62g carbs) and broccoli provides ~550 kcal and 62g protein — an ideal post-training meal that fuels muscle protein synthesis and glycogen replenishment.' },
+      { q: 'Is chicken and rice good for muscle building?', a: 'It can be a practical muscle-building meal because it combines protein and carbohydrate in an easy-to-adjust portion. 200g chicken breast (62g protein) with 80g dry brown rice (62g carbs) and broccoli provides about 550 kcal and 62g protein.' },
     ],
   },
 
@@ -2719,3 +2720,40 @@ export const blogPostsData = {
   },
 
 };
+
+const BLOG_PRICE_CHECKED_DATES = Object.freeze({
+  'cheapest-protein-sources-cost-per-gram-uk': '2026-07-14',
+  'chicken-vs-eggs-protein-value-uk': '2026-07-14',
+  'is-protein-powder-worth-it-uk': '2026-07-14',
+  'is-protein-powder-cheaper-than-food-uk': '2026-07-14',
+  'how-much-should-meal-prep-cost-uk': '2026-07-14',
+  'is-meal-prep-cheaper-than-takeaway-uk': '2026-07-14',
+  'is-meal-prep-cheaper-than-meal-deals-uk': '2026-07-14',
+  'best-low-calorie-foods-uk': '2026-07-02',
+  'tesco-low-calorie-shopping-list': '2026-05-28',
+  'how-to-meal-plan-for-weight-loss': '2026-05-28',
+  'best-cheap-high-protein-foods-uk': '2026-07-13',
+  'aldi-vs-tesco-meal-prep': '2025-02-01',
+  'cheapest-uk-supermarket-meal-prep': '2025-02-01',
+  'cheap-meal-prep-shopping-list-uk': '2025-02-01',
+  'meal-prep-for-beginners-uk': '2026-05-28',
+  'high-protein-breakfast-uk': '2025-02-01',
+  'anti-inflammatory-diet-meal-plan-uk': '2026-05-30',
+  'menopause-diet-plan-uk': '2026-05-30',
+  'endurance-running-nutrition-uk': '2026-05-30',
+  'low-calorie-snacks-uk': '2026-05-30',
+  'vegan-meal-prep-uk': '2026-05-30',
+  'vegetarian-meal-prep-uk': '2026-05-30',
+  'muscle-building-meal-plan-uk': '2026-05-30',
+  'batch-cooking-for-beginners-uk': '2026-07-06',
+  'sainsburys-meal-prep-uk': '2026-05-30',
+  'asda-meal-prep-uk': '2026-05-30',
+  'high-protein-snacks-uk': '2026-06-17',
+});
+
+export const blogPostsData = Object.fromEntries(
+  Object.entries(rawBlogPostsData).map(([slug, post]) => [
+    slug,
+    BLOG_PRICE_CHECKED_DATES[slug] ? { ...post, priceChecked: BLOG_PRICE_CHECKED_DATES[slug] } : post,
+  ]),
+);

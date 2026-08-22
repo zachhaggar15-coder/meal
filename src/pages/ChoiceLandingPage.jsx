@@ -197,7 +197,7 @@ export default function ChoiceLandingPage({ mode }) {
           <h2>{toTitleCase('Want a different combination?')}</h2>
           <p>
             Use the full plan browser to combine supermarket, diet, calories, budget and effort
-            without landing on a default Aldi or weight loss plan first.
+            in one search.
           </p>
           <Link className="btn-secondary" to={config.changeUrl}>Browse matching plans</Link>
         </section>
@@ -258,7 +258,7 @@ function buildDietConfig(slug) {
     selfUrl: `/choose-diet/${choice.value}`,
     canonical: resolveCanonical(`/choose-diet/${choice.value}`, `/meal-plans/${choice.value}`),
     description: `Choose ${indefiniteArticleFor(choice.label)} ${choice.label.toLowerCase()} meal plan by supermarket, with ${formatChoiceList(INDEXED_SUPERMARKET_CHOICES.map(market => market.label))}.`,
-    intro: `${choice.description} Pick the supermarket next so the diet type no longer defaults to Aldi.`,
+    intro: `${choice.description} Choose the supermarket you use to see matching plans while keeping this diet type.`,
     defaultLabel: 'Current diet type:',
     defaultValue: choice.label,
     changeUrl: buildBrowsePlanUrl({ diet: choice.dietType, goal: choice.defaultGoal }),

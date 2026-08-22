@@ -23,6 +23,7 @@ export function observeWebVitals(report, { path = '/' } = {}) {
   const metrics = new Map();
   const observers = [];
   const interactionDurations = new Map();
+  const clsElements = new Set();
   const supported = new Set(PerformanceObserver.supportedEntryTypes || []);
   const navigation = performance.getEntriesByType('navigation')[0];
   const navigationType = navigation?.type || 'navigate';
@@ -41,29 +42,43 @@ export function observeWebVitals(report, { path = '/' } = {}) {
 
   observe('largest-contentful-paint', entries => {
     const last = entries[entries.length - 1];
-    if (last) setMetric('LCP', last.startTime);
+    if (last) setMetric('LCP', last.startTime, { metric_element: describeElement(last.element) });
   });
 
   observe('layout-shift', entries => {
     for (const entry of entries) {
-      if (!entry.hadRecentInput) clsValue += entry.value;
+      if (!entry.hadRecentInput) {
+        clsValue += entry.value;
+        for (const source of entry.sources || []) {
+          const label = describeElement(source.node);
+          if (label) clsElements.add(label);
+        }
+      }
     }
-    setMetric('CLS', clsValue);
+    setMetric('CLS', clsValue, { metric_elements: [...clsElements].slice(0, 5).join(', ') });
   });
 
   observe('event', entries => {
     for (const entry of entries) {
       if (!entry.interactionId || !Number.isFinite(entry.duration)) continue;
-      interactionDurations.set(
-        entry.interactionId,
-        Math.max(interactionDurations.get(entry.interactionId) || 0, entry.duration),
-      );
+      const current = interactionDurations.get(entry.interactionId);
+      if (!current || entry.duration > current.duration) {
+        interactionDurations.set(entry.interactionId, {
+          duration: entry.duration,
+          target: describeElement(entry.target),
+          eventType: String(entry.name || '').slice(0, 30),
+        });
+      }
     }
-    const durations = [...interactionDurations.values()].sort((left, right) => right - left);
-    if (!durations.length) return;
+    const interactions = [...interactionDurations.values()].sort((left, right) => right.duration - left.duration);
+    if (!interactions.length) return;
     const interactionCount = Number(performance.interactionCount) || interactionDurations.size;
-    const p98Index = Math.min(durations.length - 1, Math.floor(interactionCount / 50));
-    setMetric('INP', durations[p98Index]);
+    const p98Index = Math.min(interactions.length - 1, Math.floor(interactionCount / 50));
+    const selected = interactions[p98Index];
+    setMetric('INP', selected.duration, {
+      metric_element: selected.target,
+      metric_event_type: selected.eventType,
+    });
   }, { durationThreshold: 40 });
 
   return {
@@ -80,6 +95,7 @@ export function observeWebVitals(report, { path = '/' } = {}) {
           metric_id: `${metricId}-${metric.name.toLowerCase()}`,
           navigation_type: navigationType,
           final_reason: reason,
+          ...metric.attribution,
         });
       }
       disconnect();
@@ -87,9 +103,9 @@ export function observeWebVitals(report, { path = '/' } = {}) {
     disconnect,
   };
 
-  function setMetric(name, value) {
+  function setMetric(name, value, attribution = {}) {
     if (!Number.isFinite(value) || value < 0) return;
-    metrics.set(name, { name, value });
+    metrics.set(name, { name, value, attribution });
   }
 
   function observe(type, handler, extraOptions = {}) {
@@ -125,3 +141,16 @@ function roundMetric(name, value) {
 }
 
 export const CORE_WEB_VITAL_NAMES = Object.freeze(['LCP', 'INP', 'CLS']);
+
+function describeElement(element) {
+  if (!element || typeof element !== 'object') return '';
+  const tag = String(element.tagName || '').toLowerCase();
+  if (!tag) return '';
+  const id = String(element.id || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
+  const classes = typeof element.className === 'string'
+    ? element.className.split(/\s+/).filter(Boolean).slice(0, 3)
+      .map(value => value.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 30))
+      .filter(Boolean)
+    : [];
+  return `${tag}${id ? `#${id}` : ''}${classes.map(value => `.${value}`).join('')}`.slice(0, 140);
+}

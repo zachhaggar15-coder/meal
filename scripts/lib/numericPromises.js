@@ -25,7 +25,7 @@
 // So every pattern below requires an explicit distributive quantifier, and
 // anything framed per-day, per-100g or as a personal target is excluded.
 const DISTRIBUTIVE = /\b(?:all|each|every|these)\b/i;
-const NOT_PER_EXAMPLE = /\b(?:per day|per 100 ?g|a day|daily|per kg|body ?weight|target|aim for|per week)\b/i;
+const NOT_PER_EXAMPLE = /\b(?:per day|per 100 ?g|a day|daily|per kg|body ?weight|target|aim for|per week|cost per|per gram of protein|price note)\b/i;
 
 /** Promise patterns, each yielding a predicate over an example's figures. */
 const PROMISE_PATTERNS = [

@@ -989,10 +989,41 @@ const DEEP_EXPANSION_SEEDS = buildDeepExpansionSeeds(Math.max(0, TARGET_PLAN_COU
 // create a duplicate route.
 const GENERATED_SEEDS = [...BASE_PLAN_SEEDS, ...DEEP_EXPANSION_SEEDS];
 const GENERATED_SLUGS = new Set(GENERATED_SEEDS.map(seed => seed.slug));
-const INDEXABLE_PLAN_SEED_POOL = [
+const RAW_INDEXABLE_PLAN_SEED_POOL = [
   ...GENERATED_SEEDS,
   ...RESTORED_PLAN_SEEDS.filter(seed => !GENERATED_SLUGS.has(seed.slug)),
 ];
+
+const PRACTICAL_MEAL_SET_OVERRIDES = Object.freeze({
+  'aldi-cheap-hp-veg-1800': 4,
+  'aldi-muscle-gain-3000': 42,
+  'any-hp-veg-1800-protein-focused': 50,
+  'any-hp-veg-2000-batch-cook': 53,
+  'sainsburys-muscle-gain-2500-performance-protein-vegetarian-v3': 174,
+});
+
+function normalisePlanTitle(title) {
+  return String(title || '')
+    .replace(/\bProtein-Focused High Protein\b/g, 'Protein-Focused')
+    .replace(/\bHigher-Protein Weekly High Protein\b/g, 'Higher-Protein Weekly')
+    .replace(/\bLean Protein Cheap High Protein\b/g, 'Lean-Protein Budget')
+    .replace(/\bBudget-Smart Weekly Budget\b/g, 'Budget-Smart Weekly')
+    .replace(/\bLow-Fuss Weekly Low Effort\b/g, 'Low-Fuss Weekly')
+    .replace(/\bVery Cheap Batch Cook Cheap\b/g, 'Very Cheap Batch Cook')
+    .replace(/\bModerate Budget Batch Cook Budget\b/g, 'Moderate-Budget Batch Cook')
+    .replace(/\bBudget Batch Cook Budget\b/g, 'Budget Batch Cook')
+    .replace(/\bSimple Gym Gym Beginner\b/g, 'Simple Gym Beginner')
+    .replace(/\bHigh Protein\b/g, 'High-Protein')
+    .replace(/\s+-\s+(?=[\d,]+\s+kcal\b)/g, ' — ')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
+const INDEXABLE_PLAN_SEED_POOL = RAW_INDEXABLE_PLAN_SEED_POOL.map(seed => ({
+  ...seed,
+  mealSetIndex: PRACTICAL_MEAL_SET_OVERRIDES[seed.slug] ?? seed.mealSetIndex,
+  title: normalisePlanTitle(seed.title),
+}));
 export const COVERAGE_PLAN_SEEDS = buildCoverageSeeds(INDEXABLE_PLAN_SEED_POOL);
 
 export const INDEXABLE_PLAN_SEEDS = INDEXABLE_PLAN_SEED_POOL;

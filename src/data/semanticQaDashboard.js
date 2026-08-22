@@ -2,119 +2,132 @@
 // Do not import this module into public page components.
 
 export const SEMANTIC_QA_DASHBOARD = {
-  "generatedAt": "2026-08-13T16:44:35.864Z",
+  "generatedAt": "2026-08-21T10:18:57.820Z",
   "available": true,
   "latest": {
-    "runAt": "2026-08-13T16:44:35.864Z",
-    "sampleSize": 30,
-    "passed": 3,
-    "flagged": 27,
-    "passRate": 10,
+    "runAt": "2026-08-21T10:18:57.820Z",
+    "sampleSize": 1059,
+    "passed": 1059,
+    "flagged": 0,
+    "passRate": 100,
+    "plansWithoutFlagsRate": 100,
     "severity": {
       "Critical": 0,
-      "High": 1,
-      "Medium": 101,
+      "High": 0,
+      "Medium": 0,
       "Low": 0
     },
-    "systemicIssueCount": 3,
+    "systemicIssueCount": 0,
     "model": {
-      "status": "unavailable",
-      "model": "gpt-5-mini",
+      "status": "not_configured",
+      "model": "",
       "calls": 0,
-      "error": "Unterminated string in JSON at position 6781 (line 124 column 32)",
+      "attempted": 0,
+      "successful": 0,
+      "malformed": 0,
+      "unavailable": 0,
+      "error": "",
       "fallback": "Local semantic checks completed; model enrichment did not run."
-    },
-    "plansWithoutFlagsRate": 10
+    }
   },
   "coverage": {
-    "totalPublishedPlans": 1089,
-    "plansEverSampled": 30,
-    "percentageEverSampled": 2.8,
-    "plansSampledLast30Days": 30,
-    "plansNeverSampled": 1059
+    "totalPublishedPlans": 1059,
+    "plansEverSampled": 1059,
+    "percentageEverSampled": 100,
+    "plansSampledLast30Days": 1059,
+    "plansNeverSampled": 0
   },
   "trend": [
     {
       "runAt": "2026-08-13T16:44:35.864Z",
       "sampleSize": 30,
       "passRate": 10,
+      "plansWithoutFlagsRate": 10,
       "criticalHigh": 1,
       "medium": 101,
-      "cumulativeCoverage": 30,
-      "plansWithoutFlagsRate": 10
+      "cumulativeCoverage": 30
+    },
+    {
+      "runAt": "2026-08-21T10:18:57.820Z",
+      "sampleSize": 1059,
+      "passRate": 100,
+      "plansWithoutFlagsRate": 100,
+      "criticalHigh": 0,
+      "medium": 0,
+      "cumulativeCoverage": 1059
     }
   ],
   "breakdowns": {
     "supermarket": [
       {
-        "name": "tesco",
-        "sampled": 4,
-        "flagged": 4,
-        "reviewRate": 100
-      },
-      {
-        "name": "asda",
-        "sampled": 4,
-        "flagged": 3,
-        "reviewRate": 75
-      },
-      {
-        "name": "any",
-        "sampled": 3,
-        "flagged": 3,
-        "reviewRate": 100
-      },
-      {
         "name": "aldi",
-        "sampled": 3,
-        "flagged": 3,
-        "reviewRate": 100
+        "sampled": 206,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
-        "name": "sainsburys",
-        "sampled": 3,
-        "flagged": 3,
-        "reviewRate": 100
+        "name": "tesco",
+        "sampled": 165,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "lidl",
-        "sampled": 3,
-        "flagged": 3,
-        "reviewRate": 100
+        "sampled": 142,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
-        "name": "iceland",
-        "sampled": 3,
-        "flagged": 3,
-        "reviewRate": 100
+        "name": "asda",
+        "sampled": 142,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "any",
+        "sampled": 123,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "sainsburys",
+        "sampled": 105,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "morrisons",
-        "sampled": 3,
-        "flagged": 2,
-        "reviewRate": 66.7
+        "sampled": 98,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
-        "name": "ocado",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "waitrose",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
+        "name": "iceland",
+        "sampled": 62,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "marks-spencer",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
+        "sampled": 5,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "waitrose",
+        "sampled": 5,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "coop",
-        "sampled": 1,
+        "sampled": 4,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "ocado",
+        "sampled": 2,
         "flagged": 0,
         "reviewRate": 0
       }
@@ -122,1282 +135,266 @@ export const SEMANTIC_QA_DASHBOARD = {
     "diet": [
       {
         "name": "standard",
-        "sampled": 16,
-        "flagged": 14,
-        "reviewRate": 87.5
+        "sampled": 644,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "vegetarian",
-        "sampled": 5,
-        "flagged": 5,
-        "reviewRate": 100
-      },
-      {
-        "name": "pescatarian",
-        "sampled": 5,
-        "flagged": 4,
-        "reviewRate": 80
+        "sampled": 215,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "vegan",
-        "sampled": 4,
-        "flagged": 4,
-        "reviewRate": 100
+        "sampled": 102,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "pescatarian",
+        "sampled": 98,
+        "flagged": 0,
+        "reviewRate": 0
       }
     ],
     "goal": [
       {
         "name": "weight-loss",
-        "sampled": 3,
-        "flagged": 3,
-        "reviewRate": 100
-      },
-      {
-        "name": "body-recomp",
-        "sampled": 2,
-        "flagged": 2,
-        "reviewRate": 100
-      },
-      {
-        "name": "cheap-student",
-        "sampled": 2,
-        "flagged": 2,
-        "reviewRate": 100
-      },
-      {
-        "name": "endurance-athlete",
-        "sampled": 2,
-        "flagged": 2,
-        "reviewRate": 100
-      },
-      {
-        "name": "cutting",
-        "sampled": 2,
-        "flagged": 1,
-        "reviewRate": 50
+        "sampled": 138,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "muscle-gain",
-        "sampled": 2,
-        "flagged": 1,
-        "reviewRate": 50
+        "sampled": 97,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "budget-fat-loss",
-        "sampled": 2,
-        "flagged": 1,
-        "reviewRate": 50
+        "sampled": 81,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
-        "name": "general",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
+        "name": "high-protein-low-cal",
+        "sampled": 81,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "cheap-student",
+        "sampled": 77,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "low-effort",
+        "sampled": 64,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "busy-professional",
+        "sampled": 60,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "budget-bodybuilding",
+        "sampled": 48,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "vegetarian-low-cal",
+        "sampled": 45,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "vegan-low-cal",
+        "sampled": 45,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "high-protein-vegetarian",
+        "sampled": 45,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "cheap-high-protein",
+        "sampled": 33,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "body-recomp",
+        "sampled": 32,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "gym-beginner",
+        "sampled": 31,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "cutting",
+        "sampled": 31,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "maintenance",
+        "sampled": 30,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "anti-inflammatory",
+        "sampled": 30,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "endurance-athlete",
+        "sampled": 30,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "pescatarian",
+        "sampled": 30,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "menopause-nutrition",
+        "sampled": 30,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "budget",
         "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "high-protein-low-cal",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "vegan-low-cal",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "maintenance",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "budget-bodybuilding",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "pescatarian",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "vegetarian-low-cal",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "high-protein-vegetarian",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "low-effort",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "busy-professional",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "menopause-nutrition",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "anti-inflammatory",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "gym-beginner",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
-      },
-      {
-        "name": "cheap-high-protein",
-        "sampled": 1,
-        "flagged": 1,
-        "reviewRate": 100
+        "flagged": 0,
+        "reviewRate": 0
       }
     ],
     "planType": [
       {
         "name": "generated",
-        "sampled": 26,
-        "flagged": 23,
-        "reviewRate": 88.5
+        "sampled": 1056,
+        "flagged": 0,
+        "reviewRate": 0
       },
       {
         "name": "editorial",
-        "sampled": 4,
-        "flagged": 4,
-        "reviewRate": 100
+        "sampled": 3,
+        "flagged": 0,
+        "reviewRate": 0
       }
     ]
   },
-  "recentFindings": [
+  "recentFindings": [],
+  "findingsLedger": [
     {
-      "id": "qa_7d6edd57f7efaa31",
+      "id": "manual_eca649f3493d4715",
+      "source": "manual",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "Other",
+      "severity": "Medium",
+      "evidence": "STRUCTURAL FLAVOUR COMPLETENESS - PRODUCT/DATA DECISION, NOT A METHOD BUG. The non-blocking audit (scripts/audit-recipe-invariants.js) flags 202 occurrences across 26 distinct recipe patterns where a savoury cooked dish carries no recognised flavour component at all (no aromatic, herb, spice, stock, sauce, acid or seasoning ingredient). Clear examples: 'Baked Salmon with Broccoli & New Potatoes' (salmon + broccoli + potatoes, nothing else); 'Roast Chicken Breast with Root Veg' (chicken + parsnips + carrots); 'Grilled Chicken with Roasted Mediterranean Veg' (chicken + rice + mixed veg). These are nutritionally valid and now cookable, but read as under-specified food rather than a recipe a person would write. Resolving this requires ADDING material ingredients to the meal data, which changes canonical nutrition - explicitly a product decision outside the method-generation scope, so no change was made. Recommend deciding whether to (a) add negligible-calorie seasoning ingredients that are excluded from nutrition, (b) add real ingredients and accept the nutrition delta, or (c) accept these as intentionally minimal. Full list: node scripts/audit-recipe-invariants.js",
+      "affectedLocation": "26 distinct recipe patterns, shared + legacy library",
+      "firstDetectedAt": "2026-08-14T23:23:22.487Z",
+      "lastDetectedAt": "2026-08-14T23:23:22.487Z",
+      "lastRecheckAt": "",
+      "lastRecheckResult": "",
+      "resolvedAt": "",
+      "status": "Fixed",
+      "humanAssessment": "True issue",
+      "humanNote": "Approved flavour coverage has been implemented and the full recipe invariant now passes.",
+      "potentiallySystemic": true
+    },
+    {
+      "id": "manual_5b409c1e8bca0f60",
+      "source": "manual",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "Weekly ingredient practicality",
+      "severity": "Low",
+      "evidence": "checkSoupStewMissingLiquid non-blocking audit (scripts/audit-recipe-invariants.js) flags 86 soup/stew/curry/chilli occurrences with no stock/water ingredient literally listed. Most look like false positives against the invariant as currently defined (ingredient presence) — the generated method already instructs adding water/stock as a cooking step, and real recipes don't normally list plain water as a shopping ingredient. A minority (e.g. 'Turkey Mince Chilli with Brown Rice' — no tomatoes/stock/sauce base at all) look more genuinely worth reviewing. Recommend refining the invariant to check the METHOD TEXT for a liquid-related instruction rather than the ingredient list before using it for anything beyond non-blocking review evidence.",
+      "affectedLocation": "Legacy + shared meal library, multiple plans",
+      "firstDetectedAt": "2026-08-14T14:52:40.072Z",
+      "lastDetectedAt": "2026-08-14T14:52:40.072Z",
+      "lastRecheckAt": "",
+      "lastRecheckResult": "",
+      "resolvedAt": "",
+      "status": "Fixed",
+      "humanAssessment": "Useful warning",
+      "humanNote": "Refined 2026-08-15. The original ingredient-list-based check was ~97% false positive (water is not a grocery item). Rewritten to inspect the METHOD for a stated cooking medium instead. That refined version found 2 genuine defects (Turkey & Lentil Soup, Chicken & Vegetable Stew: dry lentils simmered with no stated liquid), both now fixed by generalising the dry-pulse liquid clause to fire whenever a dry pulse is in the pot, not only when it is the primary protein. Check now sits at 0 flagged and has been promoted to a blocking invariant.",
+      "potentiallySystemic": false
+    },
+    {
+      "id": "manual_4ec03162a6a04e55",
+      "source": "manual",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "Recipe method",
       "severity": "High",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "ingredient-method consistency",
-      "issue": "The method mentions potato, but no matching ingredient is listed.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Tuna Nicoise Salad",
-      "humanAssessment": "Uncertain"
+      "evidence": "Meal-name keyword collisions route dishes through the wrong method template. Confirmed instances: (1) 'Lean Beef Mince Lettuce Wraps' — no bread/tortilla present, but the name contains 'wraps' so it triggers the toast/bagel/wrap/sandwich branch; carriers is empty, producing a nonsensical opening step 'Toast or warm the listed ingredients.' (2) 'Wholemeal Pancakes with Low-Fat Yogurt' and 'Protein Waffles with Greek Yogurt' — the yogurt/cereal branch is checked before the pancake branch and matches on the word 'yogurt' alone, so raw eggs and flour are 'topped' onto a cold yogurt bowl instead of whisked into a batter and cooked. This second case is food-safety adjacent (raw egg never cooked) and should be prioritised. Same architectural class as the already-fixed lettuce-cups (hot mince vs cold prawn) collision — worth a systemic sweep for other meal names that trigger a branch by keyword alone regardless of whether the ingredients actually match that branch's assumptions.",
+      "affectedLocation": "Shared meal library (wholemeal-pancakes, protein-waffles-yogurt, beef-lettuce-wraps)",
+      "firstDetectedAt": "2026-08-14T14:52:39.664Z",
+      "lastDetectedAt": "2026-08-14T14:52:39.664Z",
+      "lastRecheckAt": "",
+      "lastRecheckResult": "",
+      "resolvedAt": "",
+      "status": "Fixed",
+      "humanAssessment": "True issue",
+      "humanNote": "Confirmed and fixed 2026-08-15. Root cause was family-selection precedence: branches were chosen on meal-name keyword alone. Fixed by (1) checking pancake/waffle BEFORE the yogurt/cereal branch so a strong dish-type signal outranks a serving component, and (2) routing lettuce-vessel wraps/cups to the lettuce branch using ingredient evidence (lettuce present, no bread carrier) rather than the name alone. Both now covered by passing regression tests and by a promoted blocking invariant (family-validity) that fails the build on any recurrence.",
+      "potentiallySystemic": true
     },
     {
-      "id": "qa_9ec20e2eeff3f8de",
+      "id": "qa_65f08241a9324caa",
+      "source": "auto",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "weekly ingredient practicality",
       "severity": "Medium",
-      "route": "/meal-plan/2000-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_5b0dd4fb66aef124",
-      "severity": "Medium",
-      "route": "/meal-plan/2000-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "beef is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_ed62d8f27f8fd46d",
-      "severity": "Medium",
-      "route": "/meal-plan/tesco-1800-calorie-meal-plan",
-      "supermarket": "tesco",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Homemade Lentil Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_281f29a76204f943",
-      "severity": "Medium",
-      "route": "/meal-plan/tesco-1800-calorie-meal-plan",
-      "supermarket": "tesco",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "beef is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Leftover Steak Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f1fd5f910fd15a2d",
-      "severity": "Medium",
-      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "chickpea is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Chickpea & Spinach Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_8c87f472c995a0a8",
-      "severity": "Medium",
-      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 1500,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Dinner: Tofu & Vegetable Stir-Fry",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_b9ef5c4b48dc829f",
-      "severity": "Medium",
-      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "bean is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Black Bean Tacos",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_397cc9da5fa5b880",
-      "severity": "Medium",
-      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Lentil & Roasted Veg Bowl",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_0e371ee5af0b450d",
-      "severity": "Medium",
-      "route": "/meal-plan/vegetarian-low-calorie-meal-plan",
-      "supermarket": "any",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "chickpea is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Caprese & Chickpea Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_96c8ec76dcdc0612",
-      "severity": "Medium",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Tuna & Egg White Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_e362c705b980083b",
-      "severity": "Medium",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Dinner: Chicken Breast with Lentils & Greens",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_85ec4ecd2e0cc884",
-      "severity": "Medium",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Dinner: Lean Beef Stir-Fry",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_767ce511348d9cd2",
-      "severity": "Medium",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "ingredient-method consistency",
-      "issue": "chickpea is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Chicken & Chickpea Power Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_9d5be1d584c7ceb0",
-      "severity": "Medium",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "ingredient-method consistency",
-      "issue": "cod is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_9d5be1d584c7ceb0",
-      "severity": "Medium",
-      "route": "/meal-plan/aldi-high-protein-meal-plan",
-      "supermarket": "aldi",
-      "calorieTarget": 1550,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Dinner: Baked Cod with Lentils",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_b7f591407baf4e6d",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2200,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_92f6fb4c0a3ebf27",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2200,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_047e2c0fcdc72d96",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2200,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Cucumber 4 slices (about 3 3/4 used) (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
+      "evidence": "Tinned tomatoes totals (about 1280g used) for the week (vegetables) — review whether this accumulated quantity is still a practical single shop, especially if driven by a repeated meal.",
       "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
+      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckResult": "new",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": "",
+      "potentiallySystemic": false
     },
     {
-      "id": "qa_047e2c0fcdc72d96",
+      "id": "qa_d3d9213bfa4a6232",
+      "source": "auto",
+      "route": "/plans/aldi-high-protein-low-cal-1500",
+      "category": "container recommendation",
       "severity": "Medium",
-      "route": "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2200,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil at least 2 tbsp (condiments); Olive oil at least 4.25 tsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_5928f25ddb88b90f",
-      "severity": "Medium",
-      "route": "/plans/lidl-vegan-low-cal-1500",
-      "supermarket": "lidl",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_bbe32f62abc1715a",
-      "severity": "Medium",
-      "route": "/plans/lidl-vegan-low-cal-1500",
-      "supermarket": "lidl",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_6ff815daf88ce093",
-      "severity": "Medium",
-      "route": "/plans/lidl-vegan-low-cal-1500",
-      "supermarket": "lidl",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Dinner: Butternut Squash and Lentil Soup with Bread",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f1eb5a6c3a7a43ba",
-      "severity": "Medium",
-      "route": "/plans/lidl-vegan-low-cal-1500",
-      "supermarket": "lidl",
-      "calorieTarget": 1500,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_9270fbea194d63ce",
-      "severity": "Medium",
-      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-      "supermarket": "iceland",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_803cb18c37488dbb",
-      "severity": "Medium",
-      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-      "supermarket": "iceland",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Green Lentil and Roasted Sweet Potato Bowl",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_6a92151255c2c4dd",
-      "severity": "Medium",
-      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-      "supermarket": "iceland",
-      "calorieTarget": 2000,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f256bb82a1b52822",
-      "severity": "Medium",
-      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-      "supermarket": "iceland",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_474bfef7e66b58e1",
-      "severity": "Medium",
-      "route": "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-      "supermarket": "iceland",
-      "calorieTarget": 2000,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_e998ef9a55cd65de",
-      "severity": "Medium",
-      "route": "/plans/tesco-maintenance-vegan-2000",
-      "supermarket": "tesco",
-      "calorieTarget": 2000,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Baked Falafel and Salad Pitta",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_e8ef10232477e118",
-      "severity": "Medium",
-      "route": "/plans/tesco-maintenance-vegan-2000",
-      "supermarket": "tesco",
-      "calorieTarget": 2000,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_8c2c5a9ec9465024",
-      "severity": "Medium",
-      "route": "/plans/tesco-maintenance-vegan-2000",
-      "supermarket": "tesco",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Dinner: Butternut Squash and Lentil Soup with Bread",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_8be9eb8b9378ca74",
-      "severity": "Medium",
-      "route": "/plans/tesco-maintenance-vegan-2000",
-      "supermarket": "tesco",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Green Lentil and Roasted Sweet Potato Bowl",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_8ec4851d9c86dfb2",
-      "severity": "Medium",
-      "route": "/plans/tesco-maintenance-vegan-2000",
-      "supermarket": "tesco",
-      "calorieTarget": 2000,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Cucumber 3 slices (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f42594d033067329",
-      "severity": "Medium",
-      "route": "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
-      "supermarket": "lidl",
-      "calorieTarget": 3500,
-      "category": "ingredient-method consistency",
-      "issue": "salmon is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Smoked Salmon and Quinoa Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_23897335d40098e5",
-      "severity": "Medium",
-      "route": "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
-      "supermarket": "lidl",
-      "calorieTarget": 3500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Dinner: Butternut Squash and Lentil Soup with Bread",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_632f5a17ecbc97c6",
-      "severity": "Medium",
-      "route": "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
-      "supermarket": "lidl",
-      "calorieTarget": 3500,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil at least 6.5 tsp (condiments); Olive oil 2.5 tbsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_632f5a17ecbc97c6",
-      "severity": "Medium",
-      "route": "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
-      "supermarket": "lidl",
-      "calorieTarget": 3500,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Honey at least 3.5 tbsp (condiments); Honey at least 1.25 tsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_68de551fb139ac81",
-      "severity": "Medium",
-      "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_56ef8b34f5a91d86",
-      "severity": "Medium",
-      "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f482b2efb576e84b",
-      "severity": "Medium",
-      "route": "/plans/asda-pescatarian-1800-balanced-plate-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil 2 tsp (condiments); Olive oil at least 1.25 tbsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_0e9bc16706942064",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-endurance-2500-recovery",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Dinner: Butternut Squash and Lentil Soup with Bread",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_b7473288b136660b",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-endurance-2500-recovery",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2500,
-      "category": "ingredient-method consistency",
-      "issue": "salmon is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Smoked Salmon and Quinoa Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_229825f937f7b591",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-endurance-2500-recovery",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2500,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Cucumber 10 slices (vegetables); Cucumber 2 (about 1 1/2 used) (vegetables).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_cd1e1949479591d9",
-      "severity": "Medium",
-      "route": "/plans/aldi-veg-low-cal-1500",
-      "supermarket": "aldi",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_5c3f281b48c5c941",
-      "severity": "Medium",
-      "route": "/plans/aldi-veg-low-cal-1500",
-      "supermarket": "aldi",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Green Lentil and Roasted Sweet Potato Bowl",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_65da7894323d06cd",
-      "severity": "Medium",
-      "route": "/plans/aldi-veg-low-cal-1500",
-      "supermarket": "aldi",
-      "calorieTarget": 1500,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Baked Falafel and Salad Pitta",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_a7a1cf83f072a5b4",
-      "severity": "Medium",
-      "route": "/plans/aldi-veg-low-cal-1500",
-      "supermarket": "aldi",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f2ae02352eae26e6",
-      "severity": "Medium",
-      "route": "/plans/aldi-veg-low-cal-1500",
-      "supermarket": "aldi",
-      "calorieTarget": 1500,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil at least 1 tsp (condiments); Olive oil at least 1 tbsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f9062ea5cad63665",
-      "severity": "Medium",
-      "route": "/plans/ocado-weight-loss-1400-moderate-standard",
-      "supermarket": "ocado",
-      "calorieTarget": 1400,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_311319d763884ae5",
-      "severity": "Medium",
-      "route": "/plans/morrisons-hp-veg-1800",
-      "supermarket": "morrisons",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_b0c14c7b21033f8c",
-      "severity": "Medium",
-      "route": "/plans/morrisons-hp-veg-1800",
-      "supermarket": "morrisons",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Green Lentil and Halloumi Bowl",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_a9dc402eee533416",
-      "severity": "Medium",
-      "route": "/plans/morrisons-hp-veg-1800",
-      "supermarket": "morrisons",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Vegetable Frittata Slice with Green Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_321c14e6a1d20811",
-      "severity": "Medium",
-      "route": "/plans/asda-low-effort-vegan-1800-printable-prep-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_fe3740e55faeea72",
-      "severity": "Medium",
-      "route": "/plans/asda-low-effort-vegan-1800-printable-prep-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_029d32f6a3dba192",
-      "severity": "Medium",
-      "route": "/plans/asda-low-effort-vegan-1800-printable-prep-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_34e8af20420c54e7",
-      "severity": "Medium",
-      "route": "/plans/asda-low-effort-vegan-1800-printable-prep-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Thursday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_81121a9b971291d2",
-      "severity": "Medium",
-      "route": "/plans/asda-low-effort-vegan-1800-printable-prep-v3",
-      "supermarket": "asda",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_f8bf7e9c6ea2aef4",
-      "severity": "Medium",
-      "route": "/plans/iceland-busy-professional-1800-twenty-minute",
-      "supermarket": "iceland",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Lean Beef Stir-Fry with Brown Rice",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_4de8b7cb3345b178",
-      "severity": "Medium",
-      "route": "/plans/iceland-busy-professional-1800-twenty-minute",
-      "supermarket": "iceland",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Vegetable Frittata Slice with Green Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_d36ca8842909db48",
-      "severity": "Medium",
-      "route": "/plans/iceland-busy-professional-1800-twenty-minute",
-      "supermarket": "iceland",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_9ecebf7ef54277c0",
-      "severity": "Medium",
-      "route": "/plans/iceland-busy-professional-1800-twenty-minute",
-      "supermarket": "iceland",
-      "calorieTarget": 1800,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil at least 2.25 tsp (condiments); Olive oil at least 1.75 tbsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_0108d79d83501bc8",
-      "severity": "Medium",
-      "route": "/plans/any-menopause-1800-calcium-rich-vegan-v3",
-      "supermarket": "any",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_c265f4d984cf259a",
-      "severity": "Medium",
-      "route": "/plans/any-menopause-1800-calcium-rich-vegan-v3",
-      "supermarket": "any",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Dinner: Butternut Squash and Lentil Soup with Bread",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_5db71a076f76206c",
-      "severity": "Medium",
-      "route": "/plans/any-menopause-1800-calcium-rich-vegan-v3",
-      "supermarket": "any",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Baked Falafel and Salad Pitta",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_d50a7021ca371c33",
-      "severity": "Medium",
-      "route": "/plans/any-menopause-1800-calcium-rich-vegan-v3",
-      "supermarket": "any",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_a643c2028bf86920",
-      "severity": "Medium",
-      "route": "/plans/aldi-anti-inflammatory-veg-1800-mediterranean",
-      "supermarket": "aldi",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Lentil and Roasted Vegetable Soup",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_dd38ed5ea1718d96",
-      "severity": "Medium",
-      "route": "/plans/aldi-anti-inflammatory-veg-1800-mediterranean",
-      "supermarket": "aldi",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_451a6b0ce8c95278",
-      "severity": "Medium",
-      "route": "/plans/aldi-anti-inflammatory-veg-1800-mediterranean",
-      "supermarket": "aldi",
-      "calorieTarget": 1800,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_109799faaaec8415",
-      "severity": "Medium",
-      "route": "/plans/aldi-anti-inflammatory-veg-1800-mediterranean",
-      "supermarket": "aldi",
-      "calorieTarget": 1800,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Sunday — Lunch: Baked Falafel and Salad Pitta",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_a29bb873afc480b3",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "bean is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Salmon Fillet with New Potatoes and Green Beans",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_3b5fb01fba206040",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Tuesday — Dinner: Lentil and Turkey Sausage Casserole",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_49cf29e94b0d2e65",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "chickpea is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Lunch: Grilled Chicken and Chickpea Power Salad",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_91153129d167d357",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Dinner: Butternut Squash and Lentil Soup with Bread",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_e8a93b8bdfd6283b",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Friday — Lunch: Tofu and Noodle Stir-Fry with Soy",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_176fc41d0893c2af",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Saturday — Lunch: Red Lentil and Vegetable Soup with Wholemeal Roll",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_49e70c9b143fcb97",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Cucumber 1 (about 1/2 used) (vegetables); Cucumber slices 7 (vegetables).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_49e70c9b143fcb97",
-      "severity": "Medium",
-      "route": "/plans/sainsburys-gym-beginner-2000",
-      "supermarket": "sainsburys",
-      "calorieTarget": 2000,
-      "category": "shopping-list usability",
-      "issue": "Potential duplicate purchase entries: Olive oil at least 3 tsp (condiments); Olive oil at least 2 tbsp (condiments).",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Weekly shopping list",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_099cc73ac68ca23f",
-      "severity": "Medium",
-      "route": "/plans/lidl-cheap-hp-1500-higher-protein-v3",
-      "supermarket": "lidl",
-      "calorieTarget": 1500,
-      "category": "ingredient-method consistency",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "scope": "uncertain",
-      "reviewStatus": "New",
-      "affectedLocation": "Monday — Lunch: Green Lentil and Halloumi Bowl",
-      "humanAssessment": "Uncertain"
-    },
-    {
-      "id": "qa_eae0e6a9abda42b1",
-      "severity": "Medium",
-      "route": "/plans/lidl-cheap-hp-1500-higher-protein-v3",
-      "supermarket": "lidl",
-      "calorieTarget": 1500,
-      "category": "meal-name coherence",
-      "issue": "The meal is called a salad, but the method does not assemble one.",
-      "scope": "template/systemic",
-      "reviewStatus": "New",
-      "affectedLocation": "Wednesday — Dinner: Tuna and Sweet Potato Fishcakes with Salad",
-      "humanAssessment": "Uncertain"
+      "evidence": "Recommends 23 containers, which likely assumes zero reuse across the week rather than concurrently stored meals.",
+      "affectedLocation": "Container recommendation",
+      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
+      "lastRecheckResult": "new",
+      "resolvedAt": "",
+      "status": "New",
+      "humanAssessment": "Uncertain",
+      "humanNote": "",
+      "potentiallySystemic": false
     }
   ],
-  "systemicIssues": [
-    {
-      "patternKey": "important-ingredient-unused",
-      "issue": "lentil is central to the meal name but is not clearly used in the method.",
-      "affectedSampledPlans": 25,
-      "routes": [
-        "/meal-plan/2000-calorie-meal-plan",
-        "/meal-plan/tesco-1800-calorie-meal-plan",
-        "/meal-plan/vegetarian-low-calorie-meal-plan",
-        "/meal-plan/aldi-high-protein-meal-plan",
-        "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-        "/plans/lidl-vegan-low-cal-1500",
-        "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-        "/plans/tesco-maintenance-vegan-2000"
-      ],
-      "severity": "Medium",
-      "likelySharedComponent": "src/utils/recipeQuality.js method generation",
-      "firstDetected": "2026-08-13T16:44:35.864Z",
-      "mostRecentDetection": "2026-08-13T16:44:35.864Z",
-      "note": "Potential systemic issue — investigate shared generation logic."
-    },
-    {
-      "patternKey": "meal-style-method-mismatch",
-      "issue": "The meal is called a stir-fry, but the method does not use a stir-fry step.",
-      "affectedSampledPlans": 19,
-      "routes": [
-        "/meal-plan/vegetarian-low-calorie-meal-plan",
-        "/meal-plan/aldi-high-protein-meal-plan",
-        "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-        "/plans/lidl-vegan-low-cal-1500",
-        "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-        "/plans/tesco-maintenance-vegan-2000",
-        "/plans/asda-pescatarian-1800-balanced-plate-v3",
-        "/plans/aldi-veg-low-cal-1500"
-      ],
-      "severity": "Medium",
-      "likelySharedComponent": "src/utils/recipeQuality.js meal-style branch",
-      "firstDetected": "2026-08-13T16:44:35.864Z",
-      "mostRecentDetection": "2026-08-13T16:44:35.864Z",
-      "note": "Potential systemic issue — investigate shared generation logic."
-    },
-    {
-      "patternKey": "shopping-duplicate-alias",
-      "issue": "Potential duplicate purchase entries: Cucumber 4 slices (about 3 3/4 used) (vegetables); Cucumber 1 (about 1/2 used) (vegetables).",
-      "affectedSampledPlans": 12,
-      "routes": [
-        "/plans/sainsburys-body-recomp-2200-performance-protein-vegetarian-v3",
-        "/plans/iceland-cheap-student-2000-quick-shop-pescatarian-v3",
-        "/plans/tesco-maintenance-vegan-2000",
-        "/plans/lidl-budget-bodybuilding-3500-tinned-and-frozen-v3",
-        "/plans/asda-pescatarian-1800-balanced-plate-v3",
-        "/plans/sainsburys-endurance-2500-recovery",
-        "/plans/aldi-veg-low-cal-1500",
-        "/plans/iceland-busy-professional-1800-twenty-minute"
-      ],
-      "severity": "Medium",
-      "likelySharedComponent": "src/utils/planBuilder.js shopping aggregation",
-      "firstDetected": "2026-08-13T16:44:35.864Z",
-      "mostRecentDetection": "2026-08-13T16:44:35.864Z",
-      "note": "Potential systemic issue — investigate shared generation logic."
-    }
-  ],
+  "systemicIssues": [],
   "calibration": {
     "sampleSize": 36,
     "reviewed": 1,
@@ -1900,97 +897,5 @@ export const SEMANTIC_QA_DASHBOARD = {
         "humanSeverity": "Unreviewed"
       }
     ]
-  },
-  "findingsLedger": [
-    {
-      "id": "manual_eca649f3493d4715",
-      "source": "manual",
-      "route": "/plans/aldi-high-protein-low-cal-1500",
-      "category": "Other",
-      "severity": "Medium",
-      "evidence": "STRUCTURAL FLAVOUR COMPLETENESS - PRODUCT/DATA DECISION, NOT A METHOD BUG. The non-blocking audit (scripts/audit-recipe-invariants.js) flags 202 occurrences across 26 distinct recipe patterns where a savoury cooked dish carries no recognised flavour component at all (no aromatic, herb, spice, stock, sauce, acid or seasoning ingredient). Clear examples: 'Baked Salmon with Broccoli & New Potatoes' (salmon + broccoli + potatoes, nothing else); 'Roast Chicken Breast with Root Veg' (chicken + parsnips + carrots); 'Grilled Chicken with Roasted Mediterranean Veg' (chicken + rice + mixed veg). These are nutritionally valid and now cookable, but read as under-specified food rather than a recipe a person would write. Resolving this requires ADDING material ingredients to the meal data, which changes canonical nutrition - explicitly a product decision outside the method-generation scope, so no change was made. Recommend deciding whether to (a) add negligible-calorie seasoning ingredients that are excluded from nutrition, (b) add real ingredients and accept the nutrition delta, or (c) accept these as intentionally minimal. Full list: node scripts/audit-recipe-invariants.js",
-      "affectedLocation": "26 distinct recipe patterns, shared + legacy library",
-      "firstDetectedAt": "2026-08-14T23:23:22.487Z",
-      "lastDetectedAt": "2026-08-14T23:23:22.487Z",
-      "lastRecheckAt": "",
-      "lastRecheckResult": "",
-      "resolvedAt": "",
-      "status": "New",
-      "humanAssessment": "Uncertain",
-      "humanNote": "STRUCTURAL FLAVOUR COMPLETENESS - PRODUCT/DATA DECISION, NOT A METHOD BUG. The non-blocking audit (scripts/audit-recipe-invariants.js) flags 202 occurrences across 26 distinct recipe patterns where a savoury cooked dish carries no recognised flavour component at all (no aromatic, herb, spice, stock, sauce, acid or seasoning ingredient). Clear examples: 'Baked Salmon with Broccoli & New Potatoes' (salmon + broccoli + potatoes, nothing else); 'Roast Chicken Breast with Root Veg' (chicken + parsnips + carrots); 'Grilled Chicken with Roasted Mediterranean Veg' (chicken + rice + mixed veg). These are nutritionally valid and now cookable, but read as under-specified food rather than a recipe a person would write. Resolving this requires ADDING material ingredients to the meal data, which changes canonical nutrition - explicitly a product decision outside the method-generation scope, so no change was made. Recommend deciding whether to (a) add negligible-calorie seasoning ingredients that are excluded from nutrition, (b) add real ingredients and accept the nutrition delta, or (c) accept these as intentionally minimal. Full list: node scripts/audit-recipe-invariants.js",
-      "potentiallySystemic": true
-    },
-    {
-      "id": "manual_5b409c1e8bca0f60",
-      "source": "manual",
-      "route": "/plans/aldi-high-protein-low-cal-1500",
-      "category": "Weekly ingredient practicality",
-      "severity": "Low",
-      "evidence": "checkSoupStewMissingLiquid non-blocking audit (scripts/audit-recipe-invariants.js) flags 86 soup/stew/curry/chilli occurrences with no stock/water ingredient literally listed. Most look like false positives against the invariant as currently defined (ingredient presence) — the generated method already instructs adding water/stock as a cooking step, and real recipes don't normally list plain water as a shopping ingredient. A minority (e.g. 'Turkey Mince Chilli with Brown Rice' — no tomatoes/stock/sauce base at all) look more genuinely worth reviewing. Recommend refining the invariant to check the METHOD TEXT for a liquid-related instruction rather than the ingredient list before using it for anything beyond non-blocking review evidence.",
-      "affectedLocation": "Legacy + shared meal library, multiple plans",
-      "firstDetectedAt": "2026-08-14T14:52:40.072Z",
-      "lastDetectedAt": "2026-08-14T14:52:40.072Z",
-      "lastRecheckAt": "",
-      "lastRecheckResult": "",
-      "resolvedAt": "",
-      "status": "Fixed",
-      "humanAssessment": "Useful warning",
-      "humanNote": "Refined 2026-08-15. The original ingredient-list-based check was ~97% false positive (water is not a grocery item). Rewritten to inspect the METHOD for a stated cooking medium instead. That refined version found 2 genuine defects (Turkey & Lentil Soup, Chicken & Vegetable Stew: dry lentils simmered with no stated liquid), both now fixed by generalising the dry-pulse liquid clause to fire whenever a dry pulse is in the pot, not only when it is the primary protein. Check now sits at 0 flagged and has been promoted to a blocking invariant.",
-      "potentiallySystemic": false
-    },
-    {
-      "id": "manual_4ec03162a6a04e55",
-      "source": "manual",
-      "route": "/plans/aldi-high-protein-low-cal-1500",
-      "category": "Recipe method",
-      "severity": "High",
-      "evidence": "Meal-name keyword collisions route dishes through the wrong method template. Confirmed instances: (1) 'Lean Beef Mince Lettuce Wraps' — no bread/tortilla present, but the name contains 'wraps' so it triggers the toast/bagel/wrap/sandwich branch; carriers is empty, producing a nonsensical opening step 'Toast or warm the listed ingredients.' (2) 'Wholemeal Pancakes with Low-Fat Yogurt' and 'Protein Waffles with Greek Yogurt' — the yogurt/cereal branch is checked before the pancake branch and matches on the word 'yogurt' alone, so raw eggs and flour are 'topped' onto a cold yogurt bowl instead of whisked into a batter and cooked. This second case is food-safety adjacent (raw egg never cooked) and should be prioritised. Same architectural class as the already-fixed lettuce-cups (hot mince vs cold prawn) collision — worth a systemic sweep for other meal names that trigger a branch by keyword alone regardless of whether the ingredients actually match that branch's assumptions.",
-      "affectedLocation": "Shared meal library (wholemeal-pancakes, protein-waffles-yogurt, beef-lettuce-wraps)",
-      "firstDetectedAt": "2026-08-14T14:52:39.664Z",
-      "lastDetectedAt": "2026-08-14T14:52:39.664Z",
-      "lastRecheckAt": "",
-      "lastRecheckResult": "",
-      "resolvedAt": "",
-      "status": "Fixed",
-      "humanAssessment": "True issue",
-      "humanNote": "Confirmed and fixed 2026-08-15. Root cause was family-selection precedence: branches were chosen on meal-name keyword alone. Fixed by (1) checking pancake/waffle BEFORE the yogurt/cereal branch so a strong dish-type signal outranks a serving component, and (2) routing lettuce-vessel wraps/cups to the lettuce branch using ingredient evidence (lettuce present, no bread carrier) rather than the name alone. Both now covered by passing regression tests and by a promoted blocking invariant (family-validity) that fails the build on any recurrence.",
-      "potentiallySystemic": true
-    },
-    {
-      "id": "qa_65f08241a9324caa",
-      "source": "auto",
-      "route": "/plans/aldi-high-protein-low-cal-1500",
-      "category": "weekly ingredient practicality",
-      "severity": "Medium",
-      "evidence": "Tinned tomatoes totals (about 1280g used) for the week (vegetables) — review whether this accumulated quantity is still a practical single shop, especially if driven by a repeated meal.",
-      "affectedLocation": "Weekly shopping list",
-      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
-      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
-      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
-      "lastRecheckResult": "new",
-      "resolvedAt": "",
-      "status": "New",
-      "humanAssessment": "Uncertain",
-      "humanNote": "",
-      "potentiallySystemic": false
-    },
-    {
-      "id": "qa_d3d9213bfa4a6232",
-      "source": "auto",
-      "route": "/plans/aldi-high-protein-low-cal-1500",
-      "category": "container recommendation",
-      "severity": "Medium",
-      "evidence": "Recommends 23 containers, which likely assumes zero reuse across the week rather than concurrently stored meals.",
-      "affectedLocation": "Container recommendation",
-      "firstDetectedAt": "2026-08-14T12:55:09.650Z",
-      "lastDetectedAt": "2026-08-14T12:55:09.650Z",
-      "lastRecheckAt": "2026-08-14T12:55:09.650Z",
-      "lastRecheckResult": "new",
-      "resolvedAt": "",
-      "status": "New",
-      "humanAssessment": "Uncertain",
-      "humanNote": "",
-      "potentiallySystemic": false
-    }
-  ]
+  }
 };

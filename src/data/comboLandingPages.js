@@ -1,4 +1,4 @@
-import { conflictsWithDiet } from '../utils/planBuilder.js';
+import { conflictsWithDiet } from '../utils/dietCompatibility.js';
 const REVIEWED_DATE = '22 June 2026';
 
 export const SUPERMARKET_EVIDENCE = {

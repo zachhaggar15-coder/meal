@@ -1022,10 +1022,23 @@ function updateHistory(history, run, reviews, totalPlans) {
 export function buildDashboardData({ history, inventory, latestRun, calibration = readSemanticQaCalibration(), ledger = readLedger() }) {
   const plans = inventory || buildPlanInventory();
   const perPlan = history?.perPlan || {};
-  const everSampled = Object.keys(perPlan).length;
+  // The admin coverage card describes the generated catalogue surfaced by the
+  // public plan browser. Editorial /meal-plan pages have a separate lifecycle
+  // and must not inflate this total or make catalogue coverage exceed 100%.
+  const coveragePlans = plans.filter(plan => plan.planType === 'generated');
+  const coverageRoutes = new Set(coveragePlans.map(plan => plan.route));
+  const sampledCoveragePlans = Object.entries(perPlan)
+    .filter(([route]) => coverageRoutes.has(route));
+  const everSampled = sampledCoveragePlans.length;
   const now = latestRun?.runAt ? new Date(latestRun.runAt) : new Date();
-  const sampledLast30Days = Object.values(perPlan).filter(item => daysBetween(item.lastQaAt, now) <= 30).length;
-  const runs = (history?.runs || []).slice(-12);
+  const sampledLast30Days = sampledCoveragePlans
+    .filter(([, item]) => daysBetween(item.lastQaAt, now) <= 30).length;
+  const runsByDayAndScope = new Map();
+  for (const run of (history?.runs || []).slice(-24)) {
+    const key = `${String(run.runAt || '').slice(0, 10)}|${run.sampleSize}`;
+    runsByDayAndScope.set(key, run);
+  }
+  const runs = [...runsByDayAndScope.values()].slice(-12);
   const latestReviews = latestRun?.reviews || [];
   const recentFindings = latestReviews
     .flatMap(review => review.findings.map(item => ({
@@ -1060,11 +1073,11 @@ export function buildDashboardData({ history, inventory, latestRun, calibration 
       model: latestRun.model,
     } : null,
     coverage: {
-      totalPublishedPlans: plans.length,
+      totalPublishedPlans: coveragePlans.length,
       plansEverSampled: everSampled,
-      percentageEverSampled: plans.length ? round((everSampled / plans.length) * 100, 1) : 0,
+      percentageEverSampled: coveragePlans.length ? round((everSampled / coveragePlans.length) * 100, 1) : 0,
       plansSampledLast30Days: sampledLast30Days,
-      plansNeverSampled: Math.max(0, plans.length - everSampled),
+      plansNeverSampled: Math.max(0, coveragePlans.length - everSampled),
     },
     trend: runs.map(run => ({
       runAt: run.runAt,
@@ -1073,7 +1086,9 @@ export function buildDashboardData({ history, inventory, latestRun, calibration 
       plansWithoutFlagsRate: run.plansWithoutFlagsRate ?? run.passRate,
       criticalHigh: Number(run.severity?.Critical || 0) + Number(run.severity?.High || 0),
       medium: Number(run.severity?.Medium || 0),
-      cumulativeCoverage: run.coverageAfterRun?.plansEverSampled || null,
+      cumulativeCoverage: run.coverageAfterRun?.plansEverSampled
+        ? Math.min(coveragePlans.length, run.coverageAfterRun.plansEverSampled)
+        : null,
     })),
     breakdowns: buildBreakdowns(latestReviews),
     recentFindings,

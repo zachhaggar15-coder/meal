@@ -8,9 +8,11 @@ import { MEALS } from '../src/data/mealLibrary.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
 import { PLAN_COUNT as LIGHTWEIGHT_PLAN_COUNT } from '../src/data/planCatalogMeta.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
+import { PLAN_MACRO_INDEX } from '../src/data/planMacroIndex.js';
 import { canonicaliseLegacyMeal } from '../src/utils/legacyPlanBuilder.js';
 import { analyticsSearchIntent, sanitiseAnalyticsPath, sanitiseAnalyticsUrl } from '../src/utils/analyticsSanitisation.js';
 import { getEditorialSources, getPriceClaimMeta, getPriceSources, hasSpecificPriceClaims } from '../src/utils/editorialSafeguards.js';
+import { buildPlanDays, buildShoppingList, getSeedMacroGrams } from '../src/utils/planBuilder.js';
 import { impliedMacroCalories, macroMatchStatus, validateMacroCalorieConsistency } from '../src/utils/macroTargets.js';
 import { buildPracticalRecipeSteps } from '../src/utils/recipeQuality.js';
 import { checkCoreIngredientOmission, checkFlavourCompleteness } from './lib/recipeInvariants.js';
@@ -49,6 +51,45 @@ test('specific price examples carry a dated warning and a current source', () =>
   assert.deepEqual(missing, []);
 });
 
+test('editorial dates are never presented as price-check dates', () => {
+  const meta = getPriceClaimMeta({ published: '2026-08-20', sections: [{ paragraphs: ['Example price £2.50.'] }] });
+  assert.equal(meta.dated, null);
+  assert.equal(meta.stale, true);
+});
+
+test('catalogue macro data covers every indexed plan and matches its recipes', () => {
+  assert.equal(Object.keys(PLAN_MACRO_INDEX).length, INDEXABLE_PLAN_SEEDS.length);
+  for (const slug of ['aldi-cheap-hp-veg-1800', 'aldi-muscle-gain-3000', 'any-hp-veg-2000-batch-cook']) {
+    const seed = INDEXABLE_PLAN_SEEDS.find(item => item.slug === slug);
+    assert.deepEqual(PLAN_MACRO_INDEX[slug], getSeedMacroGrams(seed));
+  }
+});
+
+test('approved high-egg plans stay within a practical weekly whole-egg quantity', () => {
+  const slugs = [
+    'aldi-cheap-hp-veg-1800',
+    'aldi-muscle-gain-3000',
+    'any-hp-veg-1800-protein-focused',
+    'any-hp-veg-2000-batch-cook',
+    'sainsburys-muscle-gain-2500-performance-protein-vegetarian-v3',
+  ];
+  for (const slug of slugs) {
+    const seed = INDEXABLE_PLAN_SEEDS.find(item => item.slug === slug);
+    const eggs = Object.values(buildShoppingList(buildPlanDays(seed).plan)).flat()
+      .find(item => /^Eggs\s/i.test(item));
+    assert.ok((Number(eggs?.match(/[\d.]+/)?.[0]) || 0) <= 24, `${slug}: ${eggs}`);
+  }
+});
+
+test('generated plan titles use consistent punctuation and remove repeated concepts', () => {
+  const offenders = INDEXABLE_PLAN_SEEDS.filter(seed => (
+    /\s-\s[\d,]+\s+kcal\b/.test(seed.title)
+    || /\bHigh Protein\b/.test(seed.title)
+    || /\b(Simple Gym Gym Beginner|Protein-Focused High Protein|Higher-Protein Weekly High Protein|Budget-Smart Weekly Budget|Low-Fuss Weekly Low Effort)\b/.test(seed.title)
+  )).map(seed => seed.slug);
+  assert.deepEqual(offenders, []);
+});
+
 test('analytics averages use only sessions with the relevant measurements', () => {
   const now = new Date().toISOString();
   const events = [
@@ -67,6 +108,29 @@ test('analytics averages use only sessions with the relevant measurements', () =
   assert.equal(stats.overview.avgMaxScrollDepth, 50);
   assert.deepEqual(stats.topPages, [{ name: '/quiz/results', value: 1 }]);
   assert.deepEqual(stats.topEntryIntents, [{ name: 'quiz', value: 1 }]);
+});
+
+test('route vitals require enough sessions for each individual metric', () => {
+  const now = new Date().toISOString();
+  const vitalEvents = Array.from({ length: 5 }, (_, index) => ({
+    occurred_at: now,
+    session_id: `vital_session_${index}`,
+    event_name: 'web_vital',
+    path: '/',
+    metadata: { metric_name: 'LCP', metric_value: 1800 },
+  }));
+  vitalEvents.push({
+    occurred_at: now,
+    session_id: 'vital_session_0',
+    event_name: 'web_vital',
+    path: '/',
+    metadata: { metric_name: 'INP', metric_value: 120 },
+  });
+  const route = buildAnalyticsStats([], [], vitalEvents).coreWebVitals.routes[0];
+  assert.equal(route.lcpStatus, 'measured');
+  assert.equal(route.inpStatus, 'insufficient_data');
+  assert.equal(route.lcpSessions, 5);
+  assert.equal(route.inpSessions, 1);
 });
 
 test('custom macro energy must broadly reconcile with the calorie target', () => {

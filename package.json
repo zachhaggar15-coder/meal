@@ -4,9 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "node scripts/generate-blog-search-index.js --check && vite build && vite build --ssr src/entry-server.jsx --outDir dist/ssr && node prerender.js && node scripts/check-protected-urls.js && node scripts/check-structured-data.js && node scripts/check-google-indexing.js && node scripts/check-affiliate-disclosure.js && node --test scripts/rendered-grammar.test.js",
+    "dev": "node scripts/generate-plan-macro-index.js && vite",
+    "build": "node scripts/generate-blog-search-index.js --check && node scripts/generate-plan-macro-index.js --check && node scripts/check-semantic-dashboard-freshness.js && vite build && vite build --ssr src/entry-server.jsx --outDir dist/ssr && node prerender.js && node scripts/check-protected-urls.js && node scripts/check-structured-data.js && node scripts/check-google-indexing.js && node scripts/check-affiliate-disclosure.js && node --test scripts/rendered-grammar.test.js",
     "generate:blog-index": "node scripts/generate-blog-search-index.js",
+    "generate:plan-macros": "node scripts/generate-plan-macro-index.js",
     "check:urls": "node scripts/check-protected-urls.js",
     "check:structured-data": "node scripts/check-structured-data.js",
     "check:google-indexing": "node scripts/check-google-indexing.js",

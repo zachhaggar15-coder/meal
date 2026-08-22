@@ -166,13 +166,17 @@ export default function BrowsePlans() {
   const { page: pageParam } = useParams();
   const paramString = params.toString();
   const routePage = readPageParam(pageParam);
-  const [search,     setSearch]     = useState(() => params.get('search') || '');
-  const [goal,       setGoal]       = useState(() => readFilterParam(params, 'goal', GOALS));
-  const [supermarket,setSupermarket]= useState(() => readFilterParam(params, 'supermarket', SUPERMARKETS));
-  const [diet,       setDiet]       = useState(() => readFilterParam(params, 'diet', DIETS));
-  const [calories,   setCalories]   = useState(() => readFilterParam(params, 'calories', CALORIES));
-  const [budget,     setBudget]     = useState(() => readFilterParam(params, 'budget', BUDGETS));
-  const [effort,     setEffort]     = useState(() => readFilterParam(params, 'effort', EFFORTS));
+  // Static prerendering cannot know a visitor's query string. Keep the first
+  // client render identical to the prerendered unfiltered page, then apply URL
+  // filters in the effect below. This avoids hydration errors on shared or
+  // bookmarked filtered URLs.
+  const [search,     setSearch]     = useState('');
+  const [goal,       setGoal]       = useState('');
+  const [supermarket,setSupermarket]= useState('');
+  const [diet,       setDiet]       = useState('');
+  const [calories,   setCalories]   = useState('');
+  const [budget,     setBudget]     = useState('');
+  const [effort,     setEffort]     = useState('');
   const [page,       setPage]       = useState(routePage);
 
   useEffect(() => {

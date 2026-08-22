@@ -230,7 +230,7 @@ function SemanticQaSection({ semanticQa }) {
 
       <div className="admin-stats-grid admin-stats-grid--wide">
         <StatCard label="Latest sample" value={number(latest.sampleSize)} detail={dateOnly(latest.runAt)} />
-        <StatCard label="Plans with no review flags" value={`${number(latest.plansWithoutFlagsRate)}%`} detail={`${number(latest.passed)} of ${number(latest.sampleSize)}`} />
+        <StatCard label="Plans with no actionable findings" value={`${number(latest.plansWithoutFlagsRate)}%`} detail={`${number(latest.passed)} of ${number(latest.sampleSize)}`} />
         <StatCard label="Plans with review flags" value={number(latest.flagged)} detail={`of ${number(latest.sampleSize)} sampled`} />
         <StatCard label="Critical" value={number(severity.Critical)} />
         <StatCard label="High" value={number(severity.High)} />
@@ -432,9 +432,9 @@ function AnalyticsSection({ analytics }) {
         rows={coreWebVitals.routes || []}
         columns={[
           { key: 'route', label: 'Route', render: row => truncate(row.route, 54) },
-          { key: 'inp', label: 'INP p75', render: row => row.dataStatus === 'measured' ? formatMilliseconds(row.inp) : 'Insufficient data' },
-          { key: 'lcp', label: 'LCP p75', render: row => row.dataStatus === 'measured' ? formatMilliseconds(row.lcp) : 'Insufficient data' },
-          { key: 'cls', label: 'CLS p75', render: row => row.dataStatus === 'measured' ? row.cls ?? '-' : 'Insufficient data' },
+          { key: 'inp', label: 'INP p75', render: row => row.inpStatus === 'measured' ? formatMilliseconds(row.inp) : 'Insufficient data' },
+          { key: 'lcp', label: 'LCP p75', render: row => row.lcpStatus === 'measured' ? formatMilliseconds(row.lcp) : 'Insufficient data' },
+          { key: 'cls', label: 'CLS p75', render: row => row.clsStatus === 'measured' ? row.cls ?? '-' : 'Insufficient data' },
           { key: 'sessions', label: 'Sessions' },
           { key: 'samples', label: 'Samples' },
         ]}

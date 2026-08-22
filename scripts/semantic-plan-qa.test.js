@@ -247,8 +247,8 @@ test('private dashboard data includes coverage, trend, severity and recent findi
   };
   const dashboard = buildDashboardData({ history, inventory, latestRun });
 
-  assert.equal(dashboard.coverage.totalPublishedPlans, 10);
-  assert.equal(dashboard.coverage.plansEverSampled, 1);
+  assert.equal(dashboard.coverage.totalPublishedPlans, 8);
+  assert.equal(dashboard.coverage.plansEverSampled, 0);
   assert.equal(dashboard.latest.severity.High, 1);
   assert.equal(dashboard.trend[0].cumulativeCoverage, 1);
   assert.equal(dashboard.recentFindings[0].reviewStatus, 'New');
