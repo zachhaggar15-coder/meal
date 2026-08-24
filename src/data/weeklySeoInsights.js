@@ -2,11 +2,11 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-08-17T07:27:45.768Z",
+  "generatedAt": "2026-08-24T07:32:59.897Z",
   "range": {
     "current": {
-      "startDate": "2026-07-18",
-      "endDate": "2026-08-14"
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-21"
     }
   },
   "source": "google-analytics-and-search-console",
@@ -42,21 +42,21 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Meal plans"
     },
     {
-      "to": "/meal-plan/1500-calorie-meal-plan",
-      "label": "1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List",
-      "description": "A complete 1500 calorie meal plan for UK adults: 7 days of high-protein meals, a full supermarket shopping list, batch cooking tips, and suitability notes for fat loss.",
-      "category": "Ready-made plan"
+      "to": "/meal-plans/1500-calorie",
+      "label": "1500 Calorie Meal Plan UK",
+      "description": "Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/meal-plans/high-protein",
+      "label": "High Protein Meal Plans UK",
+      "description": "Find free high protein meal plans for UK supermarkets, including fat loss, muscle gain, vegetarian, gym beginner and body recomposition plans.",
+      "category": "Meal plans"
     },
     {
       "to": "/blog/lidl-high-protein-food-ideas-uk",
       "label": "Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples",
       "description": "Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.",
-      "category": "Guide"
-    },
-    {
-      "to": "/blog/best-cheap-high-protein-foods-uk",
-      "label": "Cheap Protein UK: Best High-Protein Foods by Value",
-      "description": "Compare 10 cheap protein staples, from eggs and tuna to lentils and frozen chicken, with protein-per-penny guidance for UK meal prep.",
       "category": "Guide"
     }
   ]

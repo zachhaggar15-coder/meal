@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-17T07:27:48.319Z",
+  "updatedAt": "2026-08-24T07:33:03.188Z",
   "totalPlansAtLastRun": 1089,
   "perPlan": {
     "/meal-plan/2000-calorie-meal-plan": {
       "planId": "2000-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-17T07:27:48.319Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 3,
       "lastStatus": "Review suggested",
       "highestSeverity": "Medium",
       "lastSourceHash": "0fa0999b26681d5d44323f4f2a2a7ac5ef1035a809ce5f8aa412e2d985b2326f"
@@ -276,8 +276,8 @@
     "/meal-plan/1500-calorie-meal-plan": {
       "planId": "1500-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-17T07:27:48.319Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 2,
       "lastStatus": "Review suggested",
       "highestSeverity": "Medium",
       "lastSourceHash": "c7236658cb0883e54b94b2e9284b5e98df79a38c85a52073fcdfad7933e0df25"
@@ -438,8 +438,8 @@
     "/plans/aldi-veg-low-cal-batch-1800-five-a-day-v3": {
       "planId": "aldi-veg-low-cal-batch-1800-five-a-day-v3",
       "planType": "generated",
-      "lastQaAt": "2026-08-17T07:27:48.319Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 2,
       "lastStatus": "Review suggested",
       "highestSeverity": "Medium",
       "lastSourceHash": "855498b22d40cf3ef56360ea69dc0b2c75bc1ac6927c542f0b11815ca1177573"
@@ -515,6 +515,249 @@
       "lastStatus": "Review suggested",
       "highestSeverity": "Medium",
       "lastSourceHash": "0c47030f4dfe4a92c3c51d9a8a65c5e277f0ca25af7e7d0816a0dd4cf535cdb6"
+    },
+    "/meal-plan/2500-calorie-meal-plan": {
+      "planId": "2500-calorie-meal-plan",
+      "planType": "editorial",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "f8b06825e821a1ce0617035f65ead7a35cb92e7b19d71a1e1a4a321ed1f39d89"
+    },
+    "/meal-plan/aldi-low-calorie-meal-plan": {
+      "planId": "aldi-low-calorie-meal-plan",
+      "planType": "editorial",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "42d2b280ae71fc2a374349ce33e84b7b1496a02eefcb36d8a8d15ea548aac469"
+    },
+    "/plans/tesco-veg-low-cal-1800": {
+      "planId": "tesco-veg-low-cal-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "78fe7cea6cb07a92aab19dabfeb7ea8d02cd660c6015daf06f9a17bb49c918e8"
+    },
+    "/plans/aldi-weight-loss-1500": {
+      "planId": "aldi-weight-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "fb82beb6f928eca8792dd220c69ffc771ac8ccd31820b410a269ae7da8eee4a9"
+    },
+    "/plans/tesco-weight-loss-1500": {
+      "planId": "tesco-weight-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ecc832a0a23d73aac104789aab11c2b15ef6aab0eef26de4d541228aacc7b385"
+    },
+    "/plans/lidl-high-protein-low-cal-1800": {
+      "planId": "lidl-high-protein-low-cal-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "3417138bfcac7e473db7986584d501a18381b48aecbb03d1df8ecba76fa50943"
+    },
+    "/plans/lidl-budget-fat-loss-1500": {
+      "planId": "lidl-budget-fat-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2f0191d4c87885990d0d6988297c5c6c8dc7d05140d9246ffa97b0eabe2563ef"
+    },
+    "/plans/asda-muscle-gain-3000-batch-friendly-pescatarian-v3": {
+      "planId": "asda-muscle-gain-3000-batch-friendly-pescatarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "58a432d6dbddc914006d4d0bee70846b506ed6446e38a09afe0774d4ff1fc5f3"
+    },
+    "/plans/morrisons-vegan-low-cal-1800-quick-prep": {
+      "planId": "morrisons-vegan-low-cal-1800-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "0ecba1029882519f995ada283fedb8f42b267592ea1012755b6c8ca66da43372"
+    },
+    "/plans/morrisons-cutting-1400-lower-sugar-vegetarian-v3": {
+      "planId": "morrisons-cutting-1400-lower-sugar-vegetarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "8398b2741de3ad802a486f5024089924bec34f7a23591a993403184e63ca0f21"
+    },
+    "/plans/sainsburys-pescatarian-1800-mediterranean": {
+      "planId": "sainsburys-pescatarian-1800-mediterranean",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7570ff09524c22c7c9a825d91be50f84e0f8ecc93b4ad26633a0c22fdfc07cfd"
+    },
+    "/plans/iceland-budget-bodybuilding-3000-wholegrain-v3": {
+      "planId": "iceland-budget-bodybuilding-3000-wholegrain-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "7a690d6ad256dfa63fb37f12f24ae1afdd24fbec63cf97cc6e9686bde25faa78"
+    },
+    "/plans/tesco-maintenance-vegan-2000-quick-prep": {
+      "planId": "tesco-maintenance-vegan-2000-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "f56ecf6f89f3e5cd2cf7cac90d24a95c780f59d4e59b063900fa63608ec9bc6a"
+    },
+    "/plans/asda-body-recomp-2200-balanced-plate-v3": {
+      "planId": "asda-body-recomp-2200-balanced-plate-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "21b8ea614cbb60447100bb2c0c6543c98890ace51b08fc9850c568c420711689"
+    },
+    "/plans/sainsburys-anti-inflammatory-pesc-1800": {
+      "planId": "sainsburys-anti-inflammatory-pesc-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "0c476f6e4e3841a5927d327b78157942c396645977015c1090f7d6a1549ebe4a"
+    },
+    "/plans/tesco-endurance-pesc-2000": {
+      "planId": "tesco-endurance-pesc-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "9c83ab62e249665d50f58ffa69ae5af0ce9f1cf8c289064560759214563d7274"
+    },
+    "/plans/iceland-cheap-student-1500-low-fuss-vegetarian-v3": {
+      "planId": "iceland-cheap-student-1500-low-fuss-vegetarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "e0e60a0b83a42a106fad1fa6d8ca0cba5954ae99afc57598dcc7144290926629"
+    },
+    "/plans/asda-low-effort-vegan-1800-fifteen-minute": {
+      "planId": "asda-low-effort-vegan-1800-fifteen-minute",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "d6bdfb4de72484c2dafea6df14e7cccc3e56e172cb63d4e684c8001472d02a5f"
+    },
+    "/plans/lidl-busy-professional-2000-desk-lunch": {
+      "planId": "lidl-busy-professional-2000-desk-lunch",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "385f59dd7be74e091b6c68119f68b53724cfd0997bde115af9a94b6da3369a50"
+    },
+    "/plans/sainsburys-hp-veg-1800-budget-smart": {
+      "planId": "sainsburys-hp-veg-1800-budget-smart",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "f322b0de7ad9e50391884d628fb6a621ddd4e8c10be0387719c0f5da246b9dc8"
+    },
+    "/plans/marks-spencer-weight-loss-1400-moderate-batch": {
+      "planId": "marks-spencer-weight-loss-1400-moderate-batch",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "de57567da08422b496bcf0c8357df9e711e3eb15ac63a1445ab5b91bd620bfb2"
+    },
+    "/plans/aldi-cheap-hp-veg-1800": {
+      "planId": "aldi-cheap-hp-veg-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "37246562b05ca81071d4a128c373fa5952bc69d507ae02963a49244b2e673adb"
+    },
+    "/plans/morrisons-menopause-1800-batch-friendly-v3": {
+      "planId": "morrisons-menopause-1800-batch-friendly-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "b44fe68f5d4611e5ed542265014e83e8cb2029f343b6f2d6d2c9ff15c2f67bbe"
+    },
+    "/plans/sainsburys-gym-beginner-2000-training-day-v3": {
+      "planId": "sainsburys-gym-beginner-2000-training-day-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "44cd7353f077b2a18276464acc18b8f14f2e101d94ff0d3c7a5061ba25a4aa68"
+    },
+    "/plans/coop-high-protein-low-cal-1500-budget-batch": {
+      "planId": "coop-high-protein-low-cal-1500-budget-batch",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "3bfab904a2eaca196ff9ba5348372cfb35c6403db286dbdc436684738faa55bd"
+    },
+    "/plans/waitrose-weight-loss-1500-moderate-batch": {
+      "planId": "waitrose-weight-loss-1500-moderate-batch",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "2b70bd2420f76e1ea9074702bf98cf08803a5a5141248672128e98398f4c3f56"
+    },
+    "/plans/morrisons-cutting-1400-lean-cut": {
+      "planId": "morrisons-cutting-1400-lean-cut",
+      "planType": "generated",
+      "lastQaAt": "2026-08-24T07:33:03.188Z",
+      "timesSampled": 1,
+      "lastStatus": "Review suggested",
+      "highestSeverity": "Medium",
+      "lastSourceHash": "abe71d610401b4546ad87042580989c018d07518a8c3742377776387ac930e1f"
     }
   },
   "runs": [
@@ -854,6 +1097,193 @@
         "totalPublishedPlans": 1089,
         "percentageEverSampled": 5.2
       }
+    },
+    {
+      "runId": "2026-W35-2026-08-24",
+      "runAt": "2026-08-24T07:33:03.188Z",
+      "weekSeed": "2026-W35",
+      "sampleSize": 30,
+      "passed": 6,
+      "flagged": 24,
+      "passRate": 20,
+      "plansWithoutFlagsRate": 20,
+      "severity": {
+        "Critical": 0,
+        "High": 0,
+        "Medium": 67,
+        "Low": 0
+      },
+      "systemicIssueCount": 5,
+      "systemicIssues": [
+        {
+          "patternKey": "weekly-ingredient-accumulation",
+          "issue": "1250ml skimmed milk (about totals (about 1232ml used) for the week (dairy) — review whether this accumulated quantity is still a practical single shop, especially if driven by a repeated meal.",
+          "affectedSampledPlans": 17,
+          "routes": [
+            "/meal-plan/1500-calorie-meal-plan",
+            "/plans/aldi-veg-low-cal-batch-1800-five-a-day-v3",
+            "/meal-plan/2000-calorie-meal-plan",
+            "/meal-plan/2500-calorie-meal-plan",
+            "/meal-plan/aldi-low-calorie-meal-plan",
+            "/plans/tesco-veg-low-cal-1800",
+            "/plans/aldi-weight-loss-1500",
+            "/plans/lidl-high-protein-low-cal-1800"
+          ],
+          "severity": "Medium",
+          "likelySharedComponent": "shared plan generation or source data",
+          "firstDetected": "2026-08-17T07:27:48.319Z",
+          "mostRecentDetection": "2026-08-24T07:33:03.188Z",
+          "note": "Potential systemic issue — investigate shared generation logic."
+        },
+        {
+          "patternKey": "meal-style-method-mismatch",
+          "issue": "The meal is called a salad, but the method does not assemble one.",
+          "affectedSampledPlans": 11,
+          "routes": [
+            "/plans/aldi-veg-low-cal-batch-1800-five-a-day-v3",
+            "/plans/lidl-high-protein-low-cal-1800",
+            "/plans/asda-body-recomp-2200-balanced-plate-v3",
+            "/plans/tesco-endurance-pesc-2000",
+            "/plans/iceland-cheap-student-1500-low-fuss-vegetarian-v3",
+            "/plans/asda-low-effort-vegan-1800-fifteen-minute",
+            "/plans/sainsburys-hp-veg-1800-budget-smart",
+            "/plans/aldi-cheap-hp-veg-1800"
+          ],
+          "severity": "Medium",
+          "likelySharedComponent": "src/utils/recipeQuality.js meal-style branch",
+          "firstDetected": "2026-08-13T16:44:35.864Z",
+          "mostRecentDetection": "2026-08-24T07:33:03.188Z",
+          "note": "Potential systemic issue — investigate shared generation logic."
+        },
+        {
+          "patternKey": "important-ingredient-unused",
+          "issue": "lentil is central to the meal name but is not clearly used in the method.",
+          "affectedSampledPlans": 9,
+          "routes": [
+            "/plans/aldi-veg-low-cal-batch-1800-five-a-day-v3",
+            "/plans/aldi-weight-loss-1500",
+            "/plans/asda-body-recomp-2200-balanced-plate-v3",
+            "/plans/tesco-endurance-pesc-2000",
+            "/plans/sainsburys-hp-veg-1800-budget-smart",
+            "/plans/aldi-cheap-hp-veg-1800",
+            "/plans/sainsburys-gym-beginner-2000-training-day-v3",
+            "/plans/waitrose-weight-loss-1500-moderate-batch"
+          ],
+          "severity": "Medium",
+          "likelySharedComponent": "src/utils/recipeQuality.js method generation",
+          "firstDetected": "2026-08-13T16:44:35.864Z",
+          "mostRecentDetection": "2026-08-24T07:33:03.188Z",
+          "note": "Potential systemic issue — investigate shared generation logic."
+        },
+        {
+          "patternKey": "shopping-duplicate-alias",
+          "issue": "Potential duplicate purchase entries: Cucumber 1 (about 1/2 used) (vegetables); Cucumber slices 3 (vegetables).",
+          "affectedSampledPlans": 6,
+          "routes": [
+            "/plans/lidl-high-protein-low-cal-1800",
+            "/plans/morrisons-vegan-low-cal-1800-quick-prep",
+            "/plans/iceland-budget-bodybuilding-3000-wholegrain-v3",
+            "/plans/asda-body-recomp-2200-balanced-plate-v3",
+            "/plans/asda-low-effort-vegan-1800-fifteen-minute",
+            "/plans/sainsburys-gym-beginner-2000-training-day-v3"
+          ],
+          "severity": "Medium",
+          "likelySharedComponent": "src/utils/planBuilder.js shopping aggregation",
+          "firstDetected": "2026-08-13T16:44:35.864Z",
+          "mostRecentDetection": "2026-08-24T07:33:03.188Z",
+          "note": "Potential systemic issue — investigate shared generation logic."
+        },
+        {
+          "patternKey": "container-count-outlier",
+          "issue": "Recommends 17 containers, which likely assumes zero reuse across the week rather than concurrently stored meals.",
+          "affectedSampledPlans": 4,
+          "routes": [
+            "/plans/lidl-high-protein-low-cal-1800",
+            "/plans/marks-spencer-weight-loss-1400-moderate-batch",
+            "/plans/coop-high-protein-low-cal-1500-budget-batch",
+            "/plans/waitrose-weight-loss-1500-moderate-batch"
+          ],
+          "severity": "Medium",
+          "likelySharedComponent": "shared plan generation or source data",
+          "firstDetected": "2026-08-17T07:27:48.319Z",
+          "mostRecentDetection": "2026-08-24T07:33:03.188Z",
+          "note": "Potential systemic issue — investigate shared generation logic."
+        }
+      ],
+      "manualReviewRoutes": [
+        "/meal-plan/1500-calorie-meal-plan",
+        "/plans/aldi-veg-low-cal-batch-1800-five-a-day-v3",
+        "/meal-plan/2000-calorie-meal-plan",
+        "/meal-plan/2500-calorie-meal-plan",
+        "/meal-plan/aldi-low-calorie-meal-plan",
+        "/plans/tesco-veg-low-cal-1800",
+        "/plans/aldi-weight-loss-1500",
+        "/plans/lidl-high-protein-low-cal-1800",
+        "/plans/asda-muscle-gain-3000-batch-friendly-pescatarian-v3",
+        "/plans/morrisons-vegan-low-cal-1800-quick-prep",
+        "/plans/iceland-budget-bodybuilding-3000-wholegrain-v3",
+        "/plans/tesco-maintenance-vegan-2000-quick-prep",
+        "/plans/asda-body-recomp-2200-balanced-plate-v3",
+        "/plans/tesco-endurance-pesc-2000",
+        "/plans/iceland-cheap-student-1500-low-fuss-vegetarian-v3",
+        "/plans/asda-low-effort-vegan-1800-fifteen-minute",
+        "/plans/sainsburys-hp-veg-1800-budget-smart",
+        "/plans/marks-spencer-weight-loss-1400-moderate-batch",
+        "/plans/aldi-cheap-hp-veg-1800",
+        "/plans/morrisons-menopause-1800-batch-friendly-v3",
+        "/plans/sainsburys-gym-beginner-2000-training-day-v3",
+        "/plans/coop-high-protein-low-cal-1500-budget-batch",
+        "/plans/waitrose-weight-loss-1500-moderate-batch",
+        "/plans/morrisons-cutting-1400-lean-cut"
+      ],
+      "sampledRoutes": [
+        "/meal-plan/1500-calorie-meal-plan",
+        "/plans/aldi-veg-low-cal-batch-1800-five-a-day-v3",
+        "/meal-plan/2000-calorie-meal-plan",
+        "/meal-plan/2500-calorie-meal-plan",
+        "/meal-plan/aldi-low-calorie-meal-plan",
+        "/plans/tesco-veg-low-cal-1800",
+        "/plans/aldi-weight-loss-1500",
+        "/plans/tesco-weight-loss-1500",
+        "/plans/lidl-high-protein-low-cal-1800",
+        "/plans/lidl-budget-fat-loss-1500",
+        "/plans/asda-muscle-gain-3000-batch-friendly-pescatarian-v3",
+        "/plans/morrisons-vegan-low-cal-1800-quick-prep",
+        "/plans/morrisons-cutting-1400-lower-sugar-vegetarian-v3",
+        "/plans/sainsburys-pescatarian-1800-mediterranean",
+        "/plans/iceland-budget-bodybuilding-3000-wholegrain-v3",
+        "/plans/tesco-maintenance-vegan-2000-quick-prep",
+        "/plans/asda-body-recomp-2200-balanced-plate-v3",
+        "/plans/sainsburys-anti-inflammatory-pesc-1800",
+        "/plans/tesco-endurance-pesc-2000",
+        "/plans/iceland-cheap-student-1500-low-fuss-vegetarian-v3",
+        "/plans/asda-low-effort-vegan-1800-fifteen-minute",
+        "/plans/lidl-busy-professional-2000-desk-lunch",
+        "/plans/sainsburys-hp-veg-1800-budget-smart",
+        "/plans/marks-spencer-weight-loss-1400-moderate-batch",
+        "/plans/aldi-cheap-hp-veg-1800",
+        "/plans/morrisons-menopause-1800-batch-friendly-v3",
+        "/plans/sainsburys-gym-beginner-2000-training-day-v3",
+        "/plans/coop-high-protein-low-cal-1500-budget-batch",
+        "/plans/waitrose-weight-loss-1500-moderate-batch",
+        "/plans/morrisons-cutting-1400-lean-cut"
+      ],
+      "model": {
+        "status": "not_configured",
+        "model": "",
+        "calls": 0,
+        "attempted": 0,
+        "successful": 0,
+        "malformed": 0,
+        "unavailable": 0,
+        "error": "",
+        "fallback": "Local semantic checks completed; model enrichment did not run."
+      },
+      "coverageAfterRun": {
+        "plansEverSampled": 84,
+        "totalPublishedPlans": 1089,
+        "percentageEverSampled": 7.7
+      }
     }
   ],
   "reviewStatuses": {
@@ -1005,6 +1435,57 @@
     "qa_689f6ef328bf0fe6": "New",
     "qa_d978259a1c714391": "New",
     "qa_4f601689a31148aa": "New",
-    "qa_493c7e0190899e09": "New"
+    "qa_493c7e0190899e09": "New",
+    "qa_c0645ad99c241c84": "New",
+    "qa_e2a4633ea6542baf": "New",
+    "qa_003cae86e321bc37": "New",
+    "qa_91792bda3a8f681a": "New",
+    "qa_84ab31ea78707b42": "New",
+    "qa_3f3b804d9b6edf5e": "New",
+    "qa_04cd794956121eae": "New",
+    "qa_a48b665e42963a0e": "New",
+    "qa_86b261a99cb95cfc": "New",
+    "qa_fb39fc62f88027a7": "New",
+    "qa_891bc812ff7b50f9": "New",
+    "qa_d25fc97f066095f1": "New",
+    "qa_0c9522b5adc2f99e": "New",
+    "qa_e9cf8523e3e589eb": "New",
+    "qa_b13f653d48ed580c": "New",
+    "qa_69110820f326f64c": "New",
+    "qa_968d46e0bdd96ba7": "New",
+    "qa_7bc14fc46ed11aea": "New",
+    "qa_078890bd66525db4": "New",
+    "qa_a5f74ec8171a2df9": "New",
+    "qa_257b3c527d4b01af": "New",
+    "qa_a4c4e3aa662c293a": "New",
+    "qa_698424dfad7f0f06": "New",
+    "qa_e14ebe18b8941db3": "New",
+    "qa_6e353da5746ad734": "New",
+    "qa_99a1ccae935fefd2": "New",
+    "qa_722d29967b6a4416": "New",
+    "qa_b83f94df6695d5e8": "New",
+    "qa_549911efa5ae9383": "New",
+    "qa_a42fbf15a35862fe": "New",
+    "qa_7d570c2486095079": "New",
+    "qa_f2ebfa6c5ec9712c": "New",
+    "qa_3af94aa2c81ee11f": "New",
+    "qa_207576eaef6692af": "New",
+    "qa_58d3e5aef9d1bdf7": "New",
+    "qa_7ea4bfecbe68bcab": "New",
+    "qa_b7d1b29e09beb909": "New",
+    "qa_cc101cecfe2c29da": "New",
+    "qa_3024a13e04389aaf": "New",
+    "qa_8935c3baa3d270be": "New",
+    "qa_939428a919c31e12": "New",
+    "qa_f0b240da1cb55d83": "New",
+    "qa_d3813810efe94529": "New",
+    "qa_8046aa2d0206f0b5": "New",
+    "qa_7663d1118bd17705": "New",
+    "qa_15d4568955cbb744": "New",
+    "qa_031318695553e4fb": "New",
+    "qa_46581b2fff413424": "New",
+    "qa_c145ce9b819408bf": "New",
+    "qa_200a549b45c3bff1": "New",
+    "qa_226320b93b398b3f": "New"
   }
 }
