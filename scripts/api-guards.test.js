@@ -83,6 +83,55 @@ async function run() {
   assert.equal(limitedRes.statusCode, 429);
   assert.ok(Number(limitedRes.headers['Retry-After']) > 0);
 
+  // Rate limiting is per client, not per address. Two people behind one office
+  // IP on the same browser build used to share a bucket, so a stranger's usage
+  // locked you out; the browser's per-tab id now separates them.
+  const sharedRoute = `security-test-shared-${Date.now()}`;
+  const guard = req => applyApiGuards(req, makeRes(), {
+    route: sharedRoute,
+    maxBodyBytes: 1024,
+    rateLimit: { limit: 3, windowMs: 60_000 },
+  });
+  const sameOffice = client => makeReq({
+    ip: '198.51.100.7',
+    ua: 'shared-office-browser',
+    headers: { 'x-mealprep-client': client },
+  });
+
+  for (let i = 0; i < 3; i += 1) {
+    assert.equal(await guard(sameOffice('alice-tab')), true, 'a caller gets their full budget');
+  }
+  assert.equal(await guard(sameOffice('alice-tab')), false, 'and is blocked once they spend it');
+  assert.equal(
+    await guard(sameOffice('bob-tab')),
+    true,
+    'someone else on the same IP and browser must be unaffected',
+  );
+
+  // The client id is caller-supplied, so rotating it must buy nothing beyond
+  // the per-IP ceiling — five times the per-client limit.
+  const ceilingRoute = `security-test-ceiling-${Date.now()}`;
+  let allowedThrough = 0;
+  for (let i = 0; i < 18; i += 1) {
+    const passed = await applyApiGuards(
+      makeReq({ ip: '203.0.113.9', ua: 'rotator', headers: { 'x-mealprep-client': `id-${i}` } }),
+      makeRes(),
+      { route: ceilingRoute, maxBodyBytes: 1024, rateLimit: { limit: 3, windowMs: 60_000 } },
+    );
+    if (passed) allowedThrough += 1;
+  }
+  assert.equal(allowedThrough, 15, 'rotating the client id cannot exceed the per-IP ceiling');
+
+  // Two different addresses never share a ceiling, even with an identical id.
+  const splitRoute = `security-test-split-${Date.now()}`;
+  const guardSplit = ip => applyApiGuards(
+    makeReq({ ip, ua: 'ua', headers: { 'x-mealprep-client': 'same-id' } }),
+    makeRes(),
+    { route: splitRoute, maxBodyBytes: 1024, rateLimit: { limit: 1, windowMs: 60_000 } },
+  );
+  assert.equal(await guardSplit('192.0.2.10'), true);
+  assert.equal(await guardSplit('192.0.2.11'), true, 'separate addresses keep separate ceilings');
+
   assert.equal(assertInteger('7', 'days', { allowed: [1, 3, 7] }), 7);
   assert.throws(() => assertInteger('8', 'days', { allowed: [1, 3, 7] }), /days must be one of/);
   assert.equal(assertText('hello\nworld', 'instruction', 20), 'hello world');

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { apiHeaders } from '../utils/apiClient.js';
 
 export default function MealPromptBox({ meal, onSwap }) {
   const [open, setOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function MealPromptBox({ meal, onSwap }) {
     try {
       const res = await fetch('/api/edit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ plan: syntheticPlan, instruction: instruction.trim() }),
       });
       const data = await res.json().catch(() => ({}));

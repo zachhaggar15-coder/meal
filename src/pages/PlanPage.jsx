@@ -43,6 +43,7 @@ import {
 import { toTitleCase } from '../utils/textFormatting.js';
 import NotFound from './NotFound.jsx';
 import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
+import { apiHeaders } from '../utils/apiClient.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -263,7 +264,7 @@ export default function PlanPage() {
     try {
       const res = await fetch('/api/edit-meal', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ meal, prompt: editPrompt }),
       });
 

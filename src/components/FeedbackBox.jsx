@@ -1,4 +1,5 @@
 import { useId, useState } from 'react';
+import { apiHeaders } from '../utils/apiClient.js';
 
 const MAX_FEEDBACK_LENGTH = 4000;
 
@@ -40,7 +41,7 @@ export default function FeedbackBox({
     try {
       const res = await fetch('/api/feedback', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           feedback: feedbackText,
           email: showEmail ? email.trim() : '',

@@ -18,6 +18,7 @@ import { MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { PLAN_COUNT } from '../data/planCatalogMeta.js';
 import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
+import { apiHeaders } from '../utils/apiClient.js';
 
 // ── JSON-LD ───────────────────────────────────────────────────────────────────
 
@@ -185,7 +186,7 @@ export default function Home() {
     try {
       const res = await fetch('/api/edit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ plan, instruction }),
       });
       if (!res.ok) {
@@ -211,7 +212,7 @@ export default function Home() {
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(values),
       });
       if (!res.ok) {

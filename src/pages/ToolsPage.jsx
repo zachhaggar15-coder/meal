@@ -9,6 +9,7 @@ import { buildBrowsePlanUrl } from '../data/planChooser.js';
 import { CONTAINER_TIER_COPY, getContainerRecommendation } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
+import { apiHeaders } from '../utils/apiClient.js';
 import {
   PROTEIN_FOODS,
   PRICE_CHECKED_DATE,
@@ -402,7 +403,7 @@ export default function ToolsPage() {
     try {
       const response = await fetch('/api/edit-meal', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ meal: option, prompt }),
       });
       const data = await response.json();

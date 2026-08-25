@@ -1,8 +1,17 @@
 import crypto from 'node:crypto';
 
 const memoryBuckets = new Map();
-const MAX_MEMORY_BUCKETS = 5000;
+const MAX_MEMORY_BUCKETS = 10000;
 const JSON_CONTENT_TYPE = /\bapplication\/json\b/i;
+
+// Sent by the browser (see src/utils/apiClient.js) so two people sharing one
+// IP — an office, a school, a mobile carrier's CGNAT — get their own budget
+// instead of one exhausting the other's.
+const CLIENT_HEADER = 'x-mealprep-client';
+// The client id is supplied by the caller, so it can be rotated to mint fresh
+// budgets. The per-IP ceiling is what actually caps abuse; the per-client limit
+// is there for fairness between people who happen to share an address.
+const SHARED_CEILING_MULTIPLIER = 5;
 
 export async function applyApiGuards(req, res, options) {
   const contentType = header(req, 'content-type');
@@ -39,7 +48,11 @@ export async function applyApiGuards(req, res, options) {
 // retries after a server-side failure spends their own budget on our fault and
 // ends up rate-limited for it.
 export function refundRateLimit(req, route) {
-  const key = `${route}:${clientFingerprint(req)}`;
+  refundBucket(`${route}:client:${clientFingerprint(req)}`);
+  refundBucket(`${route}:ip:${addressFingerprint(req)}`);
+}
+
+function refundBucket(key) {
   const bucket = memoryBuckets.get(key);
   if (bucket && bucket.count > 0) bucket.count -= 1;
 }
@@ -104,11 +117,31 @@ export function sendGuardError(res, err) {
   throw err;
 }
 
-function hitRateLimit(req, route, { limit, windowMs }) {
+// Two buckets, not one. The per-client bucket is the limit a normal visitor
+// feels; the per-IP ceiling sits well above it and only bites when a single
+// address is genuinely hammering a route. A stranger on your office wifi can
+// no longer spend your allowance, and rotating the client id buys a caller
+// nothing beyond the ceiling.
+function hitRateLimit(req, route, { limit, windowMs, sharedLimit }) {
   const now = Date.now();
   pruneBuckets(now);
 
-  const key = `${route}:${clientFingerprint(req)}`;
+  const ceiling = sharedLimit ?? limit * SHARED_CEILING_MULTIPLIER;
+  const perClient = hitBucket(`${route}:client:${clientFingerprint(req)}`, limit, windowMs, now);
+  const perAddress = hitBucket(`${route}:ip:${addressFingerprint(req)}`, ceiling, windowMs, now);
+
+  const blocking = [perClient, perAddress].find(bucket => !bucket.allowed);
+  const resetAt = blocking?.resetAt ?? Math.max(perClient.resetAt, perAddress.resetAt);
+
+  return {
+    allowed: !blocking,
+    remaining: Math.min(perClient.remaining, perAddress.remaining),
+    resetAt,
+    retryAfterSeconds: Math.max(1, Math.ceil((resetAt - now) / 1000)),
+  };
+}
+
+function hitBucket(key, limit, windowMs, now) {
   let bucket = memoryBuckets.get(key);
   if (!bucket || bucket.resetAt <= now) {
     bucket = { count: 0, resetAt: now + windowMs };
@@ -116,12 +149,10 @@ function hitRateLimit(req, route, { limit, windowMs }) {
   }
 
   bucket.count += 1;
-  const remaining = Math.max(0, limit - bucket.count);
   return {
     allowed: bucket.count <= limit,
-    remaining,
+    remaining: Math.max(0, limit - bucket.count),
     resetAt: bucket.resetAt,
-    retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000)),
   };
 }
 
@@ -134,17 +165,30 @@ function pruneBuckets(now) {
   }
 }
 
+// Identifies one caller. IP and user-agent alone put everyone behind a shared
+// address on the same browser build into a single bucket, so the browser's own
+// per-tab id joins them. A caller that sends no id degrades to exactly the old
+// behaviour rather than sharing a bucket with every other id-less caller.
 function clientFingerprint(req) {
-  const ip = firstForwardedIp(header(req, 'x-forwarded-for'))
+  const clientId = header(req, CLIENT_HEADER).slice(0, 64);
+  const userAgent = header(req, 'user-agent').slice(0, 160);
+  return hash(`${requestAddress(req)}|${userAgent}|${clientId}`);
+}
+
+// The ceiling is per address only — a client id must not be able to escape it.
+function addressFingerprint(req) {
+  return hash(requestAddress(req));
+}
+
+function requestAddress(req) {
+  return firstForwardedIp(header(req, 'x-forwarded-for'))
     || header(req, 'x-real-ip')
     || req.socket?.remoteAddress
     || 'unknown';
-  const userAgent = header(req, 'user-agent').slice(0, 160);
-  return crypto
-    .createHash('sha256')
-    .update(`${ip}|${userAgent}`)
-    .digest('hex')
-    .slice(0, 32);
+}
+
+function hash(value) {
+  return crypto.createHash('sha256').update(value).digest('hex').slice(0, 32);
 }
 
 function firstForwardedIp(value) {
