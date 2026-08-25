@@ -34,6 +34,16 @@ export async function applyApiGuards(req, res, options) {
   return true;
 }
 
+// Hands a request's slot back when the failure was ours, not the caller's — an
+// upstream error or a result we couldn't vouch for. Without this a user who
+// retries after a server-side failure spends their own budget on our fault and
+// ends up rate-limited for it.
+export function refundRateLimit(req, route) {
+  const key = `${route}:${clientFingerprint(req)}`;
+  const bucket = memoryBuckets.get(key);
+  if (bucket && bucket.count > 0) bucket.count -= 1;
+}
+
 export function assertInteger(value, name, { min, max, allowed, fallback } = {}) {
   const number = Number(value ?? fallback);
   if (!Number.isInteger(number)) {

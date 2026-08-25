@@ -311,6 +311,106 @@ test('AI plan edits rebuild day totals and the consolidated shopping list', () =
   assert.ok(Object.values(plan.shopping_list).flat().some(item => /rolled oats/i.test(item)));
 });
 
+test('ingredient lines phrased the way an AI writes them still resolve', () => {
+  // Each of these came back from a real /api/edit-meal call and failed the
+  // whole edit: a preparation word in front of the food, a size word after the
+  // count, US tinned-goods phrasing, and a gram-basis food asked for in ml.
+  const lines = [
+    'Cooked chicken breast 100g',
+    'Grilled chicken breast 150g',
+    'Tomato 1 medium',
+    'Egg 1 large',
+    'Cheddar cheese 30g',
+    'Feta cheese 30g',
+    'Canned tuna 100g',
+    'Soy sauce 15ml',
+    'Balsamic vinegar 10ml',
+    'Salad leaves 40g',
+  ];
+  for (const line of lines) {
+    const result = computeMealNutritionRaw([line]);
+    assert.deepEqual(result.unmatched, [], `${line} should resolve to a nutrition entry`);
+    assert.ok(result.kcal > 0, `${line} should carry calories`);
+  }
+});
+
+test('an exact table name always beats the descriptor-stripping fallback', () => {
+  // 'lean beef mince' and 'plain kefir' start with words the fallback peels off.
+  // They own table rows, so they must never be reduced to 'beef mince'/'kefir'.
+  assert.equal(
+    Math.round(computeMealNutritionRaw(['Lean beef mince 100g']).kcal),
+    Math.round(NUTRITION_TABLE['lean beef mince'].kcal100),
+  );
+  assert.equal(
+    Math.round(computeMealNutritionRaw(['Plain kefir 100ml']).kcal),
+    Math.round(NUTRITION_TABLE['plain kefir'].kcal100),
+  );
+});
+
+test('an AI edit survives one unresolvable ingredient by falling back to a flagged estimate', () => {
+  const meal = canonicaliseAiMeal({
+    type: 'Lunch',
+    name: 'Mystery bowl',
+    kcal: 520,
+    protein: 41,
+    carbs: 38,
+    fats: 22,
+    fibre: 7,
+    ingredients: [
+      'Chicken breast 150g',
+      'Brown rice 55g',
+      'Broccoli 80g',
+      'Olive oil 10g',
+      'Mystery powder 40g',
+    ],
+    portion_size: 'Chicken breast 150g',
+    recipe: ['Cook.', 'Serve.'],
+  }, { onUnresolved: 'estimate' });
+
+  assert.equal(meal.nutritionEstimated, true);
+  assert.deepEqual(meal.unresolvedIngredients, ['Mystery powder 40g']);
+  assert.equal(meal.kcal, 520, 'the stated figures are kept, not recomputed to zero');
+  assert.equal(meal.calories, 520);
+  assert.equal(meal.protein, 41);
+});
+
+test('a meal we mostly cannot resolve is still refused outright', () => {
+  assert.throws(
+    () => canonicaliseAiMeal({
+      kcal: 400,
+      protein: 30,
+      ingredients: ['Chicken breast 150g', 'Mystery powder 40g'],
+    }, { onUnresolved: 'estimate' }),
+    UnresolvedNutritionError,
+    'half the lines unresolved is too far off-vocabulary to vouch for',
+  );
+});
+
+test('generated plans stay strict — only the single-meal editor may estimate', () => {
+  // canonicaliseAiPlan maps over meals, so the index argument must not be able
+  // to arrive as an options object and quietly switch the strictness off.
+  assert.throws(
+    () => canonicaliseAiPlan({
+      weekly_plan: [{
+        day: 'Monday',
+        meals: [{
+          type: 'Breakfast',
+          name: 'Mystery',
+          kcal: 300,
+          protein: 20,
+          ingredients: [
+            'Rolled oats 80g',
+            'Semi-skimmed milk 200ml',
+            'Banana 1',
+            'Mystery powder 40g',
+          ],
+        }],
+      }],
+    }),
+    UnresolvedNutritionError,
+  );
+});
+
 function pick(value, keys) {
   return Object.fromEntries(keys.map(key => [key, value[key]]));
 }

@@ -221,7 +221,9 @@ export const track = {
   emailPlanFailed: (props) => trackEvent('email_plan_failed', props),
   mealEditSubmitted: (slug) => trackEvent('meal_edit_submitted', { slug }),
   mealEditCompleted: (slug) => trackEvent('meal_edit_completed', { slug }),
-  mealEditFailed: (slug) => trackEvent('meal_edit_failed', { slug }),
+  // Takes props, not a bare slug: without the status and error text a failure
+  // is indistinguishable from every other failure once it reaches analytics.
+  mealEditFailed: (props) => trackEvent('meal_edit_failed', props),
   // Form inputs
   supermarketSelected: (store) => trackEvent('supermarket_selected', { store }),
   calorieTargetChanged: (kcal) => trackEvent('calorie_target_changed', { kcal }),

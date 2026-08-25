@@ -256,6 +256,10 @@ export default function PlanPage() {
     const meal = basePlan.plan[editTarget.dayIdx].meals[editTarget.mealIdx];
     track.mealEditSubmitted(plan.slug);
 
+    // Held outside the try so the catch can report what actually went wrong
+    // rather than logging every failure as an indistinguishable one.
+    let failureStatus = 0;
+
     try {
       const res = await fetch('/api/edit-meal', {
         method: 'POST',
@@ -264,8 +268,9 @@ export default function PlanPage() {
       });
 
       if (!res.ok) {
+        failureStatus = res.status;
         const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || 'Edit failed');
+        throw new Error(errData.error || `Request failed with ${res.status}`);
       }
       const data = await res.json();
 
@@ -280,7 +285,9 @@ export default function PlanPage() {
         newPlan.shoppingList = buildShoppingList(newPlan.plan);
 
         setEditedPlan(newPlan);
-        setEditNote('Plan updated. Calorie and macro values are estimates after AI editing.');
+        setEditNote(data.meal.nutritionEstimated
+          ? 'Plan updated. We could not match every ingredient to our nutrition data, so the calories and macros for this meal are the AI’s own estimate.'
+          : 'Plan updated. Calorie and macro values are estimates after AI editing.');
         setEditTarget(null);
         setEditPrompt('');
         track.mealEditCompleted(plan.slug);
@@ -288,11 +295,17 @@ export default function PlanPage() {
           ...planAnalytics,
           cta_location: 'inline_meal_editor',
           meal_name: data.meal.name,
+          nutrition_estimated: Boolean(data.meal.nutritionEstimated),
         });
       }
-    } catch (_err) {
+    } catch (err) {
       setEditError('Edit failed. Please try again.');
-      track.mealEditFailed(plan.slug);
+      track.mealEditFailed({
+        slug: plan.slug,
+        status: failureStatus,
+        reason: failureStatus ? 'server_error' : 'network_error',
+        error: String(err?.message || 'unknown').slice(0, 160),
+      });
     } finally {
       setEditLoading(false);
     }
@@ -1615,7 +1628,19 @@ function PrintablePlanSummary({ plan, marketLabel }) {
 function normaliseEditedMeal(currentMeal, returnedMeal = {}) {
   const merged = { ...currentMeal, ...returnedMeal };
   const ingredients = normaliseIngredients(merged.ingredients, merged.portion_size, merged.name);
-  const nutrition = computeMealNutrition(ingredients);
+  const computed = computeMealNutrition(ingredients);
+  // When the server could only estimate this meal, keep its figures. Recomputing
+  // here would count every ingredient it failed to match as zero calories.
+  const nutrition = returnedMeal.nutritionEstimated
+    ? {
+      kcal: Number(merged.kcal) || 0,
+      protein: Number(merged.protein) || 0,
+      carbs: Number(merged.carbs) || 0,
+      fats: Number(merged.fats) || 0,
+      fibre: Number(merged.fibre) || 0,
+      unmatched: computed.unmatched,
+    }
+    : computed;
   const portionSize = merged.portion_size || ingredients.join(', ');
   const mealWithIngredients = {
     ...merged,

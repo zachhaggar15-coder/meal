@@ -154,7 +154,10 @@ export function parseIngredientLine(raw) {
     return { name: cleanName(name), qualifier, kind: 'fraction', qty, unit: 'item', raw: original };
   }
 
-  const trailingBareCount = original.match(/^(.*?)(\d+(?:\.\d+)?)\s*((?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled)?)$/i);
+  // The trailing word may be a state ("Potato 1 baked") or, in AI-authored
+  // lines, a size ("Tomato 1 medium"). Either way the number is a plain count;
+  // without the size words the whole line falls through to `unparsed`.
+  const trailingBareCount = original.match(/^(.*?)(\d+(?:\.\d+)?)\s*((?:baked|cooked|roasted|grated|mashed|soft-boiled|hard-boiled|small|medium|large)?)$/i);
   if (trailingBareCount && trailingBareCount[1].trim()) {
     const [, prefix, amount, suffix] = trailingBareCount;
     return { name: cleanName(prefix), qualifier: suffix || null, kind: 'count', qty: Number(amount), unit: 'item', raw: original };

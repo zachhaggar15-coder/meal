@@ -29,10 +29,31 @@ export function normaliseAiIngredients(value, portionSize = '') {
   }).filter(Boolean);
 }
 
-export function canonicaliseAiMeal(meal = {}) {
+// `onUnresolved: 'estimate'` lets a caller accept the model's own macro figures
+// for a meal where a minority of ingredient lines don't resolve, rather than
+// losing an otherwise good edit to one unrecognised line. The result is marked
+// `nutritionEstimated` so the UI can say so. Anything from half the lines up is
+// too far off-vocabulary to vouch for and still throws.
+export function canonicaliseAiMeal(meal = {}, { onUnresolved = 'throw' } = {}) {
   const ingredients = normaliseAiIngredients(meal.ingredients, meal.portion_size);
   const raw = computeMealNutritionRaw(ingredients);
-  if (raw.unmatched.length) throw new UnresolvedNutritionError(raw.unmatched);
+
+  if (raw.unmatched.length) {
+    const resolvable = onUnresolved === 'estimate'
+      && raw.unmatched.length * 2 < ingredients.length;
+    if (!resolvable) throw new UnresolvedNutritionError(raw.unmatched);
+
+    const estimated = readStatedNutrition(meal);
+    return {
+      ...meal,
+      ...estimated,
+      ingredients,
+      portion_size: ingredients.join(', '),
+      nutritionEstimated: true,
+      unresolvedIngredients: raw.unmatched,
+    };
+  }
+
   const nutrition = roundNutrition(raw);
 
   return {
@@ -48,9 +69,31 @@ export function canonicaliseAiMeal(meal = {}) {
   };
 }
 
+// The model writes macros under whichever of the accepted aliases it picks;
+// validateEditedMeal has already checked they're present and in range.
+function readStatedNutrition(meal) {
+  const nutrition = roundNutrition({
+    kcal: meal.kcal ?? meal.calories,
+    protein: meal.protein,
+    carbs: meal.carbs ?? meal.carbohydrates,
+    fats: meal.fats ?? meal.fat,
+    fibre: meal.fibre ?? meal.fiber,
+  });
+
+  return {
+    calories: nutrition.kcal,
+    kcal: nutrition.kcal,
+    protein: nutrition.protein,
+    carbs: nutrition.carbs,
+    fats: nutrition.fats,
+    fibre: nutrition.fibre,
+  };
+}
+
 export function canonicaliseAiPlan(plan = {}) {
   const weeklyPlan = (plan.weekly_plan || []).map(day => {
-    const meals = (day.meals || []).map(canonicaliseAiMeal);
+    // Called through a lambda so map's index argument can't land in the options.
+    const meals = (day.meals || []).map(meal => canonicaliseAiMeal(meal));
     const totals = sumNutrition(meals);
     return {
       ...day,

@@ -15,7 +15,9 @@
 // `gramsPerTsp` override the generic 15g/5g spoon conversion for ingredients
 // whose density differs meaningfully from water (oils, honey, nut butters).
 // `basis: 'ml'` marks liquids whose label/CoFID values are expressed per
-// 100ml. This prevents millilitres from being silently treated as grams.
+// 100ml, so millilitres are costed directly against them. For a gram-basis
+// entry asked for in millilitres, `gramsPerMl` gives the conversion where the
+// density matters (oils at 0.92); everything else falls back to water at 1.
 
 export const NUTRITION_TABLE = {
   // ── Grains & carbs (dry/raw weight unless the key says otherwise) ────────
@@ -83,6 +85,12 @@ export const NUTRITION_TABLE = {
   'light mozzarella':       { kcal100: 250, pro100: 24 }, // corrected 2026-07-06: generic low-fat mozzarella ~254kcal
   'buffalo mozzarella':     { kcal100: 280, pro100: 18 },
   'reduced-fat feta':       { kcal100: 200, pro100: 16 },
+  // Full-fat forms of the cheeses above. The curated plans only ever call
+  // for the reduced-fat variants, but a free-text AI edit will happily ask
+  // for plain cheddar/feta/mozzarella. CoFID 2021 Proximates.
+  'cheddar':                { kcal100: 416, pro100: 25.4 },
+  'feta':                   { kcal100: 250, pro100: 15.6 },
+  'mozzarella':             { kcal100: 300, pro100: 22 },
   'low-fat paneer':         { kcal100: 220, pro100: 18 },
   'low-fat crème fraîche':  { kcal100: 165, pro100: 3 },
   'butter':                 { kcal100: 717, pro100: 0.6 },
@@ -208,8 +216,8 @@ export const NUTRITION_TABLE = {
   'toast':                  { kcal100: 230, pro100: 9.5, gramsEach: 35 },
 
   // ── Sauces, condiments, oils & spices ────────────────────────────────────
-  'olive oil':              { kcal100: 884, pro100: 0, gramsPerTbsp: 13.5, gramsPerTsp: 4.5 }, // verified 2026-07-06 (119kcal/tbsp)
-  'sesame oil':             { kcal100: 884, pro100: 0, gramsPerTbsp: 13.5, gramsPerTsp: 4.5 },
+  'olive oil':              { kcal100: 884, pro100: 0, gramsPerTbsp: 13.5, gramsPerTsp: 4.5, gramsPerMl: 0.92 }, // verified 2026-07-06 (119kcal/tbsp)
+  'sesame oil':             { kcal100: 884, pro100: 0, gramsPerTbsp: 13.5, gramsPerTsp: 4.5, gramsPerMl: 0.92 },
   'soy sauce':              { kcal100: 60, pro100: 8 },
   'tamari':                 { kcal100: 60, pro100: 10.5 }, // corrected 2026-07-06: USDA — tamari is more protein-dense than soy sauce
   'hoisin sauce':           { kcal100: 220, pro100: 3 },
@@ -222,6 +230,9 @@ export const NUTRITION_TABLE = {
   'honey':                  { kcal100: 304, pro100: 0.3, gramsPerTsp: 7, gramsPerTbsp: 21 }, // verified 2026-07-06
   'maple syrup':            { kcal100: 260, pro100: 0.1, gramsPerTsp: 7, gramsPerTbsp: 21 },
   'balsamic glaze':         { kcal100: 250, pro100: 0.5 },
+  'balsamic vinegar':       { kcal100: 88, pro100: 0.5, basis: 'ml' },
+  'vinegar':                { kcal100: 19, pro100: 0.1, basis: 'ml' },
+  'stir-fry sauce':         { kcal100: 100, pro100: 1.5 },
   'light dressing':         { kcal100: 50, pro100: 1, basis: 'ml' },
   'lemon dressing':         { kcal100: 90, pro100: 1.5 },
   'mustard dressing':       { kcal100: 90, pro100: 1.5 },
@@ -335,6 +346,9 @@ export const NUTRITION_MACRO_OVERRIDES = {
   'light mozzarella': { fat100: 12, carb100: 1.5, fibre100: 0 },
   'buffalo mozzarella': { fat100: 20.3, carb100: 0, fibre100: 0 },
   'reduced-fat feta': { fat100: 13, carb100: 1.5, fibre100: 0 },
+  cheddar: { fat100: 34.9, carb100: 0.1, fibre100: 0 },
+  feta: { fat100: 20.2, carb100: 1.5, fibre100: 0 },
+  mozzarella: { fat100: 22, carb100: 2.2, fibre100: 0 },
   'low-fat paneer': { fat100: 15, carb100: 1, fibre100: 0 },
   'low-fat crème fraîche': { fat100: 15, carb100: 4.4, fibre100: 0 },
   butter: { fat100: 82.2, carb100: 0.6, fibre100: 0 },
@@ -470,6 +484,9 @@ export const NUTRITION_MACRO_OVERRIDES = {
   honey: { fat100: 0, carb100: 82, fibre100: 0 },
   'maple syrup': { fat100: 0, carb100: 67, fibre100: 0 },
   'balsamic glaze': { fat100: 0.5, carb100: 55, fibre100: 0 },
+  'balsamic vinegar': { fat100: 0, carb100: 17, fibre100: 0 },
+  vinegar: { fat100: 0, carb100: 0.6, fibre100: 0 },
+  'stir-fry sauce': { fat100: 1, carb100: 20, fibre100: 0.5 },
   'light dressing': { fat100: 2, carb100: 7, fibre100: 0 },
   'lemon dressing': { fat100: 6, carb100: 6, fibre100: 0 },
   'mustard dressing': { fat100: 6, carb100: 6, fibre100: 0 },
@@ -593,6 +610,9 @@ export const NUTRITION_SYNONYMS = {
   'light mozzarella': 'light mozzarella',
   'buffalo mozzarella': 'buffalo mozzarella',
   'reduced-fat feta': 'reduced-fat feta',
+  'cheddar': 'cheddar', 'cheddar cheese': 'cheddar', 'mature cheddar': 'cheddar',
+  'feta': 'feta', 'feta cheese': 'feta',
+  'mozzarella': 'mozzarella', 'mozzarella cheese': 'mozzarella',
   'low-fat paneer': 'low-fat paneer',
   'low-fat crème fraîche': 'low-fat crème fraîche',
   'reduced-fat crème fraîche': 'low-fat crème fraîche',
@@ -714,6 +734,7 @@ export const NUTRITION_SYNONYMS = {
   'watercress': 'watercress',
   'lettuce': 'lettuce', 'romaine lettuce': 'lettuce', 'romaine lettuce leaves': 'lettuce',
   'mixed leaves': 'mixed leaves', 'salad leaves and tomato': 'mixed leaves',
+  'salad leaves': 'mixed leaves', 'mixed salad leaves': 'mixed leaves',
   'rocket': 'rocket',
   'cabbage': 'cabbage', 'shredded cabbage': 'cabbage',
   'leek': 'leek',
@@ -722,6 +743,10 @@ export const NUTRITION_SYNONYMS = {
   'mixed veg': 'mixed veg', 'frozen mixed veg': 'mixed veg', 'mixed frozen veg': 'mixed veg',
   'roasted mixed veg': 'mixed veg', 'roasted veg': 'mixed veg', 'veg': 'mixed veg',
   'frozen stir-fry veg': 'mixed veg',
+  'mixed vegetables': 'mixed veg', 'mixed frozen vegetables': 'mixed veg',
+  'balsamic vinegar': 'balsamic vinegar', 'vinegar': 'vinegar',
+  'red wine vinegar': 'vinegar', 'white wine vinegar': 'vinegar',
+  'stir-fry sauce': 'stir-fry sauce', 'stir fry sauce': 'stir-fry sauce',
   'edamame': 'edamame',
 
   'olive oil': 'olive oil', 'olive oil spray': 'olive oil',
@@ -781,11 +806,56 @@ export const NUTRITION_SYNONYMS = {
 const NEGLIGIBLE_ESTIMATE = { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0 };
 const UNIT_TO_GRAMS = { g: 1, kg: 1000, ml: 1, l: 1000, tbsp: 15, tsp: 5 };
 
-function lookupEntry(name, qualifier) {
+// Preparation words an ingredient line may carry in front of the food itself
+// ("Cooked chicken breast 100g", "1 medium tomato"). The curated plans never
+// phrase things this way, but a free-text AI edit routinely does.
+const DESCRIPTOR_PREFIXES = [
+  'cooked', 'raw', 'fresh', 'grilled', 'baked', 'roasted', 'fried', 'steamed',
+  'boiled', 'poached', 'diced', 'chopped', 'sliced', 'shredded', 'grated',
+  'crushed', 'minced', 'cubed', 'lean', 'small', 'medium', 'large',
+];
+const DESCRIPTOR_PREFIX_RE = new RegExp(`^(?:${DESCRIPTOR_PREFIXES.join('|')})\\s+`);
+
+function resolveEntry(name, qualifier) {
   const key = (qualifier && NUTRITION_SYNONYMS[`${name}|${qualifier}`])
     || NUTRITION_SYNONYMS[name]
     || (NUTRITION_TABLE[name] ? name : null);
   return key ? completeNutritionEntry(key, NUTRITION_TABLE[key]) : null;
+}
+
+function lookupEntry(name, qualifier) {
+  // An exact table name always wins, so 'lean beef mince' and 'plain kefir'
+  // keep their own rows rather than being reduced to 'beef mince' and 'kefir'.
+  const direct = resolveEntry(name, qualifier);
+  if (direct) return direct;
+
+  for (const candidate of alternativeNames(name)) {
+    const entry = resolveEntry(candidate, qualifier);
+    if (entry) return entry;
+  }
+  return null;
+}
+
+// Rewrites a missed name into the forms this table might know it by, most
+// faithful first: US "canned" for the UK "tinned" rows, then the name with its
+// leading preparation words peeled off one at a time.
+function* alternativeNames(name) {
+  const deAmericanised = toTinned(name);
+  if (deAmericanised) yield deAmericanised;
+
+  let candidate = name;
+  for (let depth = 0; depth < 3; depth += 1) {
+    const stripped = candidate.replace(DESCRIPTOR_PREFIX_RE, '');
+    if (stripped === candidate || !stripped) break;
+    candidate = stripped;
+    yield candidate;
+    const tinned = toTinned(candidate);
+    if (tinned) yield tinned;
+  }
+}
+
+function toTinned(name) {
+  return name.startsWith('canned ') ? `tinned ${name.slice('canned '.length)}` : null;
 }
 
 function completeNutritionEntry(key, entry) {
@@ -830,7 +900,12 @@ export function computeIngredientNutrition(parsed) {
       const millilitres = parsed.qty * (parsed.unit === 'l' ? 1000 : 1);
       amountPerHundred = millilitres / 100;
     } else if ((parsed.unit === 'ml' || parsed.unit === 'l') && entry.basis !== 'ml') {
-      return { kcal: 0, protein: 0, carbs: 0, fats: 0, fibre: 0, matched: false, reason: 'volume-without-density' };
+      // A gram-basis entry asked for in millilitres. Rejecting outright fails
+      // the whole meal over a splash of soy sauce, so fall back to the entry's
+      // own density where we know it, and water (1 g/ml) where we don't —
+      // the same order of estimate as the generic 15g/5g spoon conversions.
+      const millilitres = parsed.qty * (parsed.unit === 'l' ? 1000 : 1);
+      grams = millilitres * (entry.gramsPerMl ?? 1);
     } else if (parsed.unit === 'tbsp' && entry.gramsPerTbsp) grams = parsed.qty * entry.gramsPerTbsp;
     else if (parsed.unit === 'tsp' && entry.gramsPerTsp) grams = parsed.qty * entry.gramsPerTsp;
     else grams = parsed.qty * (UNIT_TO_GRAMS[parsed.unit] ?? 1);
