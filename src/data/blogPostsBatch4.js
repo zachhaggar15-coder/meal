@@ -225,6 +225,11 @@ export const blogPostsBatch4Data = {
     description: 'Microwave-safe meal prep containers UK: how to tell if a container is genuinely microwave safe, common mistakes, and which materials hold up best.',
     h1: 'Microwave-Safe Meal Prep Containers UK',
     intro: 'Most containers sold for meal prep in the UK are marketed as microwave safe, but "microwave safe" is not a strictly regulated label, and mistakes with lids and reused takeaway tubs are common. This guide explains what the label should actually mean, how to check a container properly, and the everyday mistakes that cause the most problems.',
+    productRecommendations: {
+      title: 'Sets that hold up to repeated reheating',
+      intro: 'Glass is the safest bet for daily microwave use. The plastic set is here because PP5 is genuinely fine and costs a fraction of the glass.',
+      productIds: ['budget-compartment-50-pack', 'harbour-housewares-glass-5-pack', 'pyrex-cook-and-go'],
+    },
     quickAnswer: {
       answer: 'A genuinely microwave-safe container will state it clearly on the packaging or listing, usually alongside a microwave symbol (wavy lines). Glass and PP5 polypropylene plastic are the two materials most reliably safe for repeated microwave use. Always remove the lid or vent it before microwaving, and never microwave reused single-use takeaway containers.',
       links: [
@@ -286,6 +291,16 @@ export const blogPostsBatch4Data = {
     description: 'Best meal prep containers for soup UK: leakproof tub types, correct freezer headspace, and how to reheat and portion soup safely for the week.',
     h1: 'Best Meal Prep Containers for Soup UK',
     intro: 'Soup is one of the easiest things to batch cook and one of the easiest to spill. The right container is less about looks and more about seal quality, shape, and leaving room for liquid to expand in the freezer. This guide covers what actually works.',
+    productRecommendations: {
+      title: 'Tubs that seal against liquid',
+      intro: 'Twist-lid deli tubs are the cheapest reliable answer for soup and freeze well. The glass set is for people who would rather reheat in the same container.',
+      productIds: ['deli-twist-lid-tubs', 'harbour-housewares-glass-5-pack'],
+    },
+    toolRecommendations: {
+      title: 'For soup that has to travel',
+      intro: 'If there is no microwave at the other end, a flask is the only thing that keeps soup hot enough to be worth eating.',
+      productIds: ['milu-450ml-food-flask'],
+    },
     quickAnswer: {
       answer: 'Twist-lid deli-style tubs or four-corner clip-lock containers are the most reliable choice for soup, since they seal against liquid better than simple snap-on lids. Leave at least 2cm of headspace if freezing, and portion soup into meal-sized amounts before freezing rather than one large batch.',
       links: [
@@ -349,6 +364,16 @@ export const blogPostsBatch4Data = {
     description: 'Best meal prep containers for salads UK, plus the layering method that stops salads going soggy: which container shape to use and how long they keep.',
     h1: 'Best Meal Prep Containers for Salads UK',
     intro: 'A soggy meal prep salad by Thursday is almost never a container problem on its own — it is usually a layering and moisture problem that the wrong container makes worse. This guide covers both: which container shape actually helps, and the layering method that keeps salad crisp for most of the week.',
+    productRecommendations: {
+      title: 'Wide, shallow boxes rather than deep tubs',
+      intro: 'Shape matters more than material here: a wide base lets the layering method above actually work.',
+      productIds: ['budget-compartment-50-pack', 'harbour-housewares-glass-5-pack'],
+    },
+    toolRecommendations: {
+      title: 'Keeping the dressing out of the leaves',
+      intro: 'The single highest-impact change for salad prep, and the cheapest. Either pot type works; glass is heavier but does not hold onto smells.',
+      productIds: ['sistema-dressing-pots', 'vitever-glass-dressing-containers'],
+    },
     quickAnswer: {
       answer: 'Use a wide, shallow rectangular container rather than a deep round tub, and store dressing separately or at the very bottom under sturdy ingredients. Layered correctly in the right container, robust salads can stay crisp for the next couple of days; add delicate leaves fresh.',
       links: [
@@ -409,6 +434,11 @@ export const blogPostsBatch4Data = {
     description: 'Best insulated lunch bags for meal prep UK: what to look for when carrying multiple containers, keeping food cold on a commute, and easy-clean linings.',
     h1: 'Best Lunch Bags for Meal Prep UK',
     intro: 'The container matters for the food itself, but the bag matters for getting it to work in one piece and at a safe temperature. This guide covers what to actually look for in a meal prep lunch bag, separate from the containers that go inside it.',
+    toolRecommendations: {
+      title: 'Two bags covering the two situations above',
+      intro: 'The Lifewit is the straightforward option if you already own containers. The Fit & Fresh set is only worth it if you are starting from nothing and want the bag, boxes and cooling together.',
+      productIds: ['lifewit-9l-insulated-lunch-bag', 'fit-fresh-bree-meal-prep-bag', 'fit-fresh-slim-ice-packs'],
+    },
     quickAnswer: {
       answer: 'For a single-meal commute, a compact insulated bag with one main compartment is enough. For a full day of meals plus snacks, look for a larger insulated bag with an ice-pack compartment and a wipeable, easy-clean lining. Genuine insulation (not just a lightly padded fabric bag) is the difference that actually matters.',
       links: [
@@ -466,6 +496,11 @@ export const blogPostsBatch4Data = {
     description: 'Why meal prep container lids leak even when marketed as leakproof, how to test a container before you trust it, and which lid types leak least.',
     h1: 'Why Do My Meal Prep Container Lids Leak?',
     intro: 'A container marketed as leakproof still leaking is one of the most common meal prep frustrations, and it is almost always one of a small handful of causes rather than a genuine product fault. This guide covers why it happens, how to test a container properly, and when to fix versus replace.',
+    productRecommendations: {
+      title: 'If the lid is genuinely worn out',
+      intro: 'Replace rather than persevere once a seal is warped. Four-corner clip locks hold a seal longer than snap-on lids, which is what the pricier sets are actually buying you.',
+      productIds: ['sistema-klip-it', 'harbour-housewares-glass-5-pack', 'joseph-joseph-nest-lock'],
+    },
     quickAnswer: {
       answer: 'Leaking lids are most often caused by overfilling, a chipped rim, a worn or twisted seal, or the wrong closing technique rather than the container itself. Test any container with water before trusting it with sauce or soup, and replace containers with visibly warped or cracked lids rather than continuing to use them.',
       links: [
@@ -527,6 +562,12 @@ export const blogPostsBatch4Data = {
     description: 'Air fryer meal prep UK: which foods batch cook best, how to run a dual-drawer session, and how to reheat meal prep in an air fryer without drying it out.',
     h1: 'Air Fryer Meal Prep UK',
     intro: 'Air fryers are now in the majority of UK kitchens, and using one for meal prep genuinely changes how quickly a week of food comes together, particularly with a dual-drawer model that lets you cook two different things at once. This guide covers what to actually batch cook in an air fryer, how to run an efficient session, and how to reheat meal prep without it drying out.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    toolRecommendations: {
+      title: 'Accessories that earn their place in a batch session',
+      intro: 'Assuming you already own the air fryer. Liners save most of the scrubbing between rounds; the accessory set is only worth it if you will use the rack to cook on two levels.',
+      productIds: ['square-silicone-air-fryer-liners', 'cosori-air-fryer-accessory-kit'],
+    },
     quickAnswer: {
       answer: 'Air fryers are best for meal prep proteins (chicken thighs, chicken breast, salmon, tofu) and roasted vegetables, cooked in batches across multiple rounds rather than one huge tray. A dual-drawer air fryer lets you cook a protein and a vegetable side at the same time, roughly halving total prep time compared with one basket.',
       links: [
@@ -600,6 +641,12 @@ export const blogPostsBatch4Data = {
     description: 'Chicken and rice meal prep UK: batch cooking method, five flavour variations so it does not taste the same every day, and rice food safety for the week.',
     h1: 'Chicken and Rice Meal Prep UK',
     intro: 'Chicken and rice is the default meal prep combination for a reason: it is cheap, high in protein, and easy to batch cook. The two most common complaints are that it gets boring by Wednesday and that people are unsure about reheating rice safely. This guide covers both.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    toolRecommendations: {
+      title: 'Two things that make this a ten minute job',
+      intro: 'A basic rice cooker handles the rice unattended while the chicken cooks. The COSORI is only worth the extra if you also want it to steam vegetables and slow cook.',
+      productIds: ['russell-hobbs-rice-cooker', 'cosori-rice-cooker-steamer', 'thermopro-tp02s-thermometer'],
+    },
     quickAnswer: {
       answer: 'Cook chicken and rice separately in bulk, then vary the sauce, spice mix or vegetables added at the point of eating rather than cooking five identical portions upfront. Cool rice quickly after cooking, refrigerate within an hour, and only reheat each portion once, until steaming hot throughout.',
       links: [
@@ -667,6 +714,12 @@ export const blogPostsBatch4Data = {
     description: 'Overnight oats meal prep UK: the basic ratio, how to batch a few jars at once, protein-boosting without relying only on powder, and how long they keep.',
     h1: 'Overnight Oats Meal Prep UK',
     intro: 'Overnight oats are one of the few meal prep breakfasts that genuinely improve with a day or two of sitting rather than degrading, which makes them easy to batch in small runs. This guide covers the basic ratio, how to prep multiple jars efficiently, and how to boost protein without relying entirely on protein powder.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    toolRecommendations: {
+      title: 'Jars sized for the ratio above',
+      intro: 'Any lidded jar works, but a matched set makes batching four at once quicker. Glass if they stay in the fridge, plastic if they travel.',
+      productIds: ['smarch-overnight-oats-jars', 'bubblewally-overnight-oats-containers'],
+    },
     quickAnswer: {
       answer: 'A reliable starting ratio is 40g rolled oats to 100-120ml milk or yogurt-milk mix per jar, left in the fridge overnight. Prep two or three jars at a time by multiplying the ratio across identical jars, and add fruit or crunchy toppings fresh on the day rather than overnight, since they lose texture if left soaking too long.',
       links: [

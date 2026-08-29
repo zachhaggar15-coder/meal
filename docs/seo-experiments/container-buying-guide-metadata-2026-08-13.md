@@ -52,3 +52,39 @@ The measurable on-site funnel is:
 Measurement stops at the outbound Amazon click unless actual Amazon conversion or revenue data becomes available. No conversion or revenue estimate should be inferred.
 
 Commercial reports should show buying-guide views, product impressions, canonical clicks, clicks per 1,000 page views, and CTR as clicks divided by product impressions. Every CTR must retain its click and impression denominator, especially for small samples. Breakdowns should cover placement, product ID/category/list position/recommendation source, and mobile/desktop/tablet where the sample supports it.
+
+## Mid-cooldown confounder: inbound internal links added 29 August 2026
+
+The metadata under test was not changed. What changed is the link graph around it.
+
+On 29 August 2026, seventeen days into the twenty-eight day cooldown, internal
+contextual links pointing at `/blog/best-meal-prep-containers-uk` were added to
+a set of previously unlinked informational pages — the calorie plan cluster
+(1200/1400/1500/1600/1800/2000), several meal-prep routine guides, and a number
+of diet-guidance pages. Before this the page received almost no internal links
+from the pages that actually carry the site's traffic, and took 23 page views in
+ninety days.
+
+This was a deliberate commercial decision, made with the confounder understood
+and accepted, because the page was starved of on-site traffic for the whole
+observation window and waiting a further twelve days had a real cost.
+
+What it means for the 10 September read:
+
+- **CTR at a given position remains the primary signal and is the least
+  affected.** The experiment tests whether the new title and description earn
+  more clicks from the same impressions. Internal links do not change what the
+  snippet says.
+- **Average position is now confounded.** Any improvement in position from
+  10 September onward cannot be cleanly attributed to the metadata, because
+  additional internal links are a recognised ranking input and landed
+  mid-window. Treat a position change as jointly caused.
+- **Page views and affiliate clicks are heavily confounded and should not be
+  read as a metadata outcome at all.** They were the explicit target of the
+  linking change.
+
+Recommended handling: report the CTR result as the experiment outcome, and
+report position, views and affiliate clicks separately as "post-linking" figures
+against the pre-29-August baseline rather than against the 13 August baseline.
+If a clean position read matters more than the traffic, the linking change is
+reversible.

@@ -446,11 +446,16 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 7. Meal prep for two ──────────────────────────────────────────────────
-  'meal-prep-for-two-people-uk': post({
+  'meal-prep-for-two-people-uk': toolPost({
     title: 'Meal Prep for Two People UK: Batch Cooking Without Overdoing It',
     description: 'Meal prep for two people UK: how to scale recipes down without waste, handle different preferences in one household, and shop and batch efficiently.',
     h1: 'Meal Prep for Two People UK',
     intro: 'Meal prep for two sits in an awkward middle ground: most recipes are written for four, and most single-portion advice wastes ingredients. This guide covers how to scale properly, handle two people wanting slightly different things, and shop without overbuying.',
+    toolRecommendations: {
+      title: 'Kit sized for two rather than four',
+      intro: 'The scaling problem above is mostly a capacity problem. A 2.4 litre slow cooker makes two portions plus one for the freezer without the leftovers that a family-size pot creates.',
+      productIds: ['crockpot-2-4l-compact', 'salter-arc-scale'],
+    },
     quickAnswer: {
       answer: 'Halve family recipes rather than searching for "for two" versions, and batch cook the base of a meal (protein, grains) in a slightly larger amount than needed for two portions, then vary toppings or sides individually if preferences differ.',
       links: [
@@ -633,6 +638,18 @@ export const blogPostsBatch5Data = {
     description: 'High protein pasta meal prep UK: legume-based pasta compared to regular pasta, easy ways to boost protein, and how to batch cook pasta without it going mushy.',
     h1: 'High Protein Pasta Meal Prep UK',
     intro: 'Pasta gets a reputation as a low-protein carb, but with the right approach it can anchor a genuinely high-protein meal prep week. This guide compares legume-based high-protein pasta with regular pasta, and covers the practical side of batch cooking pasta without it turning to mush by day three.',
+    // Links only: this is a food-comparison page, so the plan finder stays as
+    // the next step rather than the container calculator.
+    contextualLinks: [
+      {
+        parts: [
+          { text: 'Batch-cooked pasta keeps best in a shallow box rather than a deep tub — the ' },
+          { label: 'meal prep container size guide', to: '/blog/meal-prep-container-size-guide' },
+          { text: ' covers which shape suits which meal.' },
+        ],
+      },
+      ...planFinderLinks,
+    ],
     quickAnswer: {
       answer: 'Legume-based pasta (made from chickpeas, lentils or edamame) typically provides 20-25g of protein per 100g dry, roughly double standard wheat pasta. For batch cooking, cook pasta slightly firmer than usual (a minute or two under packet timing), cool quickly, and toss with a little oil to stop it clumping.',
       links: [

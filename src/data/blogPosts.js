@@ -2331,8 +2331,8 @@ const rawBlogPostsData = {
     },
     toolRecommendations: {
       title: 'A rice cooker speeds this up further',
-      intro: 'Useful if you would rather not watch a pan of rice while everything else is going.',
-      productIds: ['russell-hobbs-rice-cooker'],
+      intro: 'Useful if you would rather not watch a pan of rice while everything else is going. The basic model is enough for rice alone; the COSORI is only worth the difference if you also want steaming and slow cooking from the same appliance.',
+      productIds: ['russell-hobbs-rice-cooker', 'cosori-rice-cooker-steamer'],
     },
     sections: [
       {

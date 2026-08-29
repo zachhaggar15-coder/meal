@@ -34,6 +34,15 @@ export const MEALPREP_PRODUCTS = {
     href: amazonProductUrl('Crock-Pot-CSC046-Cooker-Stoneware-liters', 'B0716XV7VM'),
     watchOut: 'Too small for weekly batch cooking for a family; pair it with freezer portioning if you want to build up a stock of meals.',
   },
+  'crockpot-6-5l-family': {
+    name: 'Crock-Pot Slow Cooker, 6.5L (SCV655B)',
+    category: 'Slow cooker',
+    priceBand: 'Mid range',
+    bestFor: 'Family batch cooking, or one cook that fills the freezer as well as dinner',
+    summary: 'The large Crock-Pot, sized for 8 or more portions. This is the one that makes batch cooking worthwhile for a family: a single session covers dinner and several frozen portions, and cheap slow-cook cuts do most of the work.',
+    href: amazonProductUrl('Crock-Pot-Removable-Easy-Clean-Ceramic-SCV655B', 'B007XEJ40S'),
+    watchOut: 'It is a large appliance to store, and a 6.5L bowl is inefficient for cooking one or two portions — the smaller models suit a couple better.',
+  },
   'russell-hobbs-rice-cooker': {
     name: 'Russell Hobbs Electric Rice Cooker, 27030',
     category: 'Rice cooker',

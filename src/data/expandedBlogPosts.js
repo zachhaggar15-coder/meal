@@ -35,6 +35,63 @@ const containerLinks = [
   },
 ];
 
+// Commercial routes for the reader who has finished deciding and wants to start
+// prepping. These sit *alongside* planFinderLinks rather than replacing it: the
+// calorie and protein guides earn their traffic on informational queries, so the
+// plan finder stays in place and the kit link only catches the reader who has
+// already moved on to "what do I put it in".
+//
+// They are deliberately worded differently from one another. The same block
+// repeated across a dozen pages reads as boilerplate to a reader and gives
+// Google a single anchor text to discount.
+const containerBuyingLink = {
+  parts: [
+    { text: 'Once the food is decided, the boxes are the next question: the ' },
+    { label: 'best meal prep containers guide', to: '/blog/best-meal-prep-containers-uk' },
+    { text: ' compares glass, plastic and leakproof sets, and the ' },
+    { label: 'container count guide', to: '/blog/how-many-meal-prep-containers-do-you-need' },
+    { text: ' works out how many a week actually needs.' },
+  ],
+};
+
+const portionSizeLink = {
+  parts: [
+    { text: 'Portioning these amounts is easier with the right box size — the ' },
+    { label: 'meal prep container size guide', to: '/blog/meal-prep-container-size-guide' },
+    { text: ' covers when 500 ml, 1 litre or larger makes sense.' },
+  ],
+};
+
+const budgetKitLink = {
+  parts: [
+    { text: 'Keeping the setup cheap matters as much as the food. The ' },
+    { label: 'budget container guide', to: '/meal-prep-containers/budget' },
+    { text: ' covers low-cost sets, and the ' },
+    { label: 'container hub', to: '/meal-prep-containers' },
+    { text: ' compares every type in one table.' },
+  ],
+};
+
+const workLunchKitLink = {
+  parts: [
+    { text: 'For food that has to survive a commute, compare ' },
+    { label: 'work lunch containers', to: '/meal-prep-containers/work-lunch' },
+    { text: ' and ' },
+    { label: 'insulated lunch bags', to: '/blog/best-lunch-bags-for-meal-prep-uk' },
+    { text: '.' },
+  ],
+};
+
+const freezerKitLink = {
+  parts: [
+    { text: 'Anything going into the freezer needs the right container: see ' },
+    { label: 'freezer-safe containers', to: '/meal-prep-containers/freezer-safe' },
+    { text: ' and ' },
+    { label: 'reusable freezer bags', to: '/meal-prep-containers/freezer-bags' },
+    { text: '.' },
+  ],
+};
+
 const guideRelated = [
   { slug: 'best-meal-prep-containers-hub', path: '/meal-prep-containers', label: 'Best Meal Prep Containers UK', type: 'guide' },
   { slug: 'budget-meal-prep-containers-guide', path: '/meal-prep-containers/budget', label: 'Budget Meal Prep Containers', type: 'guide' },
@@ -86,6 +143,12 @@ export const expandedBlogPostsData = {
     description: 'Summer meals UK: seven fresh, easy meal prep recipes for warm weeks, including salads, wraps, overnight oats, cold lunches and light dinners using UK supermarket ingredients.',
     h1: 'Summer Meals UK: Fresh Meal Prep Recipes for Hot Weeks',
     intro: 'Summer meal prep should feel lighter than a winter batch cook: crisp salads, herby potatoes, yogurt bowls, cold pasta, quick wraps and dinners that do not need a heavy sauce. This guide is written more like a recipe blog than a diet explainer, with seven summery recipes you can make from normal UK supermarket ingredients.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    toolRecommendations: {
+      title: 'Keeping cold food cold in warm weather',
+      intro: 'The one genuine summer problem. An ice pack and an insulated bag matter more in July than any container upgrade does.',
+      productIds: ['fit-fresh-slim-ice-packs', 'lifewit-9l-insulated-lunch-bag', 'sistema-dressing-pots'],
+    },
     sources: [
       {
         label: 'NHS Eatwell Guide',
@@ -511,6 +574,7 @@ export const expandedBlogPostsData = {
         url: 'https://www.nhs.uk/live-well/healthy-weight/',
       },
     ],
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
     contextualLinks: [
       {
         parts: [
@@ -521,7 +585,13 @@ export const expandedBlogPostsData = {
           { text: '.' },
         ],
       },
+      portionSizeLink,
     ],
+    toolRecommendations: {
+      title: 'Seeing what 1500 calories looks like is easier than guessing it',
+      intro: 'This whole page is about portion size by eye. A scale is how you calibrate that once, then stop needing it.',
+      productIds: ['salter-arc-scale', 'salter-disc-scale'],
+    },
     sections: [
       {
         h2: 'Quick answer: a realistic 1500 calorie day',
@@ -591,6 +661,13 @@ export const expandedBlogPostsData = {
     description: 'A practical 1200 calorie meal plan UK guide with filling meal ideas, safety notes, supermarket staples and better options for most adults.',
     h1: '1200 Calorie Meal Plan UK',
     intro: 'A 1200 calorie day is a very low target for many adults, so it needs to be handled carefully. This guide is for people who have already chosen that target and want a realistic UK supermarket structure rather than tiny meals that collapse by 4pm.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [portionSizeLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Weighing portions is what makes a low target survivable',
+      intro: 'At 1200 calories the margin for error is small, and eyeballing portions is where the target usually slips. Both scales below are inexpensive.',
+      productIds: ['salter-arc-scale', 'salter-disc-scale'],
+    },
     sections: [
       {
         h2: 'Who this target suits',
@@ -639,6 +716,13 @@ export const expandedBlogPostsData = {
     description: 'Build a filling 1400 calorie meal plan with UK supermarket foods, high-protein meals, batch cooking tips and simple swaps.',
     h1: '1400 Calorie Meal Plan UK',
     intro: 'A 1400 calorie meal plan can work well for smaller adults who want a clear fat-loss structure without dropping as low as 1200 calories. The aim is straightforward: keep protein high, use vegetables for volume, and spend calories on meals you will actually want to repeat.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [portionSizeLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'The cheapest way to stop a 1400 calorie day drifting',
+      intro: 'Rice, oats, pasta and oil are the four things most often underestimated by eye. A basic scale fixes all four.',
+      productIds: ['salter-arc-scale', 'salter-disc-scale'],
+    },
     sections: [
       {
         h2: 'How to split 1400 calories',
@@ -700,6 +784,13 @@ export const expandedBlogPostsData = {
     description: 'A realistic 1600 calorie UK meal plan guide with breakfast, lunch, dinner, snack ideas and supermarket shopping tips.',
     h1: '1600 Calorie Meal Plan UK',
     intro: 'For many UK dieters, 1600 calories is the sweet spot: low enough to create progress, but not so low that every meal feels rationed. It is especially useful for people who want high protein, normal dinners, and some room for a snack.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Two things that make this target repeatable',
+      intro: 'A scale for the portions and, if you batch cook the dinners, a way to cook rice without watching it.',
+      productIds: ['salter-arc-scale', 'russell-hobbs-rice-cooker'],
+    },
     sections: [
       {
         h2: 'A balanced 1600 calorie structure',
@@ -749,6 +840,13 @@ export const expandedBlogPostsData = {
     description: 'Use an 1800 calorie meal plan for weight loss with UK supermarket foods, high protein meals, batch cooking and flexible dinners.',
     h1: '1800 Calorie Meal Plan for Weight Loss UK',
     intro: 'An 1800 calorie plan is often a better fat-loss target than people expect. It gives enough room for a real breakfast, a work lunch, a proper dinner, and a snack, which makes it easier to repeat for months rather than days.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Kit that makes a work-lunch target easier to hit',
+      intro: 'At this level the lunch is usually the meal that gets improvised. Weighing it the night before is what stops that.',
+      productIds: ['salter-arc-scale', 'lifewit-9l-insulated-lunch-bag'],
+    },
     sections: [
       {
         h2: 'Who 1800 calories can work for',
@@ -810,6 +908,13 @@ export const expandedBlogPostsData = {
     description: 'A practical 2000 calorie weight loss meal plan for active UK adults, with high-protein meals and supermarket shopping tips.',
     h1: '2000 Calorie Weight Loss Meal Plan UK',
     intro: 'A 2000 calorie plan can still be a weight-loss plan. For active adults, larger bodies, and people with physical jobs, cutting too hard often backfires. A higher target can keep hunger steady while still moving body weight in the right direction.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [budgetKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Prepping larger portions without larger effort',
+      intro: 'Bigger targets mean more food to cook and carry, which is where batch cooking and a decent lunch box start to pay for themselves.',
+      productIds: ['salter-disc-scale', 'lifewit-9l-insulated-lunch-bag'],
+    },
     sections: [
       {
         h2: 'When 2000 calories makes sense',
@@ -871,6 +976,10 @@ export const expandedBlogPostsData = {
     description: 'Plan a weekly calorie deficit without eating the same bland meal every day. UK shopping, batch cooking and weekend flexibility.',
     h1: 'Weekly Calorie Deficit Meal Prep UK',
     intro: 'A calorie deficit is easier to manage weekly than perfectly daily. This guide shows how to prep meals that keep Monday to Friday steady while leaving enough space for normal UK weekends, family meals, and the odd pub lunch.',
+    // Links only, no product block: this page's job is the weekly deficit
+    // structure, and its next-step CTA should stay pointed at the plan finder
+    // rather than flipping to the container calculator.
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
     sections: [
       {
         h2: 'Think in weekly averages',
@@ -910,6 +1019,7 @@ export const expandedBlogPostsData = {
     description: 'Avoid the common UK meal prep mistakes that stall weight loss, from tiny lunches to untracked oils, sauces and weekend drift.',
     h1: 'Weight Loss Meal Prep Mistakes UK',
     intro: 'Meal prep should make weight loss easier. When it does not, the problem is usually not effort; it is a handful of fixable mistakes that make the food too bland, too small, too repetitive, or higher calorie than expected.',
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
     sections: [
       {
         h2: 'Mistake one: prepping meals that are too small',
@@ -949,6 +1059,7 @@ export const expandedBlogPostsData = {
     description: 'Low calorie meal prep dinners using UK supermarket ingredients: chilli, curry, traybakes, pasta, stir-fries and freezer-friendly meals.',
     h1: 'Low Calorie Dinners for Meal Prep UK',
     intro: 'The best low calorie dinners are warm, filling, and easy to portion. They should look like normal meals, not diet food. These UK-friendly ideas are built for batch cooking, reheating, and realistic weeknights.',
+    contextualLinks: [portionSizeLink, ...planFinderLinks],
     sections: [
       {
         h2: 'Dinner ideas that batch well',
@@ -995,6 +1106,13 @@ export const expandedBlogPostsData = {
     description: 'High protein work lunch ideas for UK offices, shifts and commutes, including cold lunches, microwave meals and supermarket staples.',
     h1: 'High Protein Lunches for Work UK',
     intro: 'A good work lunch has to survive the commute, fill you up, and avoid the sad-desk-lunch feeling. These high-protein UK lunch ideas are built around realistic supermarket foods and the awkward truth that not every workplace has a clean microwave.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [workLunchKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'For the no-microwave problem above',
+      intro: 'A flask covers the days when there is nowhere to reheat, and an insulated bag keeps yogurt and chicken at a safe temperature until lunchtime.',
+      productIds: ['milu-450ml-food-flask', 'lifewit-9l-insulated-lunch-bag'],
+    },
     sections: [
       {
         h2: 'Microwave-friendly lunches',
@@ -1040,6 +1158,7 @@ export const expandedBlogPostsData = {
     description: 'High protein vegetarian meal prep ideas using UK supermarket ingredients: eggs, yogurt, tofu, lentils, beans, cottage cheese and Quorn.',
     h1: 'High Protein Vegetarian Meal Prep UK',
     intro: 'Vegetarian meal prep can be high protein without relying on endless protein bars. The key is to build each meal around one or two reliable protein sources, then use grains, potatoes, vegetables, and sauces to make it filling.',
+    contextualLinks: [portionSizeLink, ...planFinderLinks],
     sections: [
       {
         h2: 'Best vegetarian protein staples',
@@ -1165,6 +1284,12 @@ export const expandedBlogPostsData = {
     description: 'Protein porridge UK guide with oats, Greek yogurt, skyr, cottage cheese, berries and supermarket ingredients for cheap high-protein breakfasts.',
     h1: 'Protein Porridge UK',
     intro: 'Protein porridge is one of the easiest breakfasts to repeat because oats are cheap, filling and available everywhere. Add Greek yogurt, skyr, milk, cottage cheese or protein powder and it becomes a useful high-protein breakfast for weight loss, muscle gain or simple weekday meal prep.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    toolRecommendations: {
+      title: 'Prepping a few mornings at once',
+      intro: 'Jars let you build four breakfasts in one go. The scale is worth it here because oats and nut butter are the two things most often over-poured.',
+      productIds: ['smarch-overnight-oats-jars', 'salter-arc-scale'],
+    },
     contextualLinks: [
       {
         parts: [
@@ -1362,6 +1487,13 @@ export const expandedBlogPostsData = {
     description: 'A realistic Sunday meal prep routine for UK shoppers: plan meals, batch cook lunches, prepare breakfasts and store food safely.',
     h1: 'Sunday Meal Prep Routine UK',
     intro: 'Sunday meal prep does not need to mean cooking all day. A good routine gives you weekday breakfasts, lunches, and two dinner bases in about 90 minutes, with enough flexibility that you do not resent the fridge by Thursday.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'What a 90 minute session actually needs',
+      intro: 'A slow cooker doing one dinner base unattended is what frees the hob for everything else. The scale is for the portioning at the end.',
+      productIds: ['crockpot-3-5l-red', 'salter-arc-scale'],
+    },
     sections: [
       {
         h2: 'The 90-minute routine',
@@ -1408,6 +1540,13 @@ export const expandedBlogPostsData = {
     description: 'Plan five days of UK work lunches with high-protein meal prep ideas, cold lunch options, containers and shopping tips.',
     h1: 'Five Day Work Lunch Meal Prep UK',
     intro: 'Five ready-made work lunches can save money, calories, and decision fatigue. The challenge is making them varied enough to eat, safe enough to store, and sturdy enough for the commute.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [workLunchKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Getting five lunches to work intact',
+      intro: 'A bag that holds containers upright and one ice pack covers most of what goes wrong between home and the office fridge.',
+      productIds: ['lifewit-9l-insulated-lunch-bag', 'fit-fresh-slim-ice-packs'],
+    },
     sections: [
       {
         h2: 'Choose a lunch format',
@@ -1457,6 +1596,13 @@ export const expandedBlogPostsData = {
     description: 'Freezer meal prep guide for UK beginners with batch-cook recipes, storage tips, containers, labels and reheating advice.',
     h1: 'Freezer Meal Prep for Beginners UK',
     intro: 'Freezer meal prep is the quiet hero of eating well. It gives you a backup dinner when plans fall apart and stops batch cooking from becoming a race against the fridge.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [freezerKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Freezing well costs less than most people assume',
+      intro: 'Reusable bags that freeze flat and a roll of labels solve the two real problems: wasted space and unidentifiable tubs. A vacuum sealer is worth it only if you freeze meat in bulk.',
+      productIds: ['moonmoon-silicone-bags', 'nuoshen-removable-food-labels', 'foodsaver-everyday'],
+    },
     sections: [
       {
         h2: 'Meals that freeze well',
@@ -1505,6 +1651,13 @@ export const expandedBlogPostsData = {
     description: 'Cold meal prep ideas for UK workers without a microwave: salads, wraps, pasta boxes, noodle bowls, snack boxes and safe storage tips.',
     h1: 'Meal Prep Without a Microwave UK',
     intro: 'No microwave at work does not have to mean sad sandwiches. Cold meal prep can be filling, high protein, and genuinely enjoyable if you choose foods that are meant to be eaten cold.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [workLunchKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'If you would rather have something hot',
+      intro: 'An insulated flask filled at breakfast is the one piece of kit that genuinely replaces a microwave. The Milu is the cheaper option; the Stanley is for people who will drop it.',
+      productIds: ['milu-450ml-food-flask', 'stanley-classic-food-jar-400ml'],
+    },
     sections: [
       {
         h2: 'Best cold lunch formats',
@@ -1551,6 +1704,7 @@ export const expandedBlogPostsData = {
     description: 'Healthier alternatives to UK ready meals using quick supermarket staples, batch cooking shortcuts and high-protein meal prep ideas.',
     h1: 'Healthy Ready Meal Alternatives UK',
     intro: 'Ready meals are convenient, and sometimes convenience wins. But if they have become the default, a few supermarket shortcuts can give you cheaper, higher-protein meals with barely more effort.',
+    contextualLinks: [budgetKitLink, ...planFinderLinks],
     sections: [
       {
         h2: 'The ready meal upgrade formula',
@@ -1599,6 +1753,9 @@ export const expandedBlogPostsData = {
     description: 'One pan meal prep ideas for UK kitchens, including traybakes, stir-fries, chilli, pasta, curry and low-washing-up batch cooking.',
     h1: 'One Pan Meal Prep UK',
     intro: 'One pan meal prep is for people who want food sorted but do not want the kitchen to look like a cookware sale. The best recipes cook protein, vegetables, and a carbohydrate with minimal washing up.',
+    // Links only. This page is about cooking method, not kit, so its next-step
+    // CTA stays on the plan finder.
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
     sections: [
       {
         h2: 'Best one pan formats',
@@ -1643,6 +1800,7 @@ export const expandedBlogPostsData = {
     description: 'A simple UK meal prep shopping list template covering protein, carbohydrates, vegetables, fruit, snacks, sauces and freezer staples.',
     h1: 'Meal Prep Shopping List Template UK',
     intro: 'A good meal prep shopping list is boring in the best way. It stops you buying random healthy-looking bits that do not become meals and makes the week easier to cook.',
+    contextualLinks: [containerBuyingLink, ...planFinderLinks],
     sections: [
       {
         h2: 'The basic template',
@@ -1692,6 +1850,13 @@ export const expandedBlogPostsData = {
     description: 'UK meal prep food safety guide covering cooling, fridge storage, freezing, reheating, containers and packed lunch transport.',
     h1: 'How to Store Meal Prep Safely UK',
     intro: 'Meal prep only works if the food is stored safely. The rules are simple enough: cool food quickly, keep it chilled, use clean sealed containers, freeze what you will not eat soon, and reheat hot meals properly.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [freezerKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'The two things that turn these rules into habits',
+      intro: 'A probe answers "is this actually hot enough" without cutting into the thickest piece, and dated labels stop the freezer becoming guesswork. Neither is expensive.',
+      productIds: ['thermopro-tp02s-thermometer', 'nuoshen-removable-food-labels'],
+    },
     sections: [
       {
         h2: 'Cool and store cooked food properly',
@@ -2483,6 +2648,13 @@ export const expandedBlogPostsData = {
     description: 'Family meal prep on a budget in the UK, with batch cooking, supermarket staples, freezer meals and kid-friendly practical meals.',
     h1: 'Family Meal Prep on a Budget UK',
     intro: 'Family meal prep is not about perfect boxes lined up in the fridge. It is about having enough useful food ready that weeknights do not become expensive, chaotic, or entirely beige.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [budgetKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'The cheapest way to cook a lot at once',
+      intro: 'A slow cooker is the one appliance that genuinely suits budget family cooking: it makes the cheap cuts worth buying and needs no attention while it works. Size it to the family — the 6.5L covers dinner plus freezer portions, the 3.5L suits three or four people.',
+      productIds: ['crockpot-6-5l-family', 'crockpot-3-5l-red', 'nuoshen-removable-food-labels'],
+    },
     sections: [
       {
         h2: 'Cook bases, not perfect portions',
@@ -2522,6 +2694,13 @@ export const expandedBlogPostsData = {
     description: 'Night shift meal prep ideas for UK workers, including portable meals, high-protein snacks, sleep-friendly planning and batch cooking.',
     h1: 'Night Shift Meal Prep UK',
     intro: 'Night shifts make normal meal routines awkward. The goal is not a perfect timetable; it is enough planned food to stop the shift being powered by vending machines, petrol station snacks, and one huge meal before bed.',
+    affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    contextualLinks: [workLunchKitLink, ...planFinderLinks],
+    toolRecommendations: {
+      title: 'Eating properly at 3am usually means bringing it with you',
+      intro: 'Night shift kitchens are the least reliable, so a flask that holds a hot meal for the whole shift does more than any container. The bag matters if there is no fridge either.',
+      productIds: ['milu-450ml-food-flask', 'stanley-classic-food-jar-400ml', 'lifewit-9l-insulated-lunch-bag'],
+    },
     sections: [
       {
         h2: 'Plan around your shift, not the clock',
@@ -2688,6 +2867,13 @@ export const expandedBlogPostsData = {
     description: 'Compare budget and premium meal prep containers for UK batch cooking, including plastic tubs, glass boxes, leak resistance and weekly prep.',
     h1: 'Budget vs Premium Meal Prep Containers UK',
     intro: 'Budget containers are not automatically bad, and premium containers are not automatically worth it. The right choice depends on how often you prep, whether you commute, how much you reheat, and whether leaks would ruin your day.',
+    // The one page where showing both ends of the range is the whole point, so
+    // the premium sets sit beside the budget ones rather than replacing them.
+    productRecommendations: {
+      title: 'The same comparison, as actual sets',
+      intro: 'Two cheap sets and two expensive ones. For most people prepping a few lunches a week the budget plastic is genuinely enough; the premium sets earn their price on daily commuting and heavy reheating.',
+      productIds: ['budget-compartment-50-pack', 'sistema-klip-it', 'oxo-smart-seal-glass', 'joseph-joseph-nest-lock'],
+    },
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
     contextualLinks: containerLinks,
     sections: [
