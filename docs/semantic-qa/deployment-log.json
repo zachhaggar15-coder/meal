@@ -36,6 +36,12 @@
       "deployedAt": "2026-08-16T00:00:00.000Z",
       "summary": "Routing hotfix: supermarket goal cards opened a different plan than they advertised (\"Lidl Weight Loss Plan\" -> \"Lidl Very Cheap Batch Cook Weight Loss Plan\"). Root cause was an inverted effort tie-break in a duplicated additive scorer (batch +6 vs standard +5, 94 beats 93), plus cards synthesising their own heading instead of showing the destination's title. Replaced both chooser resolvers with one lexicographic canonical resolver (src/utils/planRecommendation.js); cards now display the destination plan's own title; unmatched combinations are named rather than silently dropped. 348 combinations audited, 0 mismatches after. Production verified: 231 cards across 32 routes, 133 destinations, 0 title mismatches.",
       "gate": "npm run check - exit 0 (156 tests, 1406 routes, 11 audits)"
+    },
+    {
+      "commit": "31ab581",
+      "deployedAt": "2026-08-29T20:31:10.637Z",
+      "summary": "Affiliate and search remediation, deployed after production had run 23 commits behind for five days. Monetised blog posts 32 -> 58, chosen where a product answers the page question; commercial contextual links added to the calorie cluster, which previously had no route to a buying guide (the container guide had taken 8,210 impressions and 23 page views in 90 days). Budget picks still lead; one new product, a verified 6.5L Crock-Pot (B007XEJ40S), filled the family batch-cooking gap. Six blog posts that cannibalised stronger container guide routes were retired to 301s after their unique FAQ answers were merged into the surviving guides; 36 internal references repointed and seven duplicate post definitions removed. Corpus 154 -> 148. Search Console coverage confirmed the cluster was indexed (92% of URLs), not missing, so the 57 crawled-not-indexed pages were redundant rather than thin. This release also cleared three defects that had been sitting live: Amazon product images hotlinked from m.media-amazon.com in breach of the Associates terms, the missing Feedback nav tab, and a rate-limit hole.",
+      "gate": "npm run check - exit 0 (354 tests, 1400 routes, 11 audits; plan audit 76,246 combinations in 7336s)"
     }
   ]
 }
