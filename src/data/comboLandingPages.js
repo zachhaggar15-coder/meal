@@ -370,9 +370,9 @@ export const COMBO_LANDING_PAGES = {
     relatedSlugs: ['tesco-high-protein-meal-plan', 'vegetarian-batch-cooking-meal-plan', 'asda-1800-calorie-meal-plan'],
     supportingLinks: [
       { label: 'High protein lunches for work UK', to: '/blog/high-protein-lunches-for-work-uk' },
-      { label: 'Meal prep boxes for work lunches', to: '/blog/meal-prep-boxes-for-work-lunches' },
+      { label: 'Meal prep boxes for work lunches', to: '/meal-prep-containers/work-lunch' },
       { label: 'Low effort meal plans', to: '/browse?goal=low-effort' },
-      { label: 'Leakproof meal prep containers UK', to: '/blog/leakproof-meal-prep-containers-uk' },
+      { label: 'Leakproof meal prep containers UK', to: '/meal-prep-containers/leakproof' },
     ],
   }),
 

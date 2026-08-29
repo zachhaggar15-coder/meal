@@ -322,72 +322,6 @@ export const blogPostsBatch5Data = {
     ],
   }),
 
-  // ── 5. Freezer bags ───────────────────────────────────────────────────────
-  'best-freezer-bags-for-meal-prep-uk': toolPost({
-    title: 'Best Freezer Bags for Meal Prep UK: Flat-Freezing for Space and Speed',
-    description: 'Best freezer bags for meal prep UK: how flat-freezing in bags saves space over rigid containers, reusable silicone options, and what freezes well in a bag.',
-    h1: 'Best Freezer Bags for Meal Prep UK',
-    intro: 'Rigid containers are the default for most meal prep, but freezer bags solve a problem containers cannot: flat-freezing. A flat-frozen bag of soup or mince takes up a fraction of the space a rigid tub does, and defrosts noticeably faster because of the thinner shape. This guide covers when bags beat containers and how to use them properly.',
-    quickAnswer: {
-      answer: 'Reusable silicone freezer bags are the more sustainable choice for regular meal prep, since they can be washed and reused hundreds of times. Lay bags flat while freezing rather than freezing them upright, which lets you stack finished portions like books once solid.',
-      links: [
-        { label: 'Compare reusable freezer bag picks', to: '/meal-prep-containers/freezer-bags' },
-        { label: 'See freezer-safe container advice', to: '/blog/freezer-safe-meal-prep-containers' },
-        { label: 'Read freezer meal prep for beginners', to: '/blog/freezer-meal-prep-for-beginners-uk' },
-      ],
-    },
-    sections: [
-      {
-        h2: 'Why flat-freezing saves space over rigid tubs',
-        paragraphs: [
-          'A rigid container takes up its full 3D shape in the freezer whether it is full or half-empty, and stacking odd-shaped tubs wastes space between them. A flat-frozen bag is roughly 2-3cm thick once solid, and stacks like a book, fitting far more portions into the same freezer drawer.',
-          'Flat portions also defrost faster, since there is less thickness for heat to travel through, which matters on a weeknight when you forgot to move a portion to the fridge the night before.',
-        ],
-      },
-      {
-        h2: 'Reusable silicone vs disposable freezer bags',
-        paragraphs: [
-          'Reusable silicone bags cost more upfront but pay for themselves after a few months of regular use, and hold up better to repeated freezing and washing than thin disposable bags. Disposable freezer bags are still a reasonable choice for occasional use or for food you are not confident about reusing a bag for, such as raw meat marinades.',
-        ],
-      },
-      {
-        h2: 'How to flat-freeze without spills',
-        paragraphs: [
-          'Fill the bag no more than two-thirds full to leave room for expansion, seal it, then lay it flat on a tray in the freezer rather than standing it upright until it is solid. Once frozen solid, the tray is no longer needed and portions can be stacked directly.',
-        ],
-        numbered: [
-          'Fill the bag two-thirds full, leaving headspace',
-          'Push out excess air before sealing',
-          'Lay flat on a tray or baking sheet',
-          'Freeze flat until solid (usually a few hours)',
-          'Once solid, remove the tray and stack portions directly',
-        ],
-      },
-      {
-        h2: 'What freezes well in a bag vs what needs a rigid container',
-        paragraphs: [
-          'Soups, sauces, mince-based dishes, curries and stews all flat-freeze well in a bag. Delicate foods that could get crushed under stacked weight, or dishes with a lot of solid chunks that would be awkward to defrost through a narrow bag opening, are usually better suited to a rigid container instead.',
-        ],
-      },
-    ],
-    toolRecommendations: {
-      title: 'Freezer bags worth considering',
-      intro: 'A reusable set and a larger multi-size pack.',
-      productIds: ['moonmoon-silicone-bags', 'anpro-silicone-bags'],
-    },
-    related: [
-      { slug: 'freezer-safe-meal-prep-containers', label: 'Freezer-Safe Meal Prep Containers', type: 'blog' },
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'meal-prep-containers-for-soup-uk', label: 'Best Meal Prep Containers for Soup UK', type: 'blog' },
-      { slug: 'vacuum-sealer-meal-prep-uk', label: 'Vacuum Sealer Meal Prep UK', type: 'blog' },
-    ],
-    faq: [
-      { q: 'Are reusable silicone freezer bags actually reusable for raw meat?', a: 'Many are, provided they are properly washed between uses, but check the specific product instructions. Some people prefer to keep a separate set for raw meat as a precaution.' },
-      { q: 'Do freezer bags leak more than rigid containers?', a: 'If filled correctly (not overfilled) and sealed properly, good quality freezer bags seal reliably. The main risk is overfilling, which stops the seal closing fully.' },
-      { q: 'Can you microwave food straight from a freezer bag?', a: 'Only if the bag is explicitly labelled microwave safe. Otherwise, defrost first and transfer to a microwave-safe container to reheat.' },
-    ],
-  }),
-
   // ── 6. Cookbooks ──────────────────────────────────────────────────────────
   'best-meal-prep-cookbooks-uk': toolPost({
     title: 'Best Meal Prep Cookbooks UK',
@@ -576,8 +510,8 @@ export const blogPostsBatch5Data = {
     quickAnswer: {
       answer: 'A vacuum sealer meaningfully extends freezer life by removing the air that causes freezer burn, which matters most if you batch cook meat or fish in large amounts and store it for more than a month or two. For shorter-term freezer storage (under a month), reusable silicone bags or rigid containers are usually good enough without the extra cost.',
       links: [
-        { label: 'Compare freezer bags for meal prep', to: '/blog/best-freezer-bags-for-meal-prep-uk' },
-        { label: 'See freezer-safe container advice', to: '/blog/freezer-safe-meal-prep-containers' },
+        { label: 'Compare freezer bags for meal prep', to: '/meal-prep-containers/freezer-bags' },
+        { label: 'See freezer-safe container advice', to: '/meal-prep-containers/freezer-safe' },
       ],
     },
     sections: [
@@ -620,8 +554,8 @@ export const blogPostsBatch5Data = {
       productIds: ['foodsaver-everyday', 'foodsaver-handheld'],
     },
     related: [
-      { slug: 'best-freezer-bags-for-meal-prep-uk', label: 'Best Freezer Bags for Meal Prep UK', type: 'blog' },
-      { slug: 'freezer-safe-meal-prep-containers', label: 'Freezer-Safe Meal Prep Containers', type: 'blog' },
+      { slug: 'freezer-bags-meal-prep-guide', path: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep UK', type: 'guide' },
+      { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
       { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
       { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
     ],

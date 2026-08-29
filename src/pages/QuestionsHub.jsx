@@ -71,7 +71,7 @@ const CLUSTERS = [
       { q: 'What are good cheap high-protein work lunches?', to: '/blog/high-protein-lunches-for-work-uk' },
       { q: 'How do I meal prep five days of lunches at once?', to: '/blog/five-day-work-lunch-meal-prep-uk' },
       { q: 'What lunch bag actually keeps food cold for work?', to: '/blog/best-lunch-bags-for-meal-prep-uk' },
-      { q: 'What are the best containers for carrying lunch to work?', to: '/blog/meal-prep-boxes-for-work-lunches' },
+      { q: 'What are the best containers for carrying lunch to work?', to: '/meal-prep-containers/work-lunch' },
     ],
   },
   {

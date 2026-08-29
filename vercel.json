@@ -8,6 +8,36 @@
       "permanent": true
     },
     {
+      "source": "/blog/best-glass-meal-prep-containers-uk",
+      "destination": "/meal-prep-containers/glass",
+      "permanent": true
+    },
+    {
+      "source": "/blog/plastic-meal-prep-containers-uk",
+      "destination": "/meal-prep-containers/plastic",
+      "permanent": true
+    },
+    {
+      "source": "/blog/leakproof-meal-prep-containers-uk",
+      "destination": "/meal-prep-containers/leakproof",
+      "permanent": true
+    },
+    {
+      "source": "/blog/freezer-safe-meal-prep-containers",
+      "destination": "/meal-prep-containers/freezer-safe",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-freezer-bags-for-meal-prep-uk",
+      "destination": "/meal-prep-containers/freezer-bags",
+      "permanent": true
+    },
+    {
+      "source": "/blog/meal-prep-boxes-for-work-lunches",
+      "destination": "/meal-prep-containers/work-lunch",
+      "permanent": true
+    },
+    {
       "source": "/stickers",
       "destination": "/glass-meal-prep-containers",
       "permanent": true

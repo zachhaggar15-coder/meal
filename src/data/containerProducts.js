@@ -757,6 +757,10 @@ const LONG_TAIL_CONTAINER_GUIDES = {
         q: 'How many glass meal prep containers do I need?',
         a: 'Five lunch-sized glass boxes is the best starting point for one person. Ten pieces is better if you prep lunches, dinners and leftovers together.',
       },
+      {
+        q: 'Why did my glass container lid stop sealing properly?',
+        a: 'This is usually a chipped rim or a warped plastic clip from repeated dishwasher heat rather than a fault with the glass itself. Check the rim for small chips before assuming the whole container needs replacing.',
+      },
     ],
   },
   plastic: {
@@ -815,6 +819,10 @@ const LONG_TAIL_CONTAINER_GUIDES = {
       {
         q: 'Should I buy 10, 20 or 50 plastic containers?',
         a: 'Ten is enough for one person testing meal prep. Twenty suits lunches and freezer rotation. Very large packs are best for family batch cooking or shared households.',
+      },
+      {
+        q: 'Why do my plastic containers go cloudy over time?',
+        a: 'Repeated dishwasher heat and scratching from cutlery gradually cloud plastic. This does not usually affect food safety, but once a container feels rough to the touch it is a reasonable point to replace it.',
       },
     ],
   },
@@ -875,6 +883,10 @@ const LONG_TAIL_CONTAINER_GUIDES = {
         q: 'What containers are best for soup?',
         a: 'Use twist-lid tubs, premium clip-lock containers or products that explicitly mention liquid storage. Avoid shallow divided lunch boxes for soup.',
       },
+      {
+        q: 'How do I stop meal prep containers leaking?',
+        a: 'Do not overfill, cool food before sealing, keep sauces separate where possible, and test new lids with water before commuting.',
+      },
     ],
   },
   'freezer-safe': {
@@ -933,6 +945,10 @@ const LONG_TAIL_CONTAINER_GUIDES = {
       {
         q: 'How many freezer containers do I need?',
         a: 'For one person, ten containers is a useful freezer rotation. Families or bulk cooks may need twenty or more, especially if freezing lunches and dinners.',
+      },
+      {
+        q: 'How long can meal prep stay in the freezer?',
+        a: 'Many cooked meals keep well for around 2 to 3 months when sealed properly, though quality depends on the recipe and freezer conditions.',
       },
     ],
   },
@@ -1017,6 +1033,10 @@ const LONG_TAIL_CONTAINER_GUIDES = {
         q: 'What foods freeze best in meal prep bags?',
         a: 'Soups, sauces, cooked mince, chilli, bolognese, smoothie packs, marinades and chopped fruit or vegetables freeze well in bags. Delicate foods that crush easily are better in rigid containers.',
       },
+      {
+        q: 'Are reusable silicone freezer bags actually reusable for raw meat?',
+        a: 'Many are, provided they are properly washed between uses, but check the specific product instructions. Some people prefer to keep a separate set for raw meat as a precaution.',
+      },
     ],
   },
   'work-lunch': {
@@ -1075,6 +1095,10 @@ const LONG_TAIL_CONTAINER_GUIDES = {
       {
         q: 'How many work lunch containers should I buy?',
         a: 'Five matching lunch containers is the cleanest starting point for a Monday to Friday routine. Add small sauce tubs later if you need them.',
+      },
+      {
+        q: 'What should I avoid in a work meal prep box?',
+        a: 'Avoid very wet sauces in weak-lidded boxes, overfilled containers, and lids that need perfect alignment to seal.',
       },
     ],
   },

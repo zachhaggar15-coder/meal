@@ -59,166 +59,6 @@ function containerPost(data) {
 
 export const blogPostsBatch4Data = {
 
-  // ── 1. Glass containers ──────────────────────────────────────────────────
-  'best-glass-meal-prep-containers-uk': containerPost({
-    title: 'Best Glass Meal Prep Containers UK: What to Buy and Why',
-    description: 'Best glass meal prep containers UK: borosilicate vs soda-lime glass, lid types, real product picks, and how to look after glass so it lasts for years.',
-    h1: 'Best Glass Meal Prep Containers UK',
-    intro: 'Glass containers cost more upfront than plastic, but for people who meal prep every week the running cost is often lower: they do not stain, do not hold onto smells, and can handle years of reheating without warping. This guide covers what actually matters when buying glass, which real products are worth considering, and how to avoid the two mistakes that crack glass early.',
-    quickAnswer: {
-      answer: 'For most UK meal preppers, a five-pack of rectangular borosilicate glass containers around 900ml to 1 litre is the best glass starting point. Look for click-lock or clip lids rather than simple snap-on lids, and check that both the base and lid are stated as dishwasher and microwave safe.',
-      links: [
-        { label: 'Compare glass vs plastic in full', to: '/blog/glass-vs-plastic-meal-prep-containers' },
-        { label: 'See the mid range container guide', to: '/meal-prep-containers/mid-range' },
-      ],
-    },
-    productRecommendations: {
-      title: 'Glass container picks from the table above',
-      intro: 'Three of the real products compared in this guide.',
-      productIds: ['harbour-housewares-glass-5-pack', 'prep-naturals-glass-5-pack', 'rubbermaid-brilliance-glass'],
-    },
-    sections: [
-      {
-        h2: 'Borosilicate vs soda-lime glass',
-        paragraphs: [
-          'Most branded meal prep glassware uses borosilicate glass, which resists sudden temperature changes better than ordinary soda-lime glass. That matters in practice: taking a container straight from the freezer into a hot oven or microwave is the single most common way glass containers crack.',
-          'Cheaper glass sets sometimes use standard soda-lime glass without saying so clearly. If a listing does not mention borosilicate glass or "thermal shock resistant", assume it is closer to standard glass and let food come to room temperature before microwaving from frozen.',
-        ],
-      },
-      {
-        h2: 'Lid types, ranked for meal prep',
-        paragraphs: [
-          'The lid matters more than the glass itself for day-to-day use. Four-corner clip locks seal the most reliably for liquids like curry sauce or soup. Simple snap-on plastic lids are lighter and quieter in a bag, but are more likely to loosen if a container gets knocked around in a rucksack.',
-        ],
-        bullets: [
-          'Four-corner clip lock: best seal, good for sauces and commuting',
-          'Two-corner clip lock: good middle ground, slightly easier to open one-handed',
-          'Simple snap-on lid: fine for dry food eaten at home, not ideal for liquids',
-          'Screw-top glass jars: excellent for overnight oats and dressings, awkward for full meals',
-        ],
-      },
-      {
-        h2: 'Real glass container picks',
-        paragraphs: [
-          'These are genuine products rather than invented ones. Prices and stock levels change on Amazon UK, so treat the notes below as guidance rather than live pricing.',
-        ],
-        table: {
-          headers: ['Product', 'Best for', 'Watch-out'],
-          rows: [
-            ['Harbour Housewares 5-pack glass', 'All-round weekly lunches', 'Mid-weight, not the lightest to carry'],
-            ['Prep Naturals 5-pack glass', 'Reheating-heavy routines', 'Slightly premium price point'],
-            ['BOROHOUSE 10-pack glass', 'People who prep every meal, not just lunch', 'Takes up more cupboard space'],
-            ['Pyrex Cook & Go', 'Cooking and storing in the same dish', 'Fewer per pack than dedicated meal prep sets'],
-            ['Rubbermaid Brilliance glass', 'Long-term staining and odour resistance', 'Higher cost per container'],
-          ],
-        },
-      },
-      {
-        h2: 'Looking after glass containers',
-        paragraphs: [
-          'Let food cool for a few minutes before sealing the lid straight from the hob; trapping steam under a hot lid is a common way seals degrade early. Avoid stacking heavy glass containers directly on top of each other without the lids in place, since chipped rims are the main reason a seal eventually fails.',
-          'If a lid smells after tomato-based sauces, a short soak in water with a spoon of bicarbonate of soda usually clears it without needing to replace the container.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Meal Prep Containers', type: 'blog' },
-      { slug: 'plastic-meal-prep-containers-uk', label: 'Plastic Meal Prep Containers UK', type: 'blog' },
-      { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
-      { slug: 'dishwasher-safe-meal-prep-containers', label: 'Dishwasher-Safe Meal Prep Containers', type: 'blog' },
-      { slug: 'budget-vs-premium-meal-prep-containers', label: 'Budget vs Premium Meal Prep Containers', type: 'blog' },
-    ],
-    faq: [
-      { q: 'Is glass actually worth the extra cost over plastic?', a: 'For people who meal prep most weeks, usually yes, because glass resists staining and smells for years rather than months. For occasional use, budget plastic is a perfectly reasonable choice.' },
-      { q: 'Can glass meal prep containers go in the freezer?', a: 'Borosilicate glass containers marketed for meal prep are generally freezer safe, but leave headroom for liquids to expand and let food defrost before microwaving from frozen to avoid thermal shock.' },
-      { q: 'Why did my glass container lid stop sealing properly?', a: 'This is usually a chipped rim or a warped plastic clip from repeated dishwasher heat rather than a fault with the glass itself. Check the rim for small chips before assuming the whole container needs replacing.' },
-    ],
-  }),
-
-  // ── 2. Plastic containers ────────────────────────────────────────────────
-  'plastic-meal-prep-containers-uk': containerPost({
-    title: 'Plastic Meal Prep Containers UK: When They Are the Better Choice',
-    description: 'Plastic meal prep containers UK: what BPA-free and food-safe plastic actually means, when plastic beats glass, and how to stop tubs staining or smelling.',
-    h1: 'Plastic Meal Prep Containers UK',
-    intro: 'Plastic containers get dismissed as the "cheap option", but for a lot of meal preppers they are genuinely the right choice, not just the budget one. This guide covers what food-safe plastic actually means, when plastic beats glass in practice, and how to stop tubs staining after a few uses.',
-    quickAnswer: {
-      answer: 'Plastic is the right choice if you need many containers at low cost, want the lightest option for carrying or freezing in bulk, or are still deciding whether meal prep is a habit worth investing in. Look for containers explicitly labelled BPA-free and dishwasher safe, and choose divided compartments if you dislike sauces touching.',
-      links: [
-        { label: 'Compare glass vs plastic in full', to: '/blog/glass-vs-plastic-meal-prep-containers' },
-        { label: 'See the budget container guide', to: '/meal-prep-containers/budget' },
-      ],
-    },
-    productRecommendations: {
-      title: 'Plastic container picks from the table above',
-      intro: 'Three of the real products compared in this guide.',
-      productIds: ['budget-compartment-50-pack', 'bentgo-prep-10-pack', 'freshware-3-compartment'],
-    },
-    sections: [
-      {
-        h2: 'What "food-safe plastic" actually means',
-        paragraphs: [
-          'UK meal prep containers are almost always made from polypropylene, often labelled with the recycling code PP5 stamped into the base. Polypropylene is the plastic generally recommended for repeated microwave use because it holds its shape better under heat than thinner plastics.',
-          'BPA-free is now standard on virtually all UK meal prep containers, but it is worth checking the listing states it explicitly rather than assuming, particularly on unbranded multipacks.',
-        ],
-      },
-      {
-        h2: 'When plastic genuinely beats glass',
-        paragraphs: [
-          'Plastic wins on weight for anyone carrying containers on public transport or to the gym, and on cost when you need ten or more tubs for a full week of freezer batching. It is also the safer choice around young children or shared kitchens where dropped containers are a real risk.',
-        ],
-        table: {
-          headers: ['Situation', 'Best choice', 'Why'],
-          rows: [
-            ['Carrying lunch on foot or by bike', 'Plastic', 'Significantly lighter in a bag'],
-            ['Freezing 10+ portions in one batch', 'Plastic', 'Lower cost per container, less breakage risk'],
-            ['Reheating the same tub most days', 'Glass', 'Resists staining better over hundreds of uses'],
-            ['Shared house or student kitchen', 'Plastic', 'Cheaper to replace if lost or damaged'],
-          ],
-        },
-      },
-      {
-        h2: 'Real plastic container picks',
-        paragraphs: [
-          'These are genuine current products rather than invented ones.',
-        ],
-        table: {
-          headers: ['Product', 'Best for', 'Watch-out'],
-          rows: [
-            ['Vinsani 3-compartment (20-pack)', 'Bulk batch cooking on a budget', 'Can stain with strong sauces over time'],
-            ['Igluu 10-pack reusable', 'Simple single-compartment lunches', 'Less useful if you want food kept separate'],
-            ['Harbour Housewares divided plastic', 'Portion-controlled meals', 'Divider walls reduce usable volume slightly'],
-            ['Freshware 3-compartment', 'Classic protein/carb/veg layout', 'Standard multipack, nothing special but reliable'],
-            ['Deli-style twist-lid tubs', 'Soups, sauces, overnight oats', 'Round shape wastes some fridge space'],
-          ],
-        },
-      },
-      {
-        h2: 'Stopping plastic containers staining and smelling',
-        paragraphs: [
-          'Tomato-based sauces and turmeric are the two biggest culprits for staining plastic. Spraying the inside with a light coat of oil before adding sauce-heavy food reduces staining noticeably, and washing containers as soon as possible after eating rather than leaving them stops most smells taking hold.',
-          'If a container already smells, a soak in warm water with a spoon of bicarbonate of soda for an hour, followed by leaving the lid off to air dry fully, clears most odours without needing to bin the tub.',
-        ],
-      },
-      {
-        h2: 'When to upgrade from plastic to glass',
-        paragraphs: [
-          'If you have been meal prepping consistently for a couple of months and are replacing stained or warped tubs every few weeks, the running cost of glass usually works out lower over a year. There is no need to switch everything at once — many people keep a plastic set for freezer batching and add a small glass set for the meals they reheat most often.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Meal Prep Containers', type: 'blog' },
-      { slug: 'best-glass-meal-prep-containers-uk', label: 'Best Glass Meal Prep Containers UK', type: 'blog' },
-      { slug: 'budget-vs-premium-meal-prep-containers', label: 'Budget vs Premium Meal Prep Containers', type: 'blog' },
-      { slug: 'how-many-meal-prep-containers-do-you-need', label: 'How Many Meal Prep Containers Do You Need?', type: 'blog' },
-    ],
-    faq: [
-      { q: 'Is plastic meal prep containers safe to microwave?', a: 'Polypropylene (PP5) containers marketed for meal prep and labelled microwave safe are designed for repeated reheating. Avoid microwaving thin, unlabelled plastic tubs such as old takeaway containers.' },
-      { q: 'Why do my plastic containers go cloudy over time?', a: 'Repeated dishwasher heat and scratching from cutlery gradually cloud plastic. This does not usually affect food safety, but once a container feels rough to the touch it is a reasonable point to replace it.' },
-      { q: 'Can I put plastic meal prep containers in the freezer?', a: 'Yes, most are freezer safe, but leave headroom for expansion with liquids and avoid very thin budget tubs, which are more prone to cracking at low temperatures.' },
-    ],
-  }),
-
   // ── 3. Microwave-safe containers ─────────────────────────────────────────
   'microwave-safe-meal-prep-containers-uk': containerPost({
     title: 'Microwave-Safe Meal Prep Containers UK: What to Check Before You Buy',
@@ -274,8 +114,8 @@ export const blogPostsBatch4Data = {
     ],
     related: [
       { slug: 'dishwasher-safe-meal-prep-containers', label: 'Dishwasher-Safe Meal Prep Containers', type: 'blog' },
-      { slug: 'freezer-safe-meal-prep-containers', label: 'Freezer-Safe Meal Prep Containers', type: 'blog' },
-      { slug: 'best-glass-meal-prep-containers-uk', label: 'Best Glass Meal Prep Containers UK', type: 'blog' },
+      { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
+      { slug: 'glass-meal-prep-containers-guide', path: '/meal-prep-containers/glass', label: 'Glass Meal Prep Containers UK', type: 'guide' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
     ],
     faq: [
@@ -304,8 +144,8 @@ export const blogPostsBatch4Data = {
     quickAnswer: {
       answer: 'Twist-lid deli-style tubs or four-corner clip-lock containers are the most reliable choice for soup, since they seal against liquid better than simple snap-on lids. Leave at least 2cm of headspace if freezing, and portion soup into meal-sized amounts before freezing rather than one large batch.',
       links: [
-        { label: 'See leakproof container options', to: '/blog/leakproof-meal-prep-containers-uk' },
-        { label: 'Check freezer-safe container advice', to: '/blog/freezer-safe-meal-prep-containers' },
+        { label: 'See leakproof container options', to: '/meal-prep-containers/leakproof' },
+        { label: 'Check freezer-safe container advice', to: '/meal-prep-containers/freezer-safe' },
       ],
     },
     sections: [
@@ -346,8 +186,8 @@ export const blogPostsBatch4Data = {
       },
     ],
     related: [
-      { slug: 'leakproof-meal-prep-containers-uk', label: 'Leakproof Meal Prep Containers UK', type: 'blog' },
-      { slug: 'freezer-safe-meal-prep-containers', label: 'Freezer-Safe Meal Prep Containers', type: 'blog' },
+      { slug: 'leakproof-meal-prep-containers-guide', path: '/meal-prep-containers/leakproof', label: 'Leakproof Meal Prep Containers UK', type: 'guide' },
+      { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
       { slug: 'meal-prep-tubs-for-batch-cooking', label: 'Meal Prep Tubs for Batch Cooking', type: 'blog' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
     ],
@@ -442,7 +282,7 @@ export const blogPostsBatch4Data = {
     quickAnswer: {
       answer: 'For a single-meal commute, a compact insulated bag with one main compartment is enough. For a full day of meals plus snacks, look for a larger insulated bag with an ice-pack compartment and a wipeable, easy-clean lining. Genuine insulation (not just a lightly padded fabric bag) is the difference that actually matters.',
       links: [
-        { label: 'See meal prep boxes for work lunches', to: '/blog/meal-prep-boxes-for-work-lunches' },
+        { label: 'See meal prep boxes for work lunches', to: '/meal-prep-containers/work-lunch' },
         { label: 'Check the container size guide', to: '/blog/meal-prep-container-size-guide' },
       ],
     },
@@ -478,7 +318,7 @@ export const blogPostsBatch4Data = {
       },
     ],
     related: [
-      { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
+      { slug: 'work-lunch-containers-guide', path: '/meal-prep-containers/work-lunch', label: 'Meal Prep Boxes for Work UK', type: 'guide' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
@@ -504,7 +344,7 @@ export const blogPostsBatch4Data = {
     quickAnswer: {
       answer: 'Leaking lids are most often caused by overfilling, a chipped rim, a worn or twisted seal, or the wrong closing technique rather than the container itself. Test any container with water before trusting it with sauce or soup, and replace containers with visibly warped or cracked lids rather than continuing to use them.',
       links: [
-        { label: 'See leakproof container recommendations', to: '/blog/leakproof-meal-prep-containers-uk' },
+        { label: 'See leakproof container recommendations', to: '/meal-prep-containers/leakproof' },
         { label: 'Check dishwasher-safe container advice', to: '/blog/dishwasher-safe-meal-prep-containers' },
       ],
     },
@@ -544,7 +384,7 @@ export const blogPostsBatch4Data = {
       },
     ],
     related: [
-      { slug: 'leakproof-meal-prep-containers-uk', label: 'Leakproof Meal Prep Containers UK', type: 'blog' },
+      { slug: 'leakproof-meal-prep-containers-guide', path: '/meal-prep-containers/leakproof', label: 'Leakproof Meal Prep Containers UK', type: 'guide' },
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'dishwasher-safe-meal-prep-containers', label: 'Dishwasher-Safe Meal Prep Containers', type: 'blog' },
       { slug: 'meal-prep-containers-for-soup-uk', label: 'Best Meal Prep Containers for Soup UK', type: 'blog' },

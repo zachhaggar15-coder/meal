@@ -5,8 +5,6 @@ const STATIC_OG = `${DOMAIN}/og-preview.png`;
 
 const BLOG_OG_IMAGES = {
   'best-meal-prep-containers-uk': '/og/blog/best-meal-prep-containers-uk.png',
-  'best-glass-meal-prep-containers-uk': '/og/blog/best-glass-meal-prep-containers-uk.png',
-  'plastic-meal-prep-containers-uk': '/og/blog/plastic-meal-prep-containers-uk.png',
   'microwave-safe-meal-prep-containers-uk': '/og/blog/microwave-safe-meal-prep-containers-uk.png',
   'how-to-build-a-calorie-deficit': '/og/blog/how-to-build-a-calorie-deficit.png',
   '1500-vs-1800-vs-2000-calories': '/og/blog/1500-vs-1800-vs-2000-calories.png',

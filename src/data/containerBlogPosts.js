@@ -104,9 +104,9 @@ export const containerBlogPostsData = {
       {
         parts: [
           { text: 'If leakproofing matters most, read the ' },
-          { label: 'leakproof meal prep containers guide', to: '/blog/leakproof-meal-prep-containers-uk' },
+          { label: 'leakproof meal prep containers guide', to: '/meal-prep-containers/leakproof' },
           { text: '. For batch cooking and freezer storage, see ' },
-          { label: 'freezer-safe meal prep containers', to: '/blog/freezer-safe-meal-prep-containers' },
+          { label: 'freezer-safe meal prep containers', to: '/meal-prep-containers/freezer-safe' },
           { text: '.' },
         ],
       },
@@ -212,8 +212,8 @@ export const containerBlogPostsData = {
     ],
     related: [
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
-      { slug: 'best-glass-meal-prep-containers-uk', label: 'Best Glass Meal Prep Containers UK', type: 'blog' },
-      { slug: 'plastic-meal-prep-containers-uk', label: 'Plastic Meal Prep Containers UK', type: 'blog' },
+      { slug: 'glass-meal-prep-containers-guide', path: '/meal-prep-containers/glass', label: 'Glass Meal Prep Containers UK', type: 'guide' },
+      { slug: 'plastic-meal-prep-containers-guide', path: '/meal-prep-containers/plastic', label: 'Plastic Meal Prep Containers UK', type: 'guide' },
       ...guideRelated,
     ],
     faq: [
@@ -223,73 +223,7 @@ export const containerBlogPostsData = {
     ],
   },
 
-  'leakproof-meal-prep-containers-uk': {
-    published: '2026-06-16',
-    modified: '2026-06-16',
-    title: 'Leakproof Meal Prep Containers UK: Best Boxes for Saucy Meals',
-    description: 'Best leakproof meal prep containers UK guide for soups, chilli, curry, dressings, packed lunches and commuting without spills.',
-    h1: 'Leakproof Meal Prep Containers UK',
-    intro:
-      'Leakproof meal prep containers are essential if you carry food to work, take meals to the gym, or prep saucy dishes such as chilli, curry, stew, soup, pasta sauce, or salad dressing. The wrong lid turns a cheap lunch into a ruined bag.',
-    affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: containerLinks,
-    productRecommendations: {
-      title: 'Leak-focused containers to compare',
-      intro: 'These options cover twist-lid tubs, mid-range glass, and premium seal-focused storage.',
-      productIds: [
-        'deli-twist-lid-tubs',
-        'harbour-housewares-glass-5-pack',
-        'rubbermaid-brilliance-glass',
-      ],
-    },
-    sections: [
-      {
-        h2: 'What makes a container leakproof?',
-        paragraphs: [
-          'The seal matters more than the material. Clip-lock lids with a silicone ring, twist lids, and premium locking systems are usually safer than thin press-on lids. For liquids, twist-lid deli tubs can outperform flat lunch boxes because pressure is spread evenly around the rim.',
-          'Leakproof does not always mean suitable for every liquid. Soup, oil-based dressings, and watery curry sauces are harder tests than rice bowls. When in doubt, carry sauces separately in a smaller sealed tub.',
-        ],
-      },
-      {
-        h2: 'Best container type for each saucy meal',
-        paragraphs: [
-          'For soup, use round twist-lid tubs or a dedicated soup container. For chilli, stew, and curry, use glass clip-lock containers if you will reheat. For salad dressing, use a tiny separate sauce pot and add it after reheating or just before eating.',
-          'For commuting, test a new container at home first. Fill it with water, close the lid, turn it upside down over the sink, then shake gently. That quick test catches most poor lid fits before they reach your bag.',
-        ],
-      },
-      {
-        h2: 'Glass or plastic for leak resistance?',
-        paragraphs: [
-          'Both can be leak-resistant. Glass often has better premium lids, but a cheap glass container with a weak lid is still a poor buy. Plastic twist-lid tubs can be excellent for liquids, while divided plastic lunch boxes are usually better for drier meals.',
-          'For high-conversion buying pages, match the product to the job: twist-lid tubs for liquids, mid-range glass for reheated meals, premium seal-focused sets for buyers who have already had leaks.',
-        ],
-      },
-      {
-        h2: 'Leakproof buying checklist',
-        bullets: [
-          'Look for clip-lock, twist-lock, or silicone-seal lids.',
-          'Avoid hinged budget boxes for soup or very wet meals.',
-          'Choose rectangular containers for solid meals and round tubs for liquid meals.',
-          'Check lid care instructions because dishwasher heat can shorten lid life.',
-        ],
-        paragraphs: [
-          'The best leakproof container is not one product for every meal. It is a small system: one reliable glass lunch set, a few twist-lid tubs, and smaller sauce pots.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'meal-prep-tubs-for-batch-cooking', label: 'Meal Prep Tubs for Batch Cooking', type: 'blog' },
-      { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
-      { slug: 'meal-prep-container-lids-leaking', label: 'Why Do My Meal Prep Container Lids Leak?', type: 'blog' },
-      { slug: 'meal-prep-containers-for-soup-uk', label: 'Best Meal Prep Containers for Soup UK', type: 'blog' },
-      ...guideRelated,
-    ],
-    faq: [
-      { q: 'What is the best container for soup meal prep?', a: 'A round twist-lid tub or dedicated soup container is usually best. Rectangular lunch boxes are better for solid meals, but twist lids handle liquids more reliably.' },
-      { q: 'Are glass containers leakproof?', a: 'Some are, but glass alone does not make a container leakproof. The lid design and silicone seal are what matter.' },
-      { q: 'How do I stop meal prep containers leaking?', a: 'Do not overfill, cool food before sealing, keep sauces separate where possible, and test new lids with water before commuting.' },
-    ],
-  },
+
 
   'meal-prep-container-size-guide': {
     published: '2026-06-16',
@@ -368,7 +302,7 @@ export const containerBlogPostsData = {
     related: [
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'how-many-meal-prep-containers-do-you-need', label: 'How Many Meal Prep Containers Do You Need?', type: 'blog' },
-      { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
+      { slug: 'work-lunch-containers-guide', path: '/meal-prep-containers/work-lunch', label: 'Meal Prep Boxes for Work UK', type: 'guide' },
       ...guideRelated,
     ],
     faq: [
@@ -378,138 +312,9 @@ export const containerBlogPostsData = {
     ],
   },
 
-  'meal-prep-boxes-for-work-lunches': {
-    published: '2026-06-16',
-    modified: '2026-06-16',
-    title: 'Best Meal Prep Boxes for Work Lunches UK',
-    description: 'Best meal prep boxes for work lunches in the UK, including lightweight plastic, glass lunch containers and premium commuter boxes.',
-    h1: 'Best Meal Prep Boxes for Work Lunches UK',
-    intro:
-      'A good work lunch box has a different job from a fridge storage tub. It has to survive a commute, fit in a bag, avoid leaking, reheat safely if needed, and still feel pleasant to eat from at lunchtime.',
-    affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: containerLinks,
-    productRecommendations: {
-      title: 'Work lunch boxes to compare',
-      intro: 'Compare a lightweight budget option, a glass lunch option, and a premium commuter-friendly option.',
-      productIds: [
-        'bentgo-prep-10-pack',
-        'harbour-housewares-glass-5-pack',
-        'black-blum-stainless-set',
-      ],
-    },
-    sections: [
-      {
-        h2: 'What makes a good work lunch box?',
-        paragraphs: [
-          'The best work lunch container is secure first and stylish second. If you carry meals upright in a car, glass is easy. If you use a train, bus, bike, or gym bag, weight and lid reliability matter more.',
-          'A 900 ml to 1 litre rectangular box is ideal for most work lunches. It fits a proper portion but still slips into a lunch bag. Add a small sauce pot for dressings rather than trusting a large container with loose liquid.',
-        ],
-      },
-      {
-        h2: 'Plastic, glass, or stainless steel for work?',
-        paragraphs: [
-          'Plastic is best if you want light and cheap. Glass is best if you reheat at work and dislike stained containers. Stainless steel is best if you want a premium, durable box and the exact listing suits your reheating needs.',
-          'For many office workers, the best setup is one glass lunch box carried each day plus spare plastic containers at home for backup portions.',
-        ],
-      },
-      {
-        h2: 'Lunch ideas that suit different boxes',
-        bullets: [
-          'Divided plastic box: chicken, rice, broccoli, and salsa.',
-          'Glass container: chilli and rice, pasta bake, curry, stir fry, or leftovers.',
-          'Stainless steel box: salads, grain bowls, cold noodles, or sandwich plus sides.',
-          'Twist-lid tub: soup, overnight oats, stew, or yoghurt bowl.',
-        ],
-        paragraphs: [
-          'Match the meal to the box. Dry structured meals work in divided boxes. Saucy reheated meals are better in glass. Liquid-heavy meals need twist lids or dedicated soup containers.',
-        ],
-      },
-      {
-        h2: 'Work lunch verdict',
-        paragraphs: [
-          'If you want the safest first purchase, choose a mid range glass five-pack and carry one portion each day. If commuting weight is the frustration, compare premium stainless steel. If cost is the constraint, choose a reusable plastic multipack and avoid very wet meals.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'leakproof-meal-prep-containers-uk', label: 'Leakproof Meal Prep Containers UK', type: 'blog' },
-      { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
-      { slug: 'best-lunch-bags-for-meal-prep-uk', label: 'Best Lunch Bags for Meal Prep UK', type: 'blog' },
-      ...guideRelated,
-    ],
-    faq: [
-      { q: 'Are glass lunch boxes too heavy for work?', a: 'One glass lunch box is usually manageable, but carrying several is heavy. If you commute on foot or by public transport, compare plastic or stainless steel options.' },
-      { q: 'What size lunch box is best for work?', a: 'Around 900ml to 1 litre is the best all-round size for a complete adult lunch.' },
-      { q: 'What should I avoid in a work meal prep box?', a: 'Avoid very wet sauces in weak-lidded boxes, overfilled containers, and lids that need perfect alignment to seal.' },
-    ],
-  },
 
-  'freezer-safe-meal-prep-containers': {
-    published: '2026-06-16',
-    modified: '2026-06-16',
-    title: 'Freezer Safe Meal Prep Containers: What to Buy and Avoid',
-    description: 'Freezer safe meal prep containers guide for batch cooking soups, chilli, curry, rice bowls and make-ahead meals in the UK.',
-    h1: 'Freezer Safe Meal Prep Containers',
-    intro:
-      'Freezer meal prep is the easiest way to stop weekday meals falling apart. The right containers let you portion chilli, curry, soup, rice bowls, pasta sauce, and cooked proteins without freezer burn or mystery leftovers.',
-    affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: containerLinks,
-    productRecommendations: {
-      title: 'Freezer-friendly containers to compare',
-      intro: 'Use these as starting points for liquid portions, glass lunches, and larger weekly prep systems.',
-      productIds: [
-        'deli-twist-lid-tubs',
-        'harbour-housewares-glass-5-pack',
-        'borohouse-10-pack-glass',
-      ],
-    },
-    sections: [
-      {
-        h2: 'What freezer safe really means',
-        paragraphs: [
-          'A freezer-safe container should tolerate low temperatures, seal tightly enough to reduce freezer burn, and leave room for food expansion. The listing should explicitly say freezer safe; do not assume every glass or plastic tub qualifies.',
-          'Liquid-heavy foods expand as they freeze. Leave headroom, cool food before freezing, and avoid moving glass straight from hot food to a cold freezer.',
-        ],
-      },
-      {
-        h2: 'Best containers for different freezer meals',
-        paragraphs: [
-          'Use twist-lid tubs for soups, stews, chilli, and sauces. Use 1 litre rectangular boxes for complete meals such as chicken curry and rice. Use larger 1.5 to 2 litre containers for family-size batch bases that you will portion later.',
-          'If you freeze many meals, label everything with the meal name and date. A freezer full of unlabelled red sauces is not a system; it is future confusion.',
-        ],
-      },
-      {
-        h2: 'Glass in the freezer',
-        paragraphs: [
-          'Glass is excellent for visibility and reheating, but it needs more care. Leave headroom, avoid sudden temperature changes, and follow the product instructions. Borosilicate-style glass is often marketed for freezer-to-oven durability, but the exact listing guidance still matters.',
-          'For most people, glass is best for freezer portions that will be reheated as complete meals. Plastic tubs are better for high-volume freezer storage where low cost and quantity matter.',
-        ],
-      },
-      {
-        h2: 'Freezer prep mistakes',
-        bullets: [
-          'Filling containers to the brim.',
-          'Freezing food while it is still steaming hot.',
-          'Using weak lids for soup or sauce.',
-          'Forgetting labels and dates.',
-          'Buying only one size of container.',
-        ],
-        paragraphs: [
-          'A mixed setup wins: twist-lid tubs for liquids, rectangular glass or plastic for individual meals, and larger tubs for batch bases.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'meal-prep-tubs-for-batch-cooking', label: 'Meal Prep Tubs for Batch Cooking', type: 'blog' },
-      { slug: 'leakproof-meal-prep-containers-uk', label: 'Leakproof Meal Prep Containers UK', type: 'blog' },
-      ...guideRelated,
-    ],
-    faq: [
-      { q: 'Can you freeze meal prep in glass containers?', a: 'Yes, if the exact container is freezer safe and you leave headroom. Avoid sudden temperature changes and follow the listing instructions.' },
-      { q: 'What containers are best for freezing soup?', a: 'Twist-lid deli tubs or dedicated soup containers are usually best because they seal evenly and handle liquid portions well.' },
-      { q: 'How long can meal prep stay in the freezer?', a: 'Many cooked meals keep well for around 2 to 3 months when sealed properly, though quality depends on the recipe and freezer conditions.' },
-    ],
-  },
+
+
 
   'dishwasher-safe-meal-prep-containers': {
     published: '2026-06-16',
@@ -627,7 +432,7 @@ export const containerBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
+      { slug: 'work-lunch-containers-guide', path: '/meal-prep-containers/work-lunch', label: 'Meal Prep Boxes for Work UK', type: 'guide' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
       ...guideRelated,
     ],
@@ -687,7 +492,7 @@ export const containerBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'freezer-safe-meal-prep-containers', label: 'Freezer Safe Meal Prep Containers', type: 'blog' },
+      { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
       { slug: 'how-many-meal-prep-containers-do-you-need', label: 'How Many Meal Prep Containers Do You Need?', type: 'blog' },
       ...guideRelated,
     ],

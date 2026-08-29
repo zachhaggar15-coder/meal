@@ -138,28 +138,12 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     'Glass is better for reheating, stain resistance and long-term use. Plastic is better for low cost, light weight and bulk freezer portions.',
     CONTAINER_LINKS,
   ),
-  'leakproof-meal-prep-containers-uk': qa(
-    'Leakproof meal prep containers need the right lid more than the right material. Clip-lock, twist-lock and silicone-seal lids are best for soup, chilli, curry and commuting.',
-    CONTAINER_LINKS,
-  ),
   'meal-prep-container-size-guide': qa(
     'Most full lunches need around 900ml to 1 litre. Smaller 400-600ml tubs suit snacks and sides, while larger tubs work better for batch bases and freezer portions.',
     CONTAINER_LINKS,
   ),
-  'meal-prep-boxes-for-work-lunches': qa(
-    'Work lunch boxes should stack neatly, seal reliably and fit a proper portion. Rectangular glass or sturdy plastic boxes usually work better than tiny snack pots.',
-    CONTAINER_LINKS,
-  ),
   'meal-prep-tubs-for-batch-cooking': qa(
     'Batch cooking needs more tubs than lunch-only meal prep. Use larger containers for chilli, curry and pasta, plus smaller tubs for sauces, snacks and freezer portions.',
-    CONTAINER_LINKS,
-  ),
-  'best-glass-meal-prep-containers-uk': qa(
-    'The best glass meal prep containers are rectangular, around 900ml to 1 litre for lunches, with lids that are easy to clean and reliable enough for commuting.',
-    CONTAINER_LINKS,
-  ),
-  'plastic-meal-prep-containers-uk': qa(
-    'Plastic meal prep containers are best for budget, freezer portions and light commuting. They are less ideal for repeated tomato-heavy reheating because they can stain.',
     CONTAINER_LINKS,
   ),
   'microwave-safe-meal-prep-containers-uk': qa(
@@ -237,7 +221,7 @@ export const SEO_EXACT_PLAN_LINKS = {
   'high-protein-lunches-for-work-uk': [
     { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
     { label: 'Tesco high protein meal plan', to: '/meal-plans/tesco-high-protein-meal-plan' },
-    { label: 'Meal prep boxes for work lunches', to: '/blog/meal-prep-boxes-for-work-lunches' },
+    { label: 'Meal prep boxes for work lunches', to: '/meal-prep-containers/work-lunch' },
   ],
   'best-cheap-high-protein-foods-uk': [
     { label: 'High protein shopping list', to: '/meal-plans/high-protein-shopping-list' },
@@ -273,11 +257,6 @@ export const SEO_EXACT_PLAN_LINKS = {
     { label: 'Cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
     { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
     { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
-  ],
-  'meal-prep-boxes-for-work-lunches': [
-    { label: 'Work lunch meal prep plans', to: '/meal-plans/work-lunch-meal-prep-uk' },
-    { label: 'High protein lunches for work UK', to: '/blog/high-protein-lunches-for-work-uk' },
-    { label: 'Leakproof containers guide', to: '/blog/leakproof-meal-prep-containers-uk' },
   ],
   'meal-prep-tubs-for-batch-cooking': [
     { label: 'Vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },

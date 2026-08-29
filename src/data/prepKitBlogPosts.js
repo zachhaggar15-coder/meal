@@ -18,7 +18,7 @@ const commonContextualLinks = [
 
 const prepKitRelated = [
   { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
-  { slug: 'meal-prep-boxes-for-work-lunches', label: 'Meal Prep Boxes for Work Lunches', type: 'blog' },
+  { slug: 'work-lunch-containers-guide', path: '/meal-prep-containers/work-lunch', label: 'Meal Prep Boxes for Work UK', type: 'guide' },
   { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
   { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
 ];
@@ -235,7 +235,7 @@ export const prepKitBlogPostsData = {
     ],
     related: [
       { slug: 'meal-prep-containers-for-salads-uk', label: 'Meal Prep Containers for Salads UK', type: 'blog' },
-      { slug: 'leakproof-meal-prep-containers-uk', label: 'Leakproof Meal Prep Containers UK', type: 'blog' },
+      { slug: 'leakproof-meal-prep-containers-guide', path: '/meal-prep-containers/leakproof', label: 'Leakproof Meal Prep Containers UK', type: 'guide' },
       ...prepKitRelated,
     ],
     faq: [
@@ -741,7 +741,7 @@ export const prepKitBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'best-freezer-bags-for-meal-prep-uk', label: 'Best Freezer Bags for Meal Prep UK', type: 'blog' },
+      { slug: 'freezer-bags-meal-prep-guide', path: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep UK', type: 'guide' },
       { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
       { path: '/glass-meal-prep-containers', label: 'Glass Meal Prep Container Quick Compare' },
       ...prepKitRelated,
