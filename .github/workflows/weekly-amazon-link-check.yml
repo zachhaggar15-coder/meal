@@ -1,0 +1,105 @@
+name: Weekly Amazon Link Check
+
+on:
+  schedule:
+    # GitHub cron is UTC and does not follow British Summer Time, so 15:00
+    # London is 14:00 UTC in summer and 15:00 UTC in winter. Both fire, and the
+    # gate step below drops whichever one is not 15:00 in London that week.
+    - cron: '0 14 * * 1'
+    - cron: '0 15 * * 1'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'auto (PA-API if credentials exist), paapi, or reachability'
+        required: false
+        default: 'auto'
+        type: choice
+        options: [auto, paapi, reachability]
+      fail_on:
+        description: 'What should fail the run'
+        required: false
+        default: 'stock'
+        type: choice
+        options: [stock, dead, none]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-amazon-link-check
+  cancel-in-progress: false
+
+jobs:
+  check-amazon-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Gate to 15:00 Europe/London
+        id: gate
+        run: |
+          hour="$(TZ=Europe/London date +%H)"
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "$hour" = "15" ]; then
+            echo "London time is ${hour}:00 - running."
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "London time is ${hour}:00, not 15:00 - skipping this trigger."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        if: steps.gate.outputs.run == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.gate.outputs.run == 'true'
+        run: npm ci
+
+      - name: Validate the checker itself
+        if: steps.gate.outputs.run == 'true'
+        run: node --test scripts/amazon-link-health.test.js
+
+      # The links live in the prerendered HTML, so the site has to be built
+      # before there is anything to scan.
+      - name: Build site
+        if: steps.gate.outputs.run == 'true'
+        run: npm run build
+
+      - name: Check Amazon links
+        if: steps.gate.outputs.run == 'true'
+        env:
+          AMAZON_PAAPI_ACCESS_KEY: ${{ secrets.AMAZON_PAAPI_ACCESS_KEY }}
+          AMAZON_PAAPI_SECRET_KEY: ${{ secrets.AMAZON_PAAPI_SECRET_KEY }}
+          AMAZON_PAAPI_PARTNER_TAG: ${{ secrets.AMAZON_PAAPI_PARTNER_TAG }}
+        run: >-
+          node scripts/check-amazon-links.js
+          --mode=${{ inputs.mode || 'auto' }}
+          --fail-on=${{ inputs.fail_on || 'stock' }}
+
+      # Runs on failure too: the report is the thing worth reading when a link
+      # has gone dead or out of stock.
+      - name: Upload link health report
+        if: always() && steps.gate.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: amazon-link-health
+          path: |
+            audit-artifacts/amazon-link-health.json
+            audit-artifacts/amazon-link-health.md
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Summarise
+        if: always() && steps.gate.outputs.run == 'true'
+        run: |
+          if [ -f audit-artifacts/amazon-link-health.md ]; then
+            cat audit-artifacts/amazon-link-health.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'No Amazon link health report was produced.' >> "$GITHUB_STEP_SUMMARY"
+          fi
