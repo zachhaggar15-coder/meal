@@ -2,32 +2,62 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-08-10T08:10:22.078Z",
+  "generatedAt": "2026-08-24T07:32:59.897Z",
   "range": {
     "current": {
-      "startDate": "2026-07-11",
-      "endDate": "2026-08-07"
+      "startDate": "2026-07-25",
+      "endDate": "2026-08-21"
     }
   },
   "source": "google-analytics-and-search-console",
   "trendingLinks": [
     {
+      "to": "/quiz",
+      "label": "Meal plan quiz",
+      "description": "Answer a few questions to find a plan that fits your goal, diet and routine.",
+      "category": "Tool"
+    },
+    {
+      "to": "/browse",
+      "label": "Browse UK meal plans",
+      "description": "Compare plans by calories, supermarket, goal and dietary preference.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/",
+      "label": "MealPrep.org.uk",
+      "description": "Build a practical UK meal plan with recipes and one weekly shopping list.",
+      "category": "Guide"
+    },
+    {
       "to": "/blog/best-meal-prep-containers-uk",
       "label": "Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options",
-      "description": "Compare glass, plastic and leakproof meal prep containers for UK work lunches and batch cooking, including five-pack, 1-litre and freezer-safe options.",
+      "description": "Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance.",
       "category": "Guide"
     },
     {
-      "to": "/blog/what-does-1500-calories-look-like-uk",
-      "label": "What Does 1500 Calories Look Like?",
-      "description": "See what 1500 calories looks like in the UK: realistic breakfast, lunch, dinner and snack examples, plus the full 7-day 1500 calorie meal plan to use next.",
-      "category": "Guide"
+      "to": "/meal-plans/lidl",
+      "label": "Lidl Meal Plans UK",
+      "description": "Browse free Lidl meal plans for UK weight loss, high protein, vegetarian, vegan, muscle gain and budget goals, with PDFs and shopping lists.",
+      "category": "Meal plans"
     },
     {
-      "to": "/meal-plan/2000-calorie-meal-plan",
-      "label": "2000 Calorie Meal Plan UK — Free 7-Day Balanced Guide",
-      "description": "Complete 2000 calorie meal plan for active UK adults. Maintain energy, build muscle, or gentle weight loss. High-protein meals with shopping list. Generate yours free.",
-      "category": "Ready-made plan"
+      "to": "/meal-plans/1500-calorie",
+      "label": "1500 Calorie Meal Plan UK",
+      "description": "Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/meal-plans/high-protein",
+      "label": "High Protein Meal Plans UK",
+      "description": "Find free high protein meal plans for UK supermarkets, including fat loss, muscle gain, vegetarian, gym beginner and body recomposition plans.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/blog/lidl-high-protein-food-ideas-uk",
+      "label": "Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples",
+      "description": "Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.",
+      "category": "Guide"
     }
   ]
 };
