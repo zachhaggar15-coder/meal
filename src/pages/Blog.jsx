@@ -84,6 +84,9 @@ const CATEGORY_ORDER = [
   {
     label: 'Meal Prep & Batch Cooking',
     slugs: [
+      'meal-prep-rice-goes-hard-uk',
+      'meal-prep-chicken-drying-out-uk',
+      'meal-prep-watery-or-soggy-uk',
       'summer-meals-uk',
       'meal-prep-for-beginners-uk',
       'batch-cooking-for-beginners-uk',
@@ -115,6 +118,7 @@ const CATEGORY_ORDER = [
   {
     label: 'Work, Family & Student Food',
     slugs: [
+      'meal-prep-no-fridge-at-work-uk',
       'student-high-protein-meals-uk',
       'family-high-protein-dinners-uk',
       'night-shift-food-ideas-uk',
@@ -147,6 +151,7 @@ const CATEGORY_ORDER = [
     label: 'Meal Prep Containers',
     slugs: [
       'best-meal-prep-containers-uk',
+      'meal-prep-container-stains-and-smells-uk',
       'glass-vs-plastic-meal-prep-containers',
       'meal-prep-container-size-guide',
       'dishwasher-safe-meal-prep-containers',

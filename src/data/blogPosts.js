@@ -4,6 +4,7 @@ import { blogPostsBatch4Data } from './blogPostsBatch4.js';
 import { blogPostsBatch5Data } from './blogPostsBatch5.js';
 import { blogPostsBatch6Data } from './blogPostsBatch6.js';
 import { blogPostsBatch7Data } from './blogPostsBatch7.js';
+import { blogPostsBatch8Data } from './blogPostsBatch8.js';
 import { commercialBlogPostsData } from './commercialBlogPosts.js';
 import { prepKitBlogPostsData } from './prepKitBlogPosts.js';
 
@@ -17,6 +18,7 @@ const rawBlogPostsData = {
   ...blogPostsBatch5Data,
   ...blogPostsBatch6Data,
   ...blogPostsBatch7Data,
+  ...blogPostsBatch8Data,
   ...commercialBlogPostsData,
   ...prepKitBlogPostsData,
   'how-to-build-a-calorie-deficit': {
