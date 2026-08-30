@@ -41,18 +41,20 @@ export function buildBlogNextStep({ slug = '', data = {}, exactPlanLinks = [] })
     };
   }
 
-  if (isEquipment) {
-    return {
-      title: 'Match the kit to the meals you actually prep',
-      description: 'Work out your weekly container count first, then compare only the size and material that fits.',
-      primary: { to: '/tools#container-count-calculator', label: 'Calculate my container count' },
-      secondary: [
-        { to: '/meal-prep-containers', label: 'Compare container types' },
-        { to: '/quiz', label: 'Find a weekly meal plan' },
-      ],
-    };
-  }
-
+  // Supermarket is checked before equipment, and the ordering is load-bearing.
+  //
+  // Three months of Search Console data says supermarket-named queries are what
+  // this site actually wins: they convert at 1.14% against 0.21% for generic
+  // ones, and /meal-plans/lidl is the single best page on the site at 3.68%.
+  // Container queries over the same window returned 9,757 impressions and 11
+  // clicks. So when a page is both — an Aldi guide that also recommends a
+  // lunch box — the supermarket plan is the more valuable next step by an
+  // order of magnitude, and sending that reader to the container calculator
+  // instead would trade a proven destination for a dead one.
+  //
+  // This also means a supermarket page can carry affiliate products without
+  // silently losing its plan CTA, which is what lets those pages be monetised
+  // at all.
   if (supermarket) {
     const [key, label] = supermarket;
     return {
@@ -62,6 +64,18 @@ export function buildBlogNextStep({ slug = '', data = {}, exactPlanLinks = [] })
       secondary: [
         { to: `/browse?supermarket=${key}`, label: `Filter all ${label} plans` },
         { to: '/quiz', label: 'Use the plan finder' },
+      ],
+    };
+  }
+
+  if (isEquipment) {
+    return {
+      title: 'Match the kit to the meals you actually prep',
+      description: 'Work out your weekly container count first, then compare only the size and material that fits.',
+      primary: { to: '/tools#container-count-calculator', label: 'Calculate my container count' },
+      secondary: [
+        { to: '/meal-prep-containers', label: 'Compare container types' },
+        { to: '/quiz', label: 'Find a weekly meal plan' },
       ],
     };
   }

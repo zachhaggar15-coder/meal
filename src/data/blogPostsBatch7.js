@@ -1,6 +1,17 @@
 // Seventh batch of blog posts (July 2026). Long-tail food idea pages written
 // as practical UK supermarket guides: quick answer, meal ideas, food lists,
 // shopping prompts, prep notes and FAQs. These are additions only.
+//
+// August 2026: these pages turned out to be where the site actually converts.
+// Three months of Search Console data put supermarket-named queries at 1.14%
+// CTR against 0.21% for generic ones, with the retailer pages here among the
+// best on the site — Lidl high protein at 2.44%, Asda budget ideas at 3.21%.
+// The affiliate links had all been placed on container pages, whose queries
+// returned 9,757 impressions and 11 clicks over the same window. So a topic can
+// now declare `toolRecommendations` and the factory attaches the Associates
+// disclosure with it, which puts the products in front of the readers who are
+// actually here.
+import { AFFILIATE_DISCLOSURE } from './mealPrepProducts.js';
 
 const PUBLISHED = '2026-07-23';
 const REVIEWED = '23 July 2026';
@@ -297,6 +308,15 @@ function ideaPost(topic) {
     ],
     related: relatedFor(topic),
     faq: topic.faq,
+    // Only the topics that opt in carry products, and opting in is what pulls
+    // the disclosure with it — check-affiliate-disclosure fails the build on
+    // any served page with a tagged link and no notice.
+    ...(topic.toolRecommendations
+      ? {
+        affiliateDisclosure: AFFILIATE_DISCLOSURE,
+        toolRecommendations: topic.toolRecommendations,
+      }
+      : {}),
   };
 }
 
@@ -1543,6 +1563,11 @@ const topics = [
   },
   {
     slug: 'tesco-high-protein-snacks-uk',
+    toolRecommendations: {
+      title: "Making snacks portable rather than buying them",
+      intro: "Most of the cost of high-protein snacking is convenience packaging. Small pots and a shaker cover the same job for a fraction of it.",
+      productIds: ['sistema-dressing-pots', 'blenderbottle-classic-v2'],
+    },
     cluster: 'supermarket',
     supermarketSlug: 'tesco',
     supermarketName: 'Tesco',
@@ -1607,6 +1632,11 @@ const topics = [
   },
   {
     slug: 'aldi-low-calorie-food-ideas-uk',
+    toolRecommendations: {
+      title: "Weighing is most of the work on a lower-calorie week",
+      intro: "Low-calorie eating is mostly a portioning problem rather than a food-choice problem. Either scale below solves it; neither is expensive.",
+      productIds: ['salter-arc-scale', 'salter-disc-scale'],
+    },
     cluster: 'supermarket',
     supermarketSlug: 'aldi',
     supermarketName: 'Aldi',
@@ -1687,6 +1717,11 @@ const topics = [
   },
   {
     slug: 'lidl-high-protein-food-ideas-uk',
+    toolRecommendations: {
+      title: "Two things that make a high-protein shop go further",
+      intro: "Neither is essential. A scale matters because protein portions are the ones people misjudge most, and a shaker covers the gap when the cooked food runs out mid-week.",
+      productIds: ['salter-arc-scale', 'blenderbottle-classic-v2'],
+    },
     cluster: 'supermarket',
     supermarketSlug: 'lidl',
     supermarketName: 'Lidl',
@@ -1751,6 +1786,11 @@ const topics = [
   },
   {
     slug: 'asda-budget-meal-ideas-uk',
+    toolRecommendations: {
+      title: "The one appliance that pays for itself on a budget shop",
+      intro: "A slow cooker is what makes the cheap cuts worth buying, and it needs no attention while it works. Labels are pennies and stop the freezer becoming a mystery.",
+      productIds: ['crockpot-3-5l-red', 'nuoshen-removable-food-labels'],
+    },
     cluster: 'supermarket',
     supermarketSlug: 'asda',
     supermarketName: 'Asda',
@@ -1815,6 +1855,11 @@ const topics = [
   },
   {
     slug: 'sainsburys-healthy-ready-meal-combos-uk',
+    toolRecommendations: {
+      title: "For combos that travel to work",
+      intro: "A ready meal plus a fresh side only works if the side arrives in one piece. A bag keeps it cold and a small pot keeps the dressing off it until lunchtime.",
+      productIds: ['lifewit-9l-insulated-lunch-bag', 'sistema-dressing-pots'],
+    },
     cluster: 'supermarket',
     supermarketSlug: 'sainsburys',
     supermarketName: "Sainsbury's",
