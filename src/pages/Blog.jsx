@@ -3,7 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { generateBlogCardImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
 
 const CATEGORY_ORDER = [
@@ -284,10 +284,10 @@ export default function Blog() {
 
         <div className="cta-box cta-box--large">
           <h2>Ready to put it into practice?</h2>
-          <p>Browse {PLAN_COUNT} free UK meal plans or take the quiz to get matched in 30 seconds.</p>
+          <p>Browse {PLAN_COUNT_LABEL} free UK meal plans or take the quiz to get matched in 30 seconds.</p>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/quiz" className="btn-primary">Take the Quiz →</Link>
-            <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT} Plans</Link>
+            <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT_LABEL} Plans</Link>
           </div>
         </div>
       </div>

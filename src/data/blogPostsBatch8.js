@@ -69,6 +69,10 @@ function troubleshootingPost(data) {
     modified: PUBLISHED,
     reviewed: REVIEWED,
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
+    // Someone arriving here has a problem, not a shopping list. Hold the
+    // products until after the cause and the fix have been explained; landing
+    // on them first was both worse to read and a poor argument for the product.
+    productsAfterSection: 1,
     // Kit route first, because a reader here has a problem a product may solve;
     // the plan finder stays after it so these pages still feed the quiz.
     contextualLinks: [...containerLinks, ...planFinderLinks],
@@ -138,11 +142,6 @@ export const blogPostsBatch8Data = {
       title: 'Kit that makes rice prep more consistent',
       intro: 'A rice cooker is not essential, but it removes the main source of variation, since rice cooked to the same texture every time also ages more predictably in the fridge.',
       productIds: ['russell-hobbs-rice-cooker', 'cosori-rice-cooker-steamer'],
-    },
-    productRecommendations: {
-      title: 'Containers that keep rice from drying out',
-      intro: 'The seal matters more than the material. Both of these hold moisture properly; the glass set can go from fridge to microwave without decanting.',
-      productIds: ['harbour-housewares-glass-5-pack', 'budget-compartment-50-pack'],
     },
     related: [
       { slug: 'chicken-and-rice-meal-prep-uk', label: 'Chicken and Rice Meal Prep UK', type: 'blog' },
@@ -443,11 +442,6 @@ export const blogPostsBatch8Data = {
         ],
       },
     ],
-    productRecommendations: {
-      title: 'Containers that cool and separate better',
-      intro: 'Wide and shallow beats deep and narrow for anything packed warm. Compartment boxes solve the same problem by keeping wet and dry apart.',
-      productIds: ['budget-compartment-50-pack', 'harbour-housewares-glass-5-pack'],
-    },
     toolRecommendations: {
       title: 'For the sauces and dressings',
       intro: 'The single change that fixes most soggy prep is not pouring the wet component on until you eat.',

@@ -31,7 +31,12 @@ export default function ProductPicks({
         <p className="affiliate-disclosure">{AFFILIATE_DISCLOSURE}</p>
       )}
 
-      {showQuickComparison && products.length > 1 && (
+      {/* The comparison table only earns its space at three or more products.
+          With two, it lists the same names, prices and use cases that the
+          detailed cards repeat immediately underneath — so a two-product block
+          rendered every product twice in a row and took more vertical space
+          than any section of the article around it. */}
+      {showQuickComparison && products.length > 2 && (
         <div className="product-quick-compare" aria-label={`${title} quick comparison`}>
           <div className="product-quick-head">
             <span className="offer-kicker">Quick comparison</span>
@@ -46,7 +51,10 @@ export default function ProductPicks({
           <div className="product-quick-grid">
             {products.slice(0, 3).map((product, index) => (
               <article key={product.id} className="product-quick-card">
-                <span className="container-search-chip">Use case: {title}</span>
+                {/* Was "Use case: {title}", which repeated the section heading on
+                    every card and described nothing. The category is the fact a
+                    reader is scanning for. */}
+                <span className="container-search-chip">{product.category}</span>
                 <h4>{product.name}</h4>
                 <dl>
                   <div>

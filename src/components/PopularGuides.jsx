@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 function hasAny(value, needles) {
@@ -23,7 +23,7 @@ function buildGuides(slug, post) {
     },
     {
       to: '/browse',
-      title: `Browse ${PLAN_COUNT} plans`,
+      title: `Browse ${PLAN_COUNT_LABEL} plans`,
       description: 'Filter by calories, diet type, supermarket, goal, and effort.',
       event: 'popular_guide_browse_click',
     },

@@ -2,7 +2,7 @@ import blogSearchIndex from './blogSearchIndex.json' with { type: 'json' };
 import { COMBO_LANDING_PAGES } from './comboLandingPages.js';
 import { CONTAINER_GUIDE_GROUPS } from './containerProducts.js';
 import { MEAL_PLAN_HUBS } from './mealPlanHubs.js';
-import { PLAN_COUNT } from './planCatalogMeta.js';
+import { PLAN_COUNT, PLAN_COUNT_LABEL } from './planCatalogMeta.js';
 import {
   buildCalorieChooserPath,
   buildDietChooserPath,
@@ -14,7 +14,7 @@ import {
   INDEXED_SUPERMARKET_CHOICES,
 } from './planChooser.js';
 
-export { PLAN_COUNT };
+export { PLAN_COUNT, PLAN_COUNT_LABEL };
 
 export const TOOL_LINKS = [
   {
@@ -68,7 +68,7 @@ export const START_LINKS = [
   },
   {
     to: '/browse',
-    label: `Browse ${PLAN_COUNT} Plans`,
+    label: `Browse ${PLAN_COUNT_LABEL} Plans`,
     description: 'Filter by goal, supermarket, diet, calories, budget and effort.',
   },
   {
@@ -270,7 +270,7 @@ export const FOOTER_GROUPS = [
     items: [
       { to: '/quiz', label: 'Find My Plan' },
       { to: '/saved-plans', label: 'Saved Plans' },
-      { to: '/browse', label: `Browse ${PLAN_COUNT} Plans` },
+      { to: '/browse', label: `Browse ${PLAN_COUNT_LABEL} Plans` },
       { to: '/tools', label: 'Tools' },
       { to: '/mealprep-plus', label: 'MealPrep+' },
       { to: '/meal-plans', label: 'Supermarkets' },
@@ -335,7 +335,7 @@ const STATIC_SEARCH_ENTRIES = [
     priority: 98,
   },
   {
-    title: `Browse ${PLAN_COUNT} UK Meal Plans`,
+    title: `Browse ${PLAN_COUNT_LABEL} UK Meal Plans`,
     to: '/browse',
     type: 'Plan browser',
     description: 'Filter by goal, supermarket, diet, calories, budget and effort.',

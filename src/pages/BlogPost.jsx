@@ -48,6 +48,12 @@ export default function BlogPost() {
   const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
   const nextStep = buildBlogNextStep({ slug, data, exactPlanLinks });
   const useBuyingGuideFlow = data.commercialLayout === 'container-buying-guide';
+  // Number: hold the product blocks until after that section index. The buying
+  // guide has its own placement, so this only applies to ordinary posts.
+  const deferProductsAfter = Number.isInteger(data.productsAfterSection)
+    ? data.productsAfterSection
+    : null;
+  const hasDeferredProducts = !useBuyingGuideFlow && deferProductsAfter !== null;
 
   const jsonLd = [
     {
@@ -238,7 +244,13 @@ export default function BlogPost() {
 
           {!useBuyingGuideFlow && <ContextualLinks blocks={data.contextualLinks} />}
 
-          {data.productRecommendations && !useBuyingGuideFlow && (
+          {/* A post can set productsAfterSection to hold its product blocks back
+              until after that section index, which is what a troubleshooting
+              page wants: someone asking why their rice goes hard should reach
+              the explanation before the shopping. Without it, both blocks
+              render here and a reader meets four products before the first
+              paragraph of the answer. */}
+          {data.productRecommendations && !useBuyingGuideFlow && !hasDeferredProducts && (
             <AffiliateProductGrid
               title={data.productRecommendations.title}
               intro={data.productRecommendations.intro}
@@ -248,7 +260,7 @@ export default function BlogPost() {
             />
           )}
 
-          {data.toolRecommendations && (
+          {data.toolRecommendations && !hasDeferredProducts && (
             <ProductPicks
               title={data.toolRecommendations.title}
               intro={data.toolRecommendations.intro}
@@ -281,6 +293,28 @@ export default function BlogPost() {
                   <ResponsiveBlogTable table={section.table} />
                 )}
               </section>
+              {hasDeferredProducts && deferProductsAfter === i && (
+                <>
+                  {data.productRecommendations && (
+                    <AffiliateProductGrid
+                      title={data.productRecommendations.title}
+                      intro={data.productRecommendations.intro}
+                      productIds={data.productRecommendations.productIds}
+                      sourcePage={`blog-${slug}-recommendations`}
+                      showDisclosure={false}
+                    />
+                  )}
+                  {data.toolRecommendations && (
+                    <ProductPicks
+                      title={data.toolRecommendations.title}
+                      intro={data.toolRecommendations.intro}
+                      productIds={data.toolRecommendations.productIds}
+                      sourcePage={`blog-${slug}-tools`}
+                      showDisclosure={false}
+                    />
+                  )}
+                </>
+              )}
               {useBuyingGuideFlow && data.detailedProductsAfterSection === i && (
                 <AffiliateProductGrid
                   title="Details on the three picks"

@@ -9,7 +9,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { BROWSE_PAGE_SIZE, buildBrowsePagePath, buildBrowsePageWindow } from '../data/browsePagination.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
@@ -297,7 +297,7 @@ export default function BrowsePlans() {
           <SiteLogo variant="page" className="page-header-logo" />
           <h1>Browse All UK Meal Plans</h1>
           <p className="browse-sub">
-            {PLAN_COUNT} plans covering every goal, supermarket, and diet.
+            {PLAN_COUNT_LABEL} plans covering every goal, supermarket, and diet.
             {' '}<Link to="/quiz" className="browse-quiz-link">Take the quiz to get matched →</Link>
           </p>
         </div>

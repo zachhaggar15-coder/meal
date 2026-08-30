@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   MOBILE_NAV_GROUPS,
-  PLAN_COUNT,
+  PLAN_COUNT_LABEL,
 } from '../data/navigation.js';
 
 const DEFAULT_EXPANDED = MOBILE_NAV_GROUPS.reduce((state, group) => ({
@@ -74,7 +74,7 @@ export default function Sidebar({ open, onClose }) {
               className={`sidebar-browse-cta${location.pathname === '/browse' ? ' sidebar-link--active' : ''}`}
               onClick={onClose}
             >
-              Browse {PLAN_COUNT} Plans
+              Browse {PLAN_COUNT_LABEL} Plans
             </Link>
           </div>
 
