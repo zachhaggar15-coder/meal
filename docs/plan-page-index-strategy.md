@@ -1,6 +1,43 @@
 # Plan page index strategy
 
-Status: **proposal, not yet decided.** Written 29 August 2026.
+Status: **decided — do not deindex.** Proposed 29 August 2026, resolved 30 August 2026
+against a three-month Search Console performance export.
+
+## Verdict, up front
+
+The measurement this document asked for has been run, and it contradicts the suspicion
+that prompted it. **The plan pages are the site's second-largest source of clicks and its
+best-converting substantial section.** Nothing here should be deindexed.
+
+| Section | Pages | Clicks | Impressions | CTR |
+|---|---:|---:|---:|---:|
+| `/blog` | 146 | 549 | 69,777 | 0.79% |
+| **`/plans`** | **741** | **401** | **19,404** | **2.07%** |
+| `/meal-plan` | 29 | 209 | 19,956 | 1.05% |
+| `/meal-plans` | 41 | 149 | 9,752 | 1.53% |
+
+`/plans/` earns **30% of all site clicks** from **15% of the impressions**, at nearly three
+times the blog's click-through rate. The hypothesis that 77% of the sitemap was dead weight
+was wrong, and acting on it without measuring would have removed the most efficient traffic
+on the site.
+
+The one caveat worth keeping: the value is concentrated and the tail is genuinely thin.
+Of the 741 plan pages with impressions, **206 have at least one click and 535 have none**,
+and the median plan page took **6 impressions in three months**. One page,
+`/plans/aldi-high-protein-low-cal-1500`, accounts for 51 of the 401 clicks. So this is a
+real long tail rather than 741 uniformly healthy pages — but a long tail that sums to a
+third of the site's traffic is exactly what a long tail is supposed to look like, and
+pruning it would cost more than it saved.
+
+**Action: leave the plan pages indexed. Revisit only if CTR falls below the blog's.**
+
+---
+
+## Original proposal, retained for the record
+
+Everything below was written before the data arrived. It is kept because the reasoning
+about *how* to decide still applies, and because the conclusion it warned against is the
+one the data rejected.
 
 ## The question
 
