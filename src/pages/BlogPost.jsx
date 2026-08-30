@@ -11,7 +11,6 @@ import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
-import QuizNudge from '../components/QuizNudge.jsx';
 import TrustBox from '../components/TrustBox.jsx';
 import ContentByline from '../components/ContentByline.jsx';
 import SupermarketEvidence from '../components/SupermarketEvidence.jsx';
@@ -187,13 +186,15 @@ export default function BlogPost() {
               )}
             </aside>
           )}
+          {/* The quiz nudge used to sit here, immediately above the next-step
+              block, and both asked for the same thing. The next step is the one
+              worth keeping: it is page-aware, so a Lidl guide points at
+              /meal-plans/lidl (1,711 impressions, 3.68% CTR) where the nudge
+              pointed everyone at /quiz (14 impressions). An article now makes
+              one contextual ask here and one general ask at the end, instead of
+              four separate routes to the same place. */}
           {!useBuyingGuideFlow && (
             <>
-              <QuizNudge
-                sourcePage={`blog-${slug}`}
-                pageType="blog"
-                location="after_quick_answer"
-              />
               <ContextualNextStep
                 {...nextStep}
                 eyebrow="Make this practical"
@@ -339,11 +340,6 @@ export default function BlogPost() {
           {useBuyingGuideFlow && (
             <>
               <ContextualLinks blocks={data.contextualLinks} />
-              <QuizNudge
-                sourcePage={`blog-${slug}`}
-                pageType="blog"
-                location="after_buying_guide"
-              />
               <ContextualNextStep
                 {...nextStep}
                 eyebrow="Use your containers"
@@ -408,20 +404,12 @@ export default function BlogPost() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                to="/quiz"
-                data-event="plan_primary_cta_clicked"
-                data-source-page={`blog-${slug}`}
-              >
-                Generate A Personalised UK Meal Plan
-              </Link>
-            </li>
-            <li>
-              <Link to="/glass-meal-prep-containers" data-event="container_promo_click" data-source-page={`blog-${slug}`}>
-                Glass Meal Prep Container Quick Compare
-              </Link>
-            </li>
+            {/* Two links used to be appended to every article's related list: a
+                second /quiz call, duplicating the CTA box directly above it,
+                and a glass container promo. Neither is a related article, and
+                the promo target is the stickers page rather than a container
+                guide, so the heading was describing them wrongly. Both are
+                reachable from the nav on every page anyway. */}
           </ul>
           {showTrustBox && (
             <TrustBox
