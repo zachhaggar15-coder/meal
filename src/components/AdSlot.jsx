@@ -1,9 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import {
+  areAdsEnabled,
+  getAdsenseClientId,
+  hasAdConsent,
+  onAdConsentChange,
+} from '../utils/adConsent.js';
+import { isMonetisableRoute } from '../utils/adPlacement.js';
 
-const ENV = import.meta.env || {};
-const ADS_ENABLED = ['1', 'true', 'yes', 'on'].includes(
-  String(ENV.VITE_ADS_ENABLED || '').trim().toLowerCase(),
-);
 const ADSENSE_SCRIPT_ID = 'mealprep-adsense-loader';
 const ADSENSE_SCRIPT_BASE_URL = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
 
@@ -27,38 +31,52 @@ export default function AdSlot({
   format = 'auto',
   fullWidthResponsive = true,
 }) {
-  const requestQueued = useRef(false);
-  const clientId = String(ENV.VITE_ADSENSE_CLIENT_ID || '').trim();
+  const { pathname } = useLocation();
+  const clientId = getAdsenseClientId();
   const resolvedSlotId = String(slotId || '').trim();
-  const isConfigured = Boolean(ADS_ENABLED && clientId && resolvedSlotId);
+  const configured = Boolean(areAdsEnabled() && clientId && resolvedSlotId);
+  const eligible = configured && isMonetisableRoute(pathname);
+
+  // The script used to load on mount regardless of what the visitor had
+  // chosen, which for a UK site means setting advertising cookies before the
+  // question was asked. Nothing is requested until consent is granted, and the
+  // subscription means granting it later fills the slot without a reload.
+  const [consented, setConsented] = useState(false);
 
   useEffect(() => {
-    if (!isConfigured || requestQueued.current || typeof window === 'undefined' || typeof document === 'undefined') {
-      return;
-    }
+    if (!eligible) return undefined;
+    setConsented(hasAdConsent());
+    return onAdConsentChange(next => setConsented(next === 'granted'));
+  }, [eligible]);
 
+  useEffect(() => {
+    if (!eligible || !consented) return;
     ensureAdsenseScript(clientId);
-
     try {
       window.adsbygoogle = window.adsbygoogle || [];
       window.adsbygoogle.push({});
-      requestQueued.current = true;
     } catch {
-      requestQueued.current = false;
+      // A blocked or failed request leaves the reserved space empty rather
+      // than breaking the page around it.
     }
-  }, [clientId, isConfigured, resolvedSlotId]);
+  }, [clientId, consented, eligible, resolvedSlotId]);
 
-  if (!isConfigured) return null;
+  if (!eligible || !consented) return null;
 
+  // `display: block` alone let a late-arriving ad push the article down as it
+  // loaded. The wrapper reserves the height the unit will take, so the content
+  // below it does not move.
   return (
-    <ins
-      className="adsbygoogle"
-      style={{ display: 'block' }}
-      data-ad-client={clientId}
-      data-ad-slot={resolvedSlotId}
-      data-ad-format={format}
-      data-full-width-responsive={fullWidthResponsive ? 'true' : 'false'}
-      data-ad-placement={placement}
-    />
+    <div className="ad-slot" data-ad-placement={placement}>
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client={clientId}
+        data-ad-slot={resolvedSlotId}
+        data-ad-format={format}
+        data-full-width-responsive={fullWidthResponsive ? 'true' : 'false'}
+        data-ad-placement={placement}
+      />
+    </div>
   );
 }

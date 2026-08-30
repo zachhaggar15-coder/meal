@@ -36,10 +36,17 @@ const fitItems = [
 export default function MealPrepPlus() {
   return (
     <>
+      {/* The page describes a service that does not exist yet — it says
+          "coming soon" and collects waitlist signups. Google Publisher
+          Policies name under-construction screens as ineligible inventory,
+          and an unbuilt product is not something to put in front of search
+          traffic either. It stays reachable and linked; it is just not
+          indexed until there is a service behind it. */}
       <SEO
         title="MealPrep+ | Weekly UK Meal Planning Waitlist"
         description="Join the MealPrep+ waitlist for a planned weekly UK meal planning service with supermarket shopping lists, recipes, calories and prep notes."
         canonical="/mealprep-plus"
+        robots="noindex,follow"
         jsonLd={jsonLd}
       />
 

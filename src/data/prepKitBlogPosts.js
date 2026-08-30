@@ -743,7 +743,7 @@ export const prepKitBlogPostsData = {
     related: [
       { slug: 'freezer-bags-meal-prep-guide', path: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep UK', type: 'guide' },
       { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
-      { path: '/glass-meal-prep-containers', label: 'Glass Meal Prep Container Quick Compare' },
+      { slug: 'glass-meal-prep-containers-guide', path: '/meal-prep-containers/glass', label: 'Glass Meal Prep Containers UK', type: 'guide' },
       ...prepKitRelated,
     ],
     faq: [

@@ -115,10 +115,42 @@ export default function Privacy() {
         <section>
           <h2>Advertising</h2>
           <p>
-            <strong>MealPrep.org.uk does not currently show advertising.</strong> No advertising
-            script is loaded on any page, including before consent. If that changes, this page
-            will be updated before any ad code goes live to name the advertising provider,
-            describe the cookies involved and explain the consent choice you will be given.
+            The site is built to carry advertising from{' '}
+            <strong>Google AdSense</strong>, and this section describes how that works whether or
+            not you are seeing ads today. Ads are switched off site-wide unless we have enabled
+            them, and while they are off no advertising script is loaded on any page.
+          </p>
+          <p>
+            When advertising is on, the banner asks you separately about it before anything loads.
+            Agreeing to analytics does not agree to advertising, and vice versa. Until you accept,
+            the Google AdSense script is not on the page, so it cannot set cookies or receive your
+            visit. If your browser sends a Do Not Track signal, advertising stays off regardless of
+            what the banner says.
+          </p>
+          <p>
+            If you accept, Google and its partners may set cookies or read device identifiers to
+            serve and measure ads, including personalised ads where you have agreed to that. Google
+            processes this under its own terms:{' '}
+            <a
+              href="https://policies.google.com/technologies/partner-sites"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              how Google uses data from sites that use its services
+            </a>
+            . You can change or withdraw the choice at any time by clearing this site&rsquo;s
+            stored data in your browser settings, and you can turn off personalised advertising
+            across Google at{' '}
+            <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer">
+              My Ad Center
+            </a>
+            .
+          </p>
+          <p>
+            Ads are never placed on error screens, forms, the quiz, the plan browser, the chooser
+            screens or other navigation pages. Advertising is bought by Google, not by us: an ad
+            appearing beside a page is not a recommendation, and we have no relationship with the
+            advertiser.
           </p>
         </section>
 

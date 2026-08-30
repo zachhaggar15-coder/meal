@@ -221,8 +221,6 @@ const ROUTES = uniqueRoutes([
   ...MEAL_PLAN_HUB_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...COMBO_LANDING_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...CONTAINER_GUIDE_SLUGS.map(slug => `/meal-prep-containers/${slug}`),
-  '/glass-meal-prep-containers',
-  '/stickers',
   // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),
   // Legacy meal plan pages (preserved for SEO)
@@ -233,29 +231,36 @@ const ROUTES = uniqueRoutes([
   ...SEO_PRIORITY_ROUTES,
 ]);
 
-const NOINDEX_ROUTES = new Set(['/quiz/results', '/saved-plans', '/404', '/admin', '/feedback']);
+// Routes whose pages emit `noindex`. Kept in step with the `robots` prop on
+// each page component — a route listed here but still indexable in the markup
+// (or the reverse) is the bug this set exists to prevent.
+const NOINDEX_ROUTES = new Set([
+  '/quiz/results',
+  '/saved-plans',
+  '/404',
+  '/admin',
+  '/feedback',
+  // Waitlist page for a service that does not exist yet.
+  '/mealprep-plus',
+  // The 32 chooser screens — routing surfaces, noindex,follow.
+  ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
+  ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
+  ...DIET_CHOOSER_SLUGS.map(slug => `/choose-diet/${slug}`),
+  ...CALORIE_CHOOSER_SLUGS.map(slug => `/choose-calories/${slug}`),
+]);
 
 // A URL that canonicalises elsewhere must not also be advertised in the
 // sitemap. Google treats sitemap URLs as canonical hints, so keep only the
 // preferred URLs listed there.
-const HUB_SLUG_SET = new Set(MEAL_PLAN_HUB_SLUGS);
+// The chooser entries that used to be listed here — the ones sharing a slug
+// with a /meal-plans/ hub — are now covered by NOINDEX_ROUTES, which excludes
+// every chooser rather than only the overlapping ones.
 const NON_CANONICAL_SITEMAP_ROUTES = new Set([
-  '/stickers',
-  '/choose-plan/weight-loss',
   '/meal-plan/aldi-high-protein-meal-plan',
   '/meal-plan/sainsburys-low-calorie-meal-plan',
   '/meal-plan/morrisons-low-calorie-meal-plan',
   '/meal-plan/gym-beginner-meal-plan-uk',
   '/meal-plans/low-effort',
-  ...SUPERMARKET_CHOOSER_SLUGS
-    .filter(slug => HUB_SLUG_SET.has(slug))
-    .map(slug => `/choose-supermarket/${slug}`),
-  ...DIET_CHOOSER_SLUGS
-    .filter(slug => HUB_SLUG_SET.has(slug))
-    .map(slug => `/choose-diet/${slug}`),
-  ...CALORIE_CHOOSER_SLUGS
-    .filter(slug => HUB_SLUG_SET.has(`${slug}-calorie`))
-    .map(slug => `/choose-calories/${slug}`),
 ]);
 
 const SITEMAP_ROUTES = ROUTES.filter(route => (
@@ -329,14 +334,12 @@ async function prerender() {
     if (route === '/blog') return ['0.8', 'weekly'];
     if (route === '/questions') return ['0.8', 'weekly'];
     if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
-    if (route === '/glass-meal-prep-containers') return ['0.8', 'weekly'];
     if (SEO_PRIORITY_ROUTE_SET.has(route)) return ['0.9', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];
     if (route.startsWith('/meal-plan/')) return ['0.7', 'monthly'];
     if (route.startsWith('/blog/')) return ['0.7', 'monthly'];
     if (route === '/quiz/results') return ['0.6', 'monthly'];
-    if (route === '/stickers') return ['0.5', 'monthly'];
     return ['0.5', 'monthly'];
   }
 

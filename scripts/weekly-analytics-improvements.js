@@ -631,8 +631,8 @@ function buildRouteIndex() {
   addRoute('/', { label: 'MealPrep.org.uk', description: 'Build a practical UK meal plan with recipes and one weekly shopping list.', type: 'home' });
   addRoute('/quiz', { label: 'Meal plan quiz', description: 'Answer a few questions to find a plan that fits your goal, diet and routine.', type: 'tool' });
   addRoute('/browse', { label: 'Browse UK meal plans', description: 'Compare plans by calories, supermarket, goal and dietary preference.', type: 'hub' });
-  addRoute('/stickers', { label: 'Meal prep stickers', description: 'Create printable labels for dated, organised fridge and freezer portions.', type: 'promo' });
   addRoute('/meal-prep-containers', { label: 'Meal prep containers', description: 'Compare container sizes and materials for lunches, freezing and reheating.', type: 'container-guide' });
+  addRoute('/meal-prep-containers/glass', { label: 'Glass meal prep containers', description: 'Compare glass containers by size, material and reheating use.', type: 'container-guide' });
   addRoute('/blog', { label: 'Meal prep guides', description: 'Find practical UK guides for planning, shopping, cooking and food storage.', type: 'blog-index' });
   addRoute('/tools', { label: 'Meal prep tools', description: 'Use calculators and planning tools to make a weekly food shop easier.', type: 'tool' });
   addRoute('/about', { label: 'About MealPrep.org.uk', type: 'support' });

@@ -83,10 +83,17 @@ export default function ChoiceLandingPage({ mode }) {
 
   return (
     <>
+      {/* These 32 screens are routing surfaces, not articles: 306-570 visible
+          words, about a third of it unique, and where a combination has no
+          plan the main content is a sentence saying so. The ones that share a
+          slug with a /meal-plans/ hub were already kept out of the sitemap as
+          non-canonical; this extends the same judgement to all of them.
+          `follow` keeps the equity flowing through to the plans they link. */}
       <SEO
         title={`${config.title} | MealPrep.org.uk`}
         description={config.description}
         canonical={config.canonical}
+        robots="noindex,follow"
         jsonLd={jsonLd}
       />
 

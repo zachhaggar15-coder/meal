@@ -74,10 +74,14 @@ export default function PlanChooserPage() {
 
   return (
     <>
+      {/* Routing surface, not an article — see the note in
+          ChoiceLandingPage.jsx. Kept `follow` so the plans it points at still
+          receive the links. */}
       <SEO
         title={`${title} | MealPrep.org.uk`}
         description={description}
         canonical={canonical}
+        robots="noindex,follow"
         jsonLd={jsonLd}
       />
 

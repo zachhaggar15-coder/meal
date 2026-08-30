@@ -4,6 +4,12 @@ The site is ready for AdSense, but ads are switched off by default. While they a
 
 ## After AdSense approves the site
 
+0. **First, turn on a certified consent message.** In AdSense, open
+   **Privacy & messaging** and enable Google's consent management solution for
+   UK and EEA traffic. Google requires a certified CMP to serve there, and the
+   site's own consent gate (`src/utils/adConsent.js`) does not produce a TCF
+   string. Do this before step 4 — without it, ads will not serve to most of the
+   site's audience.
 1. In AdSense, create two responsive display ad units: one for articles and one for meal-plan pages.
 2. Copy the numeric slot ID shown for each ad unit. The slot ID is the value AdSense labels as `data-ad-slot` in its code.
 3. In the Vercel dashboard, open the MealPrep project and go to **Settings → Environment Variables**.
@@ -17,6 +23,11 @@ The site is ready for AdSense, but ads are switched off by default. While they a
 5. Trigger a new production deployment in Vercel so the new environment values are included in the site build.
 
 No source-code change is needed. Setting the variables and triggering the redeployment is enough.
+
+Once ads are on, the consent banner starts asking the advertising question
+alongside the analytics one, and no AdSense script loads until a visitor
+accepts. Readers who decline, or who send Do Not Track, see the site with no ad
+requests made at all.
 
 ## Keeping ads off
 

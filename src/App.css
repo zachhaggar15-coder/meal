@@ -12067,6 +12067,32 @@ textarea {
   }
 }
 
+/* Ad slots.
+   The unit arrives after the article has painted, so the wrapper reserves the
+   height it will occupy. Without this the text below jumps down as the ad
+   loads, which is both a Core Web Vitals problem and the mechanism behind
+   accidental clicks. Heights match the responsive display unit at each
+   breakpoint. The slot only renders once advertising consent is granted, so
+   this space is never reserved for readers who declined. */
+.ad-slot {
+  display: block;
+  margin: 32px auto;
+  min-height: 280px;
+  width: 100%;
+}
+
+.ad-slot .adsbygoogle {
+  min-height: 280px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .ad-slot,
+  .ad-slot .adsbygoogle {
+    min-height: 250px;
+  }
+}
+
 /* First-party analytics consent */
 .analytics-consent {
   align-items: center;
@@ -13844,6 +13870,29 @@ textarea {
 .plan-email-capture .plan-email-note a {
   color: inherit;
   font-weight: 750;
+}
+
+/* Names the plan the address buys. On a blog post the reader did not pick it,
+   so without this the form is an unqualified ask for an email address. */
+.plan-email-target {
+  margin-block: 6px 0;
+  font-size: 0.95rem;
+}
+
+.plan-email-target strong {
+  font-weight: 700;
+}
+
+.plan-email-privacy {
+  margin-block: 10px 0;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  line-height: 1.45;
+}
+
+.plan-email-privacy a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .legacy-plan-overview {

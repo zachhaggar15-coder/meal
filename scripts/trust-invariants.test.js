@@ -18,6 +18,7 @@ import {
   resolveAllergens,
 } from '../src/utils/allergens.js';
 import { formatContentDate, schemaDates, toIsoDate } from '../src/utils/contentDates.js';
+import { isMonetisableRoute } from '../src/utils/adPlacement.js';
 import { getAllPlanMeta, getPlanBySlug } from '../src/utils/planBuilder.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
 import { computeMealNutritionRaw, splitIngredientText } from '../src/utils/nutrition.js';
@@ -243,10 +244,44 @@ test('no analytics provider is loaded before consent', () => {
 
 test('AdSense stays disabled and is never loaded before an explicit opt-in', () => {
   const adSlot = read('src/components/AdSlot.jsx');
-  assert.ok(/VITE_ADS_ENABLED/.test(adSlot), 'AdSlot must remain behind the ads-enabled flag.');
+  const adConsent = read('src/utils/adConsent.js');
+
+  // The flag lives in adConsent.js now, so AdSlot is checked through it.
   assert.ok(
-    /if \(!isConfigured\) return null;/.test(adSlot),
-    'AdSlot must render nothing when ads are not explicitly enabled.',
+    /VITE_ADS_ENABLED/.test(adConsent),
+    'Ads must remain behind the ads-enabled flag.',
+  );
+  assert.ok(
+    /areAdsEnabled\(\)/.test(adSlot),
+    'AdSlot must consult the ads-enabled flag.',
+  );
+
+  // Two independent reasons to render nothing: ads not enabled or the route is
+  // not monetisable (`eligible`), and no advertising consent (`consented`).
+  assert.ok(
+    /if \(!eligible \|\| !consented\) return null;/.test(adSlot),
+    'AdSlot must render nothing without both an eligible route and consent.',
+  );
+
+  // The loader must sit behind the consent check, not run on mount.
+  // lastIndexOf skips the function declaration and finds the call site.
+  const loaderCall = adSlot.lastIndexOf('ensureAdsenseScript(clientId)');
+  const consentGuard = adSlot.indexOf('if (!eligible || !consented) return;');
+  assert.ok(consentGuard > -1, 'AdSlot must guard its effect on consent.');
+  assert.ok(
+    consentGuard < loaderCall,
+    'AdSlot requests the AdSense script before checking consent.',
+  );
+
+  // Advertising consent must be its own signal. Analytics consent is a
+  // different purpose under UK PECR and cannot stand in for it.
+  assert.ok(
+    !/hasAnalyticsConsent/.test(adSlot),
+    'AdSlot must not treat analytics consent as advertising consent.',
+  );
+  assert.ok(
+    /doNotTrack/.test(adConsent),
+    'Advertising consent must respect Do Not Track.',
   );
 
   // No page may embed the AdSense loader directly, bypassing the flag.
@@ -255,6 +290,38 @@ test('AdSense stays disabled and is never loaded before an explicit opt-in', () 
     !/pagead2\.googlesyndication\.com/.test(indexHtml),
     'index.html must not load the AdSense script globally.',
   );
+});
+
+test('ads are refused on screens with no publisher content', () => {
+  // Google's inventory-value policy rules out error screens, forms, empty
+  // utility screens and navigation surfaces. Enforced in code so a misplaced
+  // slot renders nothing rather than relying on nobody placing one.
+  for (const route of [
+    '/404',
+    '/admin',
+    '/feedback',
+    '/saved-plans',
+    '/quiz',
+    '/quiz/results',
+    '/browse',
+    '/browse/page/3',
+    '/tools',
+    '/mealprep-plus',
+    '/choose-plan/muscle-gain',
+    '/choose-supermarket/ocado',
+    '/choose-diet/vegan',
+    '/choose-calories/1500',
+  ]) {
+    assert.equal(isMonetisableRoute(route), false, `${route} must not carry ads.`);
+  }
+
+  for (const route of [
+    '/plans/aldi-cutting-1600-batch-cook',
+    '/blog/how-to-build-a-calorie-deficit',
+    '/meal-plan/1800-calorie-meal-plan',
+  ]) {
+    assert.equal(isMonetisableRoute(route), true, `${route} should be monetisable.`);
+  }
 });
 
 test('the publisher pages a reader needs are reachable from the footer', () => {

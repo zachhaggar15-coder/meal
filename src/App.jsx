@@ -17,7 +17,6 @@ const QuestionsHub = lazy(() => import('./pages/QuestionsHub.jsx'));
 const AccessoriesHub = lazy(() => import('./pages/AccessoriesHub.jsx'));
 const ContainerHub = lazy(() => import('./pages/ContainerHub.jsx'));
 const ContainerGuide = lazy(() => import('./pages/ContainerGuide.jsx'));
-const Stickers = lazy(() => import('./pages/Stickers.jsx'));
 const Quiz = lazy(() => import('./pages/Quiz.jsx'));
 const QuizResults = lazy(() => import('./pages/QuizResults.jsx'));
 const PlanPage = lazy(() => import('./pages/PlanPage.jsx'));
@@ -108,8 +107,12 @@ export default function App() {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/meal-prep-containers" element={<ContainerHub />} />
               <Route path="/meal-prep-containers/:tier" element={<ContainerGuide />} />
-              <Route path="/glass-meal-prep-containers" element={<Stickers />} />
-              <Route path="/stickers" element={<Stickers />} />
+              {/* /glass-meal-prep-containers and /stickers were one product
+                  placement page duplicating /meal-prep-containers/glass: 469
+                  words, ~96% of them promotional, against the guide's 2,466.
+                  Both now 301 to the guide in vercel.json, which is where the
+                  same two products are already sold with the buying notes
+                  attached. Seventh of the container pairs to be merged. */}
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

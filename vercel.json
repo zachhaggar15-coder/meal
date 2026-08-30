@@ -39,7 +39,12 @@
     },
     {
       "source": "/stickers",
-      "destination": "/glass-meal-prep-containers",
+      "destination": "/meal-prep-containers/glass",
+      "permanent": true
+    },
+    {
+      "source": "/glass-meal-prep-containers",
+      "destination": "/meal-prep-containers/glass",
       "permanent": true
     },
     {

@@ -967,11 +967,15 @@ export default function PlanPage() {
           note="Plans are generated from a curated UK meal library, then rendered with deterministic shopping lists, recipes, calorie estimates and supermarket-specific notes. They are general meal-planning information, not medical advice."
         />
 
-        <FeedbackBox />
+        {/* Above the feedback form rather than below it: the form's controls
+            are action items, and an ad butting up against a submit button is
+            how accidental clicks happen. This keeps the single plan-page unit
+            below all of the plan content and clear of anything tickable. */}
         <AdSlot
           placement="plan-inline"
           slotId={import.meta.env.VITE_AD_SLOT_PLAN_INLINE}
         />
+        <FeedbackBox />
 
       </div>
       <WaitlistSection sourcePage="plan" compact />

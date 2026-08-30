@@ -726,10 +726,11 @@ export default function MealPlanPage() {
 
         {data.ctaPlacements?.final !== false && (
           <div className="cta-box cta-box--large">
-            <h2>Generate Your Free Personalised Plan</h2>
+            <h2>Find Your Free Matched Plan</h2>
             <p>
-              Our AI generator creates a personalised {data.planLabel} meal plan tailored to your
-              preferred UK supermarket, dietary requirements, and cooking time. Free, no sign-up needed.
+              The free plan finder matches {indefiniteArticleFor(data.planLabel)} {data.planLabel}{' '}
+              meal plan to your preferred UK supermarket, dietary requirements and cooking time,
+              from a curated library of checked plans. Free, no sign-up needed.
             </p>
             <Link
               to="/"
@@ -783,7 +784,7 @@ export default function MealPlanPage() {
             </li>
           )}
           <li>
-            <Link to="/glass-meal-prep-containers" data-event="container_promo_click" data-source-page={slug}>
+            <Link to="/meal-prep-containers/glass" data-event="container_promo_click" data-source-page={slug}>
               Glass Meal Prep Containers For Your Portions
             </Link>
           </li>
@@ -840,8 +841,7 @@ function getLegacyPlanFamily(slug, data) {
 
 // vercel.json 301-redirects these slugs to their current /plans/ equivalent.
 // The static file still builds (see check-protected-urls.js), but a non-self
-// canonical keeps it out of the sitemap and off Google's radar, matching the
-// pattern already used by Stickers.jsx.
+// canonical keeps it out of the sitemap and off Google's radar.
 const REDIRECTED_LEGACY_PLANS = {
   'aldi-high-protein-meal-plan': '/plans/aldi-high-protein-low-cal-1500',
   'sainsburys-low-calorie-meal-plan': '/plans/sainsburys-weight-loss-1500',
