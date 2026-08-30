@@ -195,15 +195,15 @@ export default function BlogPost() {
               four separate routes to the same place. */}
           {!useBuyingGuideFlow && (
             <>
+              {/* An ad unit used to sit directly under this next-step box.
+                  Ads immediately adjacent to an action control are how
+                  accidental clicks happen, and it is the placement Google's
+                  policy calls out. The one mid-article unit below is enough. */}
               <ContextualNextStep
                 {...nextStep}
                 eyebrow="Make this practical"
                 pageType={`blog-${slug}`}
                 className="blog-next-step"
-              />
-              <AdSlot
-                placement="in-article-intro"
-                slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
               />
             </>
           )}
@@ -328,7 +328,11 @@ export default function BlogPost() {
                   compact
                 />
               )}
-              {i === Math.floor((data.sections.length - 1) / 2) && (
+              {/* One unit per article, between two content sections. The
+                  buying guide is excluded: it already gives roughly a quarter
+                  of its main content to product blocks, and adding ads on top
+                  pushes paid content past publisher content. */}
+              {!useBuyingGuideFlow && i === Math.floor((data.sections.length - 1) / 2) && (
                 <AdSlot
                   placement="in-article-midpoint"
                   slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
@@ -345,10 +349,6 @@ export default function BlogPost() {
                 eyebrow="Use your containers"
                 pageType={`blog-${slug}`}
                 className="blog-next-step"
-              />
-              <AdSlot
-                placement="in-article-midpoint"
-                slotId={import.meta.env.VITE_AD_SLOT_IN_ARTICLE}
               />
             </>
           )}
