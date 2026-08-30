@@ -8,6 +8,7 @@ import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
+import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
@@ -17,6 +18,7 @@ import SupermarketEvidence from '../components/SupermarketEvidence.jsx';
 import { contentProvenance, schemaDates } from '../utils/contentDates.js';
 import NotFound from './NotFound.jsx';
 import { blogPostsData } from '../data/blogPosts.js';
+import { BLOG_PLAN_INDEX } from '../data/blogPlanIndex.js';
 import {
   SEO_EXACT_PLAN_LINKS,
   SEO_OPPORTUNITY_QUICK_ANSWERS,
@@ -46,6 +48,7 @@ export default function BlogPost() {
   const quickAnswer = data.quickAnswer || SEO_OPPORTUNITY_QUICK_ANSWERS[slug];
   const exactPlanLinks = SEO_EXACT_PLAN_LINKS[slug] || [];
   const nextStep = buildBlogNextStep({ slug, data, exactPlanLinks });
+  const blogPlanMatch = BLOG_PLAN_INDEX[slug];
   const useBuyingGuideFlow = data.commercialLayout === 'container-buying-guide';
   // Number: hold the product blocks until after that section index. The buying
   // guide has its own placement, so this only applies to ordinary posts.
@@ -366,6 +369,28 @@ export default function BlogPost() {
                 ))}
               </div>
             </>
+          )}
+
+          {/* Placed after the FAQ, where the reader has the answer they came
+              for and the next question is what to actually cook. The quiz box
+              lower down asks the same thing at seven questions of friction;
+              this asks it at one field, so it goes first. The pairing is
+              precomputed — see scripts/generate-blog-plan-index.js. */}
+          {blogPlanMatch && (
+            <EmailPlanCapture
+              plan={{
+                slug: blogPlanMatch.planSlug,
+                supermarket: blogPlanMatch.supermarket,
+                goal: blogPlanMatch.goal,
+                calories: blogPlanMatch.calories,
+              }}
+              sourcePage={`blog-${slug}`}
+              compact
+              kicker="Put this into a week"
+              heading="Want this as a full 7-day plan?"
+              blurb="We'll email the matching plan, its shopping list and a printable copy."
+              planName={blogPlanMatch.title}
+            />
           )}
 
           <PopularGuides slug={slug} post={data} />

@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { track } from '../utils/analytics.js';
 
@@ -10,8 +10,16 @@ export default function EmailPlanCapture({
   sourcePage = 'plan',
   compact = false,
   className = '',
+  // A reader on a blog post has not chosen this plan — it was matched to the
+  // article. Naming it is the difference between "give us your email" and a
+  // stated exchange, so callers off the plan pages pass their own framing.
+  kicker = 'Save this week',
+  heading = 'Email me this plan',
+  blurb = 'Get the 7-day menu, shopping list and printable plan link in your inbox.',
+  planName = '',
 }) {
   const uid = useId();
+  const sectionRef = useRef(null);
   const [email, setEmail] = useState('');
   const [website, setWebsite] = useState('');
   const [status, setStatus] = useState('idle');
@@ -19,6 +27,29 @@ export default function EmailPlanCapture({
   const startedRef = useRef(false);
   const sending = status === 'sending';
   const sent = status === 'sent';
+  const planSlug = plan?.slug;
+
+  const viewContext = useMemo(() => ({
+    plan_slug: planSlug,
+    page_type: sourcePage,
+    cta_location: compact ? 'compact_email_plan' : 'email_plan',
+  }), [compact, planSlug, sourcePage]);
+
+  // Impressions are the denominator for capture rate. Without them a fall in
+  // completions cannot be told apart from a fall in traffic to the section.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!planSlug || !section || typeof IntersectionObserver === 'undefined') return undefined;
+
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.35)) return;
+      track.emailPlanViewed(viewContext);
+      observer.disconnect();
+    }, { threshold: [0.35] });
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [planSlug, viewContext]);
 
   if (!plan?.slug) return null;
 
@@ -82,6 +113,7 @@ export default function EmailPlanCapture({
 
   return (
     <section
+      ref={sectionRef}
       className={[
         'plan-email-capture',
         compact ? 'plan-email-capture--compact' : '',
@@ -90,9 +122,14 @@ export default function EmailPlanCapture({
       aria-labelledby={`${uid}-heading`}
     >
       <div>
-        <span className="offer-kicker">Save this week</span>
-        <h2 id={`${uid}-heading`}>Email me this plan</h2>
-        <p>Get the 7-day menu, shopping list and printable plan link in your inbox.</p>
+        <span className="offer-kicker">{kicker}</span>
+        <h2 id={`${uid}-heading`}>{heading}</h2>
+        <p>{blurb}</p>
+        {planName && (
+          <p className="plan-email-target">
+            We'll send: <strong>{planName}</strong>
+          </p>
+        )}
       </div>
 
       {sent ? (
@@ -128,7 +165,7 @@ export default function EmailPlanCapture({
             />
           </label>
           <button className="btn-primary" type="submit" disabled={sending || !email.trim()}>
-            {sending ? 'Sending...' : 'Email plan'}
+            {sending ? 'Sending...' : 'Send me the plan'}
           </button>
           {message && (
             <p
@@ -139,12 +176,22 @@ export default function EmailPlanCapture({
               {message}
             </p>
           )}
+          {/* The single most common reason a reader does not type an address
+              is not knowing what else it will be used for. Answer it in the
+              form, where the decision is being made, not in the footer.
+              /api/email-plan sends and does not store, so this is the whole
+              truth — but it does pass through a delivery provider, which is
+              why the claim stops at "not a newsletter" and links the rest. */}
+          <p className="plan-email-privacy">
+            One email with the plan — not a newsletter.{' '}
+            <Link to="/privacy">How we handle your address</Link>.
+          </p>
         </form>
       )}
 
       <p className="plan-email-note">
         Want a new plan every week?{' '}
-        <Link to="/mealprep-plus">Join MealPrep+ for future weekly plans</Link>.
+        <Link to="/mealprep-plus">Join the MealPrep+ waitlist</Link>.
       </p>
     </section>
   );

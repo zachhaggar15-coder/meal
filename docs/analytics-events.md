@@ -34,6 +34,7 @@ not included.
 | `container_recommender_started` | First container-calculator input changes | `source_page`, `page_type`, `cta_location` | How many visitors actively use the recommender? |
 | `container_recommendation_viewed` | A recommendation becomes visible | `recommended_tier`, `container_count`, `prep_meal_count`, `source_page` | Which setups are actually seen? |
 | `accessory_guide_clicked` | A visitor opens a deeper guide from the accessories hub | `source_page`, `selected_problem`, `placement`, `list_position`, `recommendation_source` | Which practical friction deserves a clearer hub pathway? |
+| `email_plan_viewed` | At least 35% of an email-plan module is visible | `plan_slug`, `page_type`, `cta_location` | What is the denominator for capture rate on each surface? |
 | `email_plan_started` | Email-plan field receives first focus or form is submitted | plan context, `page_type`, `cta_location` | How many visitors begin the immediate save flow? |
 | `email_plan_completed` | Plan email endpoint succeeds | plan context, `page_type`, `cta_location` | How many immediate plan saves complete? |
 | `email_plan_failed` | Plan email endpoint fails | plan context, non-sensitive `reason` | Is the save flow technically reliable? |

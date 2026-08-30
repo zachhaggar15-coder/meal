@@ -216,6 +216,14 @@ export const track = {
   ),
   shoppingListCleared: (props) => trackEvent('shopping_list_cleared', props),
   readyMadePlanClicked: (slug) => trackEvent('ready_made_plan_clicked', { slug }),
+  // Started/completed alone cannot produce a capture rate: without a
+  // denominator a quiet month is indistinguishable from a broken form.
+  emailPlanViewed: (props) => trackEventOnce(
+    `${props?.page_type || 'plan'}:${props?.plan_slug || ''}`,
+    'email_plan_viewed',
+    props,
+    5000,
+  ),
   emailPlanStarted: (props) => trackEvent('email_plan_started', props),
   emailPlanCompleted: (props) => trackEvent('email_plan_completed', props),
   emailPlanFailed: (props) => trackEvent('email_plan_failed', props),

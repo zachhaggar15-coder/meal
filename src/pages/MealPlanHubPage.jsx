@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import WaitlistSection from '../components/WaitlistSection.jsx';
+import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
 import HubContextPanel from '../components/HubContextPanel.jsx';
@@ -312,6 +313,23 @@ export default function MealPlanHubPage() {
         </ul>
         <TrustBox sources={sources} {...contentProvenance(hub)} />
       </div>
+      {/* The supermarket hubs are the best-converting section of the site
+          (1.80% CTR against 0.52% on the container pages), and /meal-plans/lidl
+          is the single best page on it. Until now the only thing they asked a
+          reader for was the MealPrep+ waitlist — a service that does not exist
+          yet. Offering the plan that does exist, first, gives that traffic
+          somewhere real to convert. */}
+      {shownPlans[0] && (
+        <EmailPlanCapture
+          plan={shownPlans[0]}
+          sourcePage={`meal-plan-hub-${hub.slug}`}
+          compact
+          kicker="Start this week"
+          heading="Email me a plan from this list"
+          blurb="We'll send the 7-day menu, its shopping list and a printable copy."
+          planName={shownPlans[0].title}
+        />
+      )}
       <WaitlistSection sourcePage="meal-plan-hub" />
       <Footer />
     </>
