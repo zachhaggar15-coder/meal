@@ -70,7 +70,7 @@ export default function Privacy() {
             <li>
               <strong>Ahrefs Web Analytics</strong> — cookieless traffic measurement.{' '}
               <a
-                href="https://ahrefs.com/privacy"
+                href="https://ahrefs.com/legal/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
               >
