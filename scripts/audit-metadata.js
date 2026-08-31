@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { INDEXABLE_PLAN_SEEDS, PLAN_COUNT } from '../src/data/planSeeds.js';
+import { PLAN_COUNT } from '../src/data/planCatalogMeta.js';
+import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { crawlDist } from './lib/crawlDist.js';
 import { writeAuditJson } from './lib/auditOutput.js';
 

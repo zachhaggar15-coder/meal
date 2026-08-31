@@ -8,6 +8,7 @@ import { getAllPlanMeta } from '../utils/planBuilder.js';
 import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 import { recommendPlanForIntent } from '../utils/planRecommendation.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
+import { formatWeeklyPriceEstimate } from '../utils/priceDisplay.js';
 import {
   buildBrowsePlanUrl,
   getCalorieChoice,
@@ -152,7 +153,7 @@ export default function ChoiceLandingPage({ mode }) {
                 <p>{card.description}</p>
                 <div className="plan-chooser-meta">
                   <span>{toTitleCase(marketLabel(card.plan.supermarket))}</span>
-                  <span>{card.plan.priceEstimate}/week estimate</span>
+                  <span>{formatWeeklyPriceEstimate(card.plan.priceEstimate)}</span>
                   <span>{card.plan.dietType === 'standard' ? 'Standard diet' : cap(card.plan.dietType)}</span>
                 </div>
                 <div className="plan-chooser-actions">

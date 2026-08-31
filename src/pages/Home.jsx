@@ -15,7 +15,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
@@ -28,7 +28,7 @@ const homeJsonLd = [
     '@type': 'WebSite',
     name: 'MealPrep.org.uk - Free UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk',
-    description: `Generate a weekly UK meal plan using supermarket ingredients, browse ${PLAN_COUNT} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
+    description: `Generate a weekly UK meal plan using supermarket ingredients, browse ${PLAN_COUNT_LABEL} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
   },
   {
     '@context': 'https://schema.org',
@@ -39,7 +39,7 @@ const homeJsonLd = [
         name: 'How does the meal plan quiz work?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Answer 7 quick questions about your goal, diet type, supermarket, calorie target, budget, cooking effort, and macro preferences. The quiz matches you with your top 3 plans from a library of ${PLAN_COUNT} UK meal plans.`,
+          text: `Answer 7 quick questions about your goal, diet type, supermarket, calorie target, budget, cooking effort, and macro preferences. The quiz matches you with your top 3 plans from a library of ${PLAN_COUNT_LABEL} UK meal plans.`,
         },
       },
       {
@@ -47,7 +47,7 @@ const homeJsonLd = [
         name: 'Are the meal plans free?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Yes. All ${PLAN_COUNT} meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.`,
+          text: `Yes. All ${PLAN_COUNT_LABEL} meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.`,
         },
       },
       {
@@ -265,7 +265,7 @@ export default function Home() {
     <>
       <SEO
         title="Find a UK Supermarket Meal Plan | MealPrep.org.uk"
-        description={`Find a realistic 7-day meal plan for the UK supermarket you use, with shopping lists, calories, macros and printable plans from a library of ${PLAN_COUNT}.`}
+        description={`Find a realistic 7-day meal plan for the UK supermarket you use, with shopping lists, calories, macros and printable plans from a library of ${PLAN_COUNT_LABEL}.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -298,7 +298,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="trust-row">
-            <span className="trust-badge"><strong>{PLAN_COUNT.toLocaleString('en-GB')}</strong> published plans</span>
+            <span className="trust-badge"><strong>{PLAN_COUNT_LABEL}</strong> published plans</span>
             <span className="trust-badge"><strong>11</strong> supermarkets</span>
             <span className="trust-badge"><strong>Free</strong> with no account</span>
             <span className="trust-badge"><strong>Shopping list</strong> included</span>
@@ -396,7 +396,7 @@ export default function Home() {
 
           <div className="featured-browse-cta">
             <Link to="/browse" className="btn-secondary">
-              Browse all {PLAN_COUNT} plans →
+              Browse all {PLAN_COUNT_LABEL} plans →
             </Link>
           </div>
         </section>
@@ -475,7 +475,7 @@ export default function Home() {
               },
               {
                 q: 'Are the plans free?',
-                a: `All ${PLAN_COUNT} plans are completely free with no account required. The AI editing tool is also free.`,
+                a: `All ${PLAN_COUNT_LABEL} plans are completely free with no account required. The AI editing tool is also free.`,
               },
             ].map((f, i) => (
               <details className="faq-item" key={i}>

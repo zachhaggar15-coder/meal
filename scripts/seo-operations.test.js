@@ -20,7 +20,7 @@ test('metadata titles stay inside the review range', () => {
   const values = [
     'One Pan Meal Prep UK',
     'Air Fryer High Protein Meal Prep UK: Fast Chicken, Fish, Tofu and Potatoes',
-    'Free UK Diet Plans - Browse 1059 Meal Plans by Calories & Supermarket - Page 45 | MealPrep.org.uk',
+    'Free UK Diet Plans - Browse 1,059 Meal Plans by Calories & Supermarket - Page 45 | MealPrep.org.uk',
   ];
 
   for (const value of values) {

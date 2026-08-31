@@ -9,7 +9,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
-import { PLAN_COUNT, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { BROWSE_PAGE_SIZE, buildBrowsePagePath, buildBrowsePageWindow } from '../data/browsePagination.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
@@ -249,7 +249,7 @@ export default function BrowsePlans() {
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: `Browse ${PLAN_COUNT} UK meal plans${pageTitleSuffix}`,
+      name: `Browse ${PLAN_COUNT_LABEL} UK meal plans${pageTitleSuffix}`,
       description: browseDescription,
       url: `https://www.mealprep.org.uk${canonicalPath}`,
       mainEntity: {
@@ -285,7 +285,7 @@ export default function BrowsePlans() {
   return (
     <>
       <SEO
-        title={`Browse ${PLAN_COUNT.toLocaleString('en-GB')} UK Meal Plans by Goal & Calories${pageTitleSuffix} | MealPrep.org.uk`}
+        title={`Browse ${PLAN_COUNT_LABEL} UK Meal Plans by Goal & Calories${pageTitleSuffix} | MealPrep.org.uk`}
         description={browseDescription}
         canonical={`https://www.mealprep.org.uk${canonicalPath}`}
         robots={hasActiveFilters ? 'noindex,follow' : undefined}

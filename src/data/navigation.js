@@ -1,5 +1,5 @@
 import { CONTAINER_GUIDE_GROUPS } from './containerGuideGroups.js';
-import { PLAN_COUNT, PLAN_COUNT_LABEL } from './planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from './planCatalogMeta.js';
 import {
   buildCalorieChooserPath,
   buildDietChooserPath,
@@ -11,7 +11,7 @@ import {
   INDEXED_SUPERMARKET_CHOICES,
 } from './planChooser.js';
 
-export { PLAN_COUNT, PLAN_COUNT_LABEL };
+export { PLAN_COUNT_LABEL };
 
 export const TOOL_LINKS = [
   {

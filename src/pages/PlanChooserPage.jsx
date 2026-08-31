@@ -13,6 +13,7 @@ import {
 } from '../data/planChooser.js';
 import { chooseChooserVisual, chooseSupermarketVisual } from '../data/visualAssets.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
+import { formatWeeklyPriceEstimate } from '../utils/priceDisplay.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 
@@ -136,7 +137,7 @@ export default function PlanChooserPage() {
                 <h2>{toTitleCase(planCardTitle(plan.title))}</h2>
                 <p>{market.description}</p>
                 <div className="plan-chooser-meta">
-                  <span>{plan.priceEstimate}/week estimate</span>
+                  <span>{formatWeeklyPriceEstimate(plan.priceEstimate)}</span>
                   <span>{plan.dietType === 'standard' ? 'Standard diet' : cap(plan.dietType)}</span>
                 </div>
                 <div className="plan-chooser-actions">

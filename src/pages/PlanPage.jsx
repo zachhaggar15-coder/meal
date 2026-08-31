@@ -21,12 +21,13 @@ import StorageSafetyNote from '../components/StorageSafetyNote.jsx';
 import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, LIBRARY_VALIDATED_ON, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { formatContentDate } from '../utils/contentDates.js';
 import { track } from '../utils/analytics.js';
+import { formatWeeklyPrice, formatWeeklyPriceEstimate } from '../utils/priceDisplay.js';
 import {
   buildPlanReference,
   readPlanProgress,
@@ -582,7 +583,7 @@ export default function PlanPage() {
         </Link>
       </p>
       <p className="plan-shopping-note">
-        Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+        Estimated cost: <strong>{formatWeeklyPrice(displayPlan.priceEstimate)}</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
         {displayPlan.household?.hasMixedPortions
           ? ' Calories and macros are estimated for each household member from their portion size.'
           : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
@@ -833,7 +834,7 @@ export default function PlanPage() {
             </button>
           </div>
           <p className="plan-shopping-note">
-            Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+            Estimated cost: <strong>{formatWeeklyPrice(displayPlan.priceEstimate)}</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
             {displayPlan.household?.hasMixedPortions
               ? ' Calories and macros are estimated for each household member from their portion size.'
               : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
@@ -959,7 +960,7 @@ export default function PlanPage() {
         {/* Bottom CTAs */}
         <div className="plan-bottom-ctas">
           <Link to="/quiz" className="btn-primary">Find a better match →</Link>
-          <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT} plans</Link>
+          <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT_LABEL} plans</Link>
         </div>
 
         <TrustBox
@@ -1031,7 +1032,7 @@ function PlanOverview({ plan, sourcePlan }) {
       <div className="plan-overview-grid">
         <SummaryItem label="Supermarket" value={market} />
         <SummaryItem label="Goal" value={sourcePlan.goalLabel} />
-        <SummaryItem label="Weekly cost" value={`${plan.priceEstimate} estimate`} />
+        <SummaryItem label="Weekly cost" value={formatWeeklyPriceEstimate(plan.priceEstimate)} />
       </div>
       {/* Calories alone, plus protein alone, left a reader to guess the rest of
           the plate. All four are stated, and labelled as averages, because
@@ -1056,7 +1057,7 @@ function _PlanQuickFacts({ plan }) {
   const facts = [
     { label: 'Best for', value: plan.summary.bestFor },
     { label: 'Calories', value: plan.summary.calorieRange },
-    { label: 'Budget', value: `${plan.summary.budgetRange}/week estimate` },
+    { label: 'Budget', value: formatWeeklyPriceEstimate(plan.summary.budgetRange) },
     { label: 'Prep style', value: plan.effortLabel },
     { label: 'Includes', value: '7 days, recipes, macros, PDF export and shopping list' },
     { label: 'Diet', value: plan.dietType === 'standard' ? 'No specific dietary restriction' : cap(plan.dietType) },
@@ -1277,7 +1278,7 @@ function PlanQualityNotes({ plan }) {
   const rows = [
     ['Calorie target', `Built around roughly ${calorieText} kcal per day`, getCalorieAssumption(plan.calories)],
     ['Supermarket', market, getMarketAssumption(plan.supermarket)],
-    ['Budget', `${plan.summary.budgetRange}/week estimate`, getBudgetAssumption(plan.budget)],
+    ['Budget', formatWeeklyPriceEstimate(plan.summary.budgetRange), getBudgetAssumption(plan.budget)],
     ['Prep style', plan.effortLabel, getEffortAssumption(plan.effort)],
   ];
 
