@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-21T10:18:57.820Z",
+  "updatedAt": "2026-08-31T14:08:55.405Z",
   "totalPlansAtLastRun": 1089,
   "perPlan": {
     "/meal-plan/2000-calorie-meal-plan": {
       "planId": "2000-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-13T16:44:35.864Z",
-      "timesSampled": 1,
-      "lastStatus": "Review suggested",
-      "highestSeverity": "Medium",
-      "lastSourceHash": "b91d9c36c9d06b4ed845372502273deef2f2cb9988551d03c4a30c7df8a5528f"
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "837d7d5de1f876e11a3d2c463b23d62a42997619a02cc2c293df33d6545ba768"
     },
     "/meal-plan/tesco-1800-calorie-meal-plan": {
       "planId": "tesco-1800-calorie-meal-plan",
@@ -465,11 +465,11 @@
     "/plans/marks-spencer-weight-loss-1500-flexible-standard": {
       "planId": "marks-spencer-weight-loss-1500-flexible-standard",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "e47c07cc95fc3f8175c431d886983c18d83670c2df316a17c7283deb7a560114"
+      "lastSourceHash": "b55585483a996f5ed26346b08434908da28c4fbca92aee862e53179968ce9ce4"
     },
     "/plans/aldi-menopause-pesc-1800": {
       "planId": "aldi-menopause-pesc-1800",
@@ -501,11 +501,11 @@
     "/meal-plan/1800-calorie-meal-plan": {
       "planId": "1800-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "620b82b40c48a3d2b6dbc26cbcaad088fdcb569f6b2b47bd5f472fb015b13356"
+      "lastSourceHash": "44804c75f5af8fd1f0c73532a81a07c4cd3008ba200bfe33925097f658b2e43c"
     },
     "/plans/lidl-budget-bodybuilding-2500-high-carb-fuel-v3": {
       "planId": "lidl-budget-bodybuilding-2500-high-carb-fuel-v3",
@@ -897,11 +897,11 @@
     "/meal-plan/1500-calorie-meal-plan": {
       "planId": "1500-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "0c158d8b29594ab9f95a49c5942dd29b7cea26a491d4b2c231ac98027813ba8b"
+      "lastSourceHash": "73f2d8143e2e63518caeb80b3a56525ae2c8e734fdd6a4d143e59d99b057da05"
     },
     "/plans/aldi-pescatarian-1500-high-protein": {
       "planId": "aldi-pescatarian-1500-high-protein",
@@ -960,11 +960,11 @@
     "/plans/tesco-veg-low-cal-1800": {
       "planId": "tesco-veg-low-cal-1800",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "81dd9fafa0790f1988c36f9278aaf07fcbefb1144c17afff30f3a06e5fa79088"
+      "lastSourceHash": "446d2b22e26b6837c70a60895423ec422bc23284bbf5d6c6ab46dff79c8fa324"
     },
     "/plans/iceland-cheap-student-1800": {
       "planId": "iceland-cheap-student-1800",
@@ -1014,11 +1014,11 @@
     "/meal-plan/budget-fat-loss-meal-plan-uk": {
       "planId": "budget-fat-loss-meal-plan-uk",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "0c158d8b29594ab9f95a49c5942dd29b7cea26a491d4b2c231ac98027813ba8b"
+      "lastSourceHash": "73f2d8143e2e63518caeb80b3a56525ae2c8e734fdd6a4d143e59d99b057da05"
     },
     "/plans/asda-muscle-gain-2500-v2-meal-prep": {
       "planId": "asda-muscle-gain-2500-v2-meal-prep",
@@ -1221,11 +1221,11 @@
     "/meal-plan/cheap-high-protein-meal-plan-uk": {
       "planId": "cheap-high-protein-meal-plan-uk",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "564700facb8bf6e431f5aedccc3a3a2b3869e88807fe8c9d6f253dbace2a8b77"
+      "lastSourceHash": "7fd1a6ac3748ed83f1c5151ac55b61d3682aad2c1d4221884542d429bab25982"
     },
     "/plans/aldi-maintenance-veg-2000-quick-shop-v3": {
       "planId": "aldi-maintenance-veg-2000-quick-shop-v3",
@@ -1500,11 +1500,11 @@
     "/meal-plan/aldi-low-calorie-meal-plan": {
       "planId": "aldi-low-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "fead39563c532a982035848c5a6c22960a3f94d9b0f9cf65e112f84343483e7e"
+      "lastSourceHash": "e8bd9c90434ee6392fe4cdeee88e667a73ea7a8586d9f4b1600f399c738e7f47"
     },
     "/plans/lidl-budget-fat-loss-1500-v2-simple-prep": {
       "planId": "lidl-budget-fat-loss-1500-v2-simple-prep",
@@ -2211,11 +2211,11 @@
     "/plans/tesco-weight-loss-1500-five-a-day-v4": {
       "planId": "tesco-weight-loss-1500-five-a-day-v4",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "3d3389daf9ea58b9c768d8d9463eae08556cedc23a505c3910d2709bdf742d5e"
+      "lastSourceHash": "d26177726435b767710d412560f3c56e67a14faf3ec225f92aa8ba4a21c734df"
     },
     "/plans/aldi-muscle-gain-3000-budget-bulk": {
       "planId": "aldi-muscle-gain-3000-budget-bulk",
@@ -2463,11 +2463,11 @@
     "/plans/asda-weight-loss-1800": {
       "planId": "asda-weight-loss-1800",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "5c95bcf9e344d4833244d56bddfeb3d4789808e471b2e1536b04de6113f01c1e"
+      "lastSourceHash": "a9e91ac55e944049e75295e492fbad6be2c894a57a61bec584fe4b97f1291475"
     },
     "/meal-plan/tesco-high-protein-meal-plan": {
       "planId": "tesco-high-protein-meal-plan",
@@ -3255,11 +3255,11 @@
     "/plans/asda-weight-loss-1500": {
       "planId": "asda-weight-loss-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "4a7a8182536d75cbc5c6e9b6519c62d1e605fcf05a2e426518982c463866b023"
+      "lastSourceHash": "4bd7e731c1dad98ba92977a4b7d49b6e98f4024d5f1d52b0c5a777377a709bd4"
     },
     "/plans/sainsburys-anti-inflammatory-2000-high-fibre": {
       "planId": "sainsburys-anti-inflammatory-2000-high-fibre",
@@ -3570,11 +3570,11 @@
     "/plans/aldi-weight-loss-1500": {
       "planId": "aldi-weight-loss-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "ed3bb8b6ed5d2560e7617e73574eea89fa2cec2604d89d31b2380d2483ba869a"
+      "lastSourceHash": "f296eb43725472ff765e85aecdcab17ab21570e21f4b04bce16130514c65dc6c"
     },
     "/plans/asda-pescatarian-1800-quick-prep": {
       "planId": "asda-pescatarian-1800-quick-prep",
@@ -4272,11 +4272,11 @@
     "/plans/sainsburys-muscle-gain-2000": {
       "planId": "sainsburys-muscle-gain-2000",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "9a037d81f84431d89e065782bce5d2da9a130b67991c59cdc0658903b407e70b"
+      "lastSourceHash": "f7ffb964c6389f48d41469186ccf965b2c1cb6b10e8df31724886fa0c38c77eb"
     },
     "/plans/tesco-endurance-pesc-2000-recovery": {
       "planId": "tesco-endurance-pesc-2000-recovery",
@@ -4335,11 +4335,11 @@
     "/plans/lidl-budget-fat-loss-1500": {
       "planId": "lidl-budget-fat-loss-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "11938d250d98e51f1a03bd7ef7722084fc03923b6be9c0f9d5e32ba1a7cf445a"
+      "lastSourceHash": "5d8f7d087b4d6395b2b676b001e45c270c8782b347c0e654e873b8e74a688acc"
     },
     "/plans/aldi-muscle-gain-2500-budget-batch": {
       "planId": "aldi-muscle-gain-2500-budget-batch",
@@ -4866,11 +4866,11 @@
     "/plans/aldi-weight-loss-1500-v2": {
       "planId": "aldi-weight-loss-1500-v2",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "17eb37f9b7cbfaf51bc76549d2cf3d2823d08760a7d537891dd9ded08c35b028"
+      "lastSourceHash": "c7096dac226d9736b6fdd224d36586674d819fd983132a00b76a7968f86cd1c8"
     },
     "/plans/any-hp-veg-2000-batch-friendly-v3": {
       "planId": "any-hp-veg-2000-batch-friendly-v3",
@@ -5919,11 +5919,11 @@
     "/plans/lidl-body-recomp-1800": {
       "planId": "lidl-body-recomp-1800",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "749c055a604b39495dffa87659a88ac7b9fb99fcd6869b82d167edc4bd7cc9f0"
+      "lastSourceHash": "a7d792677be0fb793d3123fabfdfa462e9dfc81a7ccc21057eafa4bb43091544"
     },
     "/plans/aldi-gym-beginner-2000": {
       "planId": "aldi-gym-beginner-2000",
@@ -6441,11 +6441,11 @@
     "/plans/lidl-weight-loss-1500": {
       "planId": "lidl-weight-loss-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "d98f00dbe9850c5bd439821a65d8769308d43423238c43c519513844e0e506ef"
+      "lastSourceHash": "2306f207c22a7eab8791d9953b63577c1c3faaa32d4d1dad1ff59b8308e688de"
     },
     "/plans/tesco-hp-veg-1800-batch-cook": {
       "planId": "tesco-hp-veg-1800-batch-cook",
@@ -6720,11 +6720,11 @@
     "/meal-plan/2500-calorie-meal-plan": {
       "planId": "2500-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "139dd978e1fdf3b01c0ed48e8f94b5e71b4645c44e5f864c55f8a5e2b2c53750"
+      "lastSourceHash": "1b36336770f997d5997e1912eb7f99216fc0ad2a612c91f44920bcec05472354"
     },
     "/plans/tesco-hp-veg-1800": {
       "planId": "tesco-hp-veg-1800",
@@ -6792,8 +6792,8 @@
     "/plans/asda-budget-fat-loss-1800-freezer-friendly": {
       "planId": "asda-budget-fat-loss-1800-freezer-friendly",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
       "lastSourceHash": "2cba434b74b815382ffdbb018ec0af1ab2e0b148c32d338ac73fc635cdc4af31"
@@ -6990,11 +6990,11 @@
     "/plans/lidl-high-protein-low-cal-1800": {
       "planId": "lidl-high-protein-low-cal-1800",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "d369b892a5a92df8ac16a698d3c84c4ed14a4186bd71e7e9d1526bb7e1a37794"
+      "lastSourceHash": "607759174baf40ca8262b041d7a0d4157068778a4f51d8f02c1a014ee861917d"
     },
     "/plans/lidl-weight-loss-1800-five-a-day-v3": {
       "planId": "lidl-weight-loss-1800-five-a-day-v3",
@@ -7089,8 +7089,8 @@
     "/plans/asda-high-protein-low-cal-1500": {
       "planId": "asda-high-protein-low-cal-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
       "lastSourceHash": "74a1ebdfd31d26a14230a59bfbe1d89ac0e1dd7718e8f3985fb140929f0903ef"
@@ -7512,11 +7512,11 @@
     "/plans/lidl-weight-loss-1500-lean-protein": {
       "planId": "lidl-weight-loss-1500-lean-protein",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "cb8a5f89909fef45cfd02fdf9cdb591cf7e275eae25252f223518faf7138f6d3"
+      "lastSourceHash": "2a30ba30d7344114eb2e32dfbdcf65c41bffc012a63c6e8d22d047adc4cb4dd4"
     },
     "/plans/aldi-hp-veg-2000": {
       "planId": "aldi-hp-veg-2000",
@@ -7539,11 +7539,11 @@
     "/plans/aldi-muscle-gain-3000": {
       "planId": "aldi-muscle-gain-3000",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "59b6a8b0f24cdc05d52a695864bb3bf7d2876d86979d11da278f3e00719f923c"
+      "lastSourceHash": "9f66ed4d5ae644a8c6e2b0035d9960b9d9a172ce6f848ecec8c5f5f910d1e47a"
     },
     "/plans/lidl-busy-professional-2000-desk-lunch": {
       "planId": "lidl-busy-professional-2000-desk-lunch",
@@ -7872,11 +7872,11 @@
     "/plans/aldi-high-protein-low-cal-1500": {
       "planId": "aldi-high-protein-low-cal-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "f242528fcb85da74cf17353ecee3d8794c97a138cdd569a019cb744f5d523382"
+      "lastSourceHash": "dca5f74ec0563988308e5d4ed1e93477f5ab499d6acbb87e71bcbc13d44436f2"
     },
     "/plans/tesco-weight-loss-1500-v2": {
       "planId": "tesco-weight-loss-1500-v2",
@@ -8286,11 +8286,11 @@
     "/plans/aldi-muscle-gain-2000": {
       "planId": "aldi-muscle-gain-2000",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "cf1e64ceb9aab2dc90c50f36bbeba38da4513750049e5340babed554383ca49d"
+      "lastSourceHash": "9be5cb79db5a9f99eff019ff706b3c5cdd247a1d221df105c809fcd8e9d84a36"
     },
     "/plans/sainsburys-cutting-1600": {
       "planId": "sainsburys-cutting-1600",
@@ -8502,11 +8502,11 @@
     "/plans/aldi-weight-loss-1800": {
       "planId": "aldi-weight-loss-1800",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "4cd89afdf53eb51a1bad49042e0d613eb20fae12f400d7af3abc712dec0345e3"
+      "lastSourceHash": "5930894d6c8d0841420406d8c26de581247f045fbd733c053c3bb692e55fe7b1"
     },
     "/plans/aldi-cutting-1400-lower-sugar-v3": {
       "planId": "aldi-cutting-1400-lower-sugar-v3",
@@ -8601,8 +8601,8 @@
     "/plans/lidl-high-protein-low-cal-1800-desk-lunch-v3": {
       "planId": "lidl-high-protein-low-cal-1800-desk-lunch-v3",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
       "lastSourceHash": "6ffdea68128dbb7aa5b6191d72a961bd6f4797bc29709fb31f13cde2244bc979"
@@ -8637,11 +8637,11 @@
     "/meal-plan/tesco-low-calorie-meal-plan": {
       "planId": "tesco-low-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "5b1643e5e5b6ec3e3d39ef1788d35ab8e9dfecfd32d41c829ef27b34a79097dc"
+      "lastSourceHash": "975c046d28461f6c1b698a8f75d82f98ff1f64a1ace7fbee3690e9e5a026b838"
     },
     "/plans/tesco-menopause-1800-higher-protein-v3": {
       "planId": "tesco-menopause-1800-higher-protein-v3",
@@ -9069,11 +9069,11 @@
     "/plans/tesco-weight-loss-1500": {
       "planId": "tesco-weight-loss-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "cd798cdeb8f4bfbf409bc2bc9eaea859bbe739f50bd489f3b57ebc6fbe1139bb"
+      "lastSourceHash": "372d7f115d9014a347cccfa0f2fb1c2bf60d10abb0f1afefc3bf099d59094a4e"
     },
     "/plans/tesco-high-protein-low-cal-1800-batch-friendly-v3": {
       "planId": "tesco-high-protein-low-cal-1800-batch-friendly-v3",
@@ -9096,11 +9096,11 @@
     "/plans/lidl-high-protein-low-cal-1500": {
       "planId": "lidl-high-protein-low-cal-1500",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:18:57.820Z",
-      "timesSampled": 2,
+      "lastQaAt": "2026-08-31T14:08:55.405Z",
+      "timesSampled": 3,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "9c9729dbdb8afc883a9921c3a5f31387b94f66f52902ffe36292ce4d367fa9bf"
+      "lastSourceHash": "3dcd76a4d946842a70c5389905348bc71cc4ee25afe8280e158cce67422e8d05"
     },
     "/plans/tesco-muscle-gain-3000": {
       "planId": "tesco-muscle-gain-3000",
@@ -12131,6 +12131,73 @@
         "/plans/iceland-high-protein-low-cal-1500-very-cheap-batch",
         "/plans/lidl-weight-loss-1500-very-cheap-batch",
         "/plans/ocado-weight-loss-1500-flexible-batch"
+      ],
+      "model": {
+        "status": "not_configured",
+        "model": "",
+        "calls": 0,
+        "attempted": 0,
+        "successful": 0,
+        "malformed": 0,
+        "unavailable": 0,
+        "error": "",
+        "fallback": "Local semantic checks completed; model enrichment did not run."
+      },
+      "coverageAfterRun": {
+        "plansEverSampled": 1089,
+        "totalPublishedPlans": 1089,
+        "percentageEverSampled": 100
+      }
+    },
+    {
+      "runId": "2026-W36-2026-08-31",
+      "runAt": "2026-08-31T14:08:55.405Z",
+      "weekSeed": "2026-W36",
+      "sampleSize": 30,
+      "passed": 30,
+      "flagged": 0,
+      "passRate": 100,
+      "plansWithoutFlagsRate": 100,
+      "severity": {
+        "Critical": 0,
+        "High": 0,
+        "Medium": 0,
+        "Low": 0
+      },
+      "systemicIssueCount": 0,
+      "systemicIssues": [],
+      "manualReviewRoutes": [],
+      "sampledRoutes": [
+        "/meal-plan/1500-calorie-meal-plan",
+        "/plans/tesco-veg-low-cal-1800",
+        "/meal-plan/tesco-low-calorie-meal-plan",
+        "/plans/aldi-high-protein-low-cal-1500",
+        "/meal-plan/2000-calorie-meal-plan",
+        "/meal-plan/2500-calorie-meal-plan",
+        "/meal-plan/1800-calorie-meal-plan",
+        "/meal-plan/aldi-low-calorie-meal-plan",
+        "/plans/aldi-weight-loss-1500",
+        "/plans/marks-spencer-weight-loss-1500-flexible-standard",
+        "/plans/aldi-muscle-gain-2000",
+        "/plans/lidl-weight-loss-1500",
+        "/plans/lidl-high-protein-low-cal-1800",
+        "/plans/aldi-weight-loss-1800",
+        "/plans/lidl-high-protein-low-cal-1500",
+        "/plans/tesco-weight-loss-1500",
+        "/plans/lidl-budget-fat-loss-1500",
+        "/plans/lidl-body-recomp-1800",
+        "/plans/aldi-muscle-gain-3000",
+        "/plans/asda-weight-loss-1500",
+        "/meal-plan/budget-fat-loss-meal-plan-uk",
+        "/plans/asda-weight-loss-1800",
+        "/plans/sainsburys-muscle-gain-2000",
+        "/plans/lidl-weight-loss-1500-lean-protein",
+        "/meal-plan/cheap-high-protein-meal-plan-uk",
+        "/plans/aldi-weight-loss-1500-v2",
+        "/plans/asda-high-protein-low-cal-1500",
+        "/plans/asda-budget-fat-loss-1800-freezer-friendly",
+        "/plans/lidl-high-protein-low-cal-1800-desk-lunch-v3",
+        "/plans/tesco-weight-loss-1500-five-a-day-v4"
       ],
       "model": {
         "status": "not_configured",
