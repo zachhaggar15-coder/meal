@@ -26,6 +26,7 @@
     "audit:schema": "node scripts/check-structured-data.js",
     "audit:seo": "node scripts/audit-seo.js",
     "audit:links": "node scripts/audit-links.js",
+    "audit:external-links": "node scripts/audit-external-links.js",
     "audit:metadata": "node scripts/audit-metadata.js",
     "audit:accessibility": "node scripts/audit-accessibility.js",
     "audit:performance": "node scripts/audit-performance.js",
