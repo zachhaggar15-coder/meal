@@ -332,7 +332,7 @@ export default function MealPlanPage() {
         jsonLd={jsonLd}
       />
       <div className="page content-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>›</span>{' '}
           <Link to="/#popular-plans">Meal Plans</Link> <span aria-hidden>›</span>{' '}
           <span>{data.h1}</span>

@@ -144,7 +144,7 @@ export default function QuestionsHub() {
       />
 
       <div className="content-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span> <span>Meal Prep Questions</span>
         </nav>
 

@@ -51,7 +51,7 @@ export default function Sidebar({ open, onClose }) {
             </button>
           </div>
 
-          <div className="sidebar-priority-actions" aria-label="Recommended actions">
+          <div className="sidebar-priority-actions" role="group" aria-label="Recommended actions">
             <Link to="/quiz" className="sidebar-quiz-cta" onClick={onClose}>
               Find My Plan
             </Link>

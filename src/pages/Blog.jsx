@@ -243,7 +243,7 @@ export default function Blog() {
       />
 
       <div className="content-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>›</span> <span>Blog</span>
         </nav>
 

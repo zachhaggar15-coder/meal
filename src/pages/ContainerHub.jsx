@@ -218,7 +218,7 @@ export default function ContainerHub() {
       />
 
       <div className="page content-page container-guide-page container-hub-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
           <span>Meal Prep Containers</span>
         </nav>

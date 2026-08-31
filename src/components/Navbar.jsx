@@ -45,7 +45,7 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
           <Link to="/" className="nav-brand" aria-label="MealPrep home">MealPrep</Link>
         </div>
 
-        <div className="nav-tabs" aria-label="Quick links">
+        <div className="nav-tabs" role="group" aria-label="Quick links">
           {TOP_TABS.map(tab => {
             const active = tab.match(location.pathname);
             return (

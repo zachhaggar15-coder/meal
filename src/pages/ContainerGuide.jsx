@@ -151,7 +151,7 @@ export default function ContainerGuide() {
       />
 
       <div className="page content-page container-guide-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
           <Link to="/meal-prep-containers">Meal Prep Containers</Link>{' '}
           <span aria-hidden>&rsaquo;</span> <span>{guideLabel(guide.slug)}</span>
