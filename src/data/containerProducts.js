@@ -1338,33 +1338,6 @@ export const CONTAINER_GUIDES = {
   ...LONG_TAIL_CONTAINER_GUIDES,
 };
 
-export const CONTAINER_GUIDE_GROUPS = [
-  {
-    label: 'Price bands',
-    guides: [
-      { slug: 'budget', label: 'Budget' },
-      { slug: 'mid-range', label: 'Mid range' },
-      { slug: 'premium', label: 'Premium' },
-    ],
-  },
-  {
-    label: 'Materials',
-    guides: [
-      { slug: 'glass', label: 'Glass' },
-      { slug: 'plastic', label: 'Plastic' },
-    ],
-  },
-  {
-    label: 'Buyer needs',
-    guides: [
-      { slug: 'leakproof', label: 'Leakproof' },
-      { slug: 'freezer-safe', label: 'Freezer safe' },
-      { slug: 'freezer-bags', label: 'Freezer bags' },
-      { slug: 'work-lunch', label: 'Work lunches' },
-      { slug: 'large-sets', label: 'Large sets' },
-    ],
-  },
-];
 
 export const CONTAINER_GUIDE_SLUGS = Object.keys(CONTAINER_GUIDES);
 

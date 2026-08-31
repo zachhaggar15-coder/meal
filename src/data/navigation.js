@@ -1,7 +1,4 @@
-import blogSearchIndex from './blogSearchIndex.json' with { type: 'json' };
-import { COMBO_LANDING_PAGES } from './comboLandingPages.js';
-import { CONTAINER_GUIDE_GROUPS } from './containerProducts.js';
-import { MEAL_PLAN_HUBS } from './mealPlanHubs.js';
+import { CONTAINER_GUIDE_GROUPS } from './containerGuideGroups.js';
 import { PLAN_COUNT, PLAN_COUNT_LABEL } from './planCatalogMeta.js';
 import {
   buildCalorieChooserPath,
@@ -316,7 +313,7 @@ export const FOOTER_GROUPS = [
   },
 ];
 
-const STATIC_SEARCH_ENTRIES = [
+export const STATIC_SEARCH_ENTRIES = [
   {
     title: 'Find My Plan Quiz',
     to: '/quiz',
@@ -407,123 +404,15 @@ const STATIC_SEARCH_ENTRIES = [
   },
 ];
 
-export const SITE_SEARCH_INDEX = buildSiteSearchIndex();
-
-export function searchSite(query, limit = 8) {
-  const terms = normaliseSearch(query).split(' ').filter(Boolean);
-  if (!terms.length) return STATIC_SEARCH_ENTRIES.slice(0, limit);
-
-  return SITE_SEARCH_INDEX
-    .map(item => ({ item, score: scoreSearchItem(item, terms) }))
-    .filter(result => result.score > 0)
-    .sort((a, b) => b.score - a.score || b.item.priority - a.item.priority)
-    .slice(0, limit)
-    .map(result => result.item);
+export function normaliseSearch(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }
 
-function buildSiteSearchIndex() {
-  const entries = [
-    ...STATIC_SEARCH_ENTRIES,
-    ...GOAL_NAV_LINKS.map(link => ({
-      title: `${link.label} Meal Plans`,
-      to: link.to,
-      type: 'Goal',
-      description: link.description,
-      keywords: `${link.label} goal diet plan`,
-      priority: 70,
-    })),
-    ...SUPERMARKET_NAV_LINKS.map(link => ({
-      title: `${link.label} Meal Plans`,
-      to: link.to,
-      type: 'Supermarket',
-      description: link.description,
-      keywords: `${link.label} supermarket shop weekly plan`,
-      priority: 74,
-    })),
-    ...CALORIE_NAV_LINKS.map(link => ({
-      title: `${link.label} Meal Plans`,
-      to: link.to,
-      type: 'Calories',
-      description: link.description,
-      keywords: `${link.label} calorie calories kcal target`,
-      priority: 72,
-    })),
-    ...DIET_NAV_LINKS.map(link => ({
-      title: `${link.label} Meal Plans`,
-      to: link.to,
-      type: 'Diet',
-      description: link.description,
-      keywords: `${link.label} diet vegetarian vegan pescatarian`,
-      priority: 68,
-    })),
-    ...TOOL_LINKS.map(link => ({
-      title: link.label,
-      to: link.to,
-      type: 'Tool',
-      description: link.description,
-      keywords: link.description,
-      priority: 76,
-    })),
-    ...ACCESSORY_NAV_LINKS.map(link => ({
-      title: link.label,
-      to: link.to,
-      type: 'Accessories',
-      description: link.description,
-      keywords: `${link.label} ${link.description} meal prep accessories amazon uk`,
-      priority: 73,
-    })),
-    ...CONTAINER_NAV_LINKS.map(link => ({
-      title: link.label,
-      to: link.to,
-      type: 'Containers',
-      description: link.description,
-      keywords: `${link.label} ${link.description} tubs boxes lunch freezer`,
-      priority: 66,
-    })),
-    ...Object.values(MEAL_PLAN_HUBS).map(hub => ({
-      title: hub.h1,
-      to: hub.path,
-      type: 'Meal plan hub',
-      description: hub.description || hub.intro,
-      keywords: [hub.title, hub.kicker, hub.stats?.join(' '), hub.intro].filter(Boolean).join(' '),
-      priority: 62,
-    })),
-    ...Object.values(COMBO_LANDING_PAGES).map(page => ({
-      title: page.h1,
-      to: page.path,
-      type: 'Meal plan hub',
-      description: page.description || page.intro,
-      keywords: [page.title, page.kicker, page.intro].filter(Boolean).join(' '),
-      priority: 58,
-    })),
-    ...blogSearchIndex.map(post => ({
-      title: post.title,
-      to: `/blog/${post.slug}`,
-      type: 'Guide',
-      description: post.description,
-      keywords: post.keywords,
-      priority: 55,
-    })),
-    // Individual plans remain searchable in the full plan browser. Loading all
-    // seed records here made every page download the catalogue before search.
-  ];
-
-  const unique = new Map();
-  for (const entry of entries) {
-    if (!entry?.to || !entry?.title || unique.has(entry.to)) continue;
-    const haystack = normaliseSearch([
-      entry.title,
-      entry.type,
-      entry.description,
-      entry.keywords,
-    ].filter(Boolean).join(' '));
-    unique.set(entry.to, { ...entry, haystack });
-  }
-
-  return [...unique.values()];
-}
-
-function scoreSearchItem(item, terms) {
+export function scoreSearchItem(item, terms) {
   const title = normaliseSearch(item.title);
   let score = item.priority || 0;
 
@@ -539,10 +428,43 @@ function scoreSearchItem(item, terms) {
   return score;
 }
 
-function normaliseSearch(value) {
-  return String(value || '')
-    .toLowerCase()
-    .replace(/&/g, ' and ')
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
+// Deduplicate by destination and precompute the lowercased text each entry is
+// matched against. Shared so the static fallback index and the full index score
+// identically — the only difference between them is how much is in them.
+export function withSearchHaystack(entries) {
+  const unique = new Map();
+  for (const entry of entries) {
+    if (!entry?.to || !entry?.title || unique.has(entry.to)) continue;
+    const haystack = normaliseSearch([
+      entry.title,
+      entry.type,
+      entry.description,
+      entry.keywords,
+    ].filter(Boolean).join(' '));
+    unique.set(entry.to, { ...entry, haystack });
+  }
+  return [...unique.values()];
+}
+
+export function searchEntries(index, query, limit = 8) {
+  const terms = normaliseSearch(query).split(' ').filter(Boolean);
+  if (!terms.length) return STATIC_SEARCH_ENTRIES.slice(0, limit);
+
+  return index
+    .map(item => ({ item, score: scoreSearchItem(item, terms) }))
+    .filter(result => result.score > 0)
+    .sort((a, b) => b.score - a.score || b.item.priority - a.item.priority)
+    .slice(0, limit)
+    .map(result => result.item);
+}
+
+const STATIC_SEARCH_INDEX = withSearchHaystack(STATIC_SEARCH_ENTRIES);
+
+// Synchronous search over the dozen top-level destinations only. Building the
+// full index meant importing blogSearchIndex.json (60 kB) and normalising ~1000
+// entries during boot, on every page, for a search box most readers never open.
+// SiteSearch serves these instantly and swaps in searchSite() from
+// siteSearchIndex.js once that module has loaded.
+export function searchStaticSite(query, limit = 8) {
+  return searchEntries(STATIC_SEARCH_INDEX, query, limit);
 }

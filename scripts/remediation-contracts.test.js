@@ -6,7 +6,12 @@ import { sanitisePlanEmailSource } from '../api/email-plan.js';
 import { blogPostsData } from '../src/data/blogPosts.js';
 import { MEALS } from '../src/data/mealLibrary.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
-import { PLAN_COUNT as LIGHTWEIGHT_PLAN_COUNT } from '../src/data/planCatalogMeta.js';
+import { INDEXED_SUPERMARKET_VALUES, PLAN_COUNT as LIGHTWEIGHT_PLAN_COUNT } from '../src/data/planCatalogMeta.js';
+import { CONTAINER_GUIDES } from '../src/data/containerProducts.js';
+import { CONTAINER_GUIDE_GROUPS } from '../src/data/containerGuideGroups.js';
+import { INDEXED_SUPERMARKET_CHOICES } from '../src/data/planChooser.js';
+import { searchStaticSite } from '../src/data/navigation.js';
+import { searchSite, SITE_SEARCH_INDEX } from '../src/data/siteSearchIndex.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { PLAN_MACRO_INDEX } from '../src/data/planMacroIndex.js';
 import { canonicaliseLegacyMeal } from '../src/utils/legacyPlanBuilder.js';
@@ -32,6 +37,55 @@ test('email-plan source labels can never contain quiz answers or query strings',
 
 test('the lightweight public plan count stays in sync with the indexed catalogue', () => {
   assert.equal(LIGHTWEIGHT_PLAN_COUNT, INDEXABLE_PLAN_SEEDS.length);
+});
+
+// planChooser.js used to derive this by mapping over every seed, which dragged
+// the whole generated-plan chunk into the navbar's module graph on every page.
+// The list is now static, so it needs a guard: add a supermarket to the seeds
+// without adding it here and its chooser page would quietly vanish from the
+// nav, the sidebar and the search index.
+test('the static indexed supermarket list matches the supermarkets that have plans', () => {
+  const fromSeeds = [...new Set(INDEXABLE_PLAN_SEEDS.map(seed => seed.supermarket))].sort();
+  assert.deepEqual([...INDEXED_SUPERMARKET_VALUES].sort(), fromSeeds);
+  assert.deepEqual(
+    INDEXED_SUPERMARKET_CHOICES.map(choice => choice.value).sort(),
+    fromSeeds,
+  );
+});
+
+// SiteSearch loads siteSearchIndex.js on demand and serves searchStaticSite()
+// until it lands. Both halves have to keep working: the fallback must cover the
+// top-level destinations, and the full index must still reach blog posts and
+// hubs, which is the whole reason it is worth loading.
+test('the lazily loaded search index still covers guides, hubs and nav destinations', () => {
+  assert.ok(SITE_SEARCH_INDEX.length > 200, `index unexpectedly small: ${SITE_SEARCH_INDEX.length}`);
+
+  const batch = searchSite('batch cooking', 8).map(result => result.to);
+  assert.ok(batch.includes('/blog/batch-cooking-for-beginners-uk'), 'blog guides missing from search');
+
+  const hubs = searchSite('vegetarian batch cooking', 8).map(result => result.to);
+  assert.ok(hubs.some(to => to.startsWith('/meal-plans/')), 'meal plan hubs missing from search');
+
+  const aldi = searchSite('aldi', 8).map(result => result.to);
+  assert.ok(aldi.length > 0, 'supermarket nav destinations missing from search');
+});
+
+test('the static search fallback still answers before the full index loads', () => {
+  assert.deepEqual(searchStaticSite('', 3).length, 3);
+  assert.ok(searchStaticSite('quiz', 5).some(result => result.to === '/quiz'));
+  assert.ok(searchStaticSite('browse', 5).some(result => result.to === '/browse'));
+  assert.ok(searchStaticSite('containers', 5).some(result => result.to === '/meal-prep-containers'));
+});
+
+// Same reasoning for the container guide taxonomy, which moved out of
+// containerProducts.js so the navbar stops pulling the product catalogue in.
+test('every container guide group entry resolves to a real guide', () => {
+  const slugs = CONTAINER_GUIDE_GROUPS.flatMap(group => group.guides.map(guide => guide.slug));
+  assert.ok(slugs.length > 0);
+  for (const slug of slugs) {
+    assert.ok(CONTAINER_GUIDES[slug], `container guide group references missing guide: ${slug}`);
+  }
+  assert.deepEqual(slugs, [...new Set(slugs)]);
 });
 
 test('health guidance always displays authoritative sources', () => {
