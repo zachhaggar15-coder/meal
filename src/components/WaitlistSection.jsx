@@ -5,6 +5,7 @@ import {
   WAITLIST_FEATURES,
 } from '../data/waitlistOptions.js';
 import { track } from '../utils/analytics.js';
+import { apiHeaders } from '../utils/apiClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -75,7 +76,7 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
     try {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           email: cleanEmail,
           firstName: firstName.trim(),

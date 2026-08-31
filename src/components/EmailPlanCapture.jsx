@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { track } from '../utils/analytics.js';
+import { apiHeaders } from '../utils/apiClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -87,7 +88,7 @@ export default function EmailPlanCapture({
     try {
       const response = await fetch('/api/email-plan', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           email: cleanEmail,
           website,

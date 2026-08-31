@@ -21,6 +21,7 @@ import {
   sanitiseAnalyticsPath,
   sanitiseAnalyticsUrl,
 } from '../src/utils/analyticsSanitisation.js';
+import { applyApiGuards, refundRateLimit } from './_guards.js';
 
 const ANALYTICS_WINDOW_DAYS = 30;
 const MIN_ROUTE_VITAL_SESSIONS = 5;
@@ -89,15 +90,27 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed. Use GET.' });
   }
 
+  const guarded = await applyApiGuards(req, res, {
+    route: 'admin-stats',
+    maxBodyBytes: 2 * 1024,
+    rateLimit: { limit: 30, windowMs: 10 * 60 * 1000 },
+  });
+  if (!guarded) return;
+
   const expected = process.env.ADMIN_DASHBOARD_TOKEN;
   const provided = adminTokenFromHeaders(req);
-  if (!expected || !safeEqual(String(provided), String(expected))) {
+  if (!expected) {
+    await refundRateLimit(req, 'admin-stats');
+    return res.status(401).json({ error: 'Unauthorized.' });
+  }
+  if (!safeEqual(String(provided), String(expected))) {
     return res.status(401).json({ error: 'Unauthorized.' });
   }
 
   const supabaseUrl = String(process.env.SUPABASE_URL || '').replace(/\/$/, '');
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceKey) {
+    await refundRateLimit(req, 'admin-stats');
     return res.status(500).json({ error: 'Server not configured for Supabase.' });
   }
 
@@ -105,13 +118,25 @@ export default async function handler(req, res) {
   const format = String(req.query?.format || '').toLowerCase();
 
   if (format === 'analytics-events-csv') {
-    const events = await readAnalyticsEvents(supabaseUrl, headers, 20000);
-    return sendCsv(res, 'mealprep-analytics-events.csv', analyticsEventsCsv(events));
+    try {
+      const events = await readAnalyticsEvents(supabaseUrl, headers, 20000);
+      return sendCsv(res, 'mealprep-analytics-events.csv', analyticsEventsCsv(events));
+    } catch (err) {
+      console.error('Supabase analytics event export error:', err);
+      await refundRateLimit(req, 'admin-stats');
+      return res.status(500).json({ error: 'Could not export analytics events.' });
+    }
   }
 
   if (format === 'analytics-sessions-csv') {
-    const sessions = await readAnalyticsSessions(supabaseUrl, headers, 10000);
-    return sendCsv(res, 'mealprep-analytics-sessions.csv', analyticsSessionsCsv(sessions));
+    try {
+      const sessions = await readAnalyticsSessions(supabaseUrl, headers, 10000);
+      return sendCsv(res, 'mealprep-analytics-sessions.csv', analyticsSessionsCsv(sessions));
+    } catch (err) {
+      console.error('Supabase analytics session export error:', err);
+      await refundRateLimit(req, 'admin-stats');
+      return res.status(500).json({ error: 'Could not export analytics sessions.' });
+    }
   }
 
   let rows;
@@ -119,6 +144,7 @@ export default async function handler(req, res) {
     rows = await readWaitlistRows(supabaseUrl, headers);
   } catch (err) {
     console.error('Supabase waitlist read error:', err);
+    await refundRateLimit(req, 'admin-stats');
     return res.status(500).json({ error: 'Could not read registrations.' });
   }
 
