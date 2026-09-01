@@ -14678,3 +14678,84 @@ textarea {
     white-space: normal;
   }
 }
+
+/* ---------- Tap-target minimums (WCAG 2.5.8, 24x24 CSS px) ----------
+   Measured on a 390x844 phone across /, /browse, /plans/:slug,
+   /meal-prep-containers, /blog and /questions: 325 controls came in under
+   24px, and they clustered in a handful of stacked link lists rather than
+   being spread evenly. Those lists are the problem case, because adjacent
+   rows only 18px tall with no padding between them make a mis-tap likely.
+
+   Deliberately NOT padded: links that sit inside a sentence (the byline, the
+   cost-estimate note, the allergen and storage notes, trust-box sources).
+   WCAG 2.5.8 exempts inline targets, and adding vertical padding to a link
+   mid-paragraph pushes the surrounding line-height around instead. */
+
+.footer-col ul {
+  gap: 0;
+}
+
+.footer-col a,
+.footer-col-list a {
+  display: block;
+  padding: 6px 0;
+}
+
+.site-footer .footer-brand {
+  display: inline-block;
+  padding: 4px 0;
+}
+
+.breadcrumb a {
+  display: inline-block;
+  padding: 4px 0;
+}
+
+.browse-index-list {
+  gap: 0;
+}
+
+.browse-index-list a,
+.browse-index-more a {
+  display: block;
+  padding: 5px 0;
+}
+
+.plan-links {
+  gap: 0;
+}
+
+/* Padding the li does not grow the anchor inside it - the arrow marker and the
+   link are separate boxes in the row - so the target has to go on the a. */
+.plan-links li {
+  padding: 2px 0;
+}
+
+.plan-links a {
+  display: inline-block;
+  padding: 4px 0;
+}
+
+/* The card itself is 180px tall - the short targets are the standalone guide
+   links at the foot of each one, which carry no class of their own. */
+.container-search-card a {
+  display: inline-block;
+  padding: 5px 0;
+}
+
+.btn-quiz-inline {
+  display: inline-block;
+  padding: 5px 0;
+}
+
+/* The row label is the real target here and is already 44px tall, but the box
+   itself was 18px wide - below the minimum for anyone aiming at the box rather
+   than the text. */
+.shopping-item label {
+  grid-template-columns: 28px minmax(0, 1fr);
+}
+
+.shopping-item input {
+  width: 24px;
+  height: 24px;
+}
