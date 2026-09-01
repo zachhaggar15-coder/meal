@@ -121,11 +121,12 @@ export default function Privacy() {
             them, and while they are off no advertising script is loaded on any page.
           </p>
           <p>
-            When advertising is on, the banner asks you separately about it before anything loads.
-            Agreeing to analytics does not agree to advertising, and vice versa. Until you accept,
-            the Google AdSense script is not on the page, so it cannot set cookies or receive your
-            visit. If your browser sends a Do Not Track signal, advertising stays off regardless of
-            what the banner says.
+            When advertising is on, the banner offers equally available <strong>Accept all</strong>
+            and <strong>Reject all</strong> choices before anything loads. A smaller More options
+            control lets you allow analytics only or advertising only, so agreeing to one does not
+            agree to the other. Until you accept advertising, the Google AdSense script is not on
+            the page, so it cannot set cookies or receive your visit. If your browser sends a Do Not
+            Track signal, advertising stays off regardless of what the banner says.
           </p>
           <p>
             If you accept, Google and its partners may set cookies or read device identifiers to
