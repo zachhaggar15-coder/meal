@@ -2800,8 +2800,8 @@ input:focus, select:focus {
 /* Sidebar quiz CTA */
 .sidebar-quiz-cta {
   display: block;
-  background: #2563eb;
-  color: #fff !important;
+  background: var(--lime);
+  color: var(--editorial-ink) !important;
   text-decoration: none;
   padding: 11px 14px;
   border-radius: var(--radius-md);
@@ -2811,10 +2811,10 @@ input:focus, select:focus {
   text-align: center;
   transition: background 0.15s;
 }
-.sidebar-quiz-cta:hover { background: #1d4ed8; }
+.sidebar-quiz-cta:hover { background: var(--editorial-ink); color: var(--editorial-paper) !important; }
 .nav-quiz-btn {
-  background: #2563eb;
-  color: #fff;
+  background: var(--lime);
+  color: var(--editorial-ink);
   padding: 7px 14px;
   border-radius: var(--radius-md);
   font-size: 0.85rem;
@@ -2822,7 +2822,7 @@ input:focus, select:focus {
   text-decoration: none;
   transition: background 0.15s;
 }
-.nav-quiz-btn:hover { background: #1d4ed8; }
+.nav-quiz-btn:hover { background: var(--editorial-ink); color: var(--editorial-paper); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    QUIZ PAGE
@@ -8159,12 +8159,14 @@ body {
   text-transform: none;
 }
 
+/* Primary = lime. It was near-black here, which left the accent with no job
+   except decoration, and left a page with no colour cue for its main action. */
 .btn-primary,
 .btn-hero-primary,
 .plan-meal-edit-submit,
 .plan-share-btn--primary {
-  background: var(--editorial-ink);
-  color: var(--editorial-paper) !important;
+  background: var(--lime);
+  color: var(--editorial-ink) !important;
 }
 
 .nav-quiz-btn:hover,
@@ -9413,8 +9415,9 @@ textarea {
   color: var(--editorial-ink) !important;
 }
 
-.btn-primary,
-.btn-hero-primary,
+/* Hover only. .btn-primary and .btn-hero-primary used to be in this selector
+   list, so their resting state was repainted near-black by a rule meant for
+   hovers - that is where the black primary came from. */
 .nav-quiz-btn:hover,
 .btn-secondary:hover,
 .btn-hero-secondary:hover,
@@ -14758,4 +14761,166 @@ textarea {
 .shopping-item input {
   width: 24px;
   height: 24px;
+}
+
+/* ---------- Button tiers ----------
+   Measured across seven routes at 1440x900, the site rendered 34 distinct
+   button appearances. Five fill treatments were competing for "primary":
+   lime, near-black, solid blue, black outline and blue outline - and the
+   mapping to importance was inverted in places. On the mobile plan page the
+   two useful actions (View meals, Shopping list) were pale blue outlines
+   while Save plan, the lowest-intent action there, was a solid blue fill.
+
+   Three tiers now, and only three:
+     primary   = lime fill, ink text        (one main action per section)
+     secondary = paper fill, ink hairline   (everything alongside it)
+     tertiary  = plain text link            (unchanged, not restyled here)
+
+   The blue fills and blue outlines below are folded into those tiers rather
+   than kept as a fourth and fifth look. */
+
+.waitlist-submit,
+.feedback-submit,
+.plan-action-bar .plan-action-primary {
+  background: var(--lime);
+  border: 1px solid var(--editorial-ink);
+  color: var(--editorial-ink);
+}
+
+.waitlist-submit:hover,
+.feedback-submit:hover,
+.plan-action-bar .plan-action-primary:hover {
+  background: var(--editorial-ink);
+  color: var(--editorial-paper);
+}
+
+.plan-action-bar a,
+.plan-action-bar button {
+  background: var(--editorial-paper);
+  border-color: var(--editorial-ink);
+  color: var(--editorial-ink);
+}
+
+.plan-action-bar a:hover,
+.plan-action-bar button:hover {
+  background: var(--editorial-ink);
+  color: var(--editorial-paper);
+}
+
+.btn-primary:hover,
+.btn-hero-primary:hover,
+.plan-meal-edit-submit:hover,
+.plan-share-btn--primary:hover {
+  background: var(--editorial-ink) !important;
+  color: var(--editorial-paper) !important;
+}
+
+/* ---------- Lime is the primary action, and nothing else ----------
+   It was also the nav active state, the search submit, a passive "1 person"
+   metadata badge on the plan summary and the left rule on a caveat panel.
+   An accent that means six things stops pulling the eye to the one that
+   matters. Active nav now reads through weight and a rule; the rest go
+   neutral. */
+
+.nav-tab--active {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: inset 0 -2px 0 var(--editorial-ink);
+  border-radius: 0;
+  color: var(--editorial-ink);
+  font-weight: 800;
+}
+
+.site-search-submit {
+  background: var(--editorial-paper);
+  color: var(--editorial-ink);
+}
+
+.site-search-submit:hover {
+  background: var(--editorial-ink);
+  color: var(--editorial-paper);
+}
+
+.plan-summary-people,
+.plan-people-badge {
+  background: var(--editorial-paper);
+  border: 1px solid var(--editorial-line);
+  color: var(--editorial-ink);
+}
+
+.cost-estimate-note {
+  border-left-color: var(--editorial-line);
+}
+
+/* ---------- One primary per screen ----------
+   The sidebar and the mobile header each carried a copy of the hero CTA. Once
+   both were painted in the accent they were two equally loud buttons for the
+   same action, roughly 300px apart, with four different labels between them.
+   They stay - they are useful on pages whose own CTA is further down - but as
+   secondary, so the accent marks one action per screen. */
+
+.sidebar-quiz-cta {
+  background: var(--editorial-paper) !important;
+  color: var(--editorial-ink) !important;
+}
+
+.sidebar-quiz-cta:hover {
+  background: var(--editorial-ink) !important;
+  color: var(--editorial-paper) !important;
+}
+
+.nav-quiz-btn {
+  background: var(--editorial-paper);
+  border: 1px solid var(--editorial-ink);
+  color: var(--editorial-ink);
+}
+
+/* ---------- One section-heading treatment ----------
+   The homepage carried five. Measured at 1440px: 41.7px Georgia 400 centred
+   (how-it-works, featured-plans, FAQ, generator), 72.3px Georgia 400 centred
+   (calorie nav), 36.6px DM Sans 700 left (popular this week), 28.9px DM Sans
+   700 left (waitlist) and 20.4px DM Sans 700 left (prep flow, popular
+   searches, essential guides).
+
+   Size was not tracking importance: the two largest headings on the page
+   belonged to a browse-by-calorie nav and an SEO link block, both larger than
+   "How it works". With nothing consistent to read, the type gave no signal
+   about what mattered.
+
+   Canonical is the majority treatment - Georgia 400, one clamp ramp - set
+   left, so a section heading and its eyebrow share a left edge instead of
+   sitting on two different alignments. Emphasis now comes from order and
+   content, not from size. */
+
+.how-it-works h2,
+.calorie-nav-section h2,
+.featured-plans > h2,
+.home-faq > h2,
+.home-generator-section > h2,
+.home-prep-flow h2,
+.popular-searches-head > h2,
+.weekly-trending-head > h2,
+.search-opportunity-head > h2,
+.waitlist-intro > h2,
+.popular-guides > h2,
+.container-intent-section > h2,
+.browse-hub-index > h2,
+.meal-hub-supporting-guides > h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 3.07vw, 2.45rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-align: left;
+  text-wrap: balance;
+}
+
+/* Step copy runs left, like every other block of running text on the page.
+   Centring it produced four columns of ragged multi-line body copy whose left
+   edges all differed, under headings that are themselves left-aligned. */
+.hiw-step,
+.hiw-step p,
+.hiw-step strong,
+.hiw-step h3 {
+  text-align: left;
 }
