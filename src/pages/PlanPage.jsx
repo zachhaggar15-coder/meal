@@ -713,7 +713,7 @@ export default function PlanPage() {
 
         {/* Quiz CTA */}
         <div className="plan-quiz-cta">
-          <Link to="/quiz" className="btn-quiz-inline">Not Right For You? Take The Quiz →</Link>
+          <Link to="/quiz" className="btn-quiz-inline">Not right for you? Take the quiz →</Link>
         </div>
 
         <PrintablePlanSummary

@@ -552,9 +552,11 @@ function chooseFeaturedPlanVisual(category, plan) {
     return chooseSupermarketVisual(supermarket);
   }
 
+  // No eyebrow: the caption under the card already carries goal, supermarket
+  // and calorie target, so any text drawn in here would be the same words twice.
   return chooseNavigationCardVisual({
     label: plan.label,
-    eyebrow: category,
+    eyebrow: '',
     note: 'Popular meal plan',
     seed: `${category}-${plan.slug}`,
   });

@@ -15,7 +15,7 @@ const TOP_TABS = [
   },
   {
     to: '/meal-prep-containers',
-    label: 'Meal prep containers',
+    label: 'Meal Prep Containers',
     compactLabel: 'Containers',
     match: path => path.startsWith('/meal-prep-containers') && !ACCESSORY_PATHS.has(path),
   },

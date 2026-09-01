@@ -22,7 +22,7 @@
 .allergen-note,
 .storage-safety-note {
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--card);
   padding: 16px 18px;
 }
@@ -37,7 +37,7 @@
 .allergen-note p,
 .storage-safety-note p {
   margin: 0 0 10px;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.55;
 }
 
@@ -58,9 +58,9 @@
 .allergen-chip {
   padding: 3px 10px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #fef3c7;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   line-height: 1.4;
 }
 
@@ -83,7 +83,7 @@
 .storage-safety-list {
   margin: 0 0 12px;
   padding-left: 20px;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.55;
 }
 
@@ -116,7 +116,7 @@
   margin: 0 0 28px;
   padding: 16px 18px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--card);
 }
 
@@ -155,7 +155,7 @@
 .allergen-legal-list li {
   padding: 3px 10px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: #f8fafc;
   font-size: 0.85rem;
 }
@@ -206,13 +206,13 @@
   margin: 28px 0;
   padding: 18px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--card);
 }
 
 .hub-context-panel h2 {
   margin: 0 0 14px;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 
 .hub-context-stats {
@@ -229,17 +229,17 @@
   gap: 2px;
   padding: 10px 12px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   background: var(--bg);
 }
 
 .hub-context-stats strong {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   line-height: 1.2;
 }
 
 .hub-context-stats span {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
@@ -267,7 +267,7 @@
   display: inline-block;
   padding: 6px 12px;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--bg);
   font-size: 0.85rem;
   text-decoration: none;
@@ -306,13 +306,13 @@ details > summary.tappable-summary {
   margin: 28px 0;
   padding: 18px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: var(--card);
 }
 
 .supermarket-evidence h2 {
   margin: 0 0 14px;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
 }
 
 .supermarket-evidence-block + .supermarket-evidence-block {
@@ -362,12 +362,12 @@ details > summary.tappable-summary {
   gap: 2px;
   padding: 8px 10px;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   background: var(--bg);
 }
 
 .supermarket-evidence-stats strong {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   line-height: 1.2;
 }
 
@@ -405,7 +405,7 @@ details > summary.tappable-summary {
   gap: 10px;
   padding: 16px;
   border: 1px solid var(--spec-plate-border, #dbe3ea);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: var(--spec-plate-bg, #f6f8fa);
   min-height: 116px;
   justify-content: center;
@@ -413,13 +413,13 @@ details > summary.tappable-summary {
 
 .product-spec-plate-badge {
   align-self: flex-start;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: #065f46;
   background: #d7f5e5;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   padding: 4px 10px;
 }
 
@@ -429,9 +429,14 @@ details > summary.tappable-summary {
   margin: 0;
 }
 
+/* Label column then value column, both flush left — the same shape as
+   .container-direct-facts. This was flex + space-between with the value
+   right-aligned, which pushed label and value to opposite edges and left the
+   values unaligned between the three comparison cards, so nothing read as a
+   column. */
 .product-spec-plate-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
   gap: 12px;
   align-items: baseline;
   border-bottom: 1px dotted #cbd5e1;
@@ -443,20 +448,19 @@ details > summary.tappable-summary {
 }
 
 .product-spec-plate-row dt {
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--muted-strong);
   margin: 0;
 }
 
 .product-spec-plate-row dd {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #111827;
-  text-align: right;
 }
 
 .product-spec-plate-points {
@@ -469,7 +473,7 @@ details > summary.tappable-summary {
 .product-spec-plate-points li {
   position: relative;
   padding-left: 18px;
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   color: #1f2937;
 }
 .product-spec-plate-points li::before {

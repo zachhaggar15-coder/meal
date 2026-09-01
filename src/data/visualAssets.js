@@ -33,27 +33,34 @@ const CARD_THEMES = [
   { paper: '#f5f6ed', band: '#31513b', accent: '#c7a542', line: '#cfd5b9' },
 ];
 
+// A card thumbnail sits directly above the card's own title, so drawing the
+// title into the image said the same thing twice - and because the label was
+// wrapped to three 20-character lines, the copy in the image was the truncated
+// one. The eyebrow is the only thing here the caption does not already say, so
+// the plate now carries that, plus the note and the wordmark. The two
+// translucent circles went with it; they encoded nothing.
 function cardVisual({ label, eyebrow, note, themeIndex = 0, alt = '' }) {
   const theme = CARD_THEMES[themeIndex % CARD_THEMES.length];
-  const lines = wrapText(label, 20, 3);
-  const lineHeight = lines.length > 2 ? 82 : 96;
-  const firstY = lines.length > 2 ? 244 : 270;
-  const labelLines = lines
+  // An explicit empty eyebrow means the caller has nothing to say here that the
+  // caption does not already say - the homepage plan cards are the case: goal,
+  // supermarket and calories are all in the label underneath. Those get a plain
+  // colour field rather than a line of filler text.
+  const topic = eyebrow === '' ? '' : (eyebrow || label);
+  const lines = topic ? wrapText(topic, 18, 2) : [];
+  const firstY = lines.length > 1 ? 300 : 358;
+  const topicLines = lines
     .map((line, index) => (
-      `<text x="78" y="${firstY + (index * lineHeight)}" fill="#18130d" font-family="Georgia, Times New Roman, serif" font-size="76" font-weight="400">${escapeSvg(line)}</text>`
+      `<text x="78" y="${firstY + (index * 92)}" fill="${theme.band}" font-family="Georgia, Times New Roman, serif" font-size="84" font-weight="400">${escapeSvg(line)}</text>`
     ))
     .join('');
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
 <rect width="1200" height="675" fill="${theme.paper}"/>
 <rect x="34" y="34" width="1132" height="607" fill="none" stroke="${theme.line}" stroke-width="3"/>
-<rect x="34" y="34" width="1132" height="98" fill="${theme.band}"/>
-<circle cx="1010" cy="292" r="134" fill="${theme.accent}" opacity="0.18"/>
-<circle cx="1078" cy="424" r="74" fill="${theme.accent}" opacity="0.12"/>
-<text x="78" y="96" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="31" font-weight="800">${escapeSvg(eyebrow)}</text>
-${labelLines}
-<text x="80" y="570" fill="#6e6251" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="700">${escapeSvg(note)}</text>
-<text x="864" y="588" fill="${theme.band}" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="900">MealPrep</text>
+<rect x="78" y="150" width="132" height="10" fill="${theme.accent}"/>
+${topicLines}
+<text x="80" y="570" fill="#6e6251" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700">${escapeSvg(note)}</text>
+<text x="864" y="588" fill="${theme.band}" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="900">MealPrep</text>
 </svg>`;
 
   return asset(`data:image/svg+xml;utf8,${encodeURIComponent(svg)}`, alt);

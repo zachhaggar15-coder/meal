@@ -48,11 +48,9 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
             Learn about {offer.name}
           </Link>
         </div>
-        {offer.proofPoints?.length > 0 && (
-          <div className="offer-proof-row" aria-label="Product highlights">
-            {offer.proofPoints.map(p => <span key={p}>{p}</span>)}
-          </div>
-        )}
+        {/* The proof points already appear in the spec plate on the left of this
+            same card. Rendering them again as chips here printed the identical
+            three strings twice, about 150px apart. */}
         <p className="sponsored-note">{offer.disclosure}</p>
       </div>
     </aside>
