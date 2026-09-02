@@ -2,215 +2,19 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
-import { blogPostsData } from '../data/blogPosts.js';
+import blogSearchIndex from '../data/blogSearchIndex.json' with { type: 'json' };
 import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
-import { generateBlogCardImageUrl, hasCustomBlogImage } from '../utils/imageGenerator.js';
+import { generateBlogCardImageUrl } from '../utils/imageGenerator.js';
 
-const CATEGORY_ORDER = [
-  {
-    label: 'Weight Loss & Calories',
-    slugs: [
-      'how-to-lose-weight-fast-uk',
-      'how-to-build-a-calorie-deficit',
-      'how-many-calories-to-lose-weight',
-      '1500-vs-1800-vs-2000-calories',
-      'what-does-1500-calories-look-like-uk',
-      'how-to-lose-belly-fat-uk',
-      'cutting-diet-plan-uk',
-      'cutting-food-ideas-uk',
-      'cutting-breakfast-ideas-uk',
-      'cutting-lunch-ideas-uk',
-      '500-calorie-dinner-ideas-uk',
-      'low-calorie-meals-that-fill-you-up-uk',
-      'high-volume-low-calorie-foods-uk',
-      '1200-calorie-meal-plan-uk',
-      '1400-calorie-meal-plan-uk',
-      '1600-calorie-meal-plan-uk',
-      '1800-calorie-meal-plan-for-weight-loss-uk',
-      '2000-calorie-weight-loss-meal-plan-uk',
-      '3000-vs-3500-calorie-meal-plan-uk',
-      'weekly-calorie-deficit-meal-prep-uk',
-      'weight-loss-meal-prep-mistakes-uk',
-      'low-calorie-dinners-for-meal-prep-uk',
-    ],
-  },
-  {
-    label: 'Protein & Nutrition',
-    slugs: [
-      'high-protein-low-calorie-meals',
-      'high-protein-breakfast-uk',
-      'high-protein-snacks-uk',
-      'how-much-protein-when-dieting',
-      'best-low-calorie-foods-uk',
-      'best-low-calorie-ready-meals-uk',
-      'low-calorie-snacks-uk',
-      'high-protein-lunches-for-work-uk',
-      'high-protein-vegetarian-meal-prep-uk',
-      'high-protein-snacks-without-protein-powder-uk',
-      'high-protein-gym-food-ideas-uk',
-      'high-protein-meals-under-600-calories-uk',
-      'high-protein-sandwich-fillings-uk',
-      'cottage-cheese-meal-ideas-uk',
-      'skyr-greek-yogurt-meal-ideas-uk',
-      'cheap-protein-sources-uk-supermarkets',
-      'protein-porridge-and-yogurt-breakfasts-uk',
-      'overnight-oats-meal-prep-uk',
-      'low-calorie-high-volume-foods-uk',
-      'best-fibre-foods-for-weight-loss-uk',
-      'protein-meal-prep-without-powder-uk',
-      'high-protein-pasta-meal-prep-uk',
-    ],
-  },
-  {
-    label: 'Cost & Value Questions',
-    slugs: [
-      'cheapest-protein-sources-cost-per-gram-uk',
-      'chicken-vs-eggs-protein-value-uk',
-      'is-protein-powder-cheaper-than-food-uk',
-      'how-much-should-meal-prep-cost-uk',
-      'is-meal-prep-cheaper-than-meal-deals-uk',
-    ],
-  },
-  {
-    label: 'Meal Delivery & Recipe Boxes',
-    slugs: [
-      'best-meal-prep-delivery-uk',
-      'best-high-protein-meal-delivery-uk',
-      'cheap-meal-prep-delivery-uk',
-      'hellofresh-alternatives-uk',
-      'gousto-vs-hellofresh-uk',
-    ],
-  },
-  {
-    label: 'Meal Prep & Batch Cooking',
-    slugs: [
-      'meal-prep-rice-goes-hard-uk',
-      'meal-prep-chicken-drying-out-uk',
-      'meal-prep-watery-or-soggy-uk',
-      'summer-meals-uk',
-      'meal-prep-for-beginners-uk',
-      'batch-cooking-for-beginners-uk',
-      'how-to-meal-plan-for-weight-loss',
-      'cheap-meal-prep-shopping-list-uk',
-      'intermittent-fasting-meal-plan-uk',
-      'sunday-meal-prep-routine-uk',
-      'five-day-work-lunch-meal-prep-uk',
-      'freezer-meal-prep-for-beginners-uk',
-      'meal-prep-without-a-microwave-uk',
-      'no-cook-meal-prep-ideas-uk',
-      'cold-lunch-ideas-for-work-uk',
-      'air-fryer-high-protein-meal-prep-uk',
-      'one-pot-high-protein-meals-uk',
-      'microwave-meal-prep-ideas-uk',
-      'freezer-friendly-lunch-ideas-uk',
-      'five-ingredient-meal-prep-ideas-uk',
-      'high-protein-breakfast-meal-prep-uk',
-      'healthy-ready-meal-alternatives-uk',
-      'one-pan-meal-prep-uk',
-      'meal-prep-shopping-list-template-uk',
-      'how-to-store-meal-prep-safely-uk',
-      'air-fryer-meal-prep-uk',
-      'chicken-and-rice-meal-prep-uk',
-      'meal-prep-for-two-people-uk',
-      'student-meal-prep-uk',
-    ],
-  },
-  {
-    label: 'Work, Family & Student Food',
-    slugs: [
-      'meal-prep-no-fridge-at-work-uk',
-      'student-high-protein-meals-uk',
-      'family-high-protein-dinners-uk',
-      'night-shift-food-ideas-uk',
-      'office-snack-drawer-ideas-uk',
-      'post-workout-meal-ideas-uk',
-    ],
-  },
-  {
-    label: 'Meal Prep Tools & Equipment',
-    slugs: [
-      'slow-cooker-meal-prep-uk',
-      'rice-cooker-meal-prep-uk',
-      'best-kitchen-scales-for-meal-prep-uk',
-      'best-blender-for-meal-prep-smoothies-uk',
-      'vacuum-sealer-meal-prep-uk',
-      'best-meal-prep-cookbooks-uk',
-      'insulated-meal-prep-bags-uk',
-      'reusable-ice-packs-for-lunch-bags-uk',
-      'best-sauce-pots-for-meal-prep-uk',
-      'overnight-oats-jars-for-meal-prep-uk',
-      'best-food-thermometers-for-meal-prep-uk',
-      'insulated-food-flasks-for-meal-prep-uk',
-      'best-vegetable-choppers-for-meal-prep-uk',
-      'best-air-fryer-accessories-for-meal-prep-uk',
-      'best-protein-shakers-uk',
-      'freezer-labels-for-meal-prep-uk',
-    ],
-  },
-  {
-    label: 'Meal Prep Containers',
-    slugs: [
-      'best-meal-prep-containers-uk',
-      'meal-prep-container-stains-and-smells-uk',
-      'glass-vs-plastic-meal-prep-containers',
-      'meal-prep-container-size-guide',
-      'dishwasher-safe-meal-prep-containers',
-      'bento-meal-prep-boxes-uk',
-      'meal-prep-tubs-for-batch-cooking',
-      'how-many-meal-prep-containers-do-you-need',
-      'microwave-safe-meal-prep-containers-uk',
-      'meal-prep-containers-for-soup-uk',
-      'meal-prep-containers-for-salads-uk',
-      'best-lunch-bags-for-meal-prep-uk',
-      'meal-prep-container-lids-leaking',
-      'budget-vs-premium-meal-prep-containers',
-    ],
-  },
-  {
-    label: 'Supermarket Guides',
-    slugs: [
-      'tesco-low-calorie-shopping-list',
-      'aldi-vs-tesco-meal-prep',
-      'aldi-vs-lidl-meal-prep',
-      'best-supermarket-for-high-protein-meal-prep-uk',
-      'cheapest-uk-supermarket-meal-prep',
-      'sainsburys-meal-prep-uk',
-      'asda-meal-prep-uk',
-      'best-cheap-high-protein-foods-uk',
-      'lidl-meal-prep-uk',
-      'morrisons-meal-prep-uk',
-      'iceland-meal-prep-uk',
-      'generic-uk-supermarket-meal-plan',
-      'tesco-clubcard-meal-prep-uk',
-      'aldi-high-protein-shopping-list-uk',
-      'tesco-high-protein-snacks-uk',
-      'aldi-low-calorie-food-ideas-uk',
-      'lidl-high-protein-food-ideas-uk',
-      'asda-budget-meal-ideas-uk',
-      'sainsburys-healthy-ready-meal-combos-uk',
-    ],
-  },
-  {
-    label: 'Diet Types',
-    slugs: [
-      'vegan-meal-prep-uk',
-      'vegetarian-meal-prep-uk',
-      'anti-inflammatory-diet-meal-plan-uk',
-      'menopause-diet-plan-uk',
-      'endurance-running-nutrition-uk',
-      'muscle-building-meal-plan-uk',
-      'pescatarian-meal-prep-uk',
-      'gluten-free-friendly-meal-prep-uk',
-      'vegetarian-high-protein-snacks-uk',
-      'vegan-high-protein-meal-ideas-uk',
-      'pescatarian-high-protein-meals-uk',
-      'gluten-free-lunch-ideas-uk',
-      'dairy-free-high-protein-meal-prep-uk',
-      'family-meal-prep-on-a-budget-uk',
-      'night-shift-meal-prep-uk',
-    ],
-  },
-];
+const BLOG_CATEGORY_GROUPS = blogSearchIndex.reduce((groups, post) => {
+  const current = groups.at(-1);
+  if (current?.label === post.category) {
+    current.posts.push(post);
+  } else {
+    groups.push({ label: post.category, posts: [post] });
+  }
+  return groups;
+}, []);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -221,14 +25,12 @@ const jsonLd = {
   publisher: { '@type': 'Organization', name: 'MealPrep.org.uk', url: 'https://www.mealprep.org.uk' },
   mainEntity: {
     '@type': 'ItemList',
-    itemListElement: CATEGORY_ORDER.flatMap(cat => cat.slugs)
-      .filter(slug => blogPostsData[slug])
-      .map((slug, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        name: blogPostsData[slug].h1,
-        url: `https://www.mealprep.org.uk/blog/${slug}`,
-      })),
+    itemListElement: blogSearchIndex.map((post, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: post.title,
+      url: `https://www.mealprep.org.uk/blog/${post.slug}`,
+    })),
   },
 };
 
@@ -255,29 +57,23 @@ export default function Blog() {
           UK supermarket ingredients and realistic budgets.
         </p>
 
-        {CATEGORY_ORDER.map(cat => (
-          <section key={cat.label} className="blog-category-section">
-            <h2 className="blog-category-heading">{cat.label}</h2>
+        {BLOG_CATEGORY_GROUPS.map(category => (
+          <section key={category.label} className="blog-category-section">
+            <h2 className="blog-category-heading">{category.label}</h2>
             <div className="blog-card-grid">
-              {cat.slugs.map(slug => {
-                const post = blogPostsData[slug];
-                if (!post) return null;
-                return (
-                  <Link key={slug} to={`/blog/${slug}`} className="blog-card">
-                    {hasCustomBlogImage(slug) && (
-                      <img
-                        className="blog-card-thumb"
-                        src={generateBlogCardImageUrl(slug, post.h1)}
-                        alt=""
-                        loading="lazy"
-                      />
-                    )}
-                    <h3 className="blog-card-title">{post.h1}</h3>
-                    <p className="blog-card-desc">{post.description}</p>
-                    <span className="blog-card-cta">Read guide →</span>
-                  </Link>
-                );
-              })}
+              {category.posts.map(post => (
+                <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card">
+                  <img
+                    className="blog-card-thumb"
+                    src={generateBlogCardImageUrl(post.imageId, post.title)}
+                    alt=""
+                    loading="lazy"
+                  />
+                  <h3 className="blog-card-title">{post.title}</h3>
+                  <p className="blog-card-desc">{post.description}</p>
+                  <span className="blog-card-cta">Read guide →</span>
+                </Link>
+              ))}
             </div>
           </section>
         ))}
