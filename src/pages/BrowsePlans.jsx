@@ -4,6 +4,8 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
+import { planCardFamily, planMarketShort } from '../utils/planCardMeta.js';
+import { INDEXED_SUPERMARKET_VALUES } from '../data/planCatalogMeta.js';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
@@ -160,6 +162,12 @@ const HUB_INDEX_GROUPS = [
     ],
   },
 ];
+
+// Derived from the catalogue rather than hand-listed, so a new supermarket
+// cannot appear in the grid without appearing in the key.
+const SUPERMARKET_COLOUR_KEY = INDEXED_SUPERMARKET_VALUES
+  .map(value => ({ value, label: planMarketShort(value) }))
+  .sort((a, b) => a.label.localeCompare(b.label, 'en-GB'));
 
 export default function BrowsePlans() {
   const [params] = useSearchParams();
@@ -323,7 +331,7 @@ export default function BrowsePlans() {
           </div>
 
           <div className="browse-filter-meta">
-            <span className="browse-count">{filtered.length} plan{filtered.length !== 1 ? 's' : ''}</span>
+            <span className="browse-count">{filtered.length.toLocaleString('en-GB')} plan{filtered.length !== 1 ? 's' : ''}</span>
             {(goal || supermarket || diet || calories || budget || effort || search) && (
               <button className="browse-reset" onClick={resetFilters} type="button">Clear filters</button>
             )}
@@ -339,11 +347,25 @@ export default function BrowsePlans() {
               <button onClick={resetFilters} className="btn-secondary" type="button">Clear all filters</button>
             </div>
           ) : (
-            <div className="browse-grid">
-              {shown.map(plan => (
-                <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
-              ))}
-            </div>
+            <>
+              {/* Card colour keys off the supermarket. The store name is on
+                  every card too, so this is a scanning aid rather than the only
+                  signal - but a mixed grid is where the coding earns its keep,
+                  and it needs saying once. */}
+              <ul className="browse-colour-key" aria-label="What the card colours mean">
+                {SUPERMARKET_COLOUR_KEY.map(({ value, label }) => (
+                  <li key={value}>
+                    <span className={`browse-colour-key-swatch pc-${planCardFamily(value)}`} aria-hidden="true" />
+                    {label}
+                  </li>
+                ))}
+              </ul>
+              <div className="browse-grid">
+                {shown.map(plan => (
+                  <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
+                ))}
+              </div>
+            </>
           )}
         </section>
 
@@ -470,7 +492,7 @@ export default function BrowsePlans() {
               <details className="browse-index-group" key={group.value}>
                 <summary>
                   <span>{group.label}</span>
-                  <span>{group.total} plans</span>
+                  <span>{group.total.toLocaleString('en-GB')} plans</span>
                 </summary>
                 <ul className="browse-index-list">
                   {group.plans.map(plan => (

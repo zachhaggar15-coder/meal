@@ -8,12 +8,12 @@ import {
 } from '../utils/planCardMeta.js';
 
 // Shared browse-grid card used by every list of meal plans (browse, supermarket
-// and combo hubs). A goal-coded banner makes the grid scannable, a stat strip
+// and combo hubs). A supermarket-coded banner makes the grid scannable, a stat strip
 // front-loads the three figures people compare on (calories, cost, effort), and
 // the plan name sits underneath as a caption. Keeping it in one component means
 // the design stays consistent across pages instead of drifting per page.
 export default function PlanCard({ plan, sourcePage = 'plan_grid', ctaLocation = 'plan_card' }) {
-  const family = planCardFamily(plan.goal);
+  const family = planCardFamily(plan.supermarket);
   const goalShort = planGoalShort(plan.goal, plan.goalLabel);
   const hasDiet = plan.dietType && plan.dietType !== 'standard';
 

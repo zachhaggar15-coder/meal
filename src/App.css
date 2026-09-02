@@ -4666,12 +4666,17 @@ details[open] .faq-question::after { transform: rotate(-135deg); }
 .pc-stat + .pc-stat {
   border-left: 1px solid var(--editorial-line, #e4ded1);
 }
+/* The three cells are equal fractions, so the widest value sets the fit. At
+   1.05rem serif "Standard" was wider than its cell and got clipped by the
+   overflow:hidden that rounds the strip's corners - the card read "Standar".
+   A step down plus wrapping keeps every effort label whole. */
 .pc-stat b {
   display: block;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: 1.05rem;
-  line-height: 1;
+  font-size: 0.95rem;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 .pc-stat span {
   display: block;
@@ -4726,13 +4731,23 @@ details[open] .faq-question::after { transform: rotate(-135deg); }
   color: var(--editorial-ink, #17130d);
 }
 
-/* Goal colour families — desaturated to sit inside the warm ground. */
-.pc-lean     { --pc-accent: #6f8a5f; --pc-ink: #3f5636; --pc-band: #eaefe3; }
-.pc-muscle   { --pc-accent: #b06a4f; --pc-ink: #8a4a32; --pc-band: #f1e7e1; }
-.pc-protein  { --pc-accent: #6a8299; --pc-ink: #3f5666; --pc-band: #e6ecf0; }
-.pc-veg      { --pc-accent: #5f8a6a; --pc-ink: #3f5636; --pc-band: #e5efe1; }
-.pc-wellness { --pc-accent: #8a6a86; --pc-ink: #5a3f57; --pc-band: #efe6ee; }
-.pc-neutral  { --pc-accent: #8a7f6a; --pc-ink: #5a5142; --pc-band: #efeadf; }
+/* Supermarket colour families.
+   Each takes the hue its chain is actually recognised by, desaturated hard so
+   twelve of them can sit next to each other on the warm ground without turning
+   a browse grid into confetti. --pc-ink carries the goal text on --pc-band, so
+   every ink here is dark enough to clear 4.5:1 against its own band. */
+.pc-aldi       { --pc-accent: #4a6a9e; --pc-ink: #2e4569; --pc-band: #e6eaf2; }
+.pc-tesco      { --pc-accent: #3f7fa8; --pc-ink: #275169; --pc-band: #e3eef4; }
+.pc-lidl       { --pc-accent: #a8862f; --pc-ink: #63500f; --pc-band: #f4eeda; }
+.pc-asda       { --pc-accent: #4f8a5f; --pc-ink: #2f5638; --pc-band: #e5efe6; }
+.pc-sainsburys { --pc-accent: #b0703f; --pc-ink: #74431f; --pc-band: #f5eae1; }
+.pc-morrisons  { --pc-accent: #7f9a3f; --pc-ink: #4a5c1f; --pc-band: #eef2e0; }
+.pc-iceland    { --pc-accent: #a8564f; --pc-ink: #6d332f; --pc-band: #f4e7e5; }
+.pc-waitrose   { --pc-accent: #45806e; --pc-ink: #274c41; --pc-band: #e3eeea; }
+.pc-ocado      { --pc-accent: #7f5f9e; --pc-ink: #4f3967; --pc-band: #eee8f3; }
+.pc-marks      { --pc-accent: #5a6f5a; --pc-ink: #34432f; --pc-band: #e9ede7; }
+.pc-coop       { --pc-accent: #4a8a9e; --pc-ink: #2a5361; --pc-band: #e4eff2; }
+.pc-neutral    { --pc-accent: #8a7f6a; --pc-ink: #554d3f; --pc-band: #efeadf; }
 .browse-plan-card {
   background: #fff;
   border: 1px solid #e2e8f0;
@@ -14923,4 +14938,34 @@ textarea {
 .hiw-step strong,
 .hiw-step h3 {
   text-align: left;
+}
+
+/* Colour key for the supermarket-coded cards. Quiet by design: it explains the
+   grid, it is not a control, and the store name is printed on every card
+   anyway. */
+.browse-colour-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.browse-colour-key li {
+  align-items: center;
+  color: var(--muted-strong);
+  display: flex;
+  font-size: 0.78rem;
+  gap: 7px;
+}
+
+.browse-colour-key-swatch {
+  background: var(--pc-band);
+  border: 1px solid var(--pc-ink);
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 12px;
+  width: 12px;
 }
