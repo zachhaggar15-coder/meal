@@ -1878,7 +1878,6 @@ input:focus, select:focus {
 }
 
 .popular-starts h3 {
-  font-size: 0.95rem;
   color: var(--muted);
   margin: 0 0 10px;
   font-weight: 600;
@@ -8763,7 +8762,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   max-width: 68ch;
-  text-align: center;
 }
 
 .quiz-shell-features {
@@ -14968,4 +14966,27 @@ textarea {
   flex: 0 0 auto;
   height: 12px;
   width: 12px;
+}
+
+/* ---------- The quiz gets the screen to itself ----------
+   The desktop rail put ten escape routes beside a seven-step funnel, including
+   a copy of the CTA for the quiz the reader is already taking, and it cost 33
+   tab presses to reach the first answer on desktop against 5 on mobile.
+
+   Scoped two ways on purpose. The 1000px floor is where the rail actually
+   exists - below it the same element is the navigation drawer, which must keep
+   working on the quiz like anywhere else. And :has() means this needs no route
+   prop threaded through the layout; where it is unsupported the rail simply
+   stays, which is today's behaviour. */
+@media (min-width: 1000px) {
+  .layout-body:has(.quiz-page) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* !important only because the rule that establishes the rail already uses it
+     (`display: block !important` on .sidebar in the 1000px block). Answering
+     it here rather than unpicking it keeps this change to one place. */
+  .layout-body:has(.quiz-page) .sidebar {
+    display: none !important;
+  }
 }
