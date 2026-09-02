@@ -11,6 +11,8 @@
 // While `VITE_ADS_ENABLED` is off there is nothing to consent to, and asking
 // anyway would be asking about something that does not happen.
 
+import { readConsentRecord, writeConsentRecord } from './consentRecord.js';
+
 const ENV = import.meta.env || {};
 const TRUTHY = ['1', 'true', 'yes', 'on'];
 
@@ -39,14 +41,11 @@ export function getAdConsent() {
   if (inMemoryConsent === 'granted' || inMemoryConsent === 'denied') return inMemoryConsent;
 
   try {
-    const saved = window.localStorage.getItem(CONSENT_KEY);
-    if (saved === 'granted' || saved === 'denied') return saved;
+    return readConsentRecord(window.localStorage, CONSENT_KEY);
   } catch {
     // Storage blocked: treat as undecided rather than assuming agreement.
     return 'unset';
   }
-
-  return 'unset';
 }
 
 export function hasAdConsent() {
@@ -58,7 +57,7 @@ export function setAdConsent(value) {
   const next = value === 'granted' ? 'granted' : 'denied';
   inMemoryConsent = next;
   try {
-    window.localStorage.setItem(CONSENT_KEY, next);
+    writeConsentRecord(window.localStorage, CONSENT_KEY, next);
   } catch {
     // Keep the choice for this page view only.
   }

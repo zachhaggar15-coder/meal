@@ -1,0 +1,20 @@
+.footer-privacy-choices {
+  background: transparent;
+  border: 0;
+  color: var(--editorial-ink, var(--ink));
+  cursor: pointer;
+  display: block;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin: 14px auto 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-privacy-choices:hover,
+.footer-privacy-choices:focus-visible {
+  color: var(--editorial-ink, var(--ink));
+}

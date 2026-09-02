@@ -1,4 +1,5 @@
 import { sanitiseAnalyticsPath } from './analyticsSanitisation.js';
+import { readConsentRecord, writeConsentRecord } from './consentRecord.js';
 
 const DEFAULT_GA_MEASUREMENT_ID = 'G-SRW78FVYWM';
 const ENV = import.meta.env || {};
@@ -19,6 +20,7 @@ export function initAnalytics() {
   if (typeof window === 'undefined' || analyticsInitialised) return;
   if (!hasAnalyticsConsent()) return;
   analyticsInitialised = true;
+  window[`ga-disable-${GA_MEASUREMENT_ID}`] = false;
 
   if (GA_MEASUREMENT_ID && !document.querySelector('[data-analytics-provider="ga4"]')) {
     const script = document.createElement('script');
@@ -143,13 +145,10 @@ export function getAnalyticsConsent() {
   if (inMemoryConsent === 'granted' || inMemoryConsent === 'denied') return inMemoryConsent;
 
   try {
-    const saved = window.localStorage.getItem(CONSENT_KEY);
-    if (saved === 'granted' || saved === 'denied') return saved;
+    return readConsentRecord(window.localStorage, CONSENT_KEY);
   } catch {
     return 'unset';
   }
-
-  return 'unset';
 }
 
 export function hasAnalyticsConsent() {
@@ -161,10 +160,11 @@ export function setAnalyticsConsent(value) {
   const next = value === 'granted' ? 'granted' : 'denied';
   inMemoryConsent = next;
   try {
-    window.localStorage.setItem(CONSENT_KEY, next);
+    writeConsentRecord(window.localStorage, CONSENT_KEY, next);
   } catch {
     // If storage is unavailable, keep the choice for this page view only.
   }
+  if (next === 'denied') disableLoadedAnalytics();
   window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: { consent: next } }));
   if (next === 'granted') initAnalytics();
 }
@@ -181,6 +181,17 @@ function isDoNotTrackEnabled() {
   return navigator.doNotTrack === '1'
     || window.doNotTrack === '1'
     || navigator.msDoNotTrack === '1';
+}
+
+function disableLoadedAnalytics() {
+  analyticsInitialised = false;
+  onceEvents.clear();
+  window[`ga-disable-${GA_MEASUREMENT_ID}`] = true;
+  window.__mealprepAnalyticsQueue = [];
+
+  for (const script of document.querySelectorAll('[data-analytics-provider]')) {
+    script.remove();
+  }
 }
 
 export const track = {

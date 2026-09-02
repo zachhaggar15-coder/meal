@@ -56,10 +56,11 @@ export default function BehaviorAnalytics() {
     if (!isFirstPartyAnalyticsEnabled()) return undefined;
 
     function startTracker(trackInitialPageView = false) {
-      trackerRef.current?.cleanup();
+      const consented = hasAnalyticsConsent();
+      trackerRef.current?.cleanup({ discard: !consented });
       trackerRef.current = null;
 
-      if (!hasAnalyticsConsent() || !isTrackablePath(currentPath(locationRef))) return;
+      if (!consented || !isTrackablePath(currentPath(locationRef))) return;
 
       trackerRef.current = createTracker(() => currentPath(locationRef));
       flushQueuedFirstPartyEvents();
@@ -103,8 +104,9 @@ function createTracker(getPath) {
       page = createPageState(nextPath);
       observeSectionsSoon();
     },
-    cleanup() {
-      finishPage('tracker_cleanup');
+    cleanup({ discard = false } = {}) {
+      if (discard) queue = [];
+      else finishPage('tracker_cleanup');
       detach();
       if (window.__mealprepAnalytics === api) {
         delete window.__mealprepAnalytics;

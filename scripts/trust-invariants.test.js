@@ -322,6 +322,24 @@ test('analytics and advertising consent are accepted independently', () => {
   assert.match(privacy, /Accept all/);
   assert.match(privacy, /Reject all/);
   assert.match(privacy, /More options/);
+
+  const footer = read('src/components/Footer.jsx');
+  assert.match(footer, /OPEN_PRIVACY_CHOICES_EVENT/);
+  assert.match(footer, />\s*Privacy choices\s*</);
+  assert.match(banner, /addEventListener\(OPEN_PRIVACY_CHOICES_EVENT/);
+  assert.match(banner, /removeEventListener\(OPEN_PRIVACY_CHOICES_EVENT/);
+  assert.match(
+    banner,
+    /window\.location\.reload\(\)/,
+    'Withdrawing a choice must unload providers that were injected earlier in the page view.',
+  );
+
+  const consentRecord = read('src/utils/consentRecord.js');
+  assert.match(consentRecord, /CONSENT_RECORD_VERSION/);
+  assert.match(consentRecord, /updatedAt/);
+  assert.match(privacy, /format version/);
+  assert.match(privacy, /time it was last/);
+  assert.match(privacy, /Privacy choices/);
 });
 
 test('ads are refused on screens with no publisher content', () => {

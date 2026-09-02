@@ -107,8 +107,9 @@ export default function Privacy() {
             health information or typed meal-plan form answers into this behaviour log.
           </p>
           <p>
-            You can change your mind at any time by clearing this site&rsquo;s stored data in your
-            browser settings, which resets the choice and stops the providers loading again.
+            You can change your mind at any time with the <strong>Privacy choices</strong> button
+            in the footer. Withdrawing analytics stops the live tracker and reloads the page
+            without the optional provider scripts.
           </p>
         </section>
 
@@ -139,9 +140,10 @@ export default function Privacy() {
             >
               how Google uses data from sites that use its services
             </a>
-            . You can change or withdraw the choice at any time by clearing this site&rsquo;s
-            stored data in your browser settings, and you can turn off personalised advertising
-            across Google at{' '}
+            . You can change or withdraw the choice at any time with the{' '}
+            <strong>Privacy choices</strong> button in the footer. Withdrawing advertising reloads
+            the page without the advertising script. You can also turn off personalised
+            advertising across Google at{' '}
             <a href="https://myadcenter.google.com/" target="_blank" rel="noopener noreferrer">
               My Ad Center
             </a>
@@ -159,8 +161,10 @@ export default function Privacy() {
           <h2>Things stored on your device</h2>
           <p>
             Saved plans, shopping-list ticks, household portion settings, quiz progress and your
-            analytics choice are stored in your browser&rsquo;s local storage. They stay on that
-            device, are not uploaded to an account, and expire after a year. You can remove saved
+            separate analytics and advertising choices are stored in your browser&rsquo;s local
+            storage. Each consent record includes its format version and the time it was last
+            updated; choices expire after a year so the site can ask again. These records stay on
+            that device and are not uploaded to an account. You can remove saved
             plans from the <Link to="/saved-plans">saved plans</Link> page, or clear this
             website&rsquo;s stored data in your browser settings to remove all of it.
           </p>
