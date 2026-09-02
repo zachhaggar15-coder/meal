@@ -2,11 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
-import WaitlistSection from '../components/WaitlistSection.jsx';
+import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import GeneratorCTA from '../components/GeneratorCTA.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
-import StickerPromo from '../components/StickerPromo.jsx';
 import MealPromptBox from '../components/MealPromptBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
@@ -307,17 +306,6 @@ export default function MealPlanPage() {
         <AllergenNote summary={allergenSummary} />
         <StorageSafetyNote />
       </div>
-      <EmailPlanCapture
-        plan={{
-          slug,
-          supermarket: detectLegacySupermarket(slug, data)?.slug,
-          goal: data.planLabel,
-          calories: data.targetCalories,
-          macrosGrams: { protein: avgProtein },
-        }}
-        sourcePage="legacy_plan"
-        compact
-      />
     </section>
   );
 
@@ -389,6 +377,25 @@ export default function MealPlanPage() {
           </button>
         </nav>
 
+        {/* Beside save and print, for the same reason as the generated plan
+            pages: emailing the plan is a plan action, and the reader should be
+            offered it while the plan is still the thing in front of them. */}
+        <EmailPlanCapture
+          plan={{
+            slug,
+            supermarket: detectLegacySupermarket(slug, data)?.slug,
+            goal: data.planLabel,
+            calories: data.targetCalories,
+            macrosGrams: { protein: avgProtein },
+          }}
+          sourcePage="legacy_plan"
+          compact
+          kicker="Keep this plan"
+          heading="Email me this plan"
+          blurb="The 7-day menu, shopping list and a printable link, sent once. No newsletter."
+          planName={data.h1}
+        />
+
         {examplePlanSection}
         <ContextualNextStep
           eyebrow="Next step"
@@ -403,6 +410,14 @@ export default function MealPlanPage() {
           className="plan-continuation"
         />
         {shoppingListSection}
+        {/* Replaces the generic glass-container promo that used to sit further
+            down this page. Both offered containers; this one counts them from
+            the plan's own meals and picks the tier to match, so running the two
+            together was the same product twice with the weaker one first. */}
+        <ContainerSetupRecommendation
+          weeklyPlan={plan}
+          sourcePage={`legacy-plan-${slug}-containers`}
+        />
 
         {/* Quick-stats summary card */}
         <details className="plan-summary-card legacy-plan-summary-detail">
@@ -716,9 +731,6 @@ export default function MealPlanPage() {
           </>
         )}
 
-        {/* Sticker promo — after shopping list, feels relevant here */}
-        <StickerPromo sourcePage={`${slug}-shopping-list`} />
-
         <h2>Tips for Success</h2>
         <ul className="tips-list">
           {data.tips.map((tip, i) => <li key={i}>{tip}</li>)}
@@ -792,7 +804,6 @@ export default function MealPlanPage() {
 
         <FeedbackBox />
       </div>
-      <WaitlistSection sourcePage="meal-plan" compact />
       <Footer />
     </>
   );

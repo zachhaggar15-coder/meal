@@ -3,7 +3,6 @@ import { useLocation, useParams, Link } from 'react-router-dom';
 import AdSlot from '../components/AdSlot.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
-import WaitlistSection from '../components/WaitlistSection.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
@@ -21,6 +20,7 @@ import StorageSafetyNote from '../components/StorageSafetyNote.jsx';
 import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
+import PlanKitPick from '../components/PlanKitPick.jsx';
 import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -660,6 +660,22 @@ export default function PlanPage() {
           shareStatus={shareStatus}
         />
 
+        {/* Sits with save/share/print rather than at the foot of the page.
+            Emailing the plan is the same class of action as saving it, and the
+            reader decides whether they want it kept while the title is still in
+            view. The compact variant keeps it to a single row so it does not
+            push the first meal below the fold. */}
+        <EmailPlanCapture
+          plan={plan}
+          householdMembers={householdMembers}
+          sourcePage="plan"
+          compact
+          kicker="Keep this plan"
+          heading="Email me this plan"
+          blurb="The 7-day menu, shopping list and a printable link, sent once. No newsletter."
+          planName={plan.title}
+        />
+
         <HouseholdPortionsControl
           mode={householdMode}
           members={householdMembers}
@@ -695,15 +711,15 @@ export default function PlanPage() {
           pageType="plan"
           location="after_shopping_list"
         />
-        <EmailPlanCapture
-          plan={plan}
-          householdMembers={householdMembers}
-          sourcePage="plan"
-        />
         <PageHeroVisual visual={planVisual} className="plan-page-visual plan-page-visual--after-plan" />
         <ContainerSetupRecommendation
           plan={displayPlan}
           sourcePage={`plan-${plan.slug || 'page'}-containers`}
+        />
+        <PlanKitPick
+          plan={displayPlan}
+          portions={displayPlan?.totalPortions}
+          sourcePage={`plan-${plan.slug || 'page'}-kit`}
         />
 
         <details className="plan-secondary-details">
@@ -983,7 +999,6 @@ export default function PlanPage() {
         <FeedbackBox />
 
       </div>
-      <WaitlistSection sourcePage="plan" compact />
       <Footer />
     </>
   );
