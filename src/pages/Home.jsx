@@ -15,7 +15,7 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
-import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
+import { INDEXED_SUPERMARKET_VALUES, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
@@ -140,6 +140,11 @@ async function safeJson(res) {
 }
 
 // ── Component ──────────────────────────────────────────────────────────────────
+
+// Named chains only. INDEXED_SUPERMARKET_VALUES also carries "any", which is a
+// selectable option in the quiz ("12 supermarket choices") but not a shop, so
+// the two figures are both right and were drifting apart as a hardcoded 11.
+const NAMED_SUPERMARKET_COUNT = INDEXED_SUPERMARKET_VALUES.filter(value => value !== 'any').length;
 
 export default function Home() {
   const [loading, setLoading]       = useState(false);
@@ -299,10 +304,16 @@ export default function Home() {
           </div>
           <div className="trust-row">
             <span className="trust-badge"><strong>{PLAN_COUNT_LABEL}</strong> published plans</span>
-            <span className="trust-badge"><strong>11</strong> supermarkets</span>
+            <span className="trust-badge"><strong>{NAMED_SUPERMARKET_COUNT}</strong> supermarkets</span>
             <span className="trust-badge"><strong>Free</strong> with no account</span>
             <span className="trust-badge"><strong>Shopping list</strong> included</span>
           </div>
+          {/* `priority` but deliberately NOT `lcpCandidate`. Moving this above
+              the fold on mobile was expected to make it the LCP element; measured
+              on a 390x844 phone it does not - the H1 still wins, three runs out
+              of three. So fetchpriority="high" here would only make the image
+              contend with the render-blocking stylesheet that gates the text LCP,
+              which is the trap PageHeroVisual's header comment describes. */}
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>
 
@@ -431,10 +442,14 @@ export default function Home() {
 
         <StickerPromo offer={MID_RANGE_CONTAINERS} sourcePage="home-prep-flow" />
 
-        {/* Search-led discovery remains available after the core product journey. */}
+        {/* Three link blocks run back to back here. They kept every link, but two
+            of them claimed the same thing ("most-read" and "finding useful right
+            now"), so a reader could not tell them apart. Each intro now states the
+            axis that actually separates them: what people search for, what is
+            moving lately, and the fixed reference set. No links changed. */}
         <PopularSearches
           title="Popular UK Meal Plan Searches"
-          intro="Start with a focused set of useful guides, plans and shopping-list routes."
+          intro="The phrases people actually search for. Each one goes straight to the matching plan, guide or shopping list."
           links={POPULAR_SEARCH_LINKS.slice(0, 8)}
           className="popular-searches--home"
         />
@@ -443,7 +458,7 @@ export default function Home() {
 
         <SearchOpportunityLinks
           title="Essential UK Meal Prep Guides"
-          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
+          intro="The permanent reference set, unchanged week to week — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
           showDiscovery={false}
           compact
         />

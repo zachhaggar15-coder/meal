@@ -14882,10 +14882,17 @@ textarea {
   color: var(--editorial-paper) !important;
 }
 
-.nav-quiz-btn {
+.nav-quiz-btn,
+.nav-mobile-quiz-btn {
   background: var(--editorial-paper);
   border: 1px solid var(--editorial-ink);
   color: var(--editorial-ink);
+}
+
+.nav-quiz-btn:hover,
+.nav-mobile-quiz-btn:hover {
+  background: var(--editorial-ink);
+  color: var(--editorial-paper);
 }
 
 /* ---------- One section-heading treatment ----------
@@ -14988,5 +14995,68 @@ textarea {
      it here rather than unpicking it keeps this change to one place. */
   .layout-body:has(.quiz-page) .sidebar {
     display: none !important;
+  }
+}
+
+/* ---------- Quiz intro: short on a phone, unchanged on desktop ----------
+   The mobile quiz opened with roughly two screens of preamble before the first
+   answer. Nothing is deleted - the second half of the intro is hidden below
+   640px, and the reassurance list now sits after the answers in the document,
+   with desktop ordering it back under the intro. */
+.quiz-shell-features {
+  order: 2;
+}
+
+@media (min-width: 641px) {
+  .quiz-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quiz-shell-header { order: 1; }
+  .quiz-header { order: 3; }
+  .quiz-body { order: 4; }
+  .quiz-footer { order: 5; }
+}
+
+@media (max-width: 640px) {
+  .quiz-shell-sub-more {
+    display: none;
+  }
+
+  .quiz-shell-features {
+    border-top: 1px solid var(--editorial-line);
+    margin-top: 26px;
+    padding-top: 20px;
+  }
+}
+
+/* ---------- Mobile hero: move the photo above the fold ----------
+   The homepage hero image was not missing on a phone, as the audit first
+   recorded - it was rendered last in the hero grid and stacked below the CTAs
+   and the trust row, landing at y=1148 in an 844px viewport, about 300px past
+   the fold. So a phone opened on a wall of text while the most appetising
+   thing on the site sat unseen.
+
+   Reordered to sit directly under the headline, and letterboxed to 16:7 so it
+   informs without pushing the primary CTA off the fold. The 720w source and
+   `sizes` were already in place, so this costs no extra bytes. */
+@media (max-width: 999px) {
+  .home-hero-logo { order: 1; }
+  .home-hero-h1 { order: 2; }
+  .home-hero-visual { order: 3; }
+  .home-hero-sub { order: 4; }
+  .home-hero-actions { order: 5; }
+  .trust-row { order: 6; }
+
+  .home-hero-visual {
+    margin-top: 18px;
+  }
+
+  .home-hero-visual img {
+    aspect-ratio: 16 / 7;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
   }
 }

@@ -322,17 +322,19 @@ export default function Quiz() {
           <header className="quiz-shell-header">
             <SiteLogo variant="page" className="page-header-logo" />
             <h1 className="quiz-shell-h1">Find your perfect UK meal plan</h1>
+            {/* Split so a phone can show the lead sentence and hold the rest
+                back. Nothing is removed from the document - the full copy is
+                still here for desktop and for crawlers, only hidden under
+                640px, where it was costing a screen and a half before the
+                reader could answer anything. */}
             <p className="quiz-shell-sub">
               Answer 7 quick questions about your goal, diet, supermarket, calories, budget, and
-              cooking effort. We'll match you with the best plans from our library of {PLAN_COUNT_LABEL} free
-              UK meal plans - with full shopping lists, macros, and cost estimates.
+              cooking effort.{' '}
+              <span className="quiz-shell-sub-more">
+                We'll match you with the best plans from our library of {PLAN_COUNT_LABEL} free
+                UK meal plans - with full shopping lists, macros, and cost estimates.
+              </span>
             </p>
-            <ul className="quiz-shell-features">
-              <li>{PLAN_COUNT_LABEL} plans across {SUPERMARKET_OPTION_COUNT} supermarket choices</li>
-              <li>Vegetarian, vegan, pescatarian and standard options</li>
-              <li>1,500-2,500 kcal targets, plus custom calories</li>
-              <li>Takes 30 seconds, free, no sign-up</li>
-            </ul>
           </header>
 
           <div className="quiz-header">
@@ -470,6 +472,17 @@ export default function Quiz() {
               </div>
             )}
           </div>
+
+          {/* Sits after the answers in the document. On desktop the container
+              is a flex column and `order` puts it back under the intro, so the
+              layout there is unchanged; on a phone it stays here, below the
+              first question, where it reassures without delaying it. */}
+          <ul className="quiz-shell-features">
+            <li>{PLAN_COUNT_LABEL} plans across {SUPERMARKET_OPTION_COUNT} supermarket choices</li>
+            <li>Vegetarian, vegan, pescatarian and standard options</li>
+            <li>1,500-2,500 kcal targets, plus custom calories</li>
+            <li>Takes 30 seconds, free, no sign-up</li>
+          </ul>
 
           {step > 0 && (
             <div className="quiz-footer">

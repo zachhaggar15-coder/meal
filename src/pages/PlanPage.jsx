@@ -640,12 +640,6 @@ export default function PlanPage() {
 
         <PlanOverview plan={displayPlan} sourcePlan={plan} />
 
-        <QuizNudge
-          sourcePage={`plan-${plan.slug}`}
-          pageType="plan"
-          location="after_plan_overview"
-        />
-
         {editNote && (
           <div className="plan-edit-notice">
             <strong>Note:</strong> {editNote}{' '}
@@ -691,6 +685,16 @@ export default function PlanPage() {
           className="plan-continuation"
         />
         {shoppingListSection}
+        {/* Below the meals and the shopping list on purpose. This panel used to
+            sit between the plan summary and the first meal, interrupting the page
+            before the reader had seen a single thing they came for - one of five
+            quiz invitations on this page. Someone still reading down here has
+            seen the plan and can judge whether it fits. */}
+        <QuizNudge
+          sourcePage={`plan-${plan.slug}`}
+          pageType="plan"
+          location="after_shopping_list"
+        />
         <EmailPlanCapture
           plan={plan}
           householdMembers={householdMembers}

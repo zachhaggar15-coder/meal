@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { WEEKLY_TRENDING_LINKS } from '../data/weeklySeoInsights.js';
 
+// "This week" was not true on either count: WEEKLY_SEO_INSIGHTS carries a
+// 28-day range, and it is written by a job (scripts/weekly-analytics-
+// improvements.js) that has to be run - the committed file was nine days stale
+// when this was written. So the copy describes the window the data covers and
+// claims no refresh cadence, which stays true however long the job goes
+// unrun.
 export default function WeeklyTrendingLinks({
-  title = 'Popular this week',
-  intro = 'Guides and meal-planning routes readers are finding useful right now.',
+  title = 'Popular this month',
+  intro = 'What readers opened most over the last four weeks of site analytics.',
   compact = false,
   className = '',
 }) {
