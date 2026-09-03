@@ -16,7 +16,10 @@ import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { INDEXED_SUPERMARKET_VALUES, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
-import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
+import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
+import { BUDGET_ESTIMATES } from '../utils/planBuilder.js';
+import { planDietShort, planGoalShort, planMarketShort } from '../utils/planCardMeta.js';
+import { SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
 
@@ -145,6 +148,59 @@ async function safeJson(res) {
 // selectable option in the quiz ("12 supermarket choices") but not a shop, so
 // the two figures are both right and were drifting apart as a hardcoded 11.
 const NAMED_SUPERMARKET_COUNT = INDEXED_SUPERMARKET_VALUES.filter(value => value !== 'any').length;
+
+// One accent per group. The cards used to be six different arbitrary colours
+// inside a single group, which read as a category code and encoded nothing.
+// Colour now tracks the group you are browsing within.
+//
+// Note this is deliberately NOT the same rule as /browse, where colour tracks
+// the supermarket. The homepage is grouped, so the group is the useful signal;
+// /browse is one mixed grid, where the chain is. Each surface states its own
+// key rather than sharing one that fits neither.
+const FEATURED_ACCENTS = {
+  'By Goal': 'goal',
+  'By Supermarket': 'market',
+  'Diet Types': 'diet',
+};
+
+const FEATURED_SEEDS_BY_SLUG = new Map(INDEXABLE_PLAN_SEEDS.map(seed => [seed.slug, seed]));
+
+// The tag says what this card is within its group, which is the one thing the
+// title does not reliably carry.
+function featuredTag(seed, heading, entry) {
+  if (heading === 'By Supermarket') {
+    return seed ? planMarketShort(seed.supermarket) : marketFromEntry(entry);
+  }
+  if (heading === 'Diet Types') {
+    return seed ? planDietShort(seed.dietType) : null;
+  }
+  return seed ? planGoalShort(seed.goal) : null;
+}
+
+function marketFromEntry(entry) {
+  const haystack = `${entry.slug} ${entry.path || ''}`.toLowerCase();
+  const match = INDEXED_SUPERMARKET_VALUES.find(value => value !== 'any' && haystack.includes(value));
+  return match ? planMarketShort(match) : null;
+}
+
+// Five of the six "By Supermarket" entries point at hub pages or a guide, not a
+// single plan, so there is no one calorie figure or weekly cost for them. Those
+// cards drop the stat row rather than print "Various" and a dash, which would
+// read as missing data rather than a deliberate omission.
+function featuredPlanFacts(entry, heading) {
+  const slug = entry.path?.startsWith('/plans/') ? entry.path.slice('/plans/'.length) : entry.slug;
+  const seed = FEATURED_SEEDS_BY_SLUG.get(slug);
+  const tag = featuredTag(seed, heading, entry);
+  if (!seed) return { tag, stats: null };
+  return {
+    tag,
+    stats: {
+      kcal: seed.calories.toLocaleString('en-GB'),
+      price: BUDGET_ESTIMATES[seed.budget],
+      store: planMarketShort(seed.supermarket),
+    },
+  };
+}
 
 export default function Home() {
   const [loading, setLoading]       = useState(false);
@@ -379,25 +435,29 @@ export default function Home() {
         {/* ── Featured plans ────────────────────────────────────────────────── */}
         <section className="featured-plans" id="popular-plans">
           <h2 className="section-title">Popular UK Meal Plans</h2>
+          <p className="featured-plans-sub">
+            Calories, weekly cost and supermarket at a glance, no filler images.
+          </p>
 
           {FEATURED_CATEGORIES.map(cat => (
-            <div className="featured-cat" key={cat.heading}>
+            <div className={`featured-cat fc-${FEATURED_ACCENTS[cat.heading] || 'goal'}`} key={cat.heading}>
               <h3 className="featured-cat-heading">{cat.heading}</h3>
               <div className="featured-plan-links">
                 {cat.plans.map(p => {
-                  const cardVisual = chooseFeaturedPlanVisual(cat.heading, p);
+                  const facts = featuredPlanFacts(p, cat.heading);
                   return (
-                    <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="featured-plan-link">
-                      <img
-                        src={cardVisual.src}
-                        alt=""
-                        aria-hidden="true"
-                        width={cardVisual.width || 1200}
-                        height={cardVisual.height || 675}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span>{p.label}</span>
+                    <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="fp-card">
+                      {facts.tag && <span className="fp-tag">{facts.tag}</span>}
+                      <span className="fp-title">{p.label}</span>
+                      {facts.stats && (
+                        <span className="fp-stats">
+                          <span><b>{facts.stats.kcal}</b> kcal</span>
+                          <span aria-hidden="true">·</span>
+                          <span className="fp-price">{facts.stats.price}<span className="fp-per">/wk</span></span>
+                          <span aria-hidden="true">·</span>
+                          <span className="fp-store">{facts.stats.store}</span>
+                        </span>
+                      )}
                     </Link>
                   );
                 })}
@@ -560,19 +620,3 @@ export default function Home() {
   );
 }
 
-function chooseFeaturedPlanVisual(category, plan) {
-  if (category === 'By Supermarket') {
-    const supermarket = ['tesco', 'aldi', 'lidl', 'asda', 'sainsburys', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'coop', 'any']
-      .find(item => plan.slug.includes(item));
-    return chooseSupermarketVisual(supermarket);
-  }
-
-  // No eyebrow: the caption under the card already carries goal, supermarket
-  // and calorie target, so any text drawn in here would be the same words twice.
-  return chooseNavigationCardVisual({
-    label: plan.label,
-    eyebrow: '',
-    note: 'Popular meal plan',
-    seed: `${category}-${plan.slug}`,
-  });
-}

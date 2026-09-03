@@ -39,8 +39,11 @@ export const generateBlogImageUrl = slug => {
   const fallback = chooseBlogVisual(slug);
   return fallback?.src ? imageAsset(fallback.src) : STATIC_OG;
 };
-export const generateBlogCardImageUrl = (slug, title) => {
-  if (BLOG_OG_IMAGES[slug]) return absoluteAsset(BLOG_OG_IMAGES[slug]);
-  return chooseBlogCardVisual(slug, title).src;
-};
+// Deliberately does NOT fall back to BLOG_OG_IMAGES, unlike the OG function
+// above. Those assets are Open Graph cards: they carry the article title baked
+// into the artwork, which is right when the image is seen alone in a social
+// post and wrong in a listing, where the same title is already printed
+// directly beneath it. Fourteen cards were showing their title twice, once as
+// pixels. The generated plate carries the category instead.
+export const generateBlogCardImageUrl = (slug, title) => chooseBlogCardVisual(slug, title).src;
 export const hasCustomBlogImage = slug => Boolean(BLOG_OG_IMAGES[slug] || chooseBlogVisual(slug)?.src);

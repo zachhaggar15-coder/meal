@@ -80,6 +80,20 @@ const MARKET_FAMILY = {
   any: 'neutral',
 };
 
+const DIET_SHORT = {
+  standard: 'Standard',
+  vegetarian: 'Vegetarian',
+  vegan: 'Vegan',
+  pescatarian: 'Pescatarian',
+};
+
+// The Diet Types group on the homepage mixes diet and emphasis - a
+// high-protein vegetarian plan is still vegetarian - so the tag names the diet
+// and lets the title carry the rest.
+export function planDietShort(dietType) {
+  return DIET_SHORT[dietType] || dietType || null;
+}
+
 export function planCardFamily(supermarket) {
   return MARKET_FAMILY[supermarket] || 'neutral';
 }

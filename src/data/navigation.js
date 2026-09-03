@@ -249,16 +249,24 @@ export const NAV_DROPDOWNS = [
   },
 ];
 
+// Order and default state matter here: this is the whole of navigation on a
+// phone. Opening the drawer used to present nine collapsed rows and nothing
+// else, so every destination beyond the four buttons cost two taps, and the
+// first thing under them was the affiliate section rather than the product.
+//
+// "Plan By Goal" opens by default because it is the primary browse axis and,
+// unlike "Start Here", it does not simply repeat the buttons above it. Ten
+// items is enough to show the drawer is a menu without burying the rest.
 export const MOBILE_NAV_GROUPS = [
-  { label: 'Meal Prep Accessories', items: ACCESSORY_NAV_LINKS },
-  { label: 'Start Here', items: START_LINKS },
-  { label: 'Plan By Goal', items: GOAL_NAV_LINKS },
+  { label: 'Plan By Goal', items: GOAL_NAV_LINKS, defaultOpen: true },
   { label: 'Supermarket', items: SUPERMARKET_NAV_LINKS },
   { label: 'Calories', items: CALORIE_NAV_LINKS },
   { label: 'Diet Type', items: DIET_NAV_LINKS },
+  { label: 'Start Here', items: START_LINKS },
   { label: 'Tools', items: TOOL_LINKS },
   { label: 'Guides', items: GUIDE_NAV_LINKS },
   { label: 'Containers', items: CONTAINER_NAV_LINKS },
+  { label: 'Meal Prep Accessories', items: ACCESSORY_NAV_LINKS },
 ];
 
 export const FOOTER_GROUPS = [
