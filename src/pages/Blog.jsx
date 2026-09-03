@@ -57,9 +57,27 @@ export default function Blog() {
           UK supermarket ingredients and realistic budgets.
         </p>
 
-        {BLOG_CATEGORY_GROUPS.map(category => (
-          <section key={category.label} className="blog-category-section">
-            <h2 className="blog-category-heading">{category.label}</h2>
+        {/* Every category is a native <details>. The 153 article links stay in the
+            served HTML whether a section is open or closed, so nothing here
+            depends on JavaScript and nothing is hidden from a crawler - the
+            page already earns impressions and must not lose its links. What it
+            loses is height: 16 collapsed rows instead of 153 stacked cards.
+
+            The first category is open so the page still shows real guides on
+            arrival rather than a wall of headings. Any article is then two
+            interactions away: open its category, click the card. */}
+        {BLOG_CATEGORY_GROUPS.map((category, categoryIndex) => (
+          <details
+            key={category.label}
+            className="blog-category-section"
+            open={categoryIndex === 0}
+          >
+            <summary className="blog-category-heading">
+              <span>{category.label}</span>
+              <span className="blog-category-count">
+                {category.posts.length} {category.posts.length === 1 ? 'guide' : 'guides'}
+              </span>
+            </summary>
             <div className="blog-card-grid">
               {category.posts.map(post => (
                 <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card">
@@ -75,7 +93,7 @@ export default function Blog() {
                 </Link>
               ))}
             </div>
-          </section>
+          </details>
         ))}
 
         <div className="cta-box cta-box--large">

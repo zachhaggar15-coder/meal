@@ -5614,7 +5614,7 @@ details[open] .faq-question::after { transform: rotate(-135deg); }
 
 /* ---------- Blog index page ---------- */
 .blog-category-section { margin: 32px 0; }
-.blog-category-heading { font-size: 1.05rem; font-weight: 700; color: var(--accent-dark); margin-bottom: 14px; border-bottom: 2px solid var(--border); padding-bottom: 6px; }
+.blog-category-heading { font-size: 1.05rem; font-weight: 700; color: var(--accent-dark); }
 .blog-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 .blog-card { background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--lime); border-radius: var(--radius-md); padding: 18px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 8px; transition: box-shadow 0.15s; }
 .blog-card:hover { box-shadow: var(--small-shadow, 4px 4px 0 #12130d); }
@@ -15184,4 +15184,65 @@ textarea {
 @media (prefers-reduced-motion: reduce) {
   .fp-card { transition: none; }
   .fp-card:hover { transform: none; }
+}
+
+/* ---------- Blog category sections ----------
+   /blog listed all 153 guides flat: 27,497px on desktop and 73,418px on a
+   phone, about 86 screens. It was not failing because of its height - 5,249
+   impressions for 3 clicks at position 33 is a relevance problem - but the
+   height meant most of the page was never seen either.
+
+   Native <details>, so every article link stays in the served HTML and stays
+   crawlable when a section is closed. No JavaScript involved. */
+
+.blog-category-section {
+  border-bottom: 1px solid var(--editorial-line);
+  padding-bottom: 8px;
+}
+
+.blog-category-heading {
+  align-items: baseline;
+  cursor: pointer;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  list-style: none;
+  padding: 16px 0;
+}
+
+/* Replace the default disclosure triangle with a marker that reads as an
+   affordance at the size this heading is set. */
+.blog-category-heading::-webkit-details-marker { display: none; }
+
+.blog-category-heading::after {
+  color: var(--muted-strong);
+  content: "+";
+  font-family: var(--font-sans);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.blog-category-section[open] > .blog-category-heading::after {
+  content: "\2212";
+}
+
+.blog-category-count {
+  color: var(--muted-strong);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-left: auto;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.blog-category-heading:focus-visible {
+  outline: 2px solid var(--editorial-ink);
+  outline-offset: 3px;
+}
+
+.blog-category-section[open] > .blog-card-grid {
+  padding-bottom: 24px;
 }
