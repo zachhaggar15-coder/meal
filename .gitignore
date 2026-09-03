@@ -10,3 +10,5 @@ audit-artifacts
 .claude/worktrees
 
 .vercel
+
+verify.log
