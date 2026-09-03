@@ -22,14 +22,14 @@ SEO pages. The intended journey is:
 
 The production build currently exposes 1,377 self-canonical indexable URLs:
 
-- 1,059 deliberately published generated plans under `/plans/`.
+- 1,055 deliberately published generated plans under `/plans/`.
 - Curated legacy plans under `/meal-plan/`.
 - Supermarket, calorie, goal and combination hubs under `/meal-plans/`.
 - Practical guides under `/blog/`.
 - Tools and commercial comparison hubs with visible, useful functionality.
 
 `/saved-plans`, quiz result state, filtered browse states, admin, error and other
-utility routes are `noindex,follow`. The published plan count is 1,059. The larger
+utility routes are `noindex,follow`. The published plan count is 1,055. The larger
 76,246 figure is the exhaustively tested feasible combination space and is never
 presented as the number of published pages.
 
@@ -66,7 +66,7 @@ calorie or supermarket claims are checked against the seed.
 ## Verification
 
 The release gate builds and statically crawls all 1,405 emitted HTML files, checks
-all 1,377 canonicals and 1,059 published plan claims, validates every internal link
+all 1,354 canonicals and 1,055 published plan claims, validates every internal link
 and local asset reference, and exhaustively rebuilds all 76,246 feasible plan
 combinations. Production then receives a second live crawl of every sitemap URL
 plus representative mobile and desktop browser journeys.

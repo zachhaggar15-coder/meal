@@ -41,7 +41,7 @@ one the data rejected.
 
 ## The question
 
-`/plans/*` is 1,059 of the 1,367 URLs in the sitemap — **77% of the indexable site**.
+`/plans/*` is 1,055 of the 1,354 URLs in the sitemap — **78% of the indexable site**.
 No `/plans/` URL has ever appeared in the weekly Search Console opportunity tracker,
 while `/blog/` accounts for 34 of the 41 tracked query rows.
 
@@ -53,7 +53,7 @@ These are measured, not inferred:
 
 | Fact | Source |
 |---|---|
-| 1,059 plan pages, 77% of indexable URLs | `dist/sitemap-plans.xml` |
+| 1,055 plan pages, 78% of indexable URLs | `dist/sitemap-plans.xml` |
 | ~1,423 of ~1,552 known URLs indexed (92%) | Search Console coverage export, 29 Aug |
 | 57 "crawled – currently not indexed", 40 "discovered – not indexed" | same export |
 | **Zero** exact-composition clusters and **zero** near-duplicate pairs at ≥0.85 | `audit-artifacts/duplicate-content-clusters.json` |
@@ -76,7 +76,7 @@ correct statement is:
 > No `/plans/` URL has ever cleared the 50-impression threshold required to enter the
 > weekly tracker.
 
-1,059 pages each earning 5–40 impressions a month would be entirely invisible to that
+1,055 pages each earning 5–40 impressions a month would be entirely invisible to that
 tracker while collectively representing meaningful traffic. Nothing currently in the repo
 distinguishes that world from the zero-impression world, and the two call for opposite
 decisions.
@@ -87,8 +87,8 @@ Export from Search Console, last 3 months, and answer three questions:
 
 1. Filter **Page contains `/plans/`** → total impressions and clicks. Is the true figure
    near zero, or a long tail that sums to something real?
-2. **How many distinct `/plans/` URLs** have ≥1 impression? 40 of 1,059 is a different
-   problem from 900 of 1,059.
+2. **How many distinct `/plans/` URLs** have ≥1 impression? 40 of 1,055 is a different
+   problem from 900 of 1,055.
 3. In **Indexing → Pages**, filter by `/plans/`. How many of the 57 "crawled – currently
    not indexed" and 40 "discovered – not indexed" are plan pages rather than blog pages?
 
@@ -106,7 +106,7 @@ with impressions): leave them indexed. The combinatorial surface is working as a
 and the problem is purely that no single page is big enough to show up in a top-N tracker.
 Revisit only the internal linking so the strongest ones get more equity.
 
-**If the traffic is genuinely negligible** (<100 impressions/month across all 1,059): the
+**If the traffic is genuinely negligible** (<100 impressions/month across all 1,055): the
 pages are being indexed and never surfaced. The recommended shape is then:
 
 - Keep the ~91 `/meal-plans/` hub pages and the highest-demand plan variants indexed —

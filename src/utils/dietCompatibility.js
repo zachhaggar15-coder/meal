@@ -5,7 +5,7 @@
 // it from planBuilder.js. That single import chained
 // App -> Navbar/Sidebar -> navigation.js -> comboLandingPages.js ->
 // planBuilder.js -> planMacroIndex.js, so every page on the site — the
-// homepage included — downloaded the whole plan generator and a 1,059-entry
+// homepage included — downloaded the whole plan generator and a 1,055-entry
 // macro table to render a nav menu. Initial JavaScript went over its budget.
 //
 // The function itself is pure and depends on nothing, so keeping it here lets

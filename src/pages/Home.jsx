@@ -380,7 +380,7 @@ export default function Home() {
               equal boxes whose numbers were styled as the same tiny grey
               kicker as every other label on the page, so nothing said these
               happened in sequence. Step two also led with the machinery — "we
-              rank all 1,059 plans" — which describes our work, not the
+              rank all 1,055 plans" — which describes our work, not the
               reader's. */}
           <ol className="hiw-steps">
             <li className="hiw-step">

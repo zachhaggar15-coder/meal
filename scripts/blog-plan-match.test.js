@@ -4,7 +4,7 @@
 // plan, and the obvious signals in a slug survive the match.
 //
 // The resolver is pure and the catalogue is injected, so these run against a
-// small fixture rather than building 1,059 plans.
+// small fixture rather than building 1,055 plans.
 
 import test from 'node:test';
 import assert from 'node:assert/strict';

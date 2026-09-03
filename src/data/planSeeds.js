@@ -1,4 +1,5 @@
 import { RESTORED_PLAN_SEEDS } from './restoredPlanSeeds.js';
+import { RETIRED_PLAN_SLUGS } from './retiredPlanRedirects.js';
 
 const CORE_PLAN_SEEDS = [
   // ── WEIGHT LOSS (30) ─────────────────────────────────────────────────────
@@ -992,7 +993,7 @@ const GENERATED_SLUGS = new Set(GENERATED_SEEDS.map(seed => seed.slug));
 const RAW_INDEXABLE_PLAN_SEED_POOL = [
   ...GENERATED_SEEDS,
   ...RESTORED_PLAN_SEEDS.filter(seed => !GENERATED_SLUGS.has(seed.slug)),
-];
+].filter(seed => !RETIRED_PLAN_SLUGS.includes(seed.slug));
 
 const PRACTICAL_MEAL_SET_OVERRIDES = Object.freeze({
   'aldi-cheap-hp-veg-1800': 4,

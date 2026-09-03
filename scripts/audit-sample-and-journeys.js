@@ -157,7 +157,7 @@ const SEED = Number(process.argv.find(a => a.startsWith('--seed='))?.split('=')[
 const random = makeRandom(SEED);
 
 // Quotas across the required mix; the sample must not be all plan pages just
-// because there are 1,059 of them.
+// because there are 1,055 of them.
 const QUOTA = {
   'generated plan': 22,
   'editorial': 20,
