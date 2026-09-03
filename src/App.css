@@ -15246,3 +15246,49 @@ textarea {
 .blog-category-section[open] > .blog-card-grid {
   padding-bottom: 24px;
 }
+
+/* ---------- On this page ----------
+   Plan pages run to roughly 10,000px. Someone returning for the shopping list
+   should not have to scroll past seven days of meals to reach it. Plain anchor
+   links: no JavaScript, no scrollspy, and they work in the prerendered HTML. */
+.plan-jump {
+  align-items: baseline;
+  border-bottom: 1px solid var(--editorial-line);
+  border-top: 1px solid var(--editorial-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 22px 0 30px;
+  padding: 12px 0;
+}
+
+.plan-jump-label {
+  color: var(--muted-strong);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plan-jump ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.plan-jump a {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 5px 0;
+}
+
+/* The sticky navbar would otherwise cover the heading an anchor lands on. */
+#plan-summary,
+#meal-plan,
+#shopping-list {
+  scroll-margin-top: 76px;
+}

@@ -639,6 +639,20 @@ export default function PlanPage() {
           <Link to="/methodology">How plans are built and checked</Link>.
         </p>
 
+        {/* A plan page runs to roughly 10,000px: summary, seven days of meals,
+            the shopping list, then the supporting sections. Someone who came
+            back for the shopping list had no way to reach it except scrolling
+            past everything they had already read. Plain anchors to the three
+            sections that always exist - no JavaScript, no scrollspy. */}
+        <nav className="plan-jump" aria-label="On this page">
+          <span className="plan-jump-label">On this page</span>
+          <ul>
+            <li><a href="#plan-summary">Plan summary</a></li>
+            <li><a href="#meal-plan">7-day meals</a></li>
+            <li><a href="#shopping-list">Shopping list</a></li>
+          </ul>
+        </nav>
+
         <PlanOverview plan={displayPlan} sourcePlan={plan} />
 
         {editNote && (
@@ -1041,7 +1055,7 @@ function PlanOverview({ plan, sourcePlan }) {
   };
 
   return (
-    <section className="plan-overview" aria-labelledby="plan-overview-heading">
+    <section id="plan-summary" className="plan-overview" aria-labelledby="plan-overview-heading">
       <div className="plan-overview-head">
         <div>
           <span className="offer-kicker">Your week at a glance</span>
