@@ -193,6 +193,9 @@ export default function Sidebar({ open, onClose }) {
                         className={`sidebar-link${isActive(item.to) ? ' sidebar-link--active' : ''}`}
                         aria-current={isActive(item.to) ? 'page' : undefined}
                         onClick={onClose}
+                        data-event="nav_link_clicked"
+                        data-cta-location="sidebar"
+                        data-target-route={item.to}
                       >
                         <span>{item.label}</span>
                         {item.description && <small>{item.description}</small>}

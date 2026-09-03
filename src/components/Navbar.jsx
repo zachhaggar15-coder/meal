@@ -54,6 +54,9 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
                 to={tab.to}
                 className={active ? 'nav-tab nav-tab--active' : 'nav-tab'}
                 aria-current={active ? 'page' : undefined}
+                data-event="nav_link_clicked"
+                data-cta-location="top_nav"
+                data-target-route={tab.to}
               >
                 {tab.compactLabel ? (
                   <>
