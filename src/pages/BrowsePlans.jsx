@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
@@ -19,6 +19,7 @@ import { SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { proteinFilterMatches } from '../utils/targetValidation.js';
 import { trackEvent } from '../utils/analytics.js';
+import { buildBrowseUrl } from '../utils/browseUrlState.js';
 
 // Browse only links to indexed, prerendered plan pages. The larger synthetic
 // coverage pool is kept out of public links so Google and users never land on
@@ -171,6 +172,7 @@ const SUPERMARKET_COLOUR_KEY = INDEXED_SUPERMARKET_VALUES
 
 export default function BrowsePlans() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const { page: pageParam } = useParams();
   const paramString = params.toString();
   const routePage = readPageParam(pageParam);
@@ -204,6 +206,15 @@ export default function BrowsePlans() {
     goal,
     supermarket,
     dietType: diet,
+    calories,
+    budget,
+    effort,
+  }), [search, goal, supermarket, diet, calories, budget, effort]);
+  const urlFilters = useMemo(() => ({
+    search,
+    goal,
+    supermarket,
+    diet,
     calories,
     budget,
     effort,
@@ -283,11 +294,19 @@ export default function BrowsePlans() {
   function resetFilters() {
     setSearch(''); setGoal(''); setSupermarket(''); setDiet('');
     setCalories(''); setBudget(''); setEffort(''); setPage(1);
+    navigate(buildBrowseUrl({}, 1, paramString));
   }
 
-  function updateFilter(setter, val) {
+  function updateFilter(key, setter, val, { replace = false } = {}) {
     setter(val);
     setPage(1);
+    navigate(buildBrowseUrl({ ...urlFilters, [key]: val }, 1, paramString), { replace });
+  }
+
+  function updatePage(nextPage) {
+    const boundedPage = Math.min(Math.max(1, nextPage), pageCount);
+    setPage(boundedPage);
+    navigate(buildBrowseUrl(urlFilters, boundedPage, paramString));
   }
 
   return (
@@ -317,17 +336,17 @@ export default function BrowsePlans() {
             type="search"
             placeholder="Search plans…"
             value={search}
-            onChange={e => { setSearch(e.target.value); setPage(1); }}
+            onChange={e => updateFilter('search', setSearch, e.target.value, { replace: true })}
             aria-label="Search meal plans"
           />
 
           <div className="browse-filter-row">
-            <Select label="Goal"        value={goal}        onChange={v => updateFilter(setGoal, v)}        options={goalOptions} />
-            <Select label="Supermarket" value={supermarket} onChange={v => updateFilter(setSupermarket, v)} options={supermarketOptions} />
-            <Select label="Diet"        value={diet}        onChange={v => updateFilter(setDiet, v)}        options={dietOptions} />
-            <Select label="Calories"    value={calories}    onChange={v => updateFilter(setCalories, v)}    options={calorieOptions} />
-            <Select label="Budget"      value={budget}      onChange={v => updateFilter(setBudget, v)}      options={budgetOptions} />
-            <Select label="Effort"      value={effort}      onChange={v => updateFilter(setEffort, v)}      options={effortOptions} />
+            <Select label="Goal"        value={goal}        onChange={v => updateFilter('goal', setGoal, v)}               options={goalOptions} />
+            <Select label="Supermarket" value={supermarket} onChange={v => updateFilter('supermarket', setSupermarket, v)} options={supermarketOptions} />
+            <Select label="Diet"        value={diet}        onChange={v => updateFilter('diet', setDiet, v)}               options={dietOptions} />
+            <Select label="Calories"    value={calories}    onChange={v => updateFilter('calories', setCalories, v)}       options={calorieOptions} />
+            <Select label="Budget"      value={budget}      onChange={v => updateFilter('budget', setBudget, v)}           options={budgetOptions} />
+            <Select label="Effort"      value={effort}      onChange={v => updateFilter('effort', setEffort, v)}           options={effortOptions} />
           </div>
 
           <div className="browse-filter-meta">
@@ -377,7 +396,7 @@ export default function BrowsePlans() {
                 <button
                   className="browse-page-btn"
                   disabled={currentPage === 1}
-                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  onClick={() => updatePage(currentPage - 1)}
                   type="button"
                 >
                   &larr; Previous
@@ -386,7 +405,7 @@ export default function BrowsePlans() {
                 <button
                   className="browse-page-btn"
                   disabled={currentPage === pageCount}
-                  onClick={() => setPage(p => Math.min(pageCount, p + 1))}
+                  onClick={() => updatePage(currentPage + 1)}
                   type="button"
                 >
                   Next &rarr;
