@@ -91,7 +91,13 @@ export default function QuizResults() {
   const parsedParams = useMemo(() => (
     readAnswersFromParams(new URLSearchParams(paramString))
   ), [paramString]);
-  const [answers, setAnswers] = useState(parsedParams.answers || {});
+  // Empty on the first render, deliberately. /quiz/results is prerendered, and
+  // that static HTML is built with no query string, so it shows the broad
+  // matches. Seeding this from parsedParams would make the first client render
+  // of a shared `?q=` link disagree with the markup React is hydrating - the
+  // same mismatch BrowsePlans avoids. The effect below fills it in immediately
+  // afterwards, from the URL or from this device's saved answers.
+  const [answers, setAnswers] = useState({});
   const [recoveryMessage, setRecoveryMessage] = useState('');
 
   useEffect(() => {
