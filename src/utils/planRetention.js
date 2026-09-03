@@ -95,6 +95,28 @@ export function toggleSavedPlan(reference) {
   return { ok, saved: ok ? !exists : exists };
 }
 
+// Add to the library if it is not already there. Distinct from
+// toggleSavedPlan, which would remove a plan that is already saved - wrong for
+// anything triggered by a side effect rather than by pressing Save.
+export function ensureSavedPlan(reference) {
+  const clean = cleanPlanReference(reference);
+  if (!clean) return { ok: false, saved: false, added: false };
+
+  const saved = readPlanList(SAVED_PLANS_KEY);
+  if (saved.some(item => item.route === clean.route)) {
+    return { ok: true, saved: true, added: false };
+  }
+
+  const next = [{
+    ...clean,
+    savedAt: Date.now(),
+    lastViewedAt: Date.now(),
+  }, ...saved].slice(0, MAX_SAVED_PLANS);
+  const ok = writePlanList(SAVED_PLANS_KEY, next);
+  if (ok) dispatchLibraryChange();
+  return { ok, saved: ok, added: ok };
+}
+
 export function removeSavedPlan(route) {
   const cleanRoute = normalisePlanRoute(route);
   if (!cleanRoute) return false;

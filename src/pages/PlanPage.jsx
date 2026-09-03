@@ -589,6 +589,7 @@ export default function PlanPage() {
           : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
       </p>
       <TickableShoppingList
+        planReference={planReference}
         list={displayPlan.shoppingList}
         planRoute={planRoute}
         analyticsContext={planAnalytics}

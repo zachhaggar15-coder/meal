@@ -294,6 +294,7 @@ export default function MealPlanPage() {
         compact
       />
       <TickableShoppingList
+        planReference={planReference}
         list={shoppingList}
         planRoute={planRoute}
         analyticsContext={planAnalytics}
