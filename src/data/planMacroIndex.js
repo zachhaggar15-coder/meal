@@ -1944,6 +1944,294 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "fats": 37,
     "fibre": 31
   },
+  "coop-weight-loss-1500": {
+    "protein": 125,
+    "carbs": 165,
+    "fats": 39,
+    "fibre": 27
+  },
+  "coop-weight-loss-1800": {
+    "protein": 108,
+    "carbs": 226,
+    "fats": 48,
+    "fibre": 35
+  },
+  "coop-high-protein-low-cal-1600": {
+    "protein": 123,
+    "carbs": 181,
+    "fats": 45,
+    "fibre": 26
+  },
+  "coop-busy-professional-1800": {
+    "protein": 123,
+    "carbs": 188,
+    "fats": 63,
+    "fibre": 35
+  },
+  "coop-low-effort-2000": {
+    "protein": 152,
+    "carbs": 204,
+    "fats": 62,
+    "fibre": 29
+  },
+  "coop-vegetarian-low-cal-1500": {
+    "protein": 89,
+    "carbs": 204,
+    "fats": 37,
+    "fibre": 35
+  },
+  "coop-vegan-low-cal-1500": {
+    "protein": 62,
+    "carbs": 201,
+    "fats": 50,
+    "fibre": 40
+  },
+  "coop-pescatarian-1800": {
+    "protein": 123,
+    "carbs": 205,
+    "fats": 54,
+    "fibre": 34
+  },
+  "coop-maintenance-2000": {
+    "protein": 135,
+    "carbs": 226,
+    "fats": 63,
+    "fibre": 39
+  },
+  "coop-gym-beginner-2200": {
+    "protein": 160,
+    "carbs": 245,
+    "fats": 64,
+    "fibre": 40
+  },
+  "coop-cheap-student-1800": {
+    "protein": 125,
+    "carbs": 206,
+    "fats": 52,
+    "fibre": 28
+  },
+  "coop-budget-fat-loss-1500": {
+    "protein": 95,
+    "carbs": 182,
+    "fats": 41,
+    "fibre": 32
+  },
+  "waitrose-weight-loss-1500": {
+    "protein": 107,
+    "carbs": 171,
+    "fats": 41,
+    "fibre": 26
+  },
+  "waitrose-weight-loss-1800": {
+    "protein": 137,
+    "carbs": 210,
+    "fats": 46,
+    "fibre": 31
+  },
+  "waitrose-high-protein-low-cal-1600": {
+    "protein": 134,
+    "carbs": 157,
+    "fats": 49,
+    "fibre": 23
+  },
+  "waitrose-muscle-gain-2500": {
+    "protein": 153,
+    "carbs": 260,
+    "fats": 98,
+    "fibre": 44
+  },
+  "waitrose-anti-inflammatory-1800": {
+    "protein": 117,
+    "carbs": 208,
+    "fats": 56,
+    "fibre": 30
+  },
+  "waitrose-vegetarian-low-cal-1500": {
+    "protein": 69,
+    "carbs": 203,
+    "fats": 45,
+    "fibre": 33
+  },
+  "waitrose-vegan-low-cal-1600": {
+    "protein": 73,
+    "carbs": 243,
+    "fats": 36,
+    "fibre": 39
+  },
+  "waitrose-pescatarian-1800": {
+    "protein": 131,
+    "carbs": 207,
+    "fats": 50,
+    "fibre": 29
+  },
+  "waitrose-maintenance-2000": {
+    "protein": 148,
+    "carbs": 199,
+    "fats": 70,
+    "fibre": 42
+  },
+  "waitrose-body-recomp-2200": {
+    "protein": 169,
+    "carbs": 224,
+    "fats": 69,
+    "fibre": 39
+  },
+  "waitrose-busy-professional-1800": {
+    "protein": 115,
+    "carbs": 163,
+    "fats": 76,
+    "fibre": 31
+  },
+  "waitrose-menopause-nutrition-1800": {
+    "protein": 122,
+    "carbs": 240,
+    "fats": 40,
+    "fibre": 42
+  },
+  "marks-spencer-weight-loss-1500": {
+    "protein": 120,
+    "carbs": 162,
+    "fats": 41,
+    "fibre": 27
+  },
+  "marks-spencer-weight-loss-1800": {
+    "protein": 115,
+    "carbs": 233,
+    "fats": 50,
+    "fibre": 33
+  },
+  "marks-spencer-high-protein-low-cal-1600": {
+    "protein": 134,
+    "carbs": 164,
+    "fats": 47,
+    "fibre": 27
+  },
+  "marks-spencer-busy-professional-1800": {
+    "protein": 138,
+    "carbs": 204,
+    "fats": 50,
+    "fibre": 28
+  },
+  "marks-spencer-low-effort-2000": {
+    "protein": 146,
+    "carbs": 228,
+    "fats": 56,
+    "fibre": 41
+  },
+  "marks-spencer-vegetarian-low-cal-1500": {
+    "protein": 80,
+    "carbs": 181,
+    "fats": 46,
+    "fibre": 34
+  },
+  "marks-spencer-vegan-low-cal-1600": {
+    "protein": 88,
+    "carbs": 219,
+    "fats": 46,
+    "fibre": 44
+  },
+  "marks-spencer-pescatarian-1800": {
+    "protein": 92,
+    "carbs": 234,
+    "fats": 55,
+    "fibre": 40
+  },
+  "marks-spencer-maintenance-2000": {
+    "protein": 122,
+    "carbs": 246,
+    "fats": 58,
+    "fibre": 38
+  },
+  "marks-spencer-muscle-gain-2500": {
+    "protein": 161,
+    "carbs": 256,
+    "fats": 91,
+    "fibre": 62
+  },
+  "marks-spencer-anti-inflammatory-1800": {
+    "protein": 128,
+    "carbs": 216,
+    "fats": 51,
+    "fibre": 36
+  },
+  "marks-spencer-body-recomp-2200": {
+    "protein": 151,
+    "carbs": 268,
+    "fats": 53,
+    "fibre": 40
+  },
+  "ocado-weight-loss-1500": {
+    "protein": 112,
+    "carbs": 160,
+    "fats": 45,
+    "fibre": 24
+  },
+  "ocado-weight-loss-1800": {
+    "protein": 132,
+    "carbs": 215,
+    "fats": 50,
+    "fibre": 30
+  },
+  "ocado-high-protein-low-cal-1600": {
+    "protein": 128,
+    "carbs": 166,
+    "fats": 49,
+    "fibre": 25
+  },
+  "ocado-muscle-gain-2500": {
+    "protein": 156,
+    "carbs": 280,
+    "fats": 83,
+    "fibre": 40
+  },
+  "ocado-busy-professional-1800": {
+    "protein": 104,
+    "carbs": 191,
+    "fats": 69,
+    "fibre": 39
+  },
+  "ocado-vegetarian-low-cal-1500": {
+    "protein": 72,
+    "carbs": 210,
+    "fats": 42,
+    "fibre": 34
+  },
+  "ocado-vegan-low-cal-1600": {
+    "protein": 69,
+    "carbs": 244,
+    "fats": 38,
+    "fibre": 45
+  },
+  "ocado-pescatarian-1800": {
+    "protein": 108,
+    "carbs": 203,
+    "fats": 62,
+    "fibre": 31
+  },
+  "ocado-maintenance-2000": {
+    "protein": 146,
+    "carbs": 181,
+    "fats": 76,
+    "fibre": 30
+  },
+  "ocado-endurance-athlete-3000": {
+    "protein": 247,
+    "carbs": 311,
+    "fats": 84,
+    "fibre": 53
+  },
+  "ocado-gym-beginner-2200": {
+    "protein": 144,
+    "carbs": 307,
+    "fats": 45,
+    "fibre": 53
+  },
+  "ocado-anti-inflammatory-1800": {
+    "protein": 124,
+    "carbs": 208,
+    "fats": 52,
+    "fibre": 37
+  },
   "aldi-weight-loss-1500-high-fibre": {
     "protein": 103,
     "carbs": 204,
@@ -3888,6 +4176,294 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "fats": 53,
     "fibre": 29
   },
+  "coop-weight-loss-1500-low-cal-swaps": {
+    "protein": 102,
+    "carbs": 182,
+    "fats": 41,
+    "fibre": 25
+  },
+  "coop-weight-loss-1800-high-fibre": {
+    "protein": 124,
+    "carbs": 203,
+    "fats": 57,
+    "fibre": 34
+  },
+  "coop-high-protein-low-cal-1600-batch-cook": {
+    "protein": 121,
+    "carbs": 189,
+    "fats": 41,
+    "fibre": 31
+  },
+  "coop-busy-professional-1800-twenty-minute": {
+    "protein": 133,
+    "carbs": 195,
+    "fats": 55,
+    "fibre": 31
+  },
+  "coop-low-effort-2000-simple-protein": {
+    "protein": 141,
+    "carbs": 231,
+    "fats": 57,
+    "fibre": 38
+  },
+  "coop-vegetarian-low-cal-1500-whole-food": {
+    "protein": 80,
+    "carbs": 187,
+    "fats": 48,
+    "fibre": 28
+  },
+  "coop-vegan-low-cal-1500-high-fibre": {
+    "protein": 70,
+    "carbs": 228,
+    "fats": 32,
+    "fibre": 42
+  },
+  "coop-pescatarian-1800-high-protein": {
+    "protein": 141,
+    "carbs": 184,
+    "fats": 55,
+    "fibre": 33
+  },
+  "coop-maintenance-2000-meal-prep": {
+    "protein": 140,
+    "carbs": 245,
+    "fats": 53,
+    "fibre": 36
+  },
+  "coop-gym-beginner-2200-high-protein": {
+    "protein": 153,
+    "carbs": 276,
+    "fats": 54,
+    "fibre": 51
+  },
+  "coop-cheap-student-1800-freezer-friendly": {
+    "protein": 131,
+    "carbs": 189,
+    "fats": 58,
+    "fibre": 30
+  },
+  "coop-budget-fat-loss-1500-budget-smart": {
+    "protein": 117,
+    "carbs": 162,
+    "fats": 42,
+    "fibre": 33
+  },
+  "waitrose-weight-loss-1500-meal-prep": {
+    "protein": 101,
+    "carbs": 199,
+    "fats": 33,
+    "fibre": 37
+  },
+  "waitrose-weight-loss-1800-quick-prep": {
+    "protein": 142,
+    "carbs": 172,
+    "fats": 60,
+    "fibre": 29
+  },
+  "waitrose-high-protein-low-cal-1600-high-variety": {
+    "protein": 116,
+    "carbs": 192,
+    "fats": 44,
+    "fibre": 24
+  },
+  "waitrose-muscle-gain-2500-budget-bulk": {
+    "protein": 162,
+    "carbs": 305,
+    "fats": 75,
+    "fibre": 44
+  },
+  "waitrose-anti-inflammatory-1800-omega-three": {
+    "protein": 128,
+    "carbs": 177,
+    "fats": 63,
+    "fibre": 29
+  },
+  "waitrose-vegetarian-low-cal-1500-batch-cook": {
+    "protein": 77,
+    "carbs": 216,
+    "fats": 35,
+    "fibre": 30
+  },
+  "waitrose-vegan-low-cal-1600-protein-focused": {
+    "protein": 68,
+    "carbs": 237,
+    "fats": 42,
+    "fibre": 41
+  },
+  "waitrose-pescatarian-1800-mediterranean": {
+    "protein": 125,
+    "carbs": 202,
+    "fats": 55,
+    "fibre": 30
+  },
+  "waitrose-maintenance-2000-high-variety": {
+    "protein": 149,
+    "carbs": 211,
+    "fats": 60,
+    "fibre": 35
+  },
+  "waitrose-body-recomp-2200-lean-recomp": {
+    "protein": 154,
+    "carbs": 223,
+    "fats": 76,
+    "fibre": 30
+  },
+  "waitrose-busy-professional-1800-grab-and-go": {
+    "protein": 116,
+    "carbs": 207,
+    "fats": 56,
+    "fibre": 29
+  },
+  "waitrose-menopause-nutrition-1800-high-fibre": {
+    "protein": 141,
+    "carbs": 190,
+    "fats": 53,
+    "fibre": 33
+  },
+  "marks-spencer-weight-loss-1500-lean-protein": {
+    "protein": 90,
+    "carbs": 194,
+    "fats": 39,
+    "fibre": 32
+  },
+  "marks-spencer-weight-loss-1800-low-cal-swaps": {
+    "protein": 134,
+    "carbs": 199,
+    "fats": 53,
+    "fibre": 37
+  },
+  "marks-spencer-high-protein-low-cal-1600-lean-protein": {
+    "protein": 135,
+    "carbs": 163,
+    "fats": 45,
+    "fibre": 23
+  },
+  "marks-spencer-busy-professional-1800-grab-and-go": {
+    "protein": 140,
+    "carbs": 192,
+    "fats": 52,
+    "fibre": 34
+  },
+  "marks-spencer-low-effort-2000-microwave-friendly": {
+    "protein": 131,
+    "carbs": 233,
+    "fats": 59,
+    "fibre": 39
+  },
+  "marks-spencer-vegetarian-low-cal-1500-quick-prep": {
+    "protein": 89,
+    "carbs": 199,
+    "fats": 39,
+    "fibre": 31
+  },
+  "marks-spencer-vegan-low-cal-1600-whole-food": {
+    "protein": 65,
+    "carbs": 216,
+    "fats": 50,
+    "fibre": 42
+  },
+  "marks-spencer-pescatarian-1800-omega-three": {
+    "protein": 126,
+    "carbs": 205,
+    "fats": 58,
+    "fibre": 32
+  },
+  "marks-spencer-maintenance-2000-high-fibre": {
+    "protein": 141,
+    "carbs": 170,
+    "fats": 82,
+    "fibre": 35
+  },
+  "marks-spencer-muscle-gain-2500-meal-prep": {
+    "protein": 173,
+    "carbs": 335,
+    "fats": 54,
+    "fibre": 60
+  },
+  "marks-spencer-anti-inflammatory-1800-plant-forward": {
+    "protein": 139,
+    "carbs": 215,
+    "fats": 44,
+    "fibre": 33
+  },
+  "marks-spencer-body-recomp-2200-high-variety": {
+    "protein": 144,
+    "carbs": 250,
+    "fats": 70,
+    "fibre": 44
+  },
+  "ocado-weight-loss-1500-high-fibre": {
+    "protein": 97,
+    "carbs": 197,
+    "fats": 34,
+    "fibre": 31
+  },
+  "ocado-weight-loss-1800-meal-prep": {
+    "protein": 125,
+    "carbs": 230,
+    "fats": 46,
+    "fibre": 36
+  },
+  "ocado-high-protein-low-cal-1600-quick-prep": {
+    "protein": 127,
+    "carbs": 164,
+    "fats": 48,
+    "fibre": 24
+  },
+  "ocado-muscle-gain-2500-high-variety": {
+    "protein": 157,
+    "carbs": 312,
+    "fats": 68,
+    "fibre": 50
+  },
+  "ocado-busy-professional-1800-high-variety": {
+    "protein": 122,
+    "carbs": 204,
+    "fats": 53,
+    "fibre": 36
+  },
+  "ocado-vegetarian-low-cal-1500-high-fibre": {
+    "protein": 85,
+    "carbs": 199,
+    "fats": 45,
+    "fibre": 39
+  },
+  "ocado-vegan-low-cal-1600-batch-cook": {
+    "protein": 71,
+    "carbs": 239,
+    "fats": 38,
+    "fibre": 36
+  },
+  "ocado-pescatarian-1800-quick-prep": {
+    "protein": 141,
+    "carbs": 201,
+    "fats": 48,
+    "fibre": 34
+  },
+  "ocado-maintenance-2000-quick-prep": {
+    "protein": 154,
+    "carbs": 217,
+    "fats": 59,
+    "fibre": 34
+  },
+  "ocado-endurance-athlete-3000-batch-cook": {
+    "protein": 206,
+    "carbs": 336,
+    "fats": 93,
+    "fibre": 53
+  },
+  "ocado-gym-beginner-2200-simple-gym": {
+    "protein": 146,
+    "carbs": 258,
+    "fats": 65,
+    "fibre": 42
+  },
+  "ocado-anti-inflammatory-1800-mediterranean": {
+    "protein": 120,
+    "carbs": 201,
+    "fats": 58,
+    "fibre": 30
+  },
   "aldi-weight-loss-1500-five-a-day-vegan-v3": {
     "protein": 60,
     "carbs": 258,
@@ -5814,6 +6390,294 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "fats": 42,
     "fibre": 36
   },
+  "coop-weight-loss-1500-balanced-plate-vegan-v3": {
+    "protein": 61,
+    "carbs": 202,
+    "fats": 49,
+    "fibre": 45
+  },
+  "coop-weight-loss-1800-lower-sugar-v3": {
+    "protein": 127,
+    "carbs": 203,
+    "fats": 55,
+    "fibre": 32
+  },
+  "coop-high-protein-low-cal-1600-high-fibre-v3": {
+    "protein": 118,
+    "carbs": 159,
+    "fats": 55,
+    "fibre": 25
+  },
+  "coop-busy-professional-1800-sunday-prep-v3": {
+    "protein": 105,
+    "carbs": 253,
+    "fats": 37,
+    "fibre": 41
+  },
+  "coop-low-effort-2000-tinned-and-frozen-pescatarian-v3": {
+    "protein": 140,
+    "carbs": 220,
+    "fats": 63,
+    "fibre": 38
+  },
+  "coop-vegetarian-low-cal-1500-higher-protein-v3": {
+    "protein": 90,
+    "carbs": 212,
+    "fats": 34,
+    "fibre": 41
+  },
+  "coop-vegan-low-cal-1500-plant-forward-v3": {
+    "protein": 62,
+    "carbs": 254,
+    "fats": 29,
+    "fibre": 41
+  },
+  "coop-pescatarian-1800-higher-protein-v3": {
+    "protein": 117,
+    "carbs": 205,
+    "fats": 55,
+    "fibre": 28
+  },
+  "coop-maintenance-2000-wholegrain-vegetarian-v3": {
+    "protein": 114,
+    "carbs": 246,
+    "fats": 65,
+    "fibre": 47
+  },
+  "coop-gym-beginner-2200-batch-friendly-v3": {
+    "protein": 119,
+    "carbs": 262,
+    "fats": 76,
+    "fibre": 45
+  },
+  "coop-cheap-student-1800-quick-shop-v3": {
+    "protein": 123,
+    "carbs": 175,
+    "fats": 67,
+    "fibre": 31
+  },
+  "coop-budget-fat-loss-1500-high-fibre-v3": {
+    "protein": 109,
+    "carbs": 200,
+    "fats": 28,
+    "fibre": 35
+  },
+  "waitrose-weight-loss-1500-five-a-day-vegan-v3": {
+    "protein": 69,
+    "carbs": 224,
+    "fats": 37,
+    "fibre": 40
+  },
+  "waitrose-weight-loss-1800-high-fibre-v3": {
+    "protein": 112,
+    "carbs": 220,
+    "fats": 50,
+    "fibre": 34
+  },
+  "waitrose-high-protein-low-cal-1600-high-fibre-v3": {
+    "protein": 122,
+    "carbs": 184,
+    "fats": 40,
+    "fibre": 28
+  },
+  "waitrose-muscle-gain-2500-higher-protein-v3": {
+    "protein": 187,
+    "carbs": 266,
+    "fats": 76,
+    "fibre": 45
+  },
+  "waitrose-anti-inflammatory-1800-balanced-plate-pescatarian-v3": {
+    "protein": 101,
+    "carbs": 228,
+    "fats": 57,
+    "fibre": 38
+  },
+  "waitrose-vegetarian-low-cal-1500-higher-protein-v3": {
+    "protein": 81,
+    "carbs": 188,
+    "fats": 47,
+    "fibre": 28
+  },
+  "waitrose-vegan-low-cal-1600-plant-forward-v3": {
+    "protein": 79,
+    "carbs": 246,
+    "fats": 33,
+    "fibre": 48
+  },
+  "waitrose-pescatarian-1800-higher-protein-v3": {
+    "protein": 120,
+    "carbs": 226,
+    "fats": 48,
+    "fibre": 31
+  },
+  "waitrose-maintenance-2000-wholegrain-vegetarian-v3": {
+    "protein": 95,
+    "carbs": 265,
+    "fats": 59,
+    "fibre": 46
+  },
+  "waitrose-body-recomp-2200-training-day-v3": {
+    "protein": 163,
+    "carbs": 240,
+    "fats": 67,
+    "fibre": 36
+  },
+  "waitrose-busy-professional-1800-batch-friendly-v3": {
+    "protein": 100,
+    "carbs": 235,
+    "fats": 52,
+    "fibre": 36
+  },
+  "waitrose-menopause-nutrition-1800-five-a-day-v3": {
+    "protein": 117,
+    "carbs": 210,
+    "fats": 55,
+    "fibre": 33
+  },
+  "marks-spencer-weight-loss-1500-quick-shop-vegan-v3": {
+    "protein": 67,
+    "carbs": 236,
+    "fats": 33,
+    "fibre": 39
+  },
+  "marks-spencer-weight-loss-1800-work-lunch-v3": {
+    "protein": 118,
+    "carbs": 223,
+    "fats": 47,
+    "fibre": 34
+  },
+  "marks-spencer-high-protein-low-cal-1600-high-fibre-v3": {
+    "protein": 128,
+    "carbs": 162,
+    "fats": 47,
+    "fibre": 32
+  },
+  "marks-spencer-busy-professional-1800-sunday-prep-v3": {
+    "protein": 113,
+    "carbs": 243,
+    "fats": 38,
+    "fibre": 41
+  },
+  "marks-spencer-low-effort-2000-tinned-and-frozen-pescatarian-v3": {
+    "protein": 131,
+    "carbs": 214,
+    "fats": 70,
+    "fibre": 33
+  },
+  "marks-spencer-vegetarian-low-cal-1500-higher-protein-v3": {
+    "protein": 73,
+    "carbs": 231,
+    "fats": 35,
+    "fibre": 35
+  },
+  "marks-spencer-vegan-low-cal-1600-plant-forward-v3": {
+    "protein": 85,
+    "carbs": 242,
+    "fats": 35,
+    "fibre": 43
+  },
+  "marks-spencer-pescatarian-1800-higher-protein-v3": {
+    "protein": 113,
+    "carbs": 203,
+    "fats": 59,
+    "fibre": 28
+  },
+  "marks-spencer-maintenance-2000-wholegrain-vegetarian-v3": {
+    "protein": 106,
+    "carbs": 253,
+    "fats": 63,
+    "fibre": 39
+  },
+  "marks-spencer-muscle-gain-2500-wholegrain-v3": {
+    "protein": 156,
+    "carbs": 301,
+    "fats": 71,
+    "fibre": 48
+  },
+  "marks-spencer-anti-inflammatory-1800-balanced-plate-v3": {
+    "protein": 132,
+    "carbs": 214,
+    "fats": 49,
+    "fibre": 35
+  },
+  "marks-spencer-body-recomp-2200-training-day-v3": {
+    "protein": 133,
+    "carbs": 260,
+    "fats": 69,
+    "fibre": 43
+  },
+  "ocado-weight-loss-1500-lower-sugar-vegan-v3": {
+    "protein": 66,
+    "carbs": 251,
+    "fats": 25,
+    "fibre": 43
+  },
+  "ocado-weight-loss-1800-batch-friendly-v3": {
+    "protein": 111,
+    "carbs": 225,
+    "fats": 47,
+    "fibre": 36
+  },
+  "ocado-high-protein-low-cal-1600-high-fibre-v3": {
+    "protein": 138,
+    "carbs": 147,
+    "fats": 49,
+    "fibre": 25
+  },
+  "ocado-muscle-gain-2500-higher-protein-v3": {
+    "protein": 167,
+    "carbs": 298,
+    "fats": 74,
+    "fibre": 42
+  },
+  "ocado-busy-professional-1800-batch-friendly-pescatarian-v3": {
+    "protein": 112,
+    "carbs": 223,
+    "fats": 54,
+    "fibre": 43
+  },
+  "ocado-vegetarian-low-cal-1500-higher-protein-v3": {
+    "protein": 82,
+    "carbs": 199,
+    "fats": 39,
+    "fibre": 29
+  },
+  "ocado-vegan-low-cal-1600-plant-forward-v3": {
+    "protein": 75,
+    "carbs": 232,
+    "fats": 42,
+    "fibre": 39
+  },
+  "ocado-pescatarian-1800-higher-protein-v3": {
+    "protein": 100,
+    "carbs": 205,
+    "fats": 63,
+    "fibre": 31
+  },
+  "ocado-maintenance-2000-wholegrain-vegetarian-v3": {
+    "protein": 102,
+    "carbs": 214,
+    "fats": 82,
+    "fibre": 43
+  },
+  "ocado-endurance-athlete-3000-performance-protein-v3": {
+    "protein": 218,
+    "carbs": 292,
+    "fats": 109,
+    "fibre": 47
+  },
+  "ocado-gym-beginner-2200-recovery-v3": {
+    "protein": 137,
+    "carbs": 284,
+    "fats": 58,
+    "fibre": 48
+  },
+  "ocado-anti-inflammatory-1800-wholegrain-v3": {
+    "protein": 101,
+    "carbs": 193,
+    "fats": 69,
+    "fibre": 35
+  },
   "aldi-weight-loss-1500-lower-sugar-v4": {
     "protein": 98,
     "carbs": 145,
@@ -5975,6 +6839,42 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "carbs": 173,
     "fats": 45,
     "fibre": 28
+  },
+  "any-weight-loss-1800-lower-sugar-v4": {
+    "protein": 123,
+    "carbs": 214,
+    "fats": 51,
+    "fibre": 29
+  },
+  "any-weight-loss-1800-veg-batch-friendly-v4": {
+    "protein": 84,
+    "carbs": 254,
+    "fats": 52,
+    "fibre": 42
+  },
+  "aldi-high-protein-low-cal-1500-batch-friendly-v4": {
+    "protein": 116,
+    "carbs": 157,
+    "fats": 44,
+    "fibre": 22
+  },
+  "aldi-high-protein-low-cal-1800-low-fuss-v4": {
+    "protein": 140,
+    "carbs": 179,
+    "fats": 56,
+    "fibre": 24
+  },
+  "tesco-high-protein-low-cal-1500-balanced-plate-v4": {
+    "protein": 128,
+    "carbs": 152,
+    "fats": 43,
+    "fibre": 23
+  },
+  "tesco-high-protein-low-cal-1800-higher-protein-pescatarian-v4": {
+    "protein": 137,
+    "carbs": 158,
+    "fats": 67,
+    "fibre": 23
   },
   "marks-spencer-weight-loss-1500-flexible-standard": {
     "protein": 95,

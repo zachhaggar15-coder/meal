@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-31T14:08:55.405Z",
-  "totalPlansAtLastRun": 1089,
+  "updatedAt": "2026-09-04T14:19:21.393Z",
+  "totalPlansAtLastRun": 1235,
   "perPlan": {
     "/meal-plan/2000-calorie-meal-plan": {
       "planId": "2000-calorie-meal-plan",
@@ -285,20 +285,20 @@
     "/meal-plan/aldi-1800-calorie-meal-plan": {
       "planId": "aldi-1800-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "d43139369ecec94523661157ef8d04d29d85ec6b1a1addcd820c8eda4be6941f"
+      "lastSourceHash": "ba3851f2ea5523e512190c433a0b5fe6dad19db5e14fef2cffb180c57c8d5a5c"
     },
     "/meal-plan/vegan-low-calorie-meal-plan": {
       "planId": "vegan-low-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "e0f0716525622999db64010396c327a3b19a237ce4e9b7c367fcdfdcc305dcb6"
+      "lastSourceHash": "48774a429b3fb6840293fae17b05cd225417dd978965e270392bc7c7bea06dd5"
     },
     "/meal-plan/lidl-1800-calorie-meal-plan": {
       "planId": "lidl-1800-calorie-meal-plan",
@@ -1068,11 +1068,11 @@
     "/plans/waitrose-weight-loss-1500-moderate-batch": {
       "planId": "waitrose-weight-loss-1500-moderate-batch",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "952b75aeea8309fc7f7c63428cb4b109a2992bb8381748304dec6e638a0c29d8"
+      "lastSourceHash": "603b3e486807b55b72b5d2c4e3be403b12bbfa54476d93cf586354093bd16e2f"
     },
     "/plans/asda-budget-fat-loss-vegan-1500-high-fibre": {
       "planId": "asda-budget-fat-loss-vegan-1500-high-fibre",
@@ -2004,11 +2004,11 @@
     "/plans/any-body-recomp-2000-balanced-plate-v3": {
       "planId": "any-body-recomp-2000-balanced-plate-v3",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "02f183286cc207e6695f2f7bf48259c04a5b0746a2a311ed835c639d8a047a56"
+      "lastSourceHash": "3ca5d51fd7d9be14b204f3b2de47408f8959320bb2da1213eca1176a5644c1a6"
     },
     "/plans/tesco-weight-loss-1800-veg-balanced-plate-v4": {
       "planId": "tesco-weight-loss-1800-veg-balanced-plate-v4",
@@ -2472,11 +2472,11 @@
     "/meal-plan/tesco-high-protein-meal-plan": {
       "planId": "tesco-high-protein-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "a0d337dfd3ac2d72d95e30828a74b0822f96e89d109ed4822a38645afb3dd8c9"
+      "lastSourceHash": "41db80ecbc493374042cda22db8ee1a191b3621d230f480e91a92c4fc64ce2cb"
     },
     "/plans/iceland-cheap-student-1500": {
       "planId": "iceland-cheap-student-1500",
@@ -3885,11 +3885,11 @@
     "/meal-plan/asda-1500-calorie-meal-plan": {
       "planId": "asda-1500-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "c2a5d4b817e1a1c1057b58f9b018265253880657de628685f08a227c8a516b00"
+      "lastSourceHash": "9a6ec2438a01c80211da3cc45e8971a3f5aeaebceb8d84da5a3d75eb8d295a5e"
     },
     "/plans/sainsburys-vegan-low-cal-1800-five-a-day-v3": {
       "planId": "sainsburys-vegan-low-cal-1800-five-a-day-v3",
@@ -5838,11 +5838,11 @@
     "/meal-plan/asda-1800-calorie-meal-plan": {
       "planId": "asda-1800-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "644743eb05cfbcf4ed1ca567e74ab8f127f58871d5ab6ed7d1e4a27903875ccc"
+      "lastSourceHash": "d2f6aeb111944566f544fecdd3d937dd5d90f2b1814c616c5e2532de80320b8b"
     },
     "/plans/aldi-veg-low-cal-1800": {
       "planId": "aldi-veg-low-cal-1800",
@@ -6594,11 +6594,11 @@
     "/plans/lidl-budget-bodybuilding-2500-batch-friendly-v3": {
       "planId": "lidl-budget-bodybuilding-2500-batch-friendly-v3",
       "planType": "generated",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "a96a53e858da207c9445c13479ab47faef84b48c64802e047a6a0fd3d377bea1"
+      "lastSourceHash": "0272cac643331c5aadc21cc5c0c2e528e4d0bbd5cd5e88b693ba6e26daef9120"
     },
     "/plans/morrisons-busy-professional-2000": {
       "planId": "morrisons-busy-professional-2000",
@@ -6837,11 +6837,11 @@
     "/meal-plan/sainsburys-1800-calorie-meal-plan": {
       "planId": "sainsburys-1800-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "120017ecbd5b39afa2989192ac7de2f92a9e7327ba90c4ff8161f9f177677643"
+      "lastSourceHash": "492dae8bf8893f8d3fbea179dc987276c0bb167cd2c44d9cf9ce7ef117310101"
     },
     "/plans/sainsburys-endurance-3500-batch-friendly-v3": {
       "planId": "sainsburys-endurance-3500-batch-friendly-v3",
@@ -8952,11 +8952,11 @@
     "/meal-plan/high-protein-low-calorie-meal-plan": {
       "planId": "high-protein-low-calorie-meal-plan",
       "planType": "editorial",
-      "lastQaAt": "2026-08-21T10:17:03.835Z",
-      "timesSampled": 1,
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 2,
       "lastStatus": "Pass",
       "highestSeverity": "None",
-      "lastSourceHash": "564700facb8bf6e431f5aedccc3a3a2b3869e88807fe8c9d6f253dbace2a8b77"
+      "lastSourceHash": "7fd1a6ac3748ed83f1c5151ac55b61d3682aad2c1d4221884542d429bab25982"
     },
     "/plans/asda-muscle-gain-3500-clean-bulk": {
       "planId": "asda-muscle-gain-3500-clean-bulk",
@@ -9803,6 +9803,1356 @@
       "lastStatus": "Pass",
       "highestSeverity": "None",
       "lastSourceHash": "c5808a1880bfc554028ce4b06ec369aa9f92ec20dc4ffac4a449abea1030a67f"
+    },
+    "/plans/coop-cheap-student-1800-freezer-friendly": {
+      "planId": "coop-cheap-student-1800-freezer-friendly",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "09d518ba34a67c8696c115bf5a7a228a089580f2614bebefcfab44b5f872ee2d"
+    },
+    "/plans/waitrose-vegetarian-low-cal-1500": {
+      "planId": "waitrose-vegetarian-low-cal-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7162d682a58552c3edc8dd14e8981d666de946c06193fe3cc137609562935944"
+    },
+    "/plans/marks-spencer-low-effort-2000-tinned-and-frozen-pescatarian-v3": {
+      "planId": "marks-spencer-low-effort-2000-tinned-and-frozen-pescatarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7abf7e5e5081587ddf118126a2a8b85726f0f42862dfadc0780e27c346bfa6a2"
+    },
+    "/plans/ocado-endurance-athlete-3000-batch-cook": {
+      "planId": "ocado-endurance-athlete-3000-batch-cook",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "27a1d0733ac570f7a33614c885077e670df765b5407162a4d677d9279688dc77"
+    },
+    "/plans/waitrose-vegan-low-cal-1600-plant-forward-v3": {
+      "planId": "waitrose-vegan-low-cal-1600-plant-forward-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "0708edec58b87900ce7cd62c3765a30dddcf2f3f7f543b0bebf4db5be4ce01f1"
+    },
+    "/plans/ocado-muscle-gain-2500-higher-protein-v3": {
+      "planId": "ocado-muscle-gain-2500-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a4f96e81baa2d5a04ce9d621c7c4c7a0cb3cf1b157469ef567b9fa031af168ed"
+    },
+    "/plans/any-weight-loss-1800-veg-batch-friendly-v4": {
+      "planId": "any-weight-loss-1800-veg-batch-friendly-v4",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fd929ca2abda40b81f492b5332e3d9154c7bec9f13355ab4051ac2b021d89a92"
+    },
+    "/plans/aldi-high-protein-low-cal-1500-batch-friendly-v4": {
+      "planId": "aldi-high-protein-low-cal-1500-batch-friendly-v4",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "f38ceded1191b7d2c889eb3c3772bd72524da0e428c18868f6e33111d5d45efb"
+    },
+    "/plans/coop-pescatarian-1800-higher-protein-v3": {
+      "planId": "coop-pescatarian-1800-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a69e13c30bf69e2ab1142a4ccd7b353a408de81812f810b1d92ac89406eb9e18"
+    },
+    "/plans/marks-spencer-body-recomp-2200-high-variety": {
+      "planId": "marks-spencer-body-recomp-2200-high-variety",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "119488cca28b62812969e739cf37080e9de1d834009155fcdf536c77f0e7a968"
+    },
+    "/plans/marks-spencer-maintenance-2000-wholegrain-vegetarian-v3": {
+      "planId": "marks-spencer-maintenance-2000-wholegrain-vegetarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "cde895e4cc8c1c54a641a65c99e214b25435f4e63207fe8d97e4d4cdd982db16"
+    },
+    "/plans/waitrose-anti-inflammatory-1800-balanced-plate-pescatarian-v3": {
+      "planId": "waitrose-anti-inflammatory-1800-balanced-plate-pescatarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7292257155237a4f637094a9aa28e75a3a5c43a2721b3fe9b46adf09d14b2c76"
+    },
+    "/plans/coop-gym-beginner-2200-batch-friendly-v3": {
+      "planId": "coop-gym-beginner-2200-batch-friendly-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fe773205498cc454d2438a200dde8579d303773db89b1ba40f6f539159d814e7"
+    },
+    "/plans/ocado-busy-professional-1800-batch-friendly-pescatarian-v3": {
+      "planId": "ocado-busy-professional-1800-batch-friendly-pescatarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b1e784b3ec3733bc0f85d892f2a820e93d11e5b298ef050b31b23db2c1f0c0b5"
+    },
+    "/plans/tesco-high-protein-low-cal-1500-balanced-plate-v4": {
+      "planId": "tesco-high-protein-low-cal-1500-balanced-plate-v4",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "79f0732cf71210b7e3ab4ea3ff66325d6252687a15d0f609c125d326628d891b"
+    },
+    "/plans/coop-budget-fat-loss-1500": {
+      "planId": "coop-budget-fat-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "1e2a489baf14e44e06e125c905ef3b0beaa0236aeaeb98bf3f13fe85cf8942bc"
+    },
+    "/plans/waitrose-menopause-nutrition-1800-high-fibre": {
+      "planId": "waitrose-menopause-nutrition-1800-high-fibre",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "1911f680a8f0dbfa3c01576df18bbc45c315b526eafdbb1db0b3932914ef7f3c"
+    },
+    "/plans/coop-vegan-low-cal-1500-high-fibre": {
+      "planId": "coop-vegan-low-cal-1500-high-fibre",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "6cd0c020156bdcb14a3fbe3b9c42ee6b6ad22bef539f292b3f489a0cf878ad65"
+    },
+    "/plans/ocado-endurance-athlete-3000": {
+      "planId": "ocado-endurance-athlete-3000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "c3b0157701c2563a39d3efe2b7910c99b83726bb276fb0af2b1b5cd6c54688bc"
+    },
+    "/plans/coop-low-effort-2000-tinned-and-frozen-pescatarian-v3": {
+      "planId": "coop-low-effort-2000-tinned-and-frozen-pescatarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "f3a9d734fd01da40667b833ac95feb5185db1d382f415d2d1ba6c4b720ab0874"
+    },
+    "/plans/any-weight-loss-1800-lower-sugar-v4": {
+      "planId": "any-weight-loss-1800-lower-sugar-v4",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "27a00f6ba8b83c221eeb3c89bd40086a16a6af81056e20bc5143b994f505ef99"
+    },
+    "/plans/marks-spencer-vegetarian-low-cal-1500-quick-prep": {
+      "planId": "marks-spencer-vegetarian-low-cal-1500-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "1403f7e19fbc1dccd9006d43752df434761a33a883d79f2c86ad93fcb4772a03"
+    },
+    "/plans/marks-spencer-body-recomp-2200": {
+      "planId": "marks-spencer-body-recomp-2200",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "3dcc17f7202de49ad7c5806a78460349f6a24dc1c0185fd5445af952f330be7c"
+    },
+    "/plans/waitrose-weight-loss-1500-five-a-day-vegan-v3": {
+      "planId": "waitrose-weight-loss-1500-five-a-day-vegan-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7fab06fb3e2f0ff38f12efcefe4ddd05f8636c2341deb49bed45feef5882fba4"
+    },
+    "/plans/marks-spencer-maintenance-2000": {
+      "planId": "marks-spencer-maintenance-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "51753a5a4c60b9c4f83ac00f1122c3e4b7b168732734cfae167cbd0f33cd4ff3"
+    },
+    "/plans/waitrose-muscle-gain-2500-higher-protein-v3": {
+      "planId": "waitrose-muscle-gain-2500-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "32f03be7ecfadc5125ccc001331b60b73c2cc3e347d11e529ec64a16d80ddc7b"
+    },
+    "/plans/marks-spencer-pescatarian-1800-higher-protein-v3": {
+      "planId": "marks-spencer-pescatarian-1800-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "75a29486c374e59b6cfa661965083880f7bc78458492184050ddee93d3c51f2d"
+    },
+    "/plans/ocado-anti-inflammatory-1800-wholegrain-v3": {
+      "planId": "ocado-anti-inflammatory-1800-wholegrain-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "436586cb288558d20b651db0a33ca48147699dd031a34281c02ab6b1114ba751"
+    },
+    "/plans/aldi-high-protein-low-cal-1800-low-fuss-v4": {
+      "planId": "aldi-high-protein-low-cal-1800-low-fuss-v4",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "c88e8b9ac63d4b66dcee4c9773e0af4c7b946d7cf57479fd567f8217fd32bf57"
+    },
+    "/plans/ocado-vegan-low-cal-1600": {
+      "planId": "ocado-vegan-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "610a95676efec9d826e45efa9453ec20912fb8a4b368189a270132ff591f4aea"
+    },
+    "/plans/marks-spencer-busy-professional-1800-grab-and-go": {
+      "planId": "marks-spencer-busy-professional-1800-grab-and-go",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "447a1f7a520ffc00e255cc93d835e8db19115012b8f06db867f28a6a84e1910e"
+    },
+    "/plans/marks-spencer-vegetarian-low-cal-1500": {
+      "planId": "marks-spencer-vegetarian-low-cal-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "bd61126ee2c3fec372f3e3c42bfa9aa176144d94df84c7a628e836d17ca078a9"
+    },
+    "/plans/coop-gym-beginner-2200-high-protein": {
+      "planId": "coop-gym-beginner-2200-high-protein",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "f8dd4f80246f0e5059be40e55eacb236932ba6dd3c47908ded98f531d0a57af3"
+    },
+    "/plans/waitrose-menopause-nutrition-1800": {
+      "planId": "waitrose-menopause-nutrition-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b4a162c61b5cc112f831e585bf5e68c6f194683eecf19774e503cb1417863ef7"
+    },
+    "/plans/coop-maintenance-2000": {
+      "planId": "coop-maintenance-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "31af52f719f263ce67fa3c6e0c47b28667aa0599b963bd29ac68e386b57bf643"
+    },
+    "/plans/marks-spencer-low-effort-2000-microwave-friendly": {
+      "planId": "marks-spencer-low-effort-2000-microwave-friendly",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "440c8433c06dec3f5f259a9b5494d6d2ca7c37bdd4384f77615288e0ddb19bcd"
+    },
+    "/plans/coop-pescatarian-1800": {
+      "planId": "coop-pescatarian-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "4777bbd1b18404022547fb49c036faad789e2525981e850458f918f8643598cc"
+    },
+    "/plans/ocado-muscle-gain-2500-high-variety": {
+      "planId": "ocado-muscle-gain-2500-high-variety",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "e731b201e7c5f11c932fa23a878cc345db0b71fd8ee3773e619c4e360e4ae308"
+    },
+    "/plans/tesco-high-protein-low-cal-1800-higher-protein-pescatarian-v4": {
+      "planId": "tesco-high-protein-low-cal-1800-higher-protein-pescatarian-v4",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "3f1286f800f8df6137c68e49eaa0f687fd4cac88d4c3cc226e59d65528a5c111"
+    },
+    "/plans/ocado-endurance-athlete-3000-performance-protein-v3": {
+      "planId": "ocado-endurance-athlete-3000-performance-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2e3d6cc30de4dd4062e3088aacd017c3b572d9ffbdc03910e7aeca26951784ff"
+    },
+    "/plans/marks-spencer-weight-loss-1500-quick-shop-vegan-v3": {
+      "planId": "marks-spencer-weight-loss-1500-quick-shop-vegan-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a522831bd00ab8431a664afd38fb18614ff5f2beb3a002fdaad9cde3ea8837f8"
+    },
+    "/plans/ocado-anti-inflammatory-1800": {
+      "planId": "ocado-anti-inflammatory-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "3eccd87897e6187f430493416d0cbf8056b6ee0d4d8671bee88be242a69e5827"
+    },
+    "/plans/waitrose-body-recomp-2200": {
+      "planId": "waitrose-body-recomp-2200",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "d02427f06cb0603650d97013135476cad7b9cad4f283d820de8c46935e107e2c"
+    },
+    "/plans/marks-spencer-busy-professional-1800": {
+      "planId": "marks-spencer-busy-professional-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "72aed4eb7a5c29b617878f89e5c194a092ebceddca6d2d422e6a77b60c517d40"
+    },
+    "/plans/coop-budget-fat-loss-1500-high-fibre-v3": {
+      "planId": "coop-budget-fat-loss-1500-high-fibre-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fa620666b87fdd40f09835e216ec1f86b78643042ac721e13c76aab1df9844d5"
+    },
+    "/plans/waitrose-pescatarian-1800-higher-protein-v3": {
+      "planId": "waitrose-pescatarian-1800-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ca6e6ea39eb7025a44f1cc1f9cf150574fdd29d3bd3486417420d8ce02697a1c"
+    },
+    "/plans/coop-vegan-low-cal-1500-plant-forward-v3": {
+      "planId": "coop-vegan-low-cal-1500-plant-forward-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a4cac26d296a3d3fa9b83f3d5e07901a8c64bcf5e7d01c7de73d7bd8e471872f"
+    },
+    "/plans/marks-spencer-anti-inflammatory-1800": {
+      "planId": "marks-spencer-anti-inflammatory-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "743b7785bb12733d1a1ce2d3d11fb9ebaa00982d0ea759a68dd83f69b1031403"
+    },
+    "/plans/waitrose-weight-loss-1500": {
+      "planId": "waitrose-weight-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "68324eda7a1173075bfbc88d4f33e0be42fdfc8f77232bda77765fc0d27098f1"
+    },
+    "/plans/coop-vegetarian-low-cal-1500-whole-food": {
+      "planId": "coop-vegetarian-low-cal-1500-whole-food",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2855c0dbecfad23e836d8e8a5a353f5bb4aa402c4d4652f70fea2ff87ef34286"
+    },
+    "/plans/coop-cheap-student-1800-quick-shop-v3": {
+      "planId": "coop-cheap-student-1800-quick-shop-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "bcd5acbc46dc7715cab94d8759cb3bbcf5b9f73e961a5024ef1df07ed98bddff"
+    },
+    "/plans/marks-spencer-maintenance-2000-high-fibre": {
+      "planId": "marks-spencer-maintenance-2000-high-fibre",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "81e6c92699467d58702d16f53b715ce5876b3cb8c42fe89b260e9432b621b476"
+    },
+    "/plans/marks-spencer-high-protein-low-cal-1600": {
+      "planId": "marks-spencer-high-protein-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "71b95de8d9c4c06ae66c01b6e7613aa0123d1e516ed38a4c574bad1b3eb22acc"
+    },
+    "/plans/ocado-vegan-low-cal-1600-batch-cook": {
+      "planId": "ocado-vegan-low-cal-1600-batch-cook",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ad48cdde5513a2961a82914b6b0c704a3936fe12f5bd2c01698c3e4a991eebb9"
+    },
+    "/plans/waitrose-menopause-nutrition-1800-five-a-day-v3": {
+      "planId": "waitrose-menopause-nutrition-1800-five-a-day-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b380008c932e0224fa00b2f0c9c9332974aed6f22cef6d1fb4a27fa622b69e55"
+    },
+    "/plans/marks-spencer-anti-inflammatory-1800-plant-forward": {
+      "planId": "marks-spencer-anti-inflammatory-1800-plant-forward",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "94a00dffe5b3f762cf4ca76cec796c0716ec0c53df7a41beefed277b1742e588"
+    },
+    "/plans/ocado-weight-loss-1500-high-fibre": {
+      "planId": "ocado-weight-loss-1500-high-fibre",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "5d6720d6e0b272fe9b1b43e6b669dac7f1d2d400ee19abab2b1df5df178b2587"
+    },
+    "/plans/marks-spencer-low-effort-2000": {
+      "planId": "marks-spencer-low-effort-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ff288156f1255dd53e1f5d3bb1f65bc9289204b1eeeef2316b932a4ebb577b3e"
+    },
+    "/plans/waitrose-muscle-gain-2500": {
+      "planId": "waitrose-muscle-gain-2500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "587e2f731d5305ff7541e5c06e8b3de1cf0486779b83f94519dc4ae55b9cddbf"
+    },
+    "/plans/marks-spencer-busy-professional-1800-sunday-prep-v3": {
+      "planId": "marks-spencer-busy-professional-1800-sunday-prep-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "78996b795a112f7e2190977d4158e64c830b6efcf0f1d6d0241298286a938e63"
+    },
+    "/plans/waitrose-body-recomp-2200-lean-recomp": {
+      "planId": "waitrose-body-recomp-2200-lean-recomp",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2937c544308b41b4c9118fbd7e840cb894f9e93d9e73848960e901a731e61391"
+    },
+    "/plans/marks-spencer-vegetarian-low-cal-1500-higher-protein-v3": {
+      "planId": "marks-spencer-vegetarian-low-cal-1500-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "6ca98e61999eb46fedc40aa8b7887e46d7b38e2f8d8ee7b9c67ff2957bd3a3d1"
+    },
+    "/plans/marks-spencer-weight-loss-1800-work-lunch-v3": {
+      "planId": "marks-spencer-weight-loss-1800-work-lunch-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "6966365d189f9ed1d3864fb76552b024b54282929b8ab19c80533600f0de08b0"
+    },
+    "/plans/coop-gym-beginner-2200": {
+      "planId": "coop-gym-beginner-2200",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ccdd2455ef89a641315d5f970f351b653fcf76dc3f259402e4378198674f1387"
+    },
+    "/plans/waitrose-vegan-low-cal-1600": {
+      "planId": "waitrose-vegan-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "5254b3daacad093c0f9f2ec08785046c98ef705a01bbc7e824453893483e2582"
+    },
+    "/plans/ocado-maintenance-2000": {
+      "planId": "ocado-maintenance-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "1ecf324b8aa6f9b45010283af09f05e1456c65c0976b89c2e96f03d0746c9779"
+    },
+    "/plans/coop-weight-loss-1800-high-fibre": {
+      "planId": "coop-weight-loss-1800-high-fibre",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "58afb0af5a34e267052b66962d6287df6600c122ce8b018f85a1889a17b4e92b"
+    },
+    "/plans/ocado-vegetarian-low-cal-1500-high-fibre": {
+      "planId": "ocado-vegetarian-low-cal-1500-high-fibre",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "76febf88f2a680ae06c4bc1bb32503617455c4202a43bec7cfbf27a914b23dae"
+    },
+    "/plans/marks-spencer-anti-inflammatory-1800-balanced-plate-v3": {
+      "planId": "marks-spencer-anti-inflammatory-1800-balanced-plate-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "beb13ec26c0d67ffb5b7e9f86990cf94f328573a05c36a44ef010bb3a1af2214"
+    },
+    "/plans/marks-spencer-body-recomp-2200-training-day-v3": {
+      "planId": "marks-spencer-body-recomp-2200-training-day-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b9cdc6d8897c71e223e95fee65e78b3a2fbcd4b784c142cbc4fbb171f463a04e"
+    },
+    "/plans/waitrose-muscle-gain-2500-budget-bulk": {
+      "planId": "waitrose-muscle-gain-2500-budget-bulk",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "78eda498d1f93f27153e016f1b2c23e5f9b520dacf663cd8c57f94f65ade237c"
+    },
+    "/plans/ocado-weight-loss-1500-lower-sugar-vegan-v3": {
+      "planId": "ocado-weight-loss-1500-lower-sugar-vegan-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fde6cc293c2c5e707f75dd5041236c2ff779c4bd671a9ca64b35b24c548b707c"
+    },
+    "/plans/ocado-pescatarian-1800-higher-protein-v3": {
+      "planId": "ocado-pescatarian-1800-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "71ff8051b3b8455a4551338a2a1583f0a33bb835c7f36685dd152b5c797c46ba"
+    },
+    "/plans/coop-busy-professional-1800": {
+      "planId": "coop-busy-professional-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fb6901c557ac26a6f41e5be3a119ad34c9cccfcaa91a110ca4e803bb88bbe47f"
+    },
+    "/plans/marks-spencer-vegan-low-cal-1600-whole-food": {
+      "planId": "marks-spencer-vegan-low-cal-1600-whole-food",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "46195baf218c804fc76071c786096ea020dca9ff793cb8e5efdb85d41d3f5883"
+    },
+    "/plans/coop-budget-fat-loss-1500-budget-smart": {
+      "planId": "coop-budget-fat-loss-1500-budget-smart",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "5f377ec6380ea98aa1bfd0d3b8220c3b9f3106088bb353460ebd3422ebcafe17"
+    },
+    "/plans/waitrose-maintenance-2000-wholegrain-vegetarian-v3": {
+      "planId": "waitrose-maintenance-2000-wholegrain-vegetarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "6dcd1b65dbc8cbb9342a4cd12ba7e062a9f97c65b2ee7a0adb3efe48fa381dda"
+    },
+    "/plans/coop-low-effort-2000": {
+      "planId": "coop-low-effort-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "0362c4d4ebceefdb9c1b7c85087c4422a000ea0ebc97aec14e1661d893dba0c6"
+    },
+    "/plans/ocado-weight-loss-1800": {
+      "planId": "ocado-weight-loss-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ed6464bc0fce86f902b5c8e32e0a1e006a2bc82318e1624a350af7b5ff2ea3a0"
+    },
+    "/plans/coop-pescatarian-1800-high-protein": {
+      "planId": "coop-pescatarian-1800-high-protein",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b485295880d818598c47fbbab59a6dfc9031c222b6d96627da296a819b53933d"
+    },
+    "/plans/ocado-gym-beginner-2200-simple-gym": {
+      "planId": "ocado-gym-beginner-2200-simple-gym",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2dd03dbf4356d7a817608d2d08a17688333c9f6b0480a1a536c2fc301dc741e3"
+    },
+    "/plans/coop-weight-loss-1800": {
+      "planId": "coop-weight-loss-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "4b19f70cf840ca2d4e22d409c8a9bded234c09c906c471feba2309424862fc41"
+    },
+    "/plans/ocado-high-protein-low-cal-1600-quick-prep": {
+      "planId": "ocado-high-protein-low-cal-1600-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "e9ca85250abfb8a19d7363aec4e69b3745d451136a89fe0cdeb945085211fee7"
+    },
+    "/plans/waitrose-busy-professional-1800-batch-friendly-v3": {
+      "planId": "waitrose-busy-professional-1800-batch-friendly-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ac2e9a522642f3619de7f0ef1e5fd64d924a8c736ac355e70ed5324080e373ec"
+    },
+    "/plans/waitrose-weight-loss-1500-meal-prep": {
+      "planId": "waitrose-weight-loss-1500-meal-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "4b843d160a921c61cebc73889807cc73ab125b93a6b0510b05eed5398132e4f4"
+    },
+    "/plans/marks-spencer-vegan-low-cal-1600-plant-forward-v3": {
+      "planId": "marks-spencer-vegan-low-cal-1600-plant-forward-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "3a8754c5f1f2ead5c15b3e1e48b8d7d796a8c7fcccfa61125214a38b09a01c83"
+    },
+    "/plans/ocado-weight-loss-1800-batch-friendly-v3": {
+      "planId": "ocado-weight-loss-1800-batch-friendly-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "731741d418c0014f344046e179335c9379ee3d0159f9ce619a3dc82726bba037"
+    },
+    "/plans/ocado-maintenance-2000-quick-prep": {
+      "planId": "ocado-maintenance-2000-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7a2ce49df1cbf1a679bbc5684a7a58ca5cf5b140dc1ed3ece9c1095dab03082a"
+    },
+    "/plans/waitrose-vegan-low-cal-1600-protein-focused": {
+      "planId": "waitrose-vegan-low-cal-1600-protein-focused",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "6603833af415632e7162248ca4ae551a61558ca632e1697a787b4182c0fb836b"
+    },
+    "/plans/coop-high-protein-low-cal-1600-batch-cook": {
+      "planId": "coop-high-protein-low-cal-1600-batch-cook",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "9ca1063cc4c457a4d8821e99473700acfedf097e5efae22bc4ccca05004babab"
+    },
+    "/plans/marks-spencer-weight-loss-1500": {
+      "planId": "marks-spencer-weight-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "88f80c63327108f48893564a1989d6e6e45e8902be8ac037ba55750248ae109e"
+    },
+    "/plans/waitrose-vegetarian-low-cal-1500-higher-protein-v3": {
+      "planId": "waitrose-vegetarian-low-cal-1500-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "9267ca23fdd728ba7856c95bf941541145ae8a76a5ae01b3e8a2567155743e04"
+    },
+    "/plans/coop-cheap-student-1800": {
+      "planId": "coop-cheap-student-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "59e0330dec28191108ca490274033c25f0c34c73cbc83c22b823546ceeec13ba"
+    },
+    "/plans/waitrose-busy-professional-1800": {
+      "planId": "waitrose-busy-professional-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "5ffadc68726a920dfe369c10f037f6a3d4b82959dbd59e7806b5833213116c68"
+    },
+    "/plans/marks-spencer-high-protein-low-cal-1600-lean-protein": {
+      "planId": "marks-spencer-high-protein-low-cal-1600-lean-protein",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "32d93f8f658e80f57d8c3bcf1efbdabec3b62359775509b8101c660077bc7b65"
+    },
+    "/plans/waitrose-maintenance-2000": {
+      "planId": "waitrose-maintenance-2000",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "bfabdaf96ac16ebe7a98fd0debf5d33b3b3d93bec18d0f8f4ef5aea26efe4e14"
+    },
+    "/plans/marks-spencer-pescatarian-1800-omega-three": {
+      "planId": "marks-spencer-pescatarian-1800-omega-three",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a178ace3a0916724bad4db09fbd8ccb588e67cddc3b5b011236ee494e85a206a"
+    },
+    "/plans/waitrose-weight-loss-1800-quick-prep": {
+      "planId": "waitrose-weight-loss-1800-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "f00bff95de03f2e36f129b0d0ef565067dde1140e5ff3d100a3ce24523a4e065"
+    },
+    "/plans/coop-busy-professional-1800-twenty-minute": {
+      "planId": "coop-busy-professional-1800-twenty-minute",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b64d1d56b9a8fb3bc665b00826f42e8a5463f0b60a61288b6359992083f7488e"
+    },
+    "/plans/waitrose-anti-inflammatory-1800-omega-three": {
+      "planId": "waitrose-anti-inflammatory-1800-omega-three",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "68d4c3612f7b09e57a215546f41e7e0ad02f7fae964680e91a981de66000f155"
+    },
+    "/plans/coop-weight-loss-1500-balanced-plate-vegan-v3": {
+      "planId": "coop-weight-loss-1500-balanced-plate-vegan-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a4ecd8910c67530aa30dd257990e7e236b45e0c8ebcc7f15fb5ea08a156e8fab"
+    },
+    "/plans/ocado-gym-beginner-2200": {
+      "planId": "ocado-gym-beginner-2200",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "509a80de1a4317252f8591c9dae48b6f9925995f29668d71258338bd05199eea"
+    },
+    "/plans/marks-spencer-vegan-low-cal-1600": {
+      "planId": "marks-spencer-vegan-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "e9fc0a9d0f3e2cb9dad14084386911ee00f0507f17a44c1cd9df33db781120cf"
+    },
+    "/plans/waitrose-vegetarian-low-cal-1500-batch-cook": {
+      "planId": "waitrose-vegetarian-low-cal-1500-batch-cook",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7a243d0eab7eddb8b763578d5262f05a35551c90ba66f6ce9a9158aa4d0df8f2"
+    },
+    "/plans/ocado-busy-professional-1800-high-variety": {
+      "planId": "ocado-busy-professional-1800-high-variety",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ca64fb2ab7e32a1311f5bcd63ec275ec629f2aea7f8bdef91b95724c40408cce"
+    },
+    "/plans/ocado-maintenance-2000-wholegrain-vegetarian-v3": {
+      "planId": "ocado-maintenance-2000-wholegrain-vegetarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "76a2e11cc27fc49eb56794179226d02318145d0f368b6d8ff47d1aefc805d576"
+    },
+    "/plans/coop-low-effort-2000-simple-protein": {
+      "planId": "coop-low-effort-2000-simple-protein",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "b6f683444f05d685d909b87d83d9fbe552de1c9862ec8b3ef8279c1a469923b9"
+    },
+    "/plans/marks-spencer-muscle-gain-2500-meal-prep": {
+      "planId": "marks-spencer-muscle-gain-2500-meal-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "1713a640752be02c6831791bda9130d619602e659e40f190957fbf58c2aab49d"
+    },
+    "/plans/waitrose-pescatarian-1800-mediterranean": {
+      "planId": "waitrose-pescatarian-1800-mediterranean",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2cefd5130aeb0ee7bee4282fbd520ebd9021c4acc78a3a41100fab3f9ffb8d8f"
+    },
+    "/plans/ocado-vegetarian-low-cal-1500-higher-protein-v3": {
+      "planId": "ocado-vegetarian-low-cal-1500-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2509f10c88301feeb0add18452c9fe8535e71a88d9c52dcd28587a52ad1ea918"
+    },
+    "/plans/marks-spencer-weight-loss-1500-lean-protein": {
+      "planId": "marks-spencer-weight-loss-1500-lean-protein",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a544ad93f8b077a91c82154ff7337e590a47785020b9c4d764e05e563e35f757"
+    },
+    "/plans/marks-spencer-weight-loss-1800-low-cal-swaps": {
+      "planId": "marks-spencer-weight-loss-1800-low-cal-swaps",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "aad04bc71f06b920642f97d9ad8db9a41c2538bfbbb44d5d12278df572fb9f62"
+    },
+    "/plans/ocado-muscle-gain-2500": {
+      "planId": "ocado-muscle-gain-2500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "2312203b98dc2157af14a76782f9e77768a6ce742500f70f2e69d67d083bc190"
+    },
+    "/plans/waitrose-high-protein-low-cal-1600-high-fibre-v3": {
+      "planId": "waitrose-high-protein-low-cal-1600-high-fibre-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "eacdaf1ecf1c29750d13748178cddc104d1ab022652b3f93b974f0f08d524b02"
+    },
+    "/plans/ocado-weight-loss-1800-meal-prep": {
+      "planId": "ocado-weight-loss-1800-meal-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "99214d9e23455c20f0b82f964c093a8f2f5d4f088b7272506ff9472a9a310bfc"
+    },
+    "/plans/ocado-pescatarian-1800-quick-prep": {
+      "planId": "ocado-pescatarian-1800-quick-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "347b4ffee5d6d32b17beec874b2e025c3725fb17cff95b1e33677ae4f34cf78a"
+    },
+    "/plans/coop-busy-professional-1800-sunday-prep-v3": {
+      "planId": "coop-busy-professional-1800-sunday-prep-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "a7f8972b17a52b2a2f0d7db682133edf2b610402eeed3945bea179530cb090b2"
+    },
+    "/plans/coop-vegan-low-cal-1500": {
+      "planId": "coop-vegan-low-cal-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fa10b7da16d35868d646b956cd14f6af5827e5cc86f3f4c4a389a2a57dfea4c7"
+    },
+    "/plans/ocado-high-protein-low-cal-1600-high-fibre-v3": {
+      "planId": "ocado-high-protein-low-cal-1600-high-fibre-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "efb86629d5c2b3d9887fd839a9b054724edcbf8b6d0d1f2d0e39a4cec51c447b"
+    },
+    "/plans/ocado-gym-beginner-2200-recovery-v3": {
+      "planId": "ocado-gym-beginner-2200-recovery-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "d9c42a175c5cbcae0866295977c6c54f381959d3aeff39a9984c71b178b40b01"
+    },
+    "/plans/waitrose-pescatarian-1800": {
+      "planId": "waitrose-pescatarian-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "f360c32b8f5eba0ac912e45bf161f0653e81c6167a368d68c9dd08cb6fb59e9d"
+    },
+    "/plans/coop-maintenance-2000-meal-prep": {
+      "planId": "coop-maintenance-2000-meal-prep",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7549136000528d3be4c5563074146e75ce5242cac75349d5cc0ed8198c9d88c7"
+    },
+    "/plans/coop-weight-loss-1500": {
+      "planId": "coop-weight-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "adeb73cd65ca456dc9f55875414124c4f33ccb2c6138ed620267f1e1c0b62fdb"
+    },
+    "/plans/ocado-vegan-low-cal-1600-plant-forward-v3": {
+      "planId": "ocado-vegan-low-cal-1600-plant-forward-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "818cb828df2f80a4804e2e2a73fb91e8603ccd79809aadd3d773bdcf192f2385"
+    },
+    "/plans/waitrose-body-recomp-2200-training-day-v3": {
+      "planId": "waitrose-body-recomp-2200-training-day-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "d02bbab8dcabfd13f8c1b844f0f6b2290dd37a8d766d329f97a3d318e48ec8e7"
+    },
+    "/plans/ocado-vegetarian-low-cal-1500": {
+      "planId": "ocado-vegetarian-low-cal-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "96dabc58329ba3c7de84276152d58b50c55391124f1c049731f723072353f6fe"
+    },
+    "/plans/marks-spencer-muscle-gain-2500-wholegrain-v3": {
+      "planId": "marks-spencer-muscle-gain-2500-wholegrain-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "4e32818533a4ece99def75d49256ad60226bf8ddfb54a37a8fa999831d8860f1"
+    },
+    "/plans/ocado-anti-inflammatory-1800-mediterranean": {
+      "planId": "ocado-anti-inflammatory-1800-mediterranean",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "25430502750d107274175ea0827cfdb045794e4b7bca0d70e3ff141042e7bb72"
+    },
+    "/plans/waitrose-weight-loss-1800-high-fibre-v3": {
+      "planId": "waitrose-weight-loss-1800-high-fibre-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "cfc2adf955064b8fd78f55494272a1912b93edded2010096f4548b2293f75160"
+    },
+    "/plans/marks-spencer-pescatarian-1800": {
+      "planId": "marks-spencer-pescatarian-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "3d89f7441d983bd154cf2562b1638c0d567a5d117729e70783e1bfade67745bb"
+    },
+    "/plans/coop-maintenance-2000-wholegrain-vegetarian-v3": {
+      "planId": "coop-maintenance-2000-wholegrain-vegetarian-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "25136f36d85f53d8e8477ae8162f040df154f0ec2d9b8425ccab70e42af1ebf8"
+    },
+    "/plans/waitrose-high-protein-low-cal-1600": {
+      "planId": "waitrose-high-protein-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "9758b3fd3dc01c54f1258ccc3cdc0c98c750a64f1a6de2d30a4d9dbc3df77c4d"
+    },
+    "/plans/marks-spencer-weight-loss-1800": {
+      "planId": "marks-spencer-weight-loss-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "9ee9a3e4ee3421aa58e11e17041344719ecaacb9ec2062769f1f256f454d3772"
+    },
+    "/plans/marks-spencer-muscle-gain-2500": {
+      "planId": "marks-spencer-muscle-gain-2500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ad1c083c84db37c7668a216ee24cdff2118f7b97186370279d1239033f5f6d6c"
+    },
+    "/plans/coop-vegetarian-low-cal-1500-higher-protein-v3": {
+      "planId": "coop-vegetarian-low-cal-1500-higher-protein-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "0260fa4515289ac8a8e63c3d13cbfa22d6346637ae9c283a1d422aee03a7a633"
+    },
+    "/plans/waitrose-busy-professional-1800-grab-and-go": {
+      "planId": "waitrose-busy-professional-1800-grab-and-go",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "e0eb6f3b3d51df085d8a1c45c1bc114fd0f54234279be981cf21d28cf664c95b"
+    },
+    "/plans/ocado-weight-loss-1500": {
+      "planId": "ocado-weight-loss-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "921e4aaed8d70915ad997dc2e484ef4a04c16bac0709ced57955bb82d9f81cf8"
+    },
+    "/plans/coop-weight-loss-1800-lower-sugar-v3": {
+      "planId": "coop-weight-loss-1800-lower-sugar-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "8d320b40a328a5379b76b5c08921a25add311ebebed6761c76ce5883bce37a0e"
+    },
+    "/plans/coop-weight-loss-1500-low-cal-swaps": {
+      "planId": "coop-weight-loss-1500-low-cal-swaps",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "fac38ee3c4f8f58bfc03736a072269168d72792c0c3fc17d32a8e3814aa16a36"
+    },
+    "/plans/coop-high-protein-low-cal-1600": {
+      "planId": "coop-high-protein-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "98707a2f047d59c820201c40960e2959defa25ddf18485890a736c69e93671a9"
+    },
+    "/plans/waitrose-weight-loss-1800": {
+      "planId": "waitrose-weight-loss-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "7929920da683c2efc2b5d5706e59bc16f6b30bffcc0a31f9584cdf99ca36652e"
+    },
+    "/plans/coop-vegetarian-low-cal-1500": {
+      "planId": "coop-vegetarian-low-cal-1500",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "cc376db2f5fa4a066bbf07f323dcdb074d3219b51fcc6deb0f0e5a34d0f9f9ee"
+    },
+    "/plans/ocado-busy-professional-1800": {
+      "planId": "ocado-busy-professional-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ce7cffed3c9a29f09d7b6f5151a9e96e5331f9cf5695f79853f9d63706817303"
+    },
+    "/plans/ocado-pescatarian-1800": {
+      "planId": "ocado-pescatarian-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "8068465659d70863ca567f0f8c7f323a5b574197d559f24b75e125c823d1c8c2"
+    },
+    "/plans/marks-spencer-high-protein-low-cal-1600-high-fibre-v3": {
+      "planId": "marks-spencer-high-protein-low-cal-1600-high-fibre-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "6f3f0056e20810446d4551dd6dbdd13d10e7bc162696c50191d594eebde99bf5"
+    },
+    "/plans/waitrose-maintenance-2000-high-variety": {
+      "planId": "waitrose-maintenance-2000-high-variety",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "ba98685bfdd4b57766841336db4244779e3a7dc349f6d936a5c1245bdd536521"
+    },
+    "/plans/coop-high-protein-low-cal-1600-high-fibre-v3": {
+      "planId": "coop-high-protein-low-cal-1600-high-fibre-v3",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "d6387a5f1fc496116efcf38afb01d48200c778c6b22c5dab5d9a489797e58ef6"
+    },
+    "/plans/waitrose-anti-inflammatory-1800": {
+      "planId": "waitrose-anti-inflammatory-1800",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "3bde37f9f71b5abc797327cb5d929ffbaeb7cacfc718e56ed351ceee68397bdc"
+    },
+    "/plans/ocado-high-protein-low-cal-1600": {
+      "planId": "ocado-high-protein-low-cal-1600",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "888b38c3f80c74a21729bba134f3aab1b404d5c9d324fe5fd4ae9583efb9af4a"
+    },
+    "/plans/waitrose-high-protein-low-cal-1600-high-variety": {
+      "planId": "waitrose-high-protein-low-cal-1600-high-variety",
+      "planType": "generated",
+      "lastQaAt": "2026-09-04T14:19:21.393Z",
+      "timesSampled": 1,
+      "lastStatus": "Pass",
+      "highestSeverity": "None",
+      "lastSourceHash": "337755fb05d95a6085a9868eb131e539a470f8387eca11cdc7ea28004fdea142"
     }
   },
   "runs": [
@@ -12214,6 +13564,203 @@
         "plansEverSampled": 1089,
         "totalPublishedPlans": 1089,
         "percentageEverSampled": 100
+      }
+    },
+    {
+      "runId": "2026-W36-2026-09-04",
+      "runAt": "2026-09-04T14:19:21.393Z",
+      "weekSeed": "2026-W36",
+      "sampleSize": 160,
+      "passed": 160,
+      "flagged": 0,
+      "passRate": 100,
+      "plansWithoutFlagsRate": 100,
+      "severity": {
+        "Critical": 0,
+        "High": 0,
+        "Medium": 0,
+        "Low": 0
+      },
+      "systemicIssueCount": 0,
+      "systemicIssues": [],
+      "manualReviewRoutes": [],
+      "sampledRoutes": [
+        "/plans/coop-cheap-student-1800-freezer-friendly",
+        "/plans/waitrose-vegetarian-low-cal-1500",
+        "/plans/marks-spencer-low-effort-2000-tinned-and-frozen-pescatarian-v3",
+        "/plans/ocado-endurance-athlete-3000-batch-cook",
+        "/plans/waitrose-vegan-low-cal-1600-plant-forward-v3",
+        "/plans/ocado-muscle-gain-2500-higher-protein-v3",
+        "/plans/any-weight-loss-1800-veg-batch-friendly-v4",
+        "/plans/aldi-high-protein-low-cal-1500-batch-friendly-v4",
+        "/plans/coop-pescatarian-1800-higher-protein-v3",
+        "/plans/marks-spencer-body-recomp-2200-high-variety",
+        "/plans/marks-spencer-maintenance-2000-wholegrain-vegetarian-v3",
+        "/plans/waitrose-anti-inflammatory-1800-balanced-plate-pescatarian-v3",
+        "/plans/coop-gym-beginner-2200-batch-friendly-v3",
+        "/plans/ocado-busy-professional-1800-batch-friendly-pescatarian-v3",
+        "/plans/tesco-high-protein-low-cal-1500-balanced-plate-v4",
+        "/plans/coop-budget-fat-loss-1500",
+        "/plans/waitrose-menopause-nutrition-1800-high-fibre",
+        "/plans/coop-vegan-low-cal-1500-high-fibre",
+        "/plans/ocado-endurance-athlete-3000",
+        "/plans/coop-low-effort-2000-tinned-and-frozen-pescatarian-v3",
+        "/plans/any-weight-loss-1800-lower-sugar-v4",
+        "/plans/marks-spencer-vegetarian-low-cal-1500-quick-prep",
+        "/plans/marks-spencer-body-recomp-2200",
+        "/plans/waitrose-weight-loss-1500-five-a-day-vegan-v3",
+        "/plans/marks-spencer-maintenance-2000",
+        "/plans/waitrose-muscle-gain-2500-higher-protein-v3",
+        "/plans/marks-spencer-pescatarian-1800-higher-protein-v3",
+        "/plans/ocado-anti-inflammatory-1800-wholegrain-v3",
+        "/plans/aldi-high-protein-low-cal-1800-low-fuss-v4",
+        "/plans/ocado-vegan-low-cal-1600",
+        "/plans/marks-spencer-busy-professional-1800-grab-and-go",
+        "/plans/marks-spencer-vegetarian-low-cal-1500",
+        "/plans/coop-gym-beginner-2200-high-protein",
+        "/plans/waitrose-menopause-nutrition-1800",
+        "/plans/coop-maintenance-2000",
+        "/plans/marks-spencer-low-effort-2000-microwave-friendly",
+        "/plans/coop-pescatarian-1800",
+        "/plans/ocado-muscle-gain-2500-high-variety",
+        "/plans/tesco-high-protein-low-cal-1800-higher-protein-pescatarian-v4",
+        "/plans/ocado-endurance-athlete-3000-performance-protein-v3",
+        "/plans/marks-spencer-weight-loss-1500-quick-shop-vegan-v3",
+        "/plans/ocado-anti-inflammatory-1800",
+        "/plans/waitrose-body-recomp-2200",
+        "/plans/marks-spencer-busy-professional-1800",
+        "/plans/coop-budget-fat-loss-1500-high-fibre-v3",
+        "/plans/waitrose-pescatarian-1800-higher-protein-v3",
+        "/plans/coop-vegan-low-cal-1500-plant-forward-v3",
+        "/plans/marks-spencer-anti-inflammatory-1800",
+        "/plans/waitrose-weight-loss-1500",
+        "/plans/coop-vegetarian-low-cal-1500-whole-food",
+        "/plans/coop-cheap-student-1800-quick-shop-v3",
+        "/plans/marks-spencer-maintenance-2000-high-fibre",
+        "/plans/marks-spencer-high-protein-low-cal-1600",
+        "/plans/ocado-vegan-low-cal-1600-batch-cook",
+        "/plans/waitrose-menopause-nutrition-1800-five-a-day-v3",
+        "/plans/marks-spencer-anti-inflammatory-1800-plant-forward",
+        "/plans/ocado-weight-loss-1500-high-fibre",
+        "/plans/marks-spencer-low-effort-2000",
+        "/plans/waitrose-muscle-gain-2500",
+        "/plans/marks-spencer-busy-professional-1800-sunday-prep-v3",
+        "/plans/waitrose-body-recomp-2200-lean-recomp",
+        "/plans/marks-spencer-vegetarian-low-cal-1500-higher-protein-v3",
+        "/plans/marks-spencer-weight-loss-1800-work-lunch-v3",
+        "/plans/coop-gym-beginner-2200",
+        "/plans/waitrose-vegan-low-cal-1600",
+        "/plans/ocado-maintenance-2000",
+        "/plans/coop-weight-loss-1800-high-fibre",
+        "/plans/ocado-vegetarian-low-cal-1500-high-fibre",
+        "/plans/marks-spencer-anti-inflammatory-1800-balanced-plate-v3",
+        "/plans/marks-spencer-body-recomp-2200-training-day-v3",
+        "/plans/waitrose-muscle-gain-2500-budget-bulk",
+        "/plans/ocado-weight-loss-1500-lower-sugar-vegan-v3",
+        "/plans/ocado-pescatarian-1800-higher-protein-v3",
+        "/plans/coop-busy-professional-1800",
+        "/plans/marks-spencer-vegan-low-cal-1600-whole-food",
+        "/plans/coop-budget-fat-loss-1500-budget-smart",
+        "/plans/waitrose-maintenance-2000-wholegrain-vegetarian-v3",
+        "/plans/coop-low-effort-2000",
+        "/plans/ocado-weight-loss-1800",
+        "/plans/coop-pescatarian-1800-high-protein",
+        "/plans/ocado-gym-beginner-2200-simple-gym",
+        "/plans/coop-weight-loss-1800",
+        "/plans/ocado-high-protein-low-cal-1600-quick-prep",
+        "/plans/waitrose-busy-professional-1800-batch-friendly-v3",
+        "/plans/waitrose-weight-loss-1500-meal-prep",
+        "/plans/marks-spencer-vegan-low-cal-1600-plant-forward-v3",
+        "/plans/ocado-weight-loss-1800-batch-friendly-v3",
+        "/plans/ocado-maintenance-2000-quick-prep",
+        "/plans/waitrose-vegan-low-cal-1600-protein-focused",
+        "/plans/coop-high-protein-low-cal-1600-batch-cook",
+        "/plans/marks-spencer-weight-loss-1500",
+        "/plans/waitrose-vegetarian-low-cal-1500-higher-protein-v3",
+        "/plans/coop-cheap-student-1800",
+        "/plans/waitrose-busy-professional-1800",
+        "/plans/marks-spencer-high-protein-low-cal-1600-lean-protein",
+        "/plans/waitrose-maintenance-2000",
+        "/plans/marks-spencer-pescatarian-1800-omega-three",
+        "/plans/waitrose-weight-loss-1800-quick-prep",
+        "/plans/coop-busy-professional-1800-twenty-minute",
+        "/plans/waitrose-anti-inflammatory-1800-omega-three",
+        "/plans/coop-weight-loss-1500-balanced-plate-vegan-v3",
+        "/plans/ocado-gym-beginner-2200",
+        "/plans/marks-spencer-vegan-low-cal-1600",
+        "/plans/waitrose-vegetarian-low-cal-1500-batch-cook",
+        "/plans/ocado-busy-professional-1800-high-variety",
+        "/plans/ocado-maintenance-2000-wholegrain-vegetarian-v3",
+        "/plans/coop-low-effort-2000-simple-protein",
+        "/plans/marks-spencer-muscle-gain-2500-meal-prep",
+        "/plans/waitrose-pescatarian-1800-mediterranean",
+        "/plans/ocado-vegetarian-low-cal-1500-higher-protein-v3",
+        "/plans/marks-spencer-weight-loss-1500-lean-protein",
+        "/plans/marks-spencer-weight-loss-1800-low-cal-swaps",
+        "/plans/ocado-muscle-gain-2500",
+        "/plans/waitrose-high-protein-low-cal-1600-high-fibre-v3",
+        "/plans/ocado-weight-loss-1800-meal-prep",
+        "/plans/ocado-pescatarian-1800-quick-prep",
+        "/plans/coop-busy-professional-1800-sunday-prep-v3",
+        "/plans/coop-vegan-low-cal-1500",
+        "/plans/ocado-high-protein-low-cal-1600-high-fibre-v3",
+        "/plans/ocado-gym-beginner-2200-recovery-v3",
+        "/plans/waitrose-pescatarian-1800",
+        "/plans/coop-maintenance-2000-meal-prep",
+        "/plans/coop-weight-loss-1500",
+        "/plans/ocado-vegan-low-cal-1600-plant-forward-v3",
+        "/plans/waitrose-body-recomp-2200-training-day-v3",
+        "/plans/ocado-vegetarian-low-cal-1500",
+        "/plans/marks-spencer-muscle-gain-2500-wholegrain-v3",
+        "/plans/ocado-anti-inflammatory-1800-mediterranean",
+        "/plans/waitrose-weight-loss-1800-high-fibre-v3",
+        "/plans/marks-spencer-pescatarian-1800",
+        "/plans/coop-maintenance-2000-wholegrain-vegetarian-v3",
+        "/plans/waitrose-high-protein-low-cal-1600",
+        "/plans/marks-spencer-weight-loss-1800",
+        "/plans/marks-spencer-muscle-gain-2500",
+        "/plans/coop-vegetarian-low-cal-1500-higher-protein-v3",
+        "/plans/waitrose-busy-professional-1800-grab-and-go",
+        "/plans/ocado-weight-loss-1500",
+        "/plans/coop-weight-loss-1800-lower-sugar-v3",
+        "/plans/coop-weight-loss-1500-low-cal-swaps",
+        "/plans/coop-high-protein-low-cal-1600",
+        "/plans/waitrose-weight-loss-1800",
+        "/plans/coop-vegetarian-low-cal-1500",
+        "/plans/ocado-busy-professional-1800",
+        "/plans/ocado-pescatarian-1800",
+        "/plans/marks-spencer-high-protein-low-cal-1600-high-fibre-v3",
+        "/plans/waitrose-maintenance-2000-high-variety",
+        "/plans/coop-high-protein-low-cal-1600-high-fibre-v3",
+        "/plans/waitrose-anti-inflammatory-1800",
+        "/plans/ocado-high-protein-low-cal-1600",
+        "/plans/waitrose-high-protein-low-cal-1600-high-variety",
+        "/plans/waitrose-weight-loss-1500-moderate-batch",
+        "/plans/lidl-budget-bodybuilding-2500-batch-friendly-v3",
+        "/plans/any-body-recomp-2000-balanced-plate-v3",
+        "/meal-plan/high-protein-low-calorie-meal-plan",
+        "/meal-plan/vegan-low-calorie-meal-plan",
+        "/meal-plan/aldi-1800-calorie-meal-plan",
+        "/meal-plan/tesco-high-protein-meal-plan",
+        "/meal-plan/asda-1800-calorie-meal-plan",
+        "/meal-plan/asda-1500-calorie-meal-plan",
+        "/meal-plan/sainsburys-1800-calorie-meal-plan"
+      ],
+      "model": {
+        "status": "not_configured",
+        "model": "",
+        "calls": 0,
+        "attempted": 0,
+        "successful": 0,
+        "malformed": 0,
+        "unavailable": 0,
+        "error": "",
+        "fallback": "Local semantic checks completed; model enrichment did not run."
+      },
+      "coverageAfterRun": {
+        "plansEverSampled": 1239,
+        "totalPublishedPlans": 1235,
+        "percentageEverSampled": 100.3
       }
     }
   ],

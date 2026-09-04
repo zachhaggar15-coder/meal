@@ -1,6 +1,70 @@
 import { RESTORED_PLAN_SEEDS } from './restoredPlanSeeds.js';
 import { RETIRED_PLAN_SLUGS } from './retiredPlanRedirects.js';
 
+// Co-op, Waitrose, M&S and Ocado were never in CORE_PLAN_SEEDS. The deep
+// expansion only ever clones core seeds, so those four chains kept whatever
+// restoredPlanSeeds happened to carry - 2 to 6 plans each, nearly all weight
+// loss - while the seven discounter chains were expanded to 62-203. That is
+// why their hubs were thin. The minBudgetTier gate limits which tiers they
+// can use, but it was never the reason they had almost nothing.
+//
+// Tiers below respect that gate: Co-op starts at budget, the three premium
+// chains at moderate. Nothing cheaper would be a credible basket for them.
+const PREMIUM_AND_CONVENIENCE_SEEDS = [
+  // Co-op
+  { slug: 'coop-weight-loss-1500', goal: 'weight-loss', supermarket: 'coop', calories: 1500, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 300, title: 'Co-op Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
+  { slug: 'coop-weight-loss-1800', goal: 'weight-loss', supermarket: 'coop', calories: 1800, dietType: 'standard', budget: 'budget', effort: 'batch', mealSetIndex: 307, title: 'Co-op Weight Loss Meal Plan — 1,800 kcal', emphasis: 'batch-cooking' },
+  { slug: 'coop-high-protein-low-cal-1600', goal: 'high-protein-low-cal', supermarket: 'coop', calories: 1600, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 314, title: 'Co-op High Protein Low Cal Meal Plan — 1,600 kcal', emphasis: 'lean-protein' },
+  { slug: 'coop-busy-professional-1800', goal: 'busy-professional', supermarket: 'coop', calories: 1800, dietType: 'standard', budget: 'budget', effort: 'low', mealSetIndex: 321, title: 'Co-op Busy Professional Meal Plan — 1,800 kcal', emphasis: 'minimal-effort' },
+  { slug: 'coop-low-effort-2000', goal: 'low-effort', supermarket: 'coop', calories: 2000, dietType: 'standard', budget: 'budget', effort: 'minimal', mealSetIndex: 328, title: 'Co-op Low Effort Meal Plan — 2,000 kcal', emphasis: 'minimal-effort' },
+  { slug: 'coop-vegetarian-low-cal-1500', goal: 'vegetarian-low-cal', supermarket: 'coop', calories: 1500, dietType: 'vegetarian', budget: 'budget', effort: 'standard', mealSetIndex: 335, title: 'Co-op Vegetarian Low Cal Meal Plan — 1,500 kcal', emphasis: 'whole-food' },
+  { slug: 'coop-vegan-low-cal-1500', goal: 'vegan-low-cal', supermarket: 'coop', calories: 1500, dietType: 'vegan', budget: 'budget', effort: 'standard', mealSetIndex: 342, title: 'Co-op Vegan Low Cal Meal Plan — 1,500 kcal', emphasis: 'whole-food' },
+  { slug: 'coop-pescatarian-1800', goal: 'pescatarian', supermarket: 'coop', calories: 1800, dietType: 'pescatarian', budget: 'budget', effort: 'standard', mealSetIndex: 349, title: 'Co-op Pescatarian Meal Plan — 1,800 kcal', emphasis: 'lean-protein' },
+  { slug: 'coop-maintenance-2000', goal: 'maintenance', supermarket: 'coop', calories: 2000, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 356, title: 'Co-op Maintenance Meal Plan — 2,000 kcal', emphasis: 'high-variety' },
+  { slug: 'coop-gym-beginner-2200', goal: 'gym-beginner', supermarket: 'coop', calories: 2200, dietType: 'standard', budget: 'budget', effort: 'batch', mealSetIndex: 363, title: 'Co-op Gym Beginner Meal Plan — 2,200 kcal', emphasis: 'recomp-protein' },
+  { slug: 'coop-cheap-student-1800', goal: 'cheap-student', supermarket: 'coop', calories: 1800, dietType: 'standard', budget: 'budget', effort: 'batch', mealSetIndex: 370, title: 'Co-op Cheap Student Meal Plan — 1,800 kcal', emphasis: 'batch-cooking' },
+  { slug: 'coop-budget-fat-loss-1500', goal: 'budget-fat-loss', supermarket: 'coop', calories: 1500, dietType: 'standard', budget: 'budget', effort: 'batch', mealSetIndex: 377, title: 'Co-op Budget Fat Loss Meal Plan — 1,500 kcal', emphasis: 'low-cal-swaps' },
+  // Waitrose
+  { slug: 'waitrose-weight-loss-1500', goal: 'weight-loss', supermarket: 'waitrose', calories: 1500, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 384, title: 'Waitrose Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
+  { slug: 'waitrose-weight-loss-1800', goal: 'weight-loss', supermarket: 'waitrose', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 391, title: 'Waitrose Weight Loss Meal Plan — 1,800 kcal', emphasis: 'whole-food' },
+  { slug: 'waitrose-high-protein-low-cal-1600', goal: 'high-protein-low-cal', supermarket: 'waitrose', calories: 1600, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 398, title: 'Waitrose High Protein Low Cal Meal Plan — 1,600 kcal', emphasis: 'lean-protein' },
+  { slug: 'waitrose-muscle-gain-2500', goal: 'muscle-gain', supermarket: 'waitrose', calories: 2500, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 405, title: 'Waitrose Muscle Gain Meal Plan — 2,500 kcal', emphasis: 'performance-protein' },
+  { slug: 'waitrose-anti-inflammatory-1800', goal: 'anti-inflammatory', supermarket: 'waitrose', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 412, title: 'Waitrose Anti Inflammatory Meal Plan — 1,800 kcal', emphasis: 'whole-food' },
+  { slug: 'waitrose-vegetarian-low-cal-1500', goal: 'vegetarian-low-cal', supermarket: 'waitrose', calories: 1500, dietType: 'vegetarian', budget: 'moderate', effort: 'standard', mealSetIndex: 419, title: 'Waitrose Vegetarian Low Cal Meal Plan — 1,500 kcal', emphasis: 'whole-food' },
+  { slug: 'waitrose-vegan-low-cal-1600', goal: 'vegan-low-cal', supermarket: 'waitrose', calories: 1600, dietType: 'vegan', budget: 'moderate', effort: 'standard', mealSetIndex: 426, title: 'Waitrose Vegan Low Cal Meal Plan — 1,600 kcal', emphasis: 'whole-food' },
+  { slug: 'waitrose-pescatarian-1800', goal: 'pescatarian', supermarket: 'waitrose', calories: 1800, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 433, title: 'Waitrose Pescatarian Meal Plan — 1,800 kcal', emphasis: 'lean-protein' },
+  { slug: 'waitrose-maintenance-2000', goal: 'maintenance', supermarket: 'waitrose', calories: 2000, dietType: 'standard', budget: 'moderate', effort: 'high-variety', mealSetIndex: 440, title: 'Waitrose Maintenance Meal Plan — 2,000 kcal', emphasis: 'high-variety' },
+  { slug: 'waitrose-body-recomp-2200', goal: 'body-recomp', supermarket: 'waitrose', calories: 2200, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 447, title: 'Waitrose Body Recomp Meal Plan — 2,200 kcal', emphasis: 'recomp-protein' },
+  { slug: 'waitrose-busy-professional-1800', goal: 'busy-professional', supermarket: 'waitrose', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'low', mealSetIndex: 454, title: 'Waitrose Busy Professional Meal Plan — 1,800 kcal', emphasis: 'minimal-effort' },
+  { slug: 'waitrose-menopause-nutrition-1800', goal: 'menopause-nutrition', supermarket: 'waitrose', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 461, title: 'Waitrose Menopause Nutrition Meal Plan — 1,800 kcal', emphasis: 'whole-food' },
+  // M&S
+  { slug: 'marks-spencer-weight-loss-1500', goal: 'weight-loss', supermarket: 'marks-spencer', calories: 1500, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 468, title: 'M&S Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
+  { slug: 'marks-spencer-weight-loss-1800', goal: 'weight-loss', supermarket: 'marks-spencer', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'low', mealSetIndex: 475, title: 'M&S Weight Loss Meal Plan — 1,800 kcal', emphasis: 'minimal-effort' },
+  { slug: 'marks-spencer-high-protein-low-cal-1600', goal: 'high-protein-low-cal', supermarket: 'marks-spencer', calories: 1600, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 482, title: 'M&S High Protein Low Cal Meal Plan — 1,600 kcal', emphasis: 'lean-protein' },
+  { slug: 'marks-spencer-busy-professional-1800', goal: 'busy-professional', supermarket: 'marks-spencer', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'minimal', mealSetIndex: 489, title: 'M&S Busy Professional Meal Plan — 1,800 kcal', emphasis: 'minimal-effort' },
+  { slug: 'marks-spencer-low-effort-2000', goal: 'low-effort', supermarket: 'marks-spencer', calories: 2000, dietType: 'standard', budget: 'moderate', effort: 'minimal', mealSetIndex: 496, title: 'M&S Low Effort Meal Plan — 2,000 kcal', emphasis: 'minimal-effort' },
+  { slug: 'marks-spencer-vegetarian-low-cal-1500', goal: 'vegetarian-low-cal', supermarket: 'marks-spencer', calories: 1500, dietType: 'vegetarian', budget: 'moderate', effort: 'standard', mealSetIndex: 503, title: 'M&S Vegetarian Low Cal Meal Plan — 1,500 kcal', emphasis: 'whole-food' },
+  { slug: 'marks-spencer-vegan-low-cal-1600', goal: 'vegan-low-cal', supermarket: 'marks-spencer', calories: 1600, dietType: 'vegan', budget: 'moderate', effort: 'standard', mealSetIndex: 510, title: 'M&S Vegan Low Cal Meal Plan — 1,600 kcal', emphasis: 'whole-food' },
+  { slug: 'marks-spencer-pescatarian-1800', goal: 'pescatarian', supermarket: 'marks-spencer', calories: 1800, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 517, title: 'M&S Pescatarian Meal Plan — 1,800 kcal', emphasis: 'lean-protein' },
+  { slug: 'marks-spencer-maintenance-2000', goal: 'maintenance', supermarket: 'marks-spencer', calories: 2000, dietType: 'standard', budget: 'moderate', effort: 'high-variety', mealSetIndex: 524, title: 'M&S Maintenance Meal Plan — 2,000 kcal', emphasis: 'high-variety' },
+  { slug: 'marks-spencer-muscle-gain-2500', goal: 'muscle-gain', supermarket: 'marks-spencer', calories: 2500, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 531, title: 'M&S Muscle Gain Meal Plan — 2,500 kcal', emphasis: 'performance-protein' },
+  { slug: 'marks-spencer-anti-inflammatory-1800', goal: 'anti-inflammatory', supermarket: 'marks-spencer', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 538, title: 'M&S Anti Inflammatory Meal Plan — 1,800 kcal', emphasis: 'whole-food' },
+  { slug: 'marks-spencer-body-recomp-2200', goal: 'body-recomp', supermarket: 'marks-spencer', calories: 2200, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 545, title: 'M&S Body Recomp Meal Plan — 2,200 kcal', emphasis: 'recomp-protein' },
+  // Ocado
+  { slug: 'ocado-weight-loss-1500', goal: 'weight-loss', supermarket: 'ocado', calories: 1500, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 552, title: 'Ocado Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
+  { slug: 'ocado-weight-loss-1800', goal: 'weight-loss', supermarket: 'ocado', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 559, title: 'Ocado Weight Loss Meal Plan — 1,800 kcal', emphasis: 'batch-cooking' },
+  { slug: 'ocado-high-protein-low-cal-1600', goal: 'high-protein-low-cal', supermarket: 'ocado', calories: 1600, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 566, title: 'Ocado High Protein Low Cal Meal Plan — 1,600 kcal', emphasis: 'lean-protein' },
+  { slug: 'ocado-muscle-gain-2500', goal: 'muscle-gain', supermarket: 'ocado', calories: 2500, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 573, title: 'Ocado Muscle Gain Meal Plan — 2,500 kcal', emphasis: 'performance-protein' },
+  { slug: 'ocado-busy-professional-1800', goal: 'busy-professional', supermarket: 'ocado', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'low', mealSetIndex: 580, title: 'Ocado Busy Professional Meal Plan — 1,800 kcal', emphasis: 'minimal-effort' },
+  { slug: 'ocado-vegetarian-low-cal-1500', goal: 'vegetarian-low-cal', supermarket: 'ocado', calories: 1500, dietType: 'vegetarian', budget: 'moderate', effort: 'standard', mealSetIndex: 587, title: 'Ocado Vegetarian Low Cal Meal Plan — 1,500 kcal', emphasis: 'whole-food' },
+  { slug: 'ocado-vegan-low-cal-1600', goal: 'vegan-low-cal', supermarket: 'ocado', calories: 1600, dietType: 'vegan', budget: 'moderate', effort: 'standard', mealSetIndex: 594, title: 'Ocado Vegan Low Cal Meal Plan — 1,600 kcal', emphasis: 'whole-food' },
+  { slug: 'ocado-pescatarian-1800', goal: 'pescatarian', supermarket: 'ocado', calories: 1800, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 601, title: 'Ocado Pescatarian Meal Plan — 1,800 kcal', emphasis: 'lean-protein' },
+  { slug: 'ocado-maintenance-2000', goal: 'maintenance', supermarket: 'ocado', calories: 2000, dietType: 'standard', budget: 'moderate', effort: 'high-variety', mealSetIndex: 608, title: 'Ocado Maintenance Meal Plan — 2,000 kcal', emphasis: 'high-variety' },
+  { slug: 'ocado-endurance-athlete-3000', goal: 'endurance-athlete', supermarket: 'ocado', calories: 3000, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 615, title: 'Ocado Endurance Athlete Meal Plan — 3,000 kcal', emphasis: 'high-carb-fuel' },
+  { slug: 'ocado-gym-beginner-2200', goal: 'gym-beginner', supermarket: 'ocado', calories: 2200, dietType: 'standard', budget: 'moderate', effort: 'batch', mealSetIndex: 622, title: 'Ocado Gym Beginner Meal Plan — 2,200 kcal', emphasis: 'recomp-protein' },
+  { slug: 'ocado-anti-inflammatory-1800', goal: 'anti-inflammatory', supermarket: 'ocado', calories: 1800, dietType: 'standard', budget: 'moderate', effort: 'standard', mealSetIndex: 629, title: 'Ocado Anti Inflammatory Meal Plan — 1,800 kcal', emphasis: 'whole-food' },
+];
+
 const CORE_PLAN_SEEDS = [
   // ── WEIGHT LOSS (30) ─────────────────────────────────────────────────────
   { slug: 'aldi-weight-loss-1500', goal: 'weight-loss', supermarket: 'aldi', calories: 1500, dietType: 'standard', budget: 'very-cheap', effort: 'standard', mealSetIndex: 0, title: 'Aldi Weight Loss Meal Plan — 1,500 kcal', emphasis: 'lean-protein' },
@@ -367,6 +431,7 @@ const CORE_PLAN_SEEDS = [
   { slug: 'any-cutting-1400', goal: 'cutting', supermarket: 'any', calories: 1400, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 28, title: 'Cutting Phase Meal Plan — 1,400 kcal', emphasis: 'lean-protein' },
   { slug: 'any-cutting-1600', goal: 'cutting', supermarket: 'any', calories: 1600, dietType: 'standard', budget: 'budget', effort: 'standard', mealSetIndex: 29, title: 'Cutting Phase Meal Plan — 1,600 kcal', emphasis: 'lean-protein' },
   { slug: 'tesco-cutting-pesc-1500', goal: 'cutting', supermarket: 'tesco', calories: 1500, dietType: 'pescatarian', budget: 'moderate', effort: 'standard', mealSetIndex: 29, title: 'Tesco Pescatarian Cutting Phase Plan — 1,500 kcal', emphasis: 'lean-protein' },
+  ...PREMIUM_AND_CONVENIENCE_SEEDS,
 ];
 
 const MARKET_TITLES = {
@@ -595,7 +660,7 @@ function buildExpandedTitle(seed, style) {
   return `${market}${diet}${style.label} ${goal} Plan \u2014 ${seed.calories.toLocaleString('en-GB')} kcal`;
 }
 
-const TARGET_PLAN_COUNT = 1000;
+const TARGET_PLAN_COUNT = 1150;
 
 const DEEP_EXPANSION_STYLE_LIBRARY = {
   'balanced-plate': { slug: 'balanced-plate', label: 'Balanced Plate', effort: 'standard', emphasis: 'whole-food' },
