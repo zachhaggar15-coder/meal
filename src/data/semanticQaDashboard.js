@@ -2,12 +2,12 @@
 // Do not import this module into public page components.
 
 export const SEMANTIC_QA_DASHBOARD = {
-  "generatedAt": "2026-08-21T10:18:57.820Z",
+  "generatedAt": "2026-08-31T14:08:55.405Z",
   "available": true,
   "latest": {
-    "runAt": "2026-08-21T10:18:57.820Z",
-    "sampleSize": 1059,
-    "passed": 1059,
+    "runAt": "2026-08-31T14:08:55.405Z",
+    "sampleSize": 30,
+    "passed": 30,
     "flagged": 0,
     "passRate": 100,
     "plansWithoutFlagsRate": 100,
@@ -54,80 +54,59 @@ export const SEMANTIC_QA_DASHBOARD = {
       "plansWithoutFlagsRate": 100,
       "criticalHigh": 0,
       "medium": 0,
-      "cumulativeCoverage": 1055
+      "cumulativeCoverage": 1059
+    },
+    {
+      "runAt": "2026-08-31T14:08:55.405Z",
+      "sampleSize": 30,
+      "passRate": 100,
+      "plansWithoutFlagsRate": 100,
+      "criticalHigh": 0,
+      "medium": 0,
+      "cumulativeCoverage": 1059
     }
   ],
   "breakdowns": {
     "supermarket": [
       {
         "name": "aldi",
-        "sampled": 206,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "tesco",
-        "sampled": 165,
+        "sampled": 7,
         "flagged": 0,
         "reviewRate": 0
       },
       {
         "name": "lidl",
-        "sampled": 142,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "asda",
-        "sampled": 142,
+        "sampled": 7,
         "flagged": 0,
         "reviewRate": 0
       },
       {
         "name": "any",
-        "sampled": 123,
+        "sampled": 6,
         "flagged": 0,
         "reviewRate": 0
       },
       {
-        "name": "sainsburys",
-        "sampled": 105,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "morrisons",
-        "sampled": 98,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "iceland",
-        "sampled": 62,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "marks-spencer",
-        "sampled": 5,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "waitrose",
-        "sampled": 5,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "coop",
+        "name": "tesco",
         "sampled": 4,
         "flagged": 0,
         "reviewRate": 0
       },
       {
-        "name": "ocado",
-        "sampled": 2,
+        "name": "asda",
+        "sampled": 4,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "marks-spencer",
+        "sampled": 1,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "sainsburys",
+        "sampled": 1,
         "flagged": 0,
         "reviewRate": 0
       }
@@ -135,25 +114,13 @@ export const SEMANTIC_QA_DASHBOARD = {
     "diet": [
       {
         "name": "standard",
-        "sampled": 644,
+        "sampled": 28,
         "flagged": 0,
         "reviewRate": 0
       },
       {
         "name": "vegetarian",
-        "sampled": 215,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "vegan",
-        "sampled": 102,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "pescatarian",
-        "sampled": 98,
+        "sampled": 2,
         "flagged": 0,
         "reviewRate": 0
       }
@@ -161,126 +128,48 @@ export const SEMANTIC_QA_DASHBOARD = {
     "goal": [
       {
         "name": "weight-loss",
-        "sampled": 138,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "muscle-gain",
-        "sampled": 97,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "budget-fat-loss",
-        "sampled": 81,
+        "sampled": 11,
         "flagged": 0,
         "reviewRate": 0
       },
       {
         "name": "high-protein-low-cal",
-        "sampled": 81,
+        "sampled": 7,
         "flagged": 0,
         "reviewRate": 0
       },
       {
-        "name": "cheap-student",
-        "sampled": 77,
+        "name": "muscle-gain",
+        "sampled": 4,
         "flagged": 0,
         "reviewRate": 0
       },
       {
-        "name": "low-effort",
-        "sampled": 64,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "busy-professional",
-        "sampled": 60,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "budget-bodybuilding",
-        "sampled": 48,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "vegetarian-low-cal",
-        "sampled": 45,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "vegan-low-cal",
-        "sampled": 45,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "high-protein-vegetarian",
-        "sampled": 45,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "cheap-high-protein",
-        "sampled": 33,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "body-recomp",
-        "sampled": 32,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "gym-beginner",
-        "sampled": 31,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "cutting",
-        "sampled": 31,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "maintenance",
-        "sampled": 30,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "anti-inflammatory",
-        "sampled": 30,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "endurance-athlete",
-        "sampled": 30,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "pescatarian",
-        "sampled": 30,
-        "flagged": 0,
-        "reviewRate": 0
-      },
-      {
-        "name": "menopause-nutrition",
-        "sampled": 30,
+        "name": "general",
+        "sampled": 2,
         "flagged": 0,
         "reviewRate": 0
       },
       {
         "name": "budget",
+        "sampled": 2,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "budget-fat-loss",
+        "sampled": 2,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "vegetarian-low-cal",
+        "sampled": 1,
+        "flagged": 0,
+        "reviewRate": 0
+      },
+      {
+        "name": "body-recomp",
         "sampled": 1,
         "flagged": 0,
         "reviewRate": 0
@@ -289,13 +178,13 @@ export const SEMANTIC_QA_DASHBOARD = {
     "planType": [
       {
         "name": "generated",
-        "sampled": 1056,
+        "sampled": 22,
         "flagged": 0,
         "reviewRate": 0
       },
       {
         "name": "editorial",
-        "sampled": 3,
+        "sampled": 8,
         "flagged": 0,
         "reviewRate": 0
       }

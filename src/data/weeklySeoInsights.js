@@ -2,11 +2,11 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-08-24T07:32:59.897Z",
+  "generatedAt": "2026-08-31T14:08:53.366Z",
   "range": {
     "current": {
-      "startDate": "2026-07-25",
-      "endDate": "2026-08-21"
+      "startDate": "2026-08-01",
+      "endDate": "2026-08-28"
     }
   },
   "source": "google-analytics-and-search-console",
@@ -30,12 +30,6 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Guide"
     },
     {
-      "to": "/blog/best-meal-prep-containers-uk",
-      "label": "Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options",
-      "description": "Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance.",
-      "category": "Guide"
-    },
-    {
       "to": "/meal-plans/lidl",
       "label": "Lidl Meal Plans UK",
       "description": "Browse free Lidl meal plans for UK weight loss, high protein, vegetarian, vegan, muscle gain and budget goals, with PDFs and shopping lists.",
@@ -48,16 +42,22 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Meal plans"
     },
     {
+      "to": "/blog/best-meal-prep-containers-uk",
+      "label": "Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options",
+      "description": "Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance.",
+      "category": "Guide"
+    },
+    {
       "to": "/meal-plans/high-protein",
       "label": "High Protein Meal Plans UK",
       "description": "Find free high protein meal plans for UK supermarkets, including fat loss, muscle gain, vegetarian, gym beginner and body recomposition plans.",
       "category": "Meal plans"
     },
     {
-      "to": "/blog/lidl-high-protein-food-ideas-uk",
-      "label": "Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples",
-      "description": "Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.",
-      "category": "Guide"
+      "to": "/meal-plan/1500-calorie-meal-plan",
+      "label": "1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List",
+      "description": "A complete 1500 calorie meal plan for UK adults: 7 days of high-protein meals, a full supermarket shopping list, batch cooking tips, and suitability notes for fat loss.",
+      "category": "Ready-made plan"
     }
   ]
 };
