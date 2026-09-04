@@ -31,10 +31,10 @@ export const SEMANTIC_QA_DASHBOARD = {
     }
   },
   "coverage": {
-    "totalPublishedPlans": 1059,
-    "plansEverSampled": 1059,
+    "totalPublishedPlans": 1055,
+    "plansEverSampled": 1055,
     "percentageEverSampled": 100,
-    "plansSampledLast30Days": 1059,
+    "plansSampledLast30Days": 1055,
     "plansNeverSampled": 0
   },
   "trend": [

@@ -4422,12 +4422,6 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "fats": 46,
     "fibre": 23
   },
-  "lidl-budget-fat-loss-1500-v2-high-fibre-v3": {
-    "protein": 97,
-    "carbs": 167,
-    "fats": 49,
-    "fibre": 25
-  },
   "any-budget-fat-loss-1500-budget-smart-v3": {
     "protein": 97,
     "carbs": 206,
@@ -4463,12 +4457,6 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "carbs": 216,
     "fats": 55,
     "fibre": 34
-  },
-  "tesco-budget-fat-loss-1800-v2-budget-smart-vegan-v3": {
-    "protein": 87,
-    "carbs": 268,
-    "fats": 44,
-    "fibre": 47
   },
   "morrisons-budget-fat-loss-1800-tinned-and-frozen-v3": {
     "protein": 135,
@@ -5484,12 +5472,6 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "fats": 53,
     "fibre": 33
   },
-  "aldi-anti-inflammatory-veg-1800-high-fibre-v3": {
-    "protein": 89,
-    "carbs": 256,
-    "fats": 44,
-    "fibre": 42
-  },
   "tesco-anti-inflammatory-vegan-1800-five-a-day-v3": {
     "protein": 89,
     "carbs": 225,
@@ -5945,12 +5927,6 @@ export const PLAN_MACRO_INDEX = Object.freeze({
     "carbs": 229,
     "fats": 36,
     "fibre": 41
-  },
-  "aldi-weight-loss-1800-v3-high-fibre-v4": {
-    "protein": 131,
-    "carbs": 213,
-    "fats": 50,
-    "fibre": 34
   },
   "tesco-weight-loss-1500-v2-balanced-plate-v4": {
     "protein": 85,

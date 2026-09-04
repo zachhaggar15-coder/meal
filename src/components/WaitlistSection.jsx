@@ -5,6 +5,7 @@ import {
   WAITLIST_FEATURES,
 } from '../data/waitlistOptions.js';
 import { track } from '../utils/analytics.js';
+import { apiHeaders } from '../utils/apiClient.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -17,6 +18,10 @@ async function safeJson(res) {
  * Posts to the /api/waitlist serverless function (Supabase insert + welcome
  * email). No Supabase keys ever touch the browser.
  */
+// Mirrors the server limit in api/waitlist.js, which slices firstName to 80
+// characters. Kept as a named constant so the two cannot drift apart quietly.
+export const WAITLIST_FIRST_NAME_MAX = 80;
+
 export default function WaitlistSection({ sourcePage = '', className = '', compact = false }) {
   const uid = useId();
   const sectionRef = useRef(null);
@@ -75,7 +80,7 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
     try {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: apiHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({
           email: cleanEmail,
           firstName: firstName.trim(),
@@ -181,6 +186,10 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
                 <>
                   <div className="waitlist-field">
                     <label htmlFor={`${uid}-name`}>First name <span className="waitlist-optional">(optional)</span></label>
+                    {/* api/waitlist.js truncates this to 80 characters before
+                        storing it. Enforcing the same limit here means a long
+                        name is stopped where the person can see it, rather than
+                        silently cut after they submit. */}
                     <input
                       id={`${uid}-name`}
                       type="text"
@@ -188,6 +197,7 @@ export default function WaitlistSection({ sourcePage = '', className = '', compa
                       value={firstName}
                       onChange={e => setFirstName(e.target.value)}
                       placeholder="Alex"
+                      maxLength={WAITLIST_FIRST_NAME_MAX}
                       disabled={sending}
                     />
                   </div>

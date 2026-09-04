@@ -88,25 +88,25 @@ Rules:
     if (!openaiRes.ok) {
       const errText = await openaiRes.text();
       console.error('OpenAI error:', openaiRes.status, errText);
-      refundRateLimit(req, 'edit-meal');
+      await refundRateLimit(req, 'edit-meal');
       return res.status(502).json({ error: `OpenAI API returned ${openaiRes.status}. Please try again.` });
     }
 
     const data = await openaiRes.json();
     const content = data?.choices?.[0]?.message?.content;
     if (!content) {
-      refundRateLimit(req, 'edit-meal');
+      await refundRateLimit(req, 'edit-meal');
       return res.status(502).json({ error: 'OpenAI response was empty.' });
     }
 
     const parsed = parseJsonObject(content);
     if (!parsed) {
-      refundRateLimit(req, 'edit-meal');
+      await refundRateLimit(req, 'edit-meal');
       return res.status(502).json({ error: 'Could not parse the updated meal. Please try again.' });
     }
 
     if (!validateEditedMealPayload(parsed)) {
-      refundRateLimit(req, 'edit-meal');
+      await refundRateLimit(req, 'edit-meal');
       return res.status(502).json({ error: 'The updated meal was incomplete. Please try again.' });
     }
 
@@ -119,7 +119,7 @@ Rules:
     } catch (error) {
       if (error instanceof UnresolvedNutritionError) {
         console.warn('edit-meal: unresolved nutrition:', error.lines);
-        refundRateLimit(req, 'edit-meal');
+        await refundRateLimit(req, 'edit-meal');
         return res.status(502).json({
           error: 'The updated meal used an ingredient without a verifiable quantity or nutrition match. Please try a more specific edit.',
         });
@@ -128,7 +128,7 @@ Rules:
     }
   } catch (err) {
     console.error(err);
-    refundRateLimit(req, 'edit-meal');
+    await refundRateLimit(req, 'edit-meal');
     return res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 }

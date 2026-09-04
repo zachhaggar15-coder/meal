@@ -1,7 +1,33 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { searchSite } from '../data/navigation.js';
+import { searchStaticSite } from '../data/navigation.js';
 import { trackEvent } from '../utils/analytics.js';
+
+// The full index (blog posts, hubs, every chooser destination) is a 60 kB JSON
+// import plus a ~1000 entry build. Fetching it when someone actually reaches
+// for the search box, rather than during boot on every page, keeps it off the
+// critical path. Cached at module scope so the navbar and sidebar copies of
+// this component share one load.
+let fullSearchFn = null;
+let fullSearchPromise = null;
+
+function loadFullSearch() {
+  if (fullSearchFn) return Promise.resolve(fullSearchFn);
+  if (!fullSearchPromise) {
+    fullSearchPromise = import('../data/siteSearchIndex.js')
+      .then(module => {
+        fullSearchFn = module.searchSite;
+        return fullSearchFn;
+      })
+      .catch(() => {
+        // Leave the static results in place and allow a later retry rather than
+        // breaking the search box on a transient chunk load failure.
+        fullSearchPromise = null;
+        return null;
+      });
+  }
+  return fullSearchPromise;
+}
 
 export default function SiteSearch({
   id = 'site-search',
@@ -12,8 +38,28 @@ export default function SiteSearch({
 }) {
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
+  const [searchFn, setSearchFn] = useState(() => fullSearchFn);
+  const mountedRef = useRef(true);
   const navigate = useNavigate();
-  const results = useMemo(() => searchSite(query, maxResults), [query, maxResults]);
+  const results = useMemo(
+    () => (searchFn || searchStaticSite)(query, maxResults),
+    [searchFn, query, maxResults],
+  );
+
+  // Reset on the way in as well as out: StrictMode mounts, unmounts and
+  // remounts in development, and without this the ref would stay false after
+  // the remount and the loaded index would never be applied.
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
+
+  function ensureFullSearch() {
+    if (searchFn) return;
+    loadFullSearch().then(loaded => {
+      if (loaded && mountedRef.current) setSearchFn(() => loaded);
+    });
+  }
   const trimmedQuery = query.trim();
   const showResults = focused && (trimmedQuery.length > 1 || results.length > 0);
 
@@ -64,8 +110,14 @@ export default function SiteSearch({
         <input
           id={id}
           value={query}
-          onChange={event => setQuery(event.target.value)}
-          onFocus={() => setFocused(true)}
+          onChange={event => {
+            ensureFullSearch();
+            setQuery(event.target.value);
+          }}
+          onFocus={() => {
+            ensureFullSearch();
+            setFocused(true);
+          }}
           onBlur={() => window.setTimeout(() => setFocused(false), 120)}
           placeholder={placeholder}
           type="search"

@@ -1,8 +1,9 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense, useCallback, useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import './quality.css';
 import AnalyticsConsentBanner from './components/AnalyticsConsentBanner.jsx';
+import AppErrorBoundary from './components/AppErrorBoundary.jsx';
 import BehaviorAnalytics from './components/BehaviorAnalytics.jsx';
 import ClickTracking from './components/ClickTracking.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -64,6 +65,9 @@ function AnalyticsRouteTracker() {
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const closeSidebar = useCallback(() => setSidebarOpen(false), []);
+  const toggleSidebar = useCallback(() => setSidebarOpen(open => !open), []);
 
   return (
     <>
@@ -73,12 +77,13 @@ export default function App() {
       <AnalyticsRouteTracker />
       <ScrollToTop />
       <StripHomeParams />
-      <Navbar menuOpen={sidebarOpen} onMenuToggle={() => setSidebarOpen(o => !o)} />
+      <Navbar menuOpen={sidebarOpen} onMenuToggle={toggleSidebar} />
       <div className="layout-body">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar open={sidebarOpen} onClose={closeSidebar} />
         <main id="main-content" className="layout-main" tabIndex="-1">
-          <Suspense fallback={<RouteLoading />}>
-            <Routes>
+          <AppErrorBoundary resetKey={`${location.pathname}${location.search}`}>
+            <Suspense fallback={<RouteLoading />}>
+              <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/quiz" element={<Quiz />} />
               <Route path="/quiz/results" element={<QuizResults />} />
@@ -115,8 +120,9 @@ export default function App() {
                   attached. Seventh of the container pairs to be merged. */}
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+              </Routes>
+            </Suspense>
+          </AppErrorBoundary>
         </main>
       </div>
       <AnalyticsConsentBanner />

@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
 import { FOOTER_GROUPS } from '../data/navigation.js';
+import { OPEN_PRIVACY_CHOICES_EVENT } from '../utils/consentRecord.js';
+import './Footer.css';
+
+function openPrivacyChoices() {
+  window.dispatchEvent(new CustomEvent(OPEN_PRIVACY_CHOICES_EVENT));
+}
 
 export default function Footer() {
   return (
@@ -30,6 +36,9 @@ export default function Footer() {
       <p className="footer-disclaimer">
         General meal-planning information only. Calories and macros are estimates; speak to a qualified professional for clinical dietary needs.
       </p>
+      <button type="button" className="footer-privacy-choices" onClick={openPrivacyChoices}>
+        Privacy choices
+      </button>
       <span className="footer-copy">&copy; {new Date().getFullYear()} MealPrep.org.uk</span>
     </footer>
   );

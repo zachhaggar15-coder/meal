@@ -11,11 +11,11 @@ import NotFound from './NotFound.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import {
   AFFILIATE_DISCLOSURE,
-  CONTAINER_GUIDE_GROUPS,
   CONTAINER_GUIDES,
   getContainerProduct,
   getContainerProducts,
 } from '../data/containerProducts.js';
+import { CONTAINER_GUIDE_GROUPS } from '../data/containerGuideGroups.js';
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
@@ -151,7 +151,7 @@ export default function ContainerGuide() {
       />
 
       <div className="page content-page container-guide-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
           <Link to="/meal-prep-containers">Meal Prep Containers</Link>{' '}
           <span aria-hidden>&rsaquo;</span> <span>{guideLabel(guide.slug)}</span>

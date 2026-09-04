@@ -1,4 +1,4 @@
-import { INDEXABLE_PLAN_SEEDS } from './planSeeds.js';
+import { INDEXED_SUPERMARKET_VALUES } from './planCatalogMeta.js';
 
 export const GOAL_CHOOSER_ITEMS = [
   { value: 'weight-loss', label: 'Weight Loss', defaultCalories: 1500 },
@@ -88,12 +88,10 @@ export const SUPERMARKET_CHOICES = [
   },
 ];
 
-const INDEXED_SUPERMARKET_VALUES = new Set(
-  INDEXABLE_PLAN_SEEDS.map(seed => seed.supermarket),
-);
+const INDEXED_SUPERMARKET_VALUE_SET = new Set(INDEXED_SUPERMARKET_VALUES);
 
 export const INDEXED_SUPERMARKET_CHOICES = SUPERMARKET_CHOICES.filter(choice => (
-  INDEXED_SUPERMARKET_VALUES.has(choice.value)
+  INDEXED_SUPERMARKET_VALUE_SET.has(choice.value)
 ));
 
 export const DIET_CHOICES = [

@@ -3,7 +3,6 @@ import { useLocation, useParams, Link } from 'react-router-dom';
 import AdSlot from '../components/AdSlot.jsx';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
-import WaitlistSection from '../components/WaitlistSection.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
@@ -21,12 +20,14 @@ import StorageSafetyNote from '../components/StorageSafetyNote.jsx';
 import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js';
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import PlanKitPick from '../components/PlanKitPick.jsx';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, LIBRARY_VALIDATED_ON, SITE_AUTHOR_NAME, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { formatContentDate } from '../utils/contentDates.js';
 import { track } from '../utils/analytics.js';
+import { formatWeeklyPrice, formatWeeklyPriceEstimate } from '../utils/priceDisplay.js';
 import {
   buildPlanReference,
   readPlanProgress,
@@ -582,12 +583,13 @@ export default function PlanPage() {
         </Link>
       </p>
       <p className="plan-shopping-note">
-        Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+        Estimated cost: <strong>{formatWeeklyPrice(displayPlan.priceEstimate)}</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
         {displayPlan.household?.hasMixedPortions
           ? ' Calories and macros are estimated for each household member from their portion size.'
           : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
       </p>
       <TickableShoppingList
+        planReference={planReference}
         list={displayPlan.shoppingList}
         planRoute={planRoute}
         analyticsContext={planAnalytics}
@@ -637,13 +639,21 @@ export default function PlanPage() {
           <Link to="/methodology">How plans are built and checked</Link>.
         </p>
 
-        <PlanOverview plan={displayPlan} sourcePlan={plan} />
+        {/* A plan page runs to roughly 10,000px: summary, seven days of meals,
+            the shopping list, then the supporting sections. Someone who came
+            back for the shopping list had no way to reach it except scrolling
+            past everything they had already read. Plain anchors to the three
+            sections that always exist - no JavaScript, no scrollspy. */}
+        <nav className="plan-jump" aria-label="On this page">
+          <span className="plan-jump-label">On this page</span>
+          <ul>
+            <li><a href="#plan-summary">Plan summary</a></li>
+            <li><a href="#meal-plan">7-day meals</a></li>
+            <li><a href="#shopping-list">Shopping list</a></li>
+          </ul>
+        </nav>
 
-        <QuizNudge
-          sourcePage={`plan-${plan.slug}`}
-          pageType="plan"
-          location="after_plan_overview"
-        />
+        <PlanOverview plan={displayPlan} sourcePlan={plan} />
 
         {editNote && (
           <div className="plan-edit-notice">
@@ -663,6 +673,22 @@ export default function PlanPage() {
           onSharePlan={sharePlan}
           onPrintPlan={handlePrintPlan}
           shareStatus={shareStatus}
+        />
+
+        {/* Sits with save/share/print rather than at the foot of the page.
+            Emailing the plan is the same class of action as saving it, and the
+            reader decides whether they want it kept while the title is still in
+            view. The compact variant keeps it to a single row so it does not
+            push the first meal below the fold. */}
+        <EmailPlanCapture
+          plan={plan}
+          householdMembers={householdMembers}
+          sourcePage="plan"
+          compact
+          kicker="Keep this plan"
+          heading="Email me this plan"
+          blurb="The 7-day menu, shopping list and a printable link, sent once. No newsletter."
+          planName={plan.title}
         />
 
         <HouseholdPortionsControl
@@ -690,15 +716,25 @@ export default function PlanPage() {
           className="plan-continuation"
         />
         {shoppingListSection}
-        <EmailPlanCapture
-          plan={plan}
-          householdMembers={householdMembers}
-          sourcePage="plan"
+        {/* Below the meals and the shopping list on purpose. This panel used to
+            sit between the plan summary and the first meal, interrupting the page
+            before the reader had seen a single thing they came for - one of five
+            quiz invitations on this page. Someone still reading down here has
+            seen the plan and can judge whether it fits. */}
+        <QuizNudge
+          sourcePage={`plan-${plan.slug}`}
+          pageType="plan"
+          location="after_shopping_list"
         />
         <PageHeroVisual visual={planVisual} className="plan-page-visual plan-page-visual--after-plan" />
         <ContainerSetupRecommendation
           plan={displayPlan}
           sourcePage={`plan-${plan.slug || 'page'}-containers`}
+        />
+        <PlanKitPick
+          plan={displayPlan}
+          portions={displayPlan?.totalPortions}
+          sourcePage={`plan-${plan.slug || 'page'}-kit`}
         />
 
         <details className="plan-secondary-details">
@@ -712,7 +748,7 @@ export default function PlanPage() {
 
         {/* Quiz CTA */}
         <div className="plan-quiz-cta">
-          <Link to="/quiz" className="btn-quiz-inline">Not Right For You? Take The Quiz →</Link>
+          <Link to="/quiz" className="btn-quiz-inline">Not right for you? Take the quiz →</Link>
         </div>
 
         <PrintablePlanSummary
@@ -833,7 +869,7 @@ export default function PlanPage() {
             </button>
           </div>
           <p className="plan-shopping-note">
-            Estimated cost: <strong>{displayPlan.priceEstimate}/week</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
+            Estimated cost: <strong>{formatWeeklyPrice(displayPlan.priceEstimate)}</strong> for {formatHouseholdLabel(displayPlan)} from {MKT_LABEL[plan.supermarket] || plan.supermarket}.
             {displayPlan.household?.hasMixedPortions
               ? ' Calories and macros are estimated for each household member from their portion size.'
               : ' Calories and macros stay shown per person; ingredients and shopping quantities are scaled for the household.'}
@@ -959,7 +995,7 @@ export default function PlanPage() {
         {/* Bottom CTAs */}
         <div className="plan-bottom-ctas">
           <Link to="/quiz" className="btn-primary">Find a better match →</Link>
-          <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT} plans</Link>
+          <Link to="/browse" className="btn-secondary">Browse all {PLAN_COUNT_LABEL} plans</Link>
         </div>
 
         <TrustBox
@@ -978,7 +1014,6 @@ export default function PlanPage() {
         <FeedbackBox />
 
       </div>
-      <WaitlistSection sourcePage="plan" compact />
       <Footer />
     </>
   );
@@ -1020,7 +1055,7 @@ function PlanOverview({ plan, sourcePlan }) {
   };
 
   return (
-    <section className="plan-overview" aria-labelledby="plan-overview-heading">
+    <section id="plan-summary" className="plan-overview" aria-labelledby="plan-overview-heading">
       <div className="plan-overview-head">
         <div>
           <span className="offer-kicker">Your week at a glance</span>
@@ -1031,7 +1066,7 @@ function PlanOverview({ plan, sourcePlan }) {
       <div className="plan-overview-grid">
         <SummaryItem label="Supermarket" value={market} />
         <SummaryItem label="Goal" value={sourcePlan.goalLabel} />
-        <SummaryItem label="Weekly cost" value={`${plan.priceEstimate} estimate`} />
+        <SummaryItem label="Weekly cost" value={formatWeeklyPriceEstimate(plan.priceEstimate)} />
       </div>
       {/* Calories alone, plus protein alone, left a reader to guess the rest of
           the plate. All four are stated, and labelled as averages, because
@@ -1056,7 +1091,7 @@ function _PlanQuickFacts({ plan }) {
   const facts = [
     { label: 'Best for', value: plan.summary.bestFor },
     { label: 'Calories', value: plan.summary.calorieRange },
-    { label: 'Budget', value: `${plan.summary.budgetRange}/week estimate` },
+    { label: 'Budget', value: formatWeeklyPriceEstimate(plan.summary.budgetRange) },
     { label: 'Prep style', value: plan.effortLabel },
     { label: 'Includes', value: '7 days, recipes, macros, PDF export and shopping list' },
     { label: 'Diet', value: plan.dietType === 'standard' ? 'No specific dietary restriction' : cap(plan.dietType) },
@@ -1277,7 +1312,7 @@ function PlanQualityNotes({ plan }) {
   const rows = [
     ['Calorie target', `Built around roughly ${calorieText} kcal per day`, getCalorieAssumption(plan.calories)],
     ['Supermarket', market, getMarketAssumption(plan.supermarket)],
-    ['Budget', `${plan.summary.budgetRange}/week estimate`, getBudgetAssumption(plan.budget)],
+    ['Budget', formatWeeklyPriceEstimate(plan.summary.budgetRange), getBudgetAssumption(plan.budget)],
     ['Prep style', plan.effortLabel, getEffortAssumption(plan.effort)],
   ];
 

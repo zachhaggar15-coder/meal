@@ -28,7 +28,7 @@ npm run check
 | `npm run audit:seo` | all 1,405 built HTML files and 1,377 canonicals | complete metadata, canonical/indexing/sitemap agreement, meaningful main content, valid JSON-LD |
 | `npm run audit:schema` | all generated structured data | zero invalid or misleading eligible entities |
 | `npm run audit:links` | every built internal link | zero broken links or internal links to redirects |
-| `npm run audit:metadata` | all 1,377 indexable pages and 1,059 published plan claims | zero duplicate primary metadata and zero calorie/supermarket factual mismatch; length flags recorded for prioritised review |
+| `npm run audit:metadata` | all 1,354 indexable pages and 1,055 published plan claims | zero duplicate primary metadata and zero calorie/supermarket factual mismatch; length flags recorded for prioritised review |
 | `npm run audit:accessibility` | static markup in all 1,405 built HTML files | zero missing names/alts/landmarks/language/skip links and zero duplicate IDs |
 | `npm run audit:performance` | complete emitted client asset graph and every route HTML file | all compressed/raw transfer, request, image and pre-consent script budgets pass |
 | `npm run audit:assets` | all local references in emitted HTML, CSS, JSON and manifests | zero broken local asset references |

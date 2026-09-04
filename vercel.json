@@ -1,6 +1,73 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), geolocation=(), microphone=(), payment=(), usb=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Content-Security-Policy-Report-Only",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://www.googletagmanager.com https://plausible.io https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://plausible.io https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://pagead2.googlesyndication.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/og/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon-48.png|favicon-192.png|apple-touch-icon.png|logo-512.png|mealprep-logo.webp|og-preview.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/blog/meal-prep-containers-uk",
@@ -80,6 +147,26 @@
     {
       "source": "/meal-plans/low-effort",
       "destination": "/browse",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-weight-loss-1800-v3-high-fibre-v4",
+      "destination": "/plans/aldi-weight-loss-1800-high-fibre-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/lidl-budget-fat-loss-1500-v2-high-fibre-v3",
+      "destination": "/plans/lidl-budget-fat-loss-1500-high-fibre-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/tesco-budget-fat-loss-1800-v2-budget-smart-vegan-v3",
+      "destination": "/plans/tesco-budget-fat-loss-1800-budget-smart-vegan-v3",
+      "permanent": true
+    },
+    {
+      "source": "/plans/aldi-anti-inflammatory-veg-1800-high-fibre-v3",
+      "destination": "/plans/aldi-anti-inflammatory-1800-high-fibre-vegetarian-v3",
       "permanent": true
     },
     {

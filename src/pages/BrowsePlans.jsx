@@ -1,15 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import PlanCard from '../components/PlanCard.jsx';
+import { planCardFamily, planMarketShort } from '../utils/planCardMeta.js';
+import { INDEXED_SUPERMARKET_VALUES } from '../data/planCatalogMeta.js';
 import PopularSearches from '../components/PopularSearches.jsx';
 import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
-import { PLAN_COUNT, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { BROWSE_PAGE_SIZE, buildBrowsePagePath, buildBrowsePageWindow } from '../data/browsePagination.js';
 import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
@@ -17,6 +19,7 @@ import { SITE_VISUALS } from '../data/visualAssets.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { proteinFilterMatches } from '../utils/targetValidation.js';
 import { trackEvent } from '../utils/analytics.js';
+import { buildBrowseUrl } from '../utils/browseUrlState.js';
 
 // Browse only links to indexed, prerendered plan pages. The larger synthetic
 // coverage pool is kept out of public links so Google and users never land on
@@ -161,8 +164,15 @@ const HUB_INDEX_GROUPS = [
   },
 ];
 
+// Derived from the catalogue rather than hand-listed, so a new supermarket
+// cannot appear in the grid without appearing in the key.
+const SUPERMARKET_COLOUR_KEY = INDEXED_SUPERMARKET_VALUES
+  .map(value => ({ value, label: planMarketShort(value) }))
+  .sort((a, b) => a.label.localeCompare(b.label, 'en-GB'));
+
 export default function BrowsePlans() {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const { page: pageParam } = useParams();
   const paramString = params.toString();
   const routePage = readPageParam(pageParam);
@@ -196,6 +206,15 @@ export default function BrowsePlans() {
     goal,
     supermarket,
     dietType: diet,
+    calories,
+    budget,
+    effort,
+  }), [search, goal, supermarket, diet, calories, budget, effort]);
+  const urlFilters = useMemo(() => ({
+    search,
+    goal,
+    supermarket,
+    diet,
     calories,
     budget,
     effort,
@@ -249,7 +268,7 @@ export default function BrowsePlans() {
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: `Browse ${PLAN_COUNT} UK meal plans${pageTitleSuffix}`,
+      name: `Browse ${PLAN_COUNT_LABEL} UK meal plans${pageTitleSuffix}`,
       description: browseDescription,
       url: `https://www.mealprep.org.uk${canonicalPath}`,
       mainEntity: {
@@ -275,17 +294,25 @@ export default function BrowsePlans() {
   function resetFilters() {
     setSearch(''); setGoal(''); setSupermarket(''); setDiet('');
     setCalories(''); setBudget(''); setEffort(''); setPage(1);
+    navigate(buildBrowseUrl({}, 1, paramString));
   }
 
-  function updateFilter(setter, val) {
+  function updateFilter(key, setter, val, { replace = false } = {}) {
     setter(val);
     setPage(1);
+    navigate(buildBrowseUrl({ ...urlFilters, [key]: val }, 1, paramString), { replace });
+  }
+
+  function updatePage(nextPage) {
+    const boundedPage = Math.min(Math.max(1, nextPage), pageCount);
+    setPage(boundedPage);
+    navigate(buildBrowseUrl(urlFilters, boundedPage, paramString));
   }
 
   return (
     <>
       <SEO
-        title={`Browse ${PLAN_COUNT.toLocaleString('en-GB')} UK Meal Plans by Goal & Calories${pageTitleSuffix} | MealPrep.org.uk`}
+        title={`Browse ${PLAN_COUNT_LABEL} UK Meal Plans by Goal & Calories${pageTitleSuffix} | MealPrep.org.uk`}
         description={browseDescription}
         canonical={`https://www.mealprep.org.uk${canonicalPath}`}
         robots={hasActiveFilters ? 'noindex,follow' : undefined}
@@ -309,21 +336,21 @@ export default function BrowsePlans() {
             type="search"
             placeholder="Search plans…"
             value={search}
-            onChange={e => { setSearch(e.target.value); setPage(1); }}
+            onChange={e => updateFilter('search', setSearch, e.target.value, { replace: true })}
             aria-label="Search meal plans"
           />
 
           <div className="browse-filter-row">
-            <Select label="Goal"        value={goal}        onChange={v => updateFilter(setGoal, v)}        options={goalOptions} />
-            <Select label="Supermarket" value={supermarket} onChange={v => updateFilter(setSupermarket, v)} options={supermarketOptions} />
-            <Select label="Diet"        value={diet}        onChange={v => updateFilter(setDiet, v)}        options={dietOptions} />
-            <Select label="Calories"    value={calories}    onChange={v => updateFilter(setCalories, v)}    options={calorieOptions} />
-            <Select label="Budget"      value={budget}      onChange={v => updateFilter(setBudget, v)}      options={budgetOptions} />
-            <Select label="Effort"      value={effort}      onChange={v => updateFilter(setEffort, v)}      options={effortOptions} />
+            <Select label="Goal"        value={goal}        onChange={v => updateFilter('goal', setGoal, v)}               options={goalOptions} />
+            <Select label="Supermarket" value={supermarket} onChange={v => updateFilter('supermarket', setSupermarket, v)} options={supermarketOptions} />
+            <Select label="Diet"        value={diet}        onChange={v => updateFilter('diet', setDiet, v)}               options={dietOptions} />
+            <Select label="Calories"    value={calories}    onChange={v => updateFilter('calories', setCalories, v)}       options={calorieOptions} />
+            <Select label="Budget"      value={budget}      onChange={v => updateFilter('budget', setBudget, v)}           options={budgetOptions} />
+            <Select label="Effort"      value={effort}      onChange={v => updateFilter('effort', setEffort, v)}           options={effortOptions} />
           </div>
 
           <div className="browse-filter-meta">
-            <span className="browse-count">{filtered.length} plan{filtered.length !== 1 ? 's' : ''}</span>
+            <span className="browse-count">{filtered.length.toLocaleString('en-GB')} plan{filtered.length !== 1 ? 's' : ''}</span>
             {(goal || supermarket || diet || calories || budget || effort || search) && (
               <button className="browse-reset" onClick={resetFilters} type="button">Clear filters</button>
             )}
@@ -339,11 +366,25 @@ export default function BrowsePlans() {
               <button onClick={resetFilters} className="btn-secondary" type="button">Clear all filters</button>
             </div>
           ) : (
-            <div className="browse-grid">
-              {shown.map(plan => (
-                <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
-              ))}
-            </div>
+            <>
+              {/* Card colour keys off the supermarket. The store name is on
+                  every card too, so this is a scanning aid rather than the only
+                  signal - but a mixed grid is where the coding earns its keep,
+                  and it needs saying once. */}
+              <ul className="browse-colour-key" aria-label="What the card colours mean">
+                {SUPERMARKET_COLOUR_KEY.map(({ value, label }) => (
+                  <li key={value}>
+                    <span className={`browse-colour-key-swatch pc-${planCardFamily(value)}`} aria-hidden="true" />
+                    {label}
+                  </li>
+                ))}
+              </ul>
+              <div className="browse-grid">
+                {shown.map(plan => (
+                  <PlanCard key={plan.slug} plan={plan} sourcePage="browse" />
+                ))}
+              </div>
+            </>
           )}
         </section>
 
@@ -355,7 +396,7 @@ export default function BrowsePlans() {
                 <button
                   className="browse-page-btn"
                   disabled={currentPage === 1}
-                  onClick={() => setPage(p => Math.max(1, p - 1))}
+                  onClick={() => updatePage(currentPage - 1)}
                   type="button"
                 >
                   &larr; Previous
@@ -364,7 +405,7 @@ export default function BrowsePlans() {
                 <button
                   className="browse-page-btn"
                   disabled={currentPage === pageCount}
-                  onClick={() => setPage(p => Math.min(pageCount, p + 1))}
+                  onClick={() => updatePage(currentPage + 1)}
                   type="button"
                 >
                   Next &rarr;
@@ -470,7 +511,7 @@ export default function BrowsePlans() {
               <details className="browse-index-group" key={group.value}>
                 <summary>
                   <span>{group.label}</span>
-                  <span>{group.total} plans</span>
+                  <span>{group.total.toLocaleString('en-GB')} plans</span>
                 </summary>
                 <ul className="browse-index-list">
                   {group.plans.map(plan => (

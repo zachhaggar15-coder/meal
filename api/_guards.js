@@ -1,7 +1,6 @@
 import crypto from 'node:crypto';
+import { getRateLimitStore } from './_rate-limit-store.js';
 
-const memoryBuckets = new Map();
-const MAX_MEMORY_BUCKETS = 10000;
 const JSON_CONTENT_TYPE = /\bapplication\/json\b/i;
 
 // Sent by the browser (see src/utils/apiClient.js) so two people sharing one
@@ -28,7 +27,13 @@ export async function applyApiGuards(req, res, options) {
     );
   }
 
-  const rate = hitRateLimit(req, options.route, options.rateLimit);
+  let rate;
+  try {
+    rate = await hitRateLimit(req, options.route, options.rateLimit);
+  } catch (err) {
+    console.error('Rate-limit store unavailable:', err?.message || err);
+    return reject(res, 503, 'This service is temporarily unavailable. Please try again shortly.');
+  }
   if (!rate.allowed) {
     res.setHeader('Retry-After', String(rate.retryAfterSeconds));
     res.setHeader('X-RateLimit-Limit', String(options.rateLimit.limit));
@@ -47,14 +52,13 @@ export async function applyApiGuards(req, res, options) {
 // upstream error or a result we couldn't vouch for. Without this a user who
 // retries after a server-side failure spends their own budget on our fault and
 // ends up rate-limited for it.
-export function refundRateLimit(req, route) {
-  refundBucket(`${route}:client:${clientFingerprint(req)}`);
-  refundBucket(`${route}:ip:${addressFingerprint(req)}`);
-}
-
-function refundBucket(key) {
-  const bucket = memoryBuckets.get(key);
-  if (bucket && bucket.count > 0) bucket.count -= 1;
+export async function refundRateLimit(req, route) {
+  try {
+    await getRateLimitStore().refund(rateLimitKeys(req, route));
+  } catch (err) {
+    // A failed refund must never replace the real upstream error response.
+    console.error('Could not refund rate-limit allowance:', err?.message || err);
+  }
 }
 
 export function assertInteger(value, name, { min, max, allowed, fallback } = {}) {
@@ -122,13 +126,12 @@ export function sendGuardError(res, err) {
 // address is genuinely hammering a route. A stranger on your office wifi can
 // no longer spend your allowance, and rotating the client id buys a caller
 // nothing beyond the ceiling.
-function hitRateLimit(req, route, { limit, windowMs, sharedLimit }) {
+async function hitRateLimit(req, route, { limit, windowMs, sharedLimit }) {
   const now = Date.now();
-  pruneBuckets(now);
-
   const ceiling = sharedLimit ?? limit * SHARED_CEILING_MULTIPLIER;
-  const perClient = hitBucket(`${route}:client:${clientFingerprint(req)}`, limit, windowMs, now);
-  const perAddress = hitBucket(`${route}:ip:${addressFingerprint(req)}`, ceiling, windowMs, now);
+  const [clientHit, addressHit] = await getRateLimitStore().hit(rateLimitKeys(req, route), windowMs);
+  const perClient = describeBucket(clientHit, limit, now);
+  const perAddress = describeBucket(addressHit, ceiling, now);
 
   const blocking = [perClient, perAddress].find(bucket => !bucket.allowed);
   const resetAt = blocking?.resetAt ?? Math.max(perClient.resetAt, perAddress.resetAt);
@@ -141,28 +144,19 @@ function hitRateLimit(req, route, { limit, windowMs, sharedLimit }) {
   };
 }
 
-function hitBucket(key, limit, windowMs, now) {
-  let bucket = memoryBuckets.get(key);
-  if (!bucket || bucket.resetAt <= now) {
-    bucket = { count: 0, resetAt: now + windowMs };
-    memoryBuckets.set(key, bucket);
-  }
-
-  bucket.count += 1;
+function describeBucket(hit, limit, now) {
   return {
-    allowed: bucket.count <= limit,
-    remaining: Math.max(0, limit - bucket.count),
-    resetAt: bucket.resetAt,
+    allowed: hit.count <= limit,
+    remaining: Math.max(0, limit - hit.count),
+    resetAt: now + hit.ttlMs,
   };
 }
 
-function pruneBuckets(now) {
-  if (memoryBuckets.size < MAX_MEMORY_BUCKETS) return;
-  for (const [key, bucket] of memoryBuckets) {
-    if (bucket.resetAt <= now) {
-      memoryBuckets.delete(key);
-    }
-  }
+function rateLimitKeys(req, route) {
+  return [
+    `${route}:client:${clientFingerprint(req)}`,
+    `${route}:ip:${addressFingerprint(req)}`,
+  ];
 }
 
 // Identifies one caller. IP and user-agent alone put everyone behind a shared

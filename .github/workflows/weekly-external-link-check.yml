@@ -1,0 +1,49 @@
+name: Weekly External Source Check
+
+on:
+  schedule:
+    - cron: '30 7 * * 3'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: weekly-external-source-check
+  cancel-in-progress: false
+
+jobs:
+  check-external-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate the checker
+        run: node --test scripts/external-links.test.js
+      - name: Build the rendered site
+        run: npm run build
+      - name: Check external sources
+        run: npm run audit:external-links
+      - name: Upload source-health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-source-health
+          path: |
+            audit-artifacts/external-link-health.json
+            audit-artifacts/external-link-health.md
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Summarise
+        if: always()
+        run: |
+          if [ -f audit-artifacts/external-link-health.md ]; then
+            cat audit-artifacts/external-link-health.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'No external source-health report was produced.' >> "$GITHUB_STEP_SUMMARY"
+          fi

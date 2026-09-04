@@ -143,7 +143,7 @@ export default function BlogPost() {
         jsonLd={jsonLd}
       />
       <div className="page content-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>›</span>{' '}
           <span>Blog</span> <span aria-hidden>›</span>{' '}
           <span>{data.h1}</span>

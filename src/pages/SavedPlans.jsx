@@ -4,6 +4,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import { track } from '../utils/analytics.js';
+import { formatWeeklyPriceEstimate } from '../utils/priceDisplay.js';
 import {
   getPlanLibrary,
   onPlanLibraryChange,
@@ -133,7 +134,7 @@ function PlanCollection({
                 </span>
                 <h3>{plan.title}</h3>
                 <p>
-                  {[plan.goal, plan.priceEstimate ? `${plan.priceEstimate}/week estimate` : '']
+                  {[plan.goal, formatWeeklyPriceEstimate(plan.priceEstimate)]
                     .filter(Boolean)
                     .join(' · ')}
                 </p>

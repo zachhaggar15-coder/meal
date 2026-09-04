@@ -10,7 +10,7 @@ const NHS_HEALTHY_WEIGHT = {
 };
 const FSA_FOOD_SAFETY = {
   label: 'Food Standards Agency food safety guidance',
-  url: 'https://www.food.gov.uk/safety-hygiene/food-safety-and-hygiene',
+  url: 'https://www.gov.uk/government/publications/home-food-fact-checker/home-food-fact-checker',
 };
 const ONS_PRICES = {
   label: 'ONS inflation and price indices',

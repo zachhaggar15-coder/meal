@@ -325,8 +325,8 @@ test('pages that explain a limitation link to where it is explained in full', ()
 
 // ── Browse pagination ───────────────────────────────────────────────────────
 //
-// 1,059 plans at 24 a page is 45 pages. Listing every number put 44 links in
-// the footer of all 45 pages, at 32px each: too many to scan, too small to tap,
+// 1,055 plans at 24 a page is 44 pages. Listing every number would put 43 links
+// in the footer of all 44 pages, at 32px each: too many to scan, too small to tap,
 // and about two thousand internal links carrying no information.
 
 test('the browse pagination window stays small on every page', async () => {

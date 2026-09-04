@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { track } from '../utils/analytics.js';
-import { readPlanProgress, writePlanProgress } from '../utils/planRetention.js';
+import { ensureSavedPlan, readPlanProgress, writePlanProgress } from '../utils/planRetention.js';
 
 export default function TickableShoppingList({
   list,
   planRoute,
+  planReference,
   analyticsContext = {},
   gridClassName,
   groupClassName,
@@ -15,6 +16,7 @@ export default function TickableShoppingList({
   const [checkedItems, setCheckedItems] = useState([]);
   const [ready, setReady] = useState(false);
   const [storageMessage, setStorageMessage] = useState('');
+  const [autoSaved, setAutoSaved] = useState(false);
   const groups = useMemo(() => Object.entries(list || {}).filter(([, items]) => (
     Array.isArray(items) && items.length > 0
   )), [list]);
@@ -43,6 +45,24 @@ export default function TickableShoppingList({
       ? [...new Set([...checkedItems, key])]
       : checkedItems.filter(item => item !== key);
     setCheckedItems(next);
+
+    // Ticking the first item is the point a shopping list becomes this week's
+    // shop. Progress was already stored, but in its own record keyed by route -
+    // so someone could tick half a list, close the tab, and have no way back to
+    // the plan from Saved Plans. The first tick now puts it in the library.
+    // Only the first: ensureSavedPlan never removes, and re-saving on every
+    // later tick would undo a deliberate un-save.
+    if (nextChecked && checked.length === 0 && planReference) {
+      const { added } = ensureSavedPlan(planReference);
+      if (added) {
+        setAutoSaved(true);
+        track.planSaved({
+          ...analyticsContext,
+          cta_location: 'shopping_list_first_tick',
+          save_trigger: 'auto',
+        });
+      }
+    }
     const stored = writePlanProgress(planRoute, { checkedItems: next });
     setStorageMessage(stored ? '' : 'Ticks will reset when this page closes.');
     track.shoppingItemToggled({
@@ -70,7 +90,7 @@ export default function TickableShoppingList({
       <div className="shopping-progress" aria-live="polite">
         <span>
           <strong>{checked.length}</strong> of {total} items ticked
-          <small>Saved on this device</small>
+          <small>{autoSaved ? 'Saved on this device and added to your plans' : 'Saved on this device'}</small>
         </span>
         {checked.length > 0 && (
           <button type="button" onClick={clearTicks}>Clear ticks</button>

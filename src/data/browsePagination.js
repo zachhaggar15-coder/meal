@@ -8,8 +8,8 @@ export function buildBrowsePagePath(page) {
 /**
  * The page numbers to show around the current one.
  *
- * With 1,059 plans at 24 a page there are 45 pages, and listing every number
- * put 44 links in the footer of all 45 pages — roughly two thousand internal
+ * With 1,055 plans at 24 a page there are 44 pages, and listing every number
+ * would put 43 links in the footer of all 44 pages — roughly two thousand internal
  * links that say nothing about where they lead, and on a phone a block of
  * targets too small and too close together to hit reliably.
  *

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { CONTAINER_GUIDE_GROUPS } from '../data/containerProducts.js';
+import { CONTAINER_GUIDE_GROUPS } from '../data/containerGuideGroups.js';
 
 export default function ContainerGuideNav({ currentSlug = 'hub' }) {
   return (

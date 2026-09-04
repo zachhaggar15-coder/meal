@@ -10,6 +10,7 @@ import { CONTAINER_TIER_COPY, getContainerRecommendation } from '../utils/contai
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
+import { generateDinnerOptions, normaliseFridgeRows } from '../utils/dinnerBuilder.js';
 import {
   PROTEIN_FOODS,
   PRICE_CHECKED_DATE,
@@ -54,111 +55,6 @@ const MARKET_BASKET_BASE = {
 
 const DEFAULT_FRIDGE_ROWS = [
   { id: 1, name: '', quantity: '' },
-];
-
-const DINNER_TEMPLATES = [
-  {
-    id: 'chicken-rice-bowl',
-    name: 'High-protein chicken rice bowl',
-    baseKcal: 640,
-    baseProtein: 48,
-    prep: '18 min',
-    sourcePlan: '/plans/aldi-high-protein-low-cal-1500',
-    sourceLabel: 'Aldi high-protein low-calorie plan',
-    keywords: ['chicken', 'turkey', 'rice', 'pepper', 'spinach', 'broccoli', 'beans', 'sweetcorn'],
-    staples: ['Soy sauce 1 tbsp', 'Greek yogurt 2 tbsp', 'Lemon juice 1 tsp'],
-    desc: 'A fast bowl built from lean protein, a measured carb portion and whatever veg is already open.',
-    recipe: [
-      'Slice the protein and cook it in a hot pan with salt, pepper and soy sauce.',
-      'Warm the rice or potato portion and fold through the veg until hot.',
-      'Top with yogurt, lemon juice and any chilli flakes you like.',
-    ],
-  },
-  {
-    id: 'tuna-pasta-salad',
-    name: 'Tuna pasta protein salad',
-    baseKcal: 590,
-    baseProtein: 42,
-    prep: '12 min',
-    sourcePlan: '/meal-plans/high-protein-shopping-list',
-    sourceLabel: 'high-protein shopping list plan',
-    keywords: ['tuna', 'salmon', 'pasta', 'sweetcorn', 'cucumber', 'tomato', 'yogurt', 'lettuce'],
-    staples: ['Light mayo or yogurt 1 tbsp', 'Lemon juice 1 tsp', 'Black pepper'],
-    desc: 'A cold or warm dinner that turns tins, leftover pasta and salad veg into a filling high-protein plate.',
-    recipe: [
-      'Cook or warm the pasta portion, then drain well.',
-      'Mix tuna with yogurt or light mayo, lemon juice and black pepper.',
-      'Toss with chopped veg and serve with extra salad leaves if you have them.',
-    ],
-  },
-  {
-    id: 'egg-potato-frittata',
-    name: 'Egg, potato and veg frittata',
-    baseKcal: 560,
-    baseProtein: 34,
-    prep: '20 min',
-    sourcePlan: '/meal-plans/vegetarian',
-    sourceLabel: 'vegetarian meal plan hub',
-    keywords: ['egg', 'eggs', 'potato', 'cheese', 'spinach', 'mushroom', 'pepper', 'onion'],
-    staples: ['Eggs 3', 'Milk 30ml', 'Cheddar 20g'],
-    desc: 'A cheap skillet dinner for eggs, leftover potato and veg that needs using up.',
-    recipe: [
-      'Fry the veg and cooked potato until browned at the edges.',
-      'Whisk eggs with milk, salt and pepper, then pour into the pan.',
-      'Scatter over cheese and cook gently until set, finishing under the grill if needed.',
-    ],
-  },
-  {
-    id: 'bean-chilli',
-    name: 'Bean and tomato chilli bowl',
-    baseKcal: 620,
-    baseProtein: 31,
-    prep: '22 min',
-    sourcePlan: '/meal-plans/budget-shopping-list',
-    sourceLabel: 'budget shopping list plan',
-    keywords: ['beans', 'kidney', 'chickpea', 'lentil', 'tomato', 'rice', 'quorn', 'mince', 'pepper'],
-    staples: ['Chopped tomatoes 200g', 'Chilli powder 1 tsp', 'Rice 120g cooked'],
-    desc: 'A budget dinner that leans on beans, tomatoes and a measured rice portion.',
-    recipe: [
-      'Simmer beans, tomatoes, chopped veg and chilli powder for 12 to 15 minutes.',
-      'Add mince, Quorn or lentils if you have them and cook until piping hot.',
-      'Serve over rice with yogurt or grated cheese if it fits your target.',
-    ],
-  },
-  {
-    id: 'tofu-stir-fry',
-    name: 'Tofu noodle stir-fry',
-    baseKcal: 610,
-    baseProtein: 36,
-    prep: '16 min',
-    sourcePlan: '/meal-plans/vegan',
-    sourceLabel: 'vegan meal plan hub',
-    keywords: ['tofu', 'noodles', 'rice', 'broccoli', 'carrot', 'pepper', 'edamame', 'cabbage'],
-    staples: ['Soy sauce 1 tbsp', 'Peanut butter 1 tsp', 'Garlic 1 clove'],
-    desc: 'A plant-based dinner that uses tofu, noodles or rice and crunchy fridge veg.',
-    recipe: [
-      'Press and cube the tofu, then fry until golden.',
-      'Add sliced veg and stir-fry on a high heat for 3 to 4 minutes.',
-      'Toss through noodles or rice with soy sauce, garlic and a little peanut butter.',
-    ],
-  },
-  {
-    id: 'wrap-pizza',
-    name: 'Loaded wrap pizza',
-    baseKcal: 540,
-    baseProtein: 33,
-    prep: '10 min',
-    sourcePlan: '/meal-plans/low-calorie-shopping-list',
-    sourceLabel: 'low-calorie shopping list plan',
-    keywords: ['wrap', 'tortilla', 'cheese', 'ham', 'chicken', 'tomato', 'pepper', 'mushroom'],
-    staples: ['Tortilla wrap 1', 'Passata 3 tbsp', 'Mozzarella 40g'],
-    desc: 'A quick low-effort dinner for wraps, passata, cheese and leftover protein or veg.',
-    recipe: [
-      'Spread passata over the wrap and add sliced toppings.',
-      'Scatter over cheese and season with pepper and mixed herbs.',
-      'Bake or air-fry until the edges are crisp and the cheese has melted.',
-    ],
-  },
 ];
 
 const jsonLd = [
@@ -384,7 +280,10 @@ export default function ToolsPage() {
 
     const options = generateDinnerOptions(fridgeRows, dinnerCalories);
     setDinnerOptions(options);
-    setAiStatus({ id: '', message: 'Built three dinners from your current fridge list.', busy: false });
+    const message = options.length === 0
+      ? 'No close matches yet. Add another main ingredient to build a dinner.'
+      : `Built ${options.length} ${options.length === 1 ? 'dinner' : 'dinners'} from your current fridge list.`;
+    setAiStatus({ id: '', message, busy: false });
   }
 
   function updateAiPrompt(id, value) {
@@ -465,7 +364,7 @@ export default function ToolsPage() {
             <span className="offer-kicker">{toTitleCase('Client-side dinner builder')}</span>
             <h2 id="fridge-dinner-heading">{toTitleCase('Turn fridge ingredients into dinner')}</h2>
             <p>
-              Add ingredients and rough quantities, choose a calorie target, and the tool makes three dinners from
+              Add ingredients and rough quantities, choose a calorie target, and the tool makes up to three dinners from
               rule-based premade recipe patterns. Each option links to a related plan or recipe hub, and you can ask AI
               to change one after it is made.
             </p>
@@ -536,9 +435,13 @@ export default function ToolsPage() {
                     <summary>View recipe and ingredients</summary>
                     <div className="fridge-recipe-grid">
                       <div>
-                        <strong>Ingredients</strong>
+                        <strong>From your fridge</strong>
                         <ul>
-                          {asList(option.ingredients).map(item => <li key={item}>{item}</li>)}
+                          {asList(option.fridgeIngredients).map(item => <li key={item}>{item}</li>)}
+                        </ul>
+                        <strong>You will also need</strong>
+                        <ul>
+                          {asList(option.pantryIngredients).map(item => <li key={item}>{item}</li>)}
                         </ul>
                       </div>
                       <div>
@@ -820,80 +723,6 @@ export default function ToolsPage() {
       <Footer />
     </>
   );
-}
-
-function generateDinnerOptions(rows, targetCalories) {
-  const ingredients = normaliseFridgeRows(rows);
-  const calories = clamp(Number(targetCalories), 350, 1200);
-  const ranked = DINNER_TEMPLATES
-    .map((template, index) => ({
-      template,
-      index,
-      score: scoreDinnerTemplate(template, ingredients),
-    }))
-    .sort((a, b) => (b.score - a.score) || (a.index - b.index));
-
-  return ranked.slice(0, 3).map(({ template }, index) => (
-    buildDinnerOption(template, ingredients, calories, index)
-  ));
-}
-
-function normaliseFridgeRows(rows) {
-  return rows
-    .map(row => ({
-      name: (row.name || '').trim(),
-      quantity: (row.quantity || '').trim(),
-    }))
-    .filter(row => row.name)
-    .map(row => ({
-      ...row,
-      search: `${row.name} ${row.quantity}`.toLowerCase(),
-    }));
-}
-
-function scoreDinnerTemplate(template, ingredients) {
-  if (!ingredients.length) return 1;
-
-  return ingredients.reduce((score, ingredient) => {
-    const matched = template.keywords.some(keyword => {
-      const keywordText = keyword.toLowerCase();
-      const ingredientText = ingredient.name.toLowerCase();
-      return ingredient.search.includes(keywordText) || keywordText.includes(ingredientText);
-    });
-    return score + (matched ? 4 : 0.5);
-  }, 0);
-}
-
-function buildDinnerOption(template, ingredients, targetCalories, index) {
-  const calorieOffsets = [-50, 0, 50];
-  const kcal = clamp(Math.round((targetCalories + calorieOffsets[index]) / 25) * 25, 350, 1200);
-  const factor = Math.max(0.75, Math.min(1.35, kcal / template.baseKcal));
-  const matched = ingredients.filter(ingredient => (
-    template.keywords.some(keyword => ingredient.search.includes(keyword.toLowerCase()))
-  ));
-  const selected = (matched.length ? matched : ingredients).slice(0, 4);
-  const fridgeIngredients = selected.map(formatFridgeIngredient);
-  const pantryIngredients = template.staples.slice(0, Math.max(3, 7 - fridgeIngredients.length));
-  const optionIngredients = [...fridgeIngredients, ...pantryIngredients].slice(0, 8);
-
-  return {
-    id: template.id,
-    type: 'Dinner',
-    name: template.name,
-    kcal,
-    protein: Math.max(18, Math.round((template.baseProtein * Math.sqrt(factor)) + (matched.length * 1.5))),
-    prep: template.prep,
-    desc: template.desc,
-    ingredients: optionIngredients,
-    portion_size: optionIngredients.slice(0, 4).join(', '),
-    recipe: template.recipe,
-    sourcePlan: template.sourcePlan,
-    sourceLabel: template.sourceLabel,
-  };
-}
-
-function formatFridgeIngredient(row) {
-  return row.quantity ? `${row.name} ${row.quantity}` : row.name;
 }
 
 function asList(value) {

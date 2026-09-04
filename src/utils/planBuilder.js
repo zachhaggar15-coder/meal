@@ -1585,7 +1585,7 @@ export function buildPlanDays(seed) {
         fats:        nutrition.fats,
         fibre:       nutrition.fibre,
         prep:       `${m.prepMins} min`,
-        desc:       buildMealDesc(displayMeal, nutrition.kcal, nutrition.protein, nutrition.carbs),
+        desc:       buildMealDesc(displayMeal),
         calculationIngredients: ingredients,
         ingredients,
         cookingIngredients: getCookingIngredientDisplay(ingredients),
@@ -2007,13 +2007,18 @@ function formatNumber(value) {
   return String(Number(value.toFixed(2))).replace(/\.0$/, '');
 }
 
-function buildMealDesc(meal, kcal, protein, carbs = null) {
+// The description says what the food is. It used to end with
+// "Ready in 12 min - 508 kcal, 45g protein, 59g carbs", which restated, in a
+// second separator style, exactly what the macro pill above it already shows -
+// twenty-one times on a seven-day plan page. The pill is the single source for
+// those numbers now, so the sentence is free to describe the meal.
+// The structured-data builder still emits the numbers separately.
+function buildMealDesc(meal) {
   const mainIngs = (meal.ingredients || [])
     .slice(0, 3)
     .map(i => i.replace(/\s+\d[\d.]*.*$/i, '').toLowerCase())
     .join(', ');
-  const carbText = Number.isFinite(carbs) ? `, ${carbs}g carbs` : '';
-  return `Made with ${mainIngs}. Ready in ${meal.prepMins} min — ${kcal} kcal, ${protein}g protein${carbText}.`;
+  return `Made with ${mainIngs}.`;
 }
 
 function buildRecipeSteps(meal) {

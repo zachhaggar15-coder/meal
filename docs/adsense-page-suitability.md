@@ -27,7 +27,7 @@ in-article placement below the first section would not compete with the content.
 
 | Page type | Routes | Pages | Median visible words |
 |---|---|---:|---:|
-| Generated plans | `/plans/:slug` | 1,059 | ~3,813 |
+| Generated plans | `/plans/:slug` | 1,055 | ~3,813 |
 | Legacy editorial plans | `/meal-plan/:slug` | 30 | ~2,261 |
 | Plan hubs | `/meal-plans/:slug` | 55 | ~1,186 |
 

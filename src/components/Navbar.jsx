@@ -15,7 +15,7 @@ const TOP_TABS = [
   },
   {
     to: '/meal-prep-containers',
-    label: 'Meal prep containers',
+    label: 'Meal Prep Containers',
     compactLabel: 'Containers',
     match: path => path.startsWith('/meal-prep-containers') && !ACCESSORY_PATHS.has(path),
   },
@@ -45,7 +45,7 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
           <Link to="/" className="nav-brand" aria-label="MealPrep home">MealPrep</Link>
         </div>
 
-        <div className="nav-tabs" aria-label="Quick links">
+        <div className="nav-tabs" role="group" aria-label="Quick links">
           {TOP_TABS.map(tab => {
             const active = tab.match(location.pathname);
             return (
@@ -54,6 +54,9 @@ export default function Navbar({ menuOpen = false, onMenuToggle }) {
                 to={tab.to}
                 className={active ? 'nav-tab nav-tab--active' : 'nav-tab'}
                 aria-current={active ? 'page' : undefined}
+                data-event="nav_link_clicked"
+                data-cta-location="top_nav"
+                data-target-route={tab.to}
               >
                 {tab.compactLabel ? (
                   <>

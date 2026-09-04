@@ -292,6 +292,56 @@ test('AdSense stays disabled and is never loaded before an explicit opt-in', () 
   );
 });
 
+test('analytics and advertising consent are accepted independently', () => {
+  const banner = read('src/components/AnalyticsConsentBanner.jsx');
+  const analyticsHandler = banner.slice(
+    banner.indexOf('function chooseAnalytics'),
+    banner.indexOf('function chooseAdvertising'),
+  );
+  const advertisingHandler = banner.slice(
+    banner.indexOf('function chooseAdvertising'),
+    banner.indexOf('function keepAllOff'),
+  );
+
+  assert.match(analyticsHandler, /setAnalyticsConsent\(next\)/);
+  assert.doesNotMatch(analyticsHandler, /setAdConsent/);
+  assert.match(advertisingHandler, /setAdConsent\(next\)/);
+  assert.doesNotMatch(advertisingHandler, /setAnalyticsConsent/);
+  assert.match(banner, /'Accept all'/);
+  assert.match(banner, />\s*More options\s*</);
+  assert.match(banner, />\s*Analytics only\s*</);
+  assert.match(banner, />\s*Advertising only\s*</);
+  assert.match(banner, /'Reject all'/);
+  assert.doesNotMatch(
+    banner,
+    /function choose\(next\)/,
+    'A single accept handler must not grant both analytics and advertising consent.',
+  );
+
+  const privacy = read('src/pages/Privacy.jsx');
+  assert.match(privacy, /Accept all/);
+  assert.match(privacy, /Reject all/);
+  assert.match(privacy, /More options/);
+
+  const footer = read('src/components/Footer.jsx');
+  assert.match(footer, /OPEN_PRIVACY_CHOICES_EVENT/);
+  assert.match(footer, />\s*Privacy choices\s*</);
+  assert.match(banner, /addEventListener\(OPEN_PRIVACY_CHOICES_EVENT/);
+  assert.match(banner, /removeEventListener\(OPEN_PRIVACY_CHOICES_EVENT/);
+  assert.match(
+    banner,
+    /window\.location\.reload\(\)/,
+    'Withdrawing a choice must unload providers that were injected earlier in the page view.',
+  );
+
+  const consentRecord = read('src/utils/consentRecord.js');
+  assert.match(consentRecord, /CONSENT_RECORD_VERSION/);
+  assert.match(consentRecord, /updatedAt/);
+  assert.match(privacy, /format version/);
+  assert.match(privacy, /time it was last/);
+  assert.match(privacy, /Privacy choices/);
+});
+
 test('ads are refused on screens with no publisher content', () => {
   // Google's inventory-value policy rules out error screens, forms, empty
   // utility screens and navigation surfaces. Enforced in code so a misplaced

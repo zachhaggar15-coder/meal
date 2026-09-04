@@ -5,9 +5,10 @@ import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import { getTopMatches } from '../utils/quizScorer.js';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { track } from '../utils/analytics.js';
 import { planCardTitle } from '../utils/planCardMeta.js';
+import { formatWeeklyPrice } from '../utils/priceDisplay.js';
 import {
   QUIZ_LAST_ANSWERS_KEY,
   decodeQuizAnswers,
@@ -90,7 +91,13 @@ export default function QuizResults() {
   const parsedParams = useMemo(() => (
     readAnswersFromParams(new URLSearchParams(paramString))
   ), [paramString]);
-  const [answers, setAnswers] = useState(parsedParams.answers || {});
+  // Empty on the first render, deliberately. /quiz/results is prerendered, and
+  // that static HTML is built with no query string, so it shows the broad
+  // matches. Seeding this from parsedParams would make the first client render
+  // of a shared `?q=` link disagree with the markup React is hydrating - the
+  // same mismatch BrowsePlans avoids. The effect below fills it in immediately
+  // afterwards, from the URL or from this device's saved answers.
+  const [answers, setAnswers] = useState({});
   const [recoveryMessage, setRecoveryMessage] = useState('');
 
   useEffect(() => {
@@ -196,7 +203,7 @@ export default function QuizResults() {
           <div className="result-card-meta">
             <span className="result-meta-pill">{MKT_LABELS[best.supermarket] || best.supermarket}</span>
             <span className="result-meta-pill">~{best.calories} kcal/day</span>
-            <span className="result-meta-pill">{best.priceEstimate}/week</span>
+            <span className="result-meta-pill">{formatWeeklyPrice(best.priceEstimate)}</span>
             <span className="result-meta-pill">{EFFORT_LABELS[best.effort] || best.effort}</span>
             {best.dietType !== 'standard' && (
               <span className="result-meta-pill">{DIET_LABELS[best.dietType] || best.dietType}</span>
@@ -246,7 +253,7 @@ export default function QuizResults() {
             <div className="result-card-meta">
               <span className="result-meta-pill">{MKT_LABELS[match.supermarket] || match.supermarket}</span>
               <span className="result-meta-pill">~{match.calories} kcal/day</span>
-              <span className="result-meta-pill">{match.priceEstimate}/week</span>
+              <span className="result-meta-pill">{formatWeeklyPrice(match.priceEstimate)}</span>
               <span className="result-meta-pill">{EFFORT_LABELS[match.effort] || match.effort}</span>
             </div>
 
@@ -267,7 +274,7 @@ export default function QuizResults() {
         {/* Actions */}
         <div className="quiz-results-actions">
           <Link to="/quiz" className="btn-secondary">← Retake Quiz</Link>
-          <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT} Plans</Link>
+          <Link to="/browse" className="btn-secondary">Browse All {PLAN_COUNT_LABEL} Plans</Link>
         </div>
       </div>
       <Footer />

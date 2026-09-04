@@ -4,7 +4,13 @@ import {
   assertInteger,
   assertSerializedSize,
   assertText,
+  refundRateLimit,
 } from '../api/_guards.js';
+import {
+  createRedisRateLimitStore,
+  resetRateLimitStoreForTests,
+  setRateLimitStoreForTests,
+} from '../api/_rate-limit-store.js';
 import { adminTokenFromHeaders, escCsv } from '../api/admin-stats.js';
 import { resolveEmailPlan } from '../api/email-plan.js';
 import { cleanSenderEmail } from '../api/feedback.js';
@@ -41,6 +47,7 @@ function makeRes() {
 }
 
 async function run() {
+  resetRateLimitStoreForTests();
   const okRes = makeRes();
   assert.equal(
     await applyApiGuards(makeReq({ body: { days: 7 } }), okRes, {
@@ -131,6 +138,57 @@ async function run() {
   );
   assert.equal(await guardSplit('192.0.2.10'), true);
   assert.equal(await guardSplit('192.0.2.11'), true, 'separate addresses keep separate ceilings');
+
+  const refundRoute = `security-test-refund-${Date.now()}`;
+  const refundReq = makeReq({ ip: '192.0.2.25', headers: { 'x-mealprep-client': 'refund-client' } });
+  const refundOptions = {
+    route: refundRoute,
+    maxBodyBytes: 1024,
+    rateLimit: { limit: 1, windowMs: 60_000 },
+  };
+  assert.equal(await applyApiGuards(refundReq, makeRes(), refundOptions), true);
+  await refundRateLimit(refundReq, refundRoute);
+  assert.equal(
+    await applyApiGuards(refundReq, makeRes(), refundOptions),
+    true,
+    'an upstream failure refund restores both the client and IP allowance',
+  );
+
+  const redisCalls = [];
+  const redisStore = createRedisRateLimitStore({
+    async eval(script, keys, args) {
+      redisCalls.push({ script, keys, args });
+      return args.length ? [1, 60_000, 1, 60_000] : [0, 0];
+    },
+  });
+  setRateLimitStoreForTests(redisStore);
+  const redisReq = makeReq({
+    ip: '198.51.100.80',
+    headers: { 'x-mealprep-client': 'redis-client' },
+  });
+  assert.equal(await applyApiGuards(redisReq, makeRes(), {
+    route: 'redis-test',
+    maxBodyBytes: 1024,
+    rateLimit: { limit: 2, windowMs: 60_000 },
+  }), true);
+  await refundRateLimit(redisReq, 'redis-test');
+  assert.equal(redisCalls.length, 2, 'Redis receives one atomic hit and one atomic refund');
+  assert.equal(redisCalls[0].keys.length, 2, 'client and IP buckets are updated together');
+  assert.ok(redisCalls[0].keys.every(key => !key.includes('198.51.100.80')));
+  assert.deepEqual(redisCalls[0].args, [60_000]);
+
+  setRateLimitStoreForTests({
+    async hit() { throw new Error('redis offline'); },
+    async refund() {},
+  });
+  const unavailableRes = makeRes();
+  assert.equal(await applyApiGuards(makeReq(), unavailableRes, {
+    route: 'unavailable-test',
+    maxBodyBytes: 1024,
+    rateLimit: { limit: 2, windowMs: 60_000 },
+  }), false);
+  assert.equal(unavailableRes.statusCode, 503, 'store failure fails closed');
+  resetRateLimitStoreForTests();
 
   assert.equal(assertInteger('7', 'days', { allowed: [1, 3, 7] }), 7);
   assert.throws(() => assertInteger('8', 'days', { allowed: [1, 3, 7] }), /days must be one of/);

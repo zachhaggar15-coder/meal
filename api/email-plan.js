@@ -10,11 +10,10 @@ import { SITE_CONTACT_EMAIL, SITE_NAME, SITE_URL } from '../src/constants/site.j
 import {
   cleanEmail,
   cleanMeta,
-  createInMemoryRateLimiter,
   escapeHtml,
-  getRequestIp,
   parseBody,
 } from '../server/http.js';
+import { applyApiGuards, refundRateLimit } from './_guards.js';
 import {
   buildHtmlEmail,
   resolveEmailFrom,
@@ -22,25 +21,22 @@ import {
   sendResendEmail,
 } from '../server/email.js';
 
-const rateLimited = createInMemoryRateLimiter({
-  windowMs: 10 * 60 * 1000,
-  max: 5,
-});
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed. Use POST.' });
-  }
-
-  const ip = getRequestIp(req);
-  if (rateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many email attempts. Please try again in a few minutes.' });
   }
 
   const body = parseBody(req.body);
   if (body.website) {
     return res.status(200).json({ ok: true });
   }
+
+  const guarded = await applyApiGuards(req, res, {
+    route: 'email-plan',
+    maxBodyBytes: 32 * 1024,
+    rateLimit: { limit: 5, windowMs: 10 * 60 * 1000 },
+  });
+  if (!guarded) return;
 
   const email = cleanEmail(body.email);
   if (!email) {
@@ -88,6 +84,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true, id: data?.id || data?.data?.id || null });
   } catch (err) {
     console.error('Plan email failed:', err);
+    await refundRateLimit(req, 'email-plan');
     return res.status(500).json({
       error: 'Could not send the email right now. Please try again in a minute.',
     });

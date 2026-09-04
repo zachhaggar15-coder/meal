@@ -64,7 +64,7 @@ export default function AccessoriesHub() {
       />
 
       <div className="page content-page">
-        <nav className="breadcrumb">
+        <nav className="breadcrumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link> <span aria-hidden>&rsaquo;</span>{' '}
           <span>Meal Prep Accessories</span>
         </nav>

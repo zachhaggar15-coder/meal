@@ -1,5 +1,5 @@
 import { LIBRARY_VALIDATED_ON } from '../src/constants/site.js';
-import { PLAN_COUNT } from '../src/data/planSeeds.js';
+import { PLAN_COUNT } from '../src/data/planCatalogMeta.js';
 import { SEMANTIC_QA_DASHBOARD } from '../src/data/semanticQaDashboard.js';
 
 const reportedCount = Number(SEMANTIC_QA_DASHBOARD.coverage?.totalPublishedPlans);

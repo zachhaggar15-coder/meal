@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import SEO from '../components/SEO.jsx';
+import { apiHeaders } from '../utils/apiClient.js';
 
 // Private admin view for waitlist and first-party analytics.
 // Security model: this page holds NO secrets. It asks for the admin token,
@@ -87,7 +88,7 @@ export default function AdminDashboard() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/admin-stats', { headers: { 'x-admin-token': tk } });
+      const res = await fetch('/api/admin-stats', { headers: apiHeaders({ 'x-admin-token': tk }) });
       if (res.status === 401) throw new Error('Invalid token.');
       if (!res.ok) throw new Error('Could not load stats.');
       const data = await res.json();
@@ -119,7 +120,7 @@ export default function AdminDashboard() {
     setError('');
     try {
       const res = await fetch(`/api/admin-stats?format=${encodeURIComponent(format)}`, {
-        headers: { 'x-admin-token': token.trim() },
+        headers: apiHeaders({ 'x-admin-token': token.trim() }),
       });
       if (res.status === 401) throw new Error('Invalid token.');
       if (!res.ok) throw new Error('Could not export CSV.');

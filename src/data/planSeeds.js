@@ -1,4 +1,5 @@
 import { RESTORED_PLAN_SEEDS } from './restoredPlanSeeds.js';
+import { RETIRED_PLAN_SLUGS } from './retiredPlanRedirects.js';
 
 const CORE_PLAN_SEEDS = [
   // ── WEIGHT LOSS (30) ─────────────────────────────────────────────────────
@@ -992,7 +993,7 @@ const GENERATED_SLUGS = new Set(GENERATED_SEEDS.map(seed => seed.slug));
 const RAW_INDEXABLE_PLAN_SEED_POOL = [
   ...GENERATED_SEEDS,
   ...RESTORED_PLAN_SEEDS.filter(seed => !GENERATED_SLUGS.has(seed.slug)),
-];
+].filter(seed => !RETIRED_PLAN_SLUGS.includes(seed.slug));
 
 const PRACTICAL_MEAL_SET_OVERRIDES = Object.freeze({
   'aldi-cheap-hp-veg-1800': 4,
@@ -1028,8 +1029,3 @@ export const COVERAGE_PLAN_SEEDS = buildCoverageSeeds(INDEXABLE_PLAN_SEED_POOL);
 
 export const INDEXABLE_PLAN_SEEDS = INDEXABLE_PLAN_SEED_POOL;
 export const PLAN_SEEDS = [...INDEXABLE_PLAN_SEED_POOL, ...COVERAGE_PLAN_SEEDS];
-// PLAN_COUNT is shown to users ("Browse X free UK meal plans") and must reflect
-// real, indexed, prerendered pages — not PLAN_SEEDS.length, which also includes
-// the much larger synthetic COVERAGE_PLAN_SEEDS pool used for coverage checks
-// and was never meant to be a public-facing number.
-export const PLAN_COUNT = INDEXABLE_PLAN_SEEDS.length;

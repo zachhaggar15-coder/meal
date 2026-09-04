@@ -56,10 +56,11 @@ export default function BehaviorAnalytics() {
     if (!isFirstPartyAnalyticsEnabled()) return undefined;
 
     function startTracker(trackInitialPageView = false) {
-      trackerRef.current?.cleanup();
+      const consented = hasAnalyticsConsent();
+      trackerRef.current?.cleanup({ discard: !consented });
       trackerRef.current = null;
 
-      if (!hasAnalyticsConsent() || !isTrackablePath(currentPath(locationRef))) return;
+      if (!consented || !isTrackablePath(currentPath(locationRef))) return;
 
       trackerRef.current = createTracker(() => currentPath(locationRef));
       flushQueuedFirstPartyEvents();
@@ -103,8 +104,9 @@ function createTracker(getPath) {
       page = createPageState(nextPath);
       observeSectionsSoon();
     },
-    cleanup() {
-      finishPage('tracker_cleanup');
+    cleanup({ discard = false } = {}) {
+      if (discard) queue = [];
+      else finishPage('tracker_cleanup');
       detach();
       if (window.__mealprepAnalytics === api) {
         delete window.__mealprepAnalytics;
@@ -271,6 +273,13 @@ function createTracker(getPath) {
     updateActiveTime();
     if (document.visibilityState === 'hidden') {
       track('page_hidden', pageMetrics());
+      // Mobile browsers frequently tear a page down without ever firing
+      // pagehide, so hiding has to be treated as a terminal signal for the
+      // vitals too. Reporting them only from finishPage() meant the sessions
+      // where someone gave up and switched away — the slow ones — were the
+      // samples most likely to be lost, biasing the p75 downwards. flush() on
+      // the observer is idempotent, so a later pagehide still works.
+      vitals.flush('visibility_hidden');
       flush(true);
     } else {
       page.lastTickAt = Date.now();

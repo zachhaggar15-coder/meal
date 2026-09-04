@@ -10,6 +10,8 @@
 //   MEALPREP_WAITLIST_FROM_EMAIL   (from header; default onboarding sender)
 //   MEALPREP_REPLY_TO_EMAIL        (default mealprep.org.uk@proton.me)
 
+import { applyApiGuards, refundRateLimit } from './_guards.js';
+
 const WELCOME_REPLY_TO = 'mealprep.org.uk@proton.me';
 const DEFAULT_FROM = 'MealPrep.org.uk <onboarding@resend.dev>';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,23 +26,8 @@ const GOALS = new Set([
   'Family meals', 'Student meals', 'Vegetarian', 'Healthy eating',
 ]);
 
-// Best-effort in-memory rate limit. Survives only within a warm instance, so it
-// is a courtesy speed-bump, not a hard guarantee — the honeypot, email
-// validation and the unique-email constraint are the real protections. For
-// strict limits across instances use Upstash/Redis (see docs/waitlist-setup.md).
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX = 6;
-const hits = new Map();
-
-function rateLimited(ip) {
-  if (!ip) return false;
-  const now = Date.now();
-  const bucket = (hits.get(ip) || []).filter(t => now - t < RATE_LIMIT_WINDOW_MS);
-  bucket.push(now);
-  hits.set(ip, bucket);
-  if (hits.size > 5000) hits.clear(); // crude memory cap
-  return bucket.length > RATE_LIMIT_MAX;
-}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -54,16 +41,16 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   }
 
+  const guarded = await applyApiGuards(req, res, {
+    route: 'waitlist',
+    maxBodyBytes: 8 * 1024,
+    rateLimit: { limit: RATE_LIMIT_MAX, windowMs: RATE_LIMIT_WINDOW_MS },
+  });
+  if (!guarded) return;
+
   const email = String(body.email || '').trim().toLowerCase();
   if (!email || !EMAIL_RE.test(email) || email.length > 254) {
     return res.status(400).json({ error: 'Please enter a valid email address.' });
-  }
-
-  const ip = cleanMeta(
-    (req.headers['x-forwarded-for'] || '').split(',')[0] || req.socket?.remoteAddress || '',
-  );
-  if (rateLimited(ip)) {
-    return res.status(429).json({ error: 'Too many attempts. Please try again in a few minutes.' });
   }
 
   const firstName = cleanMeta(body.firstName || body.first_name || '').slice(0, 80) || null;
@@ -75,6 +62,7 @@ export default async function handler(req, res) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceKey) {
     console.error('Waitlist misconfigured: set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.');
+    await refundRateLimit(req, 'waitlist');
     return res.status(500).json({ error: 'The waitlist is temporarily unavailable. Please try again later.' });
   }
 
@@ -111,6 +99,7 @@ export default async function handler(req, res) {
         return res.status(200).json({ ok: true, duplicate: true });
       }
       console.error('Supabase insert error:', insertRes.status, errText.slice(0, 500));
+      await refundRateLimit(req, 'waitlist');
       return res.status(500).json({ error: 'We could not save your details. Please try again.' });
     }
 
@@ -118,6 +107,7 @@ export default async function handler(req, res) {
     row = Array.isArray(data) ? data[0] : data;
   } catch (err) {
     console.error('Supabase insert exception:', err);
+    await refundRateLimit(req, 'waitlist');
     return res.status(500).json({ error: 'We could not save your details. Please try again.' });
   }
 

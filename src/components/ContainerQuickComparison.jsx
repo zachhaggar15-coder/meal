@@ -102,7 +102,10 @@ export default function ContainerQuickComparison({
       <div className={`container-direct-grid container-direct-grid--${Math.min(items.length, 3)}`}>
         {items.map(({ product, searchedFor, sizeLabel, sizeFocus, fit, guidePath }, index) => (
           <article key={product.id} className="container-direct-card container-direct-card--specs">
-            <ProductSpecPlate product={product} className="container-direct-media" />
+            {/* tone="plain" drops the plate's own badge. The card already carries
+                two positioning labels - the "Best for:" chip and the size heading -
+                so the badge made a third name for one product in the same column. */}
+            <ProductSpecPlate product={product} className="container-direct-media" tone="plain" />
             <div className="container-direct-body">
               <span className="container-search-chip">Best for: {searchedFor}</span>
               <CardHeadingTag>{sizeLabel}</CardHeadingTag>

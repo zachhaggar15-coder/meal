@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
+import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { track } from '../utils/analytics.js';
 import {
   QUIZ_DRAFT_KEY,
@@ -116,6 +116,8 @@ const STEPS = [
     type: 'macroTargets',
   },
 ];
+
+const SUPERMARKET_OPTION_COUNT = STEPS.find(step => step.id === 'supermarket')?.options.length || 0;
 
 const MACRO_FIELDS = [
   { key: 'protein', label: 'Protein', min: 50, max: 260, step: 5, desc: 'Common high-protein targets sit around 120-190g/day.' },
@@ -301,7 +303,7 @@ export default function Quiz() {
       name: 'How does the meal plan quiz work?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: `Answer 7 short questions about your goal, diet, supermarket, calories, budget, effort, and optional macro targets. We match you with the top 3 plans from our library of ${PLAN_COUNT} UK meal plans.`,
+        text: `Answer 7 short questions about your goal, diet, supermarket, calories, budget, effort, and optional macro targets. We match you with the top 3 plans from our library of ${PLAN_COUNT_LABEL} UK meal plans.`,
       },
     }],
   }];
@@ -310,7 +312,7 @@ export default function Quiz() {
     <>
       <SEO
         title="Free UK Meal Plan Quiz - Find a Printable Diet Plan | MealPrep.org.uk"
-        description={`Answer 7 quick questions to find a free UK diet plan with calories, macros, supermarket choices, printable PDF export and shopping list. ${PLAN_COUNT} plans to match.`}
+        description={`Answer 7 quick questions to find a free UK diet plan with calories, macros, supermarket choices, printable PDF export and shopping list. ${PLAN_COUNT_LABEL} plans to match.`}
         canonical="https://www.mealprep.org.uk/quiz"
         jsonLd={jsonLd}
       />
@@ -320,17 +322,19 @@ export default function Quiz() {
           <header className="quiz-shell-header">
             <SiteLogo variant="page" className="page-header-logo" />
             <h1 className="quiz-shell-h1">Find your perfect UK meal plan</h1>
+            {/* Split so a phone can show the lead sentence and hold the rest
+                back. Nothing is removed from the document - the full copy is
+                still here for desktop and for crawlers, only hidden under
+                640px, where it was costing a screen and a half before the
+                reader could answer anything. */}
             <p className="quiz-shell-sub">
               Answer 7 quick questions about your goal, diet, supermarket, calories, budget, and
-              cooking effort. We'll match you with the best plans from our library of {PLAN_COUNT} free
-              UK meal plans - with full shopping lists, macros, and cost estimates.
+              cooking effort.{' '}
+              <span className="quiz-shell-sub-more">
+                We'll match you with the best plans from our library of {PLAN_COUNT_LABEL} free
+                UK meal plans - with full shopping lists, macros, and cost estimates.
+              </span>
             </p>
-            <ul className="quiz-shell-features">
-              <li>{PLAN_COUNT} plans across Aldi, Tesco, Lidl, Asda, Morrisons, Sainsbury's &amp; Iceland</li>
-              <li>Vegetarian, vegan, pescatarian and standard options</li>
-              <li>1,500-2,500 kcal targets, plus custom calories</li>
-              <li>Takes 30 seconds, free, no sign-up</li>
-            </ul>
           </header>
 
           <div className="quiz-header">
@@ -468,6 +472,17 @@ export default function Quiz() {
               </div>
             )}
           </div>
+
+          {/* Sits after the answers in the document. On desktop the container
+              is a flex column and `order` puts it back under the intro, so the
+              layout there is unchanged; on a phone it stays here, below the
+              first question, where it reassures without delaying it. */}
+          <ul className="quiz-shell-features">
+            <li>{PLAN_COUNT_LABEL} plans across {SUPERMARKET_OPTION_COUNT} supermarket choices</li>
+            <li>Vegetarian, vegan, pescatarian and standard options</li>
+            <li>1,500-2,500 kcal targets, plus custom calories</li>
+            <li>Takes 30 seconds, free, no sign-up</li>
+          </ul>
 
           {step > 0 && (
             <div className="quiz-footer">

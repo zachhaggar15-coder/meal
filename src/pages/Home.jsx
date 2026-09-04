@@ -15,8 +15,11 @@ import SearchOpportunityLinks from '../components/SearchOpportunityLinks.jsx';
 import WeeklyTrendingLinks from '../components/WeeklyTrendingLinks.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
-import { PLAN_COUNT } from '../data/planCatalogMeta.js';
-import { chooseNavigationCardVisual, chooseSupermarketVisual, SITE_VISUALS } from '../data/visualAssets.js';
+import { INDEXED_SUPERMARKET_VALUES, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
+import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
+import { BUDGET_ESTIMATES } from '../utils/planBuilder.js';
+import { planDietShort, planGoalShort, planMarketShort } from '../utils/planCardMeta.js';
+import { SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
 
@@ -28,7 +31,7 @@ const homeJsonLd = [
     '@type': 'WebSite',
     name: 'MealPrep.org.uk - Free UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk',
-    description: `Generate a weekly UK meal plan using supermarket ingredients, browse ${PLAN_COUNT} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
+    description: `Generate a weekly UK meal plan using supermarket ingredients, browse ${PLAN_COUNT_LABEL} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
   },
   {
     '@context': 'https://schema.org',
@@ -39,7 +42,7 @@ const homeJsonLd = [
         name: 'How does the meal plan quiz work?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Answer 7 quick questions about your goal, diet type, supermarket, calorie target, budget, cooking effort, and macro preferences. The quiz matches you with your top 3 plans from a library of ${PLAN_COUNT} UK meal plans.`,
+          text: `Answer 7 quick questions about your goal, diet type, supermarket, calorie target, budget, cooking effort, and macro preferences. The quiz matches you with your top 3 plans from a library of ${PLAN_COUNT_LABEL} UK meal plans.`,
         },
       },
       {
@@ -47,7 +50,7 @@ const homeJsonLd = [
         name: 'Are the meal plans free?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: `Yes. All ${PLAN_COUNT} meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.`,
+          text: `Yes. All ${PLAN_COUNT_LABEL} meal plans are completely free with no sign-up required. You can also use the AI editing tool to customise any plan.`,
         },
       },
       {
@@ -140,6 +143,64 @@ async function safeJson(res) {
 }
 
 // ── Component ──────────────────────────────────────────────────────────────────
+
+// Named chains only. INDEXED_SUPERMARKET_VALUES also carries "any", which is a
+// selectable option in the quiz ("12 supermarket choices") but not a shop, so
+// the two figures are both right and were drifting apart as a hardcoded 11.
+const NAMED_SUPERMARKET_COUNT = INDEXED_SUPERMARKET_VALUES.filter(value => value !== 'any').length;
+
+// One accent per group. The cards used to be six different arbitrary colours
+// inside a single group, which read as a category code and encoded nothing.
+// Colour now tracks the group you are browsing within.
+//
+// Note this is deliberately NOT the same rule as /browse, where colour tracks
+// the supermarket. The homepage is grouped, so the group is the useful signal;
+// /browse is one mixed grid, where the chain is. Each surface states its own
+// key rather than sharing one that fits neither.
+const FEATURED_ACCENTS = {
+  'By Goal': 'goal',
+  'By Supermarket': 'market',
+  'Diet Types': 'diet',
+};
+
+const FEATURED_SEEDS_BY_SLUG = new Map(INDEXABLE_PLAN_SEEDS.map(seed => [seed.slug, seed]));
+
+// The tag says what this card is within its group, which is the one thing the
+// title does not reliably carry.
+function featuredTag(seed, heading, entry) {
+  if (heading === 'By Supermarket') {
+    return seed ? planMarketShort(seed.supermarket) : marketFromEntry(entry);
+  }
+  if (heading === 'Diet Types') {
+    return seed ? planDietShort(seed.dietType) : null;
+  }
+  return seed ? planGoalShort(seed.goal) : null;
+}
+
+function marketFromEntry(entry) {
+  const haystack = `${entry.slug} ${entry.path || ''}`.toLowerCase();
+  const match = INDEXED_SUPERMARKET_VALUES.find(value => value !== 'any' && haystack.includes(value));
+  return match ? planMarketShort(match) : null;
+}
+
+// Five of the six "By Supermarket" entries point at hub pages or a guide, not a
+// single plan, so there is no one calorie figure or weekly cost for them. Those
+// cards drop the stat row rather than print "Various" and a dash, which would
+// read as missing data rather than a deliberate omission.
+function featuredPlanFacts(entry, heading) {
+  const slug = entry.path?.startsWith('/plans/') ? entry.path.slice('/plans/'.length) : entry.slug;
+  const seed = FEATURED_SEEDS_BY_SLUG.get(slug);
+  const tag = featuredTag(seed, heading, entry);
+  if (!seed) return { tag, stats: null };
+  return {
+    tag,
+    stats: {
+      kcal: seed.calories.toLocaleString('en-GB'),
+      price: BUDGET_ESTIMATES[seed.budget],
+      store: planMarketShort(seed.supermarket),
+    },
+  };
+}
 
 export default function Home() {
   const [loading, setLoading]       = useState(false);
@@ -265,7 +326,7 @@ export default function Home() {
     <>
       <SEO
         title="Find a UK Supermarket Meal Plan | MealPrep.org.uk"
-        description={`Find a realistic 7-day meal plan for the UK supermarket you use, with shopping lists, calories, macros and printable plans from a library of ${PLAN_COUNT}.`}
+        description={`Find a realistic 7-day meal plan for the UK supermarket you use, with shopping lists, calories, macros and printable plans from a library of ${PLAN_COUNT_LABEL}.`}
         canonical="https://www.mealprep.org.uk/"
         jsonLd={homeJsonLd}
       />
@@ -298,11 +359,17 @@ export default function Home() {
             </Link>
           </div>
           <div className="trust-row">
-            <span className="trust-badge"><strong>{PLAN_COUNT.toLocaleString('en-GB')}</strong> published plans</span>
-            <span className="trust-badge"><strong>11</strong> supermarkets</span>
+            <span className="trust-badge"><strong>{PLAN_COUNT_LABEL}</strong> published plans</span>
+            <span className="trust-badge"><strong>{NAMED_SUPERMARKET_COUNT}</strong> supermarkets</span>
             <span className="trust-badge"><strong>Free</strong> with no account</span>
             <span className="trust-badge"><strong>Shopping list</strong> included</span>
           </div>
+          {/* `priority` but deliberately NOT `lcpCandidate`. Moving this above
+              the fold on mobile was expected to make it the LCP element; measured
+              on a 390x844 phone it does not - the H1 still wins, three runs out
+              of three. So fetchpriority="high" here would only make the image
+              contend with the render-blocking stylesheet that gates the text LCP,
+              which is the trap PageHeroVisual's header comment describes. */}
           <PageHeroVisual visual={SITE_VISUALS.home} className="home-hero-visual" priority />
         </header>
 
@@ -313,7 +380,7 @@ export default function Home() {
               equal boxes whose numbers were styled as the same tiny grey
               kicker as every other label on the page, so nothing said these
               happened in sequence. Step two also led with the machinery — "we
-              rank all 1,059 plans" — which describes our work, not the
+              rank all 1,055 plans" — which describes our work, not the
               reader's. */}
           <ol className="hiw-steps">
             <li className="hiw-step">
@@ -368,25 +435,29 @@ export default function Home() {
         {/* ── Featured plans ────────────────────────────────────────────────── */}
         <section className="featured-plans" id="popular-plans">
           <h2 className="section-title">Popular UK Meal Plans</h2>
+          <p className="featured-plans-sub">
+            Calories, weekly cost and supermarket at a glance, no filler images.
+          </p>
 
           {FEATURED_CATEGORIES.map(cat => (
-            <div className="featured-cat" key={cat.heading}>
+            <div className={`featured-cat fc-${FEATURED_ACCENTS[cat.heading] || 'goal'}`} key={cat.heading}>
               <h3 className="featured-cat-heading">{cat.heading}</h3>
               <div className="featured-plan-links">
                 {cat.plans.map(p => {
-                  const cardVisual = chooseFeaturedPlanVisual(cat.heading, p);
+                  const facts = featuredPlanFacts(p, cat.heading);
                   return (
-                    <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="featured-plan-link">
-                      <img
-                        src={cardVisual.src}
-                        alt=""
-                        aria-hidden="true"
-                        width={cardVisual.width || 1200}
-                        height={cardVisual.height || 675}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span>{p.label}</span>
+                    <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="fp-card">
+                      {facts.tag && <span className="fp-tag">{facts.tag}</span>}
+                      <span className="fp-title">{p.label}</span>
+                      {facts.stats && (
+                        <span className="fp-stats">
+                          <span><b>{facts.stats.kcal}</b> kcal</span>
+                          <span aria-hidden="true">·</span>
+                          <span className="fp-price">{facts.stats.price}<span className="fp-per">/wk</span></span>
+                          <span aria-hidden="true">·</span>
+                          <span className="fp-store">{facts.stats.store}</span>
+                        </span>
+                      )}
                     </Link>
                   );
                 })}
@@ -396,7 +467,7 @@ export default function Home() {
 
           <div className="featured-browse-cta">
             <Link to="/browse" className="btn-secondary">
-              Browse all {PLAN_COUNT} plans →
+              Browse all {PLAN_COUNT_LABEL} plans →
             </Link>
           </div>
         </section>
@@ -431,10 +502,14 @@ export default function Home() {
 
         <StickerPromo offer={MID_RANGE_CONTAINERS} sourcePage="home-prep-flow" />
 
-        {/* Search-led discovery remains available after the core product journey. */}
+        {/* Three link blocks run back to back here. They kept every link, but two
+            of them claimed the same thing ("most-read" and "finding useful right
+            now"), so a reader could not tell them apart. Each intro now states the
+            axis that actually separates them: what people search for, what is
+            moving lately, and the fixed reference set. No links changed. */}
         <PopularSearches
           title="Popular UK Meal Plan Searches"
-          intro="Start with a focused set of useful guides, plans and shopping-list routes."
+          intro="The phrases people actually search for. Each one goes straight to the matching plan, guide or shopping list."
           links={POPULAR_SEARCH_LINKS.slice(0, 8)}
           className="popular-searches--home"
         />
@@ -443,7 +518,7 @@ export default function Home() {
 
         <SearchOpportunityLinks
           title="Essential UK Meal Prep Guides"
-          intro="The most-read guides on the site — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
+          intro="The permanent reference set, unchanged week to week — containers, calorie targets, low-calorie foods, cheap protein, delivery comparisons and supermarket planning."
           showDiscovery={false}
           compact
         />
@@ -475,7 +550,7 @@ export default function Home() {
               },
               {
                 q: 'Are the plans free?',
-                a: `All ${PLAN_COUNT} plans are completely free with no account required. The AI editing tool is also free.`,
+                a: `All ${PLAN_COUNT_LABEL} plans are completely free with no account required. The AI editing tool is also free.`,
               },
             ].map((f, i) => (
               <details className="faq-item" key={i}>
@@ -545,17 +620,3 @@ export default function Home() {
   );
 }
 
-function chooseFeaturedPlanVisual(category, plan) {
-  if (category === 'By Supermarket') {
-    const supermarket = ['tesco', 'aldi', 'lidl', 'asda', 'sainsburys', 'morrisons', 'iceland', 'waitrose', 'ocado', 'marks-spencer', 'coop', 'any']
-      .find(item => plan.slug.includes(item));
-    return chooseSupermarketVisual(supermarket);
-  }
-
-  return chooseNavigationCardVisual({
-    label: plan.label,
-    eyebrow: category,
-    note: 'Popular meal plan',
-    seed: `${category}-${plan.slug}`,
-  });
-}
