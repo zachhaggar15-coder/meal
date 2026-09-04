@@ -16,9 +16,35 @@ test('every response receives the baseline security headers', () => {
   assert.match(headers.get('permissions-policy') || '', /microphone=\(\)/);
 });
 
-test('the early frame policy does not pre-empt the later CMP-aware CSP', () => {
+test('the enforced policy still only covers framing', () => {
+  // The full policy must not be enforced until Google's certified CMP is live:
+  // it injects scripts and iframes from origins that cannot be enumerated in
+  // advance, so an enforced CSP would be torn up the moment ads switch on.
   const policy = headers.get('content-security-policy') || '';
   assert.equal(policy.split(';').filter(Boolean).length, 1);
   assert.doesNotMatch(policy, /(?:script-src|frame-src|connect-src|default-src)/);
-  assert.equal(headers.has('content-security-policy-report-only'), false);
+});
+
+test('the full policy ships report-only, so CMP gaps surface instead of breaking', () => {
+  const reportOnly = headers.get('content-security-policy-report-only');
+  assert.ok(reportOnly, 'report-only CSP must be present to observe the CMP install');
+
+  // The origins the site actually loads from today, read out of the code:
+  // AdSense (AdSlot.jsx), GA4 (analytics.js), Plausible (analytics.js) and
+  // Vercel analytics (main.jsx).
+  assert.match(reportOnly, /script-src[^;]*pagead2\.googlesyndication\.com/);
+  assert.match(reportOnly, /script-src[^;]*googletagmanager\.com/);
+  assert.match(reportOnly, /script-src[^;]*plausible\.io/);
+  assert.match(reportOnly, /connect-src[^;]*google-analytics\.com/);
+  // Card visuals are inline SVG data URIs (visualAssets.js).
+  assert.match(reportOnly, /img-src[^;]*data:/);
+  assert.match(reportOnly, /object-src 'none'/);
+  assert.match(reportOnly, /frame-ancestors 'none'/);
+});
+
+test('report-only and enforced policies do not contradict each other on framing', () => {
+  const enforced = headers.get('content-security-policy') || '';
+  const reportOnly = headers.get('content-security-policy-report-only') || '';
+  assert.match(enforced, /frame-ancestors 'none'/);
+  assert.match(reportOnly, /frame-ancestors 'none'/);
 });
