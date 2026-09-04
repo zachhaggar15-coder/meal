@@ -17,8 +17,8 @@ import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { INDEXED_SUPERMARKET_VALUES, PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { INDEXABLE_PLAN_SEEDS } from '../data/planSeeds.js';
-import { BUDGET_ESTIMATES } from '../utils/planBuilder.js';
-import { planDietShort, planGoalShort, planMarketShort } from '../utils/planCardMeta.js';
+import { planGoalShort, planMarketShort } from '../utils/planCardMeta.js';
+import { DIET_CHOICES, buildDietChooserPath, buildPlanChooserPath } from '../data/planChooser.js';
 import { SITE_VISUALS } from '../data/visualAssets.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
@@ -83,41 +83,84 @@ const homeJsonLd = [
 
 // ── Featured plan categories ──────────────────────────────────────────────────
 
+// The three groups are ways in, not plans.
+//
+// They used to be six named Aldi plans under "By Goal", six mixed things under
+// "By Supermarket" and six Aldi diet plans under "Diet Types" - so every route
+// through the homepage was pre-decided as Aldi, and the supermarket choice the
+// site is built around never got made by the reader. Each card is now the
+// category its group heading promises, and choosing the supermarket is the
+// step after, on the chooser pages that already exist for exactly that.
+const FEATURED_GOALS = ['weight-loss', 'high-protein-low-cal', 'muscle-gain', 'budget-fat-loss', 'cheap-student', 'busy-professional'];
+
+function seedsWhere(predicate) {
+  return INDEXABLE_PLAN_SEEDS.filter(predicate);
+}
+
+function categoryFacts(seeds, remainingAxis) {
+  if (!seeds.length) return null;
+  const calories = seeds.map(seed => seed.calories);
+  const low = Math.min(...calories);
+  const high = Math.max(...calories);
+  return {
+    count: seeds.length,
+    // A single figure would be a lie here: a goal spans several targets.
+    kcal: low === high
+      ? `${low.toLocaleString('en-GB')} kcal`
+      : `${low.toLocaleString('en-GB')}–${high.toLocaleString('en-GB')} kcal`,
+    // What is still left to choose, which is the point of sending people to a
+    // chooser rather than straight at one plan.
+    remaining: remainingAxis,
+  };
+}
+
 const FEATURED_CATEGORIES = [
   {
     heading: 'By Goal',
-    plans: [
-      { slug: 'aldi-weight-loss-1500',         label: 'Weight Loss — Aldi 1,500 kcal' },
-      { slug: 'aldi-high-protein-low-cal-1500', label: 'High Protein Low Cal — Aldi' },
-      { slug: 'aldi-muscle-gain-2000',          label: 'Muscle Gain — Aldi 2,000 kcal' },
-      { slug: 'aldi-budget-fat-loss-1500',      label: 'Budget Fat Loss — Aldi' },
-      { slug: 'aldi-cheap-student-1800',        label: 'Cheap Student — Aldi 1,800 kcal' },
-      { slug: 'aldi-busy-professional-1800',    label: 'Busy Professional — Aldi' },
-    ],
+    cards: FEATURED_GOALS.map(goal => {
+      const seeds = seedsWhere(seed => seed.goal === goal);
+      const markets = new Set(seeds.map(seed => seed.supermarket)).size;
+      return {
+        key: goal,
+        label: planGoalShort(goal),
+        to: buildPlanChooserPath(goal),
+        facts: categoryFacts(seeds, `${markets} supermarkets`),
+      };
+    }),
   },
   {
     heading: 'By Supermarket',
-    plans: [
-      { slug: 'tesco-low-calorie',    label: 'Tesco Low Calorie Meal Plan',    path: '/meal-plan/tesco-low-calorie-meal-plan' },
-      { slug: 'aldi-low-calorie',     label: 'Aldi Low Calorie Meal Plan',     path: '/meal-plan/aldi-low-calorie-meal-plan' },
-      { slug: 'aldi-high-protein',    label: 'Aldi High Protein Meal Plan',    path: '/plans/aldi-high-protein-low-cal-1500' },
-      { slug: 'lidl-meal-plans',      label: 'Lidl Meal Plans',                path: '/meal-plans/lidl' },
-      { slug: 'asda-meal-prep',       label: 'Asda Meal Prep Guide',           path: '/blog/asda-meal-prep-uk' },
-      { slug: 'iceland-meal-plans',   label: 'Iceland Meal Plans',             path: '/meal-plans/iceland' },
-    ],
+    cards: INDEXED_SUPERMARKET_VALUES.filter(value => value !== 'any').map(supermarket => {
+      const seeds = seedsWhere(seed => seed.supermarket === supermarket);
+      const goals = new Set(seeds.map(seed => seed.goal)).size;
+      return {
+        key: supermarket,
+        label: planMarketShort(supermarket),
+        to: `/meal-plans/${supermarket}`,
+        facts: categoryFacts(seeds, `${goals} ${goals === 1 ? 'goal' : 'goals'}`),
+      };
+    }),
   },
   {
     heading: 'Diet Types',
-    plans: [
-      { slug: 'aldi-veg-low-cal-1500',       label: 'Vegetarian Low Cal — Aldi' },
-      { slug: 'aldi-vegan-low-cal-1500',      label: 'Vegan Low Cal — Aldi' },
-      { slug: 'aldi-hp-veg-1800',             label: 'High Protein Vegetarian — Aldi' },
-      { slug: 'tesco-veg-low-cal-1800',       label: 'Vegetarian Low Cal — Tesco' },
-      { slug: 'aldi-pescatarian-1800',        label: 'Pescatarian — Aldi 1,800 kcal' },
-      { slug: 'lidl-vegan-low-cal-1800',      label: 'Vegan Low Cal — Lidl' },
-    ],
+    cards: DIET_CHOICES.map(choice => {
+      // The chooser's diet list is not purely dietType: "High Protein
+      // Vegetarian" is a goal in the catalogue, not a diet, so matching it
+      // against dietType made it claim all 213 vegetarian plans - the same
+      // number as the Vegetarian card next to it. Match whichever field the
+      // choice actually lives in.
+      const seeds = seedsWhere(seed => seed.dietType === choice.value || seed.goal === choice.value);
+      const markets = new Set(seeds.map(seed => seed.supermarket)).size;
+      return {
+        key: choice.value,
+        label: choice.label,
+        to: buildDietChooserPath(choice.value),
+        facts: categoryFacts(seeds, `${markets} supermarkets`),
+      };
+    }),
   },
 ];
+
 
 // ── Loading messages for AI generator ────────────────────────────────────────
 
@@ -162,45 +205,6 @@ const FEATURED_ACCENTS = {
   'By Supermarket': 'market',
   'Diet Types': 'diet',
 };
-
-const FEATURED_SEEDS_BY_SLUG = new Map(INDEXABLE_PLAN_SEEDS.map(seed => [seed.slug, seed]));
-
-// The tag says what this card is within its group, which is the one thing the
-// title does not reliably carry.
-function featuredTag(seed, heading, entry) {
-  if (heading === 'By Supermarket') {
-    return seed ? planMarketShort(seed.supermarket) : marketFromEntry(entry);
-  }
-  if (heading === 'Diet Types') {
-    return seed ? planDietShort(seed.dietType) : null;
-  }
-  return seed ? planGoalShort(seed.goal) : null;
-}
-
-function marketFromEntry(entry) {
-  const haystack = `${entry.slug} ${entry.path || ''}`.toLowerCase();
-  const match = INDEXED_SUPERMARKET_VALUES.find(value => value !== 'any' && haystack.includes(value));
-  return match ? planMarketShort(match) : null;
-}
-
-// Five of the six "By Supermarket" entries point at hub pages or a guide, not a
-// single plan, so there is no one calorie figure or weekly cost for them. Those
-// cards drop the stat row rather than print "Various" and a dash, which would
-// read as missing data rather than a deliberate omission.
-function featuredPlanFacts(entry, heading) {
-  const slug = entry.path?.startsWith('/plans/') ? entry.path.slice('/plans/'.length) : entry.slug;
-  const seed = FEATURED_SEEDS_BY_SLUG.get(slug);
-  const tag = featuredTag(seed, heading, entry);
-  if (!seed) return { tag, stats: null };
-  return {
-    tag,
-    stats: {
-      kcal: seed.calories.toLocaleString('en-GB'),
-      price: BUDGET_ESTIMATES[seed.budget],
-      store: planMarketShort(seed.supermarket),
-    },
-  };
-}
 
 export default function Home() {
   const [loading, setLoading]       = useState(false);
@@ -436,31 +440,30 @@ export default function Home() {
         <section className="featured-plans" id="popular-plans">
           <h2 className="section-title">Popular UK Meal Plans</h2>
           <p className="featured-plans-sub">
-            Calories, weekly cost and supermarket at a glance, no filler images.
+            Start with what you want, not where you shop. Pick a supermarket on the next step.
           </p>
 
           {FEATURED_CATEGORIES.map(cat => (
             <div className={`featured-cat fc-${FEATURED_ACCENTS[cat.heading] || 'goal'}`} key={cat.heading}>
               <h3 className="featured-cat-heading">{cat.heading}</h3>
               <div className="featured-plan-links">
-                {cat.plans.map(p => {
-                  const facts = featuredPlanFacts(p, cat.heading);
-                  return (
-                    <Link key={p.slug} to={p.path || `/plans/${p.slug}`} className="fp-card">
-                      {facts.tag && <span className="fp-tag">{facts.tag}</span>}
-                      <span className="fp-title">{p.label}</span>
-                      {facts.stats && (
-                        <span className="fp-stats">
-                          <span><b>{facts.stats.kcal}</b> kcal</span>
-                          <span aria-hidden="true">·</span>
-                          <span className="fp-price">{facts.stats.price}<span className="fp-per">/wk</span></span>
-                          <span aria-hidden="true">·</span>
-                          <span className="fp-store">{facts.stats.store}</span>
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
+                {cat.cards.map(card => (
+                  <Link key={card.key} to={card.to} className="fp-card">
+                    {card.facts && (
+                      <span className="fp-tag">
+                        {card.facts.count.toLocaleString('en-GB')} plans
+                      </span>
+                    )}
+                    <span className="fp-title">{card.label}</span>
+                    {card.facts && (
+                      <span className="fp-stats">
+                        <span>{card.facts.kcal}</span>
+                        <span aria-hidden="true">·</span>
+                        <span className="fp-choice">{card.facts.remaining}</span>
+                      </span>
+                    )}
+                  </Link>
+                ))}
               </div>
             </div>
           ))}

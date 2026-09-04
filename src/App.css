@@ -15124,6 +15124,10 @@ textarea {
   display: grid;
   gap: 10px;
   justify-items: start;
+  /* Rows keep their own height. Without this the grid stretches them to fill a
+     card that the row has made taller, and the tag pill - being a row of its
+     own - grows into a tall block with the label floating in the middle. */
+  align-content: start;
   padding: 16px 18px;
   text-decoration: none;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
@@ -15291,4 +15295,10 @@ textarea {
 #meal-plan,
 #shopping-list {
   scroll-margin-top: 76px;
+}
+
+/* The count of what is still to choose after this card - the supermarkets left
+   on a goal card, the goals left on a supermarket card. */
+.fp-choice {
+  font-weight: 600;
 }

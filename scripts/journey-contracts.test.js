@@ -15,15 +15,19 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { getAllPlanMeta, getPlanBySlug } from '../src/utils/planBuilder.js';
-import { MEAL_PLAN_HUBS, filterPlansForHub } from '../src/data/mealPlanHubs.js';
+import { MEAL_PLAN_HUBS, MEAL_PLAN_HUB_SLUGS, filterPlansForHub } from '../src/data/mealPlanHubs.js';
 import { COMBO_LANDING_PAGES } from '../src/data/comboLandingPages.js';
 import { blogPostsData } from '../src/data/blogPosts.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
 import {
   DIET_CHOICES,
+  DIET_CHOOSER_SLUGS,
   GOAL_CHOOSER_ITEMS,
+  GOAL_CHOOSER_SLUGS,
   SUPERMARKET_CHOICES,
 } from '../src/data/planChooser.js';
+import { INDEXABLE_PLAN_SEEDS as ALL_SEEDS } from '../src/data/planSeeds.js';
+import { INDEXED_SUPERMARKET_VALUES } from '../src/data/planCatalogMeta.js';
 import { buildHubContextLinks, buildHubDataSummary } from '../src/utils/hubContext.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -203,36 +207,52 @@ test('a plan never lists itself as a related plan', () => {
 
 // ── Homepage and editorial links use real, current identities ────────────────
 
-test('hardcoded homepage plan links resolve and their labels match the plan data', () => {
+test('every homepage featured card points somewhere real, and none is hardcoded', () => {
   const source = read('src/pages/Home.jsx');
   const block = /const FEATURED_CATEGORIES = \[([\s\S]*?)\n\];/.exec(source);
   assert.ok(block, 'FEATURED_CATEGORIES not found in Home.jsx');
 
-  const entries = [...block[1].matchAll(/\{\s*slug:\s*'([^']+)',\s*label:\s*'([^']+)'(?:,\s*path:\s*'([^']+)')?/g)];
-  assert.ok(entries.length >= 12, `expected the featured grid to be populated, saw ${entries.length}`);
+  // This test used to parse hardcoded { slug, label } pairs and check each
+  // label against its plan - a label could say "Aldi 1,500 kcal" while pointing
+  // at a Tesco 1,800 plan. The cards are now categories built from the
+  // catalogue, so that whole failure class is gone: a label cannot disagree
+  // with data it is derived from. What can still break is a card pointing at a
+  // route that does not exist, so that is what is asserted now.
+  assert.doesNotMatch(
+    block[1],
+    /\bslug:\s*'/,
+    'featured cards must be derived from the catalogue, not hardcoded slugs',
+  );
+
+  const goals = [...(/const FEATURED_GOALS = \[([^\]]+)\]/.exec(source)?.[1] || '')
+    .matchAll(/'([^']+)'/g)].map(match => match[1]);
+  assert.ok(goals.length >= 4, `expected the goal group to be populated, saw ${goals.length}`);
 
   const failures = [];
-  for (const [, slug, label, explicitPath] of entries) {
-    const target = explicitPath && explicitPath.startsWith('/plans/')
-      ? explicitPath.replace('/plans/', '')
-      : (explicitPath ? null : slug);
-    if (!target) continue; // points at a hub or article, covered by the link audit
-    const plan = PLANS_BY_SLUG.get(target);
-    if (!plan) { failures.push(`${label} -> /plans/${target} does not exist`); continue; }
 
-    const lower = label.toLowerCase();
-    for (const [word, value] of [['aldi', 'aldi'], ['tesco', 'tesco'], ['lidl', 'lidl']]) {
-      if (lower.includes(word) && plan.supermarket !== value) {
-        failures.push(`${label} says ${word} but plan is ${plan.supermarket}`);
-      }
+  for (const goal of goals) {
+    if (!GOAL_CHOOSER_SLUGS.includes(goal)) {
+      failures.push(`goal card "${goal}" has no /choose-plan page`);
     }
-    const kcal = /([\d,]+)\s*kcal/.exec(label);
-    if (kcal && Number(kcal[1].replace(/,/g, '')) !== plan.calories) {
-      failures.push(`${label} says ${kcal[1]} kcal but plan is ${plan.calories}`);
+    if (!ALL_SEEDS.some(seed => seed.goal === goal)) {
+      failures.push(`goal card "${goal}" has no plans behind it`);
     }
-    if (lower.includes('vegan') && plan.dietType !== 'vegan') failures.push(`${label} is not a vegan plan`);
-    if (lower.includes('pescatarian') && plan.dietType !== 'pescatarian') failures.push(`${label} is not pescatarian`);
   }
+
+  for (const choice of DIET_CHOICES) {
+    if (!DIET_CHOOSER_SLUGS.includes(choice.value)) {
+      failures.push(`diet card "${choice.value}" has no /choose-diet page`);
+    }
+    const behind = ALL_SEEDS.some(seed => seed.dietType === choice.value || seed.goal === choice.value);
+    if (!behind) failures.push(`diet card "${choice.value}" has no plans behind it`);
+  }
+
+  for (const market of INDEXED_SUPERMARKET_VALUES.filter(value => value !== 'any')) {
+    if (!MEAL_PLAN_HUB_SLUGS.includes(market)) {
+      failures.push(`supermarket card "${market}" has no /meal-plans hub`);
+    }
+  }
+
   assert.deepEqual(failures, []);
 });
 
