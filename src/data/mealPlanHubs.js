@@ -429,6 +429,191 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
 };
 
 export const MEAL_PLAN_HUBS = {
+  'aldi-weight-loss': {
+    slug: 'aldi-weight-loss',
+    path: '/meal-plans/aldi-weight-loss',
+    title: 'Aldi Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
+    description: 'Free Aldi weight loss meal plans from 1,400 to 1,800 kcal, built around Everyday Essentials, with shopping lists, macros and printable PDFs.',
+    h1: 'Aldi Weight Loss Meal Plans UK',
+    kicker: 'Aldi fat loss hub',
+    intro: 'Aldi is a short list done cheaply. It carries one or two options per line where a big-four store carries ten, and for a calorie deficit that constraint is mostly a help: fewer decisions in the aisle, and a basket that stays under control without much thought.',
+    match: { supermarkets: ['aldi'], goals: ['weight-loss'] },
+    stats: ['23 Aldi plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    sections: [
+      {
+        h2: 'What Aldi is good at for a deficit',
+        paragraphs: [
+          'Three things carry these plans. The fresh mince and chicken come in large packs that divide cleanly into portions, so a single tray covers three or four dinners rather than one. Frozen vegetables and fruit are cheap enough to use as the default rather than the fallback, which keeps the weekly cost flat even when fresh produce prices move. And the own-brand dairy line - Greek-style yogurt, cottage cheese, skyr - lands at discounter prices, which matters because those are the ingredients that make a low-calorie day feel like enough food.',
+          'The practical effect is that a deficit at Aldi tends to hold up over several weeks, where a plan built on a specialist range often does not.',
+        ],
+      },
+      {
+        h2: 'Plan a fallback for anything named',
+        paragraphs: [
+          'Aldi rotates its ranges and stock varies between stores, so treat any single named product as a preference rather than a requirement. If a plan calls for skyr and the chiller is empty, Greek-style yogurt does the same job at a similar protein cost. If a specific mince percentage is missing, the next one up works with a slightly smaller portion.',
+          'This is the one habit worth building before you shop here. It is also why these plans lean on categories - lean mince, frozen mixed vegetables, plain high-protein yogurt - rather than on particular products.',
+        ],
+      },
+      {
+        h2: 'Where Aldi is the wrong choice',
+        paragraphs: [
+          'If you need free-from or speciality lines, Aldi carries fewer of them than the big four, and a restrictive diet can end up needing a second shop anyway. In that case a Tesco or Sainsbury\'s plan will be less frustrating even though the basket costs a little more.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How low do the Aldi weight loss plans go?',
+        a: '1,400 kcal is the lowest here. Below that it becomes difficult to hit protein and fibre from ordinary supermarket food without supplements, so the catalogue stops there rather than going lower for the sake of it.',
+      },
+      {
+        q: 'Are there vegetarian and vegan versions?',
+        a: 'Yes - the Aldi weight loss plans cover standard, vegetarian, vegan and pescatarian weeks. The vegan ones lean on frozen vegetables, tinned pulses and own-brand soya, which are the parts of the range that stay reliably in stock.',
+      },
+      {
+        q: 'Can I cook these ahead?',
+        a: 'Some of them. The effort levels here run from minimal through to full batch weeks, so if you would rather cook twice and reheat, filter for the batch plans rather than adapting a standard one.',
+      },
+    ],
+    relatedSlugs: ['aldi', 'weight-loss', '1500-calorie'],
+  },
+
+  'lidl-high-protein-low-cal': {
+    slug: 'lidl-high-protein-low-cal',
+    path: '/meal-plans/lidl-high-protein-low-cal',
+    title: 'Lidl High Protein Low Calorie Meal Plans UK - Free Plans',
+    description: 'Free Lidl high-protein low-calorie meal plans from 1,500 to 1,800 kcal, using own-brand dairy and Vemondo, with shopping lists and macros.',
+    h1: 'Lidl High Protein Low Calorie Meal Plans UK',
+    kicker: 'Lidl high-protein hub',
+    intro: 'Protein is the expensive part of a low-calorie week, and it is the part most plans quietly skimp on. Lidl is the discounter to pick when a plan leans on high-protein dairy, because its own-brand range covers that deliberately rather than incidentally.',
+    match: { supermarkets: ['lidl'], goals: ['high-protein-low-cal'] },
+    stats: ['10 Lidl plans', '1,500-1,800 kcal', 'Shopping list and PDF'],
+    sections: [
+      {
+        h2: 'Why the dairy aisle does the work here',
+        paragraphs: [
+          'Hitting a high protein target under 1,800 kcal is mostly an exercise in getting protein without much fat or sugar attached. Quark, skyr, cottage cheese and plain high-protein yogurt do that better than almost anything else in a supermarket, and Lidl prices them at discounter level rather than as a premium line.',
+          'That is why these plans put dairy at breakfast and around training, and use meat and fish for the evening meal where there is more calorie headroom.',
+        ],
+      },
+      {
+        h2: 'Lidl Plus coupons are worth timing',
+        paragraphs: [
+          'Meat and dairy are the costliest items in a high-protein shop, and they are also what Lidl Plus tends to discount. If you are shopping the same plan for several weeks, checking the app before you go is worth more here than at a store whose loyalty scheme pays out later or in points.',
+          'Do not build a week around a coupon, though. Treat it as a discount on a shop you were doing anyway.',
+        ],
+      },
+      {
+        h2: 'Vegetarian weeks are cheaper at Lidl than most places',
+        paragraphs: [
+          'The Vemondo range makes a meat-free high-protein week genuinely affordable, which is not true at every mainstream store. Two of the plans here are vegetarian and lean on it alongside dairy and pulses.',
+          'One caution: middle-aisle stock is not reliable enough to plan around. If you see a protein product there, treat it as a bonus rather than a staple you can repeat next week.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How much protein do these plans actually hit?',
+        a: 'Each plan states its own daily average on the plan page, alongside carbohydrate, fat and fibre. They sit high relative to the calorie target - that is the point of the goal - but the figure varies by plan, so check the one you pick rather than assuming a single number.',
+      },
+      {
+        q: 'Is Lidl or Aldi better for high protein?',
+        a: 'They are closely matched on basket price. Lidl edges it when the plan leans on dairy and plant protein, because of the own-brand dairy line and Vemondo. Aldi is the better pick when the plan is built on fresh mince and chicken in large packs.',
+      },
+    ],
+    relatedSlugs: ['lidl', 'high-protein', 'aldi'],
+  },
+
+  'asda-muscle-gain': {
+    slug: 'asda-muscle-gain',
+    path: '/meal-plans/asda-muscle-gain',
+    title: 'Asda Muscle Gain Meal Plans UK - Free High Calorie Plans',
+    description: 'Free Asda muscle gain meal plans from 2,000 to 3,500 kcal built on Just Essentials, with shopping lists, macros and printable PDFs.',
+    h1: 'Asda Muscle Gain Meal Plans UK',
+    kicker: 'Asda muscle gain hub',
+    intro: 'Eating in a surplus is a volume problem before it is a nutrition problem. At 3,000 kcal you are buying roughly twice the food of a cutting week, every week, which is where Asda earns its place: Just Essentials reaches into fresh meat and fish rather than stopping at cupboard staples, so the whole basket can sit in the value tier.',
+    match: { supermarkets: ['asda'], goals: ['muscle-gain'] },
+    stats: ['16 Asda plans', '2,000-3,500 kcal', 'Shopping list and PDF'],
+    sections: [
+      {
+        h2: 'Where the money goes in a surplus',
+        paragraphs: [
+          'The backbone of these plans is rice, pasta, oats and tinned pulses, which Asda prices well and which carry most of the extra calories. Protein comes from multipack meat and the frozen range, both of which suit cooking in bulk on one or two days rather than every evening.',
+          'The plans run from 2,000 to 3,500 kcal. Above about 3,000, most people find they need a fourth or fifth eating occasion rather than larger plates, so the higher-calorie plans are structured that way.',
+        ],
+      },
+      {
+        h2: 'Two things about Asda specifically',
+        paragraphs: [
+          'Just Essentials lines sell out, and inconsistently. When you are buying the same items in quantity every week that matters more than it would on a smaller shop, so it is worth having a second choice in mind for the two or three items you buy most of.',
+          'Asda Rewards pays cashback into a wallet rather than reducing the bill at the till. It is real money, but it will not make this week\'s shop cheaper, which is worth knowing if you are budgeting weekly rather than monthly.',
+        ],
+      },
+      {
+        h2: 'Vegetarian and pescatarian surpluses',
+        paragraphs: [
+          'Both are covered here. A meat-free surplus is harder because plant proteins tend to arrive with more volume and fibre attached, which fills you up before the calories are in. The vegetarian plans handle that with more dairy and oils and slightly denser meals rather than simply scaling up the portions.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How fast should I expect to gain on these?',
+        a: 'That depends on your starting point, training and activity, and it is not something a meal plan can predict. The plans give you a consistent calorie and protein intake to work from; judge the rate from your own weight trend over a few weeks and adjust the calorie target up or down.',
+      },
+      {
+        q: 'Do I need supplements to hit these protein targets?',
+        a: 'No. Every plan reaches its protein figure from ordinary supermarket food. If you use a shake it can replace one of the dairy servings, but nothing in the plans depends on it.',
+      },
+    ],
+    relatedSlugs: ['asda', 'muscle-gain', 'high-protein'],
+  },
+
+  'iceland-low-effort': {
+    slug: 'iceland-low-effort',
+    path: '/meal-plans/iceland-low-effort',
+    title: 'Iceland Low Effort Meal Plans UK - Frozen Meal Prep Plans',
+    description: 'Free Iceland low-effort meal plans from 1,500 to 2,000 kcal using frozen protein and vegetables, with shopping lists, macros and PDFs.',
+    h1: 'Iceland Low Effort Meal Plans UK',
+    kicker: 'Iceland frozen prep hub',
+    intro: 'Iceland solves the portioning problem rather than the price problem. Bagged frozen protein lets you take out exactly the number of portions you need, which removes both the waste and most of the weighing - and that is why it suits a week where you have very little time to cook.',
+    match: { supermarkets: ['iceland'], goals: ['low-effort'] },
+    stats: ['9 Iceland plans', '1,500-2,000 kcal', 'Shopping list and PDF'],
+    sections: [
+      {
+        h2: 'Why frozen makes low-effort weeks easier',
+        paragraphs: [
+          'Consistent pack sizes do most of the work. When a portion of chicken or fish is already the right size, calorie control stops depending on a set of scales and a decision at the end of a long day. Frozen vegetables need no washing, trimming or rescuing before they go off, and nothing is wasted because you only take out what you cook.',
+          'These plans are built around that: short ingredient lists, few pans, and meals that go from freezer to plate without a preparation stage in between.',
+        ],
+      },
+      {
+        h2: 'You will need a second shop',
+        paragraphs: [
+          'This is the honest limitation. Iceland is a frozen specialist, not a full weekly shop - the fresh produce and store-cupboard ranges are limited, so most of these plans assume you pick up basics like oats, rice, fruit or dairy elsewhere. The shopping list separates them so you can see what is coming from where before you set off.',
+          'If you would rather do one shop, a Tesco or Asda plan will suit you better even though you lose some of the freezer advantages.',
+        ],
+      },
+      {
+        h2: 'Freezer space is the real constraint',
+        paragraphs: [
+          'Budget is rarely what stops these plans working. Space is. A week of frozen protein and vegetables, plus anything you batch-cook and store, needs more room than a standard under-counter freezer usually has spare. It is worth checking what you can actually fit before shopping for a full week rather than discovering it with a full trolley.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is frozen food less nutritious than fresh?',
+        a: 'Not meaningfully for the vegetables and fish in these plans. Freezing happens soon after harvest or catch, and the nutritional difference against fresh produce that has spent days in transit and storage is small. The NHS Eatwell Guide counts frozen vegetables towards your five a day on the same basis as fresh.',
+      },
+      {
+        q: 'How much cooking do these plans actually involve?',
+        a: 'The effort levels run from minimal through to batch. The minimal plans are built around single-pan or oven-tray meals; the batch ones ask for one longer cooking session and reheating for the rest of the week. Pick by how much time you have on your least busy day, not your average one.',
+      },
+    ],
+    relatedSlugs: ['iceland', 'meal-plans-with-shopping-list'],
+  },
+
   ...CALORIE_AUTHORITY_HUBS,
   ...SUPERMARKET_AUTHORITY_HUBS,
   ...GOAL_AUTHORITY_HUBS,
