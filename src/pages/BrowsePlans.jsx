@@ -136,7 +136,7 @@ const PLAN_INDEX_GROUPS = GOALS
 const HUB_INDEX_GROUPS = [
   {
     label: 'Calorie plan hubs',
-    slugs: ['1200-calorie', '1400-calorie', '1500-calorie', '1600-calorie', '1800-calorie', '2000-calorie', '2500-calorie', '3000-calorie', '3500-calorie'],
+    slugs: ['1500-calorie', '1800-calorie', '2000-calorie', '2500-calorie', '3000-calorie', '3500-calorie'],
   },
   {
     label: 'Supermarket plan hubs',

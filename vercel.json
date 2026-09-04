@@ -588,6 +588,31 @@
       "source": "/plans/waitrose-weight-loss-1600-flexible-standard",
       "destination": "/plans/waitrose-weight-loss-1600-moderate-standard",
       "permanent": true
+    },
+    {
+      "source": "/meal-plans/1200-calorie",
+      "destination": "/meal-plans/low-calorie",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plans/1400-calorie",
+      "destination": "/meal-plans/1500-calorie",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plans/1550-calorie",
+      "destination": "/meal-plans/1500-calorie",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plans/1600-calorie",
+      "destination": "/meal-plans/1500-calorie",
+      "permanent": true
+    },
+    {
+      "source": "/meal-plans/2200-calorie",
+      "destination": "/meal-plans/2000-calorie",
+      "permanent": true
     }
   ]
 }

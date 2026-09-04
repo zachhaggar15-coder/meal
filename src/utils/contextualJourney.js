@@ -1,3 +1,5 @@
+import { calorieHubPathFor } from '../data/mealPlanHubs.js';
+
 const SUPERMARKETS = [
   ['marks-spencer', 'M&S'],
   ['sainsburys', "Sainsbury's"],
@@ -85,7 +87,7 @@ export function buildBlogNextStep({ slug = '', data = {}, exactPlanLinks = [] })
     return {
       title: `Choose a ${Number(calories).toLocaleString('en-GB')} calorie week`,
       description: 'Compare plans at this target, then open one for recipes, macros and a shopping list.',
-      primary: { to: `/meal-plans/${calories}-calorie`, label: `View ${Number(calories).toLocaleString('en-GB')} calorie plans` },
+      primary: { to: calorieHubPathFor(calories), label: `View ${Number(calories).toLocaleString('en-GB')} calorie plans` },
       secondary: [
         { to: `/browse?calories=${calories}`, label: 'Compare supermarkets' },
         { to: '/quiz', label: 'Check this target against my goals' },

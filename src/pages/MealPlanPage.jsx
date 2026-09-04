@@ -31,6 +31,7 @@ import { schemaDates } from '../utils/contentDates.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
 import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
+import { calorieHubPathFor } from '../data/mealPlanHubs.js';
 import {
   buildPlanReference,
   readPlanProgress,
@@ -834,7 +835,7 @@ function LegacyPlanFamilyBox({ family }) {
 function getLegacyPlanFamily(slug, data) {
   if (!data?.targetCalories) return null;
 
-  const calorieHub = `/meal-plans/${data.targetCalories}-calorie`;
+  const calorieHub = calorieHubPathFor(data.targetCalories);
   const supermarket = detectLegacySupermarket(slug, data);
   const generatedEquivalent = LEGACY_GENERATED_EQUIVALENTS[slug];
   const links = [

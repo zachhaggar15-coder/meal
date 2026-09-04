@@ -1,4 +1,3 @@
-import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 
 const REVIEWED_DATE = '18 June 2026';
 
@@ -25,76 +24,24 @@ const GUIDE_LINKS = {
   containers: { label: 'Best meal prep containers UK', to: '/meal-prep-containers' },
 };
 
-function createCalorieHub({
-  calories,
-  matchCalories = [calories],
-  goal = 'calorie-controlled plan hub',
-  bestFor = 'Calorie target planning',
-  relatedSlugs = ['free-online-diet-plans-uk', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list'],
-  supportingGuides = [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.lowCalorieReadyMeals, GUIDE_LINKS.printable],
-}) {
-  const calorieText = calories.toLocaleString('en-GB');
-  const isLow = calories <= 1600;
-  const isHigh = calories >= 2500;
-  return {
-    slug: `${calories}-calorie`,
-    path: `/meal-plans/${calories}-calorie`,
-    title: `${calorieText} Calorie Meal Plans UK - Printable PDFs + Shopping Lists`,
-    description:
-      `Browse free ${calorieText} calorie meal plans for UK supermarkets, with 7-day menus, macros, recipes, printable PDFs and shopping lists.`,
-    h1: `${calorieText} Calorie Meal Plans UK`,
-    kicker: goal,
-    intro:
-      `Use these ${calorieText} calorie meal plans when you want a clear UK supermarket week with recipes, macros, PDF export and a shopping list. The plans favour realistic meals, visible protein and portions you can actually shop for.`,
-    match: { calories: matchCalories },
-    stats: [bestFor, 'Printable PDF plans', 'Weekly shopping lists'],
-    reviewed: REVIEWED_DATE,
-    sources: COMMON_NUTRITION_SOURCES,
-    sections: [
-      {
-        h2: `Quick answer: who suits ${calorieText} calories?`,
-        paragraphs: [
-          `${calorieText} calories can be useful when it matches your body size, activity, appetite and goal. It is not automatically better because it is lower or higher; the right plan is the one you can repeat while still eating balanced meals.`,
-          isLow
-            ? 'For lower calorie targets, prioritise lean protein, vegetables, fruit, potatoes, oats, beans, lentils and measured fats so the day still feels like proper food.'
-            : isHigh
-              ? 'For higher calorie targets, use extra snacks, bigger carbohydrate portions and calorie-dense but useful foods such as oats, rice, pasta, olive oil, nuts, milk and yogurt.'
-              : 'For moderate calorie targets, balance protein, carbohydrates, vegetables and a snack rather than pushing all calories into one large evening meal.',
-        ],
-        table: {
-          headers: ['Need', 'Best fit', 'Watch-out'],
-          rows: [
-            ['Weight loss', isLow ? `${calorieText} calorie low-calorie plans` : 'Compare lower calorie plans first', 'Keep protein and fibre high enough for hunger control'],
-            ['Training or active job', isHigh ? `${calorieText} calorie muscle gain or endurance plans` : 'Consider 2000-2500 kcal if energy drops', 'Do not under-fuel repeated hard training'],
-            ['Vegetarian or vegan', 'Use matching diet filters from the plan cards', 'Plan protein sources before cutting portions'],
-            ['Printing and shopping', 'Open any matching plan and export the PDF', 'Check cupboard staples before buying the full list'],
-          ],
-        },
-      },
-      {
-        h2: `How to choose a ${calorieText} calorie plan`,
-        paragraphs: [
-          'Start with goal, diet type and supermarket. Then choose effort level: standard prep for variety, batch cooking for weekday speed, or low effort when you need more ready-to-eat ingredients.',
-          'If the target feels too strict or too much food, move to the nearest calorie hub and compare the meal structure before changing the whole plan.',
-        ],
-      },
-    ],
-    supportingGuides,
-    faq: [
-      {
-        q: `Do ${calorieText} calorie plans include shopping lists?`,
-        a: 'Yes. Each matching plan includes recipes, macros, a grouped weekly shopping list and PDF export.',
-      },
-      {
-        q: `Is ${calorieText} calories right for everyone?`,
-        a: 'No. Calorie needs vary by body size, activity, health status and goals. These pages are general information only and are not medical advice.',
-      },
-    ],
-    relatedSlugs,
-  };
-}
 
-function createSupermarketHub({ key, label, budgetNote, relatedSlugs = ['weight-loss', '1500-calorie', 'high-protein', 'meal-plans-with-shopping-list'] }) {
+// Structure is shared; prose is not.
+//
+// This used to take a single `budgetNote` and generate everything else, which
+// meant eleven pages whose intro, both section headings, every paragraph and
+// both FAQ answers were identical with the chain name swapped in. Measured,
+// they came out at 91% repeated sentence shapes on about 173 words - a
+// template with the nouns changed, which is exactly what the content rules
+// forbid and what a manual ad review looks for.
+//
+// `intro`, `sections` and `faq` are now required per chain. The goal table,
+// the sources, the supporting guides and the page shape stay shared, because
+// repeated layout is fine - it is repeated writing that is the problem.
+function createSupermarketHub({ key, label, intro, sections, faq, stats, relatedSlugs = ['weight-loss', '1500-calorie', 'high-protein', 'meal-plans-with-shopping-list'] }) {
+  if (!intro || !sections?.length || !faq?.length) {
+    throw new Error(`Supermarket hub "${key}" needs its own intro, sections and FAQ. See the note above createSupermarketHub.`);
+  }
+
   return {
     slug: key,
     path: `/meal-plans/${key}`,
@@ -103,18 +50,17 @@ function createSupermarketHub({ key, label, budgetNote, relatedSlugs = ['weight-
       `Browse free ${label} meal plans for UK weight loss, high protein, vegetarian, vegan, muscle gain and budget goals, with PDFs and shopping lists.`,
     h1: `${label} Meal Plans UK`,
     kicker: 'Supermarket plan hub',
-    intro:
-      `${label} meal plans are useful when you want the weekly shop to match the store you actually use. These plans turn UK supermarket staples into 7-day menus with macros, recipes, PDF export and a grouped shopping list.`,
+    intro,
     match: { supermarkets: [key] },
-    stats: [`${label} plans`, 'Supermarket shopping lists', 'PDF export'],
+    stats: stats || [`${label} plans`, 'Supermarket shopping lists', 'PDF export'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
+      ...sections,
       {
-        h2: `Quick answer: when to choose ${label}`,
+        h2: `Choosing your ${label} plan by goal`,
         paragraphs: [
-          `Choose ${label} if you shop there most weeks or want ingredients that are easy to swap within that store. ${budgetNote}`,
-          'The strongest starting point is to choose your goal first, then compare the top matching plans by calories, diet type, budget and effort.',
+          'Pick the goal first and the calorie target second. Every plan below states its own daily average and weekly cost estimate on its page.',
         ],
         table: {
           headers: ['Goal', 'Best starting plan', 'Why'],
@@ -126,25 +72,9 @@ function createSupermarketHub({ key, label, budgetNote, relatedSlugs = ['weight-
           ],
         },
       },
-      {
-        h2: `${label} shopping-list tips`,
-        paragraphs: [
-          'Check cupboard staples before buying the whole list, especially rice, oats, pasta, spices, oil, sauces and frozen vegetables.',
-          'If a plan ingredient is unavailable, swap within the same role: chicken for turkey, skyr for Greek yogurt, tofu for beans, rice for potatoes, or frozen vegetables for fresh.',
-        ],
-      },
     ],
     supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList, GUIDE_LINKS.containers],
-    faq: [
-      {
-        q: `Can I use ${indefiniteArticleFor(label)} ${label} plan at another supermarket?`,
-        a: 'Yes. Ingredients are common UK supermarket foods, but exact products and prices may differ.',
-      },
-      {
-        q: `Do ${label} plans include printable shopping lists?`,
-        a: 'Yes. Open any plan and use the PDF export section to print the weekly menu and shopping list.',
-      },
-    ],
+    faq,
     relatedSlugs,
   };
 }
@@ -256,96 +186,480 @@ function createShoppingListHub({ key, titleLabel, match, intro, relatedSlugs = [
 }
 
 const CALORIE_AUTHORITY_HUBS = {
-  '1200-calorie': createCalorieHub({
-    calories: 1200,
-    matchCalories: [1400, 1500],
-    goal: 'Very low calorie reference hub',
-    bestFor: 'Lower calorie alternatives',
-    supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.lowCalorieReadyMeals, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.printable],
-  }),
-  '1400-calorie': createCalorieHub({ calories: 1400, goal: 'Low calorie plan hub', bestFor: 'Smaller deficits' }),
-  '1550-calorie': createCalorieHub({
-    calories: 1550,
-    matchCalories: [1500, 1600],
-    goal: 'Low calorie plan hub',
-    bestFor: 'High-protein ready-made alternatives',
-    relatedSlugs: ['1500-calorie', '1600-calorie', 'low-calorie', 'high-protein'],
-  }),
-  '1600-calorie': createCalorieHub({ calories: 1600, goal: 'Low calorie plan hub', bestFor: 'Steady fat loss' }),
-  '1800-calorie': createCalorieHub({ calories: 1800, goal: 'Moderate calorie plan hub', bestFor: 'Sustainable weight loss' }),
-  '2000-calorie': createCalorieHub({ calories: 2000, goal: 'Balanced calorie plan hub', bestFor: 'Maintenance or active fat loss' }),
-  '2200-calorie': createCalorieHub({
-    calories: 2200,
-    goal: 'Active calorie plan hub',
-    bestFor: 'Body recomposition, training and active work',
-    relatedSlugs: ['2000-calorie', '2500-calorie', 'muscle-gain', 'high-protein'],
-  }),
-  '2500-calorie': createCalorieHub({
-    calories: 2500,
-    goal: 'Higher calorie plan hub',
-    bestFor: 'Muscle gain and active weeks',
-    relatedSlugs: ['muscle-gain', '3000-calorie', 'high-protein', 'meal-plans-with-shopping-list'],
+  '1800-calorie': {
+    slug: '1800-calorie',
+    path: '/meal-plans/1800-calorie',
+    title: '1,800 Calorie Meal Plans UK - Printable PDFs + Shopping Lists',
+    description:
+      'Free 1,800 calorie meal plans for UK supermarkets, with 7-day menus, macros, recipes, printable PDFs and shopping lists.',
+    h1: '1,800 Calorie Meal Plans UK',
+    kicker: 'Moderate calorie plan hub',
+    intro:
+      '1,800 kcal is where most people should probably start, and where fewer people do. It is high enough that a week does not run on willpower, and for most adults still low enough to lose weight steadily - which is why it has more plans behind it than any other target on the site.',
+    match: { calories: [1800] },
+    stats: ['523 plans at 1,800 kcal', 'The largest calorie bucket', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Why the middle target usually wins',
+        paragraphs: [
+          'A deficit only works for as long as you keep to it, and the aggressive targets are the ones people abandon in week three. 1,800 kcal leaves room for a proper evening meal, a snack and some social eating, which is usually the difference between a plan that lasts a month and one that lasts four days.',
+          'It also leaves enough headroom to hit protein and fibre comfortably from ordinary food, without the careful engineering a 1,400 kcal week needs.',
+        ],
+      },
+      {
+        h2: 'Who it does not suit',
+        paragraphs: [
+          'If you are smaller, older or largely sedentary, 1,800 may be close to maintenance rather than a deficit, and the weight will not move. If you are training hard or doing physical work, it may be too low to recover on. Neither is a reason to abandon the target so much as a reason to check it against what actually happens over two or three weeks.',
+          'The plans state their own daily averages, so use those and your own weight trend rather than assuming the number is right because it is popular.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.printable],
+    faq: [
+      {
+        q: 'Is 1,800 calories enough to lose weight?',
+        a: 'For many adults, yes - it depends on your size, age and activity, not on the number alone. If two or three weeks pass with no change in the trend, the target is too high for you rather than the plan being wrong.',
+      },
+      {
+        q: 'Should I start at 1,800 or go lower?',
+        a: 'Starting here and moving down if needed is usually more effective than starting low and rebounding. A deficit you can keep to beats a bigger one you cannot.',
+      },
+    ],
+    relatedSlugs: ['1500-calorie', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list'],
+  },
+  '2000-calorie': {
+    slug: '2000-calorie',
+    path: '/meal-plans/2000-calorie',
+    title: '2,000 Calorie Meal Plans UK - Printable PDFs + Shopping Lists',
+    description:
+      'Free 2,000 calorie meal plans for UK supermarkets, with 7-day menus, macros, recipes, printable PDFs and shopping lists.',
+    h1: '2,000 Calorie Meal Plans UK',
+    kicker: 'Balanced calorie plan hub',
+    intro:
+      '2,000 kcal is the most misunderstood number in nutrition, because it is the one printed on food labels. The %RI figures on a UK pack are calculated against 2,000 - but that is a reference value for labelling, not a recommendation for you.',
+    match: { calories: [2000, 2200] },
+    stats: ['244 plans at 2,000-2,200 kcal', 'Maintenance and active weeks', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'What the label number actually means',
+        paragraphs: [
+          'The 2,000 kcal reference intake exists so that packaging can show a consistent percentage. It is not a target, and your own maintenance figure may be several hundred calories either side of it depending on your size, activity and job.',
+          'Treated as an actual target it suits a lot of people well: maintenance for many adults, or a gentle deficit for someone larger or more active. That is why these plans sit here rather than being labelled a weight-loss set.',
+        ],
+      },
+      {
+        h2: 'Maintenance is a skill worth practising',
+        paragraphs: [
+          'Most diet advice is about losing, and almost none is about the part afterwards where you hold a weight steady. A structured maintenance week is genuinely useful, and it is easier to do deliberately from a plan than by guessing.',
+          'This hub also covers 2,200 kcal plans, which suit active work or regular training without moving into a deliberate surplus.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.printable],
+    faq: [
+      {
+        q: 'Is 2,000 calories a day right for me?',
+        a: 'It is a labelling reference rather than a personal target. Your maintenance level depends on body size, composition, activity and daily movement - use the number as a starting point and adjust from your own weight trend over a few weeks.',
+      },
+      {
+        q: 'Can I lose weight on 2,000 calories?',
+        a: 'If your maintenance is above it, yes. For a larger or very active person 2,000 kcal is a real deficit; for a smaller sedentary person it may be a surplus. The figure is not the deciding factor on its own.',
+      },
+    ],
+    relatedSlugs: ['1800-calorie', '2500-calorie', 'high-protein', 'meal-plans-with-shopping-list'],
+  },
+  '2500-calorie': {
+    slug: '2500-calorie',
+    path: '/meal-plans/2500-calorie',
+    title: '2,500 Calorie Meal Plans UK - Printable PDFs + Shopping Lists',
+    description:
+      'Free 2,500 calorie meal plans for UK supermarkets, with 7-day menus, macros, recipes, printable PDFs and shopping lists.',
+    h1: '2,500 Calorie Meal Plans UK',
+    kicker: 'Higher calorie plan hub',
+    intro:
+      'Above about 2,300 kcal the problem inverts. Every lower target is an exercise in restraint; at 2,500 the difficulty is actually eating it all, consistently, without feeling stuffed or reaching for food that leaves you no better off.',
+    match: { calories: [2500] },
+    stats: ['54 plans at 2,500 kcal', 'Surplus and heavy training', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Volume becomes the obstacle',
+        paragraphs: [
+          'Filling foods are helpful in a deficit and a nuisance in a surplus. A plate of vegetables and lean chicken is satisfying at 1,500 kcal and exhausting to repeat at 2,500, because you run out of appetite before you run out of calories.',
+          'These plans deal with that by adding eating occasions rather than enlarging plates, and by leaning on calorie-dense but useful foods - oats, rice, pasta, olive oil, nuts, whole milk and yogurt - instead of simply doubling portions.',
+        ],
+      },
+      {
+        h2: 'Protein does not scale with calories',
+        paragraphs: [
+          'A common mistake at this level is adding calories evenly and assuming protein takes care of itself. It does not: carbohydrates and fats are the easiest things to add, so protein can drift proportionally down even while total intake rises.',
+          'Each plan states its own protein figure. If you are training, check that number rather than the calorie total, because it is the one doing the work.',
+        ],
+      },
+    ],
     supportingGuides: [GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.cheapProtein, GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.printable],
-  }),
+    faq: [
+      {
+        q: 'Do I need to eat 2,500 calories to build muscle?',
+        a: 'Not necessarily. A surplus helps, but the size of it matters less than protein intake and training. A smaller surplus with adequate protein generally produces a better result than a large one.',
+      },
+      {
+        q: 'How do I eat this much without feeling overfull?',
+        a: 'More eating occasions rather than bigger plates, and choosing denser foods. Liquid calories - milk, yogurt drinks, smoothies - also help when appetite is the limiting factor rather than time.',
+      },
+    ],
+    relatedSlugs: ['muscle-gain', '3000-calorie', 'high-protein', '2000-calorie'],
+  },
 };
 
 const SUPERMARKET_AUTHORITY_HUBS = {
   tesco: createSupermarketHub({
     key: 'tesco',
     label: 'Tesco',
-    budgetNote: 'Tesco is strongest when you want broad choice, online availability, Clubcard offers and more specialist high-protein or vegetarian products.',
+    stats: ['163 Tesco plans', 'Clubcard-aware costs', 'Shopping list and PDF'],
+    intro:
+      'Tesco is the tier-shopping supermarket. The same meal can be built at three different price points without ever leaving own-label, which is what makes it forgiving when your budget moves partway through the month.',
+    sections: [
+      {
+        h2: 'What the depth of the own-brand range buys you',
+        paragraphs: [
+          'Most recipes here can be built up or down in cost without changing what you cook. A chilli made with standard mince and one made with the value tier is the same plan at two prices, and the swap takes no planning. That is unusual - at a discounter you get one option per line and the decision is made for you.',
+          'The free-from and speciality shelves are also the deepest of the mainstream stores, so gluten-free, dairy-free and vegan weeks tend to work here without a second shop.',
+        ],
+      },
+      {
+        h2: 'Clubcard is not optional',
+        paragraphs: [
+          'Non-Clubcard prices are noticeably higher, and the weekly cost estimates on these plans assume you have the card. Clubcard Prices frequently cover chicken, mince and dairy, which is where a protein-led plan spends most of its money.',
+          'One thing to watch: the Stockwell & Co economy tier has been shrinking, and some lines that used to sit there have moved up a tier. If you last shopped the value range a year ago, check the shelf rather than assuming.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Are the cost estimates based on Clubcard prices?',
+        a: 'They assume you are using a Clubcard, because the gap between Clubcard and non-Clubcard pricing is large enough to change the weekly total. Without one, expect to pay meaningfully more than the estimate on the plan page.',
+      },
+      {
+        q: 'Is Tesco a good choice for a restrictive diet?',
+        a: 'It is the strongest of the mainstream stores for this. The free-from and speciality ranges are deeper than at the discounters, so gluten-free, dairy-free and vegan plans can usually be shopped in one trip.',
+      },
+    ],
     relatedSlugs: ['tesco-weight-loss', 'weight-loss', '1500-calorie', 'high-protein'],
   }),
   lidl: createSupermarketHub({
     key: 'lidl',
     label: 'Lidl',
-    budgetNote: 'Lidl is strongest for simple budget staples, dairy, frozen veg, oats, rice, pasta and repeatable weekly shops.',
+    stats: ['142 Lidl plans', 'Own-brand dairy and Vemondo', 'Shopping list and PDF'],
+    intro:
+      'Lidl and Aldi are closely matched on basket price, so the reason to pick one over the other is what the plan leans on. Lidl is the discounter to choose when it leans on dairy or plant protein, because its own-brand range covers both deliberately rather than incidentally.',
+    sections: [
+      {
+        h2: 'Where Lidl beats the other discounter',
+        paragraphs: [
+          'The own-brand dairy line - quark, skyr, high-protein yogurt - is priced at discounter level rather than as a premium product, which matters because those are the ingredients that make a high-protein day affordable. The Vemondo plant-based range does the same job for vegan and vegetarian weeks, which are usually more expensive at mainstream stores, not less.',
+          'Bakery and fresh produce are also strong for the price point. Where Aldi wins is large fresh meat packs; if your plan is built on mince and chicken rather than dairy, that is the better fit.',
+        ],
+      },
+      {
+        h2: 'Lidl Plus, and what not to plan around',
+        paragraphs: [
+          'Meat and dairy are the costliest items in a prep shop and they are what Lidl Plus tends to discount. If you are shopping the same plan for several weeks, checking the app first is worth more here than at a store whose scheme pays out later or in points.',
+          'The middle aisle is the opposite: do not plan around it. Stock is not reliable enough to repeat next week, so treat anything you find there as a bonus rather than a staple. Store-to-store availability varies more than at the big four generally.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Lidl or Aldi for meal prep?',
+        a: 'On price, close to identical. Choose Lidl if the plan leans on dairy, plant protein or bakery, and Aldi if it leans on large packs of fresh mince and chicken.',
+      },
+      {
+        q: 'Is a vegan week actually cheaper at Lidl?',
+        a: 'Usually yes, relative to mainstream stores, because the Vemondo range is priced as an own-brand line rather than as a speciality product. It is one of the few places where a meat-free week does not cost more than the meat version.',
+      },
+    ],
+    relatedSlugs: ['lidl-high-protein-low-cal', 'weight-loss', 'vegan', 'high-protein'],
   }),
   asda: createSupermarketHub({
     key: 'asda',
     label: 'Asda',
-    budgetNote: 'Asda is useful for broad family-friendly ranges, budget staples, frozen options and high-protein convenience foods.',
+    stats: ['142 Asda plans', 'Just Essentials basket', 'Shopping list and PDF'],
+    intro:
+      'Asda is the one to choose when the whole basket has to come from the value tier. Just Essentials reaches into fresh meat and fish rather than stopping at cupboard goods, which is what makes a genuinely cheap week possible without eating badly.',
+    sections: [
+      {
+        h2: 'A value range that covers the whole plate',
+        paragraphs: [
+          'Most economy ranges cover tins, pasta and cereal and stop there, which leaves protein at full price - and protein is the expensive part. Just Essentials goes further, so a plan can sit almost entirely in the value tier rather than half in and half out.',
+          'It is also typically the cheapest of the big four on a like-for-like basket, which compounds: a value-tier basket at the cheapest mainstream store is about as low as a full weekly shop goes without moving to a discounter.',
+        ],
+      },
+      {
+        h2: 'Two things to know before you shop',
+        paragraphs: [
+          'The value lines sell out, and inconsistently, which is the trade for the low price. Keeping a second choice in mind for your two or three highest-volume items is the difference between a plan that survives a bad shop and one that does not.',
+          'Rewards is also worth understanding before you count on it: it pays cashback into a wallet rather than cutting the bill at the till, so it will not reduce what you spend this week.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Asda cheaper than Aldi or Lidl?',
+        a: 'Usually not on a like-for-like basket - the discounters still tend to win on price. Asda\'s advantage is range: you can do a full weekly shop including speciality items in one trip, which is harder at a discounter.',
+      },
+      {
+        q: 'Can I build a whole plan from Just Essentials?',
+        a: 'Close to it, which is unusual. Because the range covers fresh meat and fish as well as cupboard staples, most of a plan can come from it - subject to availability, which is the main caveat.',
+      },
+    ],
+    relatedSlugs: ['asda-muscle-gain', 'weight-loss', 'cheap-student', 'budget-shopping-list'],
   }),
   sainsburys: createSupermarketHub({
     key: 'sainsburys',
-    label: "Sainsbury's",
-    budgetNote: "Sainsbury's is useful when you want a wider premium range, convenient prepared ingredients and good vegetarian or specialist options.",
+    label: 'Sainsbury\'s',
+    stats: ['105 Sainsbury\'s plans', 'Nectar-aware costs', 'Shopping list and PDF'],
+    intro:
+      'At Sainsbury\'s the loyalty card is not a rounding error. Nectar Prices reach meat, fish and poultry, which is exactly where a high-protein plan spends most of its money, and the difference is large enough to change which plans are affordable.',
+    sections: [
+      {
+        h2: 'Where the money actually moves',
+        paragraphs: [
+          'List prices here sit above Asda and well above the discounters, and on that basis Sainsbury\'s looks like a poor choice for a budget plan. Nectar Prices close most of that gap, and because they regularly apply to meat and dairy staples rather than just to treats, they land on the part of the shop that costs the most.',
+          'Without a card the effective basket cost is meaningfully higher, so the weekly estimates on these plans assume you have one.',
+        ],
+      },
+      {
+        h2: 'Good for fish, and for weeks with no time',
+        paragraphs: [
+          'The fresh produce and fish counters are reliable, which matters for pescatarian plans and for anything you intend to cook properly rather than reheat. The chilled ready-prepared vegetable range is the other quiet advantage: it removes most of the chopping from a low-effort week at a modest cost premium.',
+          'The Stamford Street value range has been trimmed since it was consolidated, so there are fewer economy lines than there were a couple of years ago. Plan on Nectar Prices rather than on the value tier.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Do I need a Nectar card for these plans?',
+        a: 'For the cost estimates to hold, yes. The gap between Nectar and non-Nectar pricing on meat and dairy is wide enough that a high-protein plan can cost noticeably more without one.',
+      },
+      {
+        q: 'Is Sainsbury\'s good for pescatarian meal prep?',
+        a: 'It is one of the better mainstream options, because of the fish counter and the consistency of the fresh range. If a plan asks for a specific fish, you are more likely to find it here than at a discounter.',
+      },
+    ],
+    relatedSlugs: ['weight-loss', 'pescatarian', 'high-protein', '1500-calorie'],
   }),
   morrisons: createSupermarketHub({
     key: 'morrisons',
     label: 'Morrisons',
-    budgetNote: 'Morrisons is useful for fresh counters, straightforward staples, family portions and practical cooked-at-home meals.',
+    stats: ['98 Morrisons plans', 'Counter-cut portions', 'Shopping list and PDF'],
+    intro:
+      'Morrisons is the one supermarket where you can ask for the exact cut and weight you want. That removes the most persistent annoyance in meal prep - packs that do not divide into the portions your plan actually calls for.',
+    sections: [
+      {
+        h2: 'Why buying by weight changes prep',
+        paragraphs: [
+          'A plan that needs 840g of chicken across the week does not fit a 650g pack, so you either buy two and waste some or adjust the portions and lose the calorie accuracy. At the butcher and fish counters you buy the amount the plan asks for, which makes the macros on the page match what you actually cook.',
+          'The Market Street ranges are the practical version of this: protein in the quantity you need rather than the quantity the packer chose. For batch cooking across several days, that is worth more than a small price difference.',
+        ],
+      },
+      {
+        h2: 'The catch, and it is a real one',
+        paragraphs: [
+          'Counter service is not available in every store, or at every hour. If you shop late or use a smaller branch, you may find the counters closed and be back to fixed packs - so it is worth knowing your store\'s hours before building a week around exact weights.',
+          'The Savers range has also been cut back, with some lines moved to standard pricing. Morrisons is mid-priced against the rest of the big four; the counters are the reason to choose it, not the value tier.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is it cheaper to buy from the counter?',
+        a: 'Not usually per kilo. It is cheaper per plan, because you buy what you need instead of rounding up to the next pack and wasting the remainder.',
+      },
+      {
+        q: 'What if my local store has no counter?',
+        a: 'Then most of the advantage disappears and another store may suit you better. The plans work with pre-packed meat too, but you lose the exact-portion benefit that makes Morrisons worth choosing.',
+      },
+    ],
+    relatedSlugs: ['weight-loss', 'muscle-gain', 'high-protein', 'meal-plans-with-shopping-list'],
   }),
   iceland: createSupermarketHub({
     key: 'iceland',
     label: 'Iceland',
-    budgetNote: 'Iceland is strongest for frozen-friendly meal prep, low-effort plans, freezer portions and predictable budget shops.',
+    stats: ['62 Iceland plans', 'Frozen portion control', 'Shopping list and PDF'],
+    intro:
+      'Iceland is not a weekly shop, and treating it as one is why people bounce off it. It is the freezer half of a plan - strong on protein and vegetables that keep, weak on everything you would buy fresh - and the plans here are built around that split rather than pretending it does not exist.',
+    sections: [
+      {
+        h2: 'What Iceland covers, and what it does not',
+        paragraphs: [
+          'The frozen protein and vegetable ranges are cheap, keep indefinitely and cover most of what a plan needs for its main meals. Fresh produce, cupboard staples and most dairy are where the range thins out, so the shopping lists on these plans mark which items are realistically an Iceland purchase and which are not.',
+          'That makes Iceland a good second shop and a poor only shop. Used that way it is one of the cheapest ways to cover the expensive part of a plan.',
+        ],
+      },
+      {
+        h2: 'Which goals suit it',
+        paragraphs: [
+          'Weight loss and low-effort weeks work best here, because both benefit from food that is portioned and ready to cook. Higher-calorie muscle-gain plans are harder, since a surplus needs volume and variety that the frozen range alone does not cover.',
+          'The Bonus Card is worth having but will not transform the basket - Iceland is already priced low on the lines these plans use, so there is less headroom than at a store where loyalty pricing does the heavy lifting.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Iceland actually cheaper for meal prep?',
+        a: 'On frozen protein and vegetables, usually yes, and waste is close to zero because you only cook what you take out. Across a full basket the discounters still tend to win, because Iceland cannot supply the rest of the shop.',
+      },
+      {
+        q: 'Do I need a big freezer?',
+        a: 'More than you might expect, and it is the constraint people hit rather than cost. A week of frozen protein and vegetables takes real space, and a standard under-counter freezer fills quickly once anything batch-cooked goes in alongside.',
+      },
+    ],
+    relatedSlugs: ['iceland-low-effort', 'weight-loss', 'meal-plans-with-shopping-list', 'printable-meal-plans'],
   }),
   waitrose: createSupermarketHub({
     key: 'waitrose',
     label: 'Waitrose',
-    budgetNote: 'Waitrose is strongest for quality-focused shops, premium produce, higher-welfare proteins, fish, dairy and prepared vegetables.',
-    relatedSlugs: ['weight-loss', 'high-protein', 'pescatarian', 'meal-plans-with-shopping-list'],
+    stats: ['30 Waitrose plans', 'Essential-range costs', 'Shopping list and PDF'],
+    intro:
+      'Waitrose has a reputation for being unaffordable for a weekly shop, and the Essential range is the reason that is not quite true. It covers most of what a prep plan actually needs, and a plan built inside it costs far less than the name suggests.',
+    sections: [
+      {
+        h2: 'Quality matters more when food is reheated',
+        paragraphs: [
+          'Most meal prep is cooked once and eaten across several days, which is harder on ingredients than cooking fresh each night. Produce and meat that were good on day one hold up better on day four, and that is where the price difference here shows up as something you can taste rather than something abstract.',
+          'The free-from and speciality range is also strong, so restrictive diets tend to work without a second shop.',
+        ],
+      },
+      {
+        h2: 'Stay inside Essential',
+        paragraphs: [
+          'This is the whole discipline of shopping here. The Essential line covers over 700 products including the core prep staples, and a plan that stays within it is competitive on price. Stray outside it and the weekly cost rises quickly - faster than at any of the mainstream stores.',
+          'There are also fewer stores nationally and a smaller convenience footprint, so a mid-week top-up is less likely to be practical than it would be with one of the big four.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Waitrose realistic on a budget?',
+        a: 'Inside the Essential range, more realistic than most people expect. Outside it, no - the gap against the discounters widens fast, and these plans are costed on the assumption you stay in Essential.',
+      },
+      {
+        q: 'Why are there fewer Waitrose plans than Tesco ones?',
+        a: 'The catalogue is smaller here, and honestly so - Waitrose plans start at the moderate budget tier because a very cheap Waitrose basket is not a credible thing to publish.',
+      },
+    ],
+    relatedSlugs: ['weight-loss', 'high-protein', 'pescatarian', '1500-calorie'],
   }),
   ocado: createSupermarketHub({
     key: 'ocado',
     label: 'Ocado',
-    budgetNote: 'Ocado is strongest for online planning, scheduled delivery, broad brand choice, M&S ranges and repeatable saved baskets.',
-    relatedSlugs: ['busy-professional', 'high-protein', 'vegetarian', 'meal-plans-with-shopping-list'],
+    stats: ['26 Ocado plans', 'Widest UK catalogue', 'Shopping list and PDF'],
+    intro:
+      'Ocado is online-only, and that changes what it is good for. The catalogue is the widest of any UK grocer, so a speciality ingredient is rarely the thing that blocks a plan - but there is no popping in on the way home if something runs out.',
+    sections: [
+      {
+        h2: 'Built for repeating the same shop',
+        paragraphs: [
+          'A saved trolley plus a booked delivery slot makes running the same weekly prep shop genuinely low-effort, which is the part most people give up on by week three. If you have settled on a plan you intend to repeat, this is the easiest place to do it.',
+          'Ocado also publishes a minimum-life-on-delivery policy, which suits shopping once and cooking across the week rather than topping up. Check the current policy before relying on it for anything with a short shelf life.',
+        ],
+      },
+      {
+        h2: 'Delivery costs change the maths on a small shop',
+        paragraphs: [
+          'Delivery fees and minimum basket sizes are part of the real cost, and on a single-person week they can be a meaningful percentage of the total. For a larger household or a fortnightly shop they matter much less.',
+          'The other constraint is that there is no physical store, so there is no mid-week top-up if a plan slips or something spoils. Plans here assume you shop once and cook to it.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Ocado worth it for one person?',
+        a: 'Often not on a small weekly shop, once delivery and the minimum basket are counted. It makes more sense for a bigger household, or if you shop fortnightly and freeze.',
+      },
+      {
+        q: 'Does Ocado stock M&S food?',
+        a: 'Yes - the M&S range sits alongside Ocado\'s own label, which is part of why the catalogue is so wide. That also means it is easy to spend well above the plan estimate if you shop by brand rather than by list.',
+      },
+    ],
+    relatedSlugs: ['weight-loss', 'high-protein', 'meal-plans-with-shopping-list', '1500-calorie'],
   }),
   'marks-spencer': createSupermarketHub({
     key: 'marks-spencer',
     label: 'M&S',
-    budgetNote: 'M&S is strongest for premium convenience, prepared ingredients, fresh salads, fish, cooked grains and smaller high-quality baskets.',
-    relatedSlugs: ['busy-professional', 'low-calorie-shopping-list', 'pescatarian', 'meal-plans-with-shopping-list'],
+    stats: ['29 M&S plans', 'Remarksable Value staples', 'Shopping list and PDF'],
+    intro:
+      'M&S is the priciest option here, and the Remarksable Value range is what makes a prep plan feasible at all. Where it genuinely earns its place is time: the prepared and part-prepared ingredients cut real minutes off a week you have no capacity to cook in.',
+    sections: [
+      {
+        h2: 'Paying for preparation rather than food',
+        paragraphs: [
+          'Trimmed, chopped and part-cooked ingredients are the expensive kind of convenience, and on a low-effort week they are also the useful kind. If the alternative to a slightly pricier basket is not cooking at all, the maths looks different from the way it looks on a spreadsheet.',
+          'Produce quality is consistently high, which matters more here than the price comparison suggests: food cooked on Sunday and eaten on Thursday is a harder test than food eaten the day it is bought.',
+        ],
+      },
+      {
+        h2: 'Pack sizes suit one or two people',
+        paragraphs: [
+          'This is the practical limit. M&S packs are smaller than at the big four, which is fine for a single person or a couple and awkward for bulk batch cooking - you end up buying three of something where another store sells one large pack more cheaply.',
+          'Outside Remarksable Value, costs rise sharply against every other retailer here. Staying inside it is the difference between a viable plan and an expensive one.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is M&S sensible for meal prep at all?',
+        a: 'For one or two people who value time over cost, yes - particularly on low-effort plans. For bulk batch cooking on a budget it is the wrong choice, and Asda or a discounter will serve you better.',
+      },
+      {
+        q: 'Why are there so few M&S plans?',
+        a: 'The catalogue here starts at the moderate budget tier, because a very cheap M&S basket is not a real thing. That deliberately limits how many plans can exist rather than padding the number with ones that would not work.',
+      },
+    ],
+    relatedSlugs: ['weight-loss', 'high-protein', 'printable-meal-plans', 'meal-plans-with-shopping-list'],
   }),
   coop: createSupermarketHub({
     key: 'coop',
     label: 'Co-op',
-    budgetNote: 'Co-op is strongest for local convenience shops, top-up baskets, simple staples and smaller meal-prep weeks.',
-    relatedSlugs: ['busy-professional', 'generic-uk-supermarket', 'meal-plans-with-shopping-list'],
+    stats: ['28 Co-op plans', 'Honest Value staples', 'Shopping list and PDF'],
+    intro:
+      'Co-op is a convenience shop rather than a big-shop destination, and the plans here treat it that way. Its real advantage is that there is probably one near you, which makes it the store that rescues a plan when the week does not go as intended.',
+    sections: [
+      {
+        h2: 'The store that covers the slip',
+        paragraphs: [
+          'Most meal plans fail somewhere around Wednesday, when something gets eaten early or a dinner does not happen. The local footprint means a top-up is realistic rather than a special trip, and that is worth more to whether a plan survives the week than a small price difference is.',
+          'Honest Value, launched at the end of 2024, also reaches fresh meat, produce and dairy rather than stopping at cupboard goods, so a value basket here covers more of the plate than it used to.',
+        ],
+      },
+      {
+        h2: 'Small stores, and membership matters',
+        paragraphs: [
+          'Bulk buying for batch cooking is harder here - smaller stores carry less stock, and a plan that needs three large packs of chicken may simply clear the shelf. The plans here are built around smaller, more frequent shopping rather than one big one.',
+          'Non-member prices are noticeably higher on the same items, so member pricing is assumed in the weekly estimates.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is Co-op too expensive for weekly meal prep?',
+        a: 'At non-member prices, often yes. With membership and inside Honest Value it is reasonable for smaller, more frequent shops - which is how these plans are structured.',
+      },
+      {
+        q: 'Can I batch cook from Co-op?',
+        a: 'For one or two people, usually. For a large batch, stock levels in a small store become the limit rather than price, so a big-four store will be less frustrating.',
+      },
+    ],
+    relatedSlugs: ['weight-loss', 'budget-shopping-list', 'cheap-student', 'meal-plans-with-shopping-list'],
   }),
 };
+
 
 const GOAL_AUTHORITY_HUBS = {
   vegan: createGoalHub({
@@ -385,14 +699,6 @@ const GOAL_AUTHORITY_HUBS = {
     goals: ['cheap-student'],
     intro: 'Cheap student meal plans focus on low-cost UK supermarket staples, repeatable breakfasts, simple lunches and dinners that do not need a full kitchen of equipment.',
     bestFor: 'Student budget plans',
-  }),
-  'low-effort': createGoalHub({
-    key: 'low-effort',
-    titleLabel: 'Low Effort',
-    goals: ['low-effort'],
-    intro: 'Low effort meal plans are built for weeks when cooking time, equipment or energy is limited. These plans favour repeatable breakfasts, simple lunches, freezer-friendly dinners and supermarket ingredients that reduce prep decisions.',
-    bestFor: 'Fast prep and simple cooking',
-    relatedSlugs: ['busy-professional', '1800-calorie', 'meal-plans-with-shopping-list', 'free-online-diet-plans-uk'],
   }),
   'budget-bodybuilding': createGoalHub({
     key: 'budget-bodybuilding',
@@ -1219,6 +1525,41 @@ export const MEAL_PLAN_HUBS = {
 };
 
 export const MEAL_PLAN_HUB_SLUGS = Object.keys(MEAL_PLAN_HUBS);
+
+// Resolve any calorie figure to the hub that actually covers it.
+//
+// Three pages used to build this path by interpolating the plan's own calorie
+// value - `/meal-plans/${plan.calories}-calorie`. That silently assumed a hub
+// existed for every target in the catalogue, so consolidating the calorie hubs
+// left 80 internal links pointing at redirects, which check-google-indexing
+// fails on. Reading the match ranges means the mapping cannot drift again:
+// retire a hub and its plans follow whichever hub claims them.
+const CALORIE_HUB_ENTRIES = Object.values(MEAL_PLAN_HUBS)
+  .filter(hub => Array.isArray(hub.match?.calories) && /^\d+-calorie$/.test(hub.slug))
+  .map(hub => ({ path: hub.path, calories: hub.match.calories }));
+
+export function calorieHubPathFor(calories) {
+  const target = Number(calories);
+  if (!Number.isFinite(target)) return '/meal-plans/low-calorie';
+
+  const exact = CALORIE_HUB_ENTRIES.find(entry => entry.calories.includes(target));
+  if (exact) return exact.path;
+
+  // No hub claims this target - fall back to the closest one rather than
+  // linking somewhere that does not exist.
+  let best = null;
+  let bestGap = Infinity;
+  for (const entry of CALORIE_HUB_ENTRIES) {
+    for (const value of entry.calories) {
+      const gap = Math.abs(value - target);
+      if (gap < bestGap) {
+        bestGap = gap;
+        best = entry;
+      }
+    }
+  }
+  return best ? best.path : '/meal-plans/low-calorie';
+}
 
 const HUB_GOAL_PRIORITY = {
   'weight-loss': 1,

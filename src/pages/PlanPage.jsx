@@ -45,6 +45,7 @@ import { toTitleCase } from '../utils/textFormatting.js';
 import NotFound from './NotFound.jsx';
 import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 import { apiHeaders } from '../utils/apiClient.js';
+import { calorieHubPathFor } from '../data/mealPlanHubs.js';
 
 const MKT_LABEL = {
   aldi: 'Aldi', lidl: 'Lidl', tesco: 'Tesco', asda: 'Asda',
@@ -1301,7 +1302,7 @@ function PlanQualityNotes({ plan }) {
   const calorieText = plan.calories.toLocaleString('en-GB');
   const goalHub = GOAL_HUB_SLUGS[plan.goal] || 'free-online-diet-plans-uk';
   const hubLinks = [
-    { to: `/meal-plans/${plan.calories}-calorie`, label: `${calorieText} calorie meal plans` },
+    { to: calorieHubPathFor(plan.calories), label: `${calorieText} calorie meal plans` },
     plan.supermarket !== 'any'
       ? { to: `/meal-plans/${plan.supermarket}`, label: `${market} meal plans` }
       : { to: '/meal-plans/generic-uk-supermarket', label: 'Generic UK supermarket plans' },
