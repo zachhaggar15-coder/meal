@@ -24,33 +24,52 @@ The site began ranking in early June 2026. Most growth so far is new-site
 indexation and ranking maturation, which is a **one-time event**. The next
 phase has to come from CTR and position, not from more pages.
 
-### Finding 1 — CTR is the largest available lever
+### Finding 1 — CTR is the largest available lever, but smaller than first modelled
 
-Modelled against an approximate organic CTR-by-position benchmark, the gap
-between what pages earn and what their positions should earn is **~1,110 clicks
-per 3 months (~370/month)** against a current total of 1,685. Split:
+**Corrected 5 September, same day.** The first pass benchmarked every page
+against a generic industry CTR-by-position curve and produced a gap of ~1,110
+clicks per 3 months. That curve assumed this site should earn 3-3.5% at
+positions 6-10. It does not, and there was no reason to assume it would.
 
-| Tier | Pages | Gap (3mo) | Fix |
-|---|---:|---:|---|
-| **A** — position ≤10, CTR below benchmark | 101 | **727** | Title and snippet |
-| **B** — position 11–20, high impressions | 29 | **357** | Ranking + snippet |
+Re-run using **the site's own median CTR per position band** as the benchmark -
+no external assumption - the gap is **482 clicks per 3 months across 39 pages**.
+The original figure overstated it by 2.3x. Trust this one; it is self-referential
+and checkable.
 
-Tier A is the priority: these already rank on page one and are simply not being
-chosen. That is a writing problem, not an authority problem, and it is the
-cheapest work on this list.
+The site's actual CTR by band (pages with >=200 impressions):
 
-Top Tier A opportunities:
+| Position band | Pages | Median CTR |
+|---|---:|---:|
+| 6-8 | 12 | 1.96% |
+| 9-10 | 14 | 1.81% |
+| 11-15 | 20 | 0.67% |
+| 16-20 | 10 | 1.06% |
+| 21+ | 30 | 0.46% |
 
-| Gap | Impressions | CTR | Pos | Page |
-|---:|---:|---:|---:|---|
-| +129 | 4,377 | 1.55% | 5.9 | `/blog/meal-prep-container-size-guide` |
-| +116 | 8,178 | 0.78% | 9.3 | `/plans/aldi-high-protein-low-cal-1500` |
-| +63 | 4,074 | 1.96% | 7.0 | `/blog/lidl-high-protein-food-ideas-uk` |
-| +50 | 2,542 | 0.24% | 9.6 | `/plans/aldi-veg-low-cal-1500` |
-| +49 | 4,209 | 1.05% | 9.1 | `/meal-plan/tesco-low-calorie-meal-plan` |
-| +43 | 3,375 | 1.72% | 7.0 | `/blog/aldi-high-protein-shopping-list-uk` |
-| +39 | 1,863 | 0.91% | 7.8 | `/blog/cheapest-uk-supermarket-meal-prep` |
-| +38 | 1,617 | 0.68% | 7.9 | `/blog/sainsburys-healthy-ready-meal-combos-uk` |
+Pages furthest below their own band, largest gap first:
+
+| Gap | Impressions | CTR vs band | Pos | Page |
+|---:|---:|---|---:|---|
+| +84 | 8,178 | 0.78% vs 1.81% | 9.3 | `/plans/aldi-high-protein-low-cal-1500` |
+| +46 | 9,484 | 0.19% vs 0.67% | 13.3 | `/blog/best-meal-prep-containers-uk` |
+| +40 | 2,542 | 0.24% vs 1.81% | 9.6 | `/plans/aldi-veg-low-cal-1500` |
+| +35 | 6,089 | 0.48% vs 1.06% | 18.1 | `/blog/what-does-1500-calories-look-like-uk` |
+| +32 | 4,209 | 1.05% vs 1.81% | 9.1 | `/meal-plan/tesco-low-calorie-meal-plan` |
+| +21 | 1,617 | 0.68% vs 1.96% | 7.9 | `/blog/sainsburys-healthy-ready-meal-combos-uk` |
+| +20 | 1,863 | 0.91% vs 1.96% | 7.8 | `/blog/cheapest-uk-supermarket-meal-prep` |
+
+**Four of the largest gaps are not addressable and should be struck from the
+list:** `best-meal-prep-containers-uk` (+46) sits on an unwinnable commercial
+SERP, see Finding 3; `meal-prep-containers-uk` (+26) is a redirect showing as a
+stale row; `/browse` (+27, position 38.1) and `/blog` (+27, position 31.4) rank
+too deep for CTR work to reach.
+
+**The realistic prize is therefore ~250 clicks per 3 months, about 85/month**,
+against a current ~1,020/month. Worth doing. Not transformative.
+
+Note also that the top two opportunities are **plan pages, not blog posts** -
+`aldi-high-protein-low-cal-1500` is the site's largest page by impressions and
+converts at under half its band. The CTR session is not a blog session.
 
 ### Finding 2 — supermarket intent converts 4.9x better
 
@@ -75,11 +94,15 @@ winnable with a title rewrite: the SERP is retailer listings and comparison
 sites, and a publisher at position 10 on a commercial query gets what this gets.
 Do not spend a session on it. Noted here so nobody re-discovers it and tries.
 
-### Finding 4 — `/browse` ranks for things it does not answer
+### Finding 4 — `/browse` is simply ranking badly - original claim withdrawn
 
-**6,748 impressions, 4 clicks, 0.06% CTR.** Either the listing is surfacing for
-informational queries it cannot satisfy, or its title promises something the
-page does not deliver. Needs diagnosis before a fix is chosen.
+**6,748 impressions, 4 clicks, 0.06% CTR - at position 38.1.**
+
+This was first written as an intent mismatch, on the assumption that the listing
+was surfacing for queries it could not satisfy. Session 3 checked the position
+and that was wrong. A page on page four earning 0.06% is behaving exactly as
+expected; there is no snippet or intent problem to fix, only a ranking one, and
+a listing page is a poor candidate for that fight. **No action.**
 
 ### Finding 5 — the 1500-calorie cluster ranks badly despite demand
 
@@ -107,34 +130,55 @@ point. Order matters: the first two are the highest return per hour.
 
 *Outcome: the structural objection is addressed and the application is in.*
 
-### Session 2 — Tier A CTR (the highest-return session on this list)
+### Session 2 — CTR on six pages, measured before extending
 
-Rewrite titles and meta descriptions for the ~20 largest Tier A gaps. Rules,
-derived from Finding 2:
+Titles and meta descriptions only, for the six addressable pages in Finding 1.
+Rules, from Finding 2:
 
-- Put the retailer or the number first where one applies — *Lidl*, *Aldi*,
-  *1,500 calories* — because that is what the searcher typed.
+- Put the retailer or the number first where one applies - *Aldi*, *Tesco*,
+  *1,500 calories* - because that is what the searcher typed.
 - Say what the page gives, not what it is about. "Free PDF + shopping list"
-  outperforms "a guide to".
-- Meta descriptions are ad copy for a link, not summaries. Lead with the
-  specific thing nobody else on the page-one SERP is offering.
-- Do not touch H1s or body content. This session changes what the SERP shows,
-  nothing else, so the measurement stays clean.
+  beats "a guide to".
+- Meta descriptions are ad copy for a link, not summaries.
+- **Do not touch H1s or body content.** This session changes what the SERP
+  shows and nothing else, so the result stays attributable.
 
-*Outcome: measurable in 3–4 weeks. Modelled ceiling ~240 clicks/month; treat
-half of that as a good result.*
+**Do six, not twenty.** Two reasons. Google rewrites titles a large share of the
+time, so the mechanism is less reliable than the arithmetic suggests; and
+changing a title makes Google re-evaluate relevance, so a page at position 7 can
+move either way. Measure at three weeks, then extend with what was learned.
 
-### Session 3 — `/browse` and the container cluster
+*Realistic outcome: perhaps 40-85 clicks/month if it works. Treat anything above
+a third of the modelled gap as a good result.*
 
-1. Diagnose `/browse`: pull its queries from Search Console, decide whether it
-   is a title problem, an intent mismatch, or a page that should not rank for
-   what it ranks for. Fix accordingly.
-2. Decide the container cluster. `best-meal-prep-containers-uk` takes 9,484
-   impressions for 18 clicks at position 13.3 and the head query is unwinnable
-   (Finding 3). Options: accept it as an impression farm, retarget it at a
-   longer-tail commercial query, or fold its authority into the guide routes.
+### Session 3 — COMPLETE, and the answer was "no action"
 
-*Outcome: one clear decision on ~16,000 wasted impressions.*
+Run 5 September. Both halves of the original premise were wrong.
+
+**`/browse` is not an intent mismatch.** It sits at **position 38.1**. A page on
+page four earning 0.06% is behaving normally. It is a ranking problem, and a
+listing page competing for head terms is a poor fight to pick. Leave it.
+
+**The container cannibalisation was already fixed.** `meal-prep-containers-uk`,
+`/glass-meal-prep-containers`, `best-glass-meal-prep-containers-uk`,
+`freezer-safe-meal-prep-containers` and `glass-vs-plastic-meal-prep-containers`
+all 301 already - retired in the August consolidation. Roughly 4,000 of the
+impressions attributed to "waste" belong to URLs that redirect.
+
+**Also struck: the framing that ~16,000 impressions were "wasted".** Impressions
+are not a resource that gets spent. There was nothing to recover.
+
+**What the session did produce** is the strongest available evidence for
+Session 4's direction:
+
+| Page | Impressions | Clicks | CTR | Pos |
+|---|---:|---:|---:|---:|
+| `meal-prep-container-size-guide` | 4,377 | **68** | **1.55%** | 5.9 |
+| `best-meal-prep-containers-uk` | 9,484 | 18 | 0.19% | 13.3 |
+
+Twice the impressions, a quarter of the clicks. The size guide answers a
+specific question; the head term competes with Amazon. Write problem-shaped
+pages, not "best X" pages.
 
 ### Session 4 — new guides, supermarket-intent led
 

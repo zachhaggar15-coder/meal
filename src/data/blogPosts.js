@@ -7,6 +7,7 @@ import { blogPostsBatch7Data } from './blogPostsBatch7.js';
 import { blogPostsBatch8Data } from './blogPostsBatch8.js';
 import { commercialBlogPostsData } from './commercialBlogPosts.js';
 import { prepKitBlogPostsData } from './prepKitBlogPosts.js';
+import { practicalGuidesData } from './practicalGuides.js';
 
 // Static content for SEO blog posts.
 // Each entry keyed by URL slug.
@@ -21,6 +22,7 @@ const rawBlogPostsData = {
   ...blogPostsBatch8Data,
   ...commercialBlogPostsData,
   ...prepKitBlogPostsData,
+  ...practicalGuidesData,
   'how-to-build-a-calorie-deficit': {
     published: '2026-05-28',
     title: 'How to Build a Calorie Deficit UK (Free TDEE Guide)',

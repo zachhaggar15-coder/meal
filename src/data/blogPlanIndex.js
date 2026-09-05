@@ -552,6 +552,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Weight Loss",
     "calories": 1500
   },
+  "household-different-calorie-needs-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "how-many-calories-to-lose-weight": {
     "planSlug": "any-weight-loss-1500",
     "title": "Weight Loss Meal Plan — 1,500 kcal",
@@ -608,7 +616,23 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Weight Loss",
     "calories": 1500
   },
+  "how-to-read-food-labels-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "how-to-store-meal-prep-safely-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
+  "how-to-swap-meals-in-a-meal-plan-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -776,6 +800,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "meal-prep-for-one-person-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "meal-prep-for-two-people-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -934,6 +966,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "supermarket": "any",
     "goal": "pescatarian",
     "goalLabel": "Pescatarian",
+    "calories": 1500
+  },
+  "portion-sizes-without-scales-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
   "post-workout-meal-ideas-uk": {
