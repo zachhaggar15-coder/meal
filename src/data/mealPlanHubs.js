@@ -79,7 +79,16 @@ function createSupermarketHub({ key, label, intro, sections, faq, stats, related
   };
 }
 
-function createGoalHub({ key, titleLabel, h1Label = titleLabel, goals = [key], diets, intro, bestFor, relatedSlugs = ['free-online-diet-plans-uk', '1500-calorie', 'high-protein', 'meal-plans-with-shopping-list'] }) {
+// Same rule as the supermarket hubs: shared structure, per-page writing.
+//
+// This used to generate both sections and both FAQ answers from the label, so
+// seven goal hubs shared everything but their intro - 70-78% repeated sentence
+// shapes. `sections` and `faq` are now required.
+function createGoalHub({ key, titleLabel, h1Label = titleLabel, goals = [key], diets, intro, bestFor, sections, faq, relatedSlugs = ['free-online-diet-plans-uk', '1500-calorie', 'high-protein', 'meal-plans-with-shopping-list'] }) {
+  if (!intro || !sections?.length || !faq?.length) {
+    throw new Error(`Goal hub "${key}" needs its own intro, sections and FAQ.`);
+  }
+
   return {
     slug: key,
     path: `/meal-plans/${key}`,
@@ -93,46 +102,19 @@ function createGoalHub({ key, titleLabel, h1Label = titleLabel, goals = [key], d
     stats: [bestFor, 'UK supermarket plans', 'PDF and shopping list'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
-    sections: [
-      {
-        h2: `Quick answer: who should start here?`,
-        paragraphs: [
-          `Start here if ${titleLabel.toLowerCase()} is the main reason you are planning meals. The plan cards let you compare supermarket, calories, diet type, price estimate and cooking effort before opening a full week.`,
-        ],
-        table: {
-          headers: ['Need', 'Best plan style', 'Why'],
-          rows: [
-            ['Simple week', 'Standard effort plans', 'More variety while staying realistic'],
-            ['Busy schedule', 'Batch or low-effort plans', 'Fewer weekday decisions'],
-            ['Budget control', 'Very cheap or budget plans', 'Keeps ingredients repeatable'],
-            ['Higher protein', 'Protein-focused variants', 'Makes each meal more filling'],
-          ],
-        },
-      },
-      {
-        h2: `How to use these plans`,
-        paragraphs: [
-          'Pick the supermarket and calorie target first, then use the full plan page to print the PDF, copy the shopping list or edit any meal.',
-          'If the first plan is close but not perfect, use the meal edit controls rather than starting from scratch.',
-        ],
-      },
-    ],
+    sections,
     supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
-    faq: [
-      {
-        q: `Do ${titleLabel.toLowerCase()} plans include shopping lists?`,
-        a: 'Yes. Every plan includes a grouped shopping list and a printable PDF summary.',
-      },
-      {
-        q: `Can I filter these plans by supermarket?`,
-        a: 'Yes. Use the browse filters or choose a plan card that matches your preferred supermarket.',
-      },
-    ],
+    faq,
     relatedSlugs,
   };
 }
 
-function createShoppingListHub({ key, titleLabel, match, intro, relatedSlugs = ['printable-meal-plans', 'weight-loss', 'high-protein', 'generic-uk-supermarket'] }) {
+// Shared structure, per-page writing - see createGoalHub above.
+function createShoppingListHub({ key, titleLabel, match, intro, sections, faq, relatedSlugs = ['printable-meal-plans', 'weight-loss', 'high-protein', 'generic-uk-supermarket'] }) {
+  if (!intro || !sections?.length || !faq?.length) {
+    throw new Error(`Shopping-list hub "${key}" needs its own intro, sections and FAQ.`);
+  }
+
   return {
     slug: key,
     path: `/meal-plans/${key}`,
@@ -146,41 +128,9 @@ function createShoppingListHub({ key, titleLabel, match, intro, relatedSlugs = [
     stats: ['Grouped shopping lists', 'Printable PDFs', 'UK supermarket ingredients'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
-    sections: [
-      {
-        h2: 'Quick answer: what should the list include?',
-        paragraphs: [
-          'A useful shopping list groups protein, carbohydrates, fruit and vegetables, dairy or alternatives, tins, frozen food, sauces and extras. That makes the shop faster and reduces missed ingredients.',
-        ],
-        table: {
-          headers: ['List section', 'Examples', 'Why it matters'],
-          rows: [
-            ['Protein', 'Chicken, tuna, eggs, tofu, lentils, yogurt, fish', 'Anchors meals and helps satiety'],
-            ['Carbs', 'Oats, rice, pasta, potatoes, wraps, bread', 'Keeps meals realistic and repeatable'],
-            ['Fruit and veg', 'Frozen mixed veg, salad, berries, apples, broccoli', 'Adds volume, fibre and micronutrients'],
-            ['Extras', 'Sauces, spices, oil spray, stock cubes', 'Stops simple meals becoming bland'],
-          ],
-        },
-      },
-      {
-        h2: 'How to use the printable list',
-        paragraphs: [
-          'Choose a plan, export the PDF, then remove cupboard staples before shopping. If you shop at a named supermarket, use a named-store plan; if you shop across stores, use Generic UK supermarket plans.',
-          'For cost control, repeat breakfasts and batch-cook lunches before adding high-variety dinners.',
-        ],
-      },
-    ],
+    sections,
     supportingGuides: [GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.containers],
-    faq: [
-      {
-        q: 'Can I print the shopping list?',
-        a: 'Yes. Use the plan page PDF export to print the full weekly menu and grouped shopping list.',
-      },
-      {
-        q: 'Can I edit meals and update the list?',
-        a: 'Yes. Plan pages support meal edits and rebuild the shopping list around the updated meals.',
-      },
-    ],
+    faq,
     relatedSlugs,
   };
 }
@@ -668,6 +618,32 @@ const GOAL_AUTHORITY_HUBS = {
     diets: ['vegan'],
     intro: 'Vegan meal plans work best when protein is planned first. These UK plans use tofu, beans, lentils, chickpeas, soy yogurt, meat-free pieces, grains, vegetables and practical supermarket staples.',
     bestFor: 'Plant-based plans',
+    sections: [
+      {
+        h2: 'Plan the protein first, then the rest',
+        paragraphs: [
+          'A vegan week falls apart in the same place every time: protein gets treated as whatever is left after the vegetables. Building it the other way round - deciding the protein anchor for each meal before anything else - is the single change that makes these plans work, and it is why every plan here names one.',
+          'Tofu, tempeh, seitan, lentils, chickpeas, beans, soya yogurt and meat-free mince all do the job at UK supermarket prices. Lidl and Aldi price their plant ranges as own-brand lines rather than as speciality products, which is why a vegan week can genuinely cost less at a discounter.',
+        ],
+      },
+      {
+        h2: 'The nutrients worth paying attention to',
+        paragraphs: [
+          'B12 is the one that matters most, because it is not reliably available from plant foods - the NHS advises a supplement or fortified foods for anyone eating no animal products. Iron, calcium, iodine and omega-3 need a little thought too, though all are achievable from ordinary food.',
+          'These plans use fortified soya products and a mix of pulses, grains, nuts and seeds rather than assuming variety will cover it. They are general planning information, not a substitute for advice from a GP or dietitian if you have a specific concern.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is a vegan meal plan more expensive?',
+        a: 'Not necessarily, and often less. Pulses, tofu, grains and frozen vegetables are among the cheapest food in a UK supermarket. Cost climbs when a plan leans on branded meat substitutes, so these plans use those sparingly.',
+      },
+      {
+        q: 'How do I get enough protein without powders?',
+        a: 'Every meal in these plans has a named protein anchor from whole food - pulses, tofu, tempeh or soya dairy. Powder is optional and nothing here depends on it.',
+      },
+    ],
   }),
   pescatarian: createGoalHub({
     key: 'pescatarian',
@@ -675,6 +651,32 @@ const GOAL_AUTHORITY_HUBS = {
     diets: ['pescatarian'],
     intro: 'Pescatarian meal plans are useful when you want fish, eggs, dairy, beans and plant foods without meat. These plans use familiar UK supermarket ingredients and balanced weekly shopping lists.',
     bestFor: 'Fish and meat-free plans',
+    sections: [
+      {
+        h2: 'Fish is the axis, and frozen is fine',
+        paragraphs: [
+          'The practical question in a pescatarian week is not whether to eat fish but how often, and whether you can afford it. Frozen fillets solve both: they cost substantially less than the fresh counter, portion cleanly, and the nutritional difference is small because freezing happens close to the catch.',
+          'Tinned fish does more work than people expect. Sardines, mackerel and salmon are cheap, keep indefinitely and carry the oily-fish nutrients that white fish does not.',
+        ],
+      },
+      {
+        h2: 'Oily fish, and the rest of the week',
+        paragraphs: [
+          'NHS guidance is at least two portions of fish a week, one of them oily - salmon, mackerel, sardines, trout or herring. These plans build that in rather than leaving it to chance, and spread the rest across eggs, dairy, pulses and grains so the week is not entirely fish.',
+          'Anyone pregnant or trying to conceive should check the NHS advice on limits for oily fish and on species to avoid, because the guidance differs from the general population.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Is frozen fish as good as fresh?',
+        a: 'For these plans, yes. It is frozen soon after catch, which often makes it fresher on arrival than counter fish that has travelled. It is also cheaper and easier to portion, which is why the plans lean on it.',
+      },
+      {
+        q: 'Can I use these plans if I do not eat much fish?',
+        a: 'Partly. They assume fish two or three times a week; the rest is eggs, dairy and pulses. If you want less than that, a vegetarian plan will fit better than adapting one of these.',
+      },
+    ],
   }),
   menopause: createGoalHub({
     key: 'menopause',
@@ -683,6 +685,32 @@ const GOAL_AUTHORITY_HUBS = {
     goals: ['menopause-nutrition'],
     intro: 'Menopause nutrition meal plans focus on protein, fibre, calcium-rich foods, healthy fats and practical meals. They are general planning information, not medical advice.',
     bestFor: 'Menopause nutrition',
+    sections: [
+      {
+        h2: 'What these plans actually do',
+        paragraphs: [
+          'They focus on three things that are practical to plan for: enough protein spread across the day, enough calcium and vitamin D for bone health, and enough fibre. None of that is specific to menopause - it is ordinary good eating - but the reason to plan it deliberately is that requirements do not stay still, and appetite and routine often change at the same time.',
+          'Protein matters more here than most plans assume, because muscle is harder to hold onto and easier to lose. The plans spread it across meals rather than concentrating it in the evening.',
+        ],
+      },
+      {
+        h2: 'What this is not',
+        paragraphs: [
+          'This is general meal planning, not medical advice, and no meal plan treats menopause symptoms. Evidence for specific foods or supplements changing symptoms is mixed and often weak, and anything sold on a strong claim is worth treating with suspicion.',
+          'If symptoms are affecting daily life, that is a conversation with a GP. The NHS pages on menopause and on bone health are a better starting point than a meal plan for that question.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Will these plans help with menopause symptoms?',
+        a: 'They are not designed to and no meal plan can promise that. What they do is make it easier to eat consistently, with enough protein, calcium and fibre - which is worth doing regardless of symptoms.',
+      },
+      {
+        q: 'Do I need a supplement?',
+        a: 'That depends on your diet and your bloods, and it is a question for a GP rather than a website. The NHS does advise most adults consider vitamin D in autumn and winter, which applies to everyone rather than being menopause-specific.',
+      },
+    ],
   }),
   endurance: createGoalHub({
     key: 'endurance',
@@ -691,6 +719,32 @@ const GOAL_AUTHORITY_HUBS = {
     goals: ['endurance-athlete'],
     intro: 'Endurance meal plans are designed for runners, cyclists and active weeks where carbohydrate, protein and recovery meals need to be planned rather than improvised.',
     bestFor: 'Running and endurance',
+    sections: [
+      {
+        h2: 'Under-fuelling is the usual mistake',
+        paragraphs: [
+          'Most people planning meals around running or cycling are trying to eat less, and the two goals fight each other. Training on too little leaves you slower, more injury-prone and hungrier later, and the weight rarely moves the way you wanted anyway.',
+          'These plans are built to fuel the training first. Carbohydrate is not the enemy here: it is what the session runs on, and cutting it is what makes weeks fall apart around the third hard run.',
+        ],
+      },
+      {
+        h2: 'Timing matters more than at any other goal',
+        paragraphs: [
+          'For most other goals it barely matters when you eat. For endurance it does. A meal with carbohydrate a few hours before a long session, and something with both carbohydrate and protein reasonably soon after, is the part that actually changes how the next session feels.',
+          'The plans mark which meals sit around training. If your sessions move, move those meals rather than rebuilding the week.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How many calories do I need for endurance training?',
+        a: 'More than most calculators suggest once weekly volume is high, and it varies enormously with session length and intensity. These plans run from 2,500 upwards; use your own weight trend and how sessions feel rather than a fixed number.',
+      },
+      {
+        q: 'Can I lose weight while training for a distance event?',
+        a: 'It is possible but hard to do well, and a training block is usually the wrong time to try. If you do, keep the deficit small and protect the meals around your key sessions.',
+      },
+    ],
     relatedSlugs: ['2500-calorie', '3000-calorie', 'high-protein', 'meal-plans-with-shopping-list'],
   }),
   'cheap-student': createGoalHub({
@@ -699,6 +753,32 @@ const GOAL_AUTHORITY_HUBS = {
     goals: ['cheap-student'],
     intro: 'Cheap student meal plans focus on low-cost UK supermarket staples, repeatable breakfasts, simple lunches and dinners that do not need a full kitchen of equipment.',
     bestFor: 'Student budget plans',
+    sections: [
+      {
+        h2: 'The constraint is usually the kitchen, not the money',
+        paragraphs: [
+          'Most budget advice assumes a full kitchen and a freezer you control. In a shared house you may have one shelf, two working rings, no scales and someone else\'s washing-up in the sink. These plans assume that: short ingredient lists, few pans, and meals that do not need equipment beyond a hob and an oven tray.',
+          'They also assume you cannot leave things in a communal fridge and expect to find them. Cupboard and freezer staples do more of the work here than fresh produce that needs using within three days.',
+        ],
+      },
+      {
+        h2: 'Repetition is the thing that actually saves money',
+        paragraphs: [
+          'Variety is expensive. Buying five different vegetables in small quantities costs more and wastes more than buying two in larger ones, and waste is where a student budget really goes - not on the shop itself.',
+          'These plans repeat breakfasts and lunches deliberately and put the variety in the evening meal, which is the one people actually notice.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How cheap are these plans really?',
+        a: 'Each states its own weekly estimate, and the cheapest sit in the lowest budget tier. The figure assumes you already have basic cupboard staples - oil, spices, stock - which is where a first shop costs more than the estimate suggests.',
+      },
+      {
+        q: 'What if I only have a microwave?',
+        a: 'Some of these work and some do not. Filter for the minimal-effort plans, which lean on assembly rather than cooking, rather than trying to adapt a plan built around an oven.',
+      },
+    ],
   }),
   'budget-bodybuilding': createGoalHub({
     key: 'budget-bodybuilding',
@@ -706,6 +786,32 @@ const GOAL_AUTHORITY_HUBS = {
     goals: ['budget-bodybuilding'],
     intro: 'Budget bodybuilding meal plans aim for higher protein and enough calories without turning the weekly shop into premium products. They use eggs, oats, rice, pasta, chicken, tuna, beans, yogurt and freezer staples.',
     bestFor: 'Budget muscle gain',
+    sections: [
+      {
+        h2: 'Protein per pound, not protein per serving',
+        paragraphs: [
+          'A surplus with enough protein is expensive if you shop the way the fitness industry suggests. It stops being expensive when you buy protein by cost rather than by brand: eggs, milk, tinned fish, chicken thighs rather than breast, own-brand yogurt, dried pulses and frozen fish all deliver protein at a fraction of the price of anything marketed for training.',
+          'These plans are built from that list. Nothing here depends on a supplement, though a shake is a reasonable way to replace one of the dairy servings if it suits you.',
+        ],
+      },
+      {
+        h2: 'Where a cheap surplus usually goes wrong',
+        paragraphs: [
+          'The easy way to add calories cheaply is carbohydrate and oil, which works right up until protein has quietly drifted down as a proportion of the total. The plans state protein in grams for exactly this reason - it is the number to check, not the calorie figure.',
+          'The other failure is buying in bulk and then not cooking it. Large packs only save money if they get eaten, which is why these lean on batch cooking and freezing rather than on a big fresh shop.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How much protein do I actually need?',
+        a: 'Common guidance for people training for muscle is somewhere around 1.6-2.2g per kg of bodyweight daily, with little evidence of benefit above that. Each plan states its own figure so you can match it to your weight.',
+      },
+      {
+        q: 'Are supplements worth it on a budget?',
+        a: 'Whey is a cheap source of protein per gram, so it can help. It is not necessary - every plan here reaches its protein target from food alone.',
+      },
+    ],
     relatedSlugs: ['muscle-gain', '2500-calorie', '3000-calorie', 'high-protein'],
   }),
 };
@@ -716,6 +822,32 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
     titleLabel: 'Low Calorie Shopping List',
     match: { goals: ['weight-loss', 'budget-fat-loss', 'high-protein-low-cal', 'vegetarian-low-cal', 'vegan-low-cal', 'cutting'], calories: [1400, 1500, 1600, 1800] },
     intro: 'A low calorie shopping list should make the week easier, not smaller. These plans focus on lean protein, high-volume vegetables, fruit, filling carbohydrates and simple sauces.',
+    sections: [
+      {
+        h2: 'A low-calorie list should be big, not small',
+        paragraphs: [
+          'The instinct on a deficit is to buy less, and it is the reason most low-calorie weeks end in a takeaway. A list that works is physically large: high-volume vegetables, fruit, potatoes, oats and pulses take up room in a trolley and in a stomach, and that is the point.',
+          'What comes off the list is not food but calorie density - oils used by the tablespoon rather than the glug, sauces chosen deliberately, and fewer things eaten by the handful.',
+        ],
+      },
+      {
+        h2: 'Protein and fibre are what stop the hunger',
+        paragraphs: [
+          'Both slow you down and keep you full, and both are easy to under-buy when you are shopping for a smaller total. The lists here anchor every meal to a protein source and put fibre in from vegetables, pulses, oats and fruit rather than from a supplement.',
+          'The practical test of a low-calorie shop is whether you are hungry on Thursday. If you are, the problem is usually the protein and fibre in the basket rather than a lack of willpower.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'What should I take off the list first?',
+        a: 'Not food - calorie-dense extras. Cooking oil, cheese, sauces, spreads and snacks account for a surprising share of a day and are easier to reduce than meals.',
+      },
+      {
+        q: 'Do I need to weigh everything?',
+        a: 'No. Weighing the calorie-dense items - oils, nuts, cheese, cereal - gets most of the accuracy for a fraction of the effort. Vegetables barely matter.',
+      },
+    ],
     relatedSlugs: ['low-calorie', '1500-calorie', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list'],
   }),
   'high-protein-shopping-list': createShoppingListHub({
@@ -723,6 +855,32 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
     titleLabel: 'High Protein Shopping List',
     match: { goals: ['high-protein-low-cal', 'cheap-high-protein', 'high-protein-vegetarian', 'budget-bodybuilding', 'muscle-gain', 'body-recomp'] },
     intro: 'A high protein shopping list works best when every meal has a clear protein anchor. These plans use UK supermarket staples such as eggs, yogurt, chicken, tuna, tofu, beans, lentils and fish.',
+    sections: [
+      {
+        h2: 'This is really a cost problem',
+        paragraphs: [
+          'Hitting a protein target is easy if money is no object. The reason people fail is that protein is the most expensive thing in the trolley, so the useful skill is knowing which sources deliver the most per pound: eggs, milk, own-brand yogurt, tinned fish, chicken thighs, dried pulses and frozen white fish.',
+          'Chicken breast and anything branded for fitness sit at the wrong end of that list. Neither is necessary, and swapping them out changes the weekly total more than any other single decision.',
+        ],
+      },
+      {
+        h2: 'Spread it across the day',
+        paragraphs: [
+          'A protein total reached almost entirely at dinner is worse than the same total spread across meals, and it is also harder to hit. The lists here put a protein source in breakfast and lunch rather than treating those as carbohydrate meals.',
+          'Dairy does most of that work because it is cheap, needs no cooking and keeps. Yogurt, milk, quark and cottage cheese are the reason a high-protein week is affordable at all.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'What is the cheapest protein in a UK supermarket?',
+        a: 'Eggs, milk, dried pulses and own-brand yogurt are consistently among the cheapest per gram. Tinned fish and frozen white fish are close behind and need no preparation.',
+      },
+      {
+        q: 'Do I need protein powder?',
+        a: 'No. It is a convenient and reasonably cheap source, but every plan behind these lists reaches its target from ordinary food.',
+      },
+    ],
     relatedSlugs: ['high-protein', 'muscle-gain', '2500-calorie', 'meal-plans-with-shopping-list'],
   }),
   'budget-shopping-list': createShoppingListHub({
@@ -730,6 +888,32 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
     titleLabel: 'Budget Meal Prep Shopping List',
     match: { budgets: ['very-cheap', 'budget'], goals: ['budget-fat-loss', 'cheap-student', 'cheap-high-protein', 'budget-bodybuilding', 'weight-loss'] },
     intro: 'A budget meal prep shopping list should repeat useful staples while keeping enough variety to avoid giving up by Wednesday. These plans prioritise cheap protein, filling carbs, frozen veg and simple batch cooks.',
+    sections: [
+      {
+        h2: 'Waste is the hidden cost',
+        paragraphs: [
+          'The thing that makes a weekly shop expensive is usually not the prices but what gets thrown away. Fresh produce bought hopefully on Saturday and binned on Thursday is money spent twice - once on the food, once on the takeaway that replaced it.',
+          'These lists lean on frozen vegetables, tinned pulses and cupboard staples that cannot spoil, and keep fresh produce to what will realistically be eaten in the first few days.',
+        ],
+      },
+      {
+        h2: 'Fewer ingredients, bought in larger amounts',
+        paragraphs: [
+          'Buying five vegetables in small packs costs more and wastes more than buying two in bigger ones. The same is true of protein: one large pack divided across three meals beats three different proteins in small packs.',
+          'That is why these lists look repetitive on paper. The repetition is the saving, and it is concentrated in breakfast and lunch so the evening meal can still vary.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How much should a weekly shop cost?',
+        a: 'Each plan gives its own estimate by budget tier, from the low twenties upwards per person. The figure assumes cupboard staples are already in, which is why a first shop runs higher.',
+      },
+      {
+        q: 'Is own-brand always cheaper?',
+        a: 'Almost always, and the value tiers now reach fresh meat and fish at several chains rather than stopping at cupboard goods. Asda\'s Just Essentials and Co-op\'s Honest Value both go further than economy ranges used to.',
+      },
+    ],
     relatedSlugs: ['cheap-student', 'budget-bodybuilding', 'aldi', 'lidl'],
   }),
 };
@@ -1168,6 +1352,13 @@ export const MEAL_PLAN_HUBS = {
           'For fat loss, choose high-protein low-calorie or body recomposition plans. For gaining size, choose muscle gain or budget bodybuilding plans with higher calorie targets.',
         ],
       },
+      {
+        h2: 'How much, and where the money goes',
+        paragraphs: [
+          'For most people training regularly, common guidance lands somewhere around 1.6 to 2.2g per kilogram of bodyweight a day, and there is little evidence of further benefit above that. If you are not training, less is fine - the reason to raise protein is usually fullness on a deficit rather than a performance target.',
+          'The trap is the word itself. A product marketed as high-protein typically costs several times what the same protein costs as eggs, milk, yogurt or a tin of fish, and often delivers less per serving than the label implies. These plans are built from the ordinary version of each food.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1177,6 +1368,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Can I print a high protein meal plan?',
         a: 'Yes. Open any plan and use the export/print PDF section to save a full weekly summary and shopping list.',
+      },
+      {
+        q: 'Is there any harm in eating more protein than that?',
+        a: 'For healthy adults, moderately higher intakes are not a concern in the evidence we have, but there is no benefit either, and the calories have to come from somewhere. Anyone with kidney disease or another medical reason to watch protein should follow their clinician rather than a general plan.',
       },
     ],
     relatedSlugs: ['free-online-diet-plans-uk', '1500-calorie', 'weight-loss', 'vegetarian', 'meal-plans-with-shopping-list'],
@@ -1207,6 +1402,13 @@ export const MEAL_PLAN_HUBS = {
           'Higher-calorie plans use extra snacks and larger but still readable ingredient amounts. That is easier to follow than one enormous dinner or vague instructions to multiply every ingredient.',
         ],
       },
+      {
+        h2: 'Protein and patience do most of the work',
+        paragraphs: [
+          'The surplus gets the attention and matters least. Beyond a modest amount above maintenance, extra calories mostly add fat rather than muscle, and the pace at which anyone can actually build tissue is slow enough that a large surplus cannot speed it up. Somewhere around a few hundred calories over maintenance is enough for most people.',
+          'Protein is the number to hold steady, spread across the day rather than concentrated in one meal. Every plan here states its own figure, and that is the one worth checking when a plan is not working - far more often than the calorie total.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1216,6 +1418,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Can I print a muscle gain meal plan?',
         a: 'Yes. Open any plan and use the export or print PDF section to save the full week and shopping list.',
+      },
+      {
+        q: 'How fast should I expect to gain?',
+        a: 'Slowly, and more slowly the longer you have trained. Roughly a quarter to half a kilo a month is a reasonable rate for most people past the first year; faster than that is usually mostly fat, which then has to come back off.',
       },
     ],
     relatedSlugs: ['3000-calorie', '3500-calorie', 'high-protein', 'meal-plans-with-shopping-list'],
@@ -1240,10 +1446,21 @@ export const MEAL_PLAN_HUBS = {
           'If this target feels too much, compare 2500 calorie plans first. If you still struggle to gain weight, look at the 3500 calorie options.',
         ],
       },
+      {
+        h2: 'Check that 3,000 is actually your number',
+        paragraphs: [
+          'More people arrive at this target than need it. A day of heavy training genuinely burns a lot, but a rest day after it does not, and weekly average is what determines whether you gain. The reliable test is boring: hold the target for two or three weeks and watch the weight trend rather than trusting a calculator.',
+          'If the trend is climbing faster than roughly half a kilo a week, the surplus is bigger than useful and most of the extra is not going where you want it. If nothing is moving at all, you are probably not eating what you think you are - which is the more common finding.',
+        ],
+      },
     ],
     faq: [
       { q: 'Are these 3000 calorie plans only for bodybuilding?', a: 'No. Some are muscle gain or budget bodybuilding plans, while others are endurance-focused for higher training volume.' },
       { q: 'Do the 3000 calorie plans include shopping lists?', a: 'Yes. Each plan includes a full grouped shopping list and printable PDF export.' },
+      {
+        q: 'What if I cannot eat 3,000 calories a day?',
+        a: 'That is usually an appetite and timing problem rather than a willpower one. More eating occasions, denser foods and drinkable calories like milk or yogurt all help. If it stays a struggle, a sustained 2,500 beats an inconsistent 3,000.',
+      },
     ],
     relatedSlugs: ['muscle-gain', '3500-calorie', 'high-protein', 'printable-meal-plans'],
   },
@@ -1267,10 +1484,21 @@ export const MEAL_PLAN_HUBS = {
           'Because 3500 calories is high for many adults, use it when your weight trend, training demands or professional advice justify that target.',
         ],
       },
+      {
+        h2: 'At this level, eating becomes a schedule',
+        paragraphs: [
+          '3,500 kcal is not simply a bigger version of a normal day. It needs five or six eating occasions rather than three, which means it has to be planned around your actual hours - work, training, travel - or it does not happen. The plans mark the occasions for that reason.',
+          'The prep load rises with it. A week at this intake is roughly twice the cooking of a weight-loss week, so batch cooking stops being optional. If you are hitting the target on paper and not in practice, the fix is almost always more preparation on one day rather than more discipline on all seven.',
+        ],
+      },
     ],
     faq: [
       { q: 'Is a 3500 calorie meal plan suitable for everyone?', a: 'No. It is a high intake target and is mainly for people with high energy needs, heavy training or deliberate weight gain goals.' },
       { q: 'Can I choose a supermarket for 3500 calorie plans?', a: 'Yes. Use the 3500 calorie chooser or browse filters to combine calorie target with supermarket.' },
+      {
+        q: 'I am not gaining weight on 3,000 - should I move to 3,500?',
+        a: 'Only after checking that you actually hit 3,000 consistently for a few weeks. Under-eating against a target is far more common than needing a higher one, and moving up without fixing that just makes the gap larger.',
+      },
     ],
     relatedSlugs: ['3000-calorie', 'muscle-gain', 'high-protein', 'meal-plans-with-shopping-list'],
   },
@@ -1294,10 +1522,21 @@ export const MEAL_PLAN_HUBS = {
           'The recipes use standard UK supermarket ingredients, so you can still shop at Aldi, Lidl, Tesco, Asda, Sainsbury\'s, Morrisons, Iceland, Waitrose, Ocado, M&S or Co-op.',
         ],
       },
+      {
+        h2: 'What you trade away, and what you get back',
+        paragraphs: [
+          'The one real cost is the price estimate. A named-store plan can be costed against that chain\'s own-brand lines; a generic plan has to use average UK supermarket assumptions, so treat its figure as a guide rather than a quote. Everything else about the plan - the meals, the macros, the shopping list - is unaffected.',
+          'What you get back is a plan that survives a change of mind. Most people do not shop at one supermarket: there is a big shop somewhere cheap and a top-up somewhere close, and a plan tied to a single chain quietly stops matching reality by Wednesday. These plans are written so no meal depends on a product only one retailer sells.',
+        ],
+      },
     ],
     faq: [
       { q: 'Does generic mean no shopping list?', a: 'No. Generic plans still include a full shopping list, but the price estimate uses average UK supermarket assumptions.' },
       { q: 'Can I switch from generic to a named supermarket?', a: 'Yes. Use the supermarket chooser or browse filters to pick a named store.' },
+      {
+        q: 'How accurate is the price estimate on a generic plan?',
+        a: 'It is an average across the main UK chains, so expect a discounter to come in under it and Waitrose, Ocado or M&S to come in over. If cost is the deciding factor, a named-store plan for the shop you actually use will give you a closer figure.',
+      },
     ],
     relatedSlugs: ['weight-loss', '1500-calorie', 'muscle-gain', 'meal-plans-with-shopping-list'],
   },
@@ -1321,6 +1560,13 @@ export const MEAL_PLAN_HUBS = {
           'Use Aldi plans when budget control matters. If you want the same structure without choosing one store, compare Tesco or Generic UK supermarket plans.',
         ],
       },
+      {
+        h2: 'A small range is the feature, not the limitation',
+        paragraphs: [
+          'Aldi carries a fraction of the lines a full-size supermarket does, and that is precisely why meal prep works here. Fewer options means fewer decisions, and a plan built on the core range is one you can repeat next week and the week after without the products moving or the price shifting.',
+          'There is no loyalty scheme to work around either. What is on the shelf is what you pay, which makes weekly budgeting far more predictable than at a chain where the useful price depends on scanning an app.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1330,6 +1576,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Can I use an Aldi plan at another supermarket?',
         a: 'Yes. The ingredients are common UK supermarket foods, but prices and exact product names may differ.',
+      },
+      {
+        q: 'Do Specialbuys and Super 6 affect these plans?',
+        a: 'Deliberately not. Both rotate and sell through, so no plan here depends on them. Treat them as a bonus if something useful appears rather than as part of the week you are counting on.',
       },
     ],
     relatedSlugs: ['weight-loss', '1500-calorie', 'high-protein', 'tesco-weight-loss'],
@@ -1354,6 +1604,13 @@ export const MEAL_PLAN_HUBS = {
           'If you are cutting calories, pick vegetarian low-calorie plans. If you train regularly, start with high-protein vegetarian plans.',
         ],
       },
+      {
+        h2: 'Where vegetarian weeks usually go wrong',
+        paragraphs: [
+          'Not in the cooking - in the shopping. A vegetarian plan built from cheese and eggs alone gets repetitive by Wednesday and is higher in saturated fat than most people intend, while one built only from vegetables leaves you hungry. The fix is variety across the protein sources rather than variety across the vegetables.',
+          'Pulses do the most work for the least money. Tinned chickpeas, lentils and beans need no soaking, keep indefinitely and cost a fraction of what meat-free mince does, which is why these plans use branded substitutes sparingly rather than as the backbone.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1363,6 +1620,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Do vegetarian plans include shopping lists?',
         a: 'Yes. Each vegetarian plan includes a weekly shopping list and a printable PDF summary.',
+      },
+      {
+        q: 'Do I need to worry about iron or B12 as a vegetarian?',
+        a: 'Less than someone eating no animal products at all, since dairy and eggs supply B12. Iron from plant sources is absorbed less readily than from meat, so pairing pulses and leafy greens with a source of vitamin C at the same meal is a sensible habit. Speak to a GP if you have a specific concern.',
       },
     ],
     relatedSlugs: ['high-protein', '1500-calorie', 'weight-loss', 'printable-meal-plans'],
@@ -1443,6 +1704,13 @@ export const MEAL_PLAN_HUBS = {
           'Use Tesco plans when you want more choice than a discount supermarket while still keeping meals simple and repeatable.',
         ],
       },
+      {
+        h2: 'The breadth cuts both ways when you are cutting',
+        paragraphs: [
+          'The same range that makes swaps easy also puts far more in front of you than a discounter does, and a bigger shop means more decisions made while hungry. The plans deal with that by naming the products rather than leaving categories open, so the list is a set of specific items rather than an invitation to browse.',
+          'Clubcard pricing needs the same care. The promoted price is genuine but it is not distributed evenly across the store, and following it too closely is how a weight-loss basket fills with things that were cheap rather than things that were planned. Use it on what is already on your list.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1452,6 +1720,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Can I print the Tesco shopping list?',
         a: 'Yes. Open a plan and use the export/print PDF button to print the full plan and shopping list together.',
+      },
+      {
+        q: 'Should I buy the reduced-calorie versions of products?',
+        a: 'Sometimes, but check per 100g rather than per pack, because pack sizes differ and front-of-pack figures are often quoted per portion. On several categories the ordinary version in a smaller quantity works out better than the reduced-calorie one.',
       },
     ],
     relatedSlugs: ['weight-loss', '1500-calorie', 'high-protein', 'aldi'],
@@ -1476,6 +1748,13 @@ export const MEAL_PLAN_HUBS = {
           'Use printable plans when you batch cook on Sunday, shop from a paper list, or want to keep the week visible in the kitchen.',
         ],
       },
+      {
+        h2: 'Paper still wins in a kitchen and an aisle',
+        paragraphs: [
+          'A phone screen locks, needs clean hands and puts you one notification away from something else. A sheet on the fridge does none of that, and it is visible to everyone in the house - which matters more than it sounds if you are not the only person who cooks or shops.',
+          'There is a second, smaller effect worth having: a plan you can see is harder to quietly abandon. Crossing off days is a weak commitment device, but it is a free one, and it is the reason a printed week tends to survive longer than the same plan left in a browser tab.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1485,6 +1764,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Does the PDF include the shopping list?',
         a: 'Yes. The print summary includes the full weekly shopping list grouped by category.',
+      },
+      {
+        q: 'Should I print the whole plan or just the list?',
+        a: 'Both, separately. The shopping list goes to the shop and the weekly summary goes on the fridge, and splitting them means you are not carrying seven days of recipes around a supermarket to read one column.',
       },
     ],
     relatedSlugs: ['meal-plans-with-shopping-list', 'weight-loss', '1500-calorie', 'high-protein'],
@@ -1509,6 +1792,13 @@ export const MEAL_PLAN_HUBS = {
           'For the smoothest week, choose the plan first, export the PDF, then compare your cupboard staples before buying everything on the list.',
         ],
       },
+      {
+        h2: 'Why a grouped list beats a pile of recipes',
+        paragraphs: [
+          'Twenty-one meals written out as recipes gives you the same ingredient a dozen times over. A grouped list merges them, so rice appears once with the total you need rather than seven times in fragments - which is what stops you buying three bags and then finding two in the cupboard.',
+          'It is also ordered the way a supermarket is, so protein, produce, chilled, frozen and cupboard come in the order you walk them. That sounds cosmetic and is not: the back-and-forth is where things get forgotten, and a forgotten ingredient is how a week turns into a takeaway.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1518,6 +1808,10 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Can I edit a meal and update the shopping list?',
         a: 'Yes. On plan pages, meal edits recalculate the day totals and rebuild the shopping list.',
+      },
+      {
+        q: 'Should I buy everything on the list?',
+        a: 'No - check the cupboard first. Oil, spices, stock and staples are usually already in, and the list includes them because it has no way of knowing. Crossing those off is normally the difference between the estimate and what you actually spend.',
       },
     ],
     relatedSlugs: ['printable-meal-plans', 'weight-loss', 'aldi', 'vegetarian'],
