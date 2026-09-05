@@ -43,7 +43,6 @@ import {
 } from '../utils/portionShares.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import NotFound from './NotFound.jsx';
-import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
 import { apiHeaders } from '../utils/apiClient.js';
 import { calorieHubPathFor } from '../data/mealPlanHubs.js';
 
@@ -63,13 +62,6 @@ const HOUSEHOLD_MODES = [
 ];
 const MAX_HOUSEHOLD_MEMBERS = 6;
 const SHOW_LEGACY_PLAN_RENDERER = false;
-
-// Sentence-initial indefinite article. The shared helper is phonetic — "an
-// Aldi", "a Waitrose" — but returns lowercase, and this one opens a sentence.
-function sentenceArticleFor(value) {
-  const article = indefiniteArticleFor(value);
-  return article.charAt(0).toUpperCase() + article.slice(1);
-}
 
 const GOAL_HUB_SLUGS = {
   'weight-loss': 'weight-loss',
@@ -152,6 +144,15 @@ export default function PlanPage() {
   const [householdMode, setHouseholdMode] = useState('same');
   const [householdMembers, setHouseholdMembers] = useState(() => buildHouseholdPreset('same'));
   const [progressRoute, setProgressRoute] = useState('');
+
+  // The printable summary repeats the whole 7-day plan and the shopping list so
+  // they survive a print stylesheet. It is display:none on screen, so no reader
+  // ever sees it - but it was still in the prerendered HTML, which meant every
+  // plan page shipped its menu and shopping list to crawlers twice. Mounting it
+  // on the client keeps printing working and stops the duplication. `false` on
+  // the server and on the first client render, so hydration still matches.
+  const [printSummaryReady, setPrintSummaryReady] = useState(false);
+  useEffect(() => { setPrintSummaryReady(true); }, []);
   const sourcePlan = editedPlan || plan;
   const displayPlan = useMemo(() => (
     sourcePlan ? scalePlanForHousehold(sourcePlan, householdMembers) : null
@@ -752,10 +753,12 @@ export default function PlanPage() {
           <Link to="/quiz" className="btn-quiz-inline">Not right for you? Take the quiz →</Link>
         </div>
 
-        <PrintablePlanSummary
-          plan={displayPlan}
-          marketLabel={MKT_LABEL[plan.supermarket] || plan.supermarket}
-        />
+        {printSummaryReady && (
+          <PrintablePlanSummary
+            plan={displayPlan}
+            marketLabel={MKT_LABEL[plan.supermarket] || plan.supermarket}
+          />
+        )}
 
         {SHOW_LEGACY_PLAN_RENDERER && (
           <>
@@ -1321,37 +1324,12 @@ function PlanQualityNotes({ plan }) {
     <section className="plan-quality-notes" aria-labelledby="plan-quality-heading">
       <div className="section-head-inline">
         <div>
-          <h2 id="plan-quality-heading">{toTitleCase('Why this exact plan exists')}</h2>
+          <h2 id="plan-quality-heading">{toTitleCase('The assumptions behind this plan')}</h2>
           <p>
-            This page is not only a title-and-macros variant. The calorie target, supermarket,
-            diet type, budget and prep style all change the meals, shopping-list assumptions and swaps.
+            Every plan is built on four decisions. If one of them does not match your week,
+            that is the part to change - the swaps below cover the common cases.
           </p>
         </div>
-      </div>
-
-      <div className="plan-quality-grid">
-        <article>
-          <h3>What this plan is for</h3>
-          <p>
-            {sentenceArticleFor(market)} {market} {plan.goalLabel.toLowerCase()} plan at {calorieText} calories
-            is useful when someone wants a printable week before shopping, not just a generic
-            diet article.
-          </p>
-        </article>
-        <article>
-          <h3>{toTitleCase('Shopping logic')}</h3>
-          <p>
-            The list favours repeatable UK supermarket staples, grouped by protein, carbs, vegetables,
-            dairy and extras so the basket can be checked before buying.
-          </p>
-        </article>
-        <article>
-          <h3>{toTitleCase('Practical swaps')}</h3>
-          <p>
-            The swap section keeps the page usable if a product is out of stock, too expensive, or not
-            right for the reader's diet.
-          </p>
-        </article>
       </div>
 
       <div className="content-table-wrap">

@@ -1816,6 +1816,498 @@ export const MEAL_PLAN_HUBS = {
     ],
     relatedSlugs: ['printable-meal-plans', 'weight-loss', 'aldi', 'vegetarian'],
   },
+  'asda-weight-loss': {
+    slug: 'asda-weight-loss',
+    path: '/meal-plans/asda-weight-loss',
+    title: 'Asda Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
+    description: 'Free Asda weight loss meal plans from 1,400 to 1,800 kcal, built around Just Essentials and larger pack sizes, with shopping lists and printable PDFs.',
+    h1: 'Asda Weight Loss Meal Plans UK',
+    kicker: 'Asda fat loss hub',
+    intro: 'Asda sells in bigger units than most of its rivals, and on a deficit that is the thing to plan around. The price per kilo is excellent and the quantity in the house is high, which are the same fact pointing in two directions.',
+    match: { supermarkets: ['asda'], goals: ['weight-loss'] },
+    stats: ['17 Asda plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Portion on the day you shop, not the day you eat',
+        paragraphs: [
+          'A three-kilo bag of chicken is cheap and it is also three kilos of chicken sitting in a fridge, and portions taken from a big pack drift upward almost invisibly. The habit that fixes it costs ten minutes: split the meat and the fish into meal-sized bags the moment you get home, before anything goes in the fridge or freezer.',
+          'Do the same with the things people never portion - grated cheese, nuts, granola. Those are the items where a large pack quietly adds a few hundred calories a day, and they are the reason a plan followed honestly can still stall.',
+        ],
+      },
+      {
+        h2: 'Budget and protein stop competing here',
+        paragraphs: [
+          'The usual trade on a cheap deficit is that value ranges cover cupboard goods and stop before the protein, so you save on rice and pay full price on chicken. Asda is unusual in that its value tier reaches fresh meat and fish, so the basket that keeps you full is also the basket that keeps the cost down.',
+          'That matters more on a deficit than at any other goal, because protein is what makes a smaller day tolerable. It is why these plans lean on the value tier for the protein first and treat the savings elsewhere as incidental.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Are Asda plans good for weight loss on a budget?',
+        a: 'They are among the strongest, because the value range covers fresh meat and fish rather than stopping at cupboard staples. That removes the usual choice between eating cheaply and eating enough protein.',
+      },
+      {
+        q: 'Do the large pack sizes work for one person?',
+        a: 'Only if you split them on the day you shop. Portion into bags before anything goes in the fridge - portions taken straight from a big pack tend to grow, and that is the most common reason an Asda deficit stalls.',
+      },
+    ],
+    relatedSlugs: ['asda', 'weight-loss', '1500-calorie', 'meal-plans-with-shopping-list'],
+  },
+  'sainsburys-weight-loss': {
+    slug: 'sainsburys-weight-loss',
+    path: '/meal-plans/sainsburys-weight-loss',
+    title: 'Sainsbury\'s Weight Loss Meal Plans UK - Free Plans + Lists',
+    description: 'Free Sainsbury\'s weight loss meal plans from 1,400 to 1,800 kcal, with Nectar-aware shopping notes, grouped lists, macros and printable PDFs.',
+    h1: 'Sainsbury\'s Weight Loss Meal Plans UK',
+    kicker: 'Sainsbury\'s fat loss hub',
+    intro: 'Sainsbury\'s is a good shop for a deficit and an awkward one for a fixed plan, and both come from the same source: the prices move. Nectar pricing rotates week to week, so what was cheapest on Monday may not be next Monday.',
+    match: { supermarkets: ['sainsburys'], goals: ['weight-loss'] },
+    stats: ['17 Sainsbury\'s plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Rotating prices suit a flexible cook, not a fixed week',
+        paragraphs: [
+          'If you enjoy building meals around whatever is cheap, rotating offers are a gift. If you are following a plan, they are noise - and chasing them is how a weight-loss basket fills with things that were discounted rather than things that were planned.',
+          'The way to use the scheme without letting it drive the shop is to apply it to the two or three proteins you buy every single week, and ignore it everywhere else. Those are the items where a repeated saving compounds over a twelve-week phase; the rest is a one-off that costs you the plan.',
+        ],
+      },
+      {
+        h2: 'Repeatability is the point on a deficit',
+        paragraphs: [
+          'A deficit works because it is boring in the right places. The meals you repeat without thinking - the same breakfast, the same two lunches - are the ones that survive a bad week, and they only stay effortless if the ingredients are reliably there at a price you expected.',
+          'So build the fixed part of the week from Sainsbury\'s own-brand staples rather than from whatever is promoted, and let the evening meal be where variety and offers come in. That keeps the plan intact and still gets you the saving.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Is Nectar pricing worth using for weight loss?',
+        a: 'Yes, but narrowly. Apply it to the two or three proteins you buy every week, where a repeated saving adds up over a long phase, and ignore it elsewhere - following offers around the store is how a planned basket becomes an unplanned one.',
+      },
+      {
+        q: 'Are Sainsbury\'s plans more expensive than a discounter?',
+        a: 'Generally yes on a like-for-like basket, though the gap narrows on own-brand staples with Nectar applied. If cost is the deciding factor rather than convenience, an Aldi or Lidl plan will come in lower.',
+      },
+    ],
+    relatedSlugs: ['sainsburys', 'weight-loss', '1500-calorie', 'low-calorie'],
+  },
+  'lidl-weight-loss': {
+    slug: 'lidl-weight-loss',
+    path: '/meal-plans/lidl-weight-loss',
+    title: 'Lidl Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
+    description: 'Free Lidl weight loss meal plans from 1,400 to 1,800 kcal, built around own-brand high-protein dairy, with grouped shopping lists and printable PDFs.',
+    h1: 'Lidl Weight Loss Meal Plans UK',
+    kicker: 'Lidl fat loss hub',
+    intro: 'Lidl is cheap, well stocked for a deficit, and laid out in a way that works against you. The food you need is around the edges; the route to the tills is not.',
+    match: { supermarkets: ['lidl'], goals: ['weight-loss'] },
+    stats: ['17 Lidl plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'The middle aisle is the actual risk',
+        paragraphs: [
+          'Not the prices, and not the range. Lidl puts non-food and seasonal stock down the centre of the store and the bakery near the entrance, and both are on the path you walk anyway. Neither is a moral failing to walk past, but a deficit is decided by what ends up in the trolley, and impulse buying is what these layouts are designed to produce.',
+          'Two habits deal with it: shop the perimeter first and only go down the middle if you actually need something, and do not shop hungry, which is advice everyone has heard and few follow on the way home from work.',
+        ],
+      },
+      {
+        h2: 'What makes the deficit work here',
+        paragraphs: [
+          'The own-brand high-protein dairy is the reason to choose Lidl for this goal. Skyr, quark, high-protein yogurts and cottage cheese are priced as ordinary own-brand lines rather than as fitness products, and those are exactly the foods that make a smaller day feel like enough.',
+          'Frozen vegetables and fruit do the rest. Used as the default rather than the fallback, they hold the weekly cost flat and remove the pressure to use fresh produce before it turns, which is where a lot of good intentions end up in the bin.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Why is Lidl good for weight loss?',
+        a: 'Cheap own-brand high-protein dairy - skyr, quark, cottage cheese - priced as ordinary lines rather than fitness products. Those are the foods that make a calorie deficit feel like enough food rather than a negotiation.',
+      },
+      {
+        q: 'How do I avoid overspending at Lidl?',
+        a: 'Shop the perimeter and treat the middle aisle as somewhere you go only for something specific. The layout puts non-food and the bakery on your route deliberately, and a deficit is decided by what actually reaches the trolley.',
+      },
+    ],
+    relatedSlugs: ['lidl', 'weight-loss', '1500-calorie', 'low-calorie'],
+  },
+  'morrisons-weight-loss': {
+    slug: 'morrisons-weight-loss',
+    path: '/meal-plans/morrisons-weight-loss',
+    title: 'Morrisons Weight Loss Meal Plans UK - Free Plans + Lists',
+    description: 'Free Morrisons weight loss meal plans from 1,400 to 1,800 kcal, using loose produce and counter portions, with shopping lists and printable PDFs.',
+    h1: 'Morrisons Weight Loss Meal Plans UK',
+    kicker: 'Morrisons fat loss hub',
+    intro: 'Most supermarkets sell you a pack and leave the portioning to you. Morrisons is the one where you can still buy the amount you actually want, and on a deficit that is worth more than a few pence per kilo.',
+    match: { supermarkets: ['morrisons'], goals: ['weight-loss'] },
+    stats: ['16 Morrisons plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Loose produce solves the variety problem',
+        paragraphs: [
+          'Variety is what stops a deficit becoming unbearable, and pre-packed produce makes variety expensive - four different vegetables in fixed packs means four part-used bags and a bin full of the remainder by Friday. Buying loose means three peppers, one head of broccoli and exactly the mushrooms you need.',
+          'Morrisons keeps a wider loose range than most, and for a single person on a plan that is the difference between a colourful week and a wasteful one. Buy for the days ahead rather than for the pack size, and the fruit and vegetable line of the shop stops being the part you throw away.',
+        ],
+      },
+      {
+        h2: 'The parts of the store to plan for',
+        paragraphs: [
+          'The counters let you ask for the weight the plan states rather than the nearest pack, which removes a small daily decision about whether to cook the extra hundred grams. Over a week that decision is worth several hundred calories.',
+          'The other side of the same store is worth naming honestly: the cafe, the pie counter and the food-to-go section are good at what they do and none of it is on your list. Decide before you go in whether you are eating there, because deciding at the counter rarely goes the way you planned.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Why shop at Morrisons for weight loss?',
+        a: 'Loose produce and service counters let you buy the amount the plan actually calls for. Fixed pack sizes are a quiet source of both waste and calorie drift, and Morrisons is the mainstream chain that still lets you avoid them.',
+      },
+      {
+        q: 'Can I follow these plans without using the counters?',
+        a: 'Yes - every plan works from the pre-packed ranges too. The counters just make exact portions easier, particularly for meat and fish where a pack is often more than one meal needs.',
+      },
+    ],
+    relatedSlugs: ['morrisons', 'weight-loss', '1500-calorie', 'meal-plans-with-shopping-list'],
+  },
+  'tesco-muscle-gain': {
+    slug: 'tesco-muscle-gain',
+    path: '/meal-plans/tesco-muscle-gain',
+    title: 'Tesco Muscle Gain Meal Plans UK - Free Plans + Shopping Lists',
+    description: 'Free Tesco muscle gain meal plans from 2,500 to 3,500 kcal, built for variety across a long surplus, with grouped shopping lists and printable PDFs.',
+    h1: 'Tesco Muscle Gain Meal Plans UK',
+    kicker: 'Tesco muscle gain hub',
+    intro: 'The thing that ends most bulks is not the cooking or the cost. It is eating the same six meals until the sight of them is unwelcome, and that is the specific problem a big Tesco solves better than a discounter can.',
+    match: { supermarkets: ['tesco'], goals: ['muscle-gain'] },
+    stats: ['18 Tesco plans', '2,500-3,500 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'A surplus needs range more than it needs anything else',
+        paragraphs: [
+          'At 3,000 kcal you are eating roughly twice the food of a weight-loss week, and appetite is the limiting factor long before money is. Boredom compounds that - once a meal becomes a chore you eat less of it, and a surplus quietly turns into maintenance without anything obvious going wrong.',
+          'Tesco carries enough depth in each category that the same protein can appear four different ways in a week without anything unusual in the trolley. That is a duller advantage than a headline price, and it is the one that decides whether a bulk lasts twelve weeks.',
+        ],
+      },
+      {
+        h2: 'Where to spend and where not to',
+        paragraphs: [
+          'Buy the bulk carriers cheaply - rice, oats, pasta, potatoes, milk, eggs and frozen vegetables carry the calories and there is nothing to gain from paying more for them. Put the difference into the protein and into whatever makes the food enjoyable enough to keep eating.',
+          'Clubcard is worth having for exactly this, because it tends to bite hardest on the meat and dairy that a surplus consumes in volume. What it will not do is make a plan cheaper if you follow the promotions rather than the list.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Why choose Tesco for a muscle gain plan?',
+        a: 'Range. A surplus fails on boredom more often than on cost, and Tesco carries enough depth in each category to keep a high-calorie week varied without anything unusual in the basket.',
+      },
+      {
+        q: 'How do I eat 3,000 calories without feeling stuffed?',
+        a: 'More eating occasions rather than bigger plates, and denser foods - oats, rice, olive oil, whole milk, nuts. Liquid calories help when appetite rather than time is the constraint.',
+      },
+    ],
+    relatedSlugs: ['tesco', 'muscle-gain', '3000-calorie', 'high-protein'],
+  },
+  'aldi-budget-fat-loss': {
+    slug: 'aldi-budget-fat-loss',
+    path: '/meal-plans/aldi-budget-fat-loss',
+    title: 'Aldi Budget Fat Loss Meal Plans UK - Free Cheap Plans',
+    description: 'Free Aldi budget fat loss meal plans from 1,400 to 1,800 kcal at the lowest weekly cost, with grouped shopping lists, macros and printable PDFs.',
+    h1: 'Aldi Budget Fat Loss Meal Plans UK',
+    kicker: 'Aldi budget fat loss hub',
+    intro: 'Fat loss is a twelve-week job, not a one-week one, and that changes which kind of cheap actually matters. A single bargain is worth very little across three months. A shop that costs roughly the same every week is worth a great deal.',
+    match: { supermarkets: ['aldi'], goals: ['budget-fat-loss'] },
+    stats: ['18 Aldi plans', 'Lowest weekly cost', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Predictable beats cheap over a long phase',
+        paragraphs: [
+          'Most supermarket saving is conditional - it depends on an offer being on, an app being scanned, or a particular line being in stock. That works for a single shop and it makes budgeting over twelve weeks genuinely difficult, because the number moves for reasons outside your control.',
+          'Aldi prices its core range low and leaves it there. You can put a figure on the week and have it hold, which is what makes a long deficit survivable financially. Over a phase, that steadiness is worth more than the occasional larger saving somewhere else.',
+        ],
+      },
+      {
+        h2: 'Keep the plan cheap without making it grim',
+        paragraphs: [
+          'The cheapest possible basket is also the bleakest, and a plan nobody wants to eat fails regardless of what it cost. Spend the small amount of headroom on the things that carry flavour rather than calories - spices, stock, mustard, vinegar, tinned tomatoes, frozen herbs, lemons.',
+          'That handful of items costs a few pounds, lasts weeks, and is the difference between repeating a meal happily and abandoning it in week three. Everything else on these plans is built from the core range, where the price stability is.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'How cheap is a fat loss week at Aldi?',
+        a: 'Each plan states its own estimate and the lowest tier sits at the bottom of what a full week costs anywhere. The figure assumes cupboard basics like oil, spices and stock are already in, which is why a first shop runs higher.',
+      },
+      {
+        q: 'Why does price stability matter more than a bargain?',
+        a: 'Because a fat loss phase runs for months. A shop that costs roughly the same every week can be budgeted for and held; a shop that depends on rotating offers cannot, and that is where long plans tend to come apart.',
+      },
+    ],
+    relatedSlugs: ['aldi', 'weight-loss', 'low-calorie', 'cheap-student'],
+  },
+  'aldi-cheap-student': {
+    slug: 'aldi-cheap-student',
+    path: '/meal-plans/aldi-cheap-student',
+    title: 'Aldi Student Meal Plans UK - Cheap Plans + Shopping Lists',
+    description: 'Free cheap Aldi student meal plans built for shared kitchens and small budgets, with short ingredient lists, grouped shopping lists and printable PDFs.',
+    h1: 'Aldi Student Meal Plans UK',
+    kicker: 'Aldi student hub',
+    intro: 'The useful thing about Aldi for a student is not only that it is cheap. It is that the range is small enough to learn. Six meals cooked confidently beats thirty attempted badly, and a store with two options per line pushes you towards the first.',
+    match: { supermarkets: ['aldi'], goals: ['cheap-student'] },
+    stats: ['15 Aldi plans', 'Lowest weekly cost', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Learn six meals, not thirty',
+        paragraphs: [
+          'The first year of cooking for yourself is mostly about repetition. A short list of meals you can make without a recipe, from ingredients you always have, is worth more than a wide repertoire you need to look up - and it is much cheaper, because the same eight or ten ingredients keep getting used rather than half-used.',
+          'Aldi suits that because the core range barely changes. The chicken, mince, rice, pasta, tinned tomatoes, frozen vegetables and eggs are there every week at roughly the same price, so the meals you learn stay buildable.',
+        ],
+      },
+      {
+        h2: 'Plan for the kitchen you actually have',
+        paragraphs: [
+          'A shared kitchen means limited hob space at six in the evening, a fridge shelf you may not fully control, and washing up that is not always yours. These plans assume that: short ingredient lists, few pans, and meals that survive being cooked at an odd hour.',
+          'It also means the freezer and the cupboard do more work than the fridge. Frozen vegetables, tinned pulses and dried staples cannot be borrowed by a housemate or go off while you are out, which is a practical advantage as much as a financial one.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'What should a student buy on the first Aldi shop?',
+        a: 'The staples that appear in everything: oil, salt, pepper, a couple of spices, stock cubes, rice, pasta, tinned tomatoes, tinned beans, eggs, frozen vegetables. It costs more than a normal week and then makes every following week cheap.',
+      },
+      {
+        q: 'Do these plans work in a shared kitchen?',
+        a: 'They are written for one. Short ingredient lists, few pans, and a lean on cupboard and freezer items rather than fresh food that needs using within days or sitting in a communal fridge.',
+      },
+    ],
+    relatedSlugs: ['aldi', 'cheap-student', 'low-calorie', 'meal-plans-with-shopping-list'],
+  },
+  'lidl-budget-bodybuilding': {
+    slug: 'lidl-budget-bodybuilding',
+    path: '/meal-plans/lidl-budget-bodybuilding',
+    title: 'Lidl Budget Bodybuilding Meal Plans UK - Cheap High Protein',
+    description: 'Free cheap Lidl bodybuilding meal plans from 2,500 to 3,500 kcal, built on own-brand protein at discounter prices, with shopping lists and PDFs.',
+    h1: 'Lidl Budget Bodybuilding Meal Plans UK',
+    kicker: 'Lidl budget bulk hub',
+    intro: 'A surplus is where the price of protein really bites. You are not buying a bit more of everything - you are buying substantially more of the most expensive thing in the trolley, every week, for months.',
+    match: { supermarkets: ['lidl'], goals: ['budget-bodybuilding'] },
+    stats: ['14 Lidl plans', '2,500-3,500 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'The maths of a cheap surplus',
+        paragraphs: [
+          'Going from 2,000 to 3,000 kcal with protein held proportional means roughly half as much again of the meat, fish and dairy in the basket. At mainstream prices that is a noticeable weekly increase; at discounter prices it is manageable, and that difference is why the chain matters more for this goal than for most.',
+          'Lidl helps specifically because its high-protein dairy - skyr, quark, protein puddings, cottage cheese - is priced as own-brand rather than as sports nutrition. Those products carry a lot of protein per pound and need no cooking, which is exactly what a high-calorie day short on time needs.',
+        ],
+      },
+      {
+        h2: 'Watch the protein share, not the calorie total',
+        paragraphs: [
+          'The cheap way to add calories is oil and carbohydrate, and both work - right up until protein has quietly fallen as a proportion of a much larger total. The number to check when a bulk is not producing what you expected is grams of protein, not the calorie figure.',
+          'Each plan here states its own. If you are adjusting portions to fit your appetite or budget, scale the carbohydrate and fat first and leave the protein where it is.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Can you bulk cheaply at Lidl?',
+        a: 'It is one of the better places to try. The own-brand high-protein dairy is priced as an ordinary line rather than a fitness product, and that is where a surplus spends most of its extra money.',
+      },
+      {
+        q: 'Do I need protein powder for these plans?',
+        a: 'No. Every plan reaches its protein target from food. Powder is a cheap and convenient way to replace one of the dairy servings if it suits you, but nothing here depends on it.',
+      },
+    ],
+    relatedSlugs: ['lidl', 'budget-bodybuilding', 'muscle-gain', '3000-calorie'],
+  },
+  'iceland-budget-fat-loss': {
+    slug: 'iceland-budget-fat-loss',
+    path: '/meal-plans/iceland-budget-fat-loss',
+    title: 'Iceland Budget Fat Loss Meal Plans UK - Cheap Frozen Plans',
+    description: 'Free cheap Iceland fat loss meal plans from 1,400 to 1,800 kcal built on frozen portions, with grouped shopping lists, macros and printable PDFs.',
+    h1: 'Iceland Budget Fat Loss Meal Plans UK',
+    kicker: 'Iceland budget fat loss hub',
+    intro: 'Frozen food gets recommended for fat loss on the grounds that it is cheap, which is true and is not the interesting part. The useful part is that it is already divided up.',
+    match: { supermarkets: ['iceland'], goals: ['budget-fat-loss'] },
+    stats: ['10 Iceland plans', 'Lowest weekly cost', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Portion control without scales or willpower',
+        paragraphs: [
+          'A bag of frozen chicken breasts or white fish lets you take out exactly what you are cooking and put the rest back. Nothing is defrosted that needs using, so there is no half a pack in the fridge quietly arguing to be finished, and no decision to make at the end of a long day about whether to cook the extra piece.',
+          'That is a genuinely different mechanism from weighing food. Weighing requires you to be accurate every time; taking two pieces out of a bag requires nothing. On a deficit, the second one holds up far better across a bad week.',
+        ],
+      },
+      {
+        h2: 'Be honest that this is half a shop',
+        paragraphs: [
+          'Iceland covers the protein and the vegetables and thins out quickly after that. Fresh fruit, most dairy and the cupboard staples come from somewhere else, and a plan that pretends otherwise falls apart on the first shop.',
+          'Used deliberately as the freezer half of a week it is one of the cheapest ways to cover the expensive part of a deficit. The shopping lists on these plans separate what is realistically an Iceland purchase from what is not, so you can see the split before you set off.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Is frozen food good for weight loss?',
+        a: 'It is good for portion control, which matters more. You cook only what you take out of the bag, so there is no part-used pack in the fridge and no decision about whether to finish it.',
+      },
+      {
+        q: 'Can I do a whole fat loss week at Iceland?',
+        a: 'Rarely. It covers protein and vegetables well and thins out on fresh produce, dairy and cupboard staples, so expect a top-up elsewhere. Treated as the freezer half of the shop it works very well.',
+      },
+    ],
+    relatedSlugs: ['iceland', 'weight-loss', 'low-calorie', '1500-calorie'],
+  },
+  'waitrose-weight-loss': {
+    slug: 'waitrose-weight-loss',
+    path: '/meal-plans/waitrose-weight-loss',
+    title: 'Waitrose Weight Loss Meal Plans UK - Free Plans + Lists',
+    description: 'Free Waitrose weight loss meal plans from 1,400 to 1,800 kcal built around the Essential range, with grouped shopping lists and printable PDFs.',
+    h1: 'Waitrose Weight Loss Meal Plans UK',
+    kicker: 'Waitrose fat loss hub',
+    intro: 'If you are shopping at Waitrose, price is probably not the constraint on your week. The prepared food is, and it is very good, which is precisely the problem.',
+    match: { supermarkets: ['waitrose'], goals: ['weight-loss'] },
+    stats: ['11 Waitrose plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'The risk here is convenience, not cost',
+        paragraphs: [
+          'Waitrose is unusually strong on ready meals, prepared salads, dips, bakery and food-to-go, and all of it is easy to justify because the quality is high. None of that is incompatible with losing weight, but it is the part of this shop that most often replaces the plan rather than supporting it.',
+          'The practical answer is not restraint but sequence: shop the list first and give yourself a decision about anything else only after the basket already contains the week. Deciding at the chilled aisle, before the rest of the shop exists, rarely goes the way anyone intends.',
+        ],
+      },
+      {
+        h2: 'Essential is where these plans live',
+        paragraphs: [
+          'The Essential range is the reason a Waitrose plan can be costed sensibly at all. The basics in it - chicken, mince, fish, rice, pasta, tinned goods, frozen vegetables, dairy - are competitive with the other big chains, and they carry these plans almost entirely.',
+          'Step outside it and the weekly figure moves quickly. That is a fair trade if you want it, but it is worth being deliberate about which items you are choosing to pay more for rather than drifting there by default.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Is Waitrose too expensive for a weight loss plan?',
+        a: 'Not if you stay inside the Essential range, which is competitive with the other big chains on the basics these plans use. The weekly cost climbs when the basket moves outside it.',
+      },
+      {
+        q: 'What is the main thing to avoid?',
+        a: 'Not a food - a sequence. Shop the list before considering the prepared food and bakery. Waitrose is very good at those, and they replace planned meals more often than they supplement them.',
+      },
+    ],
+    relatedSlugs: ['waitrose', 'weight-loss', '1500-calorie', 'low-calorie'],
+  },
+  'marks-spencer-weight-loss': {
+    slug: 'marks-spencer-weight-loss',
+    path: '/meal-plans/marks-spencer-weight-loss',
+    title: 'M&S Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
+    description: 'Free M&S weight loss meal plans from 1,400 to 1,800 kcal using smaller pack sizes for built-in portion control, with shopping lists and PDFs.',
+    h1: 'M&S Weight Loss Meal Plans UK',
+    kicker: 'M&S fat loss hub',
+    intro: 'M&S is expensive per kilo and that is the wrong number to judge it by if you are cooking for one. What breaks most deficits is not the price of food but how much of it ends up on the plate, and small packs quietly settle that.',
+    match: { supermarkets: ['marks-spencer'], goals: ['weight-loss'] },
+    stats: ['10 M&S plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'Small packs are portion control you do not have to think about',
+        paragraphs: [
+          'A two-fillet pack of chicken is two meals. A 500g pack is two meals and an argument. For one or two people the smaller unit removes the daily decision about whether to cook the rest, and that decision is where calorie drift actually happens - not in the weighing, which most people do reasonably well when they do it at all.',
+          'The same applies to the produce and the dairy. Buying close to what a week needs means less in the fridge, less to use up, and far less of the Friday cooking that exists only because something would otherwise be thrown away.',
+        ],
+      },
+      {
+        h2: 'Judge the cost per week, not per kilo',
+        paragraphs: [
+          'The honest comparison is not the shelf price against a discounter but what you actually spend and eat across a week. A cheaper large pack that produces one wasted portion and one oversized dinner is not obviously the better buy for a single person on a deficit.',
+          'That said, the gap is real and these plans do not pretend otherwise. If weekly cost is the binding constraint rather than convenience or waste, an Aldi or Lidl plan will come in materially lower.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Is M&S practical for weight loss?',
+        a: 'For one or two people, yes. The smaller pack sizes give portion control without weighing, and less food in the fridge means less of the eating that happens simply because something needs using up.',
+      },
+      {
+        q: 'Is it worth the extra cost?',
+        a: 'That depends whether waste and portion drift are your problem or price is. If price is the binding constraint, a discounter plan will be cheaper; if you are cooking for one and throwing food away, the smaller packs can close much of the gap.',
+      },
+    ],
+    relatedSlugs: ['marks-spencer', 'weight-loss', '1500-calorie', 'low-calorie'],
+  },
+  'ocado-weight-loss': {
+    slug: 'ocado-weight-loss',
+    path: '/meal-plans/ocado-weight-loss',
+    title: 'Ocado Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
+    description: 'Free Ocado weight loss meal plans from 1,400 to 1,800 kcal built for online ordering, with grouped shopping lists, macros and printable PDFs.',
+    h1: 'Ocado Weight Loss Meal Plans UK',
+    kicker: 'Ocado fat loss hub',
+    intro: 'Ocado has one advantage for a calorie deficit that no physical supermarket can offer, and it has nothing to do with range or price: you can see the whole basket, and change your mind, before you have committed to any of it.',
+    match: { supermarkets: ['ocado'], goals: ['weight-loss'] },
+    stats: ['8 Ocado plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    reviewed: REVIEWED_DATE,
+    sources: COMMON_NUTRITION_SOURCES,
+    sections: [
+      {
+        h2: 'The basket is the plan',
+        paragraphs: [
+          'In a shop you make a series of small decisions while walking, tired, and often hungry, and you find out what you bought at the till. Ordering online inverts that. The trolley sits in front of you as a list, you can take things out without any awkwardness, and nothing arrives that you did not deliberately choose.',
+          'For anyone whose deficit is undone by impulse rather than by planning, that is the single most useful thing about this chain. Build the order against the plan, then read it back once before checkout - the second pass is where the things that crept in come out again.',
+        ],
+      },
+      {
+        h2: 'Plan the whole week, because there is no popping out',
+        paragraphs: [
+          'The trade is that a delivery slot is not a shop you can nip back to. A forgotten ingredient means either a substitute, a trip to a local store, or a meal that does not happen, and the third is what usually turns into a takeaway.',
+          'So these plans are written to be ordered in one go, with the shopping list grouped so it can be checked against the basket before the slot closes. It is also worth setting substitution preferences deliberately rather than leaving them to chance, since a swapped product can change the calories of a meal more than people expect.',
+        ],
+      },
+    ],
+    supportingGuides: [GUIDE_LINKS.mealPrepBeginners, GUIDE_LINKS.lowCalorieFoods, GUIDE_LINKS.highProteinSnacks, GUIDE_LINKS.shoppingList],
+    faq: [
+      {
+        q: 'Is online shopping better for weight loss?',
+        a: 'It can be, for a specific reason: you see the entire basket as a list before committing and can remove things without any social awkwardness. If impulse buying rather than planning is what derails your week, that matters more than range or price.',
+      },
+      {
+        q: 'What should I watch out for with Ocado?',
+        a: 'Substitutions and the lack of a top-up. Set your substitution preferences deliberately, since a swapped product can change a meal’s calories, and order the full week in one go because there is no popping back for what you forgot.',
+      },
+    ],
+    relatedSlugs: ['ocado', 'weight-loss', '1500-calorie', 'meal-plans-with-shopping-list'],
+  },
 };
 
 export const MEAL_PLAN_HUB_SLUGS = Object.keys(MEAL_PLAN_HUBS);

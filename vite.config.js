@@ -26,6 +26,7 @@ export default defineConfig({
             ['blogPostsBatch5', 'blog-data-batch-5'],
             ['blogPostsBatch6', 'blog-data-batch-6'],
             ['blogPostsBatch7', 'blog-data-batch-7'],
+            ['blogPostsBatch8', 'blog-data-batch-8'],
             ['expandedBlogPosts', 'blog-data-expanded'],
             ['containerBlogPosts', 'blog-data-containers'],
             ['commercialBlogPosts', 'blog-data-commercial'],

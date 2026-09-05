@@ -979,6 +979,20 @@ export const expandedBlogPostsData = {
           'Plan a lighter shop for Sunday if Saturday is social. Soup, omelette, jacket potato, or a simple stir-fry can reset the week without punishment.',
         ],
       },
+      {
+        h2: 'Why a weekly view is defensible',
+        paragraphs: [
+          'Body fat responds to energy balance accumulated over time, not to whether any single day landed on target, so a week that averages correctly produces much the same result as seven identical days. That is genuinely useful for anyone whose weekends look nothing like their weekdays, and it removes the all-or-nothing thinking that ends most attempts.',
+          'The caveat matters as much as the principle: the average has to be real. Weekly thinking becomes a licence the moment the higher days stop being counted, and a single large restaurant meal can carry more than the deficit the four preceding days created.',
+        ],
+      },
+      {
+        h2: 'The banking mistake',
+        paragraphs: [
+          'The tempting version of this is to cut hard from Monday to Friday to bank room for Saturday. It rarely works. Deep weekday restriction tends to produce exactly the hunger and preoccupation that make the weekend larger than planned, and the week ends level or up despite feeling like hard work throughout.',
+          'A modest, even deficit is easier to hold and produces a better weekly average than a severe one punctuated by rebound. If a big meal is coming, a slightly lighter day on either side is enough - trimming 100 to 150 calories from a few days, not 500.',
+        ],
+      },
     ],
     related: [
       { slug: 'weight-loss-meal-prep-mistakes-uk', label: 'Weight Loss Meal Prep Mistakes UK', type: 'blog' },
@@ -988,6 +1002,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Can I average calories across the week?', a: 'Yes. Fat loss responds to the overall energy balance over time, so weekly averages can be useful if they help you stay consistent.' },
       { q: 'Should I meal prep every meal?', a: 'Usually no. Prep the meals that cause the most trouble, such as work lunches and rushed breakfasts, then leave some flexibility.' },
+      {
+        q: 'Can I average my calories across the week?',
+        a: 'Yes - fat loss responds to energy balance over time rather than to individual days, so a correct weekly average works. It only fails when the higher days stop being counted honestly.',
+      },
+      {
+        q: 'Should I eat less during the week to save calories for the weekend?',
+        a: 'Not aggressively. Deep weekday restriction usually causes the rebound it was meant to fund. A small, even deficit holds better - trim 100 to 150 calories on a few days around a big meal rather than several hundred.',
+      },
     ],
   }),
 
@@ -1019,6 +1041,20 @@ export const expandedBlogPostsData = {
           'Turkey mince can become chilli bowls, wraps, jacket potato topping, or lettuce cups. Chicken can become pasta salad, rice bowls, fajitas, or soup. Variety does not have to mean more cooking.',
         ],
       },
+      {
+        h2: 'Mistake four: prepping food you do not actually like',
+        paragraphs: [
+          'This is the quiet one, because the food is not wrong on paper. Five containers of something merely tolerable get eaten on Monday, negotiated with on Tuesday and abandoned on Wednesday, and the abandonment feels like a failure of discipline rather than what it is - a menu problem.',
+          'The test before you cook a batch is whether you would order it. If the honest answer is no, change it now rather than after you have made seven portions. Prep is a multiplier: it makes a good week easier and a badly chosen menu considerably worse.',
+        ],
+      },
+      {
+        h2: 'Mistake five: measuring the things that do not matter',
+        paragraphs: [
+          'People weigh broccoli and pour oil by eye. It is the wrong way round - a tablespoon of olive oil is around 120 kcal and easy to double without noticing, while 50g either way on a portion of vegetables changes almost nothing. Weigh the dense things: oils, nuts, cheese, peanut butter, dry rice and pasta. Leave the rest.',
+          'The related error is tracking only the days that go well. A weekday-only picture can miss several hundred calories a day across a weekend, which is enough to flatten the whole week. If you are going to record anything, the inconvenient days are the informative ones.',
+        ],
+      },
     ],
     related: [
       { slug: 'weekly-calorie-deficit-meal-prep-uk', label: 'Weekly Calorie Deficit Meal Prep', type: 'blog' },
@@ -1028,6 +1064,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Why am I not losing weight with meal prep?', a: 'Common reasons include portions being larger than estimated, oils and sauces not being counted, weekends offsetting weekdays, or meals being so small that they trigger evening overeating.' },
       { q: 'Do I need to eat the same thing every day?', a: 'No. Repeating breakfast can help, but lunches and dinners can be varied by changing sauces, carbohydrates, vegetables, and serving styles.' },
+      {
+        q: 'Why is my meal prep not helping me lose weight?',
+        a: 'Usually one of five things: lunches too small to protect the evening, uncounted oils and dressings, boredom by midweek, food you do not really enjoy, or weekends that are never tracked. The last two are the most commonly missed.',
+      },
+      {
+        q: 'What should I actually weigh?',
+        a: 'The calorie-dense items - oil, nuts, cheese, nut butter, and rice or pasta before cooking. Vegetables barely move the total and are not worth the effort.',
+      },
     ],
   }),
 
@@ -1361,6 +1405,20 @@ export const expandedBlogPostsData = {
           'Bagged salad, microwave potatoes, tinned tomatoes, passata, frozen berries, and pre-chopped stir-fry veg are useful when time is tighter than motivation.',
         ],
       },
+      {
+        h2: 'Why volume works: energy density',
+        paragraphs: [
+          'The mechanism is energy density - calories per gram - and it matters because people tend to eat a fairly consistent weight of food rather than a consistent number of calories. Lower the density and the same satisfying plate carries far less energy.',
+          'The numbers make the point better than the theory. Roughly, 100g of cucumber is about 15 kcal, 100g of boiled potato around 80, 100g of cooked chicken breast about 165, and 100g of cheddar about 415. Water and fibre are what dilute a food; fat is what concentrates it. That is the whole idea, and it is why soups and stews outperform their dry equivalents for fullness.',
+        ],
+      },
+      {
+        h2: 'Where high-volume eating stops working',
+        paragraphs: [
+          'It is a tool for appetite, not a rule for eating. If hunger is not what is derailing your week - if the problem is evening snacking out of boredom, or drinking calories, or simply not tracking - then adding more vegetables solves nothing and can make meals a chore.',
+          'It also has a genuine downside if pushed hard: filling up on very low-density food can crowd out protein and fat, both of which you need. And it is actively unhelpful for anyone trying to eat more, which is why the advice reverses completely on a surplus. Use volume to make a deficit comfortable, not as a target in itself.',
+        ],
+      },
     ],
     related: [
       { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
@@ -1370,6 +1428,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What foods are high volume and low calorie?', a: 'Vegetables, berries, melon, potatoes, soups, salad leaves, mushrooms, courgette, cabbage, cauliflower, Greek yogurt, and lean protein meals with lots of veg.' },
       { q: 'Are potatoes good for weight loss?', a: 'They can be. Plain boiled, baked, or air-fried potatoes are filling and relatively low calorie compared with many processed carbohydrate foods.' },
+      {
+        q: 'Why do high-volume foods keep you full?',
+        a: 'Because people tend to eat a fairly consistent weight of food rather than a set number of calories. Water and fibre lower a food’s energy density, so the same size plate carries fewer calories - roughly 15 kcal per 100g for cucumber against 415 for cheddar.',
+      },
+      {
+        q: 'Can you overdo high-volume eating?',
+        a: 'Yes. Filling up on very low-calorie food can crowd out protein and fat, and it does nothing if your problem is snacking or drinks rather than hunger. It is a tool for making a deficit comfortable, not a goal.',
+      },
     ],
   }),
 
@@ -1406,6 +1472,20 @@ export const expandedBlogPostsData = {
           'This combination is also budget-friendly. Pulses, oats, frozen vegetables, and potatoes are among the cheapest foods in UK supermarkets.',
         ],
       },
+      {
+        h2: 'How much fibre, and where most people actually sit',
+        paragraphs: [
+          'UK government advice is 30g of fibre a day for adults. Average intake is well short of that - most surveys put it around 20g - so the realistic goal for most people is closing a ten gram gap rather than overhauling the diet.',
+          'Ten grams is smaller than it sounds. A tin of baked beans is around 10g on its own; a large jacket potato eaten with the skin is roughly 5g; two Weetabix about 4g; 80g of peas around 4g. Add one deliberate source to each meal and the total arrives without anyone eating a bowl of bran.',
+        ],
+      },
+      {
+        h2: 'Supplements, and why food usually wins',
+        paragraphs: [
+          'Fibre supplements do something - psyllium in particular has reasonable evidence behind it for regularity - but they supply one type of fibre in isolation. Food supplies a mixture, along with the protein, vitamins and minerals that come with beans, oats, fruit and vegetables, and it is the whole package that makes a meal filling rather than the fibre alone.',
+          'If you do increase intake, do it gradually and drink more water. Going from 20g to 35g in a day is a reliable way to feel bloated and conclude that fibre does not agree with you, when the problem was the speed rather than the food.',
+        ],
+      },
     ],
     related: [
       { slug: 'low-calorie-high-volume-foods-uk', label: 'Low Calorie High Volume Foods UK', type: 'blog' },
@@ -1415,6 +1495,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Which foods are highest in fibre?', a: 'Beans, lentils, chickpeas, oats, berries, wholegrains, vegetables, potatoes with skins, apples, pears, and high-fibre breakfast cereals are good options.' },
       { q: 'Can fibre help weight loss?', a: 'It can help appetite and meal satisfaction, which makes a calorie deficit easier to maintain. Calories still matter.' },
+      {
+        q: 'How much fibre should I eat a day?',
+        a: 'UK advice is 30g a day for adults, and average intake is around 20g. Closing that gap is roughly one deliberate source per meal - a tin of beans alone is about 10g.',
+      },
+      {
+        q: 'Are fibre supplements worth taking?',
+        a: 'Food usually wins, because it brings a mixture of fibre types plus protein and micronutrients. Supplements like psyllium have their uses, but they do not make a meal more filling the way a bowl of lentils does.',
+      },
     ],
   }),
 
@@ -1445,6 +1533,20 @@ export const expandedBlogPostsData = {
           'If you do use it, treat it like an ingredient in oats, yogurt, smoothies, or pancakes rather than a requirement for being healthy.',
         ],
       },
+      {
+        h2: 'How much you actually need',
+        paragraphs: [
+          'Commonly cited guidance for people training for muscle or protecting it in a deficit is roughly 1.6 to 2.2g per kilogram of bodyweight a day, with little evidence of benefit beyond that. For an 80kg person that is about 130 to 175g. The UK reference intake for a sedentary adult is far lower, around 0.75g per kilogram, which is a minimum to avoid deficiency rather than a target to train on.',
+          'Put like that, the number is reachable without powder for most people, but not by accident. It works out at roughly 30 to 40g per meal across three meals plus a snack, which is a chicken breast, a tin of tuna, a large pot of Greek yoghurt, or 200g of tofu with a side of beans.',
+        ],
+      },
+      {
+        h2: 'Spreading it out, and how much that matters',
+        paragraphs: [
+          'Research on protein distribution suggests muscle protein synthesis responds better to protein spread across the day than to the same total eaten mostly in the evening, with something in the region of 20 to 40g per meal often cited as the useful range. The effect is real but modest, and it should not be treated as a rule that a meal below the threshold is wasted.',
+          'The practical version is simpler: breakfast and snacks are where most people lose 40 or 50g without noticing, so fixing those closes the gap faster than adding more chicken to a dinner that already has plenty. Swap the cereal bar for yoghurt or eggs and the total moves on its own.',
+        ],
+      },
     ],
     related: [
       { slug: 'is-protein-powder-cheaper-than-food-uk', label: 'Is Protein Powder Cheaper Than Food?', type: 'blog' },
@@ -1455,6 +1557,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Can I hit protein goals without protein powder?', a: 'Yes. Use protein at every meal from chicken, eggs, fish, yogurt, cottage cheese, tofu, lentils, beans, and meat-free options.' },
       { q: 'What is the easiest powder-free breakfast?', a: 'Greek yogurt with oats and berries, eggs on toast, cottage cheese toast, or overnight oats made with yogurt are simple options.' },
+      {
+        q: 'How much protein do I need without powder?',
+        a: 'Around 1.6 to 2.2g per kilogram of bodyweight daily if you train, which is roughly 30 to 40g per meal for most people. That is a tin of tuna, a chicken breast, a large Greek yoghurt or 200g of tofu - all reachable from ordinary food.',
+      },
+      {
+        q: 'Does it matter when I eat protein?',
+        a: 'A little. Spreading it across meals appears to work slightly better than loading it into dinner, but the effect is modest. Fixing a low-protein breakfast matters far more than the timing detail.',
+      },
     ],
   }),
 
@@ -1679,6 +1789,20 @@ export const expandedBlogPostsData = {
           'Do not buy a new sauce, spice, or speciality ingredient for every recipe. Pick two flavour directions and repeat them.',
         ],
       },
+      {
+        h2: 'Check the cupboard before you write the list',
+        paragraphs: [
+          'This is the step almost everyone skips, and it is the main reason a weekly estimate and the actual till receipt disagree. Oil, spices, stock, rice, pasta, tins and sauces are usually already in, but a list generated from recipes has no way of knowing that, so it includes them and you buy a fourth jar of paprika.',
+          'Two minutes with the cupboard door open before writing the list is worth more than any amount of comparing prices. It also stops the opposite problem - assuming you have something, planning three meals around it, and discovering an empty jar on Tuesday.',
+        ],
+      },
+      {
+        h2: 'How many days should one shop cover?',
+        paragraphs: [
+          'Not seven, if it is all fresh. Salad, berries, fish and prepared vegetables realistically hold three or four days, so a single Sunday shop covering a full week guarantees that Thursday and Friday are made from something that has been sitting too long - or thrown out.',
+          'The split that works is fresh for the first half of the week and frozen or cupboard for the second. Same one shop, no mid-week top-up, and the food that has to last is the food that was designed to. It is also why the shopping lists on this site mark which items are freezer-suitable.',
+        ],
+      },
     ],
     related: [
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
@@ -1688,6 +1812,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What should be on a meal prep shopping list?', a: 'Protein, carbohydrates, vegetables, fruit, snacks, sauces, and storage basics. Write it from meals first, then ingredients.' },
       { q: 'How many meals should I shop for?', a: 'Start with five breakfasts, five lunches, and three or four dinners. Leave space for leftovers, social plans, and freezer meals.' },
+      {
+        q: 'How many days of food should one shop cover?',
+        a: 'Plan fresh ingredients for the first three or four days and frozen or cupboard ingredients for the rest. A full week of fresh food from one shop usually ends in waste around Thursday.',
+      },
+      {
+        q: 'Why does my shop cost more than the plan estimate?',
+        a: 'Mostly because the estimate assumes cupboard staples are already in. Check what you have before writing the list - oil, spices, stock and tins are the usual gap between the estimate and the receipt.',
+      },
     ],
   }),
 
@@ -2158,6 +2290,20 @@ export const expandedBlogPostsData = {
           'Check bones, skin, cooking instructions, and whether fish is raw or cooked before planning lunches.',
         ],
       },
+      {
+        h2: 'Which fish survives being cooked ahead',
+        paragraphs: [
+          'This is the part that decides whether a pescatarian week works, and it is not obvious. Oily fish - salmon, mackerel, trout - holds up well to being cooked and chilled, because the fat keeps it from drying out. Tinned fish is unaffected by definition. Firm white fish is acceptable cold and disappointing reheated, going rubbery and smelling stronger than anyone wants at a desk.',
+          'Prawns are the ones to watch. They are already cooked when you buy them chilled, so reheating cooks them a second time and they turn to rubber. Add them cold to a prepped salad or noodle bowl rather than including them in anything you plan to microwave.',
+        ],
+      },
+      {
+        h2: 'Cost and sustainability without overthinking it',
+        paragraphs: [
+          'The cheap options are also generally the sound ones. Tinned sardines, mackerel and salmon, frozen white fish and mussels are inexpensive, and the small oily fish tend to sit better on sustainability ratings than the large predatory species. The Marine Conservation Society publishes a Good Fish Guide if you want to check a specific species.',
+          'The MSC blue label is the simplest shortcut in a UK supermarket, and own-brand frozen ranges carry it more often than people expect. Beyond that, buying frozen rather than counter-fresh is the change that saves the most money for the least compromise.',
+        ],
+      },
     ],
     related: [
       { slug: 'asda-high-protein-low-cal-pesc-1800', label: 'Asda Pescatarian High Protein Plan', type: 'plan' },
@@ -2167,6 +2313,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Can pescatarian meal prep be high protein?', a: 'Yes. Use fish, prawns, eggs, Greek yogurt, cottage cheese, tofu, beans, lentils, and chickpeas across the day.' },
       { q: 'What pescatarian lunches work cold?', a: 'Tuna pasta salad, egg potato salad, salmon salad, prawn couscous, tofu noodle salad, and Greek yogurt snack boxes work well.' },
+      {
+        q: 'Which fish is best for meal prep?',
+        a: 'Salmon and other oily fish, because the fat stops them drying when chilled and reheated, plus anything tinned. Keep white fish for cold lunches and add prawns cold, since reheating cooks them twice and makes them rubbery.',
+      },
+      {
+        q: 'Is frozen fish worse than fresh for meal prep?',
+        a: 'No - it is usually frozen soon after catch, costs less and portions more cleanly. For food that will be cooked and chilled anyway, the difference on the plate is small.',
+      },
     ],
   }),
 
@@ -2197,6 +2351,20 @@ export const expandedBlogPostsData = {
           'Batch cooking helps because you control the ingredients. Label containers clearly if the household also stores gluten-containing foods.',
         ],
       },
+      {
+        h2: 'Coeliac disease is not the same as avoiding gluten',
+        paragraphs: [
+          'Coeliac disease is an autoimmune condition in which gluten damages the lining of the small intestine. It is not an intolerance or a preference, and it requires strict, lifelong avoidance rather than the broadly gluten-free approach that suits someone who simply feels better on less bread.',
+          'One thing genuinely matters before changing anything: if you suspect coeliac disease, do not remove gluten from your diet before being tested. The NHS tests look for the antibody response gluten produces, so cutting it out first can produce a false negative and delay a diagnosis by months. Speak to a GP while still eating gluten.',
+        ],
+      },
+      {
+        h2: 'Where gluten hides in a prepped week',
+        paragraphs: [
+          'Not in the obvious places. The recurring offenders are stock cubes, gravy granules, soy sauce, curry pastes, ready-made spice mixes, and the flour used to thicken sauces - all things you add once and then repeat across every portion you cooked. That is the specific risk of batch cooking: one contaminated ingredient reaches seven meals rather than one.',
+          'Oats are the other case worth understanding. Oats do not contain gluten themselves, but standard UK oats are usually milled alongside wheat, so anyone needing strict avoidance should buy oats explicitly labelled gluten-free. Processed meat products, some crisps and most breaded or battered foods are also worth checking rather than assuming.',
+        ],
+      },
     ],
     related: [
       { slug: 'generic-uk-supermarket-meal-plan', label: 'Generic UK Supermarket Meal Plan', type: 'blog' },
@@ -2206,6 +2374,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What meal prep foods are naturally gluten-free?', a: 'Rice, potatoes, eggs, plain meat, fish, tofu, beans, lentils, chickpeas, fruit, vegetables, and many plain dairy foods can be suitable, subject to labels and cross-contamination.' },
       { q: 'Are oats gluten-free?', a: 'Only certified gluten-free oats are suitable for people who need strict gluten avoidance. Standard oats may not be appropriate.' },
+      {
+        q: 'Should I stop eating gluten if I think I have coeliac disease?',
+        a: 'No - see a GP first. Testing looks for the immune response to gluten, so removing it beforehand can produce a false negative and delay diagnosis. Keep eating normally until you have been tested.',
+      },
+      {
+        q: 'What is the biggest gluten risk when batch cooking?',
+        a: 'Sauces and seasonings - stock cubes, soy sauce, curry pastes and thickeners. Because they go into a whole batch, a single unchecked ingredient reaches every portion rather than one meal.',
+      },
     ],
   }),
 
@@ -2243,6 +2419,20 @@ export const expandedBlogPostsData = {
           'Freeze single portions for nights when one person is late, someone has training, or plans change at the last minute.',
         ],
       },
+      {
+        h2: 'Feeding people who want different things',
+        paragraphs: [
+          'The component approach is what stops this becoming two dinners. Cook the base plain, then let the table finish it: chilli with the heat added at the end, a traybake where the sauce goes on individual plates, rice and a protein with three bowls of toppings. One pan, several acceptable outcomes.',
+          'It also helps to be realistic about children and new food. Repeated, low-pressure exposure is what tends to work, and a child refusing something on Tuesday is not a reason to stop serving it - or to cook a separate meal, which teaches that refusing produces a better option. Serving one component you know they will eat alongside the rest is usually enough.',
+        ],
+      },
+      {
+        h2: 'Where a family food budget actually leaks',
+        paragraphs: [
+          'Rarely on the big shop. It goes on the mid-week top-up, which is where an unplanned trip for milk turns into fifteen pounds, and on food thrown away because it was bought hopefully rather than against a plan. WRAP has consistently found UK households throw away a large share of the food they buy, and families with young children waste more than most.',
+          'The other leak is lunches bought out because nothing was ready. That is the one meal prep genuinely fixes, and it is worth prioritising over cooking elaborate dinners: five bought lunches a week costs more than most families spend on an entire evening meal.',
+        ],
+      },
     ],
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
@@ -2251,6 +2441,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'How can families meal prep cheaply?', a: 'Batch cook flexible bases, use frozen veg and pulses, stretch meat with beans or lentils, and repeat breakfasts and lunches where possible.' },
       { q: 'What family meals freeze well?', a: 'Chilli, bolognese, curry, soup, stew, cooked mince, pulled chicken, and pasta sauce freeze well.' },
+      {
+        q: 'How do I meal prep for fussy eaters without cooking twice?',
+        a: 'Cook components rather than finished dishes and let people assemble. Keep one element plain, add sauce and spice at the table, and serve something familiar alongside anything new rather than making a separate meal.',
+      },
+      {
+        q: 'What saves the most money for a family?',
+        a: 'Cutting the mid-week top-up shop and cutting waste, in that order - both usually beat switching brands. After that, having lunches ready, since bought lunches are the single most expensive habit in most weeks.',
+      },
     ],
   }),
 
@@ -2482,6 +2680,20 @@ export const expandedBlogPostsData = {
           'If your weight is stable and you want a controlled surplus, try 3000 calories first for two to three weeks and watch the trend. If weight still will not move and adherence is good, move up to 3500 calories.',
         ],
       },
+      {
+        h2: 'What 500 calories looks like on a plate',
+        paragraphs: [
+          'Abstractly it sounds like a lot. Concretely it is around 100g of oats with 300ml of whole milk, or two tablespoons of olive oil over the day, or a large handful of nuts and a banana. It is one addition to a day rather than a redesign of it, which is why moving between the two targets is less dramatic than the numbers suggest.',
+          'That also explains why the step up is easy to make by accident. If you are not weighing the dense additions - oil, nut butter, cheese, granola - the difference between a 3,000 and a 3,500 kcal day can be a couple of unmeasured spoonfuls.',
+        ],
+      },
+      {
+        h2: 'The measurement problem behind most of these decisions',
+        paragraphs: [
+          'People are consistently poor at estimating their own intake, and studies of self-reported eating have long found substantial under-reporting - often in the region of 20 to 30 per cent. That cuts both ways at high targets: someone convinced they are eating 3,000 may be nearer 2,400, which is why the weight has not moved.',
+          'The practical consequence is to distrust the plan number before distrusting the target. Weigh the dense items for a week, log honestly including the days that go badly, and only then decide whether 3,000 has genuinely failed. Moving to 3,500 on top of a 500 calorie logging gap simply makes the gap harder to see.',
+        ],
+      },
     ],
     related: [
       { path: '/meal-plans/3000-calorie', label: '3000 Calorie Meal Plans', type: 'guide' },
@@ -2491,6 +2703,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Is 3500 calories too much?', a: 'It can be too much for many people. It is mainly useful for high energy needs, heavy training or deliberate weight gain when lower targets are not enough.' },
       { q: 'Can I print a 3000 or 3500 calorie plan?', a: 'Yes. Open a matching plan and use the export or print PDF section to save the full week and shopping list.' },
+      {
+        q: 'What does the extra 500 calories actually look like?',
+        a: 'Roughly 100g of oats with 300ml of whole milk, two tablespoons of olive oil across the day, or a large handful of nuts with a banana. One addition rather than a redesigned day.',
+      },
+      {
+        q: 'How do I know if 3,000 is really not enough?',
+        a: 'Check the logging before changing the target. Under-reporting of 20 to 30 per cent is common, so weigh the dense items for a week and include the days that go badly. Many people who think 3,000 has failed were not eating 3,000.',
+      },
     ],
   }),
 };
