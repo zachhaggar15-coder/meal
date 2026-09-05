@@ -643,6 +643,51 @@
       "source": "/blog/budget-vs-premium-meal-prep-containers",
       "destination": "/blog/best-meal-prep-containers-uk",
       "permanent": true
+    },
+    {
+      "source": "/blog/best-kitchen-scales-for-meal-prep-uk",
+      "destination": "/blog/meal-prep-equipment-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-blender-for-meal-prep-smoothies-uk",
+      "destination": "/blog/meal-prep-equipment-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-meal-prep-cookbooks-uk",
+      "destination": "/blog/meal-prep-equipment-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/vacuum-sealer-meal-prep-uk",
+      "destination": "/blog/meal-prep-equipment-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-air-fryer-accessories-for-meal-prep-uk",
+      "destination": "/blog/meal-prep-equipment-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-protein-shakers-uk",
+      "destination": "/blog/meal-prep-equipment-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/sunday-meal-prep-routine-uk",
+      "destination": "/blog/batch-cooking-for-beginners-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/freezer-meal-prep-for-beginners-uk",
+      "destination": "/blog/batch-cooking-for-beginners-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/one-pan-meal-prep-uk",
+      "destination": "/blog/batch-cooking-for-beginners-uk",
+      "permanent": true
     }
   ]
 }

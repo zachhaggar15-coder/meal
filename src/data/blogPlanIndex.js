@@ -144,22 +144,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Low Effort",
     "calories": 1500
   },
-  "best-air-fryer-accessories-for-meal-prep-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
-  "best-blender-for-meal-prep-smoothies-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
   "best-cheap-high-protein-foods-uk": {
     "planSlug": "aldi-high-protein-meal-plan",
     "title": "Aldi High Protein Meal Plan — 140-170g Protein, £35-45/week",
@@ -185,14 +169,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "best-high-protein-meal-delivery-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
-  "best-kitchen-scales-for-meal-prep-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -232,23 +208,7 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
-  "best-meal-prep-cookbooks-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
   "best-meal-prep-delivery-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
-  "best-protein-shakers-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -441,14 +401,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "freezer-labels-for-meal-prep-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
-  "freezer-meal-prep-for-beginners-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -808,6 +760,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "meal-prep-equipment-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "meal-prep-for-beginners-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -935,14 +895,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goal": "busy-professional",
     "goalLabel": "Busy Professional",
     "calories": 1800
-  },
-  "one-pan-meal-prep-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
   },
   "one-pot-high-protein-meals-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
@@ -1080,14 +1032,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
-  "sunday-meal-prep-routine-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
   "tesco-clubcard-meal-prep-uk": {
     "planSlug": "tesco-high-protein-low-cal-1500",
     "title": "Tesco High-Protein Low Calorie Plan — 1,500 kcal",
@@ -1110,14 +1054,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "supermarket": "tesco",
     "goal": "weight-loss",
     "goalLabel": "Weight Loss",
-    "calories": 1500
-  },
-  "vacuum-sealer-meal-prep-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
   "vegan-high-protein-meal-ideas-uk": {

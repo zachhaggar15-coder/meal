@@ -464,7 +464,7 @@ export const blogPostsBatch4Data = {
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One-Pan Meal Prep UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
     ],
     faq: [
@@ -625,7 +625,7 @@ export const blogPostsBatch4Data = {
     related: [
       { slug: 'protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge and Yogurt Breakfasts UK', type: 'blog' },
       { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
-      { slug: 'best-blender-for-meal-prep-smoothies-uk', label: 'Best Blender for Meal Prep Smoothies UK', type: 'blog' },
+      { slug: 'meal-prep-equipment-uk', label: 'Meal Prep Equipment UK', type: 'blog' },
       { slug: 'protein-meal-prep-without-powder-uk', label: 'Protein Meal Prep Without Powder UK', type: 'blog' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
     ],

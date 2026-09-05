@@ -14,27 +14,6 @@ const planFinderLinks = [
   },
 ];
 
-const containerLinks = [
-  {
-    parts: [
-      { text: 'Start with the ' },
-      { label: 'best meal prep containers hub', to: '/meal-prep-containers' },
-      { text: ' for the quick comparison, then use the detailed guides below.' },
-    ],
-  },
-  {
-    parts: [
-      { text: 'For product comparisons, see the ' },
-      { label: 'budget container guide', to: '/meal-prep-containers/budget' },
-      { text: ', ' },
-      { label: 'mid range container guide', to: '/meal-prep-containers/mid-range' },
-      { text: ' and ' },
-      { label: 'premium container guide', to: '/meal-prep-containers/premium' },
-      { text: '.' },
-    ],
-  },
-];
-
 // Commercial routes for the reader who has finished deciding and wants to start
 // prepping. These sit *alongside* planFinderLinks rather than replacing it: the
 // calorie and protein guides earn their traffic on informational queries, so the
@@ -91,13 +70,6 @@ const freezerKitLink = {
     { text: '.' },
   ],
 };
-
-const guideRelated = [
-  { slug: 'best-meal-prep-containers-hub', path: '/meal-prep-containers', label: 'Best Meal Prep Containers UK', type: 'guide' },
-  { slug: 'budget-meal-prep-containers-guide', path: '/meal-prep-containers/budget', label: 'Budget Meal Prep Containers', type: 'guide' },
-  { slug: 'mid-range-meal-prep-containers-guide', path: '/meal-prep-containers/mid-range', label: 'Mid Range Meal Prep Containers', type: 'guide' },
-  { slug: 'premium-meal-prep-containers-guide', path: '/meal-prep-containers/premium', label: 'Premium Meal Prep Containers', type: 'guide' },
-];
 
 const weightRelated = [
   { slug: 'how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit', type: 'blog' },
@@ -652,7 +624,8 @@ export const expandedBlogPostsData = {
     title: '1200 Calorie Meal Plan UK: Simple Low Calorie Day Ideas',
     description: 'A practical 1200 calorie meal plan UK guide with filling meal ideas, safety notes, supermarket staples and better options for most adults.',
     h1: '1200 Calorie Meal Plan UK',
-    intro: 'A 1200 calorie day is a very low target for many adults, so it needs to be handled carefully. This guide is for people who have already chosen that target and want a realistic UK supermarket structure rather than tiny meals that collapse by 4pm.',
+    intro:
+      '1,200 kcal is the most searched calorie target in the UK and one of the least appropriate for most adults. It sits at or below the level often used as a clinical threshold, it makes hitting protein, fibre and micronutrients genuinely difficult, and it is the target people abandon fastest. This page explains what a 1,200 kcal day actually looks like, who it might suit, and why the plans on this site start at 1,400.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
     contextualLinks: [portionSizeLink, ...planFinderLinks],
     toolRecommendations: {
@@ -700,6 +673,18 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Is 1200 calories enough for weight loss?', a: 'It creates a deficit for many adults, but it is too low for others. Smaller, less active adults may tolerate it; active people usually need more food to protect energy, training, and adherence.' },
       { q: 'What should I eat on 1200 calories?', a: 'Prioritise lean protein, high-fibre carbohydrates, vegetables, fruit, and measured fats. Avoid spending too many calories on drinks, oils, sauces, and snacks that do not fill you up.' },
+      {
+        q: 'Are there 1,200 calorie meal plans on this site?',
+        a: 'No, deliberately. The plan library starts at 1,400 kcal because below that it becomes hard to build a week that reaches sensible protein and fibre from ordinary supermarket food. If you want the lowest targets available here, the low-calorie hub is the place to start.',
+      },
+      {
+        q: 'Is 1,200 calories a day safe?',
+        a: 'It is a very low intake for most adults and is not something to adopt casually or for long. Under-eating at this level is associated with poor adherence and nutrient shortfalls, and it is a level normally used with clinical supervision. If you think you need to be this low, that is a conversation with a GP or dietitian rather than a website.',
+      },
+      {
+        q: 'What should I do instead?',
+        a: 'For most people, a smaller deficit held for longer beats a large one abandoned in week three. 1,500 or 1,800 kcal will produce steady loss for many adults and leaves room to eat properly while doing it.',
+      },
     ],
   }),
 
@@ -997,7 +982,7 @@ export const expandedBlogPostsData = {
     ],
     related: [
       { slug: 'weight-loss-meal-prep-mistakes-uk', label: 'Weight Loss Meal Prep Mistakes UK', type: 'blog' },
-      { slug: 'sunday-meal-prep-routine-uk', label: 'Sunday Meal Prep Routine UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       ...weightRelated,
     ],
     faq: [
@@ -1083,8 +1068,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners', type: 'blog' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One Pan Meal Prep UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       ...weightRelated,
     ],
     faq: [
@@ -1474,58 +1458,6 @@ export const expandedBlogPostsData = {
     ],
   }),
 
-  'sunday-meal-prep-routine-uk': post({
-    title: 'Sunday Meal Prep Routine UK',
-    description: 'A realistic Sunday meal prep routine for UK shoppers: plan meals, batch cook lunches, prepare breakfasts and store food safely.',
-    h1: 'Sunday Meal Prep Routine UK',
-    intro: 'Sunday meal prep does not need to mean cooking all day. A good routine gives you weekday breakfasts, lunches, and two dinner bases in about 90 minutes, with enough flexibility that you do not resent the fridge by Thursday.',
-    affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: [containerBuyingLink, ...planFinderLinks],
-    toolRecommendations: {
-      title: 'What a 90 minute session actually needs',
-      intro: 'A slow cooker doing one dinner base unattended is what frees the hob for everything else. The scale is for the portioning at the end.',
-      productIds: ['crockpot-3-5l-red', 'salter-arc-scale'],
-    },
-    sections: [
-      {
-        h2: 'The 90-minute routine',
-        paragraphs: [
-          'Start with the longest item: rice, potatoes, chilli, curry, or a traybake. While that cooks, prep breakfast pots, chop salad items, boil eggs, and portion snacks.',
-          'Do not cook seven different meals. Pick one breakfast, one lunch base, and two dinners. Repetition is useful; total sameness is optional.',
-        ],
-        numbered: [
-          'Check the fridge and write meals before shopping.',
-          'Cook one protein and one carbohydrate in bulk.',
-          'Prepare breakfast pots or easy grab-and-go options.',
-          'Portion lunches into containers before cleaning up.',
-          'Freeze any food you will not eat within the safe fridge window.',
-        ],
-      },
-      {
-        h2: 'What to prep first',
-        paragraphs: [
-          'Prep the meal that usually causes the most expensive decision. For many people that is lunch. If lunch is ready, the meal deal, bakery, or takeaway becomes less tempting.',
-          'Breakfast is next because it is easy to automate. Overnight oats, yogurt bowls, boiled eggs, and fruit cover most busy mornings.',
-        ],
-      },
-      {
-        h2: 'Storage rhythm',
-        paragraphs: [
-          'Refrigerate only what you will eat within two days and freeze the rest straight away — that is a safety limit, not a freshness preference. Cool cooked food quickly and get it into the fridge within one to two hours, store it covered, and reheat until piping hot right through.',
-          'Label freezer tubs with the meal and date. This tiny habit prevents the mysterious frozen block problem.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely', type: 'blog' },
-      { slug: 'five-day-work-lunch-meal-prep-uk', label: 'Five Day Work Lunch Meal Prep', type: 'blog' },
-      ...mealPrepRelated,
-    ],
-    faq: [
-      { q: 'How long should Sunday meal prep take?', a: 'A practical routine can take 60 to 120 minutes. Keep it simple: one breakfast, one lunch base, and one or two dinners.' },
-      { q: 'Should I prep all seven days?', a: 'Usually no. Prep the workweek first and freeze extra portions if you cook more than you can safely eat from the fridge.' },
-    ],
-  }),
 
   'five-day-work-lunch-meal-prep-uk': post({
     title: 'Five Day Work Lunch Meal Prep UK',
@@ -1583,60 +1515,6 @@ export const expandedBlogPostsData = {
     ],
   }),
 
-  'freezer-meal-prep-for-beginners-uk': post({
-    title: 'Freezer Meal Prep for Beginners UK',
-    description: 'Freezer meal prep guide for UK beginners with batch-cook recipes, storage tips, containers, labels and reheating advice.',
-    h1: 'Freezer Meal Prep for Beginners UK',
-    intro: 'Freezer meal prep is the quiet hero of eating well. It gives you a backup dinner when plans fall apart and stops batch cooking from becoming a race against the fridge.',
-    affiliateDisclosure: AFFILIATE_DISCLOSURE,
-    contextualLinks: [freezerKitLink, ...planFinderLinks],
-    toolRecommendations: {
-      title: 'Freezing well costs less than most people assume',
-      intro: 'Reusable bags that freeze flat and a roll of labels solve the two real problems: wasted space and unidentifiable tubs. A vacuum sealer is worth it only if you freeze meat in bulk.',
-      productIds: ['moonmoon-silicone-bags', 'nuoshen-removable-food-labels', 'foodsaver-everyday'],
-    },
-    sections: [
-      {
-        h2: 'Meals that freeze well',
-        paragraphs: [
-          'Chilli, curry, bolognese, lentil dhal, soups, stews, cooked mince, pulled chicken, and tomato-based sauces usually freeze well. Rice, pasta, and potatoes can freeze too, but texture varies.',
-          'Avoid freezing delicate salads, creamy sauces that split, and crunchy toppings. Add fresh herbs, yogurt, salad, and crispy bits after reheating.',
-        ],
-      },
-      {
-        h2: 'How to freeze meals properly',
-        paragraphs: [
-          'Cool food quickly, portion it into containers, label it with the name and date, and freeze once it is no longer hot. Smaller portions cool faster and are easier to defrost.',
-          'Leave headroom in containers for liquid meals because food expands as it freezes. For soups and chilli, twist-lid tubs or reliable clip-lock containers are useful.',
-        ],
-        numbered: [
-          'Cook the batch meal.',
-          'Cool it quickly in shallow portions.',
-          'Label the container before freezing.',
-          'Defrost safely before reheating where appropriate.',
-          'Reheat until piping hot before serving.',
-        ],
-      },
-      {
-        h2: 'Build a freezer buffer',
-        paragraphs: [
-          'You do not need a freezer full of identical meals. Aim for six to ten portions across two or three recipes. That gives you options without losing track of what is in there.',
-          'Rotate older meals to the front. If something has been ignored for weeks, plan it into next week before buying more ingredients.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
-      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely', type: 'blog' },
-      { slug: 'freezer-bags-meal-prep-guide', path: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep UK', type: 'guide' },
-      { slug: 'vacuum-sealer-meal-prep-uk', label: 'Vacuum Sealer Meal Prep UK', type: 'blog' },
-      ...mealPrepRelated,
-    ],
-    faq: [
-      { q: 'What meal prep freezes best?', a: 'Chilli, curry, soup, stew, bolognese, dhal, cooked mince, pulled chicken, and tomato-based sauces are good beginner choices.' },
-      { q: 'Do I need special freezer containers?', a: 'No, but containers should be freezer-safe, seal well, and leave headroom for expansion. Labels are more important than people expect.' },
-    ],
-  }),
 
   'meal-prep-without-a-microwave-uk': post({
     title: 'Meal Prep Without a Microwave UK',
@@ -1679,6 +1557,20 @@ export const expandedBlogPostsData = {
           'Dressings can travel in small sealed pots. It improves texture and reduces the risk of leaks.',
         ],
       },
+      {
+        h2: 'Cold food is a format, not a compromise',
+        paragraphs: [
+          'The trap is imagining a hot meal eaten cold, which is grim. What works is food designed to be cold: grain salads that improve after a night in dressing, frittata, cold roast chicken, pasta salad, rice bowls with something sharp, tinned fish with beans. These are not consolation lunches - several of them are better cold than hot.',
+          'The structural difference is dressing. Hot food carries its own flavour through steam and fat; cold food does not, so it needs acid and salt to taste like anything. A grain bowl that tastes flat is almost always under-dressed rather than badly cooked.',
+        ],
+      },
+      {
+        h2: 'When you want something hot anyway',
+        paragraphs: [
+          'A preheated insulated flask solves this properly and is the only thing that does. Fill it with boiling water for five minutes, tip it out, then add food that is already hot and fill it to the top - a half-full flask has a volume of air to keep warm and loses. Stew, curry, soup, chilli and porridge all travel well this way.',
+          'What does not work is anything that keeps absorbing or is meant to be crisp. Pasta softens through the morning and breaded food turns to steam-damp coating, so those belong in the cold-format list instead.',
+        ],
+      },
     ],
     related: [
       { slug: 'high-protein-lunches-for-work-uk', label: 'High Protein Work Lunches', type: 'blog' },
@@ -1688,6 +1580,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What can I meal prep without a microwave?', a: 'Pasta salad, couscous bowls, wraps, bagels, noodle salads, egg potato salad, tofu boxes, and snack plates all work well cold.' },
       { q: 'How do I keep cold lunches fresh?', a: 'Use an insulated lunch bag, ice pack, sealed containers, and keep dressings separate until eating.' },
+      {
+        q: 'What can I take to work with no microwave and no fridge?',
+        a: 'An insulated bag with an ice pack covers the fridge problem for a normal working day. For the food itself, choose formats built to be eaten cold - grain salads, frittata, cold chicken, tinned fish and beans - rather than hot meals eaten cold.',
+      },
+      {
+        q: 'Do insulated flasks actually keep food hot until lunch?',
+        a: 'Yes, if you preheat with boiling water for five minutes first and fill the flask completely. Almost every complaint about a lukewarm flask traces back to skipping the preheat.',
+      },
     ],
   }),
 
@@ -1731,7 +1631,7 @@ export const expandedBlogPostsData = {
     ],
     related: [
       { slug: 'low-effort-meal-plan-uk', label: 'Low Effort Meal Plan', type: 'meal-plan' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One Pan Meal Prep UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       ...mealPrepRelated,
     ],
     faq: [
@@ -1740,52 +1640,6 @@ export const expandedBlogPostsData = {
     ],
   }),
 
-  'one-pan-meal-prep-uk': post({
-    title: 'One Pan Meal Prep UK',
-    description: 'One pan meal prep ideas for UK kitchens, including traybakes, stir-fries, chilli, pasta, curry and low-washing-up batch cooking.',
-    h1: 'One Pan Meal Prep UK',
-    intro: 'One pan meal prep is for people who want food sorted but do not want the kitchen to look like a cookware sale. The best recipes cook protein, vegetables, and a carbohydrate with minimal washing up.',
-    // Links only. This page is about cooking method, not kit, so its next-step
-    // CTA stays on the plan finder.
-    contextualLinks: [containerBuyingLink, ...planFinderLinks],
-    sections: [
-      {
-        h2: 'Best one pan formats',
-        paragraphs: [
-          'Traybakes, chilli, curry, pasta, stir-fries, frittata, and one-pot rice dishes are the most useful formats. They scale well and are easy to portion.',
-          'Choose sturdy ingredients. Chicken thighs, turkey mince, tofu, sausages, chickpeas, potatoes, peppers, onions, carrots, broccoli, and frozen vegetables all cope well with batch cooking.',
-        ],
-      },
-      {
-        h2: 'Three easy examples',
-        paragraphs: [
-          'A chicken traybake can use chicken thighs, potatoes, peppers, onions, spices, and a yogurt sauce after cooking. A turkey chilli can use mince, beans, tomatoes, peppers, and rice on the side. A tofu stir-fry can use tofu, frozen veg, noodles, soy, ginger, and chilli.',
-          'These are not complicated recipes; that is the point. Meal prep should be repeatable on a tired Sunday.',
-        ],
-        bullets: [
-          'Traybake: protein plus potatoes plus vegetables.',
-          'One-pot: mince or lentils plus tomatoes plus beans.',
-          'Stir-fry: protein plus frozen veg plus noodles or rice.',
-        ],
-      },
-      {
-        h2: 'Make one pan meals less samey',
-        paragraphs: [
-          'Change the sauce rather than the whole recipe. The same chicken and vegetables can become peri-peri, fajita, curry, lemon herb, or garlic paprika.',
-          'Keep a few sauces in the cupboard: soy sauce, salsa, curry paste, mustard, hot sauce, stock cubes, vinegar, and spice blends.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'low-calorie-dinners-for-meal-prep-uk', label: 'Low Calorie Dinners for Meal Prep', type: 'blog' },
-      { slug: 'healthy-ready-meal-alternatives-uk', label: 'Healthy Ready Meal Alternatives', type: 'blog' },
-      ...mealPrepRelated,
-    ],
-    faq: [
-      { q: 'What can I meal prep in one pan?', a: 'Traybakes, chilli, curry, stir-fries, frittata, one-pot rice dishes, and pasta bakes are good one pan options.' },
-      { q: 'Is one pan meal prep good for weight loss?', a: 'Yes, if portions are controlled and meals include protein, vegetables, and measured carbohydrates or fats.' },
-    ],
-  }),
 
   'meal-prep-shopping-list-template-uk': post({
     title: 'Meal Prep Shopping List Template UK',
@@ -1877,15 +1731,37 @@ export const expandedBlogPostsData = {
           'Some foods are better eaten cold by design. Pasta salad, couscous, egg potato salad, and noodle boxes can be safer and nicer than pretending every lunch needs reheating.',
         ],
       },
+      {
+        h2: 'The numbers the guidance actually gives',
+        paragraphs: [
+          'Cool cooked food quickly and get it into the fridge within two hours - splitting a large batch into shallow portions is the fastest way to do that, because a full pot cools from the outside in and can sit warm in the middle for a long time. Keep the fridge at 5C or below, which is colder than many fridges are actually running; a cheap fridge thermometer settles the question.',
+          'For most cooked leftovers, NHS and Food Standards Agency guidance is to eat them within two days. Reheat until piping hot the whole way through, and only reheat once. That two-day figure is the one that catches meal preppers out, because a Sunday cook aimed at Friday is well past it - which is what the freezer is for.',
+        ],
+      },
+      {
+        h2: 'Rice is the exception worth knowing',
+        paragraphs: [
+          'Cooked rice carries a specific risk that other leftovers do not. Bacillus cereus spores survive cooking and multiply if rice is left at room temperature, and reheating does not undo the toxin they produce. The advice is to cool rice as quickly as possible, ideally within an hour, refrigerate it, and use it within a day.',
+          'In practice that means spreading it out to cool rather than leaving the pan on the hob, and treating a big batch of rice differently from a big batch of chilli. If a rice-based week is the plan, freezing portions on the day of cooking is safer and works perfectly well.',
+        ],
+      },
     ],
     related: [
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
       ...mealPrepRelated,
     ],
     faq: [
       { q: 'How long does meal prep last in the fridge?', a: 'It depends on the food and storage. If you are unsure about later-week portions, freeze them and reheat when needed.' },
       { q: 'Should hot food go straight in the fridge?', a: 'Cool cooked food quickly in shallow portions, then refrigerate once it is no longer hot. Do not leave it sitting out for hours.' },
+      {
+        q: 'How long does meal prep last in the fridge?',
+        a: 'Around two days for most cooked leftovers under NHS and FSA guidance, and about one day for cooked rice. Anything intended for later in the week belongs in the freezer rather than the fridge.',
+      },
+      {
+        q: 'Can I reheat meal prep more than once?',
+        a: 'No - reheat once only. Portion before storing rather than reheating a large container and putting the rest back, which is the usual way people end up reheating twice without meaning to.',
+      },
     ],
   }),
 
@@ -2059,7 +1935,7 @@ export const expandedBlogPostsData = {
     related: [
       { slug: 'iceland-weight-loss-1500', label: 'Iceland Weight Loss Plan', type: 'plan' },
       { slug: 'iceland-high-protein-low-cal-1800', label: 'Iceland High Protein Plan', type: 'plan' },
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
     ],
     faq: [
       { q: 'Can you meal prep from Iceland?', a: 'Yes, and the bagged frozen format suits it better than most supermarkets. Build the plan on bagged raw protein and frozen vegetables, then buy short-life fresh basics — eggs, yogurt, salad, fruit — elsewhere.' },
@@ -2370,7 +2246,6 @@ export const expandedBlogPostsData = {
     ],
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners', type: 'blog' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
     ],
     faq: [
@@ -2413,6 +2288,20 @@ export const expandedBlogPostsData = {
           'Keep a backup meal in the freezer or work fridge if possible. Night shifts are exactly when a backup matters most.',
         ],
       },
+      {
+        h2: 'Eat to the shift, not to the clock',
+        paragraphs: [
+          'The useful reframe is to treat the start of your shift as breakfast rather than trying to map three daytime meals onto a night. That gives you a proper meal before or early in the shift, something lighter in the small hours, and a light meal before sleep rather than a heavy one that makes sleeping harder.',
+          'The three-in-the-morning stretch is where plans fail, because appetite is low, judgement is worse and the vending machine is close. That is the meal worth prepping most carefully - something you will actually want at that hour, already portioned, rather than whatever seems appealing on the night.',
+        ],
+      },
+      {
+        h2: 'What to eat before sleeping',
+        paragraphs: [
+          'Something small and mostly carbohydrate with a little protein works better than a full meal, which is harder to sleep on, and better than nothing, which tends to wake you early and hungry. Toast with yoghurt, porridge, or a small bowl of leftovers is about right.',
+          'Caffeine is the other lever and the one people misjudge. It has a long half-life, so a coffee at four in the morning is still measurably in your system when you are trying to sleep at nine. Front-load caffeine into the first half of the shift and stop well before the end; the last few hours are better handled with food, water and light than with another cup.',
+        ],
+      },
     ],
     related: [
       { slug: 'busy-professional-meal-plan-uk', label: 'Busy Professional Meal Plan', type: 'meal-plan' },
@@ -2422,6 +2311,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What should I eat on night shift?', a: 'Plan a pre-shift meal, a main packed meal, and protein-rich snacks. Choose foods that travel well and do not rely on perfect kitchen facilities.' },
       { q: 'Should I eat after a night shift?', a: 'Some people prefer a light snack before sleep, others do not need it. Avoid forcing a heavy meal if it disrupts sleep.' },
+      {
+        q: 'When should I eat on a night shift?',
+        a: 'Treat the shift start as breakfast, eat something lighter in the small hours, and keep the pre-sleep meal small. Mapping three daytime meals onto a night is what usually leaves people either overfull or raiding a vending machine at three.',
+      },
+      {
+        q: 'Should I eat before sleeping after a night shift?',
+        a: 'Something small helps - toast, porridge or yoghurt. A full meal makes sleep harder and nothing at all tends to wake you early. Stop caffeine well before the end of the shift, since it lingers for hours.',
+      },
     ],
   }),
 

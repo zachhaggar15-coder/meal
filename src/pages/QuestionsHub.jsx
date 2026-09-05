@@ -50,7 +50,7 @@ const CLUSTERS = [
       { q: 'How long does meal prep actually last in the fridge?', to: '/blog/how-to-store-meal-prep-safely-uk' },
       { q: 'Is it safe to reheat rice that has been in the fridge?', to: '/blog/chicken-and-rice-meal-prep-uk' },
       { q: 'Can you meal prep without freezing anything?', to: '/blog/how-to-store-meal-prep-safely-uk' },
-      { q: 'What foods freeze well for meal prep?', to: '/blog/freezer-meal-prep-for-beginners-uk' },
+      { q: 'What foods freeze well for meal prep?', to: '/blog/batch-cooking-for-beginners-uk' },
       { q: 'How many meal prep containers do I actually need?', to: '/tools#container-count-calculator' },
     ],
   },
@@ -60,8 +60,8 @@ const CLUSTERS = [
       { q: 'What is the best way to start batch cooking?', to: '/blog/batch-cooking-for-beginners-uk' },
       { q: 'Can I batch cook using a slow cooker?', to: '/blog/slow-cooker-meal-prep-uk' },
       { q: 'What is the easiest way to batch cook rice for the week?', to: '/blog/rice-cooker-meal-prep-uk' },
-      { q: 'What does a good Sunday meal prep routine look like?', to: '/blog/sunday-meal-prep-routine-uk' },
-      { q: 'Can I batch cook in one pan to save on washing up?', to: '/blog/one-pan-meal-prep-uk' },
+      { q: 'What does a good Sunday meal prep routine look like?', to: '/blog/batch-cooking-for-beginners-uk' },
+      { q: 'Can I batch cook in one pan to save on washing up?', to: '/blog/batch-cooking-for-beginners-uk' },
     ],
   },
   {
@@ -89,9 +89,9 @@ const CLUSTERS = [
     questions: [
       { q: 'What containers do I actually need to start meal prepping?', to: '/meal-prep-containers' },
       { q: 'Is glass or plastic better for meal prep containers?', to: '/blog/best-meal-prep-containers-uk' },
-      { q: 'Do I really need a food scale for meal prep?', to: '/blog/best-kitchen-scales-for-meal-prep-uk' },
-      { q: 'Is a vacuum sealer worth it for meal prep?', to: '/blog/vacuum-sealer-meal-prep-uk' },
-      { q: 'Are there any meal prep cookbooks worth buying?', to: '/blog/best-meal-prep-cookbooks-uk' },
+      { q: 'Do I really need a food scale for meal prep?', to: '/blog/meal-prep-equipment-uk' },
+      { q: 'Is a vacuum sealer worth it for meal prep?', to: '/blog/meal-prep-equipment-uk' },
+      { q: 'Are there any meal prep cookbooks worth buying?', to: '/blog/meal-prep-equipment-uk' },
     ],
   },
   {

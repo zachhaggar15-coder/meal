@@ -162,6 +162,20 @@ export const prepKitBlogPostsData = {
           'Buy slim ice packs first. They are the easiest to use with real containers, and they make insulated lunch bags more useful without making them awkward to carry.',
         ],
       },
+      {
+        h2: 'What an ice pack does, and what it does not',
+        paragraphs: [
+          'It slows warming. It does not hold food at a safe temperature, and no manufacturer can promise that it will, because the outcome depends on how long the bag is out, how warm the room is and how full the bag is. The Food Standards Agency point to keeping chilled food at 5C or below and getting perishable food back into refrigeration promptly; an ice pack buys time towards that rather than replacing it.',
+          'The practical reading is simple. A short commute to an office fridge needs very little. A bag that sits under a desk from eight until one, in a warm room, is where cooling actually matters - and that is also where people tend to assume the pack is doing more than it is.',
+        ],
+      },
+      {
+        h2: 'Why they fail in practice',
+        paragraphs: [
+          'Three reasons, and none is the pack itself. It went in the bag not fully frozen, because it was refrozen that morning rather than the night before. It was packed on top of the food instead of against it, so the cold sat above the thing that needed chilling. Or it had a hairline crack and leaked, which is worth checking for every few weeks since the gel is unpleasant to clean out of a lined bag.',
+          'Freeze them flat and dry them before packing. Two slim packs sitting either side of a container will outperform one large block resting on the lid, every time.',
+        ],
+      },
     ],
     related: [
       { slug: 'insulated-meal-prep-bags-uk', label: 'Insulated Meal Prep Bags UK', type: 'blog' },
@@ -180,6 +194,14 @@ export const prepKitBlogPostsData = {
       {
         q: 'Can ice packs keep meal prep safe all day?',
         a: 'They help, but they are not a guarantee. Use a fridge when available and avoid leaving chilled food warm for long periods.',
+      },
+      {
+        q: 'Can I refreeze an ice pack the same morning?',
+        a: 'You can put it back in, but it will not be properly frozen in a couple of hours and that is the single most common reason a lunch is warm by midday. Freeze overnight, and keep a second pack in rotation so there is always one ready.',
+      },
+      {
+        q: 'Do ice packs work without an insulated bag?',
+        a: 'Much less well. The pack chills what it touches; the insulation is what stops the whole thing warming from outside. In an ordinary tote you get some benefit for the first hour and little after that.',
       },
     ],
   }),
@@ -232,6 +254,20 @@ export const prepKitBlogPostsData = {
           'Buy sauce pots if you prep salads, wraps, rice bowls or high-protein lunches. They are a cheap upgrade that makes repeated meal prep feel less like eating the same box five times.',
         ],
       },
+      {
+        h2: 'Which sauces actually need separating',
+        paragraphs: [
+          'Not all of them, and knowing which saves you washing pots you did not need. Oil-based dressings are the ones that ruin a salad, because the oil coats leaves and they collapse within hours. Thick, low-water sauces - hummus, peanut butter, pesto, mayonnaise-based dips - sit happily on the side of a container without a pot at all.',
+          'Yoghurt and anything with a high water content is the middle case: it will not wilt leaves the way vinaigrette does, but it will thin out and spread. Those are worth a pot if the meal has anything crisp in it, and not worth one if it is going on rice or a wrap you assemble at the desk.',
+        ],
+      },
+      {
+        h2: 'Size and seal, in that order',
+        paragraphs: [
+          'A portion of dressing is about 15 to 30ml, which is smaller than most pots sold for the job. A 60ml pot carrying 20ml of vinaigrette sloshes, and sloshing is what finds a weak seal. Buy closer to the portion than to the pack size, and accept a second pot for the days you want more.',
+          'Screw tops beat snap-on lids for anything thin. A snap lid seals well when new and less well after fifty dishwasher cycles, and the failure is gradual enough that you find out inside a bag. Test a new pot with water over the sink, upside down, before it goes anywhere near a rucksack.',
+        ],
+      },
     ],
     related: [
       { slug: 'meal-prep-containers-for-salads-uk', label: 'Meal Prep Containers for Salads UK', type: 'blog' },
@@ -250,6 +286,14 @@ export const prepKitBlogPostsData = {
       {
         q: 'Are glass sauce pots better than plastic?',
         a: 'Glass resists stains and odours better, while plastic is lighter and cheaper for commuting.',
+      },
+      {
+        q: 'How much dressing should go in a sauce pot?',
+        a: 'Around 15 to 30ml for one salad, which is less than most pots hold. Filling the pot rather than the portion is how people end up eating far more oil than they meant to.',
+      },
+      {
+        q: 'Are silicone sauce pots better than plastic?',
+        a: 'They are softer and easier to squeeze empty, but the lid is still the part that decides whether it leaks. Judge either material on the seal and on whether it survives the dishwasher, not on the body.',
       },
     ],
   }),
@@ -302,6 +346,20 @@ export const prepKitBlogPostsData = {
           'Choose glass if breakfast is eaten at home or at a desk. Choose plastic if the jar travels daily. Either way, buy enough for at least three mornings so the habit actually sticks.',
         ],
       },
+      {
+        h2: 'Shape matters more than material',
+        paragraphs: [
+          'A straight-sided jar with a wide mouth is what you want, for two unglamorous reasons: you can layer into it without smearing the sides, and you can get a spoon to the bottom without wearing the contents. Tapered jars and narrow necks look better and eat worse.',
+          'Leave headroom. Oats and chia keep absorbing overnight and the mix rises; a jar filled to the lid will push liquid past the seal in a bag. About three quarters full is the sensible ceiling.',
+        ],
+      },
+      {
+        h2: 'How long they actually keep',
+        paragraphs: [
+          'Three to four days refrigerated is realistic for a plain oat and milk or yoghurt base, which is what makes them worth prepping on a Sunday at all. The texture does change: chia keeps thickening, so a jar that was right on Monday can be stiff by Thursday, and a splash of milk on the morning fixes it.',
+          'Fruit is the part that limits the run. Berries bleed and soften, and banana goes grey and sweet in a way most people do not enjoy by day three. Prep the base in jars and add fruit on the morning, and the four days is comfortable rather than a stretch.',
+        ],
+      },
     ],
     related: [
       { slug: 'overnight-oats-meal-prep-uk', label: 'Overnight Oats Meal Prep UK', type: 'blog' },
@@ -321,6 +379,14 @@ export const prepKitBlogPostsData = {
       {
         q: 'How many overnight oats jars do I need?',
         a: 'Three is a practical minimum. Five works if you prep breakfast for the full working week.',
+      },
+      {
+        q: 'How far ahead can I make overnight oats?',
+        a: 'Three to four days in the fridge for the base. Add fresh fruit on the day rather than at the start, because that is what deteriorates first rather than the oats.',
+      },
+      {
+        q: 'Do overnight oats jars need to be glass?',
+        a: 'No, but glass does not hold smells and lets you see the layers, which matters more here than in most containers. Plastic works if the lid seals and the mouth is wide.',
       },
     ],
   }),
@@ -383,6 +449,20 @@ export const prepKitBlogPostsData = {
           'If you cook chicken, mince or reheated batch meals often, a thermometer is one of the highest-trust small tools you can add to the kitchen. Start simple, then upgrade if you use it every week.',
         ],
       },
+      {
+        h2: 'The numbers worth knowing',
+        paragraphs: [
+          'The Food Standards Agency reference for cooking is a core temperature of 70C held for two minutes, or an equivalent combination of time and temperature; many caterers work to 75C to give themselves margin. For reheating, the practical instruction is the same idea in plainer words - piping hot all the way through, not just at the edges.',
+          'That last point is the reason to own a thermometer at all. Batch-cooked food reheated from cold is thickest in the middle, and a microwave heats unevenly enough that the outside can be steaming while the centre is barely warm. Guessing by the edges is exactly how people get this wrong.',
+        ],
+      },
+      {
+        h2: 'Placement beats the device',
+        paragraphs: [
+          'An accurate probe in the wrong place tells you nothing useful. Aim for the thickest part, away from bone and away from the container wall, and take a second reading somewhere else - if the two disagree by much, the food needs longer and a stir rather than another reading.',
+          'Instant-read probes suit meal prep because you are checking a portion and moving on. Leave-in probes are for a roast. Whichever you buy, check it occasionally in iced water, which should read close to 0C; a probe that has drifted is worse than no probe, because it is believed.',
+        ],
+      },
     ],
     related: [
       { slug: 'chicken-and-rice-meal-prep-uk', label: 'Chicken and Rice Meal Prep UK', type: 'blog' },
@@ -402,6 +482,14 @@ export const prepKitBlogPostsData = {
       {
         q: 'Can I leave an instant-read thermometer in the oven?',
         a: 'Usually no. Only leave a probe in the oven if the product instructions specifically say it is designed for leave-in use.',
+      },
+      {
+        q: 'What temperature should reheated meal prep reach?',
+        a: 'Hot all the way through rather than a single magic number - the FSA reference for cooking is 70C for two minutes or an equivalent, and many people work to 75C for margin. Check the thickest part, not the edge.',
+      },
+      {
+        q: 'Do I really need a thermometer for meal prep?',
+        a: 'Not for salads and cold lunches. It earns its place if you batch-cook chicken, rice or anything reheated from cold in a microwave, where uneven heating makes the middle hard to judge by eye.',
       },
     ],
   }),
@@ -454,6 +542,20 @@ export const prepKitBlogPostsData = {
           'A compact food flask is worth adding if no-microwave lunches are a regular problem. It will not replace containers, but it gives soup and stew meal prep a proper place in the week.',
         ],
       },
+      {
+        h2: 'Preheating is the whole trick',
+        paragraphs: [
+          'Fill the flask with boiling water, put the lid on, leave it five minutes, then tip it out and add the food. Almost every complaint about a food flask being lukewarm by lunchtime traces back to skipping this, because a cold steel flask takes a great deal of the heat out of the food in the first few minutes.',
+          'The food should go in hot rather than warm, and the flask should go in full. A half-empty flask has a volume of air to keep hot as well, and it will lose the argument by midday.',
+        ],
+      },
+      {
+        h2: 'What travels well in one',
+        paragraphs: [
+          'Wet, dense food: stew, chilli, curry, soup, dhal, bolognese, porridge. These hold heat because there is mass and liquid, and they are no worse for having sat in their own steam for four hours - arguably better.',
+          'What does not travel is anything meant to be crisp, and anything that keeps absorbing. Pasta continues to soften and will be past it by lunch; roasted vegetables go limp; anything breaded is a waste of a good coating. Those belong in a container with an ice pack and a microwave at the other end, which is a different problem with a different answer.',
+        ],
+      },
     ],
     related: [
       { slug: 'meal-prep-without-a-microwave-uk', label: 'Meal Prep Without a Microwave UK', type: 'blog' },
@@ -473,6 +575,14 @@ export const prepKitBlogPostsData = {
       {
         q: 'How do I keep a food flask hot?',
         a: 'Preheat it with boiling water, add piping hot food, fill it close to the top and keep it closed until lunch.',
+      },
+      {
+        q: 'Why is my food flask not keeping food hot?',
+        a: 'Nine times in ten it was not preheated. Fill it with boiling water for five minutes first, tip it out, then add food that is properly hot and fill the flask to the top.',
+      },
+      {
+        q: 'Can I put cold food in an insulated flask?',
+        a: 'Yes, and the same logic applies in reverse - chill it with cold water and ice first, then fill it. It works well for overnight oats and yoghurt in summer.',
       },
     ],
   }),
@@ -525,10 +635,23 @@ export const prepKitBlogPostsData = {
           'Buy a chopper if it removes a real bottleneck. The best one is not the one with the most attachments; it is the one you will actually wash, store and use every week.',
         ],
       },
+      {
+        h2: 'Where a chopper genuinely saves time',
+        paragraphs: [
+          'Volume, and only volume. Three onions, a bag of peppers, a batch of soffritto for a chilli that will feed you all week - that is where a chopper is faster than a knife and where the even cut actually helps, because pieces of the same size cook at the same rate.',
+          'For one onion it is slower. You will spend longer washing three plastic parts than you would have spent chopping, and that is the calculation that decides whether the thing lives on the worktop or at the back of a cupboard.',
+        ],
+      },
+      {
+        h2: 'The honest comparison with a sharp knife',
+        paragraphs: [
+          'A sharp knife and a large board beat a mediocre chopper at almost everything, and cost less. If your knife is blunt - and most home knives are - sharpening it will improve more meals than any gadget will. Try that before buying.',
+          'Where choppers still win is consistency and hands. Even dice without practice, and no repeated knife work if grip or wrists are a problem, are real advantages rather than marketing ones. Judge a chopper on how many parts it breaks into and whether they go in the dishwasher, because that is what determines if you keep using it.',
+        ],
+      },
     ],
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One Pan Meal Prep UK', type: 'blog' },
       { slug: 'student-meal-prep-uk', label: 'Student Meal Prep UK', type: 'blog' },
       ...prepKitRelated,
     ],
@@ -545,150 +668,18 @@ export const prepKitBlogPostsData = {
         q: 'Are vegetable choppers safe?',
         a: 'They can be safe when used as instructed, but the blades are sharp. Use the guard or pusher and store inserts carefully.',
       },
-    ],
-  }),
-
-  'best-air-fryer-accessories-for-meal-prep-uk': kitPost({
-    title: 'Best Air Fryer Accessories for Meal Prep UK: Liners, Racks and Prep Kits',
-    description:
-      'Best air fryer accessories for meal prep UK: compare reusable silicone liners, racks, skewers and accessory kits for easier batch cooking.',
-    h1: 'Best Air Fryer Accessories for Meal Prep UK',
-    intro:
-      'Air fryers are already useful for meal prep, but the right accessories make them easier to repeat. Liners reduce cleanup, racks add surface area and small pans let you prep eggs, oats-style bakes or sides without using the main basket directly.',
-    quickAnswer: {
-      answer:
-        'Reusable silicone liners are the best first accessory because they reduce scrubbing. A full accessory kit is better if you want racks, skewers, pans and moulds for a wider air-fryer routine.',
-      links: [
-        { label: 'Read air fryer meal prep', to: '/blog/air-fryer-meal-prep-uk' },
-        { label: 'See one-pan meal prep', to: '/blog/one-pan-meal-prep-uk' },
-      ],
-    },
-    toolRecommendations: {
-      title: 'Air fryer accessories to compare',
-      intro: 'A reusable liner set and a broader accessory kit for meal prep variety.',
-      productIds: ['square-silicone-air-fryer-liners', 'cosori-air-fryer-accessory-kit'],
-    },
-    sections: [
       {
-        h2: 'Which accessory should you buy first?',
-        paragraphs: [
-          'Start with reusable liners if cleaning is the reason you avoid the air fryer. They are especially useful for marinated chicken, salmon, potatoes and vegetables with seasoning.',
-          'Move to racks, skewers and pans if you already use the air fryer often and want more batch-cooking options. Buying a kit before the habit exists can just create drawer clutter.',
-        ],
+        q: 'Is a vegetable chopper better than a knife?',
+        a: 'Not for small jobs. It wins on volume and on consistent dice, and for anyone who finds repeated knife work hard on the hands. For one onion, a sharp knife is faster once washing up is counted.',
       },
       {
-        h2: 'Check size before anything else',
-        paragraphs: [
-          'Air fryer accessories are not universal. Round, square, single-basket and dual-drawer models vary, and a liner that almost fits can block airflow or stop the drawer closing.',
-          'Measure the internal basket, not only the advertised litre capacity. For dual-drawer models, check each drawer separately.',
-        ],
-      },
-      {
-        h2: 'Liners and crisping',
-        paragraphs: [
-          'Silicone liners reduce mess, but they can change airflow if overloaded. Leave space around food, shake or turn halfway through cooking and do not cover every vent or raised section.',
-          'For crispy potatoes or chicken, the liner helps cleanup but the technique still matters: dry the food, use moderate oil and avoid crowding the basket.',
-        ],
-      },
-      {
-        h2: 'Air fryer accessory verdict',
-        paragraphs: [
-          'Buy liners first for easier repeat cooking. Add racks and pans only once you know the air fryer is part of your weekly meal prep routine.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'air-fryer-meal-prep-uk', label: 'Air Fryer Meal Prep UK', type: 'blog' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One Pan Meal Prep UK', type: 'blog' },
-      { slug: 'best-food-thermometers-for-meal-prep-uk', label: 'Best Food Thermometers for Meal Prep UK', type: 'blog' },
-      ...prepKitRelated,
-    ],
-    faq: [
-      {
-        q: 'Are silicone air fryer liners worth it?',
-        a: 'They are worth it if cleanup stops you using the air fryer regularly. They are less important for dry foods that barely leave residue.',
-      },
-      {
-        q: 'Do air fryer liners stop food getting crispy?',
-        a: 'They can reduce airflow if overcrowded. Use the right size, avoid blocking vents and shake or turn food during cooking.',
-      },
-      {
-        q: 'Do air fryer accessories fit every model?',
-        a: 'No. Measure the internal basket or drawer and check the listing against your model before buying.',
+        q: 'What should I look for in a chopper?',
+        a: 'Fewer parts, dishwasher-safe parts, and a base that does not slide. The blade quality matters less than whether the thing is annoying enough to clean that you stop using it.',
       },
     ],
   }),
 
-  'best-protein-shakers-uk': kitPost({
-    title: 'Best Protein Shakers UK: Simple Bottles for Meal Prep and Gym Snacks',
-    description:
-      'Best protein shakers UK: compare simple shaker bottles for whey, clear whey, smoothies, high-protein snacks and gym beginner meal prep.',
-    h1: 'Best Protein Shakers UK',
-    intro:
-      'A protein shaker is not a meal plan, but it can protect one. When lunch is light, training runs late or breakfast is rushed, a shaker gives you a controlled backup instead of a meal deal and a guess.',
-    quickAnswer: {
-      answer:
-        'Choose a simple 600ml shaker for most whey or clear whey. Choose a larger branded shaker if you want more liquid volume for smoothies, pre-workout or bigger mixed drinks.',
-      links: [
-        { label: 'Cheap protein sources UK', to: '/blog/cheap-protein-sources-uk-supermarkets' },
-        { label: 'Protein without powder', to: '/blog/protein-meal-prep-without-powder-uk' },
-      ],
-    },
-    toolRecommendations: {
-      title: 'Protein shakers to compare',
-      intro: 'A simple budget shaker and a larger classic shaker bottle.',
-      productIds: ['myprotein-600ml-shaker', 'blenderbottle-classic-v2'],
-    },
-    sections: [
-      {
-        h2: 'Who should buy a protein shaker?',
-        paragraphs: [
-          'Buy one if protein powder is already part of your routine or you want a backup snack for gym days. It is most useful when you know the shake has a job: post-workout, breakfast helper, afternoon protein top-up or emergency snack.',
-          'Do not buy one because the plan is vague. Whole-food protein still matters, and a shaker works best alongside meals rather than replacing the structure.',
-        ],
-      },
-      {
-        h2: 'What size is best?',
-        paragraphs: [
-          'A 600ml shaker is enough for most whey, clear whey and basic supplement mixes. Larger bottles are better when you use oats, milk, fruit powder or more water.',
-          'If it has to fit in a lunch bag side pocket, check height as well as capacity. Some bigger shakers are awkward with compact insulated bags.',
-        ],
-      },
-      {
-        h2: 'Avoid shaker smell',
-        paragraphs: [
-          'Rinse the shaker as soon as possible, especially after milk-based shakes. A sealed bottle left in a gym bag can smell bad even if the shaker itself is good.',
-          'A wide mouth and fewer fiddly parts make cleaning easier. If you use thick shakes, check that the mixing ball, mesh or agitator is easy to remove and wash.',
-        ],
-      },
-      {
-        h2: 'Protein shaker verdict',
-        paragraphs: [
-          'Start with a simple, easy-clean shaker. Upgrade only if you need more capacity, better insulation or a bottle that survives daily gym-bag use.',
-        ],
-      },
-    ],
-    related: [
-      { slug: 'is-protein-powder-cheaper-than-food-uk', label: 'Is Protein Powder Cheaper Than Food?', type: 'blog' },
-      { slug: 'protein-meal-prep-without-powder-uk', label: 'Protein Meal Prep Without Powder UK', type: 'blog' },
-      { slug: 'cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK Supermarkets', type: 'blog' },
-      { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
-    ],
-    faq: [
-      {
-        q: 'What size protein shaker is best?',
-        a: 'Around 600ml is enough for most protein shakes. Larger bottles suit smoothies or higher-liquid mixes.',
-      },
-      {
-        q: 'Do I need a metal protein shaker?',
-        a: 'Not unless smell, durability or keeping drinks cold is a problem. A simple plastic shaker is enough for most people.',
-      },
-      {
-        q: 'How do I stop a shaker smelling?',
-        a: 'Rinse it immediately after use, wash the lid and mixing insert properly, and do not leave milk-based shakes sealed in a bag.',
-      },
-    ],
-  }),
+
 
   'freezer-labels-for-meal-prep-uk': kitPost({
     title: 'Freezer Labels for Meal Prep UK: Best Food Date Stickers',
@@ -739,10 +730,24 @@ export const prepKitBlogPostsData = {
           'Buy labels if you freeze more than a couple of portions at a time. They are cheap, low effort and make every container or freezer bag more useful.',
         ],
       },
+      {
+        h2: 'Write three things, not one',
+        paragraphs: [
+          'Most labels say what the food is. The useful ones say what it is, the date it went in, and how many portions the container holds. The date is what stops the freezer becoming an archive, and the portion count is what stops you defrosting twice what you needed on a Tuesday night.',
+          'Frozen food kept at minus 18C stays safe more or less indefinitely; what degrades is quality, and that happens on a timescale of months rather than days. Home-cooked meals are generally good for around three months before texture and flavour start to go, which is precisely the sort of thing nobody remembers without a date written down.',
+        ],
+      },
+      {
+        h2: 'Why labels fall off, and what to do about it',
+        paragraphs: [
+          'Adhesive fails in the cold and the damp. A sticker applied to a container that is already frosted, or already full and condensing, is coming off inside a fortnight - and it will usually come off in the freezer where you will not notice until you are holding an unidentified block.',
+          'Apply to a clean dry container before filling, or skip adhesive entirely and use a chinagraph pencil or dry-wipe marker on the lid, which survives cold and washes off. Freezer tape is the middle option: it holds better than a standard label and peels without leaving residue.',
+        ],
+      },
     ],
     related: [
       { slug: 'freezer-bags-meal-prep-guide', path: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep UK', type: 'guide' },
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'glass-meal-prep-containers-guide', path: '/meal-prep-containers/glass', label: 'Glass Meal Prep Containers UK', type: 'guide' },
       ...prepKitRelated,
     ],
@@ -758,6 +763,14 @@ export const prepKitBlogPostsData = {
       {
         q: 'Are freezer labels better than masking tape?',
         a: 'For regular meal prep, yes. They are neater, easier to write on and designed for food storage surfaces.',
+      },
+      {
+        q: 'How long does home-cooked food keep in the freezer?',
+        a: 'It stays safe indefinitely at minus 18C, but quality drops. Around three months is a reasonable working limit for most cooked meals before texture and taste noticeably suffer.',
+      },
+      {
+        q: 'Why do my freezer labels keep falling off?',
+        a: 'Almost always because they went onto a cold or damp container. Label before filling, while the box is clean and dry, or write straight onto the lid with a dry-wipe marker instead.',
       },
     ],
   }),

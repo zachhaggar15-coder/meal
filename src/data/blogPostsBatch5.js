@@ -52,7 +52,6 @@ export const blogPostsBatch5Data = {
       answer: 'Stews, curries, chilli, pulled meat, ragu and bean-based dishes all batch cook well in a slow cooker. Cook on low for 6-8 hours or high for 3-4 hours, cool the finished batch promptly, then split into meal-sized containers for the first couple of fridge days and the freezer for later portions.',
       links: [
         { label: 'Read the batch cooking basics guide', to: '/blog/batch-cooking-for-beginners-uk' },
-        { label: 'See freezer meal prep for beginners', to: '/blog/freezer-meal-prep-for-beginners-uk' },
       ],
     },
     sections: [
@@ -107,8 +106,6 @@ export const blogPostsBatch5Data = {
     },
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One-Pan Meal Prep UK', type: 'blog' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
     ],
     faq: [
@@ -192,192 +189,119 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 3. Kitchen scales ─────────────────────────────────────────────────────
-  'best-kitchen-scales-for-meal-prep-uk': toolPost({
-    title: 'Best Kitchen Scales for Meal Prep UK: Why Weighing Beats Guessing',
-    description: 'Best kitchen scales for meal prep UK: why weighing food matters for calorie and protein targets, cooked vs raw weight explained, and what to buy.',
-    h1: 'Best Kitchen Scales for Meal Prep UK',
-    intro: 'Most calorie and protein targets on this site, and in most nutrition guidance generally, assume you are weighing food rather than estimating by eye. A cheap digital kitchen scale is one of the lowest-cost, highest-impact purchases for anyone serious about meal prep. This guide covers what to look for and the most common mistake people make once they own one.',
+  'meal-prep-equipment-uk': toolPost({
+    title: 'Meal Prep Equipment UK: What Actually Earns Its Place',
+    description: 'Meal prep equipment for UK kitchens: scales, blenders, vacuum sealers, air fryer accessories, shakers and cookbooks, in the order worth buying them.',
+    h1: 'Meal Prep Equipment UK: What Earns Its Place',
+    intro:
+      'Almost nothing on this page is necessary. Meal prep works with a knife, a board, an oven tray and some boxes, and the equipment industry would rather you did not know that. What follows is the short list of things that genuinely change how a week goes, in the order worth buying them, and an honest note on the ones that mostly sit in a cupboard.',
+    detailedProductsAfterSection: 2,
     quickAnswer: {
-      answer: 'A basic digital scale with a 3-5kg capacity and a tare (zero) function covers almost all meal prep needs. Weigh food raw, before cooking, unless a recipe or plan specifically states a cooked weight, since raw and cooked weights differ significantly for foods like rice, pasta and meat.',
+      answer:
+        'Buy a digital kitchen scale first - it costs the least and changes the most. After that, buy only what fixes a problem you actually have: a blender if you drink smoothies, a vacuum sealer if you freeze in volume, air fryer accessories if you already own the air fryer.',
       links: [
-        { label: 'Read how to build a calorie deficit', to: '/blog/how-to-build-a-calorie-deficit' },
-        { label: 'See how much protein when dieting', to: '/blog/how-much-protein-when-dieting' },
+        { label: 'Choose containers first', to: '/blog/best-meal-prep-containers-uk' },
+        { label: 'Plan a week to cook from', to: '/browse' },
       ],
     },
     sections: [
       {
-        h2: 'Why weighing food matters more than eyeballing it',
+        h2: 'Buy in this order',
         paragraphs: [
-          'Most people underestimate portions of calorie-dense foods like oils, cheese, nuts and pasta, and overestimate portions of lower-calorie foods like vegetables. Weighing removes this bias entirely and is the single most reliable way to hit a specific calorie or protein target consistently.',
-          'It also matters for consistency between meals. Two "handfuls" of rice can vary by 50g or more depending on the day, which adds up to a meaningfully different weekly intake even if every other choice stays the same.',
+          'Scales, then containers, then everything else - and there is a large gap between the second and the third. A scale and a set of boxes cover the whole job. Everything below that line is convenience, and convenience is worth paying for only where it removes a step you are actually skipping.',
+          'The useful test before any of it: what went wrong last week? If the answer is that you guessed portions, buy a scale. If it is that food went to waste in the freezer, buy labels before you buy a sealer. If nothing went wrong, buy nothing.',
         ],
       },
       {
-        h2: 'What to look for in a meal prep kitchen scale',
+        h2: 'Kitchen scales, and the cooked-versus-raw trap',
         paragraphs: [
-          'A tare (zero) function is essential, letting you weigh multiple ingredients into the same bowl by resetting to zero between each one. A capacity of at least 3kg covers most meal prep needs, and a flat, wipeable platform is easier to keep clean than a bowl-style scale.',
+          'A basic digital scale with a 3-5kg capacity and a tare button covers everything meal prep needs. The expensive ones weigh the same food. What matters is that it is on the worktop rather than in a drawer, because a scale you have to fetch is a scale you stop using.',
+          'The mistake almost everyone makes is weighing at the wrong point. Weigh raw, before cooking, unless a plan explicitly gives a cooked weight - rice and pasta roughly triple in weight as they absorb water, and meat loses a quarter or more of its weight as it cooks. Weighing 100g of cooked rice when the plan meant 100g dry is a difference of several hundred calories, and it is the single most common reason a carefully followed plan does not work.',
+          'You also do not need to weigh everything. The calorie-dense items - oil, nuts, cheese, cereal, pasta, rice - carry most of the error. Vegetables barely move the total and are not worth the effort.',
         ],
       },
       {
-        h2: 'Cooked vs raw weight: a common confusion',
+        h2: 'Blenders: only if you actually drink them',
         paragraphs: [
-          'This is the single most common mistake once people start weighing food. Rice roughly doubles in weight when cooked, pasta increases by around 2-2.5 times, and meat typically loses 20-25% of its weight during cooking as moisture evaporates.',
+          'Single-serve bullet blenders suit meal prep better than jug blenders, for the unglamorous reason that you drink out of the cup you blended in and wash one part instead of four. A jug blender is the better machine and the worse habit.',
+          'The useful trick is freezer bags rather than pre-blended drinks: portion the fruit, oats, spinach and seeds into bags on Sunday, then tip one into the blender with milk or yoghurt in the morning. Blending a week ahead gives you separated, browning smoothies by Wednesday; blending fresh from a prepped bag takes ninety seconds and tastes like it should.',
         ],
-        table: {
-          headers: ['Food', 'Typical raw-to-cooked change', 'Practical note'],
-          rows: [
-            ['White rice', 'Roughly doubles (x2)', '75g raw becomes about 150g cooked'],
-            ['Pasta', 'Increases roughly x2.2-2.5', '75g raw becomes about 170-190g cooked'],
-            ['Chicken breast', 'Loses roughly 20-25%', '150g raw becomes about 115-120g cooked'],
-            ['Minced beef', 'Loses roughly 25-30% (fat and water)', 'Varies more depending on fat content'],
-          ],
-        },
       },
       {
-        h2: 'How to use a scale to hit a calorie or protein target',
+        h2: 'Vacuum sealers: real, but narrower than the marketing',
         paragraphs: [
-          'Weigh the raw ingredient, note the weight, and use nutrition figures for that raw weight rather than guessing after cooking. If a recipe or meal plan states a cooked weight, weigh the finished dish instead and be consistent about which method you use so figures stay comparable week to week.',
+          'What a sealer genuinely does is remove air, which slows freezer burn and lets flat-packed portions stack and thaw quickly. For anyone buying meat in bulk or freezing large batches, that is a real saving over months.',
+          'For most people it is not. Bags are a recurring cost, the machine takes worktop space, and rigid containers with the air pressed out do most of the job for nothing. Buy one if you freeze in volume every week; skip it if the freezer holds a few portions at a time.',
+          'Some things should not go in one at all: soft fruit and bread crush, and raw mushrooms and soft cheeses are better left in air. Liquids need freezing solid before sealing or they get pulled into the machine.',
+        ],
+      },
+      {
+        h2: 'Air fryer accessories and shakers',
+        paragraphs: [
+          'Air fryer accessories are worth it only once you own the air fryer and know what it does badly. Size is the whole decision - a kit that does not fit your basket is scrap - so measure the basket before buying anything, including liners.',
+          'Silicone liners are the one most people should buy first, because they solve washing up rather than cooking. They do reduce crisping slightly, which is the trade: use them for anything saucy and cook straight on the basket for anything that needs to crisp.',
+          'A shaker is a 5 pound purchase that only matters if you take powder to a gym. If you do, buy two, because the smell problem is not about the bottle - it is about a protein shaker left in a bag overnight, and the fix is having a spare so one can be washed properly rather than rinsed.',
+        ],
+      },
+      {
+        h2: 'Cookbooks, which are not equipment',
+        paragraphs: [
+          'A batch-cooking cookbook earns its place differently from a gadget: it changes what you cook rather than how, and that is usually the bigger problem. Most people stall because they are bored of four meals, not because their knife is slow.',
+          'Get more out of any of them by reading for method rather than recipes - which components freeze well, what reheats without going dry, which sauces carry a base through three different meals. That is the transferable part, and it outlasts the specific dishes.',
+        ],
+      },
+      {
+        h2: 'What not to buy',
+        paragraphs: [
+          'Anything single-purpose that replaces thirty seconds of work: egg slicers, avocado tools, herb strippers, banana cases. Anything sold as a meal-prep-specific version of a normal object, which is usually the normal object at a markup.',
+          'And nothing at all until the basics are being used. A cupboard of equipment is the most common form of meal prep procrastination - it feels like progress and cooks nothing.',
         ],
       },
     ],
+    productRecommendations: {
+      title: 'The three that change a week',
+      intro: 'A scale, a blender if you drink smoothies, and a sealer if you freeze in volume.',
+      productIds: ['salter-arc-scale', 'salter-disc-scale', 'nutribullet-600', 'nutribullet-900', 'foodsaver-everyday', 'foodsaver-handheld'],
+    },
     toolRecommendations: {
-      title: 'Kitchen scales worth considering',
-      intro: 'A simple solids-only option and one that also measures liquids.',
-      productIds: ['salter-arc-scale', 'salter-disc-scale'],
+      title: 'Smaller kit and reading',
+      intro: 'Air fryer liners, shakers and the batch-cooking books worth owning.',
+      productIds: ['square-silicone-air-fryer-liners', 'cosori-air-fryer-accessory-kit', 'myprotein-600ml-shaker', 'blenderbottle-classic-v2', 'batch-lady-grab-and-cook', 'nadiya-cook-once-eat-twice', 'batch-lady-healthy-family'],
     },
     related: [
-      { slug: 'how-to-build-a-calorie-deficit', label: 'How to Build a Calorie Deficit', type: 'blog' },
-      { slug: 'how-much-protein-when-dieting', label: 'How Much Protein When Dieting?', type: 'blog' },
-      { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'meal-prep-shopping-list-template-uk', label: 'Meal Prep Shopping List Template UK', type: 'blog' },
-    ],
-    faq: [
-      { q: 'Should I weigh food raw or cooked?', a: 'Raw, unless a specific recipe or meal plan states a cooked weight. Most standard nutrition figures are based on raw weight for foods like rice, pasta and meat.' },
-      { q: 'Do I really need a kitchen scale for meal prep?', a: 'Not strictly, but it is one of the most reliable ways to hit a consistent calorie or protein target, since portion sizes by eye vary more than most people expect.' },
-      { q: 'What capacity kitchen scale do I need?', a: 'A 3-5kg capacity covers almost all home meal prep needs, including weighing a full batch of rice or pasta in one go.' },
-    ],
-  }),
-
-  // ── 4. Blender ────────────────────────────────────────────────────────────
-  'best-blender-for-meal-prep-smoothies-uk': toolPost({
-    title: 'Best Blender for Meal Prep Smoothies and Shakes UK',
-    description: 'Best blender for meal prep smoothies UK: single-serve vs jug blenders, how to batch-prep smoothie bags for the freezer, and boosting protein.',
-    h1: 'Best Blender for Meal Prep Smoothies and Shakes UK',
-    intro: 'Smoothies and protein shakes are one of the easiest meal prep wins, since the prep work (chopping fruit, measuring portions) can be batched a week ahead even though blending happens fresh each day. This guide covers which blender type suits meal prep, and how to batch-prep smoothie bags properly.',
-    quickAnswer: {
-      answer: 'A compact single-serve blender is usually the better choice for meal prep, since you can blend directly into a portable cup. Batch-prep smoothie bags by pre-portioning fruit, greens and any add-ins into freezer bags a week ahead, then just add liquid and blend fresh each morning.',
-      links: [
-        { label: 'See protein without powder options', to: '/blog/protein-meal-prep-without-powder-uk' },
-        { label: 'Read high protein breakfast ideas UK', to: '/blog/high-protein-breakfast-uk' },
-      ],
-    },
-    sections: [
-      {
-        h2: 'Single-serve vs jug blenders for meal prep',
-        paragraphs: [
-          'Single-serve blenders, where you blend directly into a portable cup, are generally more practical for daily meal prep since there is less to wash and you can take the cup straight out the door. Jug blenders make sense if you regularly make larger batches to share or want to blend soups and sauces as well as smoothies.',
-        ],
-      },
-      {
-        h2: 'Batch-prepping smoothie bags for the freezer',
-        paragraphs: [
-          'The genuinely time-saving part of smoothie meal prep is pre-portioning the solid ingredients, not the blending itself, which only takes a minute regardless. Chop fruit and portion greens into individual freezer bags for a full week in one session, then each morning just tip a bag into the blender, add liquid, and blend.',
-        ],
-        numbered: [
-          'Choose a base fruit combination and any greens for the week',
-          'Chop and portion into individual freezer bags, one per day',
-          'Lay bags flat in the freezer to save space',
-          'Each morning, empty one bag into the blender and add liquid (milk, water, yogurt)',
-          'Blend fresh rather than blending the whole batch in advance',
-        ],
-      },
-      {
-        h2: 'Boosting protein without relying only on powder',
-        paragraphs: [
-          'Protein powder is the fastest way to add protein to a smoothie, but Greek yogurt, cottage cheese blended smooth, or a spoon of nut butter all work as alternatives or additions, changing the texture as well as the protein content.',
-        ],
-      },
-      {
-        h2: 'Why blend fresh rather than pre-blending a week of smoothies',
-        paragraphs: [
-          'Pre-blending a full batch and storing it in the fridge sounds efficient, but blended smoothies separate and oxidise faster than whole ingredients, losing texture and some vitamin content within a day or two. Pre-portioning the ingredients and blending fresh each morning takes barely longer and gives a noticeably better result.',
-        ],
-      },
-    ],
-    toolRecommendations: {
-      title: 'Blenders worth considering',
-      intro: 'A budget single-serve option and a more powerful alternative for frozen fruit and ice.',
-      productIds: ['nutribullet-600', 'nutribullet-900'],
-    },
-    related: [
-      { slug: 'protein-meal-prep-without-powder-uk', label: 'Protein Meal Prep Without Powder UK', type: 'blog' },
-      { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
-      { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
-      { slug: 'overnight-oats-meal-prep-uk', label: 'Overnight Oats Meal Prep UK', type: 'blog' },
-    ],
-    faq: [
-      { q: 'Can you pre-blend a week of smoothies in advance?', a: 'It is possible but not ideal, since blended smoothies separate and lose texture within a day or two. Pre-portioning ingredients into bags and blending fresh each morning gives a better result for a similar amount of effort.' },
-      { q: 'Do I need a powerful blender for meal prep smoothies?', a: 'Only if you regularly blend frozen fruit or ice straight from frozen. For fresh or slightly softened ingredients, a basic single-serve blender is usually enough.' },
-      { q: 'How long do frozen smoothie prep bags keep?', a: 'Pre-portioned fruit and greens in sealed freezer bags typically keep well for 2-3 months in the freezer.' },
-    ],
-  }),
-
-  // ── 6. Cookbooks ──────────────────────────────────────────────────────────
-  'best-meal-prep-cookbooks-uk': toolPost({
-    title: 'Best Meal Prep Cookbooks UK',
-    description: 'Best meal prep cookbooks UK: real UK titles for batch cooking, freezer meals and family-friendly meal prep, with practical notes on each. Check live availability before buying.',
-    h1: 'Best Meal Prep Cookbooks UK',
-    intro: 'A good meal prep cookbook does more than provide recipes; it teaches a system for cooking once and eating multiple times. These are genuine UK titles rather than a generic list, with notes on who each one actually suits; check current availability before buying.',
-    quickAnswer: {
-      answer: 'For UK batch cooking built around a clear system, The Batch Lady\'s books are the most purpose-built option. For a broader "cook once, eat twice" approach to weeknight cooking, Nadiya Hussain\'s Cook Once, Eat Twice is a strong choice with wide supermarket ingredient availability.',
-      links: [
-        { label: 'Read the batch cooking basics guide', to: '/blog/batch-cooking-for-beginners-uk' },
-        { label: 'See family meal prep on a budget UK', to: '/blog/family-meal-prep-on-a-budget-uk' },
-      ],
-    },
-    sections: [
-      {
-        h2: 'Best for family batch cooking',
-        paragraphs: [
-          'The Batch Lady: Grab and Cook is built specifically around freezer-friendly recipes designed to be batch cooked and grabbed through the week, from Suzanne Mulholland, the presenter behind Channel 4\'s Batch From Scratch. Recipes are written for family portions, so scale down if cooking for one or two.',
-        ],
-      },
-      {
-        h2: 'Best for cooking once and eating twice',
-        paragraphs: [
-          'Nadiya Hussain\'s Cook Once, Eat Twice is built around pairing recipes so that one cooking session produces two different meals, plus a chapter specifically on using up ingredients that would otherwise be thrown away. It suits people who want variety across the week rather than eating the same batch meal repeatedly.',
-        ],
-      },
-      {
-        h2: 'Best for healthier batch recipes',
-        paragraphs: [
-          'The Batch Lady: Healthy Family Favourites takes the same batch-cooking system but focuses on lighter recipes, useful if you want the time-saving benefits of batch cooking without leaning on heavier, richer family classics.',
-        ],
-      },
-      {
-        h2: 'Getting more from any cookbook for meal prep',
-        paragraphs: [
-          'Most cookbooks are written for family-size portions rather than precise calorie or macro targets. Weighing ingredients with a kitchen scale lets you work out approximate calories and protein per portion from any recipe, and most stews, curries and casseroles freeze well even if the book does not explicitly say so, provided you cool them properly before freezing.',
-        ],
-      },
-    ],
-    toolRecommendations: {
-      title: 'Meal prep cookbooks worth considering',
-      intro: 'Known UK titles; check current availability before buying.',
-      productIds: ['batch-lady-grab-and-cook', 'nadiya-cook-once-eat-twice', 'batch-lady-healthy-family'],
-    },
-    related: [
+      { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'family-meal-prep-on-a-budget-uk', label: 'Family Meal Prep on a Budget UK', type: 'blog' },
-      { slug: 'sunday-meal-prep-routine-uk', label: 'Sunday Meal Prep Routine UK', type: 'blog' },
+      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
     ],
     faq: [
-      { q: 'Are batch cooking cookbooks worth it over free recipes online?', a: 'They can be, mainly for the structure: a good batch cooking book groups recipes by freezer suitability and portioning in a way that scattered online recipes usually do not.' },
-      { q: 'Do meal prep cookbooks give calorie information?', a: 'Not always. Many are written around family cooking rather than strict tracking, so you may need to weigh ingredients yourself to work out calories and protein per portion.' },
-      { q: 'Can I halve recipes from a family-size batch cookbook?', a: 'Yes, most batch recipes scale down reasonably well, though cooking times may need slight adjustment for smaller quantities, particularly in a slow cooker.' },
+      {
+        q: 'What equipment do I actually need to start meal prep?',
+        a: 'A digital kitchen scale and enough matching containers for the meals you prep. That is genuinely the whole list. Everything else solves a problem you may not have yet.',
+      },
+      {
+        q: 'Should I weigh food raw or cooked?',
+        a: 'Raw, before cooking, unless the plan states a cooked weight. Rice and pasta roughly triple in weight as they absorb water and meat loses around a quarter, so the two are not interchangeable - this is the most common reason a followed plan does not add up.',
+      },
+      {
+        q: 'Is a vacuum sealer worth it for meal prep?',
+        a: 'Only if you freeze in volume every week. It genuinely slows freezer burn and makes portions stack flat, but bags are a recurring cost and a rigid container with the air pressed out covers most of the benefit for nothing.',
+      },
+      {
+        q: 'Do silicone air fryer liners stop food crisping?',
+        a: 'Slightly, yes. Use them for saucy or sticky food where washing up is the problem, and cook straight on the basket when you want a crisp finish.',
+      },
+      {
+        q: 'What is the cheapest upgrade that makes the biggest difference?',
+        a: 'A digital scale, followed by sharpening the knife you already own. Between them they cost very little and fix more than any gadget on this page.',
+      },
     ],
   }),
+
+
+  // ── 4. Blender ────────────────────────────────────────────────────────────
+
+  // ── 6. Cookbooks ──────────────────────────────────────────────────────────
 
   // ── 7. Meal prep for two ──────────────────────────────────────────────────
   'meal-prep-for-two-people-uk': toolPost({
@@ -492,7 +416,7 @@ export const blogPostsBatch5Data = {
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
       { slug: 'cheapest-uk-supermarket-meal-prep', label: 'Cheapest UK Supermarket for Meal Prep', type: 'blog' },
-      { slug: 'one-pan-meal-prep-uk', label: 'One-Pan Meal Prep UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
     ],
     faq: [
       { q: 'Can I meal prep with just a microwave?', a: 'Yes. Microwaveable rice and pasta, plus batch-cooked portions reheated from the fridge or freezer, cover a genuinely varied week without needing a hob or oven.' },
@@ -502,69 +426,6 @@ export const blogPostsBatch5Data = {
   }),
 
   // ── 9. Vacuum sealer ──────────────────────────────────────────────────────
-  'vacuum-sealer-meal-prep-uk': toolPost({
-    title: 'Vacuum Sealer Meal Prep UK: Is It Worth It for Batch Cooking?',
-    description: 'Vacuum sealer meal prep UK: what a vacuum sealer actually does, how it compares to freezer bags and containers, and whether it is worth the cost.',
-    h1: 'Vacuum Sealer Meal Prep UK',
-    intro: 'Vacuum sealers get talked about as essential meal prep kit, but for most people a good set of freezer bags or containers does the job. This guide gives an honest comparison of what a vacuum sealer actually adds, and who genuinely benefits from one.',
-    quickAnswer: {
-      answer: 'A vacuum sealer meaningfully extends freezer life by removing the air that causes freezer burn, which matters most if you batch cook meat or fish in large amounts and store it for more than a month or two. For shorter-term freezer storage (under a month), reusable silicone bags or rigid containers are usually good enough without the extra cost.',
-      links: [
-        { label: 'Compare freezer bags for meal prep', to: '/meal-prep-containers/freezer-bags' },
-        { label: 'See freezer-safe container advice', to: '/meal-prep-containers/freezer-safe' },
-      ],
-    },
-    sections: [
-      {
-        h2: 'What a vacuum sealer actually does for meal prep',
-        paragraphs: [
-          'A vacuum sealer removes air from a bag before sealing it, which slows the oxidation and ice crystal formation that cause freezer burn. Food sealed this way generally keeps noticeably better quality over long freezer storage than food in a bag or container with air still present.',
-        ],
-      },
-      {
-        h2: 'Vacuum sealer vs freezer bags vs rigid containers',
-        paragraphs: [
-          'Each option suits a different meal prep pattern.',
-        ],
-        table: {
-          headers: ['Method', 'Best for', 'Watch-out'],
-          rows: [
-            ['Vacuum sealer', 'Long-term freezing (2+ months) of meat, fish, batch portions', 'Ongoing cost of specific bags or rolls'],
-            ['Reusable silicone bags', 'Regular freezer rotation, flat-freezing for space', 'Not as air-free as a true vacuum seal'],
-            ['Rigid containers', 'Short-to-medium term storage, solid or chunky food', 'Takes up more freezer space than flat-frozen bags'],
-          ],
-        },
-      },
-      {
-        h2: 'Is it worth the cost for most people?',
-        paragraphs: [
-          'If your freezer turnover is fast (using and refilling within a few weeks), the benefit of a vacuum sealer is minimal, since freezer burn mainly becomes a problem after a month or two. If you like to batch cook large amounts and store them for several months, or you buy meat and fish in bulk to freeze, the quality difference becomes noticeable enough to justify the cost.',
-        ],
-      },
-      {
-        h2: 'What not to vacuum seal',
-        paragraphs: [
-          'Soft, high-moisture foods like soups and sauces are awkward to vacuum seal without a specialist wide-mouth attachment, since the machine can pull liquid into the sealing mechanism. Raw mushrooms and some soft cheeses continue to release gas after sealing and are better suited to a regular freezer bag or container.',
-        ],
-      },
-    ],
-    toolRecommendations: {
-      title: 'Vacuum sealers worth considering',
-      intro: 'A compact benchtop machine and a lower-commitment handheld option.',
-      productIds: ['foodsaver-everyday', 'foodsaver-handheld'],
-    },
-    related: [
-      { slug: 'freezer-bags-meal-prep-guide', path: '/meal-prep-containers/freezer-bags', label: 'Freezer Bags for Meal Prep UK', type: 'guide' },
-      { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
-      { slug: 'freezer-meal-prep-for-beginners-uk', label: 'Freezer Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
-    ],
-    faq: [
-      { q: 'Does a vacuum sealer stop food going off faster than normal?', a: 'It slows freezer burn and oxidation for frozen food, extending how long quality stays good, but it does not replace normal food safety practices like cooling food properly before sealing.' },
-      { q: 'Can you vacuum seal soup or liquid food?', a: 'It is difficult without a specialist attachment, since liquid can be pulled into the machine. A freezer bag or rigid container is usually more practical for liquid-heavy meals.' },
-      { q: 'Is a vacuum sealer worth it for a small household?', a: 'Only if you regularly freeze food for more than a month or two at a time. For fast freezer turnover, the benefit is smaller relative to the cost.' },
-    ],
-  }),
 
   // ── 10. High-protein pasta ────────────────────────────────────────────────
   'high-protein-pasta-meal-prep-uk': post({

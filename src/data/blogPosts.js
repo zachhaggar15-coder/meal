@@ -91,7 +91,7 @@ const rawBlogPostsData = {
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan', type: 'meal-plan' },
       { slug: 'how-to-meal-plan-for-weight-loss', label: 'How to Meal Plan for Weight Loss', type: 'blog' },
       { slug: 'best-low-calorie-foods-uk', label: 'Best Low Calorie Foods UK', type: 'blog' },
-      { slug: 'best-kitchen-scales-for-meal-prep-uk', label: 'Best Kitchen Scales for Meal Prep UK', type: 'blog' },
+      { slug: 'meal-prep-equipment-uk', label: 'Meal Prep Equipment UK', type: 'blog' },
     ],
     faq: [
       { q: 'What is a safe calorie deficit for weight loss?', a: 'A deficit of 300–500 calories per day is usually a sensible starting point for many adults, producing roughly 0.3–0.5 kg of fat loss per week. NHS weight-loss guidance uses a reduction of around 600 calories per day as a practical example for steady weight loss.' },
@@ -2383,6 +2383,28 @@ const rawBlogPostsData = {
           'Use our free meal plan generator to get a complete week of meals with a structured shopping list tailored to your calorie target and preferred UK supermarket.',
         ],
       },
+      {
+        h2: 'The Sunday session, timed',
+        paragraphs: [
+          'Ninety minutes is the realistic figure for a week of lunches, and the order matters more than the speed. Start whatever takes longest and needs no attention - the oven tray, the rice, the thing in the slow cooker - then do the knife work while it runs. Prepping in the order the recipes are written is how a ninety-minute session becomes three hours.',
+          'Do the washing up as you go rather than at the end. The single biggest reason people stop batch cooking is not the cooking, it is standing in a wrecked kitchen at nine on a Sunday evening, and that is entirely avoidable by cleaning during the gaps you are already waiting through.',
+        ],
+      },
+      {
+        h2: 'What actually freezes well',
+        paragraphs: [
+          'Anything wet and cooked: stews, chilli, curry, bolognese, soup, dhal, cooked mince, portioned rice. These come back essentially as they went in. Cooked pasta, potatoes in chunks and creamy sauces are the awkward middle - edible but changed. Salad leaves, raw tomato, fried food and anything meant to be crisp do not survive, and no technique fixes it.',
+          'Freeze flat in portions rather than in one block. A flat portion freezes faster, stacks in the space you have and thaws in a fraction of the time, which is the difference between using the freezer and slowly filling it. Cool food before it goes in, leave headroom for expansion, and label with the date and the number of portions.',
+          'The point of a freezer buffer is not the cooking - it is having four meals in reserve for the weeks when the Sunday session does not happen. Aim to cook one extra portion of whatever you are already making rather than holding a separate freezer-cooking day.',
+        ],
+      },
+      {
+        h2: 'One-pan cooking when you do not want a session',
+        paragraphs: [
+          'Not every week has ninety minutes in it. A tray of protein, a firm vegetable, and a starch that roasts - chicken thighs with peppers and potatoes, sausages with root vegetables, halloumi and chickpeas with squash - is one pan, one wash, and about forty minutes of which thirty-five is oven time.',
+          'The way to stop tray cooking becoming samey is to change the finish rather than the ingredients: a different spice rub before it goes in, and something sharp after it comes out - lemon, yoghurt, pickled onion, chilli oil. The tray is a format, not a recipe, and treating it as one is what makes it survive repetition.',
+        ],
+      },
     ],
     related: [
       { slug: 'is-meal-prep-cheaper-than-meal-deals-uk', label: 'Is Meal Prep Cheaper Than Meal Deals?', type: 'blog' },
@@ -2391,7 +2413,7 @@ const rawBlogPostsData = {
       { slug: 'air-fryer-meal-prep-uk', label: 'Air Fryer Meal Prep UK', type: 'blog' },
       { slug: 'chicken-and-rice-meal-prep-uk', label: 'Chicken and Rice Meal Prep UK', type: 'blog' },
       { slug: 'slow-cooker-meal-prep-uk', label: 'Slow Cooker Meal Prep UK', type: 'blog' },
-      { slug: 'best-meal-prep-cookbooks-uk', label: 'Best Meal Prep Cookbooks UK', type: 'blog' },
+      { slug: 'meal-prep-equipment-uk', label: 'Meal Prep Equipment UK', type: 'blog' },
       { slug: 'aldi-weight-loss-1800', label: '1800 kcal Meal Plan', type: 'plan' },
       { slug: 'aldi-busy-professional-1800', label: 'Aldi Busy Professional Plan', type: 'plan' },
     ],
@@ -2399,6 +2421,14 @@ const rawBlogPostsData = {
       { q: 'How long does batch-cooked food last in the fridge?', a: 'For UK food-safety guidance, eat cooked leftovers kept in the fridge within 2 days, and use cooked rice within about 24 hours. Freeze later-week portions rather than holding a full working week in the fridge.' },
       { q: 'What is the best food to batch cook?', a: 'The best batch-cook foods reheat well and freeze well: chicken breast, stews, chilli, soups, roasted vegetables, lentils and bean dishes. Cook rice in smaller batches or cool it quickly and use chilled rice within about 24 hours.' },
       { q: 'How much does a week of batch cooking cost?', a: 'A batch cook based on chicken, rice, eggs, frozen veg, and tinned chickpeas costs approximately £10–15 for the protein and carb components at Aldi. Including dairy (Greek yogurt, cottage cheese) and fresh vegetables brings a full week to £23–28 — covering all main meals for under £1 per meal.' },
+      {
+        q: 'How long should a batch cooking session take?',
+        a: 'About ninety minutes for a week of lunches once you have done it a few times. Start the longest hands-off thing first and do the knife work while it cooks; that ordering saves more time than working faster does.',
+      },
+      {
+        q: 'What should I not freeze?',
+        a: 'Salad leaves, raw tomato, anything fried or crisp, and most creamy sauces. Wet cooked food - stews, curries, chilli, soup, bolognese - freezes and returns almost unchanged.',
+      },
     ],
   },
 

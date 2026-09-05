@@ -24,7 +24,7 @@ test('every article is reachable in two interactions: open its category, click t
 test('collapsing a category must not remove its links from the served HTML', () => {
   // <details> keeps its children in the DOM when closed, which is the whole
   // reason it was chosen over conditional rendering: the page already earns
-  // impressions and cannot afford to hide 153 internal links from a crawler.
+  // impressions and cannot afford to hide ~139 internal links from a crawler.
   assert.doesNotMatch(
     blogSource,
     /\{\s*isOpen\s*&&|\{\s*open\s*&&|useState\([^)]*\)[\s\S]{0,200}?&&\s*<div className="blog-card-grid"/,
@@ -37,7 +37,11 @@ test('collapsing a category must not remove its links from the served HTML', () 
 test('the listing renders one link per indexed article and no duplicates', () => {
   const slugs = index.map(post => post.slug);
   assert.equal(new Set(slugs).size, slugs.length, 'duplicate slugs would render duplicate links');
-  assert.ok(slugs.length >= 150, `expected the full corpus, got ${slugs.length}`);
+  // Floor, not a target: it exists to catch the index silently dropping posts.
+  // Moved 150 -> 135 in September 2026 when 14 thin commercial and technique
+  // posts were deliberately merged into the guides they were competing with.
+  // Lower it only alongside a consolidation that is recorded in the history.
+  assert.ok(slugs.length >= 135, `expected the full corpus, got ${slugs.length}`);
   assert.match(blogSource, /to=\{`\/blog\/\$\{post\.slug\}`\}/);
 });
 

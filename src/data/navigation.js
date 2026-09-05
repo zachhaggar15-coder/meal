@@ -213,12 +213,12 @@ export const ACCESSORY_NAV_LINKS = [
     description: 'Manual choppers and dicers for faster batch prep.',
   },
   {
-    to: '/blog/best-air-fryer-accessories-for-meal-prep-uk',
+    to: '/blog/meal-prep-equipment-uk',
     label: 'Air Fryer Accessories',
     description: 'Liners, racks and kits for repeat air-fryer cooking.',
   },
   {
-    to: '/blog/best-protein-shakers-uk',
+    to: '/blog/meal-prep-equipment-uk',
     label: 'Protein Shakers',
     description: 'Simple shaker bottles for gym snacks and protein top-ups.',
   },
