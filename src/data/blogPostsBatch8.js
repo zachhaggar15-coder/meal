@@ -54,7 +54,7 @@ const containerLinks = [
       { text: 'If the container is part of the problem, compare types in the ' },
       { label: 'meal prep container hub', to: '/meal-prep-containers' },
       { text: ', or work out how many you need with the ' },
-      { label: 'container count guide', to: '/blog/how-many-meal-prep-containers-do-you-need' },
+      { label: 'container count guide', to: '/blog/best-meal-prep-containers-uk' },
       { text: '.' },
     ],
   },
@@ -243,8 +243,8 @@ export const blogPostsBatch8Data = {
     quickAnswer: {
       answer: 'Turmeric and tomato pigments are fat-soluble and bind to porous plastic, and the same pores trap smells. Wash promptly in warm soapy water, use a bicarbonate of soda paste for staining, and leave stubborn containers in direct sunlight for a few hours, which fades turmeric stains noticeably. Once a container is scratched and rough to the touch it will keep staining, and glass is the only real long-term answer for tomato and curry meal prep.',
       links: [
-        { label: 'Compare glass and plastic containers', to: '/blog/glass-vs-plastic-meal-prep-containers' },
-        { label: 'Check dishwasher-safe container advice', to: '/blog/dishwasher-safe-meal-prep-containers' },
+        { label: 'Compare glass and plastic containers', to: '/blog/best-meal-prep-containers-uk' },
+        { label: 'Check dishwasher-safe container advice', to: '/blog/best-meal-prep-containers-uk' },
       ],
     },
     sections: [
@@ -295,8 +295,7 @@ export const blogPostsBatch8Data = {
       productIds: ['harbour-housewares-glass-5-pack', 'pyrex-cook-and-go', 'budget-compartment-50-pack'],
     },
     related: [
-      { slug: 'glass-vs-plastic-meal-prep-containers', label: 'Glass vs Plastic Meal Prep Containers', type: 'blog' },
-      { slug: 'dishwasher-safe-meal-prep-containers', label: 'Dishwasher-Safe Meal Prep Containers', type: 'blog' },
+      { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'glass-meal-prep-containers-guide', path: '/meal-prep-containers/glass', label: 'Glass Meal Prep Containers UK', type: 'guide' },
       { slug: 'meal-prep-container-lids-leaking', label: 'Why Do My Meal Prep Container Lids Leak?', type: 'blog' },
     ],

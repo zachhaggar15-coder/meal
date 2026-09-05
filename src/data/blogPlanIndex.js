@@ -144,14 +144,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Low Effort",
     "calories": 1500
   },
-  "bento-meal-prep-boxes-uk": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
   "best-air-fryer-accessories-for-meal-prep-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -288,14 +280,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
-  "budget-vs-premium-meal-prep-containers": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
   "cheap-meal-prep-delivery-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -408,14 +392,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
-  "dishwasher-safe-meal-prep-containers": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
   "endurance-running-nutrition-uk": {
     "planSlug": "any-endurance-2000",
     "title": "Endurance Athlete Meal Plan — 2,000 kcal",
@@ -481,14 +457,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "generic-uk-supermarket-meal-plan": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
-  "glass-vs-plastic-meal-prep-containers": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -638,14 +606,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "supermarket": "any",
     "goal": "weight-loss",
     "goalLabel": "Weight Loss",
-    "calories": 1500
-  },
-  "how-many-meal-prep-containers-do-you-need": {
-    "planSlug": "any-high-protein-low-cal-1500",
-    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "high-protein-low-cal",
-    "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
   "how-much-protein-when-dieting": {
@@ -886,14 +846,6 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "supermarket": "any",
     "goal": "high-protein-low-cal",
     "goalLabel": "High Protein Low Calorie",
-    "calories": 1500
-  },
-  "meal-prep-tubs-for-batch-cooking": {
-    "planSlug": "any-low-effort-1500",
-    "title": "Low Effort Meal Plan — 1,500 kcal",
-    "supermarket": "any",
-    "goal": "low-effort",
-    "goalLabel": "Low Effort",
     "calories": 1500
   },
   "meal-prep-watery-or-soggy-uk": {

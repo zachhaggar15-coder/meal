@@ -330,7 +330,7 @@ export const COMBO_LANDING_PAGES = {
     relatedSlugs: ['high-protein-vegetarian-meal-prep', 'vegan-batch-cooking-meal-plan', 'work-lunch-meal-prep-uk'],
     supportingLinks: [
       { label: 'Batch cooking for beginners UK', to: '/blog/batch-cooking-for-beginners-uk' },
-      { label: 'Meal prep tubs for batch cooking', to: '/blog/meal-prep-tubs-for-batch-cooking' },
+      { label: 'Meal prep tubs for batch cooking', to: '/blog/best-meal-prep-containers-uk' },
       { label: 'High protein vegetarian plans', to: '/meal-plans/vegetarian' },
       { label: 'Glass meal prep containers', to: '/meal-prep-containers/glass' },
     ],

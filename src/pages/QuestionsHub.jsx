@@ -88,7 +88,7 @@ const CLUSTERS = [
     label: 'Meal-Prep Equipment',
     questions: [
       { q: 'What containers do I actually need to start meal prepping?', to: '/meal-prep-containers' },
-      { q: 'Is glass or plastic better for meal prep containers?', to: '/blog/glass-vs-plastic-meal-prep-containers' },
+      { q: 'Is glass or plastic better for meal prep containers?', to: '/blog/best-meal-prep-containers-uk' },
       { q: 'Do I really need a food scale for meal prep?', to: '/blog/best-kitchen-scales-for-meal-prep-uk' },
       { q: 'Is a vacuum sealer worth it for meal prep?', to: '/blog/vacuum-sealer-meal-prep-uk' },
       { q: 'Are there any meal prep cookbooks worth buying?', to: '/blog/best-meal-prep-cookbooks-uk' },

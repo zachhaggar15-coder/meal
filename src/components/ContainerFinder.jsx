@@ -102,7 +102,7 @@ export default function ContainerFinder({ currentTier = 'mid-range' }) {
           <Link className="btn-primary" to={`/meal-prep-containers/${recommendation}`}>
             {isCurrent ? 'Compare picks below' : `View ${TIER_LABEL[recommendation].toLowerCase()}`}
           </Link>
-          <Link className="btn-secondary" to="/blog/budget-vs-premium-meal-prep-containers">
+          <Link className="btn-secondary" to="/blog/best-meal-prep-containers-uk">
             Budget vs premium
           </Link>
         </div>

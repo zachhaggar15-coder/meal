@@ -613,6 +613,36 @@
       "source": "/meal-plans/2200-calorie",
       "destination": "/meal-plans/2000-calorie",
       "permanent": true
+    },
+    {
+      "source": "/blog/glass-vs-plastic-meal-prep-containers",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/dishwasher-safe-meal-prep-containers",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/bento-meal-prep-boxes-uk",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/meal-prep-tubs-for-batch-cooking",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-many-meal-prep-containers-do-you-need",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
+    },
+    {
+      "source": "/blog/budget-vs-premium-meal-prep-containers",
+      "destination": "/blog/best-meal-prep-containers-uk",
+      "permanent": true
     }
   ]
 }

@@ -73,8 +73,8 @@ export const blogPostsBatch4Data = {
     quickAnswer: {
       answer: 'A genuinely microwave-safe container will state it clearly on the packaging or listing, usually alongside a microwave symbol (wavy lines). Glass and PP5 polypropylene plastic are the two materials most reliably safe for repeated microwave use. Always remove the lid or vent it before microwaving, and never microwave reused single-use takeaway containers.',
       links: [
-        { label: 'See dishwasher-safe container advice', to: '/blog/dishwasher-safe-meal-prep-containers' },
-        { label: 'Compare glass vs plastic in full', to: '/blog/glass-vs-plastic-meal-prep-containers' },
+        { label: 'See dishwasher-safe container advice', to: '/blog/best-meal-prep-containers-uk' },
+        { label: 'Compare glass vs plastic in full', to: '/blog/best-meal-prep-containers-uk' },
       ],
     },
     sections: [
@@ -113,7 +113,7 @@ export const blogPostsBatch4Data = {
       },
     ],
     related: [
-      { slug: 'dishwasher-safe-meal-prep-containers', label: 'Dishwasher-Safe Meal Prep Containers', type: 'blog' },
+      { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
       { slug: 'glass-meal-prep-containers-guide', path: '/meal-prep-containers/glass', label: 'Glass Meal Prep Containers UK', type: 'guide' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
@@ -188,7 +188,7 @@ export const blogPostsBatch4Data = {
     related: [
       { slug: 'leakproof-meal-prep-containers-guide', path: '/meal-prep-containers/leakproof', label: 'Leakproof Meal Prep Containers UK', type: 'guide' },
       { slug: 'freezer-safe-meal-prep-containers-guide', path: '/meal-prep-containers/freezer-safe', label: 'Freezer Safe Meal Prep Containers', type: 'guide' },
-      { slug: 'meal-prep-tubs-for-batch-cooking', label: 'Meal Prep Tubs for Batch Cooking', type: 'blog' },
+      { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'meal-prep-container-size-guide', label: 'Meal Prep Container Size Guide', type: 'blog' },
     ],
     faq: [
@@ -345,7 +345,7 @@ export const blogPostsBatch4Data = {
       answer: 'Leaking lids are most often caused by overfilling, a chipped rim, a worn or twisted seal, or the wrong closing technique rather than the container itself. Test any container with water before trusting it with sauce or soup, and replace containers with visibly warped or cracked lids rather than continuing to use them.',
       links: [
         { label: 'See leakproof container recommendations', to: '/meal-prep-containers/leakproof' },
-        { label: 'Check dishwasher-safe container advice', to: '/blog/dishwasher-safe-meal-prep-containers' },
+        { label: 'Check dishwasher-safe container advice', to: '/blog/best-meal-prep-containers-uk' },
       ],
     },
     sections: [
@@ -386,7 +386,6 @@ export const blogPostsBatch4Data = {
     related: [
       { slug: 'leakproof-meal-prep-containers-guide', path: '/meal-prep-containers/leakproof', label: 'Leakproof Meal Prep Containers UK', type: 'guide' },
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
-      { slug: 'dishwasher-safe-meal-prep-containers', label: 'Dishwasher-Safe Meal Prep Containers', type: 'blog' },
       { slug: 'meal-prep-containers-for-soup-uk', label: 'Best Meal Prep Containers for Soup UK', type: 'blog' },
     ],
     faq: [

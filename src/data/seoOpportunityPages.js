@@ -21,7 +21,7 @@ const SHOPPING_LINKS = [
 const CONTAINER_LINKS = [
   { label: 'Best meal prep containers UK', to: '/meal-prep-containers' },
   { label: 'Glass meal prep containers', to: '/meal-prep-containers/mid-range' },
-  { label: 'Meal prep tubs', to: '/blog/meal-prep-tubs-for-batch-cooking' },
+  { label: 'Meal prep tubs', to: '/blog/best-meal-prep-containers-uk' },
   { label: 'Budget meal prep tubs', to: '/meal-prep-containers/budget' },
 ];
 
@@ -134,16 +134,8 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     'The best meal prep containers UK shoppers should compare are budget plastic tubs, mid-range glass lunch boxes and premium leakproof sets. The right choice depends on reheating, commuting and batch-cooking volume.',
     CONTAINER_LINKS,
   ),
-  'glass-vs-plastic-meal-prep-containers': qa(
-    'Glass is better for reheating, stain resistance and long-term use. Plastic is better for low cost, light weight and bulk freezer portions.',
-    CONTAINER_LINKS,
-  ),
   'meal-prep-container-size-guide': qa(
     'Most full lunches need around 900ml to 1 litre. Smaller 400-600ml tubs suit snacks and sides, while larger tubs work better for batch bases and freezer portions.',
-    CONTAINER_LINKS,
-  ),
-  'meal-prep-tubs-for-batch-cooking': qa(
-    'Batch cooking needs more tubs than lunch-only meal prep. Use larger containers for chilli, curry and pasta, plus smaller tubs for sauces, snacks and freezer portions.',
     CONTAINER_LINKS,
   ),
   'microwave-safe-meal-prep-containers-uk': qa(
@@ -257,10 +249,5 @@ export const SEO_EXACT_PLAN_LINKS = {
     { label: 'Cheap student Aldi meal prep', to: '/meal-plans/cheap-student-meal-prep-aldi' },
     { label: 'Lidl budget meal prep', to: '/meal-plans/lidl-budget-meal-prep' },
     { label: 'Aldi 1500 calorie meal plan', to: '/meal-plans/aldi-1500-calorie-meal-plan' },
-  ],
-  'meal-prep-tubs-for-batch-cooking': [
-    { label: 'Vegetarian batch cooking meal plan', to: '/meal-plans/vegetarian-batch-cooking-meal-plan' },
-    { label: 'Vegan batch cooking meal plan', to: '/meal-plans/vegan-batch-cooking-meal-plan' },
-    { label: 'Batch cooking for beginners UK', to: '/blog/batch-cooking-for-beginners-uk' },
   ],
 };

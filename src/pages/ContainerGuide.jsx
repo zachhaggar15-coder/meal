@@ -308,7 +308,7 @@ export default function ContainerGuide() {
           <li><Link to="/meal-prep-containers/large-sets">Large meal prep container sets UK</Link></li>
           <li><Link to="/blog/best-meal-prep-containers-uk">Detailed container buying guide</Link></li>
           <li><Link to="/meal-prep-containers/freezer-bags">Best freezer bags for meal prep UK</Link></li>
-          <li><Link to="/blog/glass-vs-plastic-meal-prep-containers">Glass vs plastic meal prep containers</Link></li>
+          <li><Link to="/blog/best-meal-prep-containers-uk">Glass vs plastic meal prep containers</Link></li>
           <li><Link to="/blog/meal-prep-container-size-guide">Meal prep container size guide</Link></li>
         </ul>
       </div>

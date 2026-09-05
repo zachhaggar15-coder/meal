@@ -23,7 +23,7 @@ const productById = new Map(accessoryProducts.map(product => [product.id, produc
 const accessoryGuideLinks = ACCESSORY_NAV_LINKS.filter(link => link.to !== '/meal-prep-accessories');
 
 const REHEATING_GUIDES = [
-  { to: '/blog/glass-vs-plastic-meal-prep-containers', label: 'Compare glass and plastic containers' },
+  { to: '/blog/best-meal-prep-containers-uk', label: 'Compare glass and plastic containers' },
   { to: '/blog/microwave-safe-meal-prep-containers-uk', label: 'Read the microwave-safe container guide' },
 ];
 

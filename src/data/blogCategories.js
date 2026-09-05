@@ -147,18 +147,12 @@ export const BLOG_CATEGORIES = [
     slugs: [
       'best-meal-prep-containers-uk',
       'meal-prep-container-stains-and-smells-uk',
-      'glass-vs-plastic-meal-prep-containers',
       'meal-prep-container-size-guide',
-      'dishwasher-safe-meal-prep-containers',
-      'bento-meal-prep-boxes-uk',
-      'meal-prep-tubs-for-batch-cooking',
-      'how-many-meal-prep-containers-do-you-need',
       'microwave-safe-meal-prep-containers-uk',
       'meal-prep-containers-for-soup-uk',
       'meal-prep-containers-for-salads-uk',
       'best-lunch-bags-for-meal-prep-uk',
       'meal-prep-container-lids-leaking',
-      'budget-vs-premium-meal-prep-containers',
     ],
   },
   {
