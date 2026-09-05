@@ -1,7 +1,38 @@
 # Plan page index strategy
 
-Status: **decided — do not deindex.** Proposed 29 August 2026, resolved 30 August 2026
-against a three-month Search Console performance export.
+Status: **superseded 5 September 2026 — the tail is now noindexed.** Proposed 29 August
+2026, resolved 30 August 2026 against a three-month Search Console export, reversed a week
+later against a newer one plus a constraint the original decision never weighed.
+
+> ### Update, 5 September 2026
+>
+> AdSense rejected the site for **low value content**. The cause was structural: 1,205 of
+> 1,500 indexable URLs were plan pages, and a measured sample of 201 found ~367 words of
+> page-specific prose against 1,730 words of list data. Four fifths of the site was
+> programmatically assembled.
+>
+> A fresh Search Console export (5 September, last 3 months) made the cost of pruning
+> clear in a way the August data did not:
+>
+> | | pages |
+> |---|---:|
+> | plan pages with >=1 click | 220 |
+> | impressions but zero clicks | 517 (4,691 impressions, 3% of site) |
+> | **zero impressions** | **468** |
+>
+> The top 400 live plan pages by clicks then impressions carry **100% of the 430 clicks
+> live plan pages have ever earned**. Noindexing the remaining 805 therefore costs no
+> measurable clicks and roughly 1% of site impressions, while moving editorial share of
+> the index from 14% to 33%.
+>
+> **The verdict below was not wrong.** Plan pages still convert at 2.53% against the
+> blog's 0.86%, and this document's own revisit condition — plan CTR falling below the
+> blog's — has *not* been met. What the August analysis could not see is that the section
+> is 985 dead pages carrying 220 excellent ones. Pruning the dead part is not a reversal
+> of its reasoning; it is the distinction its data was too coarse to draw.
+>
+> Implemented in `src/data/planIndexAllowlist.js` as `noindex, follow` — the pages stay
+> reachable and keep passing link equity. **Reassess after 8 weeks against fresh data.**
 
 ## Verdict, up front
 

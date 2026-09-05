@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { INDEXABLE_PLAN_SEEDS } from './src/data/planSeeds.js';
+import { isPlanIndexed } from './src/data/planIndexAllowlist.js';
 import { blogPostsData } from './src/data/blogPosts.js';
 import { mealPlansData } from './src/data/mealPlans.js';
 import { CONTAINER_GUIDE_SLUGS } from './src/data/containerProducts.js';
@@ -247,6 +248,9 @@ const NOINDEX_ROUTES = new Set([
   ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
   ...DIET_CHOOSER_SLUGS.map(slug => `/choose-diet/${slug}`),
   ...CALORIE_CHOOSER_SLUGS.map(slug => `/choose-calories/${slug}`),
+  // Plan pages outside the Search Console allowlist. See
+  // src/data/planIndexAllowlist.js for why, and for how to reassess.
+  ...PLAN_SLUGS.filter(slug => !isPlanIndexed(slug)).map(slug => `/plans/${slug}`),
 ]);
 
 // A URL that canonicalises elsewhere must not also be advertised in the

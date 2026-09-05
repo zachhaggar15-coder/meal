@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useLocation, useParams, Link } from 'react-router-dom';
 import AdSlot from '../components/AdSlot.jsx';
 import SEO from '../components/SEO.jsx';
+import { isPlanIndexed } from '../data/planIndexAllowlist.js';
 import Footer from '../components/Footer.jsx';
 import FeedbackBox from '../components/FeedbackBox.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
@@ -618,6 +619,7 @@ export default function PlanPage() {
         ogTitle={plan.seo.ogTitle}
         ogDescription={plan.seo.ogDescription}
         ogImage={planImageUrl}
+        robots={isPlanIndexed(plan.slug) ? undefined : 'noindex,follow'}
       />
 
       <div className="content-page plan-page">
