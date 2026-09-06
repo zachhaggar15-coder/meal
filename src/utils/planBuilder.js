@@ -1022,11 +1022,10 @@ function buildSeo(seed) {
 }
 
 function buildCtrPlanTitle(seed, marketLabel, goalLabel, calories) {
-  const seedTitle = compactSeedPlanTitle(seed.title);
   const topic = buildCompactPlanTopic(seed, goalLabel);
   const market = marketLabel === 'UK' ? 'UK' : marketLabel;
   const caloriesText = calories.toLocaleString('en-GB');
-  const candidates = buildPlanTitleCandidates(seedTitle, market, caloriesText, topic);
+  const candidates = buildPlanTitleCandidates(seed.title, market, caloriesText, topic);
   const collisionIndex = SEO_TITLE_COLLISION_INDEX.get(seed.slug);
   const collisionCue = collisionIndex ? ` - Option ${collisionIndex}` : '';
   const selected = pickFirstWithinLimit(candidates, PLAN_TITLE_MAX_LENGTH, `${collisionCue}${PLAN_TITLE_SUFFIX}`);
@@ -1034,9 +1033,10 @@ function buildCtrPlanTitle(seed, marketLabel, goalLabel, calories) {
   return `${selected}${collisionCue}`;
 }
 
-function buildPlanTitleCandidates(seedTitle, market, caloriesText, topic) {
+function buildPlanTitleCandidates(rawSeedTitle, market, caloriesText, topic) {
   return [
-    seedTitle,
+    normaliseSeedPlanTitle(rawSeedTitle),
+    compactSeedPlanTitle(rawSeedTitle),
     `${market} ${caloriesText} kcal ${topic} Plan`,
     `${market} ${topic} Plan`,
     `${caloriesText} kcal ${topic} Plan`,
@@ -1064,7 +1064,7 @@ function buildSeoTitleCollisionIndex() {
     const topic = buildCompactPlanTopic(seed, goal);
     const title = pickFirstWithinLimit(
       buildPlanTitleCandidates(
-        compactSeedPlanTitle(seed.title),
+        seed.title,
         marketText,
         seed.calories.toLocaleString('en-GB'),
         topic,
@@ -1083,6 +1083,20 @@ function buildSeoTitleCollisionIndex() {
   return index;
 }
 
+// The seed title with nothing removed - only punctuation and spacing tidied.
+// Tried first, so a title that already fits keeps its keywords.
+function normaliseSeedPlanTitle(title) {
+  return String(title || '')
+    .replace(/\s+[—-]\s+/g, ' - ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Lossy fallback, used only when the full title will not fit. Every rule here
+// removes a word a reader might have searched for - "Meal Plan" becomes "Plan",
+// "Low Calorie" becomes "Low Cal" - so it is a last resort rather than a
+// default. It used to be applied unconditionally: 164 titles lost "Meal" and
+// 172 were abbreviated, while only 11 of them were actually over the limit.
 function compactSeedPlanTitle(title) {
   return String(title || '')
     .replace(/\s+Meal Plan\b/g, ' Plan')

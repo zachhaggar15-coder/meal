@@ -522,7 +522,7 @@ export const expandedBlogPostsData = {
   }),
 
   'what-does-1500-calories-look-like-uk': post({
-    title: 'What Does 1500 Calories Look Like? UK Breakfast, Lunch, Dinner + Snack',
+    title: 'What Does 1500 Calories Look Like? A Full UK Day',
     description: 'See what 1500 calories looks like in the UK: realistic breakfast, lunch, dinner and snack examples, plus the full 7-day 1500 calorie meal plan to use next.',
     h1: 'What Does 1500 Calories Look Like?',
     intro: '1500 calories should not look like black coffee, lettuce and a tiny dinner. This guide is a visual explainer for the shape of a realistic UK 1500 calorie day; if you want the full weekly menu, use the linked 7-day meal plan.',

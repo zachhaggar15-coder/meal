@@ -1864,7 +1864,7 @@ const topics = [
     supermarketSlug: 'sainsburys',
     supermarketName: "Sainsbury's",
     shortName: "Sainsbury's healthy ready meal combos",
-    title: "Sainsbury's Healthy Ready Meal Combos UK: Smarter Convenience Meals",
+    title: "Sainsbury's Healthy Ready Meal Combos UK: What to Add",
     description: "Sainsbury's healthy ready meal combos UK: ways to upgrade ready meals with protein, veg and simple sides for busy weeks.",
     h1: "Sainsbury's Healthy Ready Meal Combos UK: Smarter Convenience Meals",
     intro: 'Ready meals can be useful if you treat them like a base, not the whole strategy. The upgrade is simple: check the label, add protein if needed, add veg for volume and choose a side that makes the meal satisfying without doubling it.',
