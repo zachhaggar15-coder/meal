@@ -316,7 +316,7 @@ export default function MealPlanPage() {
       <SEO
         title={data.title}
         description={data.description}
-        canonical={REDIRECTED_LEGACY_PLANS[slug] || `/meal-plan/${slug}`}
+        canonical={REDIRECTED_LEGACY_PLANS[slug] || CANONICALISED_TO_HUB[slug] || `/meal-plan/${slug}`}
         ogType="article"
         ogImage={ogImageUrl}
         jsonLd={jsonLd}
@@ -860,6 +860,20 @@ const REDIRECTED_LEGACY_PLANS = {
   'sainsburys-low-calorie-meal-plan': '/plans/sainsburys-weight-loss-1500',
   'morrisons-low-calorie-meal-plan': '/plans/morrisons-weight-loss-1500',
   'gym-beginner-meal-plan-uk': '/plans/any-gym-beginner-1800',
+};
+
+// Cross-canonicalised, NOT redirected. These legacy pages duplicate a
+// /meal-plans/ hub closely enough that Google was splitting the query between
+// them and ranking neither: /meal-plan/1500-calorie-meal-plan and
+// /meal-plans/1500-calorie both led their titles with "1500 Calorie Meal Plan
+// UK", took 7,755 impressions between them over three months, and sat at
+// positions 44 and 35 for 45 clicks. The hub converts three times better and
+// belongs to the linked hub system, so it keeps the query; this page stays live
+// and useful but points its canonical at the hub and drops out of the sitemap
+// (see NON_CANONICAL_SITEMAP_ROUTES in prerender.js). Reassess with the rest of
+// the September indexing work.
+const CANONICALISED_TO_HUB = {
+  '1500-calorie-meal-plan': '/meal-plans/1500-calorie',
 };
 
 const LEGACY_GENERATED_EQUIVALENTS = {

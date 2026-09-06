@@ -1176,6 +1176,14 @@ export const MEAL_PLAN_HUBS = {
           'Aldi and Lidl are strong for basic low-cost weeks. Tesco, Asda and Sainsbury\'s are helpful when you want more specific vegetarian, high-protein, ready-to-eat or free-from options. Generic UK supermarket plans use common ingredients and average UK supermarket pricing when you do not want to pick one shop.',
         ],
       },
+      {
+        h2: 'Is 1,500 the right target for you?',
+        paragraphs: [
+          'The number only means something relative to what you burn. A 1,500 kcal target produces a useful deficit for someone whose total daily energy expenditure sits somewhere around 1,800 to 2,200 - which is a common range for smaller or moderately active adults - and that works out at roughly 300 to 700 calories a day below maintenance. Held steadily, that is a sensible rate rather than a dramatic one.',
+          'It is the wrong target for a good number of people. If you are larger, training hard, on your feet all day, pregnant or breastfeeding, 1,500 is likely to be too low, and eating too little tends to show up as poor adherence rather than as fast progress. The honest test is two or three weeks of your own weight trend rather than a calculator.',
+          'This is general planning information rather than dietary or medical advice. If you have a health condition, take medication that interacts with diet, or are unsure what is appropriate for you, that is a conversation with a GP or a registered dietitian first.',
+        ],
+      },
     ],
     faq: [
       {
@@ -1189,6 +1197,18 @@ export const MEAL_PLAN_HUBS = {
       {
         q: 'Can I print a 1500 calorie meal plan as a PDF?',
         a: 'Yes. Open any matching plan and use the export or print PDF section to save the full week, recipes, calories, macros and shopping list.',
+      },
+      {
+        q: 'How much weight will I lose on 1,500 calories?',
+        a: 'If your maintenance is around 2,000 to 2,200, a 1,500 kcal target is a deficit of roughly 500 to 700 a day. Actual weekly change depends on starting weight, activity, how consistently you hit the target and normal water-weight movement, so judge it on a trend over a few weeks rather than day to day.',
+      },
+      {
+        q: 'How do I batch cook a 1,500 calorie week?',
+        a: 'Cook the one-pot meal and portion it, freezing anything past the first two days. Boil a batch of eggs for breakfasts and snacks, and prepare rice for the first day or two only - cooked rice should be cooled quickly, refrigerated and used within a day. Leave anything meant to be crisp or fresh to the morning.',
+      },
+      {
+        q: 'How do I make a 1,500 calorie plan cheaper?',
+        a: 'Frozen chicken and fish instead of fresh, tinned fish in place of salmon, own-brand oats and rice, and frozen vegetables as the default rather than the fallback. Those four swaps move the weekly figure more than anything else, and none of them changes the calories or the protein.',
       },
     ],
     relatedSlugs: ['free-online-diet-plans-uk', 'low-calorie', 'weight-loss', 'high-protein', 'meal-plans-with-shopping-list', 'printable-meal-plans'],
