@@ -1726,7 +1726,7 @@ const topics = [
     supermarketSlug: 'lidl',
     supermarketName: 'Lidl',
     shortName: 'Lidl high protein food ideas',
-    title: 'Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples',
+    title: 'Lidl High Protein Meals UK: Foods, Snacks and Staples',
     description: 'Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.',
     h1: 'Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples',
     intro: 'Lidl high-protein shopping works best when you stop chasing novelty and build from the basics: chicken, eggs, yogurt, tuna, mince, beans, tofu, fish and frozen veg. Add a few sauces and you have most of the week covered.',
@@ -1782,6 +1782,8 @@ const topics = [
       { q: 'What high-protein foods can I buy at Lidl?', a: 'Chicken, mince, eggs, tuna, Greek yogurt, cottage cheese, tofu, beans, lentils, fish and frozen veg are useful staples.' },
       { q: 'Is Lidl good for high-protein meal prep?', a: 'Yes, especially if you build around own-brand staples and frozen foods rather than relying only on specialist protein products.' },
       { q: 'What is an easy Lidl high-protein meal?', a: 'Chicken rice bowls, tuna pasta salad, mince chilli and yogurt oat pots are simple repeatable options.' },
+      { q: 'Does Lidl do high-protein ready meals?', a: "Lidl's dedicated High Protein range is dairy-led rather than a ready-meal line - the own-brand Milbona label covers High Protein Skyr, High Protein Greek Style Yoghurt, Fat Free High Protein Yoghurt and a High Protein Drink, grouped under one High Protein category online. For a high-protein evening meal you are generally assembling from chicken, mince, fish, eggs or tofu rather than buying a labelled product, so check the protein figure per pack on anything chilled rather than assuming." },
+      { q: 'What counts as a nutrient-dense meal at Lidl?', a: 'Nutrient density means more nutrition per calorie rather than more protein alone. In practice that is a meal built on a lean protein, a whole grain or potato, and a generous amount of vegetables - so eggs with wholemeal toast and spinach, or lentil dhal with brown rice. Frozen vegetables count exactly the same as fresh here, which is what makes it cheap to do at a discounter.' },
     ],
   },
   {

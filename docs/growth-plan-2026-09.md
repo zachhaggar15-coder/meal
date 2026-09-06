@@ -64,8 +64,33 @@ SERP, see Finding 3; `meal-prep-containers-uk` (+26) is a redirect showing as a
 stale row; `/browse` (+27, position 38.1) and `/blog` (+27, position 31.4) rank
 too deep for CTR work to reach.
 
-**The realistic prize is therefore ~250 clicks per 3 months, about 85/month**,
-against a current ~1,020/month. Worth doing. Not transformative.
+**Corrected again, 6 September, against page-filtered exports.** The largest
+single item on that list is not reachable, so the realistic prize is smaller
+still.
+
+`/plans/aldi-high-protein-low-cal-1500` (+84) does not have a title problem. Its
+own query export splits cleanly:
+
+| | impressions | clicks | CTR |
+|---|---:|---:|---:|
+| Queries the page answers (high-protein / low-calorie plan) | 49 | 6 | **12.2%** |
+| Queries it ranks for but cannot satisfy | 629 | 0 | **0.0%** |
+
+The 0.78% headline is an average of an excellent page and 629 impressions of
+queries a seven-day meal plan can never answer - *aldi meal planner* (145),
+*high protein pasta aldi* (88), *aldi protein pasta* (85), *protein pasta aldi*
+(80), *protein bread aldi* (72), *5 meals for 25 aldi* (71). No title makes
+somebody searching for protein pasta want a meal plan. **Leave this page alone.**
+
+Its 12.2% on matched intent is the highest CTR measured anywhere on the site,
+which is worth remembering the next time a low headline CTR looks like a defect.
+
+Striking it, **the realistic prize is ~165 clicks per 3 months, about 55/month.**
+
+The 325 impressions of Aldi protein-product queries are still real demand - they
+are simply landing on the wrong page. `aldi-high-protein-shopping-list-uk` now
+covers Aldi's Higher Protein Food & Drink category, so the route to those clicks
+is that page outranking the plan page for them, not a rewrite of either.
 
 Note also that the top two opportunities are **plan pages, not blog posts** -
 `aldi-high-protein-low-cal-1500` is the site's largest page by impressions and
@@ -180,21 +205,33 @@ Twice the impressions, a quarter of the clicks. The size guide answers a
 specific question; the head term competes with Amazon. Write problem-shaped
 pages, not "best X" pages.
 
-### Session 4 — new guides, supermarket-intent led
+### Session 4 — COMPLETE, and it wrote nothing new
 
-Write 5–6 guides that lead with named-retailer intent, since that is what
-converts. Candidate shapes, to be confirmed against the query export at the
-time rather than assumed now:
+Run 6 September. The plan called for five or six new supermarket-led guides. The
+query data said not to: the site already ranks 7-10 for those retailer terms with
+existing pages, and a new page targeting the same query is the cannibalisation
+that retired six pages in August. The session deepened what already ranks instead.
 
-- retailer × specific need where a plan page is the answer
-- the "what to buy at X for Y" shape that already converts at 5–15%
-- anything the query export shows demand for that the site cannot currently
-  answer
+**`aldi-high-protein-shopping-list-uk`** - 781 to 1,017 words. Its page-filtered
+export showed the real intent split: meals 537i (49%), range and products 285i
+(26%), shopping list 57i (5%). It was titled for the 5% intent. Retitled to
+"Aldi High Protein Meals, Foods and Shopping List UK", and given a section on
+Aldi's Higher Protein Food & Drink category, written from
+`supermarketProfiles.js` (sourced to aldi.co.uk, checked 2026-08-16).
 
-**Constraint: no permutation sets.** Each guide must have a premise the others
-do not. If two candidates cannot justify different content, write one.
+**`lidl-high-protein-food-ideas-uk`** - its title was 65 characters and being cut
+off, while its top query over three months is *lidl protein meals* (292i), with
+*lidl high protein meals* (94), *lidl protein meal* (43), *protein meals lidl*
+(39) and *high protein meals lidl* (30) behind it. Retitled to "Lidl High Protein
+Meals UK: Foods, Snacks and Staples" (53 chars). Two FAQs added for queries it
+ranked for and did not answer: *lidl high protein ready meals* (106i) and the
+*nutrient dense meals* pair (50i). Its sections are generated from
+`formula`/`foods`/`meals` arrays, so FAQ is the only free-prose field available -
+adding a body section there needs a supermarket-cluster template change.
 
-*Outcome: corpus ~150, all at the quality bar.*
+**Not done: "aldi meal planner"** (145i, position 8.9, zero clicks). It has no
+page of its own, but creating one risks competing with `/meal-plans/aldi`. Needs
+a page-filtered export for that hub before anything is written.
 
 ### Session 5 — the 1500-calorie cluster
 
