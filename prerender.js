@@ -264,7 +264,6 @@ const NON_CANONICAL_SITEMAP_ROUTES = new Set([
   '/meal-plan/sainsburys-low-calorie-meal-plan',
   '/meal-plan/morrisons-low-calorie-meal-plan',
   '/meal-plan/gym-beginner-meal-plan-uk',
-  '/meal-plans/low-effort',
   // Canonicalises to /meal-plans/1500-calorie - see CANONICALISED_TO_HUB.
   '/meal-plan/1500-calorie-meal-plan',
 ]);

@@ -1713,6 +1713,9 @@ const topics = [
       { q: 'What low-calorie foods should I buy at Aldi?', a: 'Chicken, tuna, eggs, yogurt, cottage cheese, potatoes, oats, frozen veg, salad, berries, soup and chopped tomatoes are useful staples.' },
       { q: 'Can Aldi meals work for weight loss?', a: 'They can fit a lower-calorie week if portions and total intake make sense. Use protein, veg and measured carbs as the base.' },
       { q: 'What is a cheap Aldi low-calorie lunch?', a: 'Tuna jacket potatoes, chicken salad wraps, soup plus eggs and yogurt oat pots are simple options.' },
+      { q: 'Does Aldi sell low-calorie bread?', a: 'Aldi groups its lower-calorie prepared products under the Slimwell range, and carries the usual wholemeal, seeded and thin-sliced breads alongside them. The figure worth reading is per slice rather than per 100g, because slice thickness varies far more between loaves than the per-100g number suggests - a thin-sliced loaf can be close to half the calories per slice of a thick-cut one made from the same bread.' },
+      { q: 'Is Aldi wholemeal bread healthy?', a: 'Wholemeal carries more fibre than white, which is the main nutritional difference and a useful one given most UK adults fall short of the 30g daily target. Beyond that, no single loaf makes a diet healthy or unhealthy - what goes on it usually matters more than the bread. Check the per-slice figures on the pack rather than assuming, since recipes and slice sizes change.' },
+      { q: 'What about lower-fat dips and tinned goods at Aldi?', a: 'Reduced-fat hummus, lower-sugar baked beans and similar swaps are stocked, though the specific lines rotate and vary by store, so treat any one product as a preference rather than a fixture. On dips the saving is real but small per serving - the portion size does more than the product choice, which is why these plans measure them rather than banning them.' },
     ],
   },
   {

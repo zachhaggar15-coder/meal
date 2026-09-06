@@ -1048,8 +1048,13 @@ function buildCtrPlanDescription(seed, marketLabel, goalLabel, calories, planTit
   const budget = BUDGET_ESTIMATES[seed.budget];
   const caloriesText = calories.toLocaleString('en-GB');
   const planLead = planTitle.replace(/\s+-\s+(\d{1,2},)?\d{3}\s+kcal$/i, '');
+  // Budget comes second, before the feature list, for two reasons: it is the
+  // most persuasive thing in the snippet, and it therefore survives if Google
+  // clips the line anyway. The previous order put it last behind "PDF print
+  // view and shopping list", which pushed 299 of 1,205 descriptions past the
+  // 155-character limit and cut every one of them off mid-word on "Budget...".
   return trimSeoDescription(
-    `Free ${planLead}: 7 days at ~${caloriesText} kcal/day with recipes, macros, PDF print view and shopping list. Budget ${budget}/week.`,
+    `Free ${planLead}: 7 days at ~${caloriesText} kcal/day, ${budget}/week. Recipes, macros, shopping list and printable PDF.`,
     PLAN_DESCRIPTION_MAX_LENGTH,
   );
 }
