@@ -2189,7 +2189,7 @@ export const expandedBlogPostsData = {
   'aldi-high-protein-shopping-list-uk': post({
 
     supermarkets: ['aldi'],
-    title: 'Aldi High Protein Shopping List UK',
+    title: 'Aldi High Protein Meals, Foods and Shopping List UK',
     description: 'Aldi high protein shopping list for UK meal prep with eggs, chicken, yogurt, tuna, cottage cheese, lentils, beans and budget meals.',
     h1: 'Aldi High Protein Shopping List UK',
     intro: 'The useful thing about an Aldi shopping list is that it keeps working. A big-four supermarket stocks tens of thousands of lines and rotates them constantly, so a list written in January sends you looking for products that have moved, changed pack size or gone. Aldi carries a fraction of that number, nearly all own-label, and the core range barely moves — which means the list below is a list you can reuse every week rather than rewrite.',
@@ -2251,6 +2251,13 @@ export const expandedBlogPostsData = {
           'If breakfast is usually low protein, fix that first with Greek yogurt, eggs, cottage cheese, or milk-based oats.',
         ],
       },
+      {
+        h2: 'Browse the Higher Protein category, not the aisles',
+        paragraphs: [
+          'Aldi groups protein-led products into a dedicated Higher Protein Food & Drink category on its website rather than leaving them scattered through the aisles. That is genuinely useful before a shop: you can see what is currently stocked in one list instead of walking the store hoping, which matters more at a discounter than it would at a big-four store carrying ten options per line.',
+          'It is also where the products people search for by name tend to sit - higher-protein pasta, protein breads, protein puddings and drinks - rather than beside their conventional equivalents. Treat anything you find there as a preference rather than a fixture: Aldi rotates ranges and stock varies between stores, so the habit worth building is to check the category each week rather than planning around one product.',
+        ],
+      },
     ],
     related: [
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High Protein Foods UK', type: 'blog' },
@@ -2260,6 +2267,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What should I buy at Aldi for high protein meal prep?', a: 'Eggs, chicken, tuna, Greek yogurt, cottage cheese, turkey mince, beans, lentils, tofu if stocked, oats, rice, potatoes, and frozen vegetables.' },
       { q: 'Is Aldi good for high protein dieting?', a: 'Yes. Aldi is strong for basic protein staples and budget-friendly meal prep.' },
+      {
+        q: 'Does Aldi sell high-protein pasta and bread?',
+        a: 'Aldi runs a Higher Protein Food & Drink category online where products like these are grouped, but the specific lines rotate and vary by store. Check the category before you shop rather than assuming a particular product will be there, and keep an ordinary alternative in mind.',
+      },
+      {
+        q: 'Where do I find high-protein products in Aldi?',
+        a: 'Online they are collected in the Higher Protein Food & Drink category. In store they sit with their conventional equivalents rather than in one aisle, so it is worth browsing that category first and writing the list from it.',
+      },
     ],
   }),
 
