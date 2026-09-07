@@ -317,6 +317,287 @@ export const practicalGuidesData = {
     ],
   }),
 
+  'how-to-scale-a-recipe-uk': guide({
+    title: 'How to Scale a Recipe for Batch Cooking (Without Ruining It)',
+    description:
+      'How to double or triple a recipe for batch cooking: what scales linearly, what does not, why a doubled pan steams instead of browns, and how cooking times change.',
+    h1: 'How to Scale a Recipe for Batch Cooking',
+    intro:
+      'Doubling a recipe is the first thing anyone does when they start batch cooking, and it is the first thing that goes wrong. Most of a recipe scales cleanly. A few parts do not, and those few are the difference between four good portions and four mediocre ones.',
+    quickAnswer: {
+      answer:
+        'Scale the main ingredients and liquid straight up. Hold back on strong spices, chilli and garlic - start at about three quarters and adjust at the end. Do not double the quantity in the same pan: crowding steams food instead of browning it, which is the most common reason a scaled-up batch tastes flat.',
+      links: [
+        { label: 'Batch cooking for beginners', to: '/blog/batch-cooking-for-beginners-uk' },
+        { label: 'Portion without scales', to: '/blog/portion-sizes-without-scales-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'What scales cleanly, and what does not',
+        paragraphs: [
+          'Proteins, vegetables, grains, tinned goods and most liquid scale straight up. Double them and the dish is the same dish. Salt scales too, but taste at the end rather than trusting the arithmetic, because a larger volume needs proportionally slightly less to taste the same.',
+          'The things to hold back are the assertive ones: chilli, strong spices, garlic, and anything smoked or fermented. Start at roughly three quarters of the scaled amount and add at the end if it needs it. You can always add heat; removing it means cooking more of everything else.',
+          'Fresh herbs and acid - lemon, vinegar, yoghurt - go in at the end regardless of scale, because both fade with cooking time, and a doubled batch cooks for longer.',
+        ],
+      },
+      {
+        h2: 'The pan is the real constraint',
+        paragraphs: [
+          'This is the mistake that spoils more scaled-up batches than any seasoning error. Browning needs the surface of the food to reach a temperature where water has boiled off. Double the mince in the same pan and the water cannot escape fast enough, so the food sits in its own liquid and steams grey rather than browning.',
+          'The fix is space, not heat. Brown in two or three batches and combine, or move to a genuinely larger pan. Turning the heat up on a crowded pan burns the bottom while the middle still steams.',
+          'The same logic applies to a roasting tray. Vegetables on a crowded tray go soft rather than caramelising, so a doubled tray bake wants two trays, and ideally two shelves with a swap halfway.',
+        ],
+      },
+      {
+        h2: 'Time does not double, but it does change',
+        paragraphs: [
+          'A doubled stew does not need twice as long, but it does need longer than the original - mostly because a larger volume takes longer to come up to temperature, not because it cooks more slowly once there. Judge by the food rather than the clock, and start checking around the original time.',
+          'Reduction is the exception that catches people out. A sauce thickens by evaporating from its surface, and doubling the volume in the same pan barely changes the surface area, so a doubled sauce can take far longer than twice as long to reduce. Either accept a looser sauce, use a wider pan, or reduce a portion of the liquid separately.',
+          'Baking is the one to be careful with. Cakes and anything set by eggs do not scale reliably, because depth changes how heat reaches the centre. Two tins of the original size beat one large one.',
+        ],
+      },
+      {
+        h2: 'Scale for the portions you actually want',
+        paragraphs: [
+          'Recipes are written for four because that is a household, not because four is a useful number for prep. Work backwards from what you need: five lunches, or three dinners plus two frozen. Then scale to that rather than to a tidy multiple, and weigh the protein into portions before cooking so the finished batch divides evenly.',
+          'It is also worth scaling less than you think at first. A tripled recipe you have never made before is three times the risk, and a batch nobody enjoys is worse than a small one that ran out.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+      { slug: 'portion-sizes-without-scales-uk', label: 'Portion Sizes Without Scales', type: 'blog' },
+      { slug: 'which-recipes-survive-meal-prep-uk', label: 'Which Recipes Survive Meal Prep', type: 'blog' },
+      { slug: 'meal-prep-equipment-uk', label: 'Meal Prep Equipment UK', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Do I double the spices when I double a recipe?',
+        a: 'Not straight away. Salt scales roughly linearly but taste at the end; chilli, strong spices and garlic are better started at about three quarters of the scaled amount and adjusted before serving. Adding heat is easy, removing it is not.',
+      },
+      {
+        q: 'Why does my doubled recipe taste flat?',
+        a: 'Usually pan crowding rather than seasoning. Twice the food in the same pan steams instead of browning, and browning is where most of the flavour comes from. Cook in batches or use a bigger pan.',
+      },
+      {
+        q: 'Does a doubled recipe take twice as long to cook?',
+        a: 'No - it mainly takes longer to reach temperature. Start checking at the original time. The exception is reducing a sauce, which can take much more than twice as long because the surface area barely changes.',
+      },
+    ],
+  }),
+
+  'how-to-defrost-meal-prep-safely-uk': guide({
+    title: 'How to Defrost Meal Prep Safely (and Quickly)',
+    description:
+      'How to defrost frozen meal prep safely: fridge, cold water and microwave methods, why the worktop is not one of them, and when to cook straight from frozen.',
+    h1: 'How to Defrost Meal Prep Safely',
+    intro:
+      'Freezing is the part of meal prep everyone gets right. Defrosting is the part almost nobody thinks about, and it is where the food safety actually lives - because a portion left on the worktop spends hours at exactly the temperature bacteria like most.',
+    quickAnswer: {
+      answer:
+        'The fridge overnight is the best method and needs no attention. If you have forgotten, use cold water in a sealed bag, changing the water every half hour, or the microwave - but food defrosted either of those ways has to be cooked straight away. Do not defrost on the worktop.',
+      links: [
+        { label: 'Store meal prep safely', to: '/blog/how-to-store-meal-prep-safely-uk' },
+        { label: 'Freezer labels that stay on', to: '/blog/freezer-labels-for-meal-prep-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Why the worktop is the one to avoid',
+        paragraphs: [
+          'A frozen portion thaws from the outside in. Left at room temperature, the outer layer reaches a temperature where bacteria multiply well before the middle has thawed at all, and it then stays there for hours. The inside being cold is not protecting the outside.',
+          'This is the reason Food Standards Agency guidance points at the fridge. It is slower precisely because the whole portion stays cold throughout, which is the point rather than an inconvenience.',
+        ],
+      },
+      {
+        h2: 'The three methods that work',
+        paragraphs: [
+          'In the fridge is the default. A single portion is usually thawed overnight; a large block of stew or a whole joint can take a day or more, so this needs planning rather than remembering at six in the evening. Put it on a plate or in a tub, because thawing food releases liquid.',
+          'In cold water is the fast method. Keep the food in a sealed, watertight bag, submerge it, and change the water every thirty minutes so it does not warm up. A portion thaws in an hour or so. Food thawed this way must be cooked immediately, because parts of it will have warmed.',
+          'In the microwave is the fastest and the least even. Use the defrost setting, stop before it starts cooking at the edges, and cook it straight away for the same reason. Never defrost in the microwave and then leave it sitting.',
+        ],
+      },
+      {
+        h2: 'When to skip defrosting entirely',
+        paragraphs: [
+          'A lot of prepped food goes straight from freezer to heat, and this is usually the better option. Soups, stews, chilli, curry and bolognese all reheat from frozen in a pan or the microwave with a splash of liquid and regular stirring. Frozen vegetables should never be defrosted first - they go straight in.',
+          'The rule is the same as reheating anything else: it has to be piping hot the whole way through, not just at the edges. Frozen food heats unevenly, so stir partway and check the middle rather than the surface.',
+        ],
+      },
+      {
+        h2: 'Refreezing, and what is actually allowed',
+        paragraphs: [
+          'Raw food that has been thawed should not be refrozen raw. But you can cook it and freeze the cooked dish - that is a different food, and it is how a large pack of mince becomes portions of chilli in the freezer.',
+          'Food that has been cooked, frozen, thawed and reheated has reached the end of the line. Do not put it back. In practice this rarely matters if you freeze in single portions in the first place, which is the habit that makes all of this easier.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
+      { slug: 'freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+      { slug: 'meal-prep-for-one-person-uk', label: 'Meal Prep for One Person', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Can I defrost meal prep on the worktop?',
+        a: 'No. The outside reaches a temperature bacteria multiply at long before the middle thaws, and then stays there for hours. Use the fridge, or cold water in a sealed bag if you need it faster.',
+      },
+      {
+        q: 'How long does a frozen portion take to defrost in the fridge?',
+        a: 'A single portion is usually ready overnight. Larger blocks and whole joints can take a day or more, so plan it rather than hoping.',
+      },
+      {
+        q: 'Can I refreeze food after defrosting it?',
+        a: 'Not raw food thawed raw. You can cook thawed raw food and freeze the cooked dish. Anything already cooked, frozen, thawed and reheated should not go back in the freezer.',
+      },
+      {
+        q: 'Can I reheat meal prep straight from frozen?',
+        a: 'Usually yes, and often it is better. Wet dishes like stew, chilli and curry reheat well from frozen with a splash of liquid and regular stirring. Check the middle is piping hot rather than the edges.',
+      },
+    ],
+  }),
+
+  'which-recipes-survive-meal-prep-uk': guide({
+    title: 'Which Recipes Survive Meal Prep (and Which Never Will)',
+    description:
+      'How to tell before you cook whether a recipe will still be good on day three: what reheats well, what goes soggy, and the one question that predicts most of it.',
+    h1: 'Which Recipes Survive Meal Prep',
+    intro:
+      'Most disappointing meal prep is not badly cooked. It is a good recipe that was never going to survive three days in a fridge, chosen before anyone asked whether it would. Working that out in advance takes about ten seconds once you know what to look for.',
+    quickAnswer: {
+      answer:
+        'Wet, braised dishes survive best and often improve - stew, chilli, curry, dhal, bolognese. Anything meant to be crisp does not survive at all. The quickest test: would you happily eat it cold? If yes, it will almost certainly reheat well too.',
+      links: [
+        { label: 'Batch cooking for beginners', to: '/blog/batch-cooking-for-beginners-uk' },
+        { label: 'Swap meals without breaking the plan', to: '/blog/how-to-swap-meals-in-a-meal-plan-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'The four categories, best to worst',
+        paragraphs: [
+          'Wet and braised is the top tier. Stews, chillies, curries, dhals, ragus and soups sit in their own sauce, which protects them from drying and lets the flavours settle. Several are genuinely better on day two, which is the only free lunch in meal prep.',
+          'Grain and pulse bowls come next, provided they are assembled cold. Rice, couscous, lentils and roasted vegetables keep well separately; it is dressing them three days early that ruins them.',
+          'Roasted food is the acceptable middle. It reheats safely and tastes fine, but it will not be crisp again, so choose it knowing that. A tray bake on day three is a good soft dinner, not the dinner you cooked.',
+          'Fried, battered and breaded food does not survive, and no technique fixes it. The coating exists to be crisp and it will not be. Cook that fresh or choose something else.',
+        ],
+      },
+      {
+        h2: 'The specific things that go wrong',
+        paragraphs: [
+          'Starch keeps absorbing. Pasta, noodles and rice continue to soften in a sauce, so a pasta dish sauced on Sunday is noticeably softer by Wednesday. Store the sauce and the starch separately if you care about texture.',
+          'Dairy splits. Cream and creme fraiche can separate when reheated, and yoghurt almost always does. Add them at serving rather than cooking them into a dish destined for the fridge.',
+          'Leaves and anything crisp collapse on contact with dressing or steam. Keep salad components dry and separate, and dress at the last moment.',
+          'Fish is a judgement call. Oily fish like salmon holds up well because the fat protects it; firm white fish is fine cold and unpleasant reheated; prawns are already cooked and turn rubbery if heated again.',
+        ],
+      },
+      {
+        h2: 'The test that predicts most of it',
+        paragraphs: [
+          'Ask whether you would eat the dish cold and be happy. Almost everything that passes that test also reheats well, because both depend on the same thing - the dish does not rely on a texture that only exists in the minutes after cooking.',
+          'The second question is whether the recipe has a sauce. A sauce is insurance: it keeps protein from drying, it carries flavour that would otherwise fade, and it makes reheating forgiving. A dry dish has no margin, so it needs to be right.',
+        ],
+      },
+      {
+        h2: 'Adapting a recipe that nearly works',
+        paragraphs: [
+          'Most borderline recipes can be rescued by splitting them. Cook the component that keeps, store the component that does not separately, and combine at eating. A crisp-topped bake becomes the filling plus a topping added at reheat; a salad becomes a base plus dressing in a small pot.',
+          'The other adjustment is to undercook slightly what will be reheated. Vegetables in particular get a second cooking when the dish is reheated, so pulling them a little early on the first pass is the difference between fine and mushy on Thursday.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+      { slug: 'how-to-swap-meals-in-a-meal-plan-uk', label: 'How to Swap Meals in a Plan', type: 'blog' },
+      { slug: 'how-to-scale-a-recipe-uk', label: 'How to Scale a Recipe for Batch Cooking', type: 'blog' },
+      { slug: 'meal-prep-watery-or-soggy-uk', label: 'Why Meal Prep Goes Watery or Soggy', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'How do I know if a recipe will work for meal prep?',
+        a: 'Ask whether you would happily eat it cold. Almost everything that passes also reheats well, because both depend on the dish not relying on a texture that exists only just after cooking.',
+      },
+      {
+        q: 'What food should I never meal prep?',
+        a: 'Anything fried, battered or breaded, and anything whose point is crispness. The coating will be soft and no reheating method changes that.',
+      },
+      {
+        q: 'Why does my pasta go soft by midweek?',
+        a: 'Because starch keeps absorbing sauce in the fridge. Store the sauce and the pasta separately and combine when you eat, and cook the pasta a little short on the first pass.',
+      },
+    ],
+  }),
+
+  'reduce-food-waste-meal-prep-uk': guide({
+    title: 'How to Cut Food Waste When You Meal Prep',
+    description:
+      'Where meal prep food waste actually comes from, how to shop so fresh food gets used first, and what use-by and best-before dates really mean.',
+    h1: 'How to Cut Food Waste When You Meal Prep',
+    intro:
+      'Meal prep is supposed to reduce waste, and often does the opposite at first - because a plan makes you buy for seven days when you realistically cook for four. The food that gets thrown away is rarely the food you forgot. It is the food you bought on purpose for a day that never happened.',
+    quickAnswer: {
+      answer:
+        'Buy fresh for the first three or four days and frozen or cupboard for the rest, freeze portions on day two rather than day four, and learn the difference between use-by and best-before. Those three habits remove most of it.',
+      links: [
+        { label: 'Shopping list template', to: '/blog/meal-prep-shopping-list-template-uk' },
+        { label: 'Store meal prep safely', to: '/blog/how-to-store-meal-prep-safely-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Where it actually goes',
+        paragraphs: [
+          'Three places, in order. Fresh produce bought for the back half of the week, which spoils before you reach it. Portions cooked on Sunday that were still fine on Tuesday and are not by Friday. And the part-used pack - half a bag of spinach, two thirds of a tub of creme fraiche - bought because the recipe needed a small amount of something sold in a large amount.',
+          'Almost none of it is forgetfulness, which is why reminders do not fix it. It is a mismatch between how food is sold and how one household eats.',
+        ],
+      },
+      {
+        h2: 'Shop for the shape of the week, not the length of it',
+        paragraphs: [
+          'Fresh salad, berries, fish and prepared vegetables realistically hold three or four days. Buying seven days of them guarantees the last two are a gamble. Plan fresh food for the front of the week and frozen or cupboard food for the back, and the same single shop covers seven days without anything sitting too long.',
+          'Frozen vegetables are the single most effective change here, because they cannot spoil while you decide. Used as the default rather than the fallback they remove the entire category of produce thrown away half used.',
+        ],
+      },
+      {
+        h2: 'Freeze early, not late',
+        paragraphs: [
+          'The instinct is to freeze what is left when it is about to turn. By then the food has already lost most of its life and you are freezing something you will enjoy less. Freeze on the day you cook, or the day after, while it is still what you meant to eat.',
+          'That also means portioning at the point of cooking rather than eating from a big container until it looks doubtful. Cook four, eat one, refrigerate one, freeze two - decided once, on Sunday, rather than negotiated every evening.',
+        ],
+      },
+      {
+        h2: 'Use-by and best-before are not the same thing',
+        paragraphs: [
+          'Use-by is about safety. Do not eat food after its use-by date even if it looks and smells fine, and do not rely on your judgement instead - this is the date on meat, fish, dairy and prepared foods. Freezing before the use-by date pauses it, which is what makes the freezer useful here.',
+          'Best-before is about quality. Food past it is generally still safe and often perfectly good - dried pasta, tinned goods, biscuits and most cupboard staples are the usual cases. Judging those by sight, smell and taste is exactly what the date allows.',
+          'Confusing the two costs money in both directions: throwing away good cupboard food, and trusting your nose on something where the date was a safety instruction.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'meal-prep-shopping-list-template-uk', label: 'Meal Prep Shopping List Template', type: 'blog' },
+      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
+      { slug: 'meal-prep-for-one-person-uk', label: 'Meal Prep for One Person', type: 'blog' },
+      { slug: 'how-to-defrost-meal-prep-safely-uk', label: 'How to Defrost Meal Prep Safely', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'What is the difference between use-by and best-before?',
+        a: 'Use-by is a safety date - do not eat food after it, even if it seems fine. Best-before is a quality date, and food past it is usually still safe. Use-by appears on meat, fish, dairy and prepared foods; best-before on cupboard staples.',
+      },
+      {
+        q: 'How do I stop throwing away fresh food?',
+        a: 'Plan fresh ingredients for the first three or four days and frozen or cupboard ones for the rest. One shop still covers the week, but nothing fresh has to survive until Friday.',
+      },
+      {
+        q: 'When should I freeze leftovers?',
+        a: 'On the day you cook or the day after, while the food is still what you meant to eat. Freezing something that was about to be thrown away just moves the problem into the freezer.',
+      },
+    ],
+  }),
+
   'how-to-swap-meals-in-a-meal-plan-uk': guide({
     title: 'How to Swap Meals in a Meal Plan Without Breaking It',
     description:

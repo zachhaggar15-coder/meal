@@ -592,6 +592,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Weight Loss",
     "calories": 1500
   },
+  "how-to-defrost-meal-prep-safely-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "how-to-lose-belly-fat-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -617,6 +625,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "how-to-read-food-labels-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
+  "how-to-scale-a-recipe-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -1000,6 +1016,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Aldi High Protein",
     "calories": 1550
   },
+  "reduce-food-waste-meal-prep-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "reusable-ice-packs-for-lunch-bags-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -1150,6 +1174,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "supermarket": null,
     "goal": null,
     "goalLabel": "1500 Calorie",
+    "calories": 1500
+  },
+  "which-recipes-survive-meal-prep-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   }
 });
