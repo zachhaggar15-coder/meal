@@ -2,11 +2,11 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-08-31T14:08:53.366Z",
+  "generatedAt": "2026-09-07T12:47:24.537Z",
   "range": {
     "current": {
-      "startDate": "2026-08-01",
-      "endDate": "2026-08-28"
+      "startDate": "2026-08-08",
+      "endDate": "2026-09-04"
     }
   },
   "source": "google-analytics-and-search-console",
@@ -36,28 +36,28 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Meal plans"
     },
     {
-      "to": "/meal-plans/1500-calorie",
-      "label": "1500 Calorie Meal Plan UK",
-      "description": "Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.",
-      "category": "Meal plans"
-    },
-    {
-      "to": "/blog/best-meal-prep-containers-uk",
-      "label": "Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options",
-      "description": "Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance.",
-      "category": "Guide"
-    },
-    {
       "to": "/meal-plans/high-protein",
       "label": "High Protein Meal Plans UK",
       "description": "Find free high protein meal plans for UK supermarkets, including fat loss, muscle gain, vegetarian, gym beginner and body recomposition plans.",
       "category": "Meal plans"
     },
     {
-      "to": "/meal-plan/1500-calorie-meal-plan",
-      "label": "1500 Calorie Meal Plan UK: 7-Day High-Protein Plan with Shopping List",
-      "description": "A complete 1500 calorie meal plan for UK adults: 7 days of high-protein meals, a full supermarket shopping list, batch cooking tips, and suitability notes for fat loss.",
-      "category": "Ready-made plan"
+      "to": "/meal-plans/1500-calorie",
+      "label": "1500 Calorie Meal Plan UK",
+      "description": "Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.",
+      "category": "Meal plans"
+    },
+    {
+      "to": "/blog/lidl-high-protein-food-ideas-uk",
+      "label": "Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples",
+      "description": "Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.",
+      "category": "Guide"
+    },
+    {
+      "to": "/meal-plans/cheap-student-meal-prep-aldi",
+      "label": "Cheap Student Meal Prep at Aldi",
+      "description": "Free Aldi cheap student meal prep plans with budget weekly shops, simple recipes, shopping lists and printable PDFs.",
+      "category": "Meal plans"
     }
   ]
 };
