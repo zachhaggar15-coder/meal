@@ -623,6 +623,7 @@ export const blogPostsBatch4Data = {
       },
     ],
     related: [
+      { slug: 'overnight-oats-jars-for-meal-prep-uk', label: 'Overnight Oats Jars for Meal Prep', type: 'blog' },
       { slug: 'protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge and Yogurt Breakfasts UK', type: 'blog' },
       { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
       { slug: 'meal-prep-equipment-uk', label: 'Meal Prep Equipment UK', type: 'blog' },

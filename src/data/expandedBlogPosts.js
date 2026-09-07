@@ -1163,6 +1163,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'high-protein-sandwich-fillings-uk', label: 'High Protein Sandwich Fillings UK', type: 'blog' },
       { slug: 'meal-prep-without-a-microwave-uk', label: 'Meal Prep Without a Microwave', type: 'blog' },
       { slug: 'five-day-work-lunch-meal-prep-uk', label: 'Five Day Work Lunch Meal Prep', type: 'blog' },
       ...proteinRelated,
@@ -1367,6 +1368,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'overnight-oats-jars-for-meal-prep-uk', label: 'Overnight Oats Jars for Meal Prep', type: 'blog' },
       { slug: 'high-protein-breakfast-uk', label: 'High Protein Breakfast UK', type: 'blog' },
       { slug: 'high-protein-snacks-uk', label: 'High Protein Snacks UK', type: 'blog' },
       { slug: 'overnight-oats-meal-prep-uk', label: 'Overnight Oats Meal Prep UK', type: 'blog' },
@@ -1683,6 +1685,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'microwave-meal-prep-ideas-uk', label: 'Microwave Meal Prep Ideas UK', type: 'blog' },
       { slug: 'high-protein-lunches-for-work-uk', label: 'High Protein Work Lunches', type: 'blog' },
       { slug: 'work-lunch-containers-guide', path: '/meal-prep-containers/work-lunch', label: 'Meal Prep Boxes for Work UK', type: 'guide' },
       ...mealPrepRelated,
@@ -1740,6 +1743,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'microwave-meal-prep-ideas-uk', label: 'Microwave Meal Prep Ideas UK', type: 'blog' },
       { slug: 'low-effort-meal-plan-uk', label: 'Low Effort Meal Plan', type: 'meal-plan' },
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       ...mealPrepRelated,

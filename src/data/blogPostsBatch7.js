@@ -571,6 +571,9 @@ const topics = [
   },
   {
     slug: 'low-calorie-meals-that-fill-you-up-uk',
+    related: [
+      { slug: 'low-calorie-snacks-uk', label: 'Low Calorie Snacks UK', type: 'blog' },
+    ],
     cluster: 'weight',
     shortName: 'filling low calorie meals',
     title: 'Low Calorie Meals That Fill You Up UK: Big Plates, Better Choices',
@@ -633,6 +636,9 @@ const topics = [
   },
   {
     slug: 'high-volume-low-calorie-foods-uk',
+    related: [
+      { slug: 'low-calorie-snacks-uk', label: 'Low Calorie Snacks UK', type: 'blog' },
+    ],
     cluster: 'weight',
     shortName: 'high volume low calorie foods',
     title: 'High Volume Low Calorie Foods UK: Bigger Portions Without Guesswork',
@@ -1067,6 +1073,9 @@ const topics = [
   },
   {
     slug: 'no-cook-meal-prep-ideas-uk',
+    related: [
+      { slug: 'microwave-meal-prep-ideas-uk', label: 'Microwave Meal Prep Ideas UK', type: 'blog' },
+    ],
     cluster: 'mealPrep',
     shortName: 'no-cook meal prep ideas',
     title: 'No-Cook Meal Prep Ideas UK: Lunches, Snacks and Emergency Meals',
@@ -1129,6 +1138,9 @@ const topics = [
   },
   {
     slug: 'cold-lunch-ideas-for-work-uk',
+    related: [
+      { slug: 'high-protein-sandwich-fillings-uk', label: 'High Protein Sandwich Fillings UK', type: 'blog' },
+    ],
     cluster: 'mealPrep',
     shortName: 'cold lunch ideas for work',
     title: 'Cold Lunch Ideas for Work UK: Meal Prep That Does Not Need a Microwave',
@@ -1501,6 +1513,9 @@ const topics = [
   },
   {
     slug: 'high-protein-breakfast-meal-prep-uk',
+    related: [
+      { slug: 'overnight-oats-jars-for-meal-prep-uk', label: 'Overnight Oats Jars for Meal Prep', type: 'blog' },
+    ],
     cluster: 'mealPrep',
     shortName: 'high protein breakfast meal prep',
     title: 'High Protein Breakfast Meal Prep UK: Make-Ahead Mornings',
@@ -2425,6 +2440,9 @@ const topics = [
   },
   {
     slug: 'office-snack-drawer-ideas-uk',
+    related: [
+      { slug: 'low-calorie-snacks-uk', label: 'Low Calorie Snacks UK', type: 'blog' },
+    ],
     cluster: 'lifestyle',
     shortName: 'office snack drawer ideas',
     title: 'Office Snack Drawer Ideas UK: Better Desk Snacks for Busy Workdays',

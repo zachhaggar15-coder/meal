@@ -805,6 +805,7 @@ const rawBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'student-high-protein-meals-uk', label: 'Student High Protein Meals UK', type: 'blog' },
       { slug: 'cheapest-protein-sources-cost-per-gram-uk', label: 'Cheapest Protein Sources: Cost Per Gram Compared', type: 'blog' },
       { slug: 'chicken-vs-eggs-protein-value-uk', label: 'Chicken vs Eggs: Which Is Better Value?', type: 'blog' },
       { slug: 'cheap-protein-sources-uk-supermarkets', label: 'Cheap Protein Sources UK', type: 'blog' },
@@ -1232,6 +1233,7 @@ const rawBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'student-high-protein-meals-uk', label: 'Student High Protein Meals UK', type: 'blog' },
       { slug: 'how-much-should-meal-prep-cost-uk', label: 'How Much Should Meal Prep Cost?', type: 'blog' },
       { slug: 'is-meal-prep-cheaper-than-meal-deals-uk', label: 'Is Meal Prep Cheaper Than Meal Deals?', type: 'blog' },
       { slug: 'iceland-weight-loss-1800', label: 'Iceland Budget Meal Plan', type: 'plan' },

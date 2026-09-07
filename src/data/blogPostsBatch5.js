@@ -413,6 +413,7 @@ export const blogPostsBatch5Data = {
       productIds: ['russell-hobbs-rice-cooker'],
     },
     related: [
+      { slug: 'student-high-protein-meals-uk', label: 'Student High Protein Meals UK', type: 'blog' },
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
       { slug: 'cheapest-uk-supermarket-meal-prep', label: 'Cheapest UK Supermarket for Meal Prep', type: 'blog' },

@@ -370,6 +370,7 @@ export const blogPostsBatch8Data = {
       productIds: ['lifewit-9l-insulated-lunch-bag', 'fit-fresh-slim-ice-packs', 'milu-450ml-food-flask'],
     },
     related: [
+      { slug: 'high-protein-sandwich-fillings-uk', label: 'High Protein Sandwich Fillings UK', type: 'blog' },
       { slug: 'best-lunch-bags-for-meal-prep-uk', label: 'Best Lunch Bags for Meal Prep UK', type: 'blog' },
       { slug: 'cold-lunch-ideas-for-work-uk', label: 'Cold Lunch Ideas for Work UK', type: 'blog' },
       { slug: 'meal-prep-without-a-microwave-uk', label: 'Meal Prep Without a Microwave UK', type: 'blog' },
