@@ -598,6 +598,702 @@ export const practicalGuidesData = {
     ],
   }),
 
+  'how-long-does-cooked-chicken-last-uk': guide({
+    title: 'How Long Does Cooked Chicken Last in the Fridge?',
+    description:
+      'How long cooked chicken and other cooked meat keeps in the fridge and freezer, why smell is the wrong test, and how quickly it needs to be cooled.',
+    h1: 'How Long Does Cooked Meat Last?',
+    intro:
+      'The honest answer is shorter than most meal preppers assume, and the reason people get it wrong is that cooked meat gives almost no warning. Food that has been sitting too long usually looks and smells exactly like food that has not.',
+    quickAnswer: {
+      answer:
+        'Around two days in the fridge for cooked chicken and most cooked leftovers, under NHS and Food Standards Agency guidance. It needs to be cooled and refrigerated within two hours of cooking. Anything you will not eat inside those two days should go in the freezer on the day you cook it.',
+      links: [
+        { label: 'Store meal prep safely', to: '/blog/how-to-store-meal-prep-safely-uk' },
+        { label: 'Defrost meal prep safely', to: '/blog/how-to-defrost-meal-prep-safely-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Two days, and the clock starts at cooking',
+        paragraphs: [
+          'For cooked chicken, mince, fish and most prepared dishes, the working figure is two days in the fridge. That is not two days from when it went in - it is two days from cooking, which matters if a batch sat on the hob cooling for an evening.',
+          'Cooling is the part people skip. Get cooked food into the fridge within two hours, and speed that up by splitting a big batch into shallow portions rather than leaving a full pot to cool from the outside in. A large volume can sit warm in the middle for hours, which is exactly the condition the two-hour rule exists to prevent.',
+          'The fridge itself should be at 5C or below. A lot of home fridges run warmer than their dial suggests, and a cheap fridge thermometer settles it in a way that guessing does not.',
+        ],
+      },
+      {
+        h2: 'Why smell is the wrong test',
+        paragraphs: [
+          'Spoilage bacteria are what make food smell bad. The bacteria that make people ill are largely different organisms, and they do not announce themselves - food carrying enough of them to cause a problem can look, smell and taste completely normal.',
+          'So "it seems fine" is not evidence about cooked leftovers. Use the date you cooked it, which is the argument for labelling containers with the day rather than trusting recall on Thursday about what happened on Sunday.',
+          'Obvious spoilage - sliminess, a sour smell, any visible mould - means throw it out. But the absence of those signs is not permission.',
+        ],
+      },
+      {
+        h2: 'The freezer changes the arithmetic',
+        paragraphs: [
+          'At minus 18C, food stays safe more or less indefinitely. What degrades is quality, and for cooked dishes that happens over months rather than days - around three months is a reasonable working limit before texture and flavour noticeably suffer.',
+          'The mistake is treating the freezer as the place food goes when it is nearly finished. Freeze on the day you cook, while it is still what you meant to eat. A portion frozen on day three has already spent most of its fridge life and comes out worse than one frozen on day one.',
+          'This is why cooking four portions and immediately deciding their fate - one now, one for tomorrow, two frozen - works better than eating from a large container until it becomes a judgement call.',
+        ],
+      },
+      {
+        h2: 'Reheating does not reset anything',
+        paragraphs: [
+          'Reheating food does not extend its life or undo time already spent in the fridge. Reheat once, until piping hot the whole way through, and eat it. Food that has been reheated and not finished should be thrown away rather than returned to the fridge for another round.',
+          'That is easier to follow if you portion before storing, so what comes out of the fridge is what gets eaten. Reheating a large container and putting the rest back is the usual way people end up reheating twice without intending to.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
+      { slug: 'how-to-defrost-meal-prep-safely-uk', label: 'How to Defrost Meal Prep Safely', type: 'blog' },
+      { slug: 'freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'How long does cooked chicken last in the fridge?',
+        a: 'About two days, counted from when it was cooked rather than when it went in the fridge. That is the NHS and FSA guidance for cooked leftovers generally, not just chicken.',
+      },
+      {
+        q: 'Can I tell if cooked meat has gone off by smelling it?',
+        a: 'Not reliably. The bacteria that cause illness are largely different from the ones that cause smells, so food can be unsafe while seeming completely normal. Go by the date you cooked it.',
+      },
+      {
+        q: 'How long does cooked chicken keep in the freezer?',
+        a: 'It stays safe indefinitely at minus 18C. Quality is the limit - around three months for most cooked dishes before texture and flavour noticeably drop.',
+      },
+    ],
+  }),
+
+  'batch-cooking-one-hob-ring-uk': guide({
+    title: 'Batch Cooking on One Hob Ring (or a Broken Cooker)',
+    description:
+      'How to batch cook with one working hob ring: what to cook in what order, which formats need only one pan, and how to use the oven, kettle and microwave to fill the gaps.',
+    h1: 'Batch Cooking on One Hob Ring',
+    intro:
+      'Shared kitchens, bedsits, caravans and cookers with three dead rings all produce the same problem: recipes assume you can run three pans at once, and you cannot. The fix is not smaller ambitions, it is a different order of operations.',
+    quickAnswer: {
+      answer:
+        'Cook in sequence and hold things in bowls rather than trying to time everything to finish together. Start with what reheats well and finish with what does not. One-pot formats - chilli, curry, dhal, soup, a rice dish - are built for this and give you a week from a single pan.',
+      links: [
+        { label: 'Batch cooking for beginners', to: '/blog/batch-cooking-for-beginners-uk' },
+        { label: 'Meal prep with no microwave', to: '/blog/meal-prep-without-a-microwave-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Cook in sequence, not in parallel',
+        paragraphs: [
+          'With several rings you time everything to land together. With one, that instinct wastes the session. Cook each component fully, tip it into a bowl, and move on - the ring is never idle and nothing needs to be watched simultaneously.',
+          'The order that works: the thing that takes longest and reheats best first, the thing that must be fresh last. So the chilli goes on before the eggs, and the rice before the greens.',
+          'Anything you cooked early gets combined or reheated at the end. Because most of it is going into the fridge anyway, a component being lukewarm when it goes into a container is irrelevant - it only has to be properly cooked and then cooled promptly.',
+        ],
+      },
+      {
+        h2: 'Formats that only ever need one pan',
+        paragraphs: [
+          'Chilli, curry, dhal, bolognese, stew and thick soups are one-pan meals by design, and they are also the dishes that survive a week in the fridge best. A single large pan of any of them is four to six portions with nothing else on the hob.',
+          'Rice dishes that cook together - a pilaf, a one-pot rice and beans - remove the second pan entirely. So does anything where the starch is a wrap, bread or a potato baked in the oven while the pan does the filling.',
+          'The pattern to avoid on one ring is a plate assembled from three separately cooked things. That is three sequential cooks and three lots of washing up for one meal.',
+        ],
+      },
+      {
+        h2: 'Use the appliances that are not the hob',
+        paragraphs: [
+          'An oven, if you have one, is a second cooking surface that needs no attention: a tray of vegetables, potatoes or chicken thighs cooks while the pan works. A microwave does rice, jacket potatoes and frozen vegetables without touching the ring at all.',
+          'A kettle is more useful than it looks. Boiling water in the kettle and pouring it over pasta or into a pan means the ring only has to hold a simmer rather than bring several litres up from cold, which is often the longest single step.',
+          'A slow cooker, if there is one going spare, is the strongest addition here because it is entirely independent of the hob and suits exactly the wet, braised dishes that prep well.',
+        ],
+      },
+      {
+        h2: 'Wash as you go, because you have to',
+        paragraphs: [
+          'On one ring the same pan does several jobs, so washing is not optional tidying - it is part of the sequence. Rinse between components rather than at the end, and cook in an order that minimises it: light and mild before dark and strong, so the pan does not need scrubbing between steps.',
+          'That also decides the running order when it is close. Do the eggs before the chilli, not after.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+      { slug: 'student-meal-prep-uk', label: 'Student Meal Prep UK', type: 'blog' },
+      { slug: 'one-pot-high-protein-meals-uk', label: 'One Pot High Protein Meals UK', type: 'blog' },
+      { slug: 'slow-cooker-meal-prep-uk', label: 'Slow Cooker Meal Prep UK', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Can you batch cook with only one hob ring?',
+        a: 'Yes, by cooking in sequence rather than in parallel. Cook each component fully, move it to a bowl, and carry on. Most of it is going into the fridge anyway, so components do not need to be hot at the same time.',
+      },
+      {
+        q: 'What are the best one-pan meals for batch cooking?',
+        a: 'Chilli, curry, dhal, bolognese, stew and thick soups. They need one pan, scale up easily, and are the dishes that keep best across a week.',
+      },
+      {
+        q: 'What if I have no hob at all?',
+        a: 'An oven tray plus a microwave covers a surprising amount - roasted protein and vegetables, jacket potatoes, microwave rice and frozen vegetables. A slow cooker covers the wet dishes and needs no hob.',
+      },
+    ],
+  }),
+
+  'freezing-dairy-and-eggs-uk': guide({
+    title: 'Can You Freeze Milk, Cheese and Eggs? What Actually Works',
+    description:
+      'What happens when you freeze milk, cheese, butter, cream, yoghurt and eggs, which of them come back usable, and the one thing never to freeze in its shell.',
+    h1: 'Freezing Dairy and Eggs',
+    intro:
+      'Dairy is where most home freezing goes wrong, because some of it freezes beautifully and some of it separates into something you would not put in a coffee. The difference is mostly fat and water, and knowing which is which turns a lot of nearly-wasted food into next week.',
+    quickAnswer: {
+      answer:
+        'Milk, butter and hard cheese freeze well. Cream, creme fraiche and yoghurt split and are only usable in cooking afterwards. Eggs freeze only out of the shell - beaten, or whites and yolks separated. Never freeze an egg in its shell.',
+      links: [
+        { label: 'Cut food waste in meal prep', to: '/blog/reduce-food-waste-meal-prep-uk' },
+        { label: 'Defrost meal prep safely', to: '/blog/how-to-defrost-meal-prep-safely-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'What freezes well',
+        paragraphs: [
+          'Milk freezes and comes back fine, though it separates as it thaws and looks alarming until you shake it. Pour a little out of a full bottle first, because it expands. Semi-skimmed and whole both work; thaw in the fridge and use within a few days.',
+          'Butter is the easiest thing in this list. It freezes for months with no change worth noticing, and it is worth buying extra when it is cheap.',
+          'Hard cheese freezes but changes texture - cheddar comes out crumblier and does not slice as cleanly. That makes it worse on a sandwich and completely fine grated into a sauce, a bake or on top of pasta. Grate before freezing and it goes straight from freezer to pan.',
+        ],
+      },
+      {
+        h2: 'What splits, and what to do with it',
+        paragraphs: [
+          'Cream, creme fraiche, soured cream and yoghurt all separate when frozen and thawed, because the water and fat come apart and will not recombine by stirring. They are not unsafe, they are just no longer smooth.',
+          'That does not make them useless. Split cream still works stirred into a hot sauce, a soup or a curry, where it is being incorporated into something anyway. What it will not do is sit on a dessert or go into coffee.',
+          'Soft cheeses - brie, mozzarella, cottage cheese, ricotta - are the same story with the same answer. Freeze them only if the plan is to cook with them.',
+        ],
+      },
+      {
+        h2: 'Eggs: out of the shell, always',
+        paragraphs: [
+          'An egg is mostly water and water expands. Frozen in the shell it cracks, which ruins it and creates a contamination risk from shell fragments and leaked contents. This is the one hard rule here.',
+          'Out of the shell they freeze well. Beat whole eggs lightly and freeze in portions - an ice cube tray works, and a couple of cubes is roughly one egg. Whites freeze cleanly on their own. Yolks thicken unpleasantly unless you beat in a pinch of salt or sugar first, depending on what you plan to use them for.',
+          'Cooked egg dishes are less successful. Frittata and quiche freeze acceptably; scrambled and boiled eggs come back rubbery and watery, so those are worth cooking fresh.',
+        ],
+      },
+      {
+        h2: 'The practical use for all this',
+        paragraphs: [
+          'The point is not to freeze dairy routinely - it is to stop the part-used pack becoming waste. Half a tub of cream, the end of a block of cheddar, milk that will turn before you get through it: all of that has somewhere to go instead of the bin.',
+          'Label what you freeze with the date and the intended use, because "cream, for cooking" is a much more useful note in three weeks than an unmarked tub you no longer trust.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'reduce-food-waste-meal-prep-uk', label: 'Cut Food Waste When You Meal Prep', type: 'blog' },
+      { slug: 'how-to-defrost-meal-prep-safely-uk', label: 'How to Defrost Meal Prep Safely', type: 'blog' },
+      { slug: 'freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep', type: 'blog' },
+      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Can you freeze milk?',
+        a: 'Yes. It separates as it thaws and needs a good shake, and you should pour a little out of a full bottle first because it expands. Thaw in the fridge and use within a few days.',
+      },
+      {
+        q: 'Can you freeze eggs in their shell?',
+        a: 'No. Eggs are mostly water, and freezing expands them until the shell cracks. Beat them and freeze out of the shell instead - an ice cube tray portions them neatly.',
+      },
+      {
+        q: 'Why does frozen cream go grainy?',
+        a: 'The fat and water separate and will not recombine by stirring. It is still safe and still works stirred into a hot sauce or soup, but it will not go back to being smooth cream.',
+      },
+    ],
+  }),
+
+  'portioning-meat-before-freezing-uk': guide({
+    title: 'Portion Meat Before You Freeze It (The 10-Minute Habit)',
+    description:
+      'Why portioning meat on the day you shop saves money and stops portion drift, how to pack it flat for faster thawing, and what to write on the bag.',
+    h1: 'Portion Meat Before You Freeze It',
+    intro:
+      'Large packs are the cheapest way to buy meat and the easiest way to eat more of it than you planned. The gap between those two facts is about ten minutes of work on the day you shop, and it is probably the highest-return habit in meal prep.',
+    quickAnswer: {
+      answer:
+        'Split large packs into meal-sized portions before anything goes in the fridge or freezer, pack them flat, and label with the weight and date. Portions taken out of a big pack drift upward almost invisibly, and a flat pack thaws in a fraction of the time a block does.',
+      links: [
+        { label: 'Defrost meal prep safely', to: '/blog/how-to-defrost-meal-prep-safely-uk' },
+        { label: 'Portion without scales', to: '/blog/portion-sizes-without-scales-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Why portions drift out of a big pack',
+        paragraphs: [
+          'Nobody decides to cook more than they planned. What happens is that a kilo of mince does not divide neatly into the amount a recipe wants, so the extra goes in - it is only a bit, and the alternative is putting a small amount back in the fridge. Repeat that across a week and the plan and the eating have quietly separated.',
+          'Portioning at the point of shopping removes the decision entirely. On Thursday evening you take out a bag that is already the right size, and there is nothing to judge.',
+          'This is the same mechanism that makes frozen bagged protein work well for a deficit: you cook what you take out. Doing it yourself with a large pack gets the same effect at a lower price per kilo.',
+        ],
+      },
+      {
+        h2: 'Pack flat, not in lumps',
+        paragraphs: [
+          'A portion pressed flat in a freezer bag freezes faster, stacks like paper rather than rubble, and thaws in a fraction of the time a ball of the same weight takes. With mince this is nearly free - flatten the bag on the worktop and press the air out before sealing.',
+          'Flat packing also fixes the small freezer problem. A drawer that holds four lumpy tubs will hold a dozen flat bags, which is usually the difference between using the freezer and filling it.',
+          'Press out as much air as you can. Air is what causes freezer burn, and a bag with the air squeezed out gets most of the benefit people buy a vacuum sealer for.',
+        ],
+      },
+      {
+        h2: 'What to write on it',
+        paragraphs: [
+          'Three things: what it is, the weight, and the date. The weight is the one people skip and the one that makes the bag useful - "chicken thighs 400g" tells you whether it matches tonight, where "chicken" does not.',
+          'Write on the bag before you fill it. A marker will not take on a bag that is already cold and damp, which is how freezers accumulate unidentified flat objects.',
+          'Frozen meat stays safe indefinitely at minus 18C; quality is the limit, and a few months is a sensible working window. The date is what tells you where in that window you are.',
+        ],
+      },
+      {
+        h2: 'Do it before the fridge, not after',
+        paragraphs: [
+          'The habit only works if it happens on the day you shop, while the shopping is still on the worktop. Meat that goes into the fridge whole stays whole, and by the time you next look at it you are hungry and it is dinner time.',
+          'It is also the safer order. Handling raw meat once, at the point of unpacking, means one round of washing hands, board and knife rather than several across the week.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'how-to-defrost-meal-prep-safely-uk', label: 'How to Defrost Meal Prep Safely', type: 'blog' },
+      { slug: 'portion-sizes-without-scales-uk', label: 'Portion Sizes Without Scales', type: 'blog' },
+      { slug: 'freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep', type: 'blog' },
+      { slug: 'reduce-food-waste-meal-prep-uk', label: 'Cut Food Waste When You Meal Prep', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Should I freeze meat in the pack it came in?',
+        a: 'Better to split it first. A whole pack has to be thawed all at once, and portions taken from a large pack tend to grow. Meal-sized bags remove both problems.',
+      },
+      {
+        q: 'Why pack meat flat before freezing?',
+        a: 'It freezes faster, stacks far better in a small freezer, and thaws in a fraction of the time. Pressing the air out also reduces freezer burn without needing a vacuum sealer.',
+      },
+      {
+        q: 'How long does frozen meat keep?',
+        a: 'Indefinitely in safety terms at minus 18C. Quality is what limits it, and a few months is a sensible window - which is why the date on the bag matters more than people expect.',
+      },
+    ],
+  }),
+
+  'air-fryer-vs-oven-batch-cooking-uk': guide({
+    title: 'Air Fryer vs Oven for Batch Cooking: Which Actually Wins',
+    description:
+      'Air fryer or oven for batch cooking? How basket capacity, cooking in shifts and running costs compare when you are cooking four or five portions rather than one.',
+    h1: 'Air Fryer vs Oven for Batch Cooking',
+    intro:
+      'Air fryers win nearly every comparison written about them, and almost all of those comparisons are about cooking for one or two. Batch cooking asks a different question, and the answer changes once you need four portions at the same time.',
+    quickAnswer: {
+      answer:
+        'The oven wins on volume, because an air fryer basket realistically holds one or two portions and batch cooking means running it in shifts. The air fryer wins on speed for a single portion, on reheating, and on anything that needs to crisp. For most prep sessions the answer is both - the oven for the tray, the air fryer for the thing that needs to be crisp.',
+      links: [
+        { label: 'Batch cooking for beginners', to: '/blog/batch-cooking-for-beginners-uk' },
+        { label: 'Meal prep equipment', to: '/blog/meal-prep-equipment-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Capacity is the whole argument',
+        paragraphs: [
+          'An air fryer cooks by moving hot air fast around food, which needs space between the pieces. Fill the basket and it stops being an air fryer and becomes a small, slow oven - the food steams rather than browning, which is the same crowding problem a pan has.',
+          'That puts a real ceiling on the batch. A typical basket does one or two portions of chicken or vegetables properly, so four portions means two or three shifts. A standard oven tray does four in one go, and two trays on two shelves does eight.',
+          'So the sums invert with quantity. For one portion the air fryer is faster than heating an oven. For five, the oven is finished while the air fryer is on its second run.',
+        ],
+      },
+      {
+        h2: 'Where the air fryer genuinely wins',
+        paragraphs: [
+          'Reheating, and it is not close. An air fryer brings a portion back to something like its original texture in a few minutes, where a microwave makes it soft and an oven takes twenty minutes to heat for one container. If you prep food that was crisp, this is the appliance that rescues it.',
+          'It also wins on anything small and quick during a prep session - halloumi, tofu, a tray of frozen vegetables - because it needs no preheating worth the name and it does not warm the kitchen.',
+          'And on running cost for small jobs. Heating a large oven cavity to cook one portion is wasteful in a way that a small basket is not, which is the real basis of the energy claims people make for them.',
+        ],
+      },
+      {
+        h2: 'Where the oven wins',
+        paragraphs: [
+          'Volume, obviously. Also anything with liquid - a traybake that releases juices, a casserole, anything you want to braise - because a basket with holes in it is the wrong shape for that entirely.',
+          'And anything where you want several different things cooking together. A tray of chicken thighs with potatoes and peppers is one dish and one wash; the same food through an air fryer is three shifts, because they need different times.',
+          'Once the oven is on, the marginal cost of a second tray is small. That is the argument for cooking more than you need whenever it is already hot.',
+        ],
+      },
+      {
+        h2: 'The practical answer for a prep session',
+        paragraphs: [
+          'Run both, doing what each is good at. The oven takes the bulk - trays of protein, potatoes and vegetables that will become the base of several meals. The air fryer takes whatever needs to be genuinely crisp, and does it in the last ten minutes.',
+          'If you only have one, and you are cooking for more than two people, the oven is the more useful appliance for prep. The air fryer is the better second appliance, and it earns its place on reheating alone.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'air-fryer-meal-prep-uk', label: 'Air Fryer Meal Prep UK', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+      { slug: 'meal-prep-equipment-uk', label: 'Meal Prep Equipment UK', type: 'blog' },
+      { slug: 'which-recipes-survive-meal-prep-uk', label: 'Which Recipes Survive Meal Prep', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Is an air fryer good for batch cooking?',
+        a: 'For one or two portions, yes. Beyond that the basket forces you to cook in shifts, because filling it makes food steam instead of crisping. An oven tray does four at once.',
+      },
+      {
+        q: 'Is an air fryer cheaper to run than an oven?',
+        a: 'For small quantities, generally yes - you are heating a small basket rather than a large cavity. That advantage shrinks once you need several batches to match one oven tray.',
+      },
+      {
+        q: 'What is an air fryer best at for meal prep?',
+        a: 'Reheating. It brings prepped food back to something close to its original texture in minutes, which neither a microwave nor an oven manages well for a single portion.',
+      },
+    ],
+  }),
+
+  'slow-cooker-food-safety-uk': guide({
+    title: 'Slow Cooker Food Safety: Frozen Meat, Fill Levels and Overnight',
+    description:
+      'Slow cooker safety for batch cooking: why frozen meat should not go straight in, how full to fill it, whether overnight cooking is safe and why the lid matters.',
+    h1: 'Slow Cooker Food Safety',
+    intro:
+      'A slow cooker is the best appliance in the house for meal prep - it makes exactly the wet, braised dishes that survive a week, and it does it while you are elsewhere. The safety questions it raises are real but few, and they mostly come down to how quickly the food gets hot.',
+    quickAnswer: {
+      answer:
+        'Do not put frozen meat straight in - thaw it first, because a slow cooker takes too long to bring frozen food through the temperature range where bacteria multiply. Fill it between a half and three quarters full, keep the lid on, and do not use it to reheat cooked food.',
+      links: [
+        { label: 'Slow cooker meal prep', to: '/blog/slow-cooker-meal-prep-uk' },
+        { label: 'Store meal prep safely', to: '/blog/how-to-store-meal-prep-safely-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Frozen meat is the one real rule',
+        paragraphs: [
+          'A slow cooker works by holding food at a low temperature for a long time. That is fine when food reaches a safe temperature reasonably quickly and stays there, and it is a problem when the starting point is frozen, because the pot can spend hours in the range where bacteria multiply before it gets hot enough to matter.',
+          'So thaw meat fully first - in the fridge, ideally overnight. If you have forgotten, cook it another way rather than putting it in frozen and hoping the length of the cook compensates. It does not work that way; the issue is the hours spent getting there, not the total time.',
+          'Frozen vegetables are a different case and generally fine, since the risk that makes raw meat a problem is not present.',
+        ],
+      },
+      {
+        h2: 'Fill level changes how fast it heats',
+        paragraphs: [
+          'Between a half and three quarters full is the range slow cookers are designed around. Under-filled, the contents can overheat and dry; over-filled, the middle takes too long to come up to temperature and may not cook evenly - and it can spill as things bubble.',
+          'That matters more for batch cooking than for a family dinner, because the instinct when prepping is to fill it to the brim to get more portions. If you need more than the pot comfortably holds, do two cooks rather than one overloaded one.',
+        ],
+      },
+      {
+        h2: 'The lid, and why lifting it costs so much',
+        paragraphs: [
+          'A slow cooker has no reserve of heat. Lifting the lid drops the temperature substantially and it can take a long time to recover - commonly cited as adding around twenty minutes each time. Stirring a dish that does not need stirring is the most common way people slow their own cooking down.',
+          'Leave it alone. If a recipe needs something added late, add it late and put the lid straight back.',
+        ],
+      },
+      {
+        h2: 'Overnight, and reheating',
+        paragraphs: [
+          'Cooking overnight is fine in principle - the appliance is designed to run unattended, and a long low cook is what it is for. What matters is the same as any other time: thawed meat in, lid on, sensible fill level. Follow the manufacturer instructions for your model, since capacities and settings differ.',
+          'What a slow cooker should not do is reheat already-cooked food. It heats too slowly to bring a chilled portion through to piping hot quickly enough, which is exactly the situation to avoid. Reheat in a pan, an oven or a microwave, and use the slow cooker for cooking raw ingredients.',
+          'Cool leftovers promptly afterwards. A ceramic pot holds heat for a long time, so decant into shallow containers rather than leaving the whole thing to cool on the side.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'slow-cooker-meal-prep-uk', label: 'Slow Cooker Meal Prep UK', type: 'blog' },
+      { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
+      { slug: 'batch-cooking-one-hob-ring-uk', label: 'Batch Cooking on One Hob Ring', type: 'blog' },
+      { slug: 'how-to-defrost-meal-prep-safely-uk', label: 'How to Defrost Meal Prep Safely', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Can you put frozen meat in a slow cooker?',
+        a: 'No - thaw it first. A slow cooker heats too gradually to bring frozen meat through the range where bacteria multiply quickly enough, and a longer cook does not compensate for that.',
+      },
+      {
+        q: 'How full should a slow cooker be?',
+        a: 'Between a half and three quarters. Under that it can dry out; over it, the middle may not reach temperature evenly and it can spill.',
+      },
+      {
+        q: 'Can you reheat food in a slow cooker?',
+        a: 'No. It heats too slowly to get chilled food piping hot quickly enough. Use a pan, oven or microwave to reheat, and keep the slow cooker for cooking raw ingredients.',
+      },
+    ],
+  }),
+
+  'supermarket-own-brand-tiers-uk': guide({
+    title: 'How UK Supermarket Own-Brand Tiers Actually Work',
+    description:
+      'Value, standard and premium own-brand ranges explained: what actually differs between them, where trading down costs you nothing, and where it costs you the meal.',
+    h1: 'How Supermarket Own-Brand Tiers Work',
+    intro:
+      'Nearly every UK supermarket sells the same product at three prices under its own name. Understanding what changes between those tiers is the difference between a cheap shop and a cheap shop you regret, and it explains most of the budget advice on this site.',
+    quickAnswer: {
+      answer:
+        'Value tiers usually differ on grade, size consistency and meat or fruit content rather than on safety or basic nutrition. Trade down on things you will process - tinned tomatoes, frozen vegetables, oats, rice - and stay standard on things eaten as they are, where texture and consistency show.',
+      links: [
+        { label: 'Work out cost per portion', to: '/blog/cost-per-portion-uk' },
+        { label: 'Read a UK food label', to: '/blog/how-to-read-food-labels-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'The three tiers, and what the names mean',
+        paragraphs: [
+          'Most chains run a value range, a standard own-label range and a premium one. Asda has Just Essentials, Aldi has Everyday Essentials with Specially Selected above it, Lidl has Deluxe as its premium line, and Co-op runs Honest Value. The names change; the structure does not.',
+          'Standard own-label is the default and is usually the closest thing to the branded equivalent. Premium own-label is generally about sourcing, cut, or a shorter ingredient list rather than about being a different food. Value is where the meaningful differences live.',
+        ],
+      },
+      {
+        h2: 'What actually changes at the value tier',
+        paragraphs: [
+          'Usually grade and consistency rather than safety. Value vegetables are often the odd sizes and shapes that do not pack neatly, which matters not at all once they are chopped. Value tinned tomatoes may be more watery. Value biscuits may have less of the expensive ingredient.',
+          'On meat products the difference is more likely to be meat content and fat percentage, and that is worth reading rather than assuming - a cheaper sausage or burger is sometimes cheaper because there is less meat in it, which changes the protein figure as well as the taste.',
+          'What does not change is food safety, or the basic identity of a plain ingredient. Value oats are oats. Value frozen peas are peas.',
+        ],
+      },
+      {
+        h2: 'Where to trade down and where not to',
+        paragraphs: [
+          'Trade down freely on anything you are about to cook, chop or blend: tinned tomatoes and pulses, frozen vegetables, oats, rice, pasta, flour, stock. The processing removes almost everything you would have paid extra for.',
+          'Stay at standard for things eaten as they are, where texture and consistency are the product - yoghurt, cheese eaten cold, salad leaves, bread you are not toasting. This is also where a disappointing swap makes a whole meal worse rather than slightly cheaper.',
+          'The one to judge case by case is meat and fish. Some value lines are simply smaller or less uniform pieces, which is fine for a curry. Others have lower meat content, which is a different product. Read the pack rather than the tier name.',
+        ],
+      },
+      {
+        h2: 'Why value tiers reaching fresh food matters',
+        paragraphs: [
+          'Value ranges used to stop at cupboard goods, which meant a cheap basket was necessarily a carbohydrate-heavy one. Several now extend into fresh meat, fish and produce, and that is the change that makes a genuinely cheap high-protein week possible rather than a compromise.',
+          'It is also why the same budget goes further at some chains than others for a protein-led plan. The headline price per item matters less than whether the value tier covers the expensive part of your basket at all.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'cost-per-portion-uk', label: 'How to Work Out Cost Per Portion', type: 'blog' },
+      { slug: 'how-to-read-food-labels-uk', label: 'How to Read a UK Food Label', type: 'blog' },
+      { slug: 'cheapest-uk-supermarket-meal-prep', label: 'Cheapest UK Supermarket for Meal Prep', type: 'blog' },
+      { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High Protein Foods UK', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Is supermarket value food lower quality?',
+        a: 'Usually it differs on grade, size consistency or the proportion of an expensive ingredient rather than on safety. For anything you chop, cook or blend that difference mostly disappears.',
+      },
+      {
+        q: 'What should I never buy in the value range?',
+        a: 'Things eaten as they are, where texture is the product - yoghurt, cold cheese, salad, bread you will not toast. Also check meat products, where a lower price sometimes means lower meat content.',
+      },
+      {
+        q: 'Which supermarket has the best value range?',
+        a: 'The useful question is whether the value tier reaches fresh meat and fish, because that is where a protein-led basket spends. Several now do, which is what makes a cheap high-protein week possible.',
+      },
+    ],
+  }),
+
+  'cost-per-portion-uk': guide({
+    title: 'How to Work Out Cost Per Portion (Properly)',
+    description:
+      'How to calculate what a meal actually costs per portion, why counting whole packs overstates it, and how to handle cupboard staples you use a spoonful of.',
+    h1: 'How to Work Out Cost Per Portion',
+    intro:
+      'Almost every claim about cheap eating rests on a cost per portion, and almost nobody calculates one the same way. The arithmetic is simple; the judgement calls are where the numbers people quote diverge by a factor of two.',
+    quickAnswer: {
+      answer:
+        'Divide what you use by what you cook, not what you bought by what you cooked. Count the fraction of each pack the meal actually consumes, ignore cupboard staples you use a spoonful of, and add them as a flat few pence rather than trying to price a teaspoon of paprika.',
+      links: [
+        { label: 'How own-brand tiers work', to: '/blog/supermarket-own-brand-tiers-uk' },
+        { label: 'Cut food waste in meal prep', to: '/blog/reduce-food-waste-meal-prep-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Use what you use, not what you bought',
+        paragraphs: [
+          'The common mistake is charging the whole pack to one meal. A 500g bag of rice does not cost a meal five pounds worth of rice; it costs the meal the 60g it used. Work in fractions: pack price divided by pack size, multiplied by the amount in the recipe.',
+          'That is the calculation that makes bulk buying look sensible, and it is also the one that makes it look less impressive than the shelf label suggests - a larger pack lowers the per-gram price, but only for the portion you eat, not for the portion still in the cupboard.',
+          'Then divide by the number of portions the dish actually makes, which is the number you will eat, not the number the recipe claims.',
+        ],
+      },
+      {
+        h2: 'How to handle the spoonful problem',
+        paragraphs: [
+          'Spices, oil, stock, mustard, soy sauce and vinegar are used in amounts too small to price sensibly and too numerous to ignore. Pricing a teaspoon of paprika to two decimal places is false precision.',
+          'The workable convention is a flat allowance - somewhere around ten to twenty pence per portion covers seasoning, oil and sauces for most home cooking. State it as an assumption rather than pretending it is zero, because a costing that excludes the cupboard and one that includes it are different claims even when they land on the same headline figure.',
+          'The exception is anything used in quantity. If a recipe takes three tablespoons of olive oil, that is a real cost and should be counted properly.',
+        ],
+      },
+      {
+        h2: 'The waste adjustment nobody makes',
+        paragraphs: [
+          'A costing assumes every gram bought gets eaten. In practice the half bag of spinach that goes off is part of what the meal cost, and ignoring it is why real spending exceeds calculated spending so reliably.',
+          'The honest version is to cost the pack you had to buy when you cannot use the remainder for anything else. If a recipe needs 50g of an ingredient that only comes in 200g packs and nothing else in the week uses it, that meal effectively cost the whole pack.',
+          'This is a strong argument for building a week from a short list of ingredients used repeatedly, which is the actual reason repetitive plans are cheaper - not the shelf prices.',
+        ],
+      },
+      {
+        h2: 'What the number is for',
+        paragraphs: [
+          'Comparison, mostly. A cost per portion is most useful for deciding between two options - this chicken dish against that lentil one - rather than as an absolute claim, because the assumptions behind any single figure are doing a lot of work.',
+          'It is also how to test advice. When a plan claims a weekly figure, the question worth asking is whether it counts cupboard staples, whether it assumes every gram is eaten, and how many people it feeds. Most disagreements about whether meal prep is cheap come down to those three, not to the food.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'supermarket-own-brand-tiers-uk', label: 'How Own-Brand Tiers Work', type: 'blog' },
+      { slug: 'reduce-food-waste-meal-prep-uk', label: 'Cut Food Waste When You Meal Prep', type: 'blog' },
+      { slug: 'how-much-should-meal-prep-cost-uk', label: 'How Much Should Meal Prep Cost UK', type: 'blog' },
+      { slug: 'cheapest-protein-sources-cost-per-gram-uk', label: 'Cheapest Protein Sources per Gram', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'How do you calculate cost per portion?',
+        a: 'Pack price divided by pack size, times the amount the recipe uses, summed across ingredients, then divided by the portions it actually makes. Use the fraction consumed, not the whole pack.',
+      },
+      {
+        q: 'How do I price spices and oil?',
+        a: 'With a flat allowance rather than precise arithmetic - roughly ten to twenty pence a portion covers seasoning and sauces for most cooking. Count anything used in real quantity, like several tablespoons of oil, properly.',
+      },
+      {
+        q: 'Why does my shop cost more than the plan says?',
+        a: 'Usually because the costing assumes every gram gets eaten and that cupboard staples are already in. Waste and first-shop staples are the two gaps between a calculated figure and a receipt.',
+      },
+    ],
+  }),
+
+  'freezer-inventory-rotation-uk': guide({
+    title: 'Freezer Inventory: How to Stop Losing Food in There',
+    description:
+      'A simple freezer list and rotation system for meal prep: what to record, why first in first out matters, and how to stop the freezer becoming a store of unidentified blocks.',
+    h1: 'Freezer Inventory and Rotation',
+    intro:
+      'A freezer is only useful if you know what is in it. Most household freezers are less a store than an archive - things go in, the intention is genuine, and nobody looks again until something needs digging out from underneath.',
+    quickAnswer: {
+      answer:
+        'Keep a list on the freezer door and update it as things go in and out. Store in categories rather than piles, put new items at the back and take from the front, and treat anything older than about three months as needing to be used rather than kept.',
+      links: [
+        { label: 'Freezer labels that stay on', to: '/blog/freezer-labels-for-meal-prep-uk' },
+        { label: 'Defrost meal prep safely', to: '/blog/how-to-defrost-meal-prep-safely-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'A list on the door beats a better memory',
+        paragraphs: [
+          'The list does not need to be sophisticated - a sheet of paper and a pen, or a note on your phone. What makes it work is updating it at the moment food goes in or comes out, which is a five-second habit rather than an inventory exercise.',
+          'Write the item, the date and the number of portions. That is enough to answer the only questions you ever ask a freezer: is there anything for tonight, and what needs using.',
+          'The payoff is not tidiness. It is that you actually cook from the freezer, which is what makes batch cooking worth doing in the first place.',
+        ],
+      },
+      {
+        h2: 'Store in categories, not in strata',
+        paragraphs: [
+          'A freezer filled chronologically becomes layers, and whatever is at the bottom is invisible for months. Grouping instead - cooked meals here, raw protein there, vegetables in the drawer - means you look in one place rather than excavating.',
+          'Flat-packed portions help enormously with this, because they file like paper rather than stacking like rubble. A drawer that holds four lumpy tubs will hold a dozen flat bags.',
+          'Boxes or bags as dividers work better than good intentions in a chest freezer, where there is nothing to stop everything becoming one layer.',
+        ],
+      },
+      {
+        h2: 'First in, first out',
+        paragraphs: [
+          'Put new things at the back and take from the front. It is the same principle a shop uses, and it is the only reliable way to stop a small amount of food ageing indefinitely while newer food gets eaten around it.',
+          'Frozen food stays safe indefinitely at minus 18C, so this is about quality rather than danger. Around three months is a sensible working window for cooked dishes before texture and flavour noticeably drop, which is exactly the sort of thing a date on the bag makes visible.',
+        ],
+      },
+      {
+        h2: 'Run it down on purpose',
+        paragraphs: [
+          'Once every month or two, plan a week that cooks mostly from the freezer. It empties the awkward corners, it costs almost nothing in shopping, and it stops the slow accumulation that makes the whole thing unusable.',
+          'That week is also when you find out whether your labelling is working. Anything you cannot identify or date is a lesson about the label, not about the food.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep', type: 'blog' },
+      { slug: 'how-to-defrost-meal-prep-safely-uk', label: 'How to Defrost Meal Prep Safely', type: 'blog' },
+      { slug: 'portioning-meat-before-freezing-uk', label: 'Portion Meat Before You Freeze It', type: 'blog' },
+      { slug: 'reduce-food-waste-meal-prep-uk', label: 'Cut Food Waste When You Meal Prep', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'How do I keep track of what is in my freezer?',
+        a: 'A list on the door, updated as things go in and out, with the item, date and number of portions. It takes five seconds each time and it is the difference between a store and an archive.',
+      },
+      {
+        q: 'How long should food stay in the freezer?',
+        a: 'It stays safe indefinitely at minus 18C. Quality is the limit, and around three months is a sensible window for cooked dishes before texture and flavour drop noticeably.',
+      },
+      {
+        q: 'What is the best way to organise a freezer?',
+        a: 'By category rather than by date order, with new items at the back and older ones taken from the front. Flat-packed portions file far better than tubs and make the whole thing visible.',
+      },
+    ],
+  }),
+
+  'falling-off-the-meal-plan-uk': guide({
+    title: 'What to Do When You Fall Off the Meal Plan',
+    description:
+      'How to recover a meal prep week that has gone wrong by Wednesday: salvaging the food you already cooked, and why restarting on Monday is the worst option.',
+    h1: 'When the Plan Falls Apart Midweek',
+    intro:
+      'Most meal prep does not fail on Sunday. It fails on Wednesday, when something ran late and the containers are still in the fridge, and the instinct after that is to write off the week and start again next Monday. That instinct costs more than the missed meals.',
+    quickAnswer: {
+      answer:
+        'Deal with the food first - freeze anything you will not eat in the next day or two, before it becomes waste rather than a decision. Then rejoin the plan at the next meal rather than the next Monday. A week that goes four days out of seven is not a failed week.',
+      links: [
+        { label: 'Weekly calorie deficit meal prep', to: '/blog/weekly-calorie-deficit-meal-prep-uk' },
+        { label: 'Weight loss meal prep mistakes', to: '/blog/weight-loss-meal-prep-mistakes-uk' },
+      ],
+    },
+    sections: [
+      {
+        h2: 'Rescue the food before you think about the plan',
+        paragraphs: [
+          'Two prepped portions sitting in the fridge on Wednesday have about a day left if they were cooked on Sunday. That is the decision that has a deadline, and it is worth making before anything else - freeze them now and they are next week; leave them another two days and they are the bin.',
+          'This is the single biggest cost of a broken week and the easiest to avoid. The food is still perfectly good at the point you realise the plan has slipped; it is only lost if the realisation leads to nothing.',
+        ],
+      },
+      {
+        h2: 'Rejoin at the next meal, not the next Monday',
+        paragraphs: [
+          'Waiting for Monday turns a missed dinner into four days of no plan at all, which is arithmetically much worse and is where most of the damage in a "failed" week actually happens. There is nothing special about Monday except that it feels like a clean start.',
+          'The next meal is always available. If Wednesday evening went badly, Thursday breakfast is the plan again - and the week still lands somewhere useful rather than being written off.',
+          'This matters more on a deficit than people assume, because a week that averages correctly does much the same job as seven identical days. Four good days and three ordinary ones is a real result.',
+        ],
+      },
+      {
+        h2: 'Work out which failure it was',
+        paragraphs: [
+          'Weeks break for a handful of reasons and they need different fixes. If you ran out of time, the prep session was too ambitious - cook fewer, simpler things next Sunday. If you did not want the food, the menu was wrong, and no amount of discipline fixes a menu you do not like.',
+          'If it was one unusually hard day, it was probably just an unusually hard day and nothing needs changing. The mistake is redesigning the whole system in response to a single bad Wednesday.',
+          'If it is the same failure every week, that is information. Consistently abandoning Thursday means Thursday needs a different kind of meal, not more willpower.',
+        ],
+      },
+      {
+        h2: 'Keep a fallback that requires nothing',
+        paragraphs: [
+          'The best insurance against a broken week is two or three frozen single portions that need no thought - the accumulated extra from previous batches. That is the difference between a bad evening and a takeaway, and it is free if you cook one extra portion of things you were making anyway.',
+          'A tin of something and a bag of frozen vegetables does the same job. The point is that the fallback exists before you need it, because nobody assembles one at seven on a Wednesday.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'weekly-calorie-deficit-meal-prep-uk', label: 'Weekly Calorie Deficit Meal Prep', type: 'blog' },
+      { slug: 'weight-loss-meal-prep-mistakes-uk', label: 'Weight Loss Meal Prep Mistakes', type: 'blog' },
+      { slug: 'how-to-swap-meals-in-a-meal-plan-uk', label: 'How to Swap Meals in a Plan', type: 'blog' },
+      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
+    ],
+    faq: [
+      {
+        q: 'Should I restart my meal plan on Monday if I fall off midweek?',
+        a: 'No - rejoin at the next meal. Waiting for Monday turns one missed dinner into four days without a plan, which does far more damage than the meal you missed.',
+      },
+      {
+        q: 'What should I do with prepped food I did not eat?',
+        a: 'Freeze it as soon as you realise the week has slipped, while it is still good. Cooked leftovers keep about two days in the fridge, so the decision has a deadline.',
+      },
+      {
+        q: 'Why does my meal prep keep failing on the same day?',
+        a: 'That is usually information rather than a discipline problem. A day you consistently abandon needs a different kind of meal - lower effort, or something you actually look forward to.',
+      },
+    ],
+  }),
+
   'how-to-swap-meals-in-a-meal-plan-uk': guide({
     title: 'How to Swap Meals in a Meal Plan Without Breaking It',
     description:

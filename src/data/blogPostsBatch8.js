@@ -119,7 +119,7 @@ export const blogPostsBatch8Data = {
       {
         h2: 'Why fridge-cold rice hardens faster than frozen rice',
         paragraphs: [
-          'Starch recrystallises fastest at fridge temperatures, which is why rice kept for three days in the fridge often feels worse than rice frozen on day one and reheated a week later. Freezing moves the rice through that temperature range quickly and then effectively pauses the process.',
+          'Starch recrystallises fastest at fridge temperatures, which is why fridge-cold rice hardens faster than rice frozen on day one and reheated a week later. It is also why the freezer is the right home for rice you are not eating quickly - cooked rice should be cooled within an hour and used within a day, so the fridge was never the long option. Freezing moves the rice through that temperature range quickly and then effectively pauses the process.',
           'If you routinely prep rice more than two days ahead, freezing the later portions rather than refrigerating them is the single change that makes the most difference to texture.',
         ],
       },

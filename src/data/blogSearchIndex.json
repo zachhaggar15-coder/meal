@@ -640,6 +640,106 @@
     "reviewed": "5 September 2026"
   },
   {
+    "slug": "supermarket-own-brand-tiers-uk",
+    "title": "How Supermarket Own-Brand Tiers Work",
+    "description": "Value, standard and premium own-brand ranges explained: what actually differs between them, where trading down costs you nothing, and where it costs you the meal.",
+    "keywords": "How UK Supermarket Own-Brand Tiers Actually Work How Supermarket Own-Brand Tiers Work",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "supermarket-own-brand-tiers-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "cost-per-portion-uk",
+    "title": "How to Work Out Cost Per Portion",
+    "description": "How to calculate what a meal actually costs per portion, why counting whole packs overstates it, and how to handle cupboard staples you use a spoonful of.",
+    "keywords": "How to Work Out Cost Per Portion (Properly) How to Work Out Cost Per Portion",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "cost-per-portion-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "freezer-inventory-rotation-uk",
+    "title": "Freezer Inventory and Rotation",
+    "description": "A simple freezer list and rotation system for meal prep: what to record, why first in first out matters, and how to stop the freezer becoming a store of unidentified blocks.",
+    "keywords": "Freezer Inventory: How to Stop Losing Food in There Freezer Inventory and Rotation",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "freezer-inventory-rotation-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "falling-off-the-meal-plan-uk",
+    "title": "When the Plan Falls Apart Midweek",
+    "description": "How to recover a meal prep week that has gone wrong by Wednesday: salvaging the food you already cooked, and why restarting on Monday is the worst option.",
+    "keywords": "What to Do When You Fall Off the Meal Plan When the Plan Falls Apart Midweek",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "falling-off-the-meal-plan-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "portioning-meat-before-freezing-uk",
+    "title": "Portion Meat Before You Freeze It",
+    "description": "Why portioning meat on the day you shop saves money and stops portion drift, how to pack it flat for faster thawing, and what to write on the bag.",
+    "keywords": "Portion Meat Before You Freeze It (The 10-Minute Habit) Portion Meat Before You Freeze It",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "portioning-meat-before-freezing-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "air-fryer-vs-oven-batch-cooking-uk",
+    "title": "Air Fryer vs Oven for Batch Cooking",
+    "description": "Air fryer or oven for batch cooking? How basket capacity, cooking in shifts and running costs compare when you are cooking four or five portions rather than one.",
+    "keywords": "Air Fryer vs Oven for Batch Cooking: Which Actually Wins Air Fryer vs Oven for Batch Cooking",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "air-fryer-vs-oven-batch-cooking-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "slow-cooker-food-safety-uk",
+    "title": "Slow Cooker Food Safety",
+    "description": "Slow cooker safety for batch cooking: why frozen meat should not go straight in, how full to fill it, whether overnight cooking is safe and why the lid matters.",
+    "keywords": "Slow Cooker Food Safety: Frozen Meat, Fill Levels and Overnight Slow Cooker Food Safety",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "slow-cooker-food-safety-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "how-long-does-cooked-chicken-last-uk",
+    "title": "How Long Does Cooked Meat Last?",
+    "description": "How long cooked chicken and other cooked meat keeps in the fridge and freezer, why smell is the wrong test, and how quickly it needs to be cooled.",
+    "keywords": "How Long Does Cooked Chicken Last in the Fridge? How Long Does Cooked Meat Last?",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "how-long-does-cooked-chicken-last-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "batch-cooking-one-hob-ring-uk",
+    "title": "Batch Cooking on One Hob Ring",
+    "description": "How to batch cook with one working hob ring: what to cook in what order, which formats need only one pan, and how to use the oven, kettle and microwave to fill the gaps.",
+    "keywords": "Batch Cooking on One Hob Ring (or a Broken Cooker) Batch Cooking on One Hob Ring",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "batch-cooking-one-hob-ring-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
+    "slug": "freezing-dairy-and-eggs-uk",
+    "title": "Freezing Dairy and Eggs",
+    "description": "What happens when you freeze milk, cheese, butter, cream, yoghurt and eggs, which of them come back usable, and the one thing never to freeze in its shell.",
+    "keywords": "Can You Freeze Milk, Cheese and Eggs? What Actually Works Freezing Dairy and Eggs",
+    "category": "Meal Prep & Batch Cooking",
+    "imageId": "freezing-dairy-and-eggs-uk",
+    "published": "2026-09-05",
+    "reviewed": "5 September 2026"
+  },
+  {
     "slug": "how-to-scale-a-recipe-uk",
     "title": "How to Scale a Recipe for Batch Cooking",
     "description": "How to double or triple a recipe for batch cooking: what scales linearly, what does not, why a doubled pan steams instead of browns, and how cooking times change.",

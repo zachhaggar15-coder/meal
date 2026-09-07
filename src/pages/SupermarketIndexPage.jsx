@@ -88,6 +88,48 @@ export default function SupermarketIndexPage() {
             );
           })}
         </section>
+
+        <section className="meal-hub-copy-section supermarket-index-guidance">
+          <h2>How to choose, if you are not sure</h2>
+          <p>
+            The honest answer is that the supermarket matters less than most comparisons suggest.
+            Every plan here is built from the same kinds of food - a protein, a starch, vegetables
+            and something to make it taste of something - and all of the big UK chains stock all of
+            it. What changes between them is the price, the pack sizes and which own-brand ranges
+            reach the expensive part of the basket.
+          </p>
+          <p>
+            If cost is the binding constraint, start with Aldi or Lidl: their prices are stable week
+            to week, which matters more across a twelve-week stretch than any single offer. If you
+            want the widest choice for swaps and dietary needs, Tesco, Asda, Sainsbury's or
+            Morrisons will fit better. If you are cooking for one or two, the smaller pack sizes at
+            M&amp;S and the Co-op waste less than a discounter's larger ones, which can close more of
+            the price gap than the shelf label suggests.
+          </p>
+          <p>
+            Iceland is the specialist case and worth understanding rather than dismissing. It is not
+            a full weekly shop, but frozen protein and vegetables come pre-portioned, so you cook
+            only what you take out - which is portion control without weighing anything.
+          </p>
+
+          <h2>What changes between supermarkets, and what does not</h2>
+          <p>
+            What does not change: the structure of the week, the calorie and protein targets, the
+            recipes and the way the shopping list is grouped. A 1,500 kcal weight-loss plan is the
+            same plan whichever chain it is costed against.
+          </p>
+          <p>
+            What does change: the weekly cost estimate, the specific own-brand products named in the
+            list, and the swaps that make sense when something is out of stock. That is why these
+            plans name categories - lean mince, frozen mixed vegetables, plain high-protein yoghurt -
+            rather than particular products, which rotate.
+          </p>
+          <p>
+            You are not locked in. If you shop across two stores, or change where you shop, the
+            generic UK supermarket plans use average price assumptions and no chain-specific
+            products, and every plan can be followed anywhere with the obvious substitutions.
+          </p>
+        </section>
       </div>
       <Footer />
     </>

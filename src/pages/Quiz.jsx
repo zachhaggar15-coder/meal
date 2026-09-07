@@ -495,6 +495,43 @@ export default function Quiz() {
             </div>
           )}
         </div>
+
+        <section className="meal-hub-copy-section quiz-explainer">
+          <h2>How the matching works</h2>
+          <p>
+            This is a filter over a library, not an algorithm that invents a plan for you. The seven
+            questions narrow a catalogue of pre-built UK meal plans down to the ones that match your
+            goal, diet, supermarket, calorie target, budget and how much cooking you want to do.
+            Nothing is generated on the fly, which is why every plan you are shown has already been
+            checked for its macros, its shopping list and its recipes.
+          </p>
+          <p>
+            The questions are not equally weighted. Diet and calorie target are hard filters - a
+            vegetarian plan will never be suggested to someone who has not asked for one. Supermarket,
+            budget and effort are preferences, so if nothing matches perfectly you will be shown the
+            closest fits rather than an empty page.
+          </p>
+          <p>
+            You can change any answer without starting again, and the results update as you go. If
+            you already know what you want, browsing the full library directly is faster than
+            answering questions.
+          </p>
+
+          <h2>What you get at the end</h2>
+          <p>
+            Every matched plan is a full seven days: breakfast, lunch, dinner and snacks, with daily
+            calorie and protein figures, a shopping list grouped the way a supermarket is laid out,
+            recipes for each meal, an allergen summary and a printable PDF. There is no sign-up and
+            nothing to pay.
+          </p>
+          <p>
+            The figures are estimates. Calories and macros are calculated from generic ingredient
+            data rather than from the specific products you buy, and the cost estimates are planning
+            ranges rather than checkout totals. They are close enough to plan a week around and not
+            precise enough to treat as clinical measurements - if you have a medical reason to
+            control your intake exactly, speak to a GP or a registered dietitian.
+          </p>
+        </section>
       </div>
       <Footer />
     </>

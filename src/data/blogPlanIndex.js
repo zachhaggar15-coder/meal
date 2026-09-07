@@ -80,6 +80,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "air-fryer-vs-oven-batch-cooking-uk": {
+    "planSlug": "any-low-effort-1500",
+    "title": "Low Effort Meal Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "low-effort",
+    "goalLabel": "Low Effort",
+    "calories": 1500
+  },
   "aldi-high-protein-shopping-list-uk": {
     "planSlug": "aldi-high-protein-low-cal-1500",
     "title": "Aldi High-Protein Low Calorie Plan — 1,500 kcal",
@@ -137,6 +145,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "batch-cooking-for-beginners-uk": {
+    "planSlug": "any-low-effort-1500",
+    "title": "Low Effort Meal Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "low-effort",
+    "goalLabel": "Low Effort",
+    "calories": 1500
+  },
+  "batch-cooking-one-hob-ring-uk": {
     "planSlug": "any-low-effort-1500",
     "title": "Low Effort Meal Plan — 1,500 kcal",
     "supermarket": "any",
@@ -304,6 +320,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "cost-per-portion-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "cottage-cheese-meal-ideas-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -360,6 +384,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Endurance & Running",
     "calories": 2000
   },
+  "falling-off-the-meal-plan-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "family-high-protein-dinners-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -400,7 +432,23 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "freezer-inventory-rotation-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "freezer-labels-for-meal-prep-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
+  "freezing-dairy-and-eggs-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -553,6 +601,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "household-different-calorie-needs-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
+  "how-long-does-cooked-chicken-last-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",
@@ -992,6 +1048,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "portioning-meat-before-freezing-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "post-workout-meal-ideas-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -1064,6 +1128,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "High Protein Low Calorie",
     "calories": 1500
   },
+  "slow-cooker-food-safety-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "slow-cooker-meal-prep-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
@@ -1089,6 +1161,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "calories": 1500
   },
   "summer-meals-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
+  "supermarket-own-brand-tiers-uk": {
     "planSlug": "any-high-protein-low-cal-1500",
     "title": "High-Protein Low Calorie Plan — 1,500 kcal",
     "supermarket": "any",

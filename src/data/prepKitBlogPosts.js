@@ -382,7 +382,7 @@ export const prepKitBlogPostsData = {
       },
       {
         q: 'How far ahead can I make overnight oats?',
-        a: 'Three to four days in the fridge for the base. Add fresh fruit on the day rather than at the start, because that is what deteriorates first rather than the oats.',
+        a: 'Three to four days in the fridge for the base, limited by the use-by date on the milk or yoghurt rather than by the oats. That is longer than cooked leftovers get, because nothing here has been cooked and cooled. Add fresh fruit on the day rather than at the start, because that is what deteriorates first.',
       },
       {
         q: 'Do overnight oats jars need to be glass?',
