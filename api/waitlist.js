@@ -7,7 +7,8 @@
 //   SUPABASE_SERVICE_ROLE_KEY
 // Optional:
 //   RESEND_API_KEY                 (welcome email; skipped if absent)
-//   MEALPREP_WAITLIST_FROM_EMAIL   (from header; default onboarding sender)
+//   MEALPREP_WAITLIST_FROM_EMAIL   (overrides MEALPREP_FROM_EMAIL)
+//   MEALPREP_FROM_EMAIL            (verified sender for public signups)
 //   MEALPREP_REPLY_TO_EMAIL        (default mealprep.org.uk@proton.me)
 
 import { applyApiGuards, refundRateLimit } from './_guards.js';
@@ -127,7 +128,9 @@ async function sendWelcomeEmail({ email, firstName, row, restUrl, authHeaders })
     return;
   }
 
-  const from = cleanHeader(process.env.MEALPREP_WAITLIST_FROM_EMAIL) || DEFAULT_FROM;
+  const from = cleanHeader(process.env.MEALPREP_WAITLIST_FROM_EMAIL)
+    || cleanHeader(process.env.MEALPREP_FROM_EMAIL)
+    || DEFAULT_FROM;
   const replyTo = cleanHeader(process.env.MEALPREP_REPLY_TO_EMAIL) || WELCOME_REPLY_TO;
   const name = firstName || 'there';
 

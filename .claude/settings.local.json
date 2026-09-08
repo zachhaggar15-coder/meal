@@ -53,7 +53,15 @@
       "Bash(curl -s --retry 25 --retry-delay 1 --retry-connrefused http://localhost:3000/)",
       "Bash(curl -s http://localhost:3000/cookie-policy)",
       "Bash(curl -s http://localhost:3000/guides/best-coffee-grinders-for-small-kitchens)",
-      "WebFetch(domain:compactcoffee.co.uk)"
+      "WebFetch(domain:compactcoffee.co.uk)",
+      "Bash(git checkout *)",
+      "Bash(git merge *)",
+      "Bash(npm run *)",
+      "Bash(echo \"lint: $?\")",
+      "Bash(npm test *)",
+      "Bash(echo \"test: $?\")",
+      "Read(//tmp/**)",
+      "Bash(node --input-type=module -e ' *)"
     ]
   }
 }

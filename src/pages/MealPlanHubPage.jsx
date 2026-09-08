@@ -23,6 +23,7 @@ import { COMBO_LANDING_PAGES } from '../data/comboLandingPages.js';
 import { chooseHubVisual } from '../data/visualAssets.js';
 import { AUTHOR_JSON_LD, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import { toTitleCase } from '../utils/textFormatting.js';
+import { selectHubFeaturedPlans } from '../data/hubFeaturedPlans.js';
 
 const ALL_PLANS = getAllPlanMeta();
 const CARD_LIMIT = 12;
@@ -62,7 +63,7 @@ export default function MealPlanHubPage() {
   if (!hub) return <NotFound />;
 
   const { plans: matchingPlans, usedFallback: usingFallbackPlans } = getHubPlanMatches(hub);
-  const shownPlans = matchingPlans.slice(0, CARD_LIMIT);
+  const shownPlans = selectHubFeaturedPlans(matchingPlans, hub.slug, CARD_LIMIT);
   // vercel.json 301-redirects these hub slugs elsewhere. The static file
   // still builds, but a non-self canonical keeps it out of the sitemap.
   const canonical = REDIRECTED_HUB_SLUGS[hub.slug] || `/meal-plans/${hub.slug}`;

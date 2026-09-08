@@ -7,6 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { HUB_FEATURED_PLAN_SLUGS } from '../src/data/hubFeaturedPlans.js';
 
 const SITE_ORIGIN = 'https://www.mealprep.org.uk';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -53,6 +54,27 @@ for (const file of htmlFiles) {
 
 validateSitemaps(pages);
 validateDuplicateMetadata(pages);
+validateCoverageDiscovery();
+
+function validateCoverageDiscovery() {
+  const requiredLinks = Object.entries(HUB_FEATURED_PLAN_SLUGS).flatMap(([hub, slugs]) =>
+    slugs.map(slug => [`/meal-plans/${hub}`, `/plans/${slug}`]),
+  );
+  requiredLinks.push(['/meal-plan/vegetarian-low-calorie-meal-plan', '/meal-plan/high-protein-vegetarian-meal-plan-uk']);
+  for (const [source, target] of requiredLinks) {
+    const sourcePage = pages.find(page => page.route === source);
+    const targetPage = pages.find(page => page.route === target);
+    for (const page of [sourcePage, targetPage]) {
+      if (!page || page.isNoindex || page.canonicalPath !== page.route || redirectMap.has(page.route)) {
+        errors.push(`coverage discovery requires indexable canonical pages: ${source} -> ${target}`);
+      }
+    }
+    const sourceFile = routeFiles.get(source);
+    const html = sourceFile ? fs.readFileSync(sourceFile, 'utf8') : '';
+    const links = matchAll(html, /<a\b[^>]*>/gi).map(tag => attr(tag, 'href'));
+    if (!links.includes(target)) errors.push(`missing contextual coverage link: ${source} -> ${target}`);
+  }
+}
 
 if (errors.length) {
   console.error(`\ncheck-google-indexing FAILED with ${errors.length} issue(s):`);

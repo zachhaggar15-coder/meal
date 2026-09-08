@@ -193,5 +193,10 @@ export function buildBrowsePlanUrl({ goal, supermarket, diet, calories, budget, 
   if (budget) params.set('budget', budget);
   if (effort) params.set('effort', effort);
   if (search) params.set('search', String(search));
+  // This exact filter combination permanently redirects to its topic hub.
+  // Link directly, but retain browse URLs when additional filters are set.
+  if (params.size === 2 && params.get('goal') === 'budget-bodybuilding' && params.get('calories') === '2000') {
+    return '/meal-plans/budget-bodybuilding';
+  }
   return `/browse${params.toString() ? `?${params.toString()}` : ''}`;
 }

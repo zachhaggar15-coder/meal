@@ -888,6 +888,7 @@ export const mealPlansData = {
       { q: 'Will I be hungry on 1500 calories as a vegetarian?', a: 'Hunger depends on food choices more than total calories. This plan is built around high-protein, high-fibre meals that keep you full. If you are regularly hungry, try adding more non-starchy vegetables and ensuring each meal includes at least 20 g of protein.' },
     ],
     related: [
+      { slug: 'high-protein-vegetarian-meal-plan-uk', label: 'High Protein Vegetarian Meal Plan' },
       { slug: '1500-calorie-meal-plan', label: '1500 Calorie Plan' },
       { slug: 'high-protein-low-calorie-meal-plan', label: 'High Protein Plan' },
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Plan' },

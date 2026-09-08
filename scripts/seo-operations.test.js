@@ -1,4 +1,5 @@
 import test from 'node:test';
+import './coverage-discovery.test.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
