@@ -867,6 +867,20 @@ export const expandedBlogPostsData = {
           'If nothing changes after several weeks, check portions, drinks, oils, weekend meals, and snacks before dropping calories. The leak is often in the extras, not the chicken and rice.',
         ],
       },
+      {
+        h2: 'What 1,800 looks like spread across a day',
+        paragraphs: [
+          'The distribution matters more than the total for whether a day feels tolerable. A workable shape is roughly 400 to 450 at breakfast, 500 to 600 at lunch, 600 to 700 at dinner and 150 to 250 in a snack - which leaves dinner recognisably a dinner rather than a portion of one.',
+          'The version that fails is a small breakfast and lunch banked to allow a large evening meal. It looks efficient and produces an afternoon where nothing else gets done, followed by an evening where the plan stops being followed. Protein at each of the first two meals is what prevents it.',
+        ],
+      },
+      {
+        h2: 'Adjusting without abandoning',
+        paragraphs: [
+          'If the weight trend has not moved after two or three weeks, the useful response is a small change rather than a new plan. Drop by 100 to 150 calories a day, or add movement, and give it another fortnight. Cutting to 1,400 in one step usually produces a worse fortnight and no better result.',
+          'If you are consistently hungry rather than consistently over, the problem is composition rather than the number. More protein and more fibre at the same calorie total changes how 1,800 feels considerably, and that is a cheaper fix than eating less.',
+        ],
+      },
     ],
     related: [
       { slug: '1600-calorie-meal-plan-uk', label: '1600 Calorie Meal Plan UK', type: 'blog' },
@@ -877,6 +891,10 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Can you lose weight on 1800 calories?', a: 'Yes, if 1800 calories is below your maintenance needs. It is a deficit for many adults, especially if they are taller, heavier, or active.' },
       { q: 'Is 1800 calories enough protein for gym training?', a: 'It can be. Build meals around chicken, eggs, Greek yogurt, fish, tofu, beans, cottage cheese, and lean mince to keep protein high without overshooting calories.' },
+      {
+        q: 'How should I split 1,800 calories across the day?',
+        a: 'Roughly 400 to 450 at breakfast, 500 to 600 at lunch, 600 to 700 at dinner and a snack of 150 to 250. Banking the first two meals to allow a large dinner is the shape that most often fails.',
+      },
     ],
   }),
 
@@ -1110,6 +1128,20 @@ export const expandedBlogPostsData = {
           'Label freezer portions with the meal name and date. Future you will not remember whether the red tub is chilli, bolognese, or spicy tomato soup.',
         ],
       },
+      {
+        h2: 'Why dinner is the meal that breaks a deficit',
+        paragraphs: [
+          'Breakfast and lunch are decided in advance and eaten in the middle of a working day. Dinner is decided at the point you are most tired, least patient and hungriest, which is why it is the meal that goes wrong even in weeks where everything else held.',
+          'That is an argument for prepping dinner rather than lunch, or at least as well as. A lunch you skip costs one meal; a dinner you abandon usually becomes a takeaway and takes the evening with it. If you only have the energy to prepare one meal ahead, make it the one you will face in the worst state.',
+        ],
+      },
+      {
+        h2: 'Volume at dinner without more cooking',
+        paragraphs: [
+          'A low-calorie dinner fails when it looks like a smaller version of a normal one. The fix is not restraint but bulk from the cheapest place - a bag of frozen vegetables added to whatever is already in the pan roughly doubles the size of the plate for under a hundred calories, and takes no extra preparation.',
+          'Soup and stew formats do the same thing structurally, because liquid adds volume without energy density. That is also why they reheat so well, which makes them the obvious shape for a prepped dinner rather than a coincidence.',
+        ],
+      },
     ],
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
@@ -1118,6 +1150,10 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What dinners are best for low calorie meal prep?', a: 'Chilli, curry, traybakes, soups, stews, stir-fries, and pasta bakes work well because they are easy to portion and can include plenty of vegetables.' },
       { q: 'Can pasta be part of a low calorie dinner?', a: 'Yes. Use a measured portion, add lean protein and vegetables, and keep sauces sensible. Pasta is not the issue; portions and extras usually are.' },
+      {
+        q: 'Should I prep lunch or dinner for weight loss?',
+        a: 'Dinner, if you can only do one. It is decided when you are tired and hungry, so it is the meal most likely to be abandoned - and an abandoned dinner usually becomes a takeaway rather than a missed meal.',
+      },
     ],
   }),
 
@@ -1208,6 +1244,20 @@ export const expandedBlogPostsData = {
           'Frozen meat-free pieces and mince can be useful, but check protein per serving. Some veggie products are more about convenience than protein.',
         ],
       },
+      {
+        h2: 'Where vegetarian protein actually falls short',
+        paragraphs: [
+          'Rarely in the total, and almost always in the distribution. A vegetarian day that ends with a lentil curry can hit a sensible protein figure and still have had a breakfast of toast and a lunch of soup - two meals with almost none. Fixing those two is usually worth more than anything you do at dinner.',
+          'Breakfast is the bigger of the two, because it is the meal most often built entirely from carbohydrate. Greek yoghurt, skyr, eggs, cottage cheese or a milk-based porridge move it from near zero to twenty grams or more without changing what the meal is.',
+        ],
+      },
+      {
+        h2: 'You do not need to combine proteins at every meal',
+        paragraphs: [
+          'The idea that plant proteins must be carefully paired within a single meal is a persistent myth from the 1970s that the science moved past. The body maintains a pool of amino acids across the day, so eating a reasonable variety of plant proteins over a day covers it - beans at lunch and grains at dinner is fine.',
+          'What does still matter is variety across the week rather than leaning entirely on one source. Pulses, soya, dairy, eggs, nuts and grains between them cover the ground comfortably, and a vegetarian diet that includes dairy and eggs has fewer gaps to think about than a vegan one.',
+        ],
+      },
     ],
     related: [
       { slug: 'vegetarian-meal-prep-uk', label: 'Vegetarian Meal Prep UK', type: 'blog' },
@@ -1217,6 +1267,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'How do vegetarians get enough protein when meal prepping?', a: 'Use protein sources at every meal: eggs, Greek yogurt, cottage cheese, tofu, lentils, beans, chickpeas, edamame, Quorn, and meat-free mince.' },
       { q: 'Is tofu good for meal prep?', a: 'Yes. Firm tofu works well in curries, stir-fries, noodle boxes, and traybakes. Pressing or patting it dry improves texture.' },
+      {
+        q: 'Do I need to combine plant proteins in the same meal?',
+        a: 'No. That advice is decades out of date - the body draws on a pool of amino acids across the day, so beans at lunch and grains at dinner works fine. Variety across the week is what matters.',
+      },
+      {
+        q: 'Where do vegetarians usually lose protein?',
+        a: 'At breakfast and lunch, not at dinner. A day can end with a high-protein evening meal and still fall short because the first two meals were almost entirely carbohydrate.',
+      },
     ],
   }),
 
@@ -1615,6 +1673,20 @@ export const expandedBlogPostsData = {
           'If your commute is long, use an insulated lunch bag and ice pack. It is a dull purchase, but it protects the food you spent Sunday making.',
         ],
       },
+      {
+        h2: 'The Thursday problem',
+        paragraphs: [
+          'Five identical lunches cooked on Sunday are eaten enthusiastically on Monday, tolerated on Wednesday and abandoned on Thursday. This is the single most common way a work-lunch plan fails, and it is not a discipline problem - it is a menu that ignores how repetition actually feels.',
+          'Two fixes work. Cook one protein and two bases so the same chicken becomes a rice bowl, a wrap and a salad across the week. Or cook three days and freeze the other two on Sunday, so Thursday and Friday are eating something you have not seen for a fortnight rather than something four days old.',
+        ],
+      },
+      {
+        h2: 'The office fridge is not your fridge',
+        paragraphs: [
+          'Anything left in a shared fridge is subject to other people, and a communal fridge is often warmer than a home one because it is opened constantly. That matters most for the food you are relying on being safe on Thursday, which by then is at the edge of its two days anyway.',
+          'The practical answer is to carry lunch in an insulated bag with an ice pack and treat the office fridge as a bonus rather than the plan. It also removes the other failure mode, which is arriving to find someone has eaten it.',
+        ],
+      },
     ],
     related: [
       { slug: 'high-protein-lunches-for-work-uk', label: 'High Protein Lunches for Work', type: 'blog' },
@@ -1624,6 +1696,10 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Can I prep five work lunches at once?', a: 'Yes, but freeze later portions if the food will sit too long. Some meals keep better than others, so choose recipes with sturdy ingredients.' },
       { q: 'What lunches are best without a microwave?', a: 'Pasta salad, chicken couscous, tuna wraps, egg potato salad, tofu noodle salad, and snack boxes all work cold.' },
+      {
+        q: 'Why do I get bored of prepped work lunches by Thursday?',
+        a: 'Because five identical containers is a menu problem rather than a discipline one. Cook one protein and two bases so it appears three different ways, or freeze two of the five on the day you cook.',
+      },
     ],
   }),
 
@@ -1741,6 +1817,20 @@ export const expandedBlogPostsData = {
           'The best healthy alternative is the one you can make when you are tired, not the one that looks impressive in a recipe video.',
         ],
       },
+      {
+        h2: 'What ready meals are actually short of',
+        paragraphs: [
+          'Usually not calories - most sit in a reasonable range for a single meal. What they tend to be short of is protein and vegetables, which is why one leaves you hungry an hour later even when the calorie figure looked fine.',
+          'That makes the fix additive rather than restrictive. A ready meal plus a tin of beans, a handful of frozen vegetables microwaved alongside, or a couple of eggs turns a snack-shaped meal into a proper one for very little money and about two minutes. Read the protein figure on the back rather than the calories on the front - it is the number that predicts whether the meal holds.',
+        ],
+      },
+      {
+        h2: 'When a ready meal is the right answer',
+        paragraphs: [
+          'On the evening you would otherwise order a takeaway. Compared against a home-cooked meal a ready meal usually loses on cost, protein and salt; compared against a delivered curry it wins comfortably on all three, and that is the comparison that actually happens at eight on a Thursday.',
+          'Keeping two or three in the freezer as a deliberate fallback is a sensible part of a plan rather than a failure of one. The alternative is not a better meal - it is no meal, and then something worse.',
+        ],
+      },
     ],
     related: [
       { slug: 'microwave-meal-prep-ideas-uk', label: 'Microwave Meal Prep Ideas UK', type: 'blog' },
@@ -1751,6 +1841,14 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Are ready meals bad?', a: 'Not automatically. They can be useful, but many are low in protein or expensive for the portion. Simple supermarket shortcuts can be more filling.' },
       { q: 'What is the quickest healthy meal?', a: 'Tuna jacket potato with salad, eggs on toast with spinach, chicken rice bowl, or tofu stir-fry with frozen veg can all be ready quickly.' },
+      {
+        q: 'Are supermarket ready meals unhealthy?',
+        a: 'Most are reasonable on calories and short on protein and vegetables, which is why they do not keep you full. Adding beans, frozen vegetables or eggs fixes the gap for pennies.',
+      },
+      {
+        q: 'Is a ready meal better than a takeaway?',
+        a: 'Generally yes on cost, protein and salt. That is the comparison worth making, because the realistic alternative on a bad evening is a delivery rather than a cooked meal.',
+      },
     ],
   }),
 
@@ -2122,6 +2220,20 @@ export const expandedBlogPostsData = {
           'Generic plans are also useful for rural shoppers, students, and households where different people pick up parts of the shop.',
         ],
       },
+      {
+        h2: 'Shop by category, not by product',
+        paragraphs: [
+          'A plan that works in any supermarket is written in categories - lean mince, plain high-protein yoghurt, frozen mixed vegetables - rather than in brand names. That is not vagueness, it is the thing that makes it portable, because every UK chain stocks all of those and none of them stocks the same labelled product.',
+          'It is also a more durable habit than it looks. Own-brand ranges rotate, value tiers get renamed and specific lines vanish, so a plan built on named products degrades over months even at the store it was written for. One built on categories does not.',
+        ],
+      },
+      {
+        h2: 'The substitutions that are actually free',
+        paragraphs: [
+          'Swapping within a category costs nothing worth measuring. Any lean mince for any other, any white fish for another, any thick plain yoghurt for the equivalent - the calories move slightly and the meal does not change.',
+          'What is not free is swapping across categories, and that is the line worth holding. Replacing the protein with more of the starch keeps the calories roughly level and removes the reason the meal kept you full, which is the failure people then blame on the plan.',
+        ],
+      },
     ],
     related: [
       { slug: 'any-weight-loss-1500', label: 'Generic 1500 Calorie Plan', type: 'plan' },
@@ -2131,6 +2243,10 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'What is a generic UK supermarket plan?', a: 'It is a meal plan based on ingredients available at most UK supermarkets, using average pricing rather than one named store.' },
       { q: 'Who should choose generic supermarket?', a: 'People who shop at several stores, use substitutions, live near smaller shops, or want the most flexible plan.' },
+      {
+        q: 'Can I follow a generic meal plan at any supermarket?',
+        a: 'Yes - the plans name categories rather than products, so lean mince, plain high-protein yoghurt and frozen vegetables are available everywhere. Only the weekly cost estimate changes, since it uses average assumptions.',
+      },
     ],
   }),
 
@@ -2178,6 +2294,20 @@ export const expandedBlogPostsData = {
           'Tesco is particularly useful for mixed households because it covers standard, vegetarian, vegan, free-from, and higher-protein ranges in one shop.',
         ],
       },
+      {
+        h2: 'Clubcard Prices and Clubcard points are different things',
+        paragraphs: [
+          'These get conflated constantly and behave nothing alike. Clubcard Prices is a lower shelf price you get at the till for scanning the card - real money off this shop, on selected lines. Points are a separate loyalty accrual that becomes vouchers later, at a much smaller effective rate.',
+          'That matters for budgeting because only one of them reduces what you spend today. If you are working to a weekly figure, count the Clubcard price and treat points as an occasional rebate rather than part of the shop.',
+        ],
+      },
+      {
+        h2: 'Use it on what you already buy',
+        paragraphs: [
+          'The offers rotate, and following them around the store is how a planned basket becomes an unplanned one. The version that compounds is narrow: apply Clubcard pricing to the two or three items you buy every single week, usually the proteins, and ignore it everywhere else.',
+          'A saving on something you were buying anyway is a saving. A saving on something you were not is spending, and across a twelve-week stretch the difference between those two habits is larger than any individual discount.',
+        ],
+      },
     ],
     related: [
       { slug: 'tesco-low-calorie-shopping-list', label: 'Tesco Low Calorie Shopping List', type: 'blog' },
@@ -2187,6 +2317,10 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Is Tesco good for meal prep?', a: 'Yes. Tesco has strong own-brand staples, broad dietary ranges, and Clubcard prices that can reduce costs when used carefully.' },
       { q: 'How do I avoid overspending at Tesco?', a: 'Write meals first, use Clubcard offers only when they match the plan, and avoid buying discounted snacks that were not on the list.' },
+      {
+        q: 'Do Clubcard points save as much as Clubcard Prices?',
+        a: 'No. Clubcard Prices is a lower shelf price you get at the till on this shop; points accrue separately into vouchers later at a much smaller effective rate. Only the first reduces what you spend today.',
+      },
     ],
   }),
 

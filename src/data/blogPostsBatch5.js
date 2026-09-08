@@ -494,6 +494,20 @@ export const blogPostsBatch5Data = {
           ],
         },
       },
+      {
+        h2: 'Ordinary pasta already has more protein than people think',
+        paragraphs: [
+          'Dried pasta is roughly 12g of protein per 100g, which is not trivial - a 100g dry portion contributes about as much as a large egg and a half before anything is added to it. That is worth knowing before paying a premium for a high-protein version.',
+          'It is incomplete protein, low in lysine, which is why pasta with beans, lentils, dairy or meat does more than pasta alone. But the useful comparison for a specialist product is not against zero, it is against the ordinary pasta plus whatever you were going to put on it - and by that measure the gap is usually smaller than the price difference.',
+        ],
+      },
+      {
+        h2: 'Where the protein in a pasta dish actually comes from',
+        paragraphs: [
+          'The sauce, in almost every case. A portion of pasta with lentil ragu, tuna, chicken or a ricotta-based sauce clears thirty grams comfortably, and none of that depends on the pasta being special. Adding a tin of lentils to a tomato sauce costs pennies and does more than switching pasta type.',
+          'That makes high-protein pasta a convenience purchase rather than a nutritional necessity. Worth it if it is the difference between cooking and not; not worth reorganising a shop around.',
+        ],
+      },
     ],
     related: [
       { slug: 'high-protein-low-calorie-meals', label: 'High Protein Low Calorie Meals', type: 'blog' },
@@ -505,6 +519,10 @@ export const blogPostsBatch5Data = {
       { q: 'Is legume-based pasta actually higher in protein?', a: 'Yes, typically 20-25g per 100g dry weight compared with around 12-13g for standard wheat pasta, roughly double.' },
       { q: 'How do I stop batch-cooked pasta going mushy?', a: 'Cook it slightly under packet timing, toss with a little oil after draining, and store sauce separately where possible rather than mixing everything together in advance.' },
       { q: 'Does high-protein pasta taste different?', a: 'Legume-based pasta has a denser, slightly nuttier texture than wheat pasta. Many people find it works well with strongly flavoured sauces, less so with very delicate ones.' },
+      {
+        q: 'Is high-protein pasta worth buying?',
+        a: 'It is a convenience rather than a necessity. Ordinary dried pasta is already around 12g of protein per 100g, and the sauce is where most of a dish’s protein comes from - a tin of lentils in the sauce does more for less.',
+      },
     ],
   }),
 
