@@ -11,6 +11,7 @@ import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
+import EbayLabelTestPlacement from '../components/EbayLabelTestPlacement.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import TrustBox from '../components/TrustBox.jsx';
 import ContentByline from '../components/ContentByline.jsx';
@@ -56,6 +57,7 @@ export default function BlogPost() {
     ? data.productsAfterSection
     : null;
   const hasDeferredProducts = !useBuyingGuideFlow && deferProductsAfter !== null;
+  const showEbayLabelPlacement = slug === 'best-cheap-high-protein-foods-uk';
 
   const jsonLd = [
     {
@@ -209,6 +211,10 @@ export default function BlogPost() {
                 className="blog-next-step"
               />
             </>
+          )}
+
+          {showEbayLabelPlacement && (
+            <EbayLabelTestPlacement sourcePage={`/blog/${slug}`} />
           )}
 
           {hasCustomBlogImage(slug) && !useBuyingGuideFlow && (

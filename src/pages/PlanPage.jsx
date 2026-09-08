@@ -22,6 +22,7 @@ import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js'
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import PlanKitPick from '../components/PlanKitPick.jsx';
+import EbayLabelTestPlacement from '../components/EbayLabelTestPlacement.jsx';
 import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -720,6 +721,9 @@ export default function PlanPage() {
           className="plan-continuation"
         />
         {shoppingListSection}
+        {plan.slug === 'aldi-high-protein-low-cal-1500' && (
+          <EbayLabelTestPlacement sourcePage={`/plans/${plan.slug}`} />
+        )}
         {/* Below the meals and the shopping list on purpose. This panel used to
             sit between the plan summary and the first meal, interrupting the page
             before the reader had seen a single thing they came for - one of five
