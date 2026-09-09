@@ -23,6 +23,7 @@ import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../util
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import PlanKitPick from '../components/PlanKitPick.jsx';
 import EbayLabelTestPlacement from '../components/EbayLabelTestPlacement.jsx';
+import EbayProductCard from '../components/EbayProductCard.jsx';
 import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
 import { choosePlanVisual } from '../data/visualAssets.js';
@@ -87,6 +88,16 @@ const GOAL_HUB_SLUGS = {
   'body-recomp': 'high-protein',
   cutting: 'weight-loss',
 };
+
+// Plans where eBay meal prep label product card should appear in related plans grid
+const EBAY_PRODUCT_PLACEMENT_SLUGS = [
+  'aldi-high-protein-low-cal-1500',
+  'tesco-high-protein-low-cal-1500',
+  'sainsburys-high-protein-low-cal-1500',
+  'cheap-high-protein-1800',
+  'budget-bodybuilding-2000',
+  'budget-fat-loss-1200',
+];
 
 function createHouseholdMember(label, portionScale = 1, id = '') {
   const safeLabel = label || 'Person';
@@ -721,9 +732,6 @@ export default function PlanPage() {
           className="plan-continuation"
         />
         {shoppingListSection}
-        {plan.slug === 'aldi-high-protein-low-cal-1500' && (
-          <EbayLabelTestPlacement sourcePage={`/plans/${plan.slug}`} />
-        )}
         {/* Below the meals and the shopping list on purpose. This panel used to
             sit between the plan summary and the first meal, interrupting the page
             before the reader had seen a single thing they came for - one of five
@@ -998,6 +1006,9 @@ export default function PlanPage() {
                   ctaLocation="related_plans"
                 />
               ))}
+              {EBAY_PRODUCT_PLACEMENT_SLUGS.includes(plan.slug) && (
+                <EbayProductCard sourcePage={`plan-${plan.slug}`} />
+              )}
             </div>
           </section>
         )}
