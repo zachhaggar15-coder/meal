@@ -326,6 +326,29 @@ The build runs these and refuses to publish on a critical failure.
 | Q | Retailer content is specific to the book and carries the right disclaimer; no cross-retailer terminology |
 | R | Stated dinner time ranges cover the real spread |
 | S | Stated protein figures match the computed plan, at the scope claimed |
+| T | Every factual statement in editorial and front-matter prose reconciles with the derived fact model |
+
+### Why T exists
+
+M–S read week objects. Four figures survived a full passing QA run by sitting
+in introductory chapters nothing scanned: 55g of protein from a breakfast pair
+that makes 51.6g, a week-one cupboard described as containing miso and peanut
+butter that neither book buys, and a forty-minute dinner ceiling on a book whose
+longest dinner is thirty-five.
+
+T walks **every string in the book** — sections, appendices, recipe taglines,
+cover facts, contents ledes, shop notes, week prose — and reconciles each claim
+it recognises against `build/facts.mjs`: protein at the scope stated (daily,
+breakfast, extra, the two combined, a named dish, a range, a percentage of
+energy), week-one cupboard prose resolved term by term through
+`CUPBOARD_CONCEPTS`, dinner-time ceilings and ranges against the real spread
+(dinners only — a Monday jacket potato must never widen the dinner promise),
+and whole-book counts.
+
+`build/frontmatter.selftest.mjs` re-injects each stale statement that reached a
+released PDF and asserts the checker still catches it, plus a positive control
+that the shipped books stay clean. A validator reporting nothing is otherwise
+indistinguishable from one doing nothing.
 
 ### Why M–S exist
 

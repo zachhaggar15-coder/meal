@@ -20,6 +20,8 @@ import {
 import { cookingEvents, KCAL_TARGET, DAY_NAMES, packHint, PACKS, canonicalSeasonings } from './plan.mjs';
 import { deriveOccurrences } from './occurrences.mjs';
 import { checkTocClaims, plain } from './claims.mjs';
+import { deriveFacts } from './facts.mjs';
+import { checkFrontMatterFacts } from './frontmatter.mjs';
 
 const RICE = /\brice\b/i;
 const DINNER_MINUTES_LIMIT = 40;
@@ -405,6 +407,13 @@ export function runQa(book) {
     }
   }
   add('S', 'Stated protein figures match the computed plan', sFail);
+
+  /* T - front-matter and editorial facts.
+   *
+   * The checks above read week objects. This one reads every string in the
+   * book, because four stale figures survived a full QA pass by sitting in
+   * introductory chapters nothing was scanning. */
+  add('T', 'Editorial prose reconciles with the computed plan', checkFrontMatterFacts(book, deriveFacts(book)));
 
   /* extra: recipe reuse shape */
   const reuseFail = [];

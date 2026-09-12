@@ -44,9 +44,9 @@ export const content = {
         {
           t: 'numlist',
           items: [
-            { b: 'Dinner takes forty minutes at the outside, and most take thirty.', text: ' Total elapsed time from a cold kitchen. One dinner in this book takes fifteen minutes and involves no heat at all beyond a toaster.' },
+            { b: 'Dinner takes thirty-five minutes at the outside, and half of them take thirty or less.', text: ' Total elapsed time from a cold kitchen. One dinner in this book takes fifteen minutes and involves no heat at all beyond a toaster.' },
             { b: 'Every dinner but Sunday&rsquo;s makes four portions.', text: ' Two eaten, two boxed while the pan is still dirty. That is the only preparation asked of you.' },
-            { b: 'Dairy does the heavy lifting.', text: ' The breakfast and the daily extra carry about 55g of protein between them before you cook anything. That is why these dinners still look like meals.' },
+            { b: 'Dairy does the heavy lifting.', text: ' The breakfast and the daily extra carry about 50g of protein between them before you cook anything. That is why these dinners still look like meals.' },
             { b: 'Monday&rsquo;s lunch is assembled, not cooked.', text: ' Sunday&rsquo;s dinner is made at half size, so Monday gets a rye plate, a quinoa box or a loaded jacket potato.' },
             { b: 'One shop a week, generated from the meals.', text: ' Grouped the way a shop is laid out, with quantities already multiplied by how often you cook each thing.' },
           ],
@@ -105,7 +105,7 @@ export const content = {
           t: 'bullets',
           items: [
             '<b>Milbona is the own-brand dairy label, and its high-protein line is unusually broad for a discounter</b> &mdash; skyr, high-protein Greek-style yogurt, fat-free high-protein yogurt and a high-protein drink are all own-brand. Lidl groups them under a dedicated high-protein category online rather than scattering them through general dairy.',
-            '<b>This is why the breakfast and the extra are built on dairy.</b> They contribute about 55g of protein a day between them at a cost that no meat could match, and they need no cooking at all.',
+            '<b>This is why the breakfast and the extra are built on dairy.</b> They contribute about 50g of protein a day between them at a cost that no meat could match, and they need no cooking at all.',
             '<b>Deluxe is the premium own-label tier.</b> Nothing here requires it.',
             '<b>Lidl Plus is a coupon scheme, not a plan.</b> Where it helps, it tends to help on meat and dairy. Nothing in these six weeks depends on a coupon, because no printed book can promise one.',
             '<b>Ranges rotate and stock varies by store.</b> No recipe names a specific product, and every one has a swap line beneath it.',
@@ -126,7 +126,7 @@ export const content = {
           t: 'callout',
           k: 'The cupboard list',
           text:
-            'Week one buys the oil, spices, stock, soy, miso, mustard and honey that carry all six weeks. It is why the first shop looks expensive and the next five do not.',
+            'Week one buys the oil, spices, stock, soy, mustard and honey that carry all six weeks. It is why the first shop looks expensive and the next five do not.',
         },
       ],
     },

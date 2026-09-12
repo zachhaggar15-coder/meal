@@ -193,7 +193,7 @@ export const content = {
           items: [
             { b: 'Two large roasting trays.', text: ' Several dinners are tray dinners, and a crowded tray steams. Cauliflower and courgette are the two that punish it most.' },
             { b: 'A wide, heavy-based pan with a lid.', text: ' The hashes, the stews and the one-pan orzo all want width rather than depth, and a lid for the stage where eggs go in.' },
-            { b: 'A grill you trust.', text: ' Two dinners finish under the grill rather than in the oven, which is what brings them in under forty minutes. Learn where the hot spot is; every grill has one.' },
+            { b: 'A grill you trust.', text: ' Two dinners finish under the grill rather than in the oven, which is what keeps them inside forty minutes. Learn where the hot spot is; every grill has one.' },
             { b: 'Eight to twelve identical tubs.', text: ' Identical so they stack and the lids interchange. Around 700ml suits one adult portion.' },
             { b: 'Digital scales.', text: ' For splitting a pan into four honest portions, not for counting calories. That is the difference between the plan working and Thursday being short.' },
           ],

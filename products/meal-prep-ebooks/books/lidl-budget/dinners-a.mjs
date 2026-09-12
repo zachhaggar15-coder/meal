@@ -138,7 +138,7 @@ export const dinnersA = {
   'quorn-cottage-pie': {
     name: 'Meat-Free Cottage Pie',
     kind: 'dinner',
-    tagline: 'Under the grill rather than in the oven, which is what brings it in under forty minutes.',
+    tagline: 'Under the grill rather than in the oven, which is what brings it in inside forty minutes.',
     time: '40 min',
     timeMins: 40,
     yield: 4,

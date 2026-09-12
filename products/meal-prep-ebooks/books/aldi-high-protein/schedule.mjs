@@ -120,7 +120,7 @@ export const weeks = [
       blocks: [
         { t: 'p', text: 'The structure is the part worth keeping, not the particular dinners: a high-protein breakfast made the night before, a repeated extra that quietly adds 20g, one fresh lunch on Monday and six dinners that each feed the following day.' },
         { t: 'bullets', items: [
-          'If you want the protein higher still, the lever is the extra rather than the dinners. Another 100g of the yogurt adds roughly 10g of protein and 80 calories, which is the least expensive trade in the book.',
+          'If you want the protein higher still, the lever is the extra rather than the dinners. Another 100g of the yogurt adds roughly 12g of protein and 75 calories, which is the least expensive trade in the book.',
           'If you want it lower, cut the dinners&rsquo; meat by about a fifth and add a tin of beans. The daily figure moves less than you would expect.',
           'The blank planner at the back takes the same shape. Five dinners you actually liked is a perfectly good week.',
         ] },

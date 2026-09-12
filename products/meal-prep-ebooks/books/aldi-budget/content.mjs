@@ -133,7 +133,7 @@ export const content = {
           t: 'callout',
           k: 'The cupboard list',
           text:
-            'Week one&rsquo;s list carries a cupboard section &mdash; oil, spices, mustard, soy sauce, stock cubes, honey, peanut butter. These are bought once and carry all six weeks. It is why the first shop is noticeably more expensive than the five that follow, and why judging the plan&rsquo;s cost on week one alone is unfair to it.',
+            'Week one&rsquo;s list carries a cupboard section &mdash; oil, spices, mustard, soy sauce, stock cubes, vinegar and honey. These are bought once and carry all six weeks. It is why the first shop is noticeably more expensive than the five that follow, and why judging the plan&rsquo;s cost on week one alone is unfair to it.',
         },
       ],
     },

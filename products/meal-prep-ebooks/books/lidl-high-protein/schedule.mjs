@@ -116,8 +116,8 @@ export const weeks = [
       blocks: [
         { t: 'p', text: 'The structure is what to keep: a dairy-led breakfast that needs no pan, a repeated extra worth 20g, one assembled lunch on Monday, and six dinners that each feed the next day.' },
         { t: 'bullets', items: [
-          'To push the protein higher, add to the extra rather than the dinners. Another 100g of high-protein yogurt is roughly 10g of protein for 60 calories, which is the best trade available to you.',
-          'To bring the cost down, lean on the pulse-and-dairy dinners: the bean mash, the lentil bowl and the tuna pasta all land above 28% of energy from protein without any meat worth the name.',
+          'To push the protein higher, add to the extra rather than the dinners. Another 100g of high-protein yogurt is roughly 12g of protein for 75 calories, which is the best trade available to you.',
+          'To bring the cost down, lean on the pulse-and-dairy dinners: the halloumi tray, the miso tofu and the paneer tray all clear 23% of energy from protein with no meat in them at all.',
           'The blank planner at the back takes the same shape. Five dinners you liked is a perfectly good week.',
         ] },
       ],

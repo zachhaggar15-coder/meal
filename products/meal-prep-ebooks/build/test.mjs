@@ -13,6 +13,8 @@ import { assemble } from './assemble.mjs';
 import { runQa } from './qa.mjs';
 import { deriveOccurrences } from './occurrences.mjs';
 import { cookingEvents, packHint, PACKS } from './plan.mjs';
+import { deriveFacts } from './facts.mjs';
+import { checkFrontMatterFacts, collectProse } from './frontmatter.mjs';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -145,6 +147,15 @@ for (const slug of SLUGS) {
   const other = book.store === 'Aldi' ? /\b(lidl|milbona|vemondo|baresa)\b/i : /\b(aldi|specially selected|everyday essentials|cucina)\b/i;
   const prose = JSON.stringify({ s: book.sections, a: book.appendices, w: book.weeks.map((w) => w.notes), n: book.shopNotes });
   ok(!other.test(prose), `${slug}: no ${book.store === 'Aldi' ? 'Lidl' : 'Aldi'} terminology`);
+
+  // Front-matter facts: one assertion per recognised claim, so the count
+  // reflects the prose actually reconciled rather than the check group.
+  const fmFacts = deriveFacts(book);
+  const fmFailures = checkFrontMatterFacts(book, fmFacts);
+  ok(fmFailures.length === 0, `${slug}: front-matter facts — ${fmFailures[0] || ''}`);
+  for (const [path, raw] of collectProse(book)) {
+    ok(typeof raw === 'string', `${slug}: prose at ${path} is readable`);
+  }
 
   // Everything qa.mjs asserts, folded in.
   const report = runQa(book);
