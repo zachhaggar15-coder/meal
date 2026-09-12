@@ -73,11 +73,11 @@ export const weeks = [
   },
   {
     n: 3,
-    title: 'The last of the new recipes',
+    title: 'The last all-new week',
     tag: 'Week 3',
-    tocSub: 'After Sunday, nothing is unfamiliar',
+    tocSub: 'Twenty-one down, three to go',
     lede:
-      'By Sunday you will have cooked all twenty-four dinners in this book at least once. From here the plan gets easier rather than harder, because the second time you make something you are not reading while you chop.',
+      'By Sunday you will have cooked twenty-one of the twenty-four dinners in this book. From here the plan gets easier rather than harder, because the second time you make something you are not reading while you chop.',
     weekdayBreakfast: 'porridge-banana',
     weekendBreakfast: 'eggs-beans-toast',
     extra: 'yogurt-berries-peanuts',
@@ -102,11 +102,11 @@ export const weeks = [
   },
   {
     n: 4,
-    title: 'Everything you already know how to cook',
+    title: 'Three new, four familiar',
     tag: 'Week 4',
     tocSub: 'The halfway point, and the easiest week',
     lede:
-      'Deliberately the least demanding week in the book. Every dinner here you cooked in the first three weeks, and each will take you less time than it did then.',
+      'The last three new dinners in the book land here: the creamy garlic chicken, the curried chickpea traybake and the turkey burgers. The other four you cooked in the first three weeks, and each will take less time than it did then.',
     weekdayBreakfast: 'porridge-banana',
     weekendBreakfast: 'eggs-beans-toast',
     extra: 'yogurt-berries-peanuts',
@@ -162,9 +162,9 @@ export const weeks = [
     n: 6,
     title: 'The week that runs itself',
     tag: 'Week 6',
-    tocSub: 'The dishes that earned a third outing',
+    tocSub: 'The dishes that earned a second outing',
     lede:
-      'The last week is made of the dinners worth cooking a third time. By now the shop takes twenty minutes and most nights you will not need the book open.',
+      'The last week is made of the dinners worth cooking twice. By now the shop takes twenty minutes and most nights you will not need the book open.',
     weekdayBreakfast: 'porridge-banana',
     weekendBreakfast: 'eggs-beans-toast',
     extra: 'yogurt-berries-peanuts',

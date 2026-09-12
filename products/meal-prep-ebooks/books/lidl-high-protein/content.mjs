@@ -10,7 +10,7 @@
 export const content = {
   planLabel: 'High-protein &middot; Six weeks',
   coverNote:
-    'One dinner a night, half an hour, and tomorrow&rsquo;s lunch out of the same pan &mdash; at around 145g of protein each, every day, without counting a thing.',
+    'One dinner a night, half an hour, and tomorrow&rsquo;s lunch out of the same pan &mdash; averaging about 145g of protein each a day, without counting a thing.',
   facts: [
     { k: 'Feeds', v: '2 adults' },
     { k: 'Protein', v: 'About 145g each' },
@@ -38,7 +38,7 @@ export const content = {
       title: 'How the plan works',
       tocSub: 'Five rules, and what high protein means here',
       lede:
-        'Written for <b>two adults</b> eating roughly 2,000 calories each a day, at around 145g of protein each. One dinner a night, most of them well inside half an hour, and tomorrow&rsquo;s lunch comes out of the same pan.',
+        'Written for <b>two adults</b> eating roughly 2,000 calories each a day, averaging about 145g of protein each (a day-to-day range of 114&ndash;164g across the six weeks). One dinner a night, most of them well inside half an hour, and tomorrow&rsquo;s lunch comes out of the same pan.',
       blocks: [
         { t: 'h', text: 'The five rules' },
         {

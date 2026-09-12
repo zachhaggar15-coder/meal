@@ -58,6 +58,20 @@ const pageHead = (kicker, title, tag) => `<div class="page-head">
 
 /* ── recipe card ──────────────────────────────────────────────────────── */
 
+// What to do with the pan once it is cooked, derived rather than written.
+//
+// A dinner card is printed once but may be cooked on a weekday at full size and
+// on a Sunday at half, so the card has to say both. Whether a recipe is ever
+// half-batched is read from the schedule, so the Sunday sentence only appears on
+// the cards it actually applies to.
+function portionNote(r, book) {
+  if (r.kind !== 'dinner') return `Makes ${r.yield} portions, one each.`;
+  const halved = book.halfBatchRecipes?.has(r.id);
+  return `Divide into 4 equal portions. Two on the plate now; the other two straight into tubs and ` +
+    `into the fridge within two hours, for tomorrow&rsquo;s lunch.` +
+    (halved ? ' Cooked on a Sunday, halve every quantity and make just the two &mdash; Monday&rsquo;s lunch is made fresh.' : '');
+}
+
 function recipeCard(r, book) {
   const m = r.macros;
   const serves = r.kind === 'dinner' ? '2, plus 2 lunches' : '2';
@@ -85,7 +99,7 @@ function recipeCard(r, book) {
       <div class="k">Per portion</div>
       <b>${m.kcal} kcal &middot; ${m.protein}g protein &middot; ${m.carbs}g carbs &middot; ${m.fats}g fat &middot; ${m.fibre}g fibre</b>
     </div>
-    <div class="note"><b>Swap</b> ${r.swap}<br><b>Leftovers</b> ${r.leftovers}</div>
+    <div class="note"><b>Portions</b> ${portionNote(r, book)}<br><b>Swap</b> ${r.swap}<br><b>Leftovers</b> ${r.leftovers}</div>
   </div>
 </article>`;
 }
@@ -139,14 +153,16 @@ function shoppingList(week, book) {
       .join('')}</ul></div>`;
   }).join('');
 
-  const stapleNames = [...new Set(staples.map((r) => r.shopperName))].sort();
+  // Week one prints the whole plan's staples; later weeks print only what that
+  // week uses, which the cupboard model guarantees is a subset of week one's buy.
+  const stapleNames = week.n === 1 ? book.cupboard.weekOne : book.cupboard.byWeek.get(week.n);
 
   return `<div class="aisles">${aisles}</div>
   <div class="callout"><div class="k">${week.n === 1 ? 'Buy these once, in week one' : 'Check you still have'}</div>
     <p>${stapleNames.join(', ')}.
     ${week.n === 1
-      ? 'These carry the whole six weeks. They are why the first shop costs noticeably more than the five that follow, and why weeks two to six look cheap by comparison.'
-      : 'Bought in week one and not counted again here. Replace only what has actually run out.'}</p></div>`;
+      ? 'Everything the whole six weeks needs from the cupboard, bought once. It is why the first shop costs noticeably more than the five that follow, and why weeks two to six look cheap by comparison.'
+      : 'All of it was on week one&rsquo;s cupboard list. Replace only what has actually run out.'}</p></div>`;
 }
 
 /* ── parts ────────────────────────────────────────────────────────────── */
@@ -214,29 +230,23 @@ function recipesHtml(book) {
     ${groups.join('')}`;
 }
 
-function fridgeSheetHtml(book) {
-  const rows = book.weeks.map((w) => `
-    <tr><td class="day">Wk ${w.n}</td>
-    ${w.days.map((d) => `<td class="mini">${book.meals[d.dinner.id].name}</td>`).join('')}
-    </tr>`).join('');
-  return `${pageHead('Printable', 'The six weeks on one sheet', 'Fridge')}
-    <p class="lede">${book.fridgeLede}</p>
-    <table class="planner fridge"><thead><tr>
-      <th style="width:11mm">&nbsp;</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-    </tr></thead><tbody>${rows}</tbody></table>
+// A blank week to photocopy once the six weeks are done.
+//
+// The "six weeks on one sheet" grid that used to sit here was removed: a
+// seven-by-six table of dinner names is unreadable at A4 and tells the reader
+// nothing the week pages do not already say more clearly.
+function blankWeekHtml(book) {
+  return `${pageHead('Printable', 'A blank week', 'Fridge')}
+    <p class="lede">${book.blankLede}</p>
+    <table class="planner blank"><thead><tr>
+      <th style="width:14mm">Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th><th style="width:7mm"></th>
+    </tr></thead><tbody>${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      .map((d) => `<tr><td class="day">${d}</td><td></td><td></td><td></td><td class="box"></td></tr>`)
+      .join('')}</tbody></table>
     <p class="small" style="margin-top:6pt">Every dinner except Sunday&rsquo;s makes the next day&rsquo;s lunch, so the lunch column is simply the dinner to its left, a day later. Sunday is cooked at half size because Monday&rsquo;s lunch is made fresh.</p>
-    <div class="newpage">
-      ${pageHead('Printable', 'A blank week', 'Fridge')}
-      <p class="lede">${book.blankLede}</p>
-      <table class="planner blank"><thead><tr>
-        <th style="width:14mm">Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th><th style="width:7mm"></th>
-      </tr></thead><tbody>${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        .map((d) => `<tr><td class="day">${d}</td><td></td><td></td><td></td><td class="box"></td></tr>`)
-        .join('')}</tbody></table>
-      <div style="height:5mm"></div>
-      <div class="card"><h4>The shop</h4>
-        ${Array.from({ length: 12 }).map(() => '<div class="writeline"></div>').join('')}
-      </div>
+    <div style="height:3mm"></div>
+    <div class="card"><h4>The shop</h4>
+      ${Array.from({ length: 9 }).map(() => '<div class="writeline"></div>').join('')}
     </div>`;
 }
 
@@ -257,7 +267,7 @@ export function buildParts(book, tocPages = null) {
   book.weeks.forEach((w) => push(`week:${w.n}`, weekHtml(book, w), { label: `Week ${w.n} &mdash; ${w.title}`, sub: w.tocSub }));
   push('recipes', recipesHtml(book), { label: 'Every recipe in the plan', sub: book.recipesTocSub });
   book.appendices.forEach((s) => push(`sec:${s.id}`, sectionHtml(s), { label: s.title, sub: s.tocSub }));
-  push('fridge', fridgeSheetHtml(book), { label: 'Printable planner and blank week', sub: 'Stick it on the fridge' });
+  push('fridge', blankWeekHtml(book), { label: 'A blank week', sub: 'For when the six weeks are done' });
 
   if (tocPages) entries.forEach((e) => { e.page = tocPages[e.key] ?? ''; });
   parts[1].html = doc(book, 'text', tocHtml(book, entries));

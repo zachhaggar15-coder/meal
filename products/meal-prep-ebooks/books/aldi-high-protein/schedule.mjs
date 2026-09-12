@@ -54,11 +54,11 @@ export const weeks = [
   },
   {
     n: 3, ...B,
-    title: 'The last of the new dinners',
+    title: 'The last all-new week',
     tag: 'Week 3',
     tocSub: 'Steak, pork, tofu and a very plain plate',
     lede:
-      'By Sunday all twenty-four dinners will have been cooked once. This week has the widest spread of the six: beef, pork, salmon, tofu, halloumi and a bacon-and-egg plate that is deliberately unfashionable.',
+      'By Sunday twenty-one of the twenty-four dinners will have been cooked once. This week has the widest spread of the six: beef, pork, salmon, tofu, halloumi and a bacon-and-egg plate that is deliberately unfashionable.',
     mondayLunch: 'cottage-cheese-jacket',
     dinners: ['chicken-lentil-spinach-curry', 'steak-pepper-rice', 'salmon-broccoli-pasta', 'tofu-edamame-noodles', 'pork-mustard-mash', 'halloumi-veg-tray', 'gammon-egg-potatoes'],
     notes: [{
@@ -112,7 +112,7 @@ export const weeks = [
     tag: 'Week 6',
     tocSub: 'And what to do in week seven',
     lede:
-      'The dinners that earned a third outing. By now you will have opinions about which of these are worth keeping, and that is the actual output of six weeks.',
+      'The dinners that earned a second outing. By now you will have opinions about which of these are worth keeping, and that is the actual output of six weeks.',
     mondayLunch: 'cottage-cheese-jacket',
     dinners: ['chicken-lentil-spinach-curry', 'mackerel-beetroot-potato', 'cottage-cheese-pasta-bake', 'steak-pepper-rice', 'salmon-broccoli-pasta', 'lamb-kofta-yogurt', 'halloumi-veg-tray'],
     notes: [{

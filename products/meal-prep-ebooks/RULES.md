@@ -318,6 +318,39 @@ The build runs these and refuses to publish on a critical failure.
 | I | Food safety: rice logic complies; next-day leftovers inside safe windows |
 | J | Content: dinner ≤40 minutes elapsed; no missing method steps; raw protein explicitly cooked; major ingredients present in the method |
 | K | Output: A4 portrait; under 45 pages unless justified; no clipped content; fonts embedded; greyscale-readable |
+| L | No dinner repeats on adjacent days |
+| M | Every prose claim about novelty or repetition agrees with the derived occurrence model |
+| N | Every cupboard staple assumed in weeks 2–6 was bought on week one's list |
+| O | One canonical name per ingredient concept per list; no combined seasoning strings |
+| P | Pack guidance never under-buys, pack counts are exact, and static notes make no week-specific quantity claim |
+| Q | Retailer content is specific to the book and carries the right disclaimer; no cross-retailer terminology |
+| R | Stated dinner time ranges cover the real spread |
+| S | Stated protein figures match the computed plan, at the scope claimed |
+
+### Why M–S exist
+
+The first release passed A–L and still shipped twenty contradictions: "all
+twenty-four dinners" in a week where twenty-one had been cooked, "a third
+outing" for dishes cooked twice, cupboard lists assuming spices no list ever
+bought, and "150g of protein every day" when nine days missed the band.
+
+The root cause was always the same shape: **two representations of one fact**.
+`week.dinners` said what gets cooked and the week's prose said it again in
+English; the shopping engine knew what staples a week needed and the cupboard
+copy listed them again by hand. Nothing compared the pair.
+
+The rule that follows: **where a fact can be derived, derive it, and where prose
+restates a derived fact, validate the prose against the derivation.** Prose may
+be prose; it may not make a counting claim the data does not support.
+
+### Render-time checks
+
+Run against the rendered DOM and the finished PDF, because they cannot be seen
+in the data: content overflowing the text area, unresolved `${...}` or stray
+`undefined`/`NaN` reaching the page, a contents page whose own length changes
+when numbers are added (which would shift every number after it), and pages
+carrying almost no text, which means a `break-inside: avoid` block was orphaned
+onto a sheet of its own.
 
 A QA report is produced per book. No product is complete while a critical check
 fails.

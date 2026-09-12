@@ -13,7 +13,7 @@ export default {
   footer: 'MealPrep.org.uk · The Aldi Dinner Plan',
   cost: { tier: 'Budget tier', range: '£30–£40 per person per week', checked: '29 July 2026' },
   shopNotes: {
-    'lean beef mince': 'Two packs across the week; freeze the second on the day you buy it if it is for later.',
+    'lean beef mince': 'Freeze whatever you are not cooking within two days, on the day you buy it.',
     'brown rice': 'Cooked fresh each night it appears, never stored between meals.',
     'mixed berries': 'Frozen. It does not spoil halfway through the week, which is the main reason it is here.',
     'chicken thighs': 'Thighs hold up to reheating better than breast does.',

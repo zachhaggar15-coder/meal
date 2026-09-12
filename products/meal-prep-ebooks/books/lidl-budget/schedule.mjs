@@ -53,11 +53,11 @@ export const weeks = [
   },
   {
     n: 3, ...B,
-    title: 'The last of the new dinners',
+    title: 'The last all-new week',
     tag: 'Week 3',
-    tocSub: 'After Sunday, nothing is unfamiliar',
+    tocSub: 'Twenty-one down, three to go',
     lede:
-      'By Sunday you will have cooked all twenty-four dinners at least once. This week also has the two dishes most worth learning properly: the tagine and the cauliflower tray.',
+      'By Sunday you will have cooked twenty-one of the twenty-four dinners at least once. This week also has the dish most worth learning properly: the roasted cauliflower and chickpea tray.',
     mondayLunch: 'soup-and-bread',
     dinners: ['quorn-bolognese', 'pork-apple-mash', 'sweet-potato-lentil-curry', 'turkey-meatball-orzo', 'mackerel-potato-hash', 'cauliflower-chickpea-tray', 'greek-style-bean-bake'],
     notes: [{
@@ -75,7 +75,7 @@ export const weeks = [
     tag: 'Week 4',
     tocSub: 'The halfway point',
     lede:
-      'The bean burgers and the tagine are the last two new things in the book. Everything else this week you have already made once, and it will take less time than it did.',
+      'The bean burgers, the mushroom and white bean pasta and the tagine are the last three new things in the book. Everything else this week you have already made once, and it will take less time than it did.',
     mondayLunch: 'hummus-falafel-flatbread',
     dinners: ['spiced-bean-burgers', 'mushroom-leek-cannellini-pasta', 'veg-chickpea-tagine', 'chana-potato-curry', 'chicken-leek-potato-bake', 'tofu-peanut-noodles', 'egg-potato-hash'],
     notes: [{
@@ -111,7 +111,7 @@ export const weeks = [
     tag: 'Week 6',
     tocSub: 'And what to do in week seven',
     lede:
-      'Seven dinners that earned a third outing. By now the shop takes twenty minutes and most nights will not need the book open at all.',
+      'Seven dinners that earned a second outing. By now the shop takes twenty minutes and most nights will not need the book open at all.',
     mondayLunch: 'soup-and-bread',
     dinners: ['turkey-meatball-orzo', 'cauliflower-chickpea-tray', 'macaroni-cheese-peas', 'chickpea-spinach-pasta', 'cod-tomato-olive-couscous', 'quorn-bolognese', 'greek-style-bean-bake'],
     notes: [{

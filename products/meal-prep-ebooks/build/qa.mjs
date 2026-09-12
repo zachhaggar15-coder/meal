@@ -17,7 +17,9 @@ import {
   checkRawProteinWithoutCooking,
   checkHydrationWithoutMedium,
 } from '../../../scripts/lib/recipeInvariants.js';
-import { cookingEvents, KCAL_TARGET, DAY_NAMES } from './plan.mjs';
+import { cookingEvents, KCAL_TARGET, DAY_NAMES, packHint, PACKS, canonicalSeasonings } from './plan.mjs';
+import { deriveOccurrences } from './occurrences.mjs';
+import { checkTocClaims, plain } from './claims.mjs';
 
 const RICE = /\brice\b/i;
 const DINNER_MINUTES_LIMIT = 40;
@@ -98,6 +100,13 @@ export function runQa(book) {
       const recipe = book.meals[event.id];
       for (const item of recipe.ingredients) {
         const p = parseIngredientLine(item.line);
+        if (p.kind === 'negligible') {
+          for (const canon of canonicalSeasonings(p.name)) {
+            const key = `${canon}|`;
+            if (!expected.has(key)) expected.set(key, { grams: 0, counts: new Map(), kind: 'negligible' });
+          }
+          continue;
+        }
         const key = `${p.name}|${p.qualifier || ''}`;
         if (!expected.has(key)) expected.set(key, { grams: 0, counts: new Map(), kind: p.kind });
         const row = expected.get(key);
@@ -213,6 +222,189 @@ export function runQa(book) {
   }
   add('J', `Content: dinners within ${DINNER_MINUTES_LIMIT} minutes, methods complete, raw protein cooked`, jFail);
   add('J2', 'Advisory: core ingredients named in the method', jAdvisory, false);
+
+  /* M - prose claims must agree with the derived occurrence model.
+   *
+   * The gap that let four books ship contradictions: structure was validated,
+   * sentences were not. Every novelty or repetition claim is now checked against
+   * week.dinners, which is the only place that fact is allowed to live. */
+  const occ = deriveOccurrences(book);
+  add('M', 'Prose claims agree with the actual recipe schedule', checkTocClaims(book, occ));
+
+  /* N - cupboard procurement.
+   *
+   * A later week may only tell the reader to "check you still have" something
+   * week one actually told them to buy. */
+  const nFail = [];
+  const weekOneSet = new Set(book.cupboard.weekOne);
+  for (const [n, names] of book.cupboard.byWeek) {
+    if (n === 1) continue;
+    for (const name of names) {
+      if (!weekOneSet.has(name)) nFail.push(`week ${n}: "${name}" is assumed in the cupboard but was never on week one's buy-once list`);
+    }
+  }
+  for (const week of book.weeks) {
+    for (const row of week.shopping) {
+      if (row.staple && !weekOneSet.has(row.shopperName)) {
+        nFail.push(`week ${week.n}: staple "${row.shopperName}" has no procurement history`);
+      }
+    }
+  }
+  add('N', 'Cupboard: every later staple was bought in week one', nFail);
+
+  /* O - one canonical name per concept per list. */
+  const oFail = [];
+  for (const week of book.weeks) {
+    const seen = new Map();
+    for (const row of week.shopping) {
+      const label = row.shopperName.toLowerCase();
+      seen.set(label, [...(seen.get(label) || []), row.key]);
+    }
+    for (const [label, keys] of seen) {
+      if (keys.length > 1) oFail.push(`week ${week.n}: "${label}" appears ${keys.length} times (${keys.join(', ')})`);
+    }
+    // Combined seasoning strings must never survive canonicalisation.
+    for (const row of week.shopping) {
+      if (/\band\b/.test(row.shopperName) && row.negligible) {
+        oFail.push(`week ${week.n}: "${row.shopperName}" is a combined seasoning string, not a canonical staple`);
+      }
+    }
+  }
+  add('O', 'Shopping lists carry one canonical name per ingredient concept', oFail);
+
+  /* P - pack guidance.
+   *
+   * Both halves: the arithmetic (never buy less than the plan needs) and the
+   * prose (a static per-ingredient note must not assert a quantity, because it
+   * is printed in every week regardless of that week's requirement). */
+  const pFail = [];
+  for (const week of book.weeks) {
+    for (const row of week.shopping) {
+      const hint = packHint(row);
+      if (!hint) continue;
+      const m = /Buy (\d+) &times; (.+?)s?$/.exec(hint);
+      const pack = PACKS.get(row.name);
+      if (!m || !pack) continue;
+      const bought = Number(m[1]) * pack.each;
+      if (bought + 1e-6 < row.grams) {
+        pFail.push(`week ${week.n}: "${row.shopperName}" needs ${row.grams.toFixed(0)}g but "${plain(hint)}" buys only ${bought}g`);
+      }
+      const expected = Math.ceil(row.grams / pack.each - 1e-9);
+      if (Number(m[1]) !== expected) {
+        pFail.push(`week ${week.n}: "${row.shopperName}" pack count is ${m[1]}, arithmetic says ${expected}`);
+      }
+    }
+  }
+  for (const [name, note] of Object.entries(book.shopNotes || {})) {
+    // Pack nouns only. "within two days" is a storage instruction and stays true
+    // in every week; "two packs" is an arithmetic claim and does not.
+    if (/\b(\d+|one|two|three|four|five|both|second|third)\b.{0,24}\b(packs?|tins?|bottles?|jars?|loa[fv]e?s?)\b/i.test(note)) {
+      pFail.push(`shopNote for "${name}" asserts a quantity, but the same note prints in every week: "${note}"`);
+    }
+  }
+  add('P', 'Pack guidance: never under-buys, counts correct, notes make no week-specific quantity claim', pFail);
+
+  /* Q - retailer specificity and cross-book contamination. */
+  const qFail = [];
+  const OTHER_RETAILER_TERMS = {
+    Aldi: [/\bmilbona\b/i, /\bvemondo\b/i, /\blidl plus\b/i, /\bderiva\b/i, /\bbaresa\b/i, /\bdeluxe\b/i, /\blidl\b/i],
+    Lidl: [/\bspecially selected\b/i, /\beveryday essentials\b/i, /\bslimwell\b/i, /\bcucina\b/i, /\baldi\b/i],
+  };
+  const fullText = plain(JSON.stringify({
+    sections: book.sections, appendices: book.appendices,
+    weeks: book.weeks.map((w) => ({ t: w.title, s: w.tocSub, l: w.lede, n: w.notes })),
+    title: book.title, subtitle: book.subtitle, footer: book.footer, shopNotes: book.shopNotes,
+    notAffiliated: book.notAffiliated, tocLede: book.tocLede, shopLede: book.shopLede,
+    recipesLede: book.recipesLede, facts: book.facts,
+  }));
+  for (const pattern of OTHER_RETAILER_TERMS[book.store] || []) {
+    const hit = pattern.exec(fullText);
+    if (hit) qFail.push(`${book.store} book contains the other retailer's term "${hit[0]}"`);
+  }
+  if (!new RegExp(`\\b${book.store}\\b`, 'i').test(book.footer || '')) {
+    qFail.push(`footer does not name ${book.store}: "${book.footer}"`);
+  }
+  if (!new RegExp(`not affiliated with[^.]{0,80}${book.store}`, 'i').test(fullText)) {
+    qFail.push(`missing a "not affiliated with ... ${book.store}" disclaimer`);
+  }
+  add('Q', 'Retailer content is specific to this book and carries the right disclaimer', qFail);
+
+  /* R - time claims.
+   *
+   * Cover and intro promises are checked against the actual dinner timings so a
+   * "20-40 min" claim cannot outlive a recipe that grew to 45. */
+  const rFail = [];
+  const dinnerTimes = Object.values(book.meals).filter((m) => m.kind === 'dinner').map((m) => m.timeMins);
+  const lo = Math.min(...dinnerTimes);
+  const hi = Math.max(...dinnerTimes);
+  const rangeClaims = [...fullText.matchAll(/\b(\d{2})\s*(?:-|to|&ndash;|–)\s*(\d{2})\s*min/gi)];
+  for (const claim of rangeClaims) {
+    const [, a, b] = claim;
+    if (Number(a) > lo || Number(b) < hi) {
+      rFail.push(`claims dinners are ${a}-${b} min, actual spread is ${lo}-${hi} min`);
+    }
+  }
+  for (const fact of book.facts || []) {
+    const m = /(\d{2})\s*(?:-|&ndash;|–)\s*(\d{2})/.exec(plain(fact.v));
+    if (m && /min/i.test(plain(fact.v)) && (Number(m[1]) > lo || Number(m[2]) < hi)) {
+      rFail.push(`cover fact "${plain(fact.k)}: ${plain(fact.v)}" does not cover the real ${lo}-${hi} min spread`);
+    }
+  }
+  add('R', `Time claims cover the real dinner spread (${lo}-${hi} min)`, rFail);
+
+  /* S - stated protein figures must match the computed plan.
+   *
+   * Both books claimed "around 150g / 145g of protein each, every day". The
+   * means were right and the daily claim was not: seven and nine days
+   * respectively fell outside a +/-10% band. A mean stated as a mean is checked
+   * against the mean; a claim that says "every day" is held to every day. */
+  const sFail = [];
+  const allDays = book.weeks.flatMap((w) => w.days);
+  const proteinMean = allDays.reduce((t, d) => t + d.protein, 0) / allDays.length;
+  // Only whole-day, per-person claims. "Another 100g of yogurt adds 10g of
+  // protein" is a per-meal fact and has nothing to do with the daily mean; the
+  // "each" is what marks a claim as being about a person's day.
+  for (const claim of fullText.matchAll(/(?:averaging|around|about|roughly)\s+(\d{2,3})\s*g of protein each([^.]{0,70})/gi)) {
+    const target = Number(claim[1]);
+    const trailing = claim[2] || '';
+    // A claim not scoped to a whole day is about part of one, so it is measured
+    // against the component means rather than the daily total: "breakfast and
+    // the daily extra settle about 55g each" was overstating a real 51.6g.
+    if (!/^\s*\(?a day/i.test(trailing)) {
+      const meanOf = (pick) => allDays.reduce((t, d) => t + pick(d), 0) / allDays.length;
+      const candidates = [
+        meanOf((d) => book.meals[d.breakfast.id].macros.protein + book.meals[d.extra.id].macros.protein),
+        meanOf((d) => book.meals[d.breakfast.id].macros.protein),
+        meanOf((d) => book.meals[d.extra.id].macros.protein),
+        meanOf((d) => book.meals[d.dinner.id].macros.protein),
+        meanOf((d) => book.meals[d.lunch.id].macros.protein),
+      ];
+      if (!candidates.some((c) => Math.abs(c - target) <= 5)) {
+        sFail.push(`claims ${target}g of protein each, matching no component of the plan (component means: ${candidates.map((c) => c.toFixed(0)).join(', ')}g)`);
+      }
+      continue;
+    }
+    const tolerance = Math.max(5, target * 0.05);
+    if (Math.abs(proteinMean - target) > tolerance) {
+      sFail.push(`claims ${target}g of protein a day, computed mean is ${proteinMean.toFixed(1)}g (tolerance ${tolerance.toFixed(1)}g)`);
+    }
+    if (/\bevery day\b|\ba day, every\b/i.test(trailing)) {
+      const outside = allDays.filter((d) => Math.abs(d.protein - target) > target * 0.1);
+      if (outside.length) {
+        sFail.push(`claims ${target}g of protein every day, but ${outside.length} of ${allDays.length} days fall outside +/-10%`);
+      }
+    }
+    // A stated range must contain the real spread.
+    const range = /(\d{2,3})\s*(?:&ndash;|-|–)\s*(\d{2,3})\s*g/.exec(trailing);
+    if (range) {
+      const lo = Math.min(...allDays.map((d) => d.protein));
+      const hi = Math.max(...allDays.map((d) => d.protein));
+      if (Number(range[1]) !== lo || Number(range[2]) !== hi) {
+        sFail.push(`states a protein range of ${range[1]}-${range[2]}g, actual spread is ${lo}-${hi}g`);
+      }
+    }
+  }
+  add('S', 'Stated protein figures match the computed plan', sFail);
 
   /* extra: recipe reuse shape */
   const reuseFail = [];

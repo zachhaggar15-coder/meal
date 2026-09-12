@@ -31,6 +31,50 @@ const COUNT_UNIT_RISK = /^\s*[\d.]+\s*(tin|tins|pack|packs|bag|bags|jar|jars|pot
 /** Seasonings genuinely below the threshold the nutrition table models. */
 export const negligible = (name) => `${name}, optional to taste (excluded from nutrition estimate)`;
 
+// Canonical cupboard vocabulary.
+//
+// Recipes are written in kitchen English - "ground cumin", "cumin seeds", "salt
+// and black pepper" - and an earlier build let each of those spellings become
+// its own line on the shopping list, so a cupboard section could carry "black
+// pepper" and "salt and black pepper" as separate items. Every seasoning string
+// is resolved here to one or more canonical staples before it reaches a list.
+const SEASONING_CANON = new Map(Object.entries({
+  'salt and black pepper': ['salt', 'black pepper'],
+  'salt and pepper': ['salt', 'black pepper'],
+  'black pepper': ['black pepper'],
+  'white pepper': ['black pepper'],
+  pepper: ['black pepper'],
+  salt: ['salt'],
+  'ground cumin': ['cumin'],
+  'cumin seeds': ['cumin'],
+  cumin: ['cumin'],
+  'ground turmeric': ['turmeric'],
+  turmeric: ['turmeric'],
+  'smoked paprika seasoning': ['smoked paprika'],
+  'smoked paprika': ['smoked paprika'],
+  paprika: ['smoked paprika'],
+  'dried oregano': ['mixed herbs'],
+  oregano: ['mixed herbs'],
+  'mixed herbs': ['mixed herbs'],
+  'chilli powder': ['chilli powder'],
+  'chilli flakes': ['chilli flakes'],
+  cinnamon: ['cinnamon'],
+  'ground cinnamon': ['cinnamon'],
+  'cocoa powder': ['cocoa powder'],
+  'curry powder': ['curry powder'],
+  'garlic powder': ['garlic powder'],
+}));
+
+/** Resolve a seasoning string to canonical staples. Unknown strings pass through. */
+export function canonicalSeasonings(raw) {
+  const name = String(raw || '').replace(/[\s,.]+$/, '').toLowerCase();
+  if (SEASONING_CANON.has(name)) return SEASONING_CANON.get(name);
+  // "salt, for the skins" and similar trailing clauses.
+  const head = name.split(',')[0].trim();
+  if (SEASONING_CANON.has(head)) return SEASONING_CANON.get(head);
+  return [head || name];
+}
+
 /* ── ingredient identity and aggregation ──────────────────────────────── */
 
 const keyOf = (parsed) => `${parsed.name}|${parsed.qualifier || ''}`;
@@ -150,7 +194,27 @@ const PLURALS = new Map(Object.entries({
   'wholemeal tortilla': 'wholemeal tortillas', 'wholemeal roll': 'wholemeal rolls',
 }));
 
+// Where a qualifier changes what the shopper actually buys, it has to survive
+// into the label. "potato" and "potato baked" are different purchases - loose
+// potatoes versus large baking potatoes - and collapsing both to "potato" put
+// the same word on a list twice with two different quantities beside it.
+const QUALIFIED_NAMES = new Map(Object.entries({
+  'potato|baked': 'baking potatoes',
+  'potato|': 'potatoes',
+  'chicken breast|cooked': 'chicken breast',
+  'brown rice|dry': 'brown rice',
+  'wholemeal pasta|dry': 'wholemeal pasta',
+  'red lentils|dry': 'red lentils',
+  'green lentils|dry': 'green lentils',
+  'wholemeal couscous|dry': 'couscous',
+  'wholewheat noodles|dry': 'wholewheat noodles',
+  'quinoa|dry': 'quinoa',
+  'orzo pasta|dry': 'orzo pasta',
+}));
+
 export const shopperName = (row) => {
+  const qualified = QUALIFIED_NAMES.get(`${cleanName(row.name)}|${row.qualifier || ''}`);
+  if (qualified) return qualified;
   const base = cleanName(row.name);
   const total = Object.values(row.counts || {}).reduce((a, b) => a + b, 0);
   if (total > 1 && PLURALS.has(base)) return PLURALS.get(base);
@@ -162,7 +226,7 @@ export const shopperName = (row) => {
 // 480g of drained kidney beans means two 400g tins, and neither number is wrong.
 // Values are the usable amount one standard UK unit yields - drained weight for a
 // tin of pulses, pack weight for everything else.
-const PACKS = new Map(Object.entries({
+export const PACKS = new Map(Object.entries({
   'tinned tomatoes': { each: 400, unit: 'tin' },
   'kidney beans': { each: 240, unit: 'tin' },
   'black beans': { each: 240, unit: 'tin' },
@@ -376,6 +440,20 @@ export function aggregateShopping(days, meals) {
     if (!recipe) throw new Error(`unknown meal "${event.id}"`);
     for (const item of recipe.parsed) {
       const p = item.parsed;
+      if (p.kind === 'negligible') {
+        for (const canon of canonicalSeasonings(p.name)) {
+          const key = `${canon}|`;
+          if (!totals.has(key)) {
+            totals.set(key, {
+              key, name: canon, qualifier: null, kind: 'negligible',
+              grams: 0, isMl: false, counts: new Map(), sources: new Set(),
+              negligible: true, display: canon,
+            });
+          }
+          totals.get(key).sources.add(`${recipe.name} (${event.slot}, ${event.day})`);
+        }
+        continue;
+      }
       const key = keyOf(p);
       if (!totals.has(key)) {
         totals.set(key, {
@@ -482,5 +560,23 @@ export function buildBook(def) {
     };
   });
 
-  return { ...def, meals, weeks };
+  // The cupboard model.
+  //
+  // Week one buys the staples the WHOLE PLAN needs, not merely the ones week one
+  // happens to use. Before this, a later week could tell the reader to "check you
+  // still have" curry powder that no list had ever asked them to buy - the Aldi
+  // budget plan used it in five separate weeks and never once bought it.
+  const stapleNames = (week) => [...new Set(week.shopping.filter((r) => r.staple).map((r) => r.shopperName))];
+  const weekOne = [...new Set(weeks.flatMap(stapleNames))].sort();
+  const cupboard = {
+    weekOne,
+    byWeek: new Map(weeks.map((w) => [w.n, stapleNames(w).sort()])),
+  };
+
+  // Which dinners are ever cooked at half size, so the recipe card can say so.
+  const halfBatchRecipes = new Set(
+    weeks.flatMap((w) => w.days.filter((d) => d.dinner.scale !== 1).map((d) => d.dinner.id))
+  );
+
+  return { ...def, meals, weeks, cupboard, halfBatchRecipes };
 }

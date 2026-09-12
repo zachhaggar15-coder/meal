@@ -18,7 +18,7 @@ export const weeks = [
     tag: 'Week 1',
     tocSub: 'Seven new dinners, and the first shop',
     lede:
-      'Breakfast and the daily extra settle about 55g of protein each before you cook anything, which is why these dinners still look like dinners rather than training food.',
+      'Breakfast and the daily extra settle about 50g of protein each before you cook anything, which is why these dinners still look like dinners rather than training food.',
     mondayLunch: 'quark-rye-plate',
     dinners: ['skyr-chicken-skewers', 'cod-herby-crumb', 'beef-mushroom-stroganoff', 'prawn-pea-orzo', 'turkey-ricotta-meatballs', 'salmon-quinoa-bowl', 'eggs-bacon-beans'],
     notes: [{
@@ -50,11 +50,11 @@ export const weeks = [
   },
   {
     n: 3, ...B,
-    title: 'The last of the new dinners',
+    title: 'The last all-new week',
     tag: 'Week 3',
     tocSub: 'Smoked fish, tofu and a Friday with no cooking',
     lede:
-      'By Sunday every dinner in the book will have been cooked once. Friday is the one to look forward to: a p&acirc;t&eacute; that needs nothing but a toaster.',
+      'By Sunday twenty-one of the twenty-four dinners will have been cooked once. Friday is the one to look forward to: a p&acirc;t&eacute; that needs nothing but a toaster.',
     mondayLunch: 'cottage-cheese-jackets',
     dinners: ['spiced-chicken-chickpea-tray', 'miso-tofu-broccoli', 'smoked-haddock-egg', 'beef-quinoa-chilli', 'mackerel-pate-rye', 'turkey-halloumi-burgers', 'chicken-leek-quinoa-broth'],
     notes: [{
@@ -108,7 +108,7 @@ export const weeks = [
     tag: 'Week 6',
     tocSub: 'And what to do in week seven',
     lede:
-      'The dinners that earned a third outing. After six weeks you will have firm opinions about which of these stay, and that is the real output of the exercise.',
+      'The dinners that earned a second outing. After six weeks you will have firm opinions about which of these stay, and that is the real output of the exercise.',
     mondayLunch: 'cottage-cheese-jackets',
     dinners: ['turkey-ricotta-meatballs', 'miso-tofu-broccoli', 'peppered-steak-bean-mash', 'prawn-pea-orzo', 'feta-lentil-pepper-bowl', 'mackerel-pate-rye', 'chicken-leek-quinoa-broth'],
     notes: [{

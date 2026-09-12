@@ -13,7 +13,7 @@ export default {
   footer: 'MealPrep.org.uk · The Lidl Dinner Plan',
   cost: { tier: 'Budget tier', range: '£30–£40 per person per week', checked: '29 July 2026' },
   shopNotes: {
-    'sourdough bread': 'A bakery loaf bought on the day, used across three days. A day-old loaf toasts better than a fresh one.',
+    'sourdough bread': 'Bought on the day from the bakery counter. A day-old loaf toasts better than a fresh one.',
     'firm tofu': 'Press it before cooking; it is the difference between browning and steaming.',
     'quorn mince': 'Any meat-free mince. Green lentils work if the range has moved on.',
     'tinned sardines': 'The best-value protein in this book by some distance.',

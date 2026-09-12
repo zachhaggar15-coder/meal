@@ -8,7 +8,7 @@
 export const content = {
   planLabel: 'High-protein &middot; Six weeks',
   coverNote:
-    'One dinner a night, half an hour, and tomorrow&rsquo;s lunch out of the same pan &mdash; at around 150g of protein each, every day, without counting a thing.',
+    'One dinner a night, half an hour, and tomorrow&rsquo;s lunch out of the same pan &mdash; averaging about 150g of protein each a day, without counting a thing.',
   facts: [
     { k: 'Feeds', v: '2 adults' },
     { k: 'Protein', v: 'About 150g each' },
@@ -36,7 +36,7 @@ export const content = {
       title: 'How the plan works',
       tocSub: 'Five rules, and where the protein actually comes from',
       lede:
-        'Written for <b>two adults</b> eating roughly 2,000 calories each a day, at around 150g of protein each. No batch cooking: one dinner a night, most in about half an hour, and tomorrow&rsquo;s lunch comes out of the same pan.',
+        'Written for <b>two adults</b> eating roughly 2,000 calories each a day, averaging about 150g of protein each (a day-to-day range of 134&ndash;171g across the six weeks). No batch cooking: one dinner a night, most in about half an hour, and tomorrow&rsquo;s lunch comes out of the same pan.',
       blocks: [
         { t: 'h', text: 'The five rules' },
         {
