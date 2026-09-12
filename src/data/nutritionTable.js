@@ -186,6 +186,11 @@ export const NUTRITION_TABLE = {
   'lemon juice':            { kcal100: 22, pro100: 0.4 },
   'lime juice':             { kcal100: 25, pro100: 0.4 },
   'tomatoes':               { kcal100: 18, pro100: 0.9, gramsEach: 120 },
+  // Double-concentrate purée, the format both discounters sell. Representative
+  // UK own-brand label (Aldi Cucina Tomato Purée Double Concentrate; Lidl Baresa
+  // and Sainsbury's own-brand agree within 2 kcal), checked 2026-09-11 via Open
+  // Food Facts. A tablespoon of purée is heavier than a tablespoon of water.
+  'tomato purée':           { kcal100: 93, pro100: 4, gramsPerTbsp: 16, gramsPerTsp: 5.5 },
   'cherry tomatoes':        { kcal100: 18, pro100: 0.9, gramsEach: 17 },
   'cucumber':               { kcal100: 12, pro100: 0.6, gramsEach: 300, unitGrams: { slice: 5, slices: 5 } },
   'carrot':                 { kcal100: 41, pro100: 0.9, gramsEach: 60 },
@@ -442,6 +447,7 @@ export const NUTRITION_MACRO_OVERRIDES = {
   'lime juice': { fat100: 0.1, carb100: 8.4, fibre100: 0.4 },
   tomatoes: { fat100: 0.2, carb100: 3.9, fibre100: 1.2 },
   'cherry tomatoes': { fat100: 0.2, carb100: 3.9, fibre100: 1.2 },
+  'tomato purée': { fat100: 0.5, carb100: 16.4, fibre100: 2.9 },
   cucumber: { fat100: 0.1, carb100: 2.2, fibre100: 0.7 },
   carrot: { fat100: 0.2, carb100: 10, fibre100: 2.8 },
   celery: { fat100: 0.2, carb100: 3, fibre100: 1.6 },
@@ -714,6 +720,7 @@ export const NUTRITION_SYNONYMS = {
   'lime juice': 'lime juice',
   'tomatoes': 'tomatoes', 'tomato': 'tomatoes',
   'tinned tomatoes': 'tomatoes', 'beef tomato': 'tomatoes', 'roasted tomatoes': 'tomatoes',
+  'tomato purée': 'tomato purée', 'tomato puree': 'tomato purée', 'tomato paste': 'tomato purée',
   'cherry tomatoes': 'cherry tomatoes',
   'cucumber': 'cucumber', 'cucumber slices': 'cucumber',
   'carrot': 'carrot', 'carrots': 'carrot', 'carrot sticks': 'carrot', 'carrot grated': 'carrot',
