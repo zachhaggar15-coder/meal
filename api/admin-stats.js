@@ -188,6 +188,11 @@ async function loadAnalyticsStats(supabaseUrl, headers) {
     console.error('Analytics stats unavailable:', err.message || err);
     return {
       configured: false,
+      health: {
+        status: 'error',
+        latestEventAt: null,
+        message: 'The analytics data source could not be read.',
+      },
       error: 'Analytics tables are not available yet. Run supabase/migrations/0002_behavior_analytics.sql, then refresh.',
     };
   }
@@ -298,6 +303,7 @@ export function buildAnalyticsStats(events, sessions, vitalEvents = [], options 
 
   return {
     configured: true,
+    health: buildAnalyticsHealth(cleanEvents),
     generatedAt: new Date().toISOString(),
     sample: {
       events: cleanEvents.length,
@@ -423,6 +429,7 @@ export function buildAffiliateMeasurement(events) {
     byListPosition: buildBreakdown('list_position'),
     byViewport: buildBreakdown('viewport_category'),
     byRecommendationSource: buildBreakdown('recommendation_source'),
+    byAffiliateTag: buildBreakdown('affiliate_tag'),
     pages: paths.map(path => {
       const views = pageViews.filter(event => event.path === path).length;
       const pageClicks = clicks.filter(event => event.path === path).length;
@@ -444,6 +451,30 @@ export function buildAffiliateMeasurement(events) {
       affiliateLinkClicked: legacy.filter(event => event.event_name === 'affiliate_link_clicked').length,
       note: 'Historical diagnostics only; never add these to canonical conversions.',
     },
+  };
+}
+
+export function buildAnalyticsHealth(events, { now = Date.now(), staleAfterHours = 48 } = {}) {
+  const latestMs = Math.max(0, ...(events || []).map(event => Number(event.ts) || 0));
+  if (!latestMs) {
+    return {
+      status: 'unavailable',
+      latestEventAt: null,
+      ageHours: null,
+      message: 'No analytics events were returned, so zero activity cannot be assumed.',
+    };
+  }
+
+  const ageHours = Math.max(0, Math.round(((Number(now) - latestMs) / 36e5) * 10) / 10);
+  const stale = ageHours > staleAfterHours;
+  return {
+    status: stale ? 'stale' : 'ok',
+    latestEventAt: new Date(latestMs).toISOString(),
+    ageHours,
+    staleAfterHours,
+    message: stale
+      ? `The newest event is ${ageHours} hours old; treat totals as historical, not current.`
+      : 'Analytics events are arriving within the expected freshness window.',
   };
 }
 

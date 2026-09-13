@@ -3,6 +3,14 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    __MEALPREP_BUILD_ID__: JSON.stringify(
+      process.env.VERCEL_GIT_COMMIT_SHA
+      || process.env.GITHUB_SHA
+      || process.env.npm_package_version
+      || 'local',
+    ),
+  },
   server: {
     port: 5173,
   },

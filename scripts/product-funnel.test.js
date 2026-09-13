@@ -31,6 +31,7 @@ import {
 import {
   buildAccessoryFunnelMeasurement,
   buildAffiliateMeasurement,
+  buildAnalyticsHealth,
 } from '../api/admin-stats.js';
 import {
   ACCESSORY_PROBLEMS,
@@ -303,6 +304,7 @@ test('canonical affiliate properties use stable page, placement and recommendati
     viewport_category: 'mobile',
     recommendation_source: 'container_buying_guide',
     source_component: 'best-containers-quick-comparison',
+    affiliate_tag: 'amazonaf063dc-21',
     destination: target.href,
   });
   assert.equal(inferRecommendationSource({ pathname: '/plans/aldi-high-protein-low-cal-1500' }), 'plan_derived');
@@ -479,7 +481,12 @@ test('commercial affiliate reporting retains CTR denominators and deployment bou
 
 test('affiliate link attributes expose one canonical conversion event', () => {
   const attributes = affiliateLinkData({
-    product: { id: 'starter-pack', name: 'Starter pack', category: 'Containers' },
+    product: {
+      id: 'starter-pack',
+      name: 'Starter pack',
+      category: 'Containers',
+      href: 'https://www.amazon.co.uk/example/dp/B0FFH1DW9W?tag=amazonaf063dc-21',
+    },
     sourcePage: 'buying-guide',
     placement: 'detailed_card',
     listPosition: 1,
@@ -490,6 +497,25 @@ test('affiliate link attributes expose one canonical conversion event', () => {
   assert.equal(attributes['data-product-id'], 'starter-pack');
   assert.equal(attributes['data-list-position'], 1);
   assert.equal(attributes['data-recommendation-source'], 'container_buying_guide');
+  assert.equal(attributes['data-affiliate-tag'], 'amazonaf063dc-21');
   assert.equal(Object.values(attributes).includes('affiliate_link_clicked'), false);
   assert.equal(Object.values(attributes).includes('affiliate_click'), false);
+});
+
+test('affiliate events recover the Amazon tracking ID from legacy links', () => {
+  const properties = buildAffiliateEventProperties({
+    href: 'https://www.amazon.co.uk/example/dp/B0FFH1DW9W?tag=amazonaf063dc-21',
+    dataset: { sourcePage: 'legacy-body-promo' },
+  }, { pathname: '/blog/example', viewportWidth: 390 });
+  assert.equal(properties.product_id, 'B0FFH1DW9W');
+  assert.equal(properties.affiliate_tag, 'amazonaf063dc-21');
+});
+
+test('analytics health distinguishes current, stale and unavailable data', () => {
+  const now = Date.parse('2026-09-10T12:00:00.000Z');
+  assert.equal(buildAnalyticsHealth([], { now }).status, 'unavailable');
+  assert.equal(buildAnalyticsHealth([{ ts: now - 60 * 60 * 1000 }], { now }).status, 'ok');
+  const stale = buildAnalyticsHealth([{ ts: now - 72 * 60 * 60 * 1000 }], { now });
+  assert.equal(stale.status, 'stale');
+  assert.equal(stale.latestEventAt, '2026-09-07T12:00:00.000Z');
 });

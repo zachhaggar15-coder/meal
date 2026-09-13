@@ -339,6 +339,14 @@ export const prepKitBlogPostsData = {
           'A 450ml to 500ml jar is a good all-rounder for oats, milk, yogurt, fruit and toppings. Smaller jars can feel cramped once protein powder, berries or chia seeds are added.',
           'Wide-mouth jars are easier to fill, stir and wash. Tall narrow jars may look neat but can make thick oats awkward to eat with a normal spoon.',
         ],
+        table: {
+          headers: ['Choose', 'Best fit', 'Cleaning and storage', 'Watch out'],
+          rows: [
+            ['450-500ml glass, wide mouth', 'Home or office breakfasts; odour resistance', 'Dishwasher-friendly if the listing confirms it; store with the lid loose', 'Heavier in a commuting bag'],
+            ['450-500ml plastic, wide mouth', 'Daily commuting, students and gym bags', 'Check lid and body dishwasher guidance; dry fully before stacking', 'Can retain smells or stain'],
+            ['Under 400ml', 'Small oats-only portions', 'Easy to store', 'Cramped once yogurt, fruit or protein powder is added'],
+          ],
+        },
       },
       {
         h2: 'Overnight oats jar verdict',

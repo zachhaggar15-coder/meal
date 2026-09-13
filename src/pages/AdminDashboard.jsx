@@ -370,6 +370,7 @@ function AnalyticsSection({ analytics }) {
 
   const overview = analytics.overview || {};
   const coreWebVitals = analytics.coreWebVitals || { summary: [], routes: [] };
+  const health = analytics.health || { status: 'unavailable', message: 'Freshness has not been measured.' };
 
   return (
     <section className="admin-panel admin-analytics">
@@ -378,6 +379,10 @@ function AnalyticsSection({ analytics }) {
         <p>
           First-party session analytics from visitors who accepted optional analytics.
           Raw exports include the full click and event trail.
+        </p>
+        <p>
+          Data health: <strong>{health.status}</strong>. {health.message}
+          {health.latestEventAt ? ` Latest event: ${shortDate(health.latestEventAt)}.` : ''}
         </p>
       </div>
 

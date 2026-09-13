@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MEAL_PREP_STICKERS } from '../data/offers.js';
 import ProductSpecPlate from './ProductSpecPlate.jsx';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 
 export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 'unknown', compact = false }) {
   return (
@@ -11,11 +12,12 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
           target="_blank"
           rel="noopener noreferrer nofollow sponsored"
           className="sticker-promo-media"
-          data-event={offer.eventName}
-          data-source-page={sourcePage}
-          data-offer={offer.name}
-          data-affiliate-category="meal-prep-containers"
-          data-product-name={offer.name}
+          {...affiliateLinkData({
+            product: offer,
+            productCategory: 'meal-prep-containers',
+            sourcePage,
+            placement: 'body_promo_image',
+          })}
         >
           <ProductSpecPlate product={offer} />
         </a>
@@ -30,11 +32,12 @@ export default function StickerPromo({ offer = MEAL_PREP_STICKERS, sourcePage = 
             target="_blank"
             rel="noopener noreferrer nofollow sponsored"
             className="sticker-promo-btn"
-            data-event={offer.eventName}
-            data-source-page={sourcePage}
-            data-offer={offer.name}
-            data-affiliate-category="meal-prep-containers"
-            data-product-name={offer.name}
+            {...affiliateLinkData({
+              product: offer,
+              productCategory: 'meal-prep-containers',
+              sourcePage,
+              placement: 'body_promo_cta',
+            })}
           >
             {offer.cta}
           </a>

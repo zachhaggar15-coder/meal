@@ -97,6 +97,10 @@ async function main() {
   let gaEventCounts = [];
   let fieldVitalRows = [];
   let commercialEventRows = [];
+  let commercialAnalyticsHealth = {
+    status: 'unavailable', latestEventAt: null, ageHours: null,
+    message: 'Supabase commercial analytics have not been checked.',
+  };
   let seoExperimentSnapshots = [];
   let semanticQa;
 
@@ -105,6 +109,7 @@ async function main() {
     gaEventCounts = sampleGa4EventCounts();
     fieldVitalRows = sampleFieldVitalRows();
     commercialEventRows = sampleCommercialEventRows();
+    commercialAnalyticsHealth = describeAnalyticsSource(commercialEventRows);
   } else {
     if (!options.siteUrl && !options.ga4PropertyId) {
       throw new Error(
@@ -196,10 +201,19 @@ async function main() {
           serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
           rowLimit: 20000,
         });
+        commercialAnalyticsHealth = describeAnalyticsSource(commercialEventRows);
       } catch (error) {
+        commercialAnalyticsHealth = {
+          status: 'error', latestEventAt: null, ageHours: null,
+          message: `Supabase commercial analytics could not be read: ${error.message || error}`,
+        };
         warnings.push(`Commercial funnel fetch failed independently: ${error.message || error}`);
       }
     } else {
+      commercialAnalyticsHealth = {
+        status: 'unavailable', latestEventAt: null, ageHours: null,
+        message: 'SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing; commercial totals are unavailable, not zero.',
+      };
       warnings.push('Supabase analytics credentials are missing, so field Core Web Vitals remain available only in the private dashboard.');
     }
   }
@@ -248,6 +262,7 @@ async function main() {
     recentActivity,
     fieldVitalRows,
     commercialEventRows,
+    commercialAnalyticsHealth,
     seoExperimentSnapshots,
     semanticQa,
     warnings,
@@ -718,7 +733,7 @@ function isPublicPagePath(value) {
   return true;
 }
 
-function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, commercialEventRows, seoExperimentSnapshots, semanticQa, warnings }) {
+function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, commercialEventRows, commercialAnalyticsHealth, seoExperimentSnapshots, semanticQa, warnings }) {
   const unverifiedRoutes = collectUnverifiedRoutes(currentSearchRows, gaLandingPages, routeIndex);
   if (unverifiedRoutes.length) {
     warnings.push(`Skipped ${unverifiedRoutes.length} analytics rows because their routes were not in the verified route inventory.`);
@@ -833,6 +848,7 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
     shippedChangeReview,
     containerGuideCommercial,
     accessoriesFunnel,
+    commercialAnalyticsHealth,
     seoExperiments,
     semanticQa,
     gaLandingPages: gaRows,
@@ -1484,6 +1500,13 @@ function renderWeeklyReport(analysis) {
 
   lines.push('## Container Buying Guide Commercial Funnel', '');
   const commercial = analysis.containerGuideCommercial;
+  const commercialHealth = analysis.commercialAnalyticsHealth;
+  lines.push(`- Data status: ${commercialHealth.status}`);
+  lines.push(`- Latest first-party event: ${commercialHealth.latestEventAt || 'unavailable'}`);
+  lines.push(`- Freshness: ${commercialHealth.message}`);
+  if (['unavailable', 'error'].includes(commercialHealth.status)) {
+    lines.push('- Funnel totals and breakdowns are unavailable. They are deliberately not rendered as zero.', '');
+  } else {
   lines.push(`- Canonical measurement starts: ${commercial.baselineTimestamp}`);
   lines.push(`- Buying-guide views: ${commercial.pageViews}`);
   lines.push(`- Product impressions: ${commercial.impressions}`);
@@ -1498,9 +1521,15 @@ function renderWeeklyReport(analysis) {
   writeAffiliateBreakdown(lines, 'List position', commercial.byListPosition);
   writeAffiliateBreakdown(lines, 'Recommendation source', commercial.byRecommendationSource);
   writeAffiliateBreakdown(lines, 'Device', commercial.byViewport);
+  writeAffiliateBreakdown(lines, 'Amazon tracking ID', commercial.byAffiliateTag);
+  writeAffiliatePageBreakdown(lines, commercial.pages);
+  }
 
   lines.push('## Accessories Problem-led Funnel', '');
   const accessories = analysis.accessoriesFunnel;
+  if (['unavailable', 'error'].includes(commercialHealth.status)) {
+    lines.push('- Accessory funnel totals are unavailable because the first-party analytics source is unavailable.', '');
+  } else {
   lines.push(`- Redesign measurement starts: ${accessories.baselineTimestamp}${accessories.baselineStatus === 'pending_production_deployment' ? ' (temporary canonical-event fallback; replace with the actual redesign deployment timestamp)' : ''}`);
   lines.push(`- Accessory page views: ${accessories.pageViews}`);
   lines.push(`- Problem selections: ${accessories.problemSelections}`);
@@ -1516,6 +1545,7 @@ function renderWeeklyReport(analysis) {
   writeAccessoryProblemBreakdown(lines, accessories.byProblem);
   writeAffiliateBreakdown(lines, 'Accessory placement', accessories.byPlacement);
   writeAffiliateBreakdown(lines, 'Accessory device', accessories.byViewport);
+  }
 
   lines.push('## Plan Quality', '');
   const semanticRun = analysis.semanticQa?.run;
@@ -1941,13 +1971,42 @@ function writeAffiliateBreakdown(lines, label, rows = []) {
   lines.push('| Value | Clicks | Impressions | Affiliate CTR |');
   lines.push('| --- | ---: | ---: | ---: |');
   if (!rows.length) {
-    lines.push('| Awaiting data | 0 | 0 | unavailable |', '');
+    lines.push('| No measured events in the available range | 0 | 0 | unavailable |', '');
     return;
   }
   for (const row of rows) {
     lines.push(`| ${mdCell(row.name)} | ${row.clicks} | ${row.impressions} | ${row.impressions ? `${row.clicks} / ${row.impressions} (${row.affiliateCtr}%)` : 'unavailable'} |`);
   }
   lines.push('');
+}
+
+function writeAffiliatePageBreakdown(lines, rows = []) {
+  lines.push('### Page', '');
+  lines.push('| Page | Clicks | Impressions | Affiliate CTR |');
+  lines.push('| --- | ---: | ---: | ---: |');
+  if (!rows.length) {
+    lines.push('| No measured events in the available range | 0 | 0 | unavailable |', '');
+    return;
+  }
+  for (const row of rows.slice(0, 30)) {
+    lines.push(`| ${mdCell(row.path)} | ${row.clicks} | ${row.impressions} | ${row.impressions ? `${row.clicks} / ${row.impressions} (${row.affiliateCtr}%)` : 'unavailable'} |`);
+  }
+  lines.push('');
+}
+
+function describeAnalyticsSource(rows, { now = Date.now(), staleAfterHours = 48 } = {}) {
+  const latestMs = Math.max(0, ...(rows || []).map(row => Number(row.ts) || Date.parse(row.occurred_at || '') || 0));
+  if (!latestMs) {
+    return { status: 'unavailable', latestEventAt: null, ageHours: null, message: 'No first-party events were returned, so zero activity cannot be assumed.' };
+  }
+  const ageHours = Math.max(0, Math.round(((Number(now) - latestMs) / 36e5) * 10) / 10);
+  return {
+    status: ageHours > staleAfterHours ? 'stale' : 'ok',
+    latestEventAt: new Date(latestMs).toISOString(), ageHours, staleAfterHours,
+    message: ageHours > staleAfterHours
+      ? `Newest event is ${ageHours} hours old; totals below are historical and may be incomplete.`
+      : 'Events are arriving within the expected freshness window.',
+  };
 }
 
 function writeAccessoryProblemBreakdown(lines, rows = []) {

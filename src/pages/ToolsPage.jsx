@@ -10,6 +10,7 @@ import { CONTAINER_TIER_COPY, getContainerRecommendation } from '../utils/contai
 import { toTitleCase } from '../utils/textFormatting.js';
 import { track } from '../utils/analytics.js';
 import { apiHeaders } from '../utils/apiClient.js';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 import { generateDinnerOptions, normaliseFridgeRows } from '../utils/dinnerBuilder.js';
 import {
   PROTEIN_FOODS,
@@ -589,11 +590,14 @@ export default function ToolsPage() {
                 href={containerOffer.href}
                 target="_blank"
                 rel="noopener noreferrer nofollow sponsored"
-                data-event={containerOffer.eventName}
-                data-source-page="tools-container-recommender"
-                data-offer={containerOffer.name}
-                data-affiliate-category="meal-prep-containers"
-                data-product-name={containerOffer.name}
+                {...affiliateLinkData({
+                  product: containerOffer,
+                  productCategory: 'meal-prep-containers',
+                  sourcePage: 'tools-container-recommender',
+                  sourcePageType: 'tool',
+                  placement: 'chooser_result',
+                  recommendationSource: 'container_chooser',
+                })}
               >
                 View matched pick on Amazon UK
               </a>

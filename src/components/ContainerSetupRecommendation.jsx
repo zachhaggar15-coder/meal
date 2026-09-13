@@ -4,6 +4,7 @@ import { AFFILIATE_DISCLOSURE } from '../data/containerProducts.js';
 import { BUDGET_CONTAINERS, MEAL_PREP_STICKERS, MID_RANGE_CONTAINERS } from '../data/offers.js';
 import { buildContainerSetup, CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
 import { track } from '../utils/analytics.js';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 
 const OFFER_BY_TIER = {
   budget: BUDGET_CONTAINERS,
@@ -82,11 +83,14 @@ export default function ContainerSetupRecommendation({
             target="_blank"
             rel="noopener noreferrer nofollow sponsored"
             className="btn-primary"
-            data-event={offer.eventName}
-            data-source-page={`${sourcePage}-${setup.recommendation}`}
-            data-offer={offer.name}
-            data-affiliate-category="meal-prep-containers"
-            data-product-name={offer.name}
+            {...affiliateLinkData({
+              product: offer,
+              productCategory: 'meal-prep-containers',
+              sourcePage: `${sourcePage}-${setup.recommendation}`,
+              sourcePageType: 'plan',
+              placement: 'plan_recommendation',
+              recommendationSource: 'plan_derived',
+            })}
           >
             View matched pick on Amazon UK
           </a>

@@ -16,6 +16,7 @@ const BROWSE_CANONICAL_REDIRECTS = [
 
 export const config = {
   matcher: ['/', '/browse'],
+  runtime: 'nodejs',
 };
 
 export default function middleware(request) {

@@ -8,6 +8,7 @@ import {
 } from '../api/_guards.js';
 import {
   createRedisRateLimitStore,
+  getRateLimitConfiguration,
   resetRateLimitStoreForTests,
   setRateLimitStoreForTests,
 } from '../api/_rate-limit-store.js';
@@ -188,7 +189,26 @@ async function run() {
     rateLimit: { limit: 2, windowMs: 60_000 },
   }), false);
   assert.equal(unavailableRes.statusCode, 503, 'store failure fails closed');
+  assert.equal(unavailableRes.headers['Retry-After'], '60');
+  assert.equal(unavailableRes.headers['X-MealPrep-Service-Status'], 'rate-limit-store-unavailable');
   resetRateLimitStoreForTests();
+
+  const previousVercelEnvironment = process.env.VERCEL_ENV;
+  const previousRedisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const previousRedisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+  process.env.VERCEL_ENV = 'production';
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  assert.deepEqual(getRateLimitConfiguration().missing, [
+    'UPSTASH_REDIS_REST_URL',
+    'UPSTASH_REDIS_REST_TOKEN',
+  ]);
+  if (previousVercelEnvironment === undefined) delete process.env.VERCEL_ENV;
+  else process.env.VERCEL_ENV = previousVercelEnvironment;
+  if (previousRedisUrl === undefined) delete process.env.UPSTASH_REDIS_REST_URL;
+  else process.env.UPSTASH_REDIS_REST_URL = previousRedisUrl;
+  if (previousRedisToken === undefined) delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  else process.env.UPSTASH_REDIS_REST_TOKEN = previousRedisToken;
 
   assert.equal(assertInteger('7', 'days', { allowed: [1, 3, 7] }), 7);
   assert.throws(() => assertInteger('8', 'days', { allowed: [1, 3, 7] }), /days must be one of/);

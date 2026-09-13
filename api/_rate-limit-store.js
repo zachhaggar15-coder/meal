@@ -59,6 +59,21 @@ export function getRateLimitStore() {
   return cachedStore;
 }
 
+export function getRateLimitConfiguration() {
+  const hasUrl = Boolean(process.env.UPSTASH_REDIS_REST_URL);
+  const hasToken = Boolean(process.env.UPSTASH_REDIS_REST_TOKEN);
+  const deploymentEnvironment = process.env.VERCEL_ENV || 'local';
+  return {
+    deploymentEnvironment,
+    configured: hasUrl && hasToken,
+    missing: [
+      ...(!hasUrl ? ['UPSTASH_REDIS_REST_URL'] : []),
+      ...(!hasToken ? ['UPSTASH_REDIS_REST_TOKEN'] : []),
+    ],
+    store: hasUrl && hasToken ? 'redis' : 'memory',
+  };
+}
+
 export function createRedisRateLimitStore(redis) {
   return {
     kind: 'redis',

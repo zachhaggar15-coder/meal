@@ -71,6 +71,7 @@ export default async function handler(req, res) {
     const data = await sendResendEmail({
       from: resolveEmailFrom(
         process.env.MEALPREP_PLAN_FROM_EMAIL ||
+        process.env.MEALPREP_PLAN_FROM_EMAI ||
         process.env.MEALPREP_FROM_EMAIL,
       ),
       to: email,

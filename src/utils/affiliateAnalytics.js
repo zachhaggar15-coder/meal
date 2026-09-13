@@ -101,6 +101,7 @@ export function buildAffiliateEventProperties(target, context = {}) {
       explicit: dataset.recommendationSource,
     }),
     source_component: sourceComponent,
+    affiliate_tag: dataset.affiliateTag || extractAffiliateTag(href),
     destination: href,
   });
 }
@@ -145,11 +146,21 @@ export function affiliateLinkData({
     'data-list-position': listPosition,
     'data-selected-problem': selectedProblem,
     'data-recommendation-source': recommendationSource,
+    'data-affiliate-tag': extractAffiliateTag(product?.href),
     'data-offer': product?.name,
   });
 }
 
-function extractAmazonProductId(href) {
+export function extractAffiliateTag(href) {
+  try {
+    const url = new URL(String(href || ''), 'https://www.mealprep.org.uk');
+    return url.searchParams.get('tag') || url.searchParams.get('ascsubtag') || '';
+  } catch {
+    return '';
+  }
+}
+
+export function extractAmazonProductId(href) {
   const match = String(href || '').match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?:[/?]|$)/i);
   return match?.[1]?.toUpperCase() || '';
 }

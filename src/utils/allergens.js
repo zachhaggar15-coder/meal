@@ -257,6 +257,7 @@ const FOOD_ALLERGENS = {
   'rice cakes': {}, 'rice noodles dry': {}, 'rocket': {},
   'smoked paprika': {}, 'spinach': {}, 'spring onion': {}, 'steak': {},
   'sweet potato': {}, 'sweetcorn': {}, 'tinned chickpeas': {}, 'tomatoes': {},
+  'tomato purée': {},
   'turkey breast': {}, 'turkey breast slices': {}, 'turkey mince lean': {},
   'turmeric': {}, 'water': {}, 'watercress': {},
 };

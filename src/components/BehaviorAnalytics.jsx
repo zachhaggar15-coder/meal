@@ -400,7 +400,8 @@ function getOrCreateSession(getPath) {
     consent_state: 'granted',
     metadata: {
       app: 'mealprep',
-      tracker_version: 2,
+      tracker_version: 3,
+      build_id: __MEALPREP_BUILD_ID__,
     },
   };
 }

@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import { getRateLimitStore } from './_rate-limit-store.js';
+import { getRateLimitConfiguration, getRateLimitStore } from './_rate-limit-store.js';
 
 const JSON_CONTENT_TYPE = /\bapplication\/json\b/i;
 
@@ -31,7 +31,15 @@ export async function applyApiGuards(req, res, options) {
   try {
     rate = await hitRateLimit(req, options.route, options.rateLimit);
   } catch (err) {
-    console.error('Rate-limit store unavailable:', err?.message || err);
+    const configuration = getRateLimitConfiguration();
+    console.error('Rate-limit store unavailable:', {
+      route: options.route,
+      environment: configuration.deploymentEnvironment,
+      missing: configuration.missing,
+      message: err?.message || String(err),
+    });
+    res.setHeader('Retry-After', '60');
+    res.setHeader('X-MealPrep-Service-Status', 'rate-limit-store-unavailable');
     return reject(res, 503, 'This service is temporarily unavailable. Please try again shortly.');
   }
   if (!rate.allowed) {

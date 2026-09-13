@@ -17,6 +17,7 @@ import {
 } from '../data/containerProducts.js';
 import { CONTAINER_GUIDE_GROUPS } from '../data/containerGuideGroups.js';
 import { CONTAINER_LAST_CHECKED } from '../utils/containerSetup.js';
+import { affiliateLinkData } from '../utils/affiliateAnalytics.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 
 const guideLabels = CONTAINER_GUIDE_GROUPS
@@ -235,11 +236,14 @@ export default function ContainerGuide() {
                         href={product.href}
                         target="_blank"
                         rel="noopener noreferrer nofollow sponsored"
-                        data-event="container_product_click"
-                        data-affiliate-category="meal-prep-containers"
-                        data-product-name={product.name}
-                        data-source-page={`${guide.slug}-comparison-table`}
-                        data-offer={product.name}
+                        {...affiliateLinkData({
+                          product,
+                          productCategory: 'meal-prep-containers',
+                          sourcePage: `${guide.slug}-comparison-table`,
+                          sourcePageType: 'container_specialist_guide',
+                          placement: 'comparison_table',
+                          recommendationSource: 'container_specialist_guide',
+                        })}
                       >
                         View deal
                       </a>
