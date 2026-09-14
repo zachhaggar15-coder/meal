@@ -2,11 +2,11 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-09-07T12:47:24.537Z",
+  "generatedAt": "2026-09-14T13:03:37.159Z",
   "range": {
     "current": {
-      "startDate": "2026-08-08",
-      "endDate": "2026-09-04"
+      "startDate": "2026-08-15",
+      "endDate": "2026-09-11"
     }
   },
   "source": "google-analytics-and-search-console",
@@ -36,10 +36,10 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Meal plans"
     },
     {
-      "to": "/meal-plans/high-protein",
-      "label": "High Protein Meal Plans UK",
-      "description": "Find free high protein meal plans for UK supermarkets, including fat loss, muscle gain, vegetarian, gym beginner and body recomposition plans.",
-      "category": "Meal plans"
+      "to": "/blog/lidl-high-protein-food-ideas-uk",
+      "label": "Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples",
+      "description": "Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.",
+      "category": "Guide"
     },
     {
       "to": "/meal-plans/1500-calorie",
@@ -48,16 +48,16 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Meal plans"
     },
     {
-      "to": "/blog/lidl-high-protein-food-ideas-uk",
-      "label": "Lidl High Protein Food Ideas UK: Budget Meals, Snacks and Staples",
-      "description": "Lidl high protein food ideas UK: budget protein staples, simple meals, snacks and shopping list prompts for training or fat-loss weeks.",
+      "to": "/blog/best-cheap-high-protein-foods-uk",
+      "label": "Cheap Protein UK: Best High-Protein Foods by Value",
+      "description": "Compare 10 cheap protein staples, from eggs and tuna to lentils and frozen chicken, with protein-per-penny guidance for UK meal prep.",
       "category": "Guide"
     },
     {
-      "to": "/meal-plans/cheap-student-meal-prep-aldi",
-      "label": "Cheap Student Meal Prep at Aldi",
-      "description": "Free Aldi cheap student meal prep plans with budget weekly shops, simple recipes, shopping lists and printable PDFs.",
-      "category": "Meal plans"
+      "to": "/blog/meal-prep-container-size-guide",
+      "label": "Meal Prep Container Size Guide UK",
+      "description": "Meal prep container size guide for UK shoppers: which sizes to buy first, what 500ml, 750ml and 1 litre are best for, and how many different sizes you actually need.",
+      "category": "Guide"
     }
   ]
 };
