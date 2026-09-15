@@ -14,6 +14,7 @@ const jsonLd = [
     name: 'Choose a UK Supermarket Meal Plan',
     description: `Choose ${INDEXED_SUPERMARKET_CHOICES.map(market => market.label).join(', ')} before selecting your meal plan goal.`,
     url: 'https://www.mealprep.org.uk/meal-plans',
+    image: `https://www.mealprep.org.uk${SITE_VISUALS.supermarket.src}`,
     mainEntity: {
       '@type': 'ItemList',
       itemListElement: INDEXED_SUPERMARKET_CHOICES.map((market, index) => ({
@@ -41,6 +42,8 @@ export default function SupermarketIndexPage() {
         title="Choose a UK Supermarket Meal Plan | MealPrep.org.uk"
         description="Choose your supermarket first, then pick a goal, calorie target and diet type for a free printable UK meal plan."
         canonical="/meal-plans"
+        ogImage={`https://www.mealprep.org.uk${SITE_VISUALS.supermarket.src}`}
+        ogImageAlt={SITE_VISUALS.supermarket.alt}
         jsonLd={jsonLd}
       />
 

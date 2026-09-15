@@ -5,6 +5,7 @@ import {
   SITE_URL,
 } from '../constants/site.js';
 import { fitMetadataTitle } from '../utils/seoMetadata.js';
+import { resolveImageDimensions } from '../utils/ogImageMeta.js';
 
 const DOMAIN = SITE_URL;
 
@@ -30,15 +31,26 @@ export default function SEO({
   ogTitle,
   ogDescription,
   ogImage,
+  ogImageAlt,
   robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1',
 }) {
   const url = cleanCanonicalUrl(canonical);
-  const image = ogImage || `${DOMAIN}/og-preview.png`;
+  // A generated card thumbnail (SVG data URI) is decorative, not a photograph
+  // of the page - it has no stable crawlable URL and must never reach search
+  // engines as the preferred image. No page currently passes one as ogImage;
+  // this is a guard against that assumption silently breaking.
+  const requestedImage = ogImage && !ogImage.startsWith('data:') ? ogImage : null;
+  const image = requestedImage || `${DOMAIN}/og-preview.png`;
   const imageType = getImageType(image);
+  const { width: imageWidth, height: imageHeight } = resolveImageDimensions(image);
   const metaTitle = fitMetadataTitle(title);
   const socialTitle = fitMetadataTitle(ogTitle || title);
   const metaDescription = trimMetaDescription(description);
   const openGraphDescription = trimMetaDescription(ogDescription || description);
+  // Every page has a unique <title> (enforced by check-google-indexing's
+  // duplicate-metadata check), so falling back to it keeps alt text
+  // page-specific instead of repeating one phrase across the site.
+  const imageAlt = ogImageAlt || socialTitle;
   const structuredData = [
     ORGANIZATION_JSON_LD,
     ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
@@ -66,15 +78,17 @@ export default function SEO({
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:image" content={image} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      <meta property="og:image:width" content={String(imageWidth)} />
+      <meta property="og:image:height" content={String(imageHeight)} />
       <meta property="og:image:type" content={imageType} />
+      <meta property="og:image:alt" content={imageAlt} />
 
       {/* Twitter/X card — falls back to a plain link without these */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={socialTitle} />
       <meta name="twitter:description" content={openGraphDescription} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={imageAlt} />
 
       {structuredData.map((item, i) => (
         <script key={i} type="application/ld+json">{JSON.stringify(item)}</script>

@@ -1,6 +1,7 @@
 import { chooseBlogCardVisual, chooseBlogVisual, choosePlanVisual } from '../data/visualAssets.js';
+import { SITE_URL } from '../constants/site.js';
 
-const DOMAIN = 'https://www.mealprep.org.uk';
+const DOMAIN = SITE_URL;
 const STATIC_OG = `${DOMAIN}/og-preview.png`;
 
 const BLOG_OG_IMAGES = {
