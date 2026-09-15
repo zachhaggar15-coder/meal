@@ -271,6 +271,7 @@ export default function BrowsePlans() {
       name: `Browse ${PLAN_COUNT_LABEL} UK meal plans${pageTitleSuffix}`,
       description: browseDescription,
       url: `https://www.mealprep.org.uk${canonicalPath}`,
+      image: `https://www.mealprep.org.uk${SITE_VISUALS.browse.src}`,
       mainEntity: {
         '@type': 'ItemList',
         itemListElement: shown.map((plan, index) => ({
@@ -316,6 +317,8 @@ export default function BrowsePlans() {
         description={browseDescription}
         canonical={`https://www.mealprep.org.uk${canonicalPath}`}
         robots={hasActiveFilters ? 'noindex,follow' : undefined}
+        ogImage={`https://www.mealprep.org.uk${SITE_VISUALS.browse.src}`}
+        ogImageAlt={SITE_VISUALS.browse.alt}
         jsonLd={jsonLd}
       />
 

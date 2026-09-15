@@ -38,6 +38,7 @@ export default function ComboLandingPage({ page }) {
       name: page.h1,
       description: page.description,
       url: `https://www.mealprep.org.uk${page.path}`,
+      image: `https://www.mealprep.org.uk${comboVisual.src}`,
       ...schemaDates({ published: page.published, modified: page.modified }),
       isPartOf: {
         '@type': 'WebSite',
@@ -80,6 +81,8 @@ export default function ComboLandingPage({ page }) {
         title={page.title}
         description={page.description}
         canonical={page.path}
+        ogImage={`https://www.mealprep.org.uk${comboVisual.src}`}
+        ogImageAlt={comboVisual.alt}
         jsonLd={jsonLd}
       />
 
