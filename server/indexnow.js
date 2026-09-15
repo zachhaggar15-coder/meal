@@ -263,6 +263,38 @@ export function selectRoutesToSubmit(diff, limit = MAX_URLS_PER_RUN) {
   return [...diff.added, ...diff.changed, ...diff.removed].slice(0, limit);
 }
 
+// ── Bootstrap ────────────────────────────────────────────────────────────────
+
+// The first production run diffs against a baseline captured before IndexNow
+// shipped (server/indexnow-baseline.js), so pages created or changed by the
+// installation release itself are submitted rather than absorbed.
+//
+// That baseline was fingerprinted by a different build on a different machine
+// from the one that will be running. Route names are exact either way, but if
+// rendering ever differs in some way the normalisation does not cover, the
+// "changed" set arrives implausibly large. Beyond this limit it is read as a
+// fingerprinting mismatch rather than as a release that genuinely rewrote most
+// of the site, and those routes are accepted into the snapshot without being
+// submitted - the far cheaper mistake of the two.
+export function bootstrapChangedLimit(routeCount) {
+  return Math.max(25, Math.ceil(routeCount * 0.05));
+}
+
+export function planBootstrapSubmission(baselineRoutes, currentRoutes, limit = MAX_URLS_PER_RUN) {
+  const diff = diffManifests(baselineRoutes, currentRoutes);
+  const mismatch = diff.changed.length > bootstrapChangedLimit(Object.keys(currentRoutes || {}).length);
+  const effective = mismatch ? { ...diff, changed: [] } : diff;
+
+  return {
+    diff,
+    // Routes taken on trust into the snapshot instead of being submitted, so a
+    // mismatch cannot repeat on every later run.
+    accepted: mismatch ? diff.changed : [],
+    fingerprintMismatch: mismatch,
+    routes: selectRoutesToSubmit(effective, limit),
+  };
+}
+
 // Advances the stored snapshot only for the routes actually submitted, so
 // anything left behind by the per-run cap - or by a failed batch - is retried
 // on the next run instead of being silently forgotten.

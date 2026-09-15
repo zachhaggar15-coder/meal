@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { INDEXNOW_BASELINE_COMMIT, INDEXNOW_BASELINE_ROUTES } from '../server/indexnow-baseline.js';
 import {
   INDEXNOW_ENDPOINT,
   INDEXNOW_KEY,
@@ -20,6 +21,7 @@ import {
   PRODUCTION_ORIGIN,
   applySubmittedChanges,
   batchUrls,
+  bootstrapChangedLimit,
   buildManifest,
   buildPayload,
   diffManifests,
@@ -29,6 +31,7 @@ import {
   isProductionEnvironment,
   manifestRoutes,
   normaliseUrl,
+  planBootstrapSubmission,
   prepareUrls,
   selectRoutesToSubmit,
   submitUrls,
@@ -288,6 +291,86 @@ test('the snapshot only advances for routes that were actually submitted', () =>
   const current = { '/a': 'new', '/b': 'new', '/added': '9' };
   const next = applySubmittedChanges(previous, current, ['/a', '/gone']);
   assert.deepEqual(next, { '/a': 'new', '/b': '2' });
+});
+
+// ── Bootstrap: the first run after installation ──────────────────────────────
+
+test('a pre-install baseline ships with the code', () => {
+  const routes = Object.keys(INDEXNOW_BASELINE_ROUTES);
+  assert.ok(routes.length > 100, 'baseline looks empty');
+  assert.ok(routes.every(route => route.startsWith('/')));
+  assert.ok(routes.every(route => typeof INDEXNOW_BASELINE_ROUTES[route] === 'string'));
+  assert.match(INDEXNOW_BASELINE_COMMIT, /^[0-9a-f]{40}$/);
+});
+
+test('bootstrap submits pages the installation release added or changed', () => {
+  const baseline = { '/': 'a', '/browse': 'b', '/blog/old': 'c', '/retired': 'd' };
+  const current = { '/': 'a', '/browse': 'CHANGED', '/blog/old': 'c', '/pinterest-boards': 'new' };
+
+  const plan = planBootstrapSubmission(baseline, current);
+  assert.equal(plan.fingerprintMismatch, false);
+  assert.deepEqual(plan.routes.sort(), ['/browse', '/pinterest-boards', '/retired']);
+  assert.deepEqual(plan.accepted, []);
+});
+
+test('bootstrap never resubmits unchanged historical pages', () => {
+  const baseline = Object.fromEntries(
+    Array.from({ length: 721 }, (_, i) => [`/plans/p${i}`, `fp${i}`]),
+  );
+  const plan = planBootstrapSubmission(baseline, { ...baseline });
+  assert.deepEqual(plan.routes, []);
+  assert.equal(plan.diff.changed.length, 0);
+});
+
+test('a wholesale fingerprint mismatch is absorbed, not submitted', () => {
+  // What a baseline built by a different toolchain would look like: every route
+  // reads as changed. Only the genuinely new route may be submitted.
+  const baseline = Object.fromEntries(
+    Array.from({ length: 200 }, (_, i) => [`/plans/p${i}`, `old${i}`]),
+  );
+  const current = Object.fromEntries(
+    Array.from({ length: 200 }, (_, i) => [`/plans/p${i}`, `new${i}`]),
+  );
+  current['/pinterest-boards'] = 'fresh';
+
+  const plan = planBootstrapSubmission(baseline, current);
+  assert.equal(plan.fingerprintMismatch, true);
+  assert.deepEqual(plan.routes, ['/pinterest-boards']);
+  assert.equal(plan.accepted.length, 200);
+
+  // The absorbed routes join the snapshot, so the next run sees no diff at all.
+  const snapshot = applySubmittedChanges(
+    applySubmittedChanges(baseline, current, plan.accepted),
+    current,
+    plan.routes,
+  );
+  assert.deepEqual(diffManifests(snapshot, current), { added: [], changed: [], removed: [] });
+});
+
+test('a plausible release-sized change stays submittable', () => {
+  const baseline = Object.fromEntries(
+    Array.from({ length: 721 }, (_, i) => [`/plans/p${i}`, `fp${i}`]),
+  );
+  const current = { ...baseline };
+  for (let i = 0; i < 20; i += 1) current[`/plans/p${i}`] = 'edited';
+
+  const plan = planBootstrapSubmission(baseline, current);
+  assert.equal(plan.fingerprintMismatch, false);
+  assert.equal(plan.routes.length, 20);
+  assert.equal(bootstrapChangedLimit(721), 37);
+  assert.equal(bootstrapChangedLimit(10), 25);
+});
+
+test('bootstrap respects the per-run cap and leaves the rest outstanding', () => {
+  const current = Object.fromEntries(
+    Array.from({ length: MAX_URLS_PER_RUN + 40 }, (_, i) => [`/pins/p${i}`, 'x']),
+  );
+  const plan = planBootstrapSubmission({ '/': 'a' }, current);
+  assert.equal(plan.routes.length, MAX_URLS_PER_RUN);
+
+  const snapshot = applySubmittedChanges({ '/': 'a' }, current, plan.routes);
+  const outstanding = diffManifests(snapshot, current);
+  assert.equal(outstanding.added.length, 40, 'capped routes must remain outstanding');
 });
 
 // ── Environment ──────────────────────────────────────────────────────────────

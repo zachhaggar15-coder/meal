@@ -16,6 +16,7 @@
 //   UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN - snapshot storage
 
 import { Redis } from '@upstash/redis';
+import { INDEXNOW_BASELINE_COMMIT, INDEXNOW_BASELINE_ROUTES } from '../server/indexnow-baseline.js';
 import {
   INDEXNOW_MANIFEST_FILENAME,
   PRODUCTION_ORIGIN,
@@ -25,6 +26,7 @@ import {
   isDisabled,
   isProductionEnvironment,
   manifestRoutes,
+  planBootstrapSubmission,
   selectRoutesToSubmit,
   submitUrls,
 } from '../server/indexnow.js';
@@ -75,17 +77,12 @@ export default async function handler(req, res) {
 
     const previous = readSnapshot(await redis.get(SNAPSHOT_KEY));
 
-    // First run after installation. Record what is live today rather than
-    // treating the entire back catalogue as brand new - IndexNow is for genuine
-    // changes, and resubmitting years of unchanged pages would be spam.
+    // First run after installation. The back catalogue must not be resubmitted
+    // just because IndexNow now exists, but pages the installation release
+    // itself added or changed are genuine news - so diff against the state of
+    // the site before IndexNow shipped rather than against nothing.
     if (!previous) {
-      await redis.set(SNAPSHOT_KEY, JSON.stringify(current));
-      log('info', 'indexnow_baseline', { routes: Object.keys(current).length });
-      return res.status(200).json({
-        status: 'baseline',
-        routes: Object.keys(current).length,
-        submitted: 0,
-      });
+      return await bootstrap(redis, current, res);
     }
 
     const diff = diffManifests(previous, current);
@@ -128,6 +125,59 @@ export default async function handler(req, res) {
     log('error', 'indexnow_sync_failed', { error: err?.message || String(err) });
     return res.status(200).json({ status: 'error' });
   }
+}
+
+async function bootstrap(redis, current, res) {
+  const baseline = INDEXNOW_BASELINE_ROUTES;
+
+  // No usable baseline: fall back to recording what is live. Never submit the
+  // whole site.
+  if (!baseline || !Object.keys(baseline).length) {
+    await redis.set(SNAPSHOT_KEY, JSON.stringify(current));
+    log('warn', 'indexnow_baseline_missing', { routes: Object.keys(current).length });
+    return res.status(200).json({ status: 'baseline', routes: Object.keys(current).length, submitted: 0 });
+  }
+
+  const plan = planBootstrapSubmission(baseline, current);
+  const result = plan.routes.length
+    ? await submitUrls(plan.routes.map(route => `${PRODUCTION_ORIGIN}${route}`))
+    : { ok: true, submitted: [], batches: [] };
+  const submittedRoutes = plan.routes.filter(route => (
+    result.submitted.includes(`${PRODUCTION_ORIGIN}${route}`)
+  ));
+
+  // Anything accepted on trust joins the snapshot alongside what was submitted,
+  // so the bootstrap reconciliation happens exactly once. Whatever is left -
+  // held back by the per-run cap or by a failed batch - stays outstanding and
+  // goes out on the next run.
+  const snapshot = applySubmittedChanges(
+    applySubmittedChanges(baseline, current, plan.accepted),
+    current,
+    submittedRoutes,
+  );
+  await redis.set(SNAPSHOT_KEY, JSON.stringify(snapshot));
+
+  log('info', 'indexnow_bootstrap', {
+    baselineCommit: INDEXNOW_BASELINE_COMMIT,
+    added: plan.diff.added.length,
+    changed: plan.diff.changed.length,
+    removed: plan.diff.removed.length,
+    acceptedWithoutSubmission: plan.accepted.length,
+    fingerprintMismatch: plan.fingerprintMismatch,
+    submitted: submittedRoutes.length,
+    ok: result.ok,
+  });
+
+  return res.status(200).json({
+    status: 'bootstrap',
+    baselineRoutes: Object.keys(baseline).length,
+    added: plan.diff.added.length,
+    changed: plan.diff.changed.length,
+    removed: plan.diff.removed.length,
+    fingerprintMismatch: plan.fingerprintMismatch,
+    submitted: submittedRoutes.length,
+    batches: result.batches,
+  });
 }
 
 function getRedis() {

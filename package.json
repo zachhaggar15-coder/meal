@@ -9,6 +9,7 @@
     "generate:blog-index": "node scripts/generate-blog-search-index.js",
     "generate:plan-macros": "node scripts/generate-plan-macro-index.js",
     "generate:blog-plan-index": "node scripts/generate-blog-plan-index.js",
+    "generate:indexnow-baseline": "node scripts/generate-indexnow-baseline.js",
     "check:urls": "node scripts/check-protected-urls.js",
     "check:structured-data": "node scripts/check-structured-data.js",
     "check:google-indexing": "node scripts/check-google-indexing.js",
