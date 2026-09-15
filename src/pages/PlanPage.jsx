@@ -22,7 +22,6 @@ import { mergeAllergenSummaries, resolveAllergens } from '../utils/allergens.js'
 import { buildShoppingList, getPlanBySlug, scalePlanForHousehold } from '../utils/planBuilder.js';
 import ContainerSetupRecommendation from '../components/ContainerSetupRecommendation.jsx';
 import PlanKitPick from '../components/PlanKitPick.jsx';
-import EbayLabelTestPlacement from '../components/EbayLabelTestPlacement.jsx';
 import EbayProductCard from '../components/EbayProductCard.jsx';
 import { PLAN_COUNT_LABEL } from '../data/planCatalogMeta.js';
 import { getSupermarketEvidence } from '../data/comboLandingPages.js';
