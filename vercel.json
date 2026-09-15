@@ -59,6 +59,28 @@
       ]
     },
     {
+      "source": "/pinterest/(.*).xml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/pinterest/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=2592000"
+        }
+      ]
+    },
+    {
       "source": "/(favicon-48.png|favicon-192.png|apple-touch-icon.png|logo-512.png|mealprep-logo.webp|og-preview.png)",
       "headers": [
         {

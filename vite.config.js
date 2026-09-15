@@ -3,6 +3,20 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    // Pinterest domain verification.
+    //
+    // Pinterest asks for a <meta name="p:domain_verify"> tag on the homepage.
+    // Exposing the token through `define` means it can be set as an ordinary
+    // Vercel environment variable, with or without the VITE_ prefix, and no
+    // source file has to be edited to hold a token. Empty by default, in which
+    // case SEO.jsx emits no tag at all.
+    __PINTEREST_DOMAIN_VERIFICATION__: JSON.stringify(
+      process.env.PINTEREST_DOMAIN_VERIFICATION
+      || process.env.VITE_PINTEREST_DOMAIN_VERIFICATION
+      || '',
+    ),
+  },
   server: {
     port: 5173,
   },

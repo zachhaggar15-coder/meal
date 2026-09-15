@@ -8,6 +8,12 @@ import { fitMetadataTitle } from '../utils/seoMetadata.js';
 
 const DOMAIN = SITE_URL;
 
+// Injected by vite.config.js from PINTEREST_DOMAIN_VERIFICATION. Declared with
+// a fallback so the component still works under plain `node --test`, where the
+// define is not applied.
+const PINTEREST_DOMAIN_VERIFICATION =
+  typeof __PINTEREST_DOMAIN_VERIFICATION__ === 'string' ? __PINTEREST_DOMAIN_VERIFICATION__ : '';
+
 function cleanCanonicalUrl(canonical = '/') {
   const url = new URL(canonical || '/', DOMAIN);
   url.search = '';
@@ -46,6 +52,12 @@ export default function SEO({
       <meta name="application-name" content={SITE_NAME} />
       <meta name="theme-color" content="#2f855a" />
       <link rel="canonical" href={url} />
+
+      {/* Pinterest domain verification. Rendered only when the token is
+          configured, so the tag never ships empty. */}
+      {PINTEREST_DOMAIN_VERIFICATION ? (
+        <meta name="p:domain_verify" content={PINTEREST_DOMAIN_VERIFICATION} />
+      ) : null}
 
       {/* Open Graph */}
       <meta property="og:type" content={ogType} />

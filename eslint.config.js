@@ -24,6 +24,8 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        // Build-time constant injected by vite.config.js `define`.
+        __PINTEREST_DOMAIN_VERIFICATION__: 'readonly',
       },
     },
     plugins: {
