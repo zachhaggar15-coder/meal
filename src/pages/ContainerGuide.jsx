@@ -23,6 +23,17 @@ const guideLabels = CONTAINER_GUIDE_GROUPS
   .flatMap(group => group.guides)
   .reduce((labels, guide) => ({ ...labels, [guide.slug]: guide.label }), {});
 
+// Two guides had a bespoke card already sitting unused in /og/blog/; the
+// remaining guide slugs share the same generic container card as the hub
+// rather than falling back to the site-wide default. The alt text is still
+// built from each guide's own h1, so it stays page-specific even where the
+// underlying photo is shared.
+const GUIDE_OG_IMAGE_SRC = {
+  glass: 'https://www.mealprep.org.uk/og/blog/best-glass-meal-prep-containers-uk.png',
+  plastic: 'https://www.mealprep.org.uk/og/blog/plastic-meal-prep-containers-uk.png',
+};
+const DEFAULT_GUIDE_OG_IMAGE_SRC = 'https://www.mealprep.org.uk/og/blog/meal-prep-containers-uk.png';
+
 const searchIntentRows = [
   {
     intent: 'Best meal prep containers UK',
@@ -87,6 +98,8 @@ export default function ContainerGuide() {
   const products = getContainerProducts(guide.productIds);
   const heroProduct = getContainerProduct(guide.heroProductId);
   const canonical = `/meal-prep-containers/${guide.slug}`;
+  const ogImageSrc = GUIDE_OG_IMAGE_SRC[guide.slug] || DEFAULT_GUIDE_OG_IMAGE_SRC;
+  const ogImageAlt = `${guide.h1} compared`;
   const quickComparisonPicks = products.slice(0, 3).map(product => ({
     product,
     searchedFor: guide.h1,
@@ -102,6 +115,7 @@ export default function ContainerGuide() {
       name: guide.h1,
       description: guide.description,
       url: `https://www.mealprep.org.uk${canonical}`,
+      image: ogImageSrc,
       isPartOf: {
         '@type': 'WebSite',
         name: 'MealPrep.org.uk',
@@ -147,6 +161,8 @@ export default function ContainerGuide() {
         title={`${guide.title} | MealPrep.org.uk`}
         description={guide.description}
         canonical={canonical}
+        ogImage={ogImageSrc}
+        ogImageAlt={ogImageAlt}
         jsonLd={jsonLd}
       />
 

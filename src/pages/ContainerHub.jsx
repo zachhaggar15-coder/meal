@@ -153,6 +153,12 @@ const faqs = [
 
 const products = getContainerProducts(HUB_PRODUCT_IDS);
 
+// Sat unused until now. /og/blog/best-meal-prep-containers-uk.png is already
+// this hub's near-identical blog post (see BLOG_OG_IMAGES in
+// imageGenerator.js) — reusing it here would put the same image on two
+// different indexable pages, so this hub gets its own generic card instead.
+const CONTAINER_HUB_OG_IMAGE = 'https://www.mealprep.org.uk/og/blog/meal-prep-containers-uk.png';
+
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -161,6 +167,7 @@ const jsonLd = [
     description:
       'Compare the best meal prep containers UK: budget plastic tubs, mid-range glass boxes, leakproof lunch containers and premium meal prep sets.',
     url: 'https://www.mealprep.org.uk/meal-prep-containers',
+    image: CONTAINER_HUB_OG_IMAGE,
     author: {
       '@type': 'Organization',
       name: 'MealPrep.org.uk',
@@ -214,6 +221,8 @@ export default function ContainerHub() {
         title="Meal Prep Containers UK: Compare 3 Sizes First"
         description="Compare three common UK meal prep container setups first: cheap plastic multipacks, five glass lunch boxes and larger 10-piece glass sets."
         canonical="/meal-prep-containers"
+        ogImage={CONTAINER_HUB_OG_IMAGE}
+        ogImageAlt="UK meal prep containers compared: plastic, glass and leakproof sets"
         jsonLd={jsonLd}
       />
 

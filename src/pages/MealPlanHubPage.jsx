@@ -86,6 +86,7 @@ export default function MealPlanHubPage() {
       name: hub.h1,
       description: hub.description,
       url: `https://www.mealprep.org.uk${canonical}`,
+      image: `https://www.mealprep.org.uk${hubVisual.src}`,
       ...schemaDates(hub),
       author: AUTHOR_JSON_LD,
       publisher: {
@@ -136,6 +137,8 @@ export default function MealPlanHubPage() {
         title={`${hub.title} | MealPrep.org.uk`}
         description={hub.description}
         canonical={canonical}
+        ogImage={`https://www.mealprep.org.uk${hubVisual.src}`}
+        ogImageAlt={hubVisual.alt}
         jsonLd={jsonLd}
       />
 

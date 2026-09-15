@@ -32,6 +32,7 @@ const homeJsonLd = [
     name: 'MealPrep.org.uk - Free UK Meal Plan Generator',
     url: 'https://www.mealprep.org.uk',
     description: `Generate a weekly UK meal plan using supermarket ingredients, browse ${PLAN_COUNT_LABEL} diet plans, print PDFs and build shopping lists by calories, supermarket and goal.`,
+    image: `https://www.mealprep.org.uk${SITE_VISUALS.home.src}`,
   },
   {
     '@context': 'https://schema.org',
@@ -332,6 +333,8 @@ export default function Home() {
         title="Find a UK Supermarket Meal Plan | MealPrep.org.uk"
         description={`Find a realistic 7-day meal plan for the UK supermarket you use, with shopping lists, calories, macros and printable plans from a library of ${PLAN_COUNT_LABEL}.`}
         canonical="https://www.mealprep.org.uk/"
+        ogImage={`https://www.mealprep.org.uk${SITE_VISUALS.home.src}`}
+        ogImageAlt={SITE_VISUALS.home.alt}
         jsonLd={homeJsonLd}
       />
 

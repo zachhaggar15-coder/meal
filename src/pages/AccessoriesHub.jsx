@@ -17,6 +17,7 @@ const jsonLd = [
     description:
       'Compare meal prep accessories UK: insulated lunch bags, ice packs, sauce pots, oats jars, food flasks, choppers, shakers and freezer labels.',
     url: 'https://www.mealprep.org.uk/meal-prep-accessories',
+    image: 'https://www.mealprep.org.uk/images/meal-plans/weekly-prep.webp',
     datePublished: '2026-07-23',
     dateModified: '2026-07-23',
     author: {
@@ -60,6 +61,7 @@ export default function AccessoriesHub() {
         canonical="/meal-prep-accessories"
         ogType="article"
         ogImage="https://www.mealprep.org.uk/images/meal-plans/weekly-prep.webp"
+        ogImageAlt="Meal prep accessories and prepared weekly meals arranged on a kitchen counter"
         jsonLd={jsonLd}
       />
 
