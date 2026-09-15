@@ -181,16 +181,28 @@ node --test scripts/pinterest-feed.test.js
 ```
 
 `generate-pinterest-assets.js` runs inside `npm run build`, immediately after
-`prerender.js`, and **fails the build** if any of the following is true, so a
+`prerender.js`. It **fails the build** on a defect in its own output, so a
 broken feed cannot reach production:
 
-- a feed is not well-formed RSS 2.0, or a board feed is empty
+- a feed is not well-formed RSS 2.0
 - a GUID repeats within a feed or appears on two boards
 - a link is off-domain, points at localhost or a preview host, or is missing a
   UTM parameter
 - a GUID is not the clean canonical URL
 - an image is missing, or is not 1000×1500
-- a destination page is not in `dist/`, is `noindex`, or canonicalises elsewhere
+- *every* eligible page fails to resolve, which means the build output is wrong
+
+It **warns and carries on** when the content has simply moved:
+
+- a destination page is no longer in `dist/` (a retired or renamed slug)
+- a destination page is now `noindex`
+- a destination now canonicalises somewhere else
+- a board feed has ended up empty
+
+Those entries drop out of the feed, each with a `! Pinterest: dropped ...` line
+in the build log. Content churn in a 1,500-page site is normal and must never
+block an unrelated release - least of all when nobody is watching the deploy.
+Pins already published are unaffected; Pinterest simply stops seeing the entry.
 
 ## Troubleshooting
 

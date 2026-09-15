@@ -418,3 +418,35 @@ test('every board has a feed, a name and a stable URL', () => {
   }
   assert.ok(!PINTEREST_MASTER_FEED.board, 'the master feed is not meant for a board');
 });
+
+// ── 14. Resilience when content moves ────────────────────────────────────────
+
+test('a retired, renamed or noindexed destination is a warning, not a build failure', () => {
+  // The build generator drops such an entry and carries on: content churn in a
+  // 1,500-page site must never block an unrelated release. The guarantee lives
+  // in scripts/generate-pinterest-assets.js; this asserts the contract it
+  // depends on, which is that dropping entries leaves a coherent plan.
+  const [first, ...rest] = plan.records;
+  const keptIds = new Set(rest.map(record => record.id));
+  const trimmed = {
+    ...plan,
+    entries: plan.entries.filter(entry => keptIds.has(entry.id)),
+    records: rest,
+    images: plan.images.filter(image => keptIds.has(image.id)),
+  };
+
+  assert.equal(trimmed.entries.length, plan.entries.length - 1);
+  assert.equal(trimmed.images.length, plan.images.length - 1);
+  assert.ok(!trimmed.records.some(record => record.id === first.id));
+
+  const rebuilt = renderPinterestFeeds(trimmed, { buildDate: new Date('2026-09-15T09:00:00Z') });
+  for (const document of rebuilt) {
+    assert.doesNotThrow(() => parseXml(document.xml), `${document.filename} still parses`);
+    const guids = childrenNamed(channelOf(document.xml), 'item').map(item => childText(item, 'guid'));
+    assert.ok(!guids.includes(first.guid), `${document.filename} no longer carries the dropped page`);
+    assert.equal(new Set(guids).size, guids.length, `${document.filename} still has unique GUIDs`);
+  }
+
+  const master = rebuilt.find(document => !document.board.board);
+  assert.equal(master.records.length, plan.records.length - 1, 'the master feed shrinks with the boards');
+});

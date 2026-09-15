@@ -60,7 +60,63 @@ function renderPng(svg) {
 
 // ── Validation ───────────────────────────────────────────────────────────────
 
-function validateFeeds(documents, { requirePages }) {
+/**
+ * Why a page can no longer be Pinned, or '' if it still can.
+ *
+ * Content moves: slugs get retired (see src/data/retiredPlanRedirects.js),
+ * pages get renamed, an article gets set to noindex. None of that is a defect
+ * in this system, and none of it should stop an unrelated release shipping -
+ * so an entry that no longer resolves is dropped from the feed with a warning
+ * rather than failing the build. Pins already published are unaffected;
+ * Pinterest simply stops seeing the entry.
+ *
+ * Defects in our own output - malformed XML, duplicate GUIDs, broken UTMs, a
+ * wrongly sized image - still fail hard in validateFeeds. Those are never
+ * acceptable and are always ours to fix.
+ */
+function unresolvableReason(record) {
+  const url = new URL(record.link);
+  const page = path.join(dist, url.pathname.replace(/^\//, ''), 'index.html');
+  if (!fs.existsSync(page)) return `no page at ${url.pathname} in this build`;
+
+  const html = fs.readFileSync(page, 'utf8');
+  const robots = /<meta[^>]*name=["']robots["'][^>]*content=["']([^"']*)["']/i.exec(html)?.[1] || '';
+  if (/noindex/i.test(robots)) return `${url.pathname} is now noindex`;
+
+  const canonical = /<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["']/i.exec(html)?.[1] || '';
+  if (canonical && canonical !== record.guid) return `${url.pathname} now canonicalises to ${canonical}`;
+
+  return '';
+}
+
+/**
+ * Drop entries whose destination no longer resolves, returning the trimmed
+ * plan and a warning per dropped page.
+ */
+function dropUnresolvableEntries(plan) {
+  const dropped = [];
+  const keptIds = new Set();
+
+  for (const record of plan.records) {
+    const reason = unresolvableReason(record);
+    if (reason) dropped.push(`dropped ${record.id}: ${reason}`);
+    else keptIds.add(record.id);
+  }
+
+  if (!dropped.length) return { plan, dropped };
+
+  return {
+    plan: {
+      ...plan,
+      entries: plan.entries.filter(entry => keptIds.has(entry.id)),
+      records: plan.records.filter(record => keptIds.has(record.id)),
+      images: plan.images.filter(image => keptIds.has(image.id)),
+    },
+    dropped,
+  };
+}
+
+function validateFeeds(documents, { requirePages, warnings = [] }) {
   const errors = [];
   const guidsAcrossBoards = new Map();
 
@@ -79,7 +135,10 @@ function validateFeeds(documents, { requirePages }) {
 
     const items = childrenNamed(channel, 'item');
     if (!items.length && document.board.board) {
-      errors.push(`${document.filename}: board feed has no items`);
+      // A board can legitimately empty out if every page it held was retired
+      // between deploys. Pinterest simply publishes nothing from it, which is
+      // not worth blocking an unrelated release over.
+      warnings.push(`${document.filename}: board feed has no items`);
     }
 
     const guidsInFeed = new Set();
@@ -130,20 +189,12 @@ function validateFeeds(documents, { requirePages }) {
         if (!dryRun && !fs.existsSync(file)) errors.push(`${where}: image file is missing (${file})`);
       }
 
-      // The destination must be a page this build actually produced, and one
-      // that is indexable. A Pin pointing at a noindex or missing route is a
-      // dead Pin.
+      // Destinations are resolved before the feeds are built - see
+      // unresolvableEntries - so anything left here is a bug in this script
+      // rather than a retired page, and should fail.
       if (requirePages && url) {
         const page = path.join(dist, url.pathname.replace(/^\//, ''), 'index.html');
-        if (!fs.existsSync(page)) {
-          errors.push(`${where}: destination page is not in dist (${url.pathname})`);
-        } else {
-          const html = fs.readFileSync(page, 'utf8');
-          const robots = /<meta[^>]*name=["']robots["'][^>]*content=["']([^"']*)["']/i.exec(html)?.[1] || '';
-          if (/noindex/i.test(robots)) errors.push(`${where}: destination page is noindex`);
-          const canonical = /<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["']/i.exec(html)?.[1] || '';
-          if (canonical && canonical !== guid) errors.push(`${where}: destination canonical is ${canonical}, not ${guid}`);
-        }
+        if (!fs.existsSync(page)) errors.push(`${where}: destination page is not in dist (${url.pathname})`);
       }
     }
   }
@@ -163,8 +214,19 @@ if (requirePages && !fs.existsSync(dist)) {
   fail(['dist/ not found - run the build (and prerender) first, or pass --dry-run']);
 }
 
-const plan = buildPinterestPlan();
-if (!plan.entries.length) fail(['no pages are eligible for Pinterest - check src/pinterest/config.js']);
+const rawPlan = buildPinterestPlan();
+if (!rawPlan.entries.length) fail(['no pages are eligible for Pinterest - check src/pinterest/config.js']);
+
+// Retired, renamed or newly-noindexed destinations leave the feed quietly; see
+// unresolvableReason. Skipped on --dry-run, which has no dist/ to check.
+const warnings = [];
+const { plan, dropped } = requirePages ? dropUnresolvableEntries(rawPlan) : { plan: rawPlan, dropped: [] };
+warnings.push(...dropped);
+
+// Everything vanishing at once is not content churn, it is a broken build.
+if (!plan.entries.length) {
+  fail(['every eligible page failed to resolve in dist/ - the build output looks wrong', ...dropped]);
+}
 
 const imageBytes = new Map();
 const renderErrors = [];
@@ -189,8 +251,10 @@ if (!dryRun) {
   for (const document of documents) fs.writeFileSync(path.join(feedDir, document.filename), document.xml);
 }
 
-const errors = validateFeeds(documents, { requirePages });
+const errors = validateFeeds(documents, { requirePages, warnings });
 if (errors.length) fail(errors);
+
+for (const warning of warnings) console.warn(`  ! Pinterest: ${warning}`);
 
 const totalBytes = [...imageBytes.values()].reduce((sum, bytes) => sum + bytes, 0);
 console.log(
