@@ -11,6 +11,13 @@ import { buildBrowsePageRoutes } from './src/data/browsePagination.js';
 import { MEAL_PLAN_HUB_SLUGS } from './src/data/mealPlanHubs.js';
 import { SEO_PRIORITY_ROUTES } from './src/data/seoPriorityLinks.js';
 import {
+  INDEXNOW_KEY,
+  INDEXNOW_KEY_FILENAME,
+  INDEXNOW_MANIFEST_FILENAME,
+  buildManifest,
+  fingerprintPage,
+} from './server/indexnow.js';
+import {
   CALORIE_CHOOSER_SLUGS,
   DIET_CHOOSER_SLUGS,
   GOAL_CHOOSER_SLUGS,
@@ -271,6 +278,7 @@ const NON_CANONICAL_SITEMAP_ROUTES = new Set([
 const SITEMAP_ROUTES = ROUTES.filter(route => (
   !NOINDEX_ROUTES.has(route) && !NON_CANONICAL_SITEMAP_ROUTES.has(route)
 ));
+const SITEMAP_ROUTES_SET = new Set(SITEMAP_ROUTES);
 
 async function prerender() {
   const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf-8');
@@ -281,6 +289,10 @@ async function prerender() {
 
   let ok = 0;
   let failed = 0;
+  // Route -> fingerprint of the content actually rendered, for the IndexNow
+  // manifest written below. Only sitemap routes are tracked: a noindex or
+  // non-canonical URL is never worth notifying anyone about.
+  const fingerprints = {};
 
   for (const route of ROUTES) {
     try {
@@ -300,6 +312,9 @@ async function prerender() {
       const outDir = route === '/' ? dist : path.join(dist, route);
       fs.mkdirSync(outDir, { recursive: true });
       fs.writeFileSync(path.join(outDir, 'index.html'), page);
+      if (SITEMAP_ROUTES_SET.has(route)) {
+        fingerprints[route] = fingerprintPage(headTags, html);
+      }
       ok++;
       if (ok % 50 === 0) console.log(`  ✓ ${ok} routes done…`);
     } catch (err) {
@@ -386,6 +401,25 @@ async function prerender() {
 
   fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemapIndex);
   console.log(`Sitemap index written: ${SITEMAP_ROUTES.length} URLs across ${sitemapGroups.length} files → dist/sitemap.xml\n`);
+
+  // ── IndexNow manifest ───────────────────────────────────────────────────────
+  // A fingerprint per indexable route. /api/indexnow-sync compares the live
+  // copy of this file against the last snapshot it submitted, which is how
+  // changed URLs are identified without tracking anything by hand.
+  const manifest = buildManifest(fingerprints);
+  fs.writeFileSync(
+    path.join(dist, INDEXNOW_MANIFEST_FILENAME),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
+  // The key file is a static asset copied from public/. If it ever goes missing
+  // or drifts from the key we submit, every IndexNow submission is rejected, so
+  // fail the build rather than ship a broken verification.
+  const keyFile = path.join(dist, INDEXNOW_KEY_FILENAME);
+  if (!fs.existsSync(keyFile) || fs.readFileSync(keyFile, 'utf8').trim() !== INDEXNOW_KEY) {
+    throw new Error(`IndexNow key file missing or does not match the key: ${INDEXNOW_KEY_FILENAME}`);
+  }
+
+  console.log(`IndexNow manifest written: ${Object.keys(manifest.routes).length} routes → dist/${INDEXNOW_MANIFEST_FILENAME}\n`);
 }
 
 prerender().catch(err => {
