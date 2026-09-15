@@ -66,6 +66,38 @@
           "value": "public, max-age=604800, stale-while-revalidate=2592000"
         }
       ]
+    },
+    {
+      "source": "/aa4b99c49e40c8e76534a164794bc9be.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/indexnow-manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/indexnow-sync",
+      "schedule": "0 4 * * *"
     }
   ],
   "redirects": [
