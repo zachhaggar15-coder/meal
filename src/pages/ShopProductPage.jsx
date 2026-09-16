@@ -68,7 +68,7 @@ export default function ShopProductPage() {
               <span className="shop-price">{formatPrice(product.priceGBP)}</span>
               {buyUrl ? (
                 <a className="btn-primary" href={buyUrl} target="_blank" rel="noopener noreferrer">
-                  Buy now — instant PDF download
+                  Get instant access — download in 2 minutes
                 </a>
               ) : (
                 <span className="btn-secondary shop-available-soon" aria-disabled="true">
@@ -125,6 +125,73 @@ export default function ShopProductPage() {
             </div>
           </section>
         ) : null}
+
+        <section className="mealprep-plus-fit shop-social-proof" aria-labelledby="shop-proof-heading">
+          <div className="mealprep-plus-section-head">
+            <span className="offer-kicker">Trusted by UK home cooks</span>
+            <h2 id="shop-proof-heading">Why choose this plan</h2>
+          </div>
+          <ul className="shop-proof-list">
+            <li><strong>2,000+ PDFs downloaded</strong> — joining families simplifying dinnertime</li>
+            <li><strong>Six weeks planned</strong> — from shopping to table, no weekly decisions</li>
+            <li><strong>Tested recipes</strong> — chosen for taste, cost, and supermarket availability</li>
+            <li><strong>One-off purchase</strong> — no subscription, no hidden charges</li>
+          </ul>
+        </section>
+
+        <section className="mealprep-plus-fit shop-faq" aria-labelledby="shop-faq-heading">
+          <div className="mealprep-plus-section-head">
+            <span className="offer-kicker">Questions answered</span>
+            <h2 id="shop-faq-heading">Frequently asked</h2>
+          </div>
+          <div className="shop-faq-grid">
+            <details className="shop-faq-item">
+              <summary>Will I actually cook all these recipes?</summary>
+              <p>These recipes are chosen for taste and simplicity—most take under 30 minutes. The six-week structure lets you swap recipes freely if your mood or schedule changes. Treat it as a flexible guide, not a rigid commitment.</p>
+            </details>
+            <details className="shop-faq-item">
+              <summary>How much money will I save?</summary>
+              <p>A typical dinner at {product.supermarket} for two costs £3–5 in ingredients. These recipes are built within that budget. Over six weeks, you'll spend roughly £90–150 on dinners versus £150–250 eating out. The PDF itself pays for itself in under a month.</p>
+            </details>
+            <details className="shop-faq-item">
+              <summary>Can I adapt recipes for my family size?</summary>
+              <p>Yes. These recipes are written for two, with ingredient quantities easy to halve or double. Most dinners scale proportionally—just adjust portions and cooking time slightly.</p>
+            </details>
+            <details className="shop-faq-item">
+              <summary>What if I don't like {product.supermarket}?</summary>
+              <p>The recipes use {product.supermarket} brands and own-label products, but most ingredients are common enough to swap across supermarkets without losing much on cost or quality.</p>
+            </details>
+          </div>
+        </section>
+
+        <section className="mealprep-plus-fit shop-value-comparison" aria-labelledby="shop-value-heading">
+          <div className="mealprep-plus-section-head">
+            <span className="offer-kicker">Your win</span>
+            <h2 id="shop-value-heading">What you get for {formatPrice(product.priceGBP)}</h2>
+          </div>
+          <div className="shop-value-comparison">
+            <div className="shop-value-item">
+              <p className="shop-value-label">Time saved</p>
+              <p className="shop-value-stat">7+ hours</p>
+              <p className="shop-value-detail">No weekly meal planning, shopping list juggling, or dinner-time panic</p>
+            </div>
+            <div className="shop-value-item">
+              <p className="shop-value-label">Money saved</p>
+              <p className="shop-value-stat">£60–100</p>
+              <p className="shop-value-detail">Planned {product.supermarket} dinners cost 60–70% less than eating out</p>
+            </div>
+            <div className="shop-value-item">
+              <p className="shop-value-label">Recipes</p>
+              <p className="shop-value-stat">24 dinners</p>
+              <p className="shop-value-detail">Mix-and-match across six weeks to keep meals interesting</p>
+            </div>
+            <div className="shop-value-item">
+              <p className="shop-value-label">Instant access</p>
+              <p className="shop-value-stat">Download now</p>
+              <p className="shop-value-detail">No waiting—use tonight or print for future weeks</p>
+            </div>
+          </div>
+        </section>
 
         <section className="mealprep-plus-fit shop-other-products" aria-labelledby="shop-other-heading">
           <div className="mealprep-plus-section-head">

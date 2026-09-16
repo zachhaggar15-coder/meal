@@ -12,14 +12,14 @@ export default function PdfUpsell({ supermarket, goal }) {
 
   return (
     <aside className="pdf-upsell" aria-label="6-week PDF plan">
-      <p className="pdf-upsell-eyebrow">Like this plan?</p>
+      <p className="pdf-upsell-eyebrow">Stop the Sunday dinner panic</p>
       <p className="pdf-upsell-copy">
-        Get <strong>{product.tagline.toLowerCase()}</strong> as a printable PDF —
-        {product.pages ? ` ${product.pages} pages, ` : ' '}
-        six weeks of {product.supermarket} dinners for two, planned out.
+        Take {product.tagline.toLowerCase()} with you — print it, save it, use it week after week.
+        {product.pages ? ` ${product.pages} pages` : ''} of zero-guesswork dinners, ready to go.
+        No subscriptions, no faff. Just download and cook.
       </p>
       <Link to={`/meal-prep-pdfs/${product.slug}`} className="btn-secondary pdf-upsell-link">
-        See {product.name} — £{product.priceGBP.toFixed(2)}
+        Get {product.name} — £{product.priceGBP.toFixed(2)}
       </Link>
     </aside>
   );
