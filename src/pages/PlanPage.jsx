@@ -11,7 +11,6 @@ import QuizNudge from '../components/QuizNudge.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
 import CostEstimateNote from '../components/CostEstimateNote.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
-import PdfUpsell from '../components/PdfUpsell.jsx';
 import PlanCard from '../components/PlanCard.jsx';
 import PlanSaveButton from '../components/PlanSaveButton.jsx';
 import RecipeDetails from '../components/RecipeDetails.jsx';
@@ -706,8 +705,6 @@ export default function PlanPage() {
           blurb="The 7-day menu, shopping list and a printable link, sent once. No newsletter."
           planName={plan.title}
         />
-
-        <PdfUpsell supermarket={plan.supermarket} goal={plan.goal} />
 
         <HouseholdPortionsControl
           mode={householdMode}

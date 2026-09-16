@@ -12,7 +12,6 @@ import { contentProvenance, schemaDates } from '../utils/contentDates.js';
 import ContentByline from '../components/ContentByline.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import QuizNudge from '../components/QuizNudge.jsx';
-import ShopHubPromo from '../components/ShopHubPromo.jsx';
 import ComboLandingPage from './ComboLandingPage.jsx';
 import NotFound from './NotFound.jsx';
 import { getAllPlanMeta } from '../utils/planBuilder.js';
@@ -216,10 +215,6 @@ export default function MealPlanHubPage() {
             ))}
           </div>
         </section>
-
-        {hub.match?.supermarkets?.length === 1 ? (
-          <ShopHubPromo supermarket={hub.match.supermarkets[0]} />
-        ) : null}
 
         <QuizNudge
           sourcePage={`meal-plan-hub-${hub.slug}`}

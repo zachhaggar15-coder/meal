@@ -37,9 +37,6 @@ const Terms = lazy(() => import('./pages/Terms.jsx'));
 const SupermarketIndexPage = lazy(() => import('./pages/SupermarketIndexPage.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard.jsx'));
-const ShopIndexPage = lazy(() => import('./pages/ShopIndexPage.jsx'));
-const ShopProductPage = lazy(() => import('./pages/ShopProductPage.jsx'));
-const ShopThankYouPage = lazy(() => import('./pages/ShopThankYouPage.jsx'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -115,9 +112,6 @@ export default function App() {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/meal-prep-containers" element={<ContainerHub />} />
               <Route path="/meal-prep-containers/:tier" element={<ContainerGuide />} />
-              <Route path="/meal-prep-pdfs" element={<ShopIndexPage />} />
-              <Route path="/meal-prep-pdfs/thank-you" element={<ShopThankYouPage />} />
-              <Route path="/meal-prep-pdfs/:slug" element={<ShopProductPage />} />
               {/* /glass-meal-prep-containers and /stickers were one product
                   placement page duplicating /meal-prep-containers/glass: 469
                   words, ~96% of them promotional, against the guide's 2,466.
