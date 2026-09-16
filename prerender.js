@@ -10,7 +10,6 @@ import { COMBO_LANDING_SLUGS } from './src/data/comboLandingPages.js';
 import { buildBrowsePageRoutes } from './src/data/browsePagination.js';
 import { MEAL_PLAN_HUB_SLUGS } from './src/data/mealPlanHubs.js';
 import { SEO_PRIORITY_ROUTES } from './src/data/seoPriorityLinks.js';
-import { MEAL_PREP_PDF_SLUGS } from './src/data/mealPrepPdfProducts.js';
 import {
   INDEXNOW_KEY,
   INDEXNOW_KEY_FILENAME,
@@ -230,9 +229,6 @@ const ROUTES = uniqueRoutes([
   ...MEAL_PLAN_HUB_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...COMBO_LANDING_SLUGS.map(slug => `/meal-plans/${slug}`),
   ...CONTAINER_GUIDE_SLUGS.map(slug => `/meal-prep-containers/${slug}`),
-  '/meal-prep-pdfs',
-  '/meal-prep-pdfs/thank-you',
-  ...MEAL_PREP_PDF_SLUGS.map(slug => `/meal-prep-pdfs/${slug}`),
   // New plan library at /plans/:slug
   ...PLAN_SLUGS.map(slug => `/plans/${slug}`),
   // Legacy meal plan pages (preserved for SEO)
@@ -254,8 +250,6 @@ const NOINDEX_ROUTES = new Set([
   '/feedback',
   // Waitlist page for a service that does not exist yet.
   '/mealprep-plus',
-  // Checkout confirmation, not a page for search traffic to land on.
-  '/meal-prep-pdfs/thank-you',
   // The 32 chooser screens — routing surfaces, noindex,follow.
   ...GOAL_CHOOSER_SLUGS.map(slug => `/choose-plan/${slug}`),
   ...SUPERMARKET_CHOOSER_SLUGS.map(slug => `/choose-supermarket/${slug}`),
@@ -360,8 +354,6 @@ async function prerender() {
     if (route === '/blog') return ['0.8', 'weekly'];
     if (route === '/questions') return ['0.8', 'weekly'];
     if (route === '/meal-prep-containers') return ['0.9', 'weekly'];
-    if (route === '/meal-prep-pdfs') return ['0.8', 'weekly'];
-    if (route.startsWith('/meal-prep-pdfs/')) return ['0.7', 'weekly'];
     if (SEO_PRIORITY_ROUTE_SET.has(route)) return ['0.9', 'weekly'];
     if (route.startsWith('/meal-prep-containers/')) return ['0.8', 'weekly'];
     if (route.startsWith('/plans/')) return ['0.8', 'monthly'];
