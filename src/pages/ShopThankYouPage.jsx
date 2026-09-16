@@ -28,6 +28,18 @@ export default function ShopThankYouPage() {
             </div>
           </div>
         </section>
+
+        <section className="shop-support" aria-labelledby="shop-support-heading">
+          <div className="mealprep-plus-section-head">
+            <h2 id="shop-support-heading">Need help or a refund?</h2>
+            <p>
+              If you run into any issues with your download, have questions about the plan, or need
+              a refund, we&apos;re here to help. Get in touch at{' '}
+              <a href="mailto:mealprep.org.uk@proton.me">mealprep.org.uk@proton.me</a> and we&apos;ll
+              sort it out for you.
+            </p>
+          </div>
+        </section>
       </div>
 
       <Footer />
