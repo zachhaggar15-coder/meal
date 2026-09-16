@@ -12856,6 +12856,18 @@ a.shop-tile-link:hover {
   display: inline-flex;
 }
 
+.pdf-hub-promo {
+  background: #fffdf8;
+  border: 1px solid var(--editorial-line);
+  border-radius: var(--radius-md);
+  margin: 28px 0;
+  padding: 26px;
+}
+
+.pdf-hub-promo-grid {
+  margin-top: 16px;
+}
+
 @media (min-width: 1000px) {
   .layout-body {
     display: grid;

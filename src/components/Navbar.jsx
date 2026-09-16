@@ -8,10 +8,10 @@ const TOP_TABS = [
   { to: '/', label: 'Home', match: path => path === '/' },
   { to: '/quiz', label: 'Quiz', match: path => path === '/quiz' || path === '/quiz/results' },
   {
-    to: '/meal-prep-accessories',
-    label: 'Meal Prep Accessories',
-    compactLabel: 'Accessories',
-    match: path => path === '/meal-prep-accessories' || ACCESSORY_PATHS.has(path),
+    to: '/meal-prep-pdfs',
+    label: '6-Week PDF Plans',
+    compactLabel: 'PDF Plans',
+    match: path => path.startsWith('/meal-prep-pdfs'),
   },
   {
     to: '/meal-prep-containers',
