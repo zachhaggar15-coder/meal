@@ -79,6 +79,11 @@ export const START_LINKS = [
     description: 'Compare tubs and box setups before batch cooking.',
   },
   {
+    to: '/meal-prep-pdfs',
+    label: '6-Week PDF Plans',
+    description: 'Printable 6-week Aldi and Lidl meal plans, delivered as a PDF.',
+  },
+  {
     to: '/mealprep-plus',
     label: 'Join MealPrep+',
     description: 'Join the waitlist for weekly UK meal plans sent before you shop.',

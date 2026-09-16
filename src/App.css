@@ -12602,7 +12602,8 @@ textarea {
   margin-top: 0;
 }
 
-.mealprep-plus-page {
+.mealprep-plus-page,
+.shop-page {
   margin: 0 auto;
   max-width: 1160px;
   padding: 26px 18px 56px;
@@ -12768,6 +12769,93 @@ textarea {
   margin-bottom: 0;
 }
 
+.shop-tagline {
+  color: var(--editorial-muted);
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.shop-buy-box {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.shop-price {
+  color: var(--editorial-ink);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.shop-available-soon {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.shop-available-soon-note {
+  color: var(--editorial-muted);
+  font-size: 0.92rem;
+  margin-top: 10px;
+}
+
+.shop-back-link {
+  color: var(--accent-dark);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+a.shop-tile-link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+a.shop-tile-link:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.shop-tile-status {
+  color: var(--editorial-ink) !important;
+  font-weight: 700 !important;
+  margin-top: 8px !important;
+}
+
+.shop-thank-you .mealprep-plus-hero {
+  grid-template-columns: 1fr;
+  max-width: 640px;
+}
+
+.pdf-upsell {
+  background: #fffdf8;
+  border: 1px solid var(--editorial-line);
+  border-radius: var(--radius-md);
+  margin: 22px 0;
+  padding: 20px;
+}
+
+.pdf-upsell-eyebrow {
+  color: var(--accent-dark);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
+.pdf-upsell-copy {
+  color: var(--editorial-muted);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+.pdf-upsell-link {
+  display: inline-flex;
+}
+
 @media (min-width: 1000px) {
   .layout-body {
     display: grid;
@@ -12790,6 +12878,7 @@ textarea {
   .layout-main > .blog-page,
   .layout-main > .blog-post-page,
   .layout-main > .mealprep-plus-page,
+  .layout-main > .shop-page,
   .layout-main > .stickers-page,
   .layout-main > .not-found-page {
     margin-left: auto;
@@ -12896,7 +12985,8 @@ textarea {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  .mealprep-plus-page {
+  .mealprep-plus-page,
+  .shop-page {
     padding: 18px 14px 42px;
   }
 
