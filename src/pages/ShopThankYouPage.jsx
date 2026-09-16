@@ -36,7 +36,7 @@ export default function ShopThankYouPage() {
               If you run into any issues with your download, have questions about the plan, or need
               a refund, we&apos;re here to help. Get in touch at{' '}
               <a href="mailto:mealprep.org.uk@proton.me">mealprep.org.uk@proton.me</a> and we&apos;ll
-              sort it out for you.
+              get back to you within 5 working days.
             </p>
           </div>
         </section>
