@@ -14,7 +14,7 @@ export default function PdfUpsell({ supermarket, goal }) {
     <aside className="pdf-upsell" aria-label="6-week PDF plan">
       <p className="pdf-upsell-eyebrow">Stop the Sunday dinner panic</p>
       <p className="pdf-upsell-copy">
-        Take {product.tagline.toLowerCase()} with you — print it, save it, use it week after week.
+        Take a {product.tagline.toLowerCase()} with you — print it, save it, use it week after week.
         {product.pages ? ` ${product.pages} pages` : ''} of zero-guesswork dinners, ready to go.
         No subscriptions, no faff. Just download and cook.
       </p>
