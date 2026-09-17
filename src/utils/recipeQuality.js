@@ -482,25 +482,32 @@ function buildComponentSteps(meal = {}) {
       : rawVegetables.length
         ? `Slice ${joinNatural(rawVegetables)} and set aside.`
         : '';
+    // When there is no vegetable prep, the fallback step used to tell the
+    // reader to crack the eggs into a bowl and whisk them with a fork, and
+    // the cook step below then said "beat the eggs" again — one dish,
+    // whisked twice. The omelette/frittata cook step is already a complete
+    // instruction on its own (it does its own cracking and beating), so
+    // that combination only needs the prep step dropped; the plain
+    // scrambled-egg step wasn't self-contained the same way, so it gets the
+    // cracking folded into it instead of losing that detail outright.
+    const isOmeletteStyle = /omelette|frittata/.test(name);
+    const prepStep = isBoiledOrPoached
+      ? `${vegPrepStep ? `${vegPrepStep} ` : ''}Bring a small pan of water to a gentle simmer.`.trim()
+      : vegPrepStep;
+    const cookStep = isBoiledOrPoached
+      ? 'Lower whole eggs into the water and simmer for 5-6 minutes for soft-boiled, or crack an egg directly into the water and poach for 3-4 minutes until the white is set.'
+      : isOmeletteStyle
+        ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
+        : vegPrepStep
+          ? 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.'
+          : 'Crack the eggs into a bowl, season lightly and whisk with a fork, then cook in a non-stick pan over medium heat, stirring gently until softly set.';
     return [
-      isBoiledOrPoached
-        ? `${vegPrepStep ? `${vegPrepStep} ` : ''}Bring a small pan of water to a gentle simmer.`.trim()
-        // No mention of the eggs here: the step below always deals with them,
-        // and naming them twice had the reader whisking one bowl of eggs and
-        // then beating another.
-        : vegPrepStep || 'Crack the eggs into a bowl, season lightly and whisk with a fork.',
-      // An omelette or frittata is beaten egg set in a pan. When the recipe has
-      // vegetables the step above cooks those instead of whisking, so a dish
-      // named as an omelette never told the reader to beat the eggs at all.
-      isBoiledOrPoached
-        ? 'Lower whole eggs into the water and simmer for 5-6 minutes for soft-boiled, or crack an egg directly into the water and poach for 3-4 minutes until the white is set.'
-        : /omelette|frittata/.test(name)
-          ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
-          : 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.',
+      prepStep,
+      cookStep,
       carrier.length
         ? `Toast ${joinNatural(carrier)}, then serve with the eggs${accompaniments.length ? ` and ${joinNatural(accompaniments)}` : ''}.`
         : `Season to taste and serve${accompaniments.length ? ` with ${joinNatural(accompaniments)}` : ''}.`,
-    ];
+    ].filter(Boolean);
   }
 
   if (name.includes('toast') || name.includes('bagel') || name.includes('wrap') || name.includes('sandwich') || name.includes('pitta')) {
@@ -632,12 +639,21 @@ function buildComponentSteps(meal = {}) {
     // disagreed, so edamame and sweetcorn simmered untouched in a curry but
     // were told to be "sliced or chopped" in a bowl. One list, both places.
     const isReadyToUse = item => READY_TO_USE_VEGETABLE.test(item) || isAlreadyPreparedIngredient(item);
-    const choppedVegetables = withoutNames(
-      vegetables.filter(item => !isReadyToUse(item)),
-      [...leafy, starchName],
-    );
     const carriers = findCookingNames(cookingIngredients, BREAD_CARRIER_PATTERN);
     const bowlAromatics = findCookingNames(cookingIngredients, /\b(garlic|ginger|onion)\b/i);
+    // Aromatics only leave the chop/assembly steps when the protein step is
+    // actually the one cooking them (below). A dish whose protein needs no
+    // cooking — tinned tuna, jerky, cottage cheese — never reaches that
+    // branch, so its onion still needs chopping AND still needs to make it
+    // into the bowl; excluding it unconditionally chopped it in one step and
+    // then quietly dropped it, never mentioned again.
+    const aromaticsCookedWithProtein = Boolean(protein)
+      && needsCooking(protein, proteinSource, pulseState)
+      && bowlAromatics.length > 0;
+    const choppedVegetables = withoutNames(
+      vegetables.filter(item => !isReadyToUse(item)),
+      [...leafy, starchName, ...(aromaticsCookedWithProtein ? bowlAromatics : [])],
+    );
     const eggs = findCookingNames(cookingIngredients, /^eggs?$/i);
     const steps = [];
     const cookingLiquid = findCookingName(cookingIngredients, /\b(stock|broth)\b/i);
@@ -650,12 +666,20 @@ function buildComponentSteps(meal = {}) {
       steps.push(`Boil the ${joinNatural(eggs)} for 8-9 minutes, then cool under cold water, peel and halve.`);
     }
     if (protein && needsCooking(protein, proteinSource, pulseState)) {
-      steps.push(`${cookProteinStep(proteinName, {
-        finish: isPulseProtein ? '' : 'Rest briefly before slicing if needed.',
+      // Aromatics go in for the final minute of cooking, before the protein
+      // comes off the heat to rest — not after. Passing "rest" to
+      // cookProteinStep as its own `finish` put that sentence at the very
+      // end of the returned string, so the aromatics line (appended after)
+      // read as happening once the protein had already finished resting.
+      const restText = isPulseProtein ? '' : ' Rest briefly before slicing if needed.';
+      const cooked = cookProteinStep(proteinName, {
         dryPulse: isPulseProtein,
         ovenBaked: titleBakes,
         grilled: titleGrills,
-      })}${bowlAromatics.length ? ` Add ${joinNatural(bowlAromatics)} for the final minute and cook until fragrant.` : ''}`);
+      });
+      steps.push(bowlAromatics.length
+        ? `${cooked} Add ${joinNatural(bowlAromatics)} for the final minute and cook until fragrant.${restText}`
+        : `${cooked}${restText}`);
     } else if (tinIngredients.length) {
       steps.push(drainTinnedStep(tinIngredients));
     }
@@ -678,7 +702,11 @@ function buildComponentSteps(meal = {}) {
       steps.push(`Toast or warm ${joinNatural(carriers)} just before serving.`);
     }
     const hasDressing = sauces.some(item => /dressing/i.test(item));
-    const assemblyIngredients = withoutNames(remainingNames, [...sauces, ...bowlAromatics, cookingLiquid].filter(Boolean));
+    const assemblyIngredients = withoutNames(remainingNames, [
+      ...sauces,
+      ...(aromaticsCookedWithProtein ? bowlAromatics : []),
+      cookingLiquid,
+    ].filter(Boolean));
     steps.push(
       `Arrange ${joinNatural(assemblyIngredients)} in a bowl${sauces.length ? ` and finish with ${joinNatural(sauces)}` : ''}.${hasDressing ? ' Keep the dressing separate if packing ahead.' : ''}`,
     );
