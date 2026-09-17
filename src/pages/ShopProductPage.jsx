@@ -151,20 +151,22 @@ export default function ShopProductPage() {
             </details>
             <details className="shop-faq-item">
               <summary>How much money will I save?</summary>
-              <p>A typical dinner at {product.supermarket} for two costs £3–5 in ingredients. These recipes are built within that budget. Over six weeks, you'll spend roughly £90–150 on dinners versus £150–250 eating out. The PDF itself pays for itself in under a month.</p>
+              <p>A typical dinner at {product.supermarket || 'Aldi or Lidl'} for two costs £3–5 in ingredients. These recipes are built within that budget. Across the 24 dinners, you'll spend roughly £70–120 versus £240–360 for the same meals eaten out. The PDF itself pays for itself in under a week.</p>
             </details>
             <details className="shop-faq-item">
               <summary>Can I adapt recipes for my family size?</summary>
               <p>Yes. These recipes are written for two, with ingredient quantities easy to halve or double. Most dinners scale proportionally—just adjust portions and cooking time slightly.</p>
             </details>
             <details className="shop-faq-item">
-              <summary>What if I don't like {product.supermarket}?</summary>
-              <p>The recipes use {product.supermarket} brands and own-label products, but most ingredients are common enough to swap across supermarkets without losing much on cost or quality.</p>
+              <summary>{product.supermarket ? `What if I don't like ${product.supermarket}?` : 'What if I only shop at one supermarket?'}</summary>
+              <p>{product.supermarket
+                ? `The recipes use ${product.supermarket} brands and own-label products, but most ingredients are common enough to swap across supermarkets without losing much on cost or quality.`
+                : 'Each recipe is labelled by supermarket, so you can stick to just the Aldi half or just the Lidl half of the collection if you only shop at one.'}</p>
             </details>
           </div>
         </section>
 
-        <section className="mealprep-plus-fit shop-value-comparison" aria-labelledby="shop-value-heading">
+        <section className="mealprep-plus-fit shop-value" aria-labelledby="shop-value-heading">
           <div className="mealprep-plus-section-head">
             <span className="offer-kicker">Your win</span>
             <h2 id="shop-value-heading">What you get for {formatPrice(product.priceGBP)}</h2>
@@ -177,8 +179,8 @@ export default function ShopProductPage() {
             </div>
             <div className="shop-value-item">
               <p className="shop-value-label">Money saved</p>
-              <p className="shop-value-stat">£60–100</p>
-              <p className="shop-value-detail">Planned {product.supermarket} dinners cost 60–70% less than eating out</p>
+              <p className="shop-value-stat">£170–240</p>
+              <p className="shop-value-detail">Planned {product.supermarket || 'Aldi and Lidl'} dinners cost 60–70% less than eating out</p>
             </div>
             <div className="shop-value-item">
               <p className="shop-value-label">Recipes</p>
