@@ -957,13 +957,18 @@ function matchesIngredient(ingredient, matcher) {
 }
 
 function proseIngredientName(value) {
-  return String(value || '')
+  const name = String(value || '')
     .replace(/\s*,\s*$/, '')
     .replace(/^(.+),\s+(grated|roasted|baked|sliced|chopped)$/i, '$2 $1')
     .replace(/\bweetabix\b/gi, 'Weetabix')
     .replace(/\bquorn\b/gi, 'Quorn')
     .replace(/\bgreek\b/gi, 'Greek')
     .trim();
+  // A partitive phrase like "small head of broccoli" reads as a bare mass
+  // noun without its article the way plain "broccoli" or "carrots" do on
+  // their own — "Add small head of broccoli and cook until tender" is
+  // missing the "a" that "head of X" always needs when used standalone.
+  return /^(?:small|medium|large)\s+head of\b/i.test(name) ? `a ${name}` : name;
 }
 
 function normaliseProteinMethodName(protein, displayName) {
