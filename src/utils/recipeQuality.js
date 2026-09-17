@@ -325,6 +325,27 @@ function buildComponentSteps(meal = {}) {
     ];
   }
 
+  // "Stuffed Peppers" is a specific, well-known dish: the filling is cooked,
+  // then packed into hollowed-out pepper halves and baked. The generic
+  // starch branch further down had no idea "stuffed" meant anything —
+  // peppers were just another vegetable to chop and fry into the mince like
+  // a stir-fry, which is a completely different dish from the one named.
+  if (name.includes('stuffed') && /pepper/i.test(ingredientSearch)) {
+    const vessel = findCookingName(cookingIngredients, /pepper/i) || 'peppers';
+    const mince = findCookingName(cookingIngredients, /mince|turkey|beef|lamb|pork|chicken/i) || proteinName;
+    const aromatics = findCookingNames(cookingIngredients, /(onion|garlic|shallot)/i);
+    const cheese = findCookingNames(cookingIngredients, /(cheddar|parmesan|mozzarella|\bcheese\b)/i);
+    const fillingExtras = withoutNames(remainingNames, [vessel, mince, proteinName, proteinDisplayName, ...aromatics, ...cheese]);
+    return [
+      `Heat the oven to 200°C (180°C fan). Halve the ${vessel} lengthways, remove the seeds and core, and arrange cut-side up in an ovenproof dish.`,
+      `Cook the ${mince}${aromatics.length ? ` with ${joinNatural(aromatics)}` : ''} in a non-stick pan over medium heat, breaking it up, until browned.`,
+      fillingExtras.length
+        ? `Stir in ${joinNatural(fillingExtras)} and season to taste.`
+        : 'Season to taste.',
+      `Spoon the filling into the pepper halves${cheese.length ? `, top with ${joinNatural(cheese)}` : ''} and bake for 25-30 minutes, until the peppers are tender.`,
+    ];
+  }
+
   if (name.includes('nicoise') || name.includes('niçoise')) {
     const potatoes = findCookingName(cookingIngredients, /potato/i);
     const eggs = findCookingName(cookingIngredients, /^eggs?$/i);
@@ -811,6 +832,13 @@ function buildComponentSteps(meal = {}) {
       findCookingNames(cookingIngredients, /\b(peanuts?|almonds?|cashews?|walnuts?|nuts?|seeds?)\b/i),
       [...sauces, ...seasonings],
     );
+    // The dry-pulse branch below simmers "every non-starch ingredient" in
+    // one sentence — sauces, seasonings and toppings included — precisely so
+    // a pulse protein's aromatics and spices aren't dropped. That means they
+    // are already named by the time the serving step runs, so a dahl was
+    // told to stir garam masala into the pot and then, two steps later,
+    // stir the same garam masala in again.
+    const pulseSimmerNamesEverything = isPulseProtein && Boolean(protein) && needsCooking(protein, proteinSource, pulseState);
     return [
       cookStarchStep(starchName, { potatoPreparation, displayName: starchDisplayName }),
       protein && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein
@@ -843,11 +871,11 @@ function buildComponentSteps(meal = {}) {
             ...seasonings,
             ...finishingToppings,
           ]))}, then season to taste.`
-          : sauces.length || seasonings.length
+          : (sauces.length || seasonings.length) && !pulseSimmerNamesEverything
           ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural([...sauces, ...seasonings])}, and heat through before serving${finishingToppings.length ? ` with ${joinNatural(finishingToppings)} scattered over` : ''}.`
           : titleBakes
             ? `Heat the oven to 200C/180C fan. Fold the cooked ${starchName} through the pan, tip into an ovenproof dish, and bake for 20-25 minutes until bubbling and golden on top.`
-            : `Fold the cooked ${starchName} through the pan, season to taste and serve hot${finishingToppings.length ? ` with ${joinNatural(finishingToppings)} scattered over` : ''}.`,
+            : `Fold the cooked ${starchName} through the pan, season to taste and serve hot${!pulseSimmerNamesEverything && finishingToppings.length ? ` with ${joinNatural(finishingToppings)} scattered over` : ''}.`,
     ];
   }
 
