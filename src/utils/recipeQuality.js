@@ -94,6 +94,12 @@ function buildComponentSteps(meal = {}) {
   // Guarded against "No-Bake", where the absence of an oven is the point.
   const titleBakes = /\bbaked?\b/i.test(name) && !/no.?bake/i.test(name);
   const titleStartsBaked = /^baked?\b/i.test(name) && !/no.?bake/i.test(name);
+  // Same failure as titleBakes, for the other cooking method a title makes
+  // a promise about: "Grilled Chicken..." pan-fried its chicken exactly
+  // like non-oven-baked "cook in a non-stick pan" text, with no mention of
+  // a grill, griddle or char at all.
+  const titleGrills = /\bgrilled?\b/i.test(name);
+  const titleStartsGrills = /^grilled?\b/i.test(name);
   const prepMinutes = readPrepMinutes(meal);
   const starch = findStarch(ingredientSearch);
   const protein = findProtein(name) || findProtein(ingredientSearch);
@@ -459,20 +465,35 @@ function buildComponentSteps(meal = {}) {
     const prepareRaw = rawVegetables.length
       ? ` Slice ${joinNatural(rawVegetables)} and set aside.`
       : '';
+    // "Poached Eggs..." and "...Boiled Eggs..." cook the egg whole, in water
+    // — the fallback step below used to tell the reader to crack the eggs
+    // into a bowl and whisk them with a fork before that, which is how you
+    // start an omelette, not a poached or boiled egg. Route those names to
+    // water-based prep instead so the two steps describe one dish, not two.
+    const isBoiledOrPoached = name.includes('boiled') || name.includes('poached');
+    // Whatever else this step does to the vegetables, a poached/boiled dish
+    // still needs water on to simmer before step two can tell the reader to
+    // lower eggs into it — that instruction can't just ride on the fallback
+    // branch below, or a recipe with vegetables (e.g. "Garlic Mushrooms with
+    // Poached Egg") skips it and step two ends up pointing at water that was
+    // never put on.
+    const vegPrepStep = panVegetables.length
+      ? `Slice or chop ${joinNatural(panVegetables)}, then cook them in a non-stick pan over medium heat until softened.${prepareRaw}`
+      : rawVegetables.length
+        ? `Slice ${joinNatural(rawVegetables)} and set aside.`
+        : '';
     return [
-      panVegetables.length
-        ? `Slice or chop ${joinNatural(panVegetables)}, then cook them in a non-stick pan over medium heat until softened.${prepareRaw}`
+      isBoiledOrPoached
+        ? `${vegPrepStep ? `${vegPrepStep} ` : ''}Bring a small pan of water to a gentle simmer.`.trim()
         // No mention of the eggs here: the step below always deals with them,
         // and naming them twice had the reader whisking one bowl of eggs and
         // then beating another.
-        : rawVegetables.length
-          ? `Slice ${joinNatural(rawVegetables)} and set aside.`
-          : 'Crack the eggs into a bowl, season lightly and whisk with a fork.',
+        : vegPrepStep || 'Crack the eggs into a bowl, season lightly and whisk with a fork.',
       // An omelette or frittata is beaten egg set in a pan. When the recipe has
       // vegetables the step above cooks those instead of whisking, so a dish
       // named as an omelette never told the reader to beat the eggs at all.
-      name.includes('boiled') || name.includes('poached')
-        ? 'Cook the eggs to your preferred set: 5-6 minutes for soft-boiled, or poach gently until the whites are set.'
+      isBoiledOrPoached
+        ? 'Lower whole eggs into the water and simmer for 5-6 minutes for soft-boiled, or crack an egg directly into the water and poach for 3-4 minutes until the white is set.'
         : /omelette|frittata/.test(name)
           ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
           : 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.',
@@ -488,7 +509,7 @@ function buildComponentSteps(meal = {}) {
     return [
       `${name.includes('sandwich') ? 'Lay out' : 'Toast or warm'} ${joinNatural(carriers)}.`,
       protein && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein
-        ? cookProteinStep(proteinName, { ovenBaked: titleBakes, finish: isAlreadyPreparedIngredient(proteinName) ? '' : 'Rest briefly, then slice it.' })
+        ? cookProteinStep(proteinName, { ovenBaked: titleBakes, grilled: titleGrills, finish: isAlreadyPreparedIngredient(proteinName) ? '' : 'Rest briefly, then slice it.' })
         : isPulseProtein && needsCooking(protein, proteinSource, pulseState)
           ? cookProteinStep(proteinName, { dryPulse: true })
           : prepareFillingStep(filling),
@@ -633,6 +654,7 @@ function buildComponentSteps(meal = {}) {
         finish: isPulseProtein ? '' : 'Rest briefly before slicing if needed.',
         dryPulse: isPulseProtein,
         ovenBaked: titleBakes,
+        grilled: titleGrills,
       })}${bowlAromatics.length ? ` Add ${joinNatural(bowlAromatics)} for the final minute and cook until fragrant.` : ''}`);
     } else if (tinIngredients.length) {
       steps.push(drainTinnedStep(tinIngredients));
@@ -748,6 +770,7 @@ function buildComponentSteps(meal = {}) {
     // A title beginning "Baked ..." is a promise about the protein, not a
     // description of the tray it is served with.
     const nameBakesProtein = titleStartsBaked;
+    const nameGrillsProtein = titleStartsGrills;
     // Seasonings a recipe genuinely lists (lemon, dill, herbs) were dropped
     // entirely by this branch, which only ever names the protein and
     // vegetables — so a salmon "baked with lemon and dill" never mentioned
@@ -768,12 +791,12 @@ function buildComponentSteps(meal = {}) {
           // already cooked in step one — without excluding it the method
           // said "Boil the potatoes… then add potatoes and cook until
           // tender", cooking the same ingredient twice.
-          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein })}${panAdditions.length
+          ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein, grilled: nameGrillsProtein })}${panAdditions.length
             ? (nameRoastsVegetables
               ? ` Meanwhile roast ${joinNatural(panAdditions)} at 200°C (180°C fan) for 25-30 minutes, until tender and lightly browned.`
               : ` Add ${joinNatural(panAdditions)} and cook until tender.`)
             : ''}`
-          : cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein })
+          : cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein, grilled: nameGrillsProtein })
         // A dry pulse is not just "warmed" — it needs real simmering time
         // in liquid to become edible. Keep every non-starch ingredient
         // named (nonStarch already includes the pulse itself, since
@@ -1198,7 +1221,7 @@ function collapseRepeatedToTaste(items) {
   return inserted ? stripped : items;
 }
 
-function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = false, ovenBaked = false } = {}) {
+function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = false, ovenBaked = false, grilled = false } = {}) {
   const protein = String(proteinName || 'protein');
   let finishText = finish;
   let instruction;
@@ -1213,11 +1236,25 @@ function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = fal
       .replace(/^([a-z])/, (m) => (prefix ? m : m.toUpperCase()));
   }
 
-  // An ingredient whose own name declares it already cooked ("baked
-  // falafel", "baked tofu") must not be given a from-raw instruction —
-  // the same principle resolvePotatoPreparation applies to potatoes,
-  // generalised to any ingredient carrying a declared state.
-  if (isAlreadyPreparedIngredient(protein)) {
+  // Same broken promise, for "Grilled Chicken..." and "Grilled Lean Sirloin
+  // Steak...": the generic and fish branches below both said "in a non-stick
+  // pan", with no grill, griddle or char in sight. Halloumi and prawns are
+  // left alone — a hot dry pan is what "grilled halloumi"/"grilled prawns"
+  // ordinarily means, so they already match their name.
+  const isGrillable = grilled
+    && !isAlreadyPreparedIngredient(protein)
+    && !dryPulse
+    && !/(prawn|halloumi|paneer)/i.test(protein);
+  if (isGrillable) {
+    instruction = /(salmon|mackerel|cod|haddock|sardine|fish|tuna steak)/i.test(protein)
+      ? `cook the ${protein} under a hot grill or on a hot griddle pan for 3-4 minutes per side, until opaque and it flakes easily`
+      : `cook the ${protein} under a hot grill or on a hot griddle pan, turning once, until cooked through and lightly charred`;
+    finishText = finish;
+  } else if (isAlreadyPreparedIngredient(protein)) {
+    // An ingredient whose own name declares it already cooked ("baked
+    // falafel", "baked tofu") must not be given a from-raw instruction —
+    // the same principle resolvePotatoPreparation applies to potatoes,
+    // generalised to any ingredient carrying a declared state.
     instruction = `warm the ${protein} through in a non-stick pan or oven until piping hot`;
     finishText = '';
   } else if (dryPulse) {
