@@ -15,6 +15,18 @@ function formatPrice(value) {
   return `£${value.toFixed(2)}`;
 }
 
+// Every single plan has 24 dinner recipes (see INCLUDES in mealPrepPdfProducts.js);
+// a bundle's recipe count is the sum of the plans it bundles.
+const DINNERS_PER_PLAN = 24;
+
+function roundToTen(value) {
+  return Math.round(value / 10) * 10;
+}
+
+function formatGBPRange(low, high) {
+  return `£${roundToTen(low).toLocaleString('en-GB')}–${roundToTen(high).toLocaleString('en-GB')}`;
+}
+
 export default function ShopProductPage() {
   const { slug } = useParams();
   const product = getPdfProductBySlug(slug);
@@ -44,6 +56,11 @@ export default function ShopProductPage() {
   const otherProducts = MEAL_PREP_PDF_SLUGS
     .filter(s => s !== product.slug)
     .map(s => getPdfProductBySlug(s));
+
+  const totalDinners = product.bundleOf ? product.bundleOf.length * DINNERS_PER_PLAN : DINNERS_PER_PLAN;
+  const costRange = formatGBPRange(totalDinners * 3, totalDinners * 5);
+  const eatOutRange = formatGBPRange(totalDinners * 10, totalDinners * 15);
+  const savingsRange = formatGBPRange(totalDinners * 7, totalDinners * 10);
 
   return (
     <>
@@ -151,7 +168,7 @@ export default function ShopProductPage() {
             </details>
             <details className="shop-faq-item">
               <summary>How much money will I save?</summary>
-              <p>A typical dinner at {product.supermarket || 'Aldi or Lidl'} for two costs £3–5 in ingredients. These recipes are built within that budget. Across the 24 dinners, you'll spend roughly £70–120 versus £240–360 for the same meals eaten out. The PDF itself pays for itself in under a week.</p>
+              <p>A typical dinner at {product.supermarket || 'Aldi or Lidl'} for two costs £3–5 in ingredients. These recipes are built within that budget. Across the {totalDinners} dinners, you'll spend roughly {costRange} versus {eatOutRange} for the same meals eaten out. The PDF itself pays for itself in under a week.</p>
             </details>
             <details className="shop-faq-item">
               <summary>Can I adapt recipes for my family size?</summary>
@@ -179,12 +196,12 @@ export default function ShopProductPage() {
             </div>
             <div className="shop-value-item">
               <p className="shop-value-label">Money saved</p>
-              <p className="shop-value-stat">£170–240</p>
+              <p className="shop-value-stat">{savingsRange}</p>
               <p className="shop-value-detail">Planned {product.supermarket || 'Aldi and Lidl'} dinners cost 60–70% less than eating out</p>
             </div>
             <div className="shop-value-item">
               <p className="shop-value-label">Recipes</p>
-              <p className="shop-value-stat">24 dinners</p>
+              <p className="shop-value-stat">{totalDinners} dinners</p>
               <p className="shop-value-detail">Mix-and-match across six weeks to keep meals interesting</p>
             </div>
             <div className="shop-value-item">
