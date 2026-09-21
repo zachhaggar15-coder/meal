@@ -2,11 +2,11 @@
 // Public-safe frontend data only: raw analytics metrics stay in docs reports.
 
 export const WEEKLY_SEO_INSIGHTS = {
-  "generatedAt": "2026-09-14T13:03:37.159Z",
+  "generatedAt": "2026-09-21T13:02:15.138Z",
   "range": {
     "current": {
-      "startDate": "2026-08-15",
-      "endDate": "2026-09-11"
+      "startDate": "2026-08-22",
+      "endDate": "2026-09-18"
     }
   },
   "source": "google-analytics-and-search-console",
@@ -42,15 +42,15 @@ export const WEEKLY_SEO_INSIGHTS = {
       "category": "Guide"
     },
     {
-      "to": "/meal-plans/1500-calorie",
-      "label": "1500 Calorie Meal Plan UK",
-      "description": "Free printable 1500 calorie meal plans for UK weight loss, with simple 7-day menus, high-protein options, vegetarian plans, PDFs and shopping lists.",
-      "category": "Meal plans"
+      "to": "/blog/high-protein-low-calorie-meals",
+      "label": "High Protein Low Calorie Meals for UK Weight Loss",
+      "description": "The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Generate a free personalised plan.",
+      "category": "Guide"
     },
     {
-      "to": "/blog/best-cheap-high-protein-foods-uk",
-      "label": "Cheap Protein UK: Best High-Protein Foods by Value",
-      "description": "Compare 10 cheap protein staples, from eggs and tuna to lentils and frozen chicken, with protein-per-penny guidance for UK meal prep.",
+      "to": "/blog/aldi-high-protein-shopping-list-uk",
+      "label": "Aldi High Protein Shopping List UK",
+      "description": "Aldi high protein shopping list for UK meal prep with eggs, chicken, yogurt, tuna, cottage cheese, lentils, beans and budget meals.",
       "category": "Guide"
     },
     {
