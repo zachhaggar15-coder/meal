@@ -32,7 +32,7 @@ const VEGETABLE_PATTERN = /(\bpepper|\bspinach|\bbroccoli|\btomato|\bonion|\bmus
 // with "Toast or warm the listed ingredients" because it found no carrier.
 // Vegetables that need no knife work: sold ready-trimmed, frozen or
 // pre-cut. They belong in the pot but never in a "peel and chop" step.
-const READY_TO_USE_VEGETABLE = /\b(sweetcorn|frozen|green beans?|beansprouts?|edamame|mixed veg|stir-fry veg|peas)\b/i;
+const READY_TO_USE_VEGETABLE = /\b(sweetcorn|frozen|green beans?|beansprouts?|edamame|mixed veg|stir-fry veg|peas|cauliflower rice)\b/i;
 
 // Herbs, spices and citrus that season a dish rather than form its body.
 const SEASONING_PATTERN = /\b(herbs?|spices?|cumin|coriander|turmeric|paprika|cinnamon|oregano|basil|thyme|rosemary|parsley|dill|mint|chilli|cayenne|masala|ras el hanout|garam|nutmeg|lemon juice|lime juice|zest)\b/i;
@@ -133,6 +133,12 @@ function buildComponentSteps(meal = {}) {
     cookingIngredients,
     /(dressing|sauce|pesto|paste|glaze|hummus|tahini|yogurt|cream cheese|crème fraîche|creme fraiche|cheddar|parmesan|\bcheese\b|\bmilk\b|salsa|oil|mayo|mayonnaise|tamari|soy sauce)/i,
   );
+  // Raita and tzatziki are cold yogurt condiments — the finishing step below
+  // says "stir in X and heat through" for anything left over, which is
+  // exactly how you split a cold yogurt sauce. Neither word contains
+  // "yogurt" or "sauce" for the pattern above to catch, so they were being
+  // warmed through with everything else instead of served cold on the side.
+  const coldCondiments = findCookingNames(cookingIngredients, /\b(raita|tzatziki)\b/i);
   const tinIngredients = findCookingNames(cookingIngredients, /\b(tinned|canned)\b/i);
   // The cooking display drops the word "tinned" on purpose — "¾ of a standard
   // tin of tomatoes" does not need to say it twice. Every check that followed
@@ -481,8 +487,15 @@ function buildComponentSteps(meal = {}) {
     // whatever the vegetable pattern matched, so avocado on toast was sliced
     // and fried, and a cold Buddha bowl fried its avocado, mixed leaves and
     // cherry tomatoes together. These are prepared and served, not cooked.
-    const panVegetables = vegetables.filter(item => !RAW_ONLY_VEGETABLE.test(item));
-    const rawVegetables = vegetables.filter(item => RAW_ONLY_VEGETABLE.test(item));
+    // RAW_ONLY_VEGETABLE catches avocado/leaves/cucumber everywhere, but
+    // deliberately leaves tomatoes off it — they're genuinely cooked in a
+    // curry or a pasta sauce — so a "Buddha Bowl" or egg salad still fried
+    // its cherry tomatoes alongside the mushrooms. A bowl/salad-named egg
+    // dish is a cold assembly regardless of which vegetable matched, so
+    // route it the same way "Egg White Omelette" already routes avocado.
+    const isColdAssembly = name.includes('bowl') || name.includes('salad');
+    const panVegetables = isColdAssembly ? [] : vegetables.filter(item => !RAW_ONLY_VEGETABLE.test(item));
+    const rawVegetables = isColdAssembly ? vegetables : vegetables.filter(item => RAW_ONLY_VEGETABLE.test(item));
     const prepareRaw = rawVegetables.length
       ? ` Slice ${joinNatural(rawVegetables)} and set aside.`
       : '';
@@ -491,7 +504,10 @@ function buildComponentSteps(meal = {}) {
     // into a bowl and whisk them with a fork before that, which is how you
     // start an omelette, not a poached or boiled egg. Route those names to
     // water-based prep instead so the two steps describe one dish, not two.
-    const isBoiledOrPoached = name.includes('boiled') || name.includes('poached');
+    // "Eggs Florentine" is a named classic — poached eggs on spinach — and
+    // never says "poached" in its own title, so it fell through to the
+    // scrambled-egg default: beaten and fried instead of poached whole.
+    const isBoiledOrPoached = name.includes('boiled') || name.includes('poached') || name.includes('florentine');
     // Whatever else this step does to the vegetables, a poached/boiled dish
     // still needs water on to simmer before step two can tell the reader to
     // lower eggs into it — that instruction can't just ride on the fallback
@@ -515,13 +531,27 @@ function buildComponentSteps(meal = {}) {
     const prepStep = isBoiledOrPoached
       ? `${vegPrepStep ? `${vegPrepStep} ` : ''}Bring a small pan of water to a gentle simmer.`.trim()
       : vegPrepStep;
-    const cookStep = isBoiledOrPoached
-      ? 'Lower whole eggs into the water and simmer for 5-6 minutes for soft-boiled, or crack an egg directly into the water and poach for 3-4 minutes until the white is set.'
-      : isOmeletteStyle
-        ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
-        : vegPrepStep
-          ? 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.'
-          : 'Crack the eggs into a bowl, season lightly and whisk with a fork, then cook in a non-stick pan over medium heat, stirring gently until softly set.';
+    // "Hard-Boiled Eggs" offered a choice between soft-boiled and poached —
+    // neither of which is a hard-boiled egg — because this used to treat
+    // every "boiled" name the same. A title that specifies hard or soft
+    // gets that exact instruction; only a plain, unqualified "boiled" name
+    // (none exist in this library today, but a future one might) falls
+    // back to presenting both timings as a choice.
+    const isHardBoiled = /hard.?boiled/i.test(name);
+    const isSoftBoiled = /soft.?boiled/i.test(name);
+    const cookStep = isHardBoiled
+      ? 'Lower whole eggs into the water and simmer for 9-12 minutes, until the yolk is fully set, then cool under cold water and peel.'
+      : isSoftBoiled
+        ? 'Lower whole eggs into the water and simmer for 5-6 minutes, until the white is set but the yolk stays runny, then cool briefly under cold water and peel.'
+        : (name.includes('poached') || name.includes('florentine')) && !name.includes('boiled')
+          ? 'Crack an egg directly into the water and poach for 3-4 minutes, until the white is set but the yolk stays soft.'
+          : isBoiledOrPoached
+            ? 'Lower whole eggs into the water and simmer for 5-6 minutes for soft-boiled, or crack an egg directly into the water and poach for 3-4 minutes until the white is set.'
+            : isOmeletteStyle
+              ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
+              : vegPrepStep
+                ? 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.'
+                : 'Crack the eggs into a bowl, season lightly and whisk with a fork, then cook in a non-stick pan over medium heat, stirring gently until softly set.';
     return [
       prepStep,
       cookStep,
@@ -895,16 +925,19 @@ function buildComponentSteps(meal = {}) {
   // the word "tinned", so a casserole opened by chopping a tin of tomatoes.
   // Anything held back from the knife must still be named by the finish step
   // below — drop it from both and the ingredient vanishes from the method.
-  const choppable = vegetables.filter(item => !isTinnedName(item) && !RAW_ONLY_VEGETABLE.test(item));
+  const choppable = vegetables.filter(item => (
+    !isTinnedName(item) && !RAW_ONLY_VEGETABLE.test(item) && !READY_TO_USE_VEGETABLE.test(item)
+  ));
   const alreadyNamed = [...choppable, proteinName, proteinDisplayName].filter(Boolean);
-  const leftovers = withoutNames(remainingNames, [...alreadyNamed, ...sauces]);
+  const leftovers = withoutNames(remainingNames, [...alreadyNamed, ...sauces, ...coldCondiments]);
   // A dry pulse cannot be "warmed through". Dry red lentils in a casserole
   // were being given the same one-line finish as a pinch of paprika, which
   // would have left them raw. They need liquid and twenty minutes, whatever
   // the dish is called.
   const dryPulses = leftovers.filter(isDryPulseName);
   const quickAdditions = withoutNames(leftovers, dryPulses);
-  const finish = dryPulses.length
+  const coldNote = coldCondiments.length ? ` Serve with the ${joinNatural(coldCondiments)} on the side, kept cold.` : '';
+  const finish = (dryPulses.length
     ? `Add ${joinNatural([...dryPulses, ...quickAdditions])} with enough ${cookingLiquidWord(remainingNames)} to cover, and simmer for 20-25 minutes until the ${joinNatural(dryPulses)} are tender${sauces.length ? `, stirring in ${joinNatural(sauces)} at the end` : ''}. Season to taste and serve.`
     : quickAdditions.length && sauces.length
       ? `Add ${joinNatural(quickAdditions)}, stir in ${joinNatural(sauces)} and heat through, then taste and serve.`
@@ -912,14 +945,14 @@ function buildComponentSteps(meal = {}) {
         ? `Add ${joinNatural(quickAdditions)} and warm through, then taste and serve.`
         : sauces.length
           ? `Stir in ${joinNatural(sauces)} and heat through, then taste and serve.`
-          : 'Season to taste and serve.';
+          : 'Season to taste and serve.') + coldNote;
 
   return [
     choppable.length
       ? `Slice or chop ${joinNatural(choppable)} and have everything else to hand.`
       : `Have ${joinNatural(remainingNames)} to hand.`,
     protein && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein
-      ? `Cook the ${proteinName} in a non-stick pan over medium heat until cooked through.`
+      ? cookProteinStep(proteinName, { ovenBaked: titleBakes, grilled: titleGrills })
       : isPulseProtein && needsCooking(protein, proteinSource, pulseState)
         ? cookProteinStep(proteinName, { dryPulse: true })
         : isPulseProtein
