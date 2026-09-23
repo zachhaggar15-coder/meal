@@ -179,27 +179,38 @@ async function main() {
       warnings.push('GA4_PROPERTY_ID is missing, so GA landing page enrichment was skipped.');
     }
 
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const hasSupabaseCredentials = Boolean(supabaseUrl && supabaseServiceKey);
+    const supabaseCredentialsLookValid = hasSupabaseCredentials
+      && isPlausibleSingleLineSecret(supabaseUrl)
+      && isPlausibleSingleLineSecret(supabaseServiceKey);
+
+    if (hasSupabaseCredentials && !supabaseCredentialsLookValid) {
+      warnings.push('Supabase credentials are malformed (not a single-line value) — check the SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables; one may have been set to the wrong value.');
+    }
+
+    if (supabaseCredentialsLookValid) {
       try {
         fieldVitalRows = await fetchFieldVitalRows({
-          supabaseUrl: process.env.SUPABASE_URL,
-          serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+          supabaseUrl,
+          serviceKey: supabaseServiceKey,
           startDate: range.current.startDate,
           rowLimit: options.fieldVitalRowLimit,
         });
       } catch (error) {
-        warnings.push(`Field Core Web Vitals fetch failed: ${error.message || error}`);
+        warnings.push(`Field Core Web Vitals fetch failed: ${redactSecretLikeText(error.message || error)}`);
       }
       try {
         commercialEventRows = await fetchCommercialEventRows({
-          supabaseUrl: process.env.SUPABASE_URL,
-          serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+          supabaseUrl,
+          serviceKey: supabaseServiceKey,
           rowLimit: 20000,
         });
       } catch (error) {
-        warnings.push(`Commercial funnel fetch failed independently: ${error.message || error}`);
+        warnings.push(`Commercial funnel fetch failed independently: ${redactSecretLikeText(error.message || error)}`);
       }
-    } else {
+    } else if (!hasSupabaseCredentials) {
       warnings.push('Supabase analytics credentials are missing, so field Core Web Vitals remain available only in the private dashboard.');
     }
   }
@@ -466,6 +477,29 @@ async function fetchGa4EventCounts(auth, { propertyId, startDate, endDate, event
       eventCount: numberOrZero(metrics[0]?.value),
     };
   }).filter(row => isPublicPagePath(row.path) && row.eventName);
+}
+
+// Defence in depth against a misconfigured secret leaking into this report.
+// SUPABASE_SERVICE_ROLE_KEY has been observed set, in error, to an entire
+// unrelated .env block (including a live Upstash Redis token) rather than
+// just the key itself — fetch() then rejected it as an invalid header value
+// and threw that whole blob back in its own error message, which this
+// script committed verbatim to a public report for at least two runs. Never
+// let a raw error message reach the report: validate credential shape
+// before use, and redact anything token-shaped from any message that still
+// gets this far.
+function isPlausibleSingleLineSecret(value) {
+  const text = String(value || '');
+  if (!text || /[\r\n]/.test(text)) return false;
+  if (text.length > 400) return false;
+  return true;
+}
+
+function redactSecretLikeText(message) {
+  return String(message || '')
+    .replace(/[\r\n]+/g, ' ')
+    .replace(/([A-Za-z0-9_]*(?:token|key|secret|password)[A-Za-z0-9_]*\s*[:=]\s*)["']?\S{8,}["']?/gi, '$1[redacted]')
+    .slice(0, 240);
 }
 
 async function fetchFieldVitalRows({ supabaseUrl, serviceKey, startDate, rowLimit }) {
