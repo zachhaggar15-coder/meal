@@ -317,6 +317,7 @@ function ideaPost(topic) {
         toolRecommendations: topic.toolRecommendations,
       }
       : {}),
+    ...(topic.pdfPromo ? { pdfPromo: topic.pdfPromo } : {}),
   };
 }
 
@@ -1735,6 +1736,11 @@ const topics = [
   },
   {
     slug: 'lidl-high-protein-food-ideas-uk',
+    pdfPromo: {
+      title: 'Get six weeks of Lidl high-protein dinners, planned out',
+      intro: 'The same Lidl staples as this guide, turned into a 6-week dinner plan for two with a shopping list organised by aisle.',
+      productSlugs: ['lidl-high-protein-plan', 'lidl-bundle'],
+    },
     toolRecommendations: {
       title: "Two things that make a high-protein shop go further",
       intro: "Neither is essential. A scale matters because protein portions are the ones people misjudge most, and a shaker covers the gap when the cooked food runs out mid-week.",

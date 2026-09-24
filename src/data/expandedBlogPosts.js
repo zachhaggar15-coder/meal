@@ -2330,6 +2330,11 @@ export const expandedBlogPostsData = {
     title: 'Aldi High Protein Meals, Foods and Shopping List UK',
     description: 'Aldi high protein shopping list for UK meal prep with eggs, chicken, yogurt, tuna, cottage cheese, lentils, beans and budget meals.',
     h1: 'Aldi High Protein Shopping List UK',
+    pdfPromo: {
+      title: 'Get six weeks of Aldi high-protein dinners, planned out',
+      intro: 'The same Aldi staples as this list, turned into a 6-week dinner plan for two with a shopping list organised by aisle.',
+      productSlugs: ['aldi-high-protein-plan', 'aldi-bundle'],
+    },
     intro: 'The useful thing about an Aldi shopping list is that it keeps working. A big-four supermarket stocks tens of thousands of lines and rotates them constantly, so a list written in January sends you looking for products that have moved, changed pack size or gone. Aldi carries a fraction of that number, nearly all own-label, and the core range barely moves — which means the list below is a list you can reuse every week rather than rewrite.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
     toolRecommendations: {
