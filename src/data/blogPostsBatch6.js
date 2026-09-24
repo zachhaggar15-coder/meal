@@ -39,7 +39,7 @@ export const blogPostsBatch6Data = {
     h1: 'Cheapest Protein Sources UK: Cost Per 25g and 30g of Protein Compared',
     intro: 'The cheapest food per 100g is not always the cheapest way to get protein. A food with a low headline price but low protein density can cost more per gram of protein than something that looks pricier at first glance. This guide compares 14 common UK protein sources by cost per 25g and 30g of protein, not just cost per pack.',
     quickAnswer: {
-      answer: 'Lentils and beans are the cheapest protein sources by a wide margin per gram of protein (roughly 22-50p per 25-30g), though you need a larger portion to hit the same protein total as meat or fish. Among higher-protein-density foods, tinned tuna, turkey mince and chicken thighs are usually the best value, at roughly 44-83p per 25-30g of protein. Eggs and Greek yogurt are cheap per serving but not the cheapest per gram of protein, since their protein density is lower.',
+      answer: 'Lentils and beans are the cheapest protein sources by a wide margin per gram of protein (roughly 22-50p per 25-30g), though you need a larger portion to hit the same protein total as meat or fish. Among higher-protein-density foods, chicken thighs and chicken breast are usually the best value, at roughly 44-93p per 25-30g of protein, with whey powder, tinned sardines and Greek yogurt close behind. Eggs and Greek yogurt are cheap per serving but not the cheapest per gram of protein, since their protein density is lower.',
       links: [
         { label: 'Use the Protein Value Comparator', to: '/tools#protein-value-comparator' },
         { label: 'See cheap protein sources by supermarket', to: '/blog/cheap-protein-sources-uk-supermarkets' },
@@ -65,7 +65,7 @@ export const blogPostsBatch6Data = {
             ['Kidney beans, tinned (half a 400g tin)', '14g', '28-42p', '50-75p', '60-90p'],
             ['Turkey mince, lean (125g raw)', '26.3g', '69p-£1.06', '65p-£1.01', '79p-£1.21'],
             ['Chicken thighs, boneless (150g raw)', '30g', '53-83p', '44-69p', '53-83p'],
-            ['Tinned tuna in spring water (1 tin)', '37.7g', '65p-£1.31', '43-87p', '52p-£1.04'],
+            ['Tinned tuna in spring water (1 tin, drained)', '26.5g', '65p-£1.31', '61p-£1.23', '74p-£1.48'],
             ['Whey protein powder (1 scoop)', '23.4g', '50-80p', '54-86p', '65p-£1.03'],
             ['Chicken breast, raw (150g)', '33.8g', '68p-£1.05', '50-78p', '60-93p'],
             ['Tinned sardines in oil (1 tin)', '22.1g', '50-86p', '56-97p', '67p-£1.16'],
@@ -91,7 +91,7 @@ export const blogPostsBatch6Data = {
         ],
         bullets: [
           'Lowest cost per gram of protein: lentils, then kidney beans.',
-          'Best balance of low cost and high protein density: turkey mince, chicken thighs, tinned tuna.',
+          'Best balance of low cost and high protein density: chicken thighs, chicken breast, tinned sardines.',
           'Best if you want minimal prep: eggs and Greek yogurt, even though they cost slightly more per gram of protein.',
           'Best for batch cooking and freezing: chicken thighs, turkey mince, lean beef mince.',
           'Best shelf-stable option: tinned tuna, tinned sardines, tinned beans, whey protein powder.',
@@ -113,7 +113,7 @@ export const blogPostsBatch6Data = {
       { path: '/tools#protein-value-comparator', label: 'Protein Value Comparator Tool', type: 'guide' },
     ],
     faq: [
-      { q: 'What is the cheapest way to get 25g of protein?', a: 'Lentils are usually the cheapest per gram of protein, at roughly 22-42p for 25g. Among denser protein sources, turkey mince, chicken thighs and tinned tuna are typically the best value, at roughly 43-87p for 25g.' },
+      { q: 'What is the cheapest way to get 25g of protein?', a: 'Lentils are usually the cheapest per gram of protein, at roughly 22-42p for 25g. Among denser protein sources, chicken thighs and chicken breast are typically the best value, at roughly 44-78p for 25g.' },
       { q: 'Are eggs actually good value for protein?', a: 'Eggs are cheap per serving and very convenient, but their protein density is lower than meat or fish, so they cost more per gram of protein than most of the foods on this list. They are still a reasonable everyday choice, just not the cheapest by this specific measure.' },
       { q: 'Is protein powder cheaper than meat for protein?', a: 'Often yes, particularly when bought in bulk or on sale — whey protein powder frequently costs a similar or lower amount per gram of protein than chicken or beef mince. See the dedicated comparison for a full breakdown.' },
       { q: 'Do these prices reflect what I will pay in store?', a: 'No. These are representative ranges checked against real UK supermarket listings, not live prices. Actual cost depends on your retailer, pack size, brand and any current promotions.' },
@@ -209,9 +209,9 @@ export const blogPostsBatch6Data = {
           rows: [
             ['Lentils, cooked', '22-42p'],
             ['Chicken thighs, raw', '44-69p'],
-            ['Tinned tuna', '43-87p'],
-            ['Whey protein powder', '54-86p'],
             ['Chicken breast, raw', '50-78p'],
+            ['Whey protein powder', '54-86p'],
+            ['Tinned tuna', '61p-£1.23'],
             ['Turkey mince, lean', '65p-£1.01'],
             ['Lean beef mince', '71p-£1.19'],
             ['Eggs, large', '99p-£1.29'],

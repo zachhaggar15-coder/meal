@@ -131,7 +131,12 @@ export const NUTRITION_TABLE = {
   'smoked haddock fillet':  { kcal100: 100, pro100: 23, gramsEach: 150 },
   'cod fillet':             { kcal100: 82, pro100: 18, gramsEach: 150 },
   'tuna steak':             { kcal100: 120, pro100: 26 }, // corrected 2026-07-06: nudged toward USDA raw tuna (species-dependent)
-  'tinned tuna in spring water': { kcal100: 116, pro100: 26, gramsEach: 145 },
+  // Per 100g of tin contents as sold, water included, because recipes state the
+  // tin weight (145g) and cooking displays turn that into "1 standard tin,
+  // drained". A 145g tin drains to about 102g of fish (CoFID drained values of
+  // ~116 kcal and 26g protein per 100g), so the whole tin is ~26.5g protein,
+  // not the 37.7g that applying drained values to 145g used to give.
+  'tinned tuna in spring water': { kcal100: 82, pro100: 18.3, gramsEach: 145 },
   'king prawns':            { kcal100: 71, pro100: 18 }, // corrected 2026-07-06: Waitrose UK label matches kcal exactly; protein nudged toward brand range (20-24g)
   'quorn mince':            { kcal100: 103, pro100: 16 }, // corrected 2026-07-06: Quorn official UK product page
   'falafel':                { kcal100: 230, pro100: 8, gramsEach: 45 },
@@ -388,7 +393,7 @@ export const NUTRITION_MACRO_OVERRIDES = {
   'smoked haddock fillet': { fat100: 0.6, carb100: 0, fibre100: 0 },
   'cod fillet': { fat100: 0.7, carb100: 0, fibre100: 0 },
   'tuna steak': { fat100: 1, carb100: 0, fibre100: 0 },
-  'tinned tuna in spring water': { fat100: 1, carb100: 0, fibre100: 0 },
+  'tinned tuna in spring water': { fat100: 0.7, carb100: 0, fibre100: 0 },
   'king prawns': { fat100: 0.9, carb100: 0, fibre100: 0 },
   'quorn mince': { fat100: 2, carb100: 7.5, fibre100: 5.5 },
   falafel: { fat100: 13, carb100: 20, fibre100: 5 },

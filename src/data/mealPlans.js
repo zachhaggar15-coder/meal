@@ -217,7 +217,7 @@ const BASE_SHOPPING = {
 export const PLAN_1500 = [
   { day: 'Monday', meals: [
     { type: 'Breakfast', name: 'Overnight Oats with Berries', kcal: 349, protein: 15, prep: '5 min', desc: 'Rolled oats soaked overnight in skimmed milk, topped with frozen berries and a drizzle of honey.', portion_size: '60g oats, 200ml skimmed milk, 80g frozen berries, 1 tsp honey' },
-    { type: 'Lunch', name: 'Tuna & Sweetcorn Jacket Potato', kcal: 345, protein: 33, prep: '10 min', desc: 'Medium baked potato topped with tinned tuna mixed with sweetcorn and a teaspoon of light mayo.', portion_size: '200g baked potato, 100g tinned tuna, 50g sweetcorn' },
+    { type: 'Lunch', name: 'Tuna & Sweetcorn Jacket Potato', kcal: 311, protein: 25, prep: '10 min', desc: 'Medium baked potato topped with tinned tuna mixed with sweetcorn and a teaspoon of light mayo.', portion_size: '200g baked potato, 100g tinned tuna, 50g sweetcorn' },
     { type: 'Dinner', name: 'Grilled Chicken with Roasted Mediterranean Veg', kcal: 405, protein: 41, prep: '25 min', desc: 'Chicken breast grilled with a mix of roasted Mediterranean vegetables, served with a small portion of brown rice.', portion_size: '150g chicken breast, 40g brown rice (dry), 200g mixed veg' },
     { type: 'Snack', name: 'Greek Yogurt with Blueberries', kcal: 180, protein: 21, prep: '2 min', desc: 'Low-fat Greek yogurt topped with fresh or frozen blueberries.', portion_size: '200g Greek yogurt, 80g blueberries' },
   ], totals: { kcal: 1270, protein: 108 } },
@@ -262,7 +262,7 @@ export const PLAN_1500 = [
 export const PLAN_HIGH_PROTEIN = [
   { day: 'Monday', meals: [
     { type: 'Breakfast', name: 'Greek Yogurt Protein Bowl', kcal: 335, protein: 47, prep: '5 min', desc: '200 g 0% Greek yogurt, one scoop protein powder, mixed berries, and 15 g chia seeds.', portion_size: '200g 0% Greek yogurt, 30g protein powder, 80g mixed berries, 15g chia seeds' },
-    { type: 'Lunch', name: 'Tuna & Egg White Salad', kcal: 425, protein: 88, prep: '10 min', desc: 'Two tins of tuna with three hard-boiled egg whites, mixed leaves, cucumber, and lemon dressing.', portion_size: '2 tins tuna (290g drained), 3 egg whites, 80g mixed leaves, 100g cucumber, 15g lemon dressing' },
+    { type: 'Lunch', name: 'Tuna & Egg White Salad', kcal: 327, protein: 66, prep: '10 min', desc: 'Two tins of tuna with three hard-boiled egg whites, mixed leaves, cucumber, and lemon dressing.', portion_size: '2 tins tuna (290g), 3 egg whites, 80g mixed leaves, 100g cucumber, 15g lemon dressing' },
     { type: 'Dinner', name: 'Chicken Breast with Lentils & Greens', kcal: 521, protein: 78, prep: '25 min', desc: 'Two chicken breasts served over 100 g cooked green lentils with a side of steamed broccoli and asparagus.', portion_size: '280g chicken breast, 100g cooked lentils, 150g broccoli, 100g asparagus' },
     { type: 'Snack', name: 'Cottage Cheese & Cucumber', kcal: 208, protein: 25, prep: '2 min', desc: '200 g low-fat cottage cheese with sliced cucumber and black pepper.', portion_size: '200g cottage cheese, 100g cucumber' },
   ], totals: { kcal: 1475, protein: 204 } },
@@ -280,7 +280,7 @@ export const PLAN_HIGH_PROTEIN = [
   ], totals: { kcal: 1334, protein: 150 } },
   { day: 'Thursday', meals: [
     { type: 'Breakfast', name: 'Smoked Salmon Scrambled Eggs', kcal: 396, protein: 40, prep: '10 min', desc: 'Three-egg scramble with 75 g smoked salmon and a handful of spinach.', portion_size: '3 eggs, 75g smoked salmon, 40g spinach' },
-    { type: 'Lunch', name: 'Tuna Nicoise Salad', kcal: 308, protein: 47, prep: '10 min', desc: 'Tinned tuna, one boiled egg, green beans, cherry tomatoes, and olives over mixed leaves.', portion_size: '145g tinned tuna, 1 egg, 80g green beans, 100g cherry tomatoes, 10g olives' },
+    { type: 'Lunch', name: 'Tuna Nicoise Salad', kcal: 259, protein: 36, prep: '10 min', desc: 'Tinned tuna, one boiled egg, green beans, cherry tomatoes, and olives over mixed leaves.', portion_size: '145g tinned tuna, 1 egg, 80g green beans, 100g cherry tomatoes, 10g olives' },
     { type: 'Dinner', name: 'Lean Beef Stir-Fry', kcal: 518, protein: 53, prep: '15 min', desc: '200 g lean beef strips stir-fried with broccoli, peppers, and a low-sodium soy sauce. Small portion of brown rice.', portion_size: '200g lean beef strips, 35g brown rice (dry), 150g broccoli, 100g peppers, 1 tbsp soy sauce' },
     { type: 'Snack', name: 'Edamame Pods', kcal: 242, protein: 22, prep: '5 min', desc: '200 g edamame pods, lightly salted.', portion_size: '200g edamame pods' },
   ], totals: { kcal: 1470, protein: 162 } },

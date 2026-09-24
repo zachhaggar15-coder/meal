@@ -100,7 +100,7 @@ const PROTEIN_FOOD_DEFINITIONS = [
     costPer100gLowPence: 45,
     costPer100gHighPence: 90,
     servingG: 145,
-    servingNote: 'one standard 145g tin (drained ~100g)',
+    servingNote: 'one 145g tin (about 102g drained)',
     notes: 'Budget and premium brands sit far apart in price for similar protein content — own-brand and price-matched lines are usually the better-value pick.',
   },
   {
