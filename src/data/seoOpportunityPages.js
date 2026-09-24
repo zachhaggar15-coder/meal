@@ -39,7 +39,7 @@ export const SEO_OPPORTUNITY_QUICK_ANSWERS = {
     LOW_CALORIE_LINKS,
   ),
   'best-low-calorie-ready-meals-uk': qa(
-    'A good low calorie ready meal should usually have enough protein, visible vegetables and a proper portion size. Very small ready meals often need a side such as salad, soup, fruit, skyr or cottage cheese.',
+    "For the most protein per calorie, start with Sainsbury's High Protein meals (at least 31g protein for under 500 kcal) or Aldi's protein pots (at least 30g protein, £1.75). Tesco's Calorie Controlled meals are the lowest in calories we could confirm, at around 250-270 kcal, so pair them with a side such as salad, soup or skyr.",
     LOW_CALORIE_LINKS,
   ),
   'what-does-1500-calories-look-like-uk': qa(

@@ -160,6 +160,14 @@ export const BLOG_PLAN_INDEX = Object.freeze({
     "goalLabel": "Low Effort",
     "calories": 1500
   },
+  "best-blender-for-smoothies-uk": {
+    "planSlug": "any-high-protein-low-cal-1500",
+    "title": "High-Protein Low Calorie Plan — 1,500 kcal",
+    "supermarket": "any",
+    "goal": "high-protein-low-cal",
+    "goalLabel": "High Protein Low Calorie",
+    "calories": 1500
+  },
   "best-cheap-high-protein-foods-uk": {
     "planSlug": "aldi-high-protein-meal-plan",
     "title": "Aldi High Protein Meal Plan — 140-170g Protein, £35-45/week",

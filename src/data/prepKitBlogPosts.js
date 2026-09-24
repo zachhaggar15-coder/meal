@@ -774,4 +774,112 @@ export const prepKitBlogPostsData = {
       },
     ],
   }),
+
+  'best-blender-for-smoothies-uk': kitPost({
+    published: '2026-09-24',
+    modified: '2026-09-24',
+    reviewed: '24 September 2026',
+    title: 'Best Blender for Smoothies UK: Personal, Jug & Portable Picks',
+    description:
+      'Best blenders for smoothies in the UK compared by type, power and capacity: nutribullet, Ninja and Russell Hobbs picks for frozen fruit, shakes and meal prep.',
+    h1: 'Best Blender for Smoothies UK',
+    intro:
+      'The best blender for smoothies depends less on the brand than on how you make them: one portion before work, a jug for the household, or a shake blended at the gym. This guide sorts six UK blenders by that job, using the power, capacity and features each one is sold with, and shows how to prep smoothies for the week so the blender earns its counter space.',
+    sources: [
+      {
+        label: 'Food Standards Agency chilling, freezing and defrosting guidance',
+        url: 'https://www.food.gov.uk/safety-hygiene/how-to-chill-freeze-and-defrost-food-safely',
+      },
+    ],
+    quickAnswer: {
+      answer:
+        'For one smoothie a day, a personal blender such as the nutribullet 600 is enough; step up to the nutribullet 900 or Ninja BN495UK if you blend a lot of frozen fruit or ice. For a household, the Ninja 2-in-1 BN750UK gives you a 2.1L jug and a single cup. For shakes away from a plug, the cordless Ninja Blast. On a tight budget, the Russell Hobbs Mix & Go.',
+      links: [
+        { label: 'Protein breakfasts to blend or prep', to: '/blog/protein-porridge-and-yogurt-breakfasts-uk' },
+        { label: 'Overnight oats jars', to: '/blog/overnight-oats-jars-for-meal-prep-uk' },
+      ],
+    },
+    toolRecommendations: {
+      title: 'Blenders for smoothies to compare',
+      intro: 'Grouped by the job, from a single cup to a household jug. Specs are from each product listing.',
+      productIds: ['nutribullet-600', 'nutribullet-900', 'ninja-bn495uk', 'ninja-2in1-bn750uk', 'ninja-blast-bc151ukbk', 'russell-hobbs-mix-go-21350'],
+    },
+    sections: [
+      {
+        h2: 'The six compared',
+        paragraphs: [
+          'Power matters most when the smoothie is built on frozen fruit or ice, and capacity decides whether you blend one portion or several. These are the figures from each blender\'s Amazon UK listing, checked on 24 September 2026; we have not tested them ourselves, so treat this as a spec comparison sorted by use rather than a lab result.',
+        ],
+        table: {
+          headers: ['Blender', 'Type', 'Power', 'Capacity', 'Best for'],
+          rows: [
+            ['Russell Hobbs Mix & Go (21350)', 'Personal', '300W', '2 x 600ml bottles', 'Simple fruit smoothies on a budget'],
+            ['nutribullet Original 600', 'Personal', '600W', 'Single-serve cup', 'One smoothie or shake a day'],
+            ['nutribullet 900 Series', 'Personal', '900W', 'Single-serve cup', 'Frozen fruit and thicker blends'],
+            ['Ninja BN495UK', 'Personal', '1000W', '2 x 700ml cups', 'Two portions at once'],
+            ['Ninja 2-in-1 BN750UK', 'Jug and cup', '1200W', '2.1L jug, 700ml cup', 'Household batches'],
+            ['Ninja Blast BC151UKBK', 'Portable', 'Cordless, USB-C', '530ml cup (470ml max fill)', 'Blending away from a plug'],
+          ],
+        },
+      },
+      {
+        h2: 'Personal, jug or portable: pick by how you drink them',
+        paragraphs: [
+          'A personal blender blends straight into the cup you drink from, so there is one thing to wash and nothing to pour. It is the right choice if smoothies are a one-person breakfast or a post-gym shake, which is most people who search for one.',
+          'A jug blender earns its space when you blend for more than one person or make two days of smoothies at once. The Ninja 2-in-1 is here because it gives you both: the 2.1L jug for the batch and a single cup for the mornings you only want one.',
+          'A portable, cordless blender solves a narrower problem: blending fresh at work or the gym instead of carrying a smoothie made hours earlier. It blends one portion at a time and needs charging, so it suits a shake more than a family breakfast.',
+        ],
+      },
+      {
+        h2: 'Frozen fruit, ice and how much power you need',
+        paragraphs: [
+          'Frozen fruit and ice are where cheaper blenders struggle, because a small motor stalls on hard, cold pieces. If most of your smoothies start from frozen berries or banana, the extra power of the 900W, 1000W or 1200W options is the part worth paying for. If you mainly blend fresh fruit, yogurt and milk, 300W to 600W is plenty.',
+          'Whatever you buy, the same habits help: put the liquid in first, then soft ingredients, then frozen ones, and do not overfill past the max line. If the blend catches, add a splash more liquid rather than running the motor harder.',
+        ],
+      },
+      {
+        h2: 'How to prep smoothies for the week',
+        paragraphs: [
+          'The easiest way to make a blender part of meal prep is freezer smoothie packs. Portion the solid ingredients for one smoothie into a bag or tub on Sunday - fruit, a handful of spinach, oats, seeds - and freeze them flat. In the morning, tip one pack into the cup, add milk or yogurt, and blend.',
+          'Label each pack with what is in it and the date, and follow the Food Standards Agency guidance on freezing and defrosting. A blended smoothie is best drunk the same day for texture, which is why prepping the ingredients rather than the finished drink works better.',
+          'To make a smoothie a proper breakfast rather than a snack, give it a protein source: Greek yogurt, skyr, milk, or a scoop of protein powder. Oats add slower-release carbohydrate and make it more filling.',
+        ],
+      },
+      {
+        h2: 'Cleaning and noise',
+        paragraphs: [
+          'The blender you use every day is the one that is quick to clean. Rinse the cup and blade straight after use, before the fruit dries on; the listings for the Ninja models and the Ninja Blast cup and lid describe dishwasher-safe parts. Take the blade assembly apart only as far as the manual says.',
+          'More power usually means more noise, particularly with ice. If you blend early while others are asleep, a smaller personal blender is the kinder option.',
+        ],
+      },
+    ],
+    related: [
+      { slug: 'protein-porridge-and-yogurt-breakfasts-uk', label: 'Protein Porridge and Yogurt Breakfasts UK', type: 'blog' },
+      { slug: 'overnight-oats-jars-for-meal-prep-uk', label: 'Overnight Oats Jars for Meal Prep UK', type: 'blog' },
+      { slug: 'freezer-labels-for-meal-prep-uk', label: 'Freezer Labels for Meal Prep UK', type: 'blog' },
+      ...prepKitRelated,
+    ],
+    faq: [
+      {
+        q: 'What is the best blender for smoothies in the UK?',
+        a: 'For one smoothie a day, a personal blender like the nutribullet 600. For lots of frozen fruit or ice, a more powerful personal blender like the nutribullet 900 or Ninja BN495UK. For a household, a jug and cup combination like the Ninja 2-in-1 BN750UK.',
+      },
+      {
+        q: 'How many watts do I need for smoothies?',
+        a: 'For fresh fruit, yogurt and milk, 300W to 600W is enough. For smoothies built on frozen fruit or ice, around 900W and above copes more easily.',
+      },
+      {
+        q: 'Is a nutribullet or a Ninja better for smoothies?',
+        a: 'They suit different jobs more than one being better. The nutribullets are simple single-serve blenders; the Ninja range adds two-cup and jug-and-cup models and a cordless portable one. Choose by how many portions you blend and where.',
+      },
+      {
+        q: 'Can I make smoothies in advance?',
+        a: 'Prep the ingredients rather than the drink: freeze single-smoothie packs of fruit, greens and oats, then blend one each morning with milk or yogurt. A finished smoothie is best drunk the same day.',
+      },
+      {
+        q: 'Can a cheap blender crush ice?',
+        a: 'Some budget personal blenders, such as the Russell Hobbs Mix & Go, are sold as able to blitz ice and frozen fruit, but lower-powered motors give a rougher result. Add more liquid, or let frozen fruit soften for a few minutes first.',
+      },
+    ],
+  }),
 };

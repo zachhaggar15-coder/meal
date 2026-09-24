@@ -97,6 +97,45 @@ export const MEALPREP_PRODUCTS = {
     href: amazonProductUrl('nutribullet-Blender-900-Extractor-Oversized', 'B01N39HGLD'),
     watchOut: 'Louder than the smaller models when blending ice; worth factoring in for shared or early-morning use.',
   },
+  // The four blenders below were matched to their Amazon UK listings (title and
+  // ASIN) through search results on 24 September 2026; specs are from those
+  // listings. The weekly Amazon check confirms they still resolve.
+  'ninja-blast-bc151ukbk': {
+    name: 'Ninja Blast Portable Blender, 530ml (BC151UKBK)',
+    category: 'Blender',
+    priceBand: 'Mid range',
+    bestFor: 'Blending a smoothie or shake at work or the gym, away from a plug',
+    summary: 'A cordless blender that charges over USB-C and blends in its own 530ml cup (470ml max fill), with a leakproof sip lid. The listing says it handles ice and frozen fruit, and the lid and cup are top-rack dishwasher safe.',
+    href: amazonProductUrl('Ninja-Leakproof-Rechargeable-Smoothies-BC151UKBK', 'B0CNH4G2TV'),
+    watchOut: 'One portion at a time, and the battery needs charging; not the one for making several smoothies in a row.',
+  },
+  'ninja-bn495uk': {
+    name: 'Ninja Blender with Auto-iQ, 1000W, 2 x 700ml Cups (BN495UK)',
+    category: 'Blender',
+    priceBand: 'Mid range',
+    bestFor: 'Two single-serve smoothies at once, straight into cups with spout lids',
+    summary: 'A 1000W personal blender with two 700ml cups and spout lids, two automatic programmes (Blend and Max Blend) plus pulse, and dishwasher-safe parts. Two cups suits a couple, or blending tomorrow\'s smoothie alongside today\'s.',
+    href: amazonProductUrl('Ninja-Blender-Auto-iQ-BN495UK-Silver', 'B088TT9PVL'),
+    watchOut: 'Cups only, no jug, so it is not built for blending a large batch in one go.',
+  },
+  'ninja-2in1-bn750uk': {
+    name: 'Ninja 2-in-1 Blender with Auto-iQ, 1200W (BN750UK)',
+    category: 'Blender',
+    priceBand: 'Mid-to-upper range',
+    bestFor: 'Batch smoothies for a household, plus single cups on busy mornings',
+    summary: 'A 1200W blender with a 2.1L jug for batches and a 700ml cup (645ml max fill) for one portion, three automatic programmes (Blend, Max Blend, Crush) and four manual settings. The most flexible option here if you blend for more than one person.',
+    href: amazonProductUrl('Automatic-Programs-Settings-Dishwasher-BN750UK', 'B088TT4KTT'),
+    watchOut: 'Takes more counter and cupboard space than a personal blender.',
+  },
+  'russell-hobbs-mix-go-21350': {
+    name: 'Russell Hobbs Mix & Go Personal Blender, 2 x 600ml (21350)',
+    category: 'Blender',
+    priceBand: 'Budget',
+    bestFor: 'A first blender for simple fruit smoothies on a tight budget',
+    summary: 'A 300W personal blender that blends straight into one of two 600ml bottles, which then go with you; the bottles fit a standard car cup holder. The listing says it can blitz ice and frozen fruit.',
+    href: amazonProductUrl('Russell-Hobbs-Personal-Blender-21350', 'B00H847SD8'),
+    watchOut: 'At 300W it is the least powerful here, so expect a rougher result with lots of frozen fruit or ice; add more liquid or let frozen fruit soften a little.',
+  },
   'moonmoon-silicone-bags': {
     name: 'Moonmoon Reusable Silicone Food Storage Bags (Set of 2, 1500ml)',
     category: 'Freezer bags',

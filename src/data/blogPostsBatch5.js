@@ -269,6 +269,7 @@ export const blogPostsBatch5Data = {
       productIds: ['square-silicone-air-fryer-liners', 'cosori-air-fryer-accessory-kit', 'myprotein-600ml-shaker', 'blenderbottle-classic-v2', 'batch-lady-grab-and-cook', 'nadiya-cook-once-eat-twice', 'batch-lady-healthy-family'],
     },
     related: [
+      { slug: 'best-blender-for-smoothies-uk', label: 'Best Blender for Smoothies UK', type: 'blog' },
       { slug: 'best-meal-prep-containers-uk', label: 'Best Meal Prep Containers UK', type: 'blog' },
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },

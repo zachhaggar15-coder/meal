@@ -2790,6 +2790,10 @@ const BLOG_PRICE_CHECKED_DATES = Object.freeze({
   'sainsburys-meal-prep-uk': '2026-05-30',
   'asda-meal-prep-uk': '2026-05-30',
   'high-protein-snacks-uk': '2026-06-17',
+  'best-low-calorie-ready-meals-uk': '2026-09-24',
+  'aldi-high-protein-shopping-list-uk': '2026-09-24',
+  'lidl-high-protein-food-ideas-uk': '2026-09-24',
+  'sainsburys-healthy-ready-meal-combos-uk': '2026-09-24',
 });
 
 export const blogPostsData = Object.fromEntries(

@@ -33,6 +33,26 @@ const SOURCES = {
     label: 'Food Standards Agency cooking guidance',
     url: 'https://www.food.gov.uk/safety-hygiene/cooking-your-food',
   },
+  nhsFoodLabels: {
+    label: 'NHS: how to read food labels',
+    url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/how-to-read-food-labels/',
+  },
+  sainsburysHighProtein: {
+    label: "Sainsbury's: High Protein range and Small but Mighty meals (30 January 2026)",
+    url: 'https://corporate.sainsburys.co.uk/news/press-releases/sainsbury-s-launches-all-new-high-protein-range-and-small-but-mighty-meals-to-support-customers-nutritional-goal/',
+  },
+  sainsburysBeGood: {
+    label: "Sainsbury's: Be Good To Yourself ready meals",
+    url: 'https://www.sainsburys.co.uk/gol-ui/features/be-good-to-yourself',
+  },
+  lidlChefSelectHighProtein: {
+    label: 'Lidl GB: Chef Select High Protein Chicken Tikka Masala',
+    url: 'https://www.lidl.co.uk/p/chef-select-high-protein-chicken-tikka-masala/p10010125',
+  },
+  lidlHighProteinMeat: {
+    label: 'Grocery Trader: Lidl launches high-protein meat range (16 September 2026)',
+    url: 'https://grocerytrader.co.uk/protein-power-lidl-launches-first-to-market-high-protein-meat-range/',
+  },
 };
 
 const planFinderLinks = [
@@ -220,8 +240,8 @@ function ideaPost(topic) {
 
   return {
     published: PUBLISHED,
-    modified: PUBLISHED,
-    reviewed: REVIEWED,
+    modified: topic.modified || PUBLISHED,
+    reviewed: topic.reviewed || REVIEWED,
     // Retailer-intent topics already declare which store they are about; carry
     // it through so editorial pages can show researched evidence for it.
     ...(topic.supermarketSlug ? { supermarkets: [topic.supermarketSlug] } : {}),
@@ -240,6 +260,8 @@ function ideaPost(topic) {
       ],
     },
     sections: [
+      // A topic whose searchers want named products first puts them here.
+      ...(topic.leadSections || []),
       {
         h2: topic.formulaHeading || `The ${shortName} formula`,
         paragraphs: [
@@ -1756,6 +1778,30 @@ const topics = [
     intro: 'Lidl high-protein shopping works best when you stop chasing novelty and build from the basics: chicken, eggs, yogurt, tuna, mince, beans, tofu, fish and frozen veg. Add a few sauces and you have most of the week covered.',
     quickAnswer: 'Good Lidl high-protein food ideas include chicken, turkey or lean mince, eggs, tuna, Greek yogurt, cottage cheese, tofu, beans, lentils, salmon, white fish, frozen veg and wraps. Use them for bowls, chilli, wraps, snack plates and breakfast pots.',
     formulaIntro: 'The Lidl formula is simple: buy two cookable proteins, two no-cook proteins, two carbs and enough veg to make meals feel complete.',
+    modified: '2026-09-24',
+    reviewed: '24 September 2026',
+    sourceKeys: ['lidlChefSelectHighProtein', 'lidlHighProteinMeat'],
+    extraSections: [
+      {
+        h2: 'Lidl high-protein ready meals and the new protein range',
+        paragraphs: [
+          "If you want something ready-made, Lidl sells its own Chef Select High Protein ready meals. The ones listed on Lidl's site when we checked on 24 September 2026 were Chicken Tikka Masala (380g), Spaghetti Bolognese (380g) and BBQ Chicken with Quinoa. Lidl shows the price as in-store only and does not list the nutrition online, so check the protein and calories on the pack before you rely on one.",
+          "Lidl has also sold a larger Chef Select XL High Protein ready meal, listed for England and Wales only. That listing has since been taken down, which usually means a limited run, and we could not confirm its protein figure from Lidl itself, so we have not quoted one. If you find it in store, the label is the number to trust.",
+          'The newest addition is a High Protein meat range, in stores from 18 September 2026. Lidl says it carries at least 20% more protein than standard equivalents. The mince is the part worth building a week around, because it goes straight into chilli, bolognese and burrito bowls:',
+        ],
+        table: {
+          headers: ['High Protein meat range', 'Price at launch'],
+          rows: [
+            ['Beef Mince 5% Fat', '£4.79'],
+            ['Beef Mince 10% Fat', '£3.99'],
+            ['Quarter Pounders', '£2.99'],
+            ['Meatballs', '£2.79'],
+            ['Pork Sausages', '£1.99'],
+            ['Cumberland Sausages', '£1.99'],
+          ],
+        },
+      },
+    ],
     formula: [
       'Cook chicken, mince, tofu or fish for main meals.',
       'Use yogurt, eggs, tuna and cottage cheese as fast proteins.',
@@ -1806,7 +1852,8 @@ const topics = [
       { q: 'What high-protein foods can I buy at Lidl?', a: 'Chicken, mince, eggs, tuna, Greek yogurt, cottage cheese, tofu, beans, lentils, fish and frozen veg are useful staples.' },
       { q: 'Is Lidl good for high-protein meal prep?', a: 'Yes, especially if you build around own-brand staples and frozen foods rather than relying only on specialist protein products.' },
       { q: 'What is an easy Lidl high-protein meal?', a: 'Chicken rice bowls, tuna pasta salad, mince chilli and yogurt oat pots are simple repeatable options.' },
-      { q: 'Does Lidl do high-protein ready meals?', a: "Lidl's dedicated High Protein range is dairy-led rather than a ready-meal line - the own-brand Milbona label covers High Protein Skyr, High Protein Greek Style Yoghurt, Fat Free High Protein Yoghurt and a High Protein Drink, grouped under one High Protein category online. For a high-protein evening meal you are generally assembling from chicken, mince, fish, eggs or tofu rather than buying a labelled product, so check the protein figure per pack on anything chilled rather than assuming." },
+      { q: 'Does Lidl do high-protein ready meals?', a: "Yes. Lidl lists Chef Select High Protein ready meals, including Chicken Tikka Masala and Spaghetti Bolognese (both 380g) and BBQ Chicken with Quinoa. Prices are in store only and the nutrition is on the pack rather than online, so check the protein figure before relying on one. For breakfasts and snacks, the own-brand Milbona High Protein range covers skyr, Greek style yoghurt and a high-protein drink." },
+      { q: 'What is the Lidl XL high protein meal?', a: 'A larger Chef Select XL High Protein ready meal that Lidl listed for England and Wales only. The listing has since been removed, which suggests a limited run. We could not confirm its protein figure from Lidl, so read the label if you find it in store.' },
       { q: 'What counts as a nutrient-dense meal at Lidl?', a: 'Nutrient density means more nutrition per calorie rather than more protein alone. In practice that is a meal built on a lean protein, a whole grain or potato, and a generous amount of vegetables - so eggs with wholemeal toast and spinach, or lentil dhal with brown rice. Frozen vegetables count exactly the same as fresh here, which is what makes it cheap to do at a discounter.' },
     ],
   },
@@ -1889,13 +1936,67 @@ const topics = [
     cluster: 'supermarket',
     supermarketSlug: 'sainsburys',
     supermarketName: "Sainsbury's",
-    shortName: "Sainsbury's healthy ready meal combos",
-    title: "Sainsbury's Healthy Ready Meal Combos UK: What to Add",
-    description: "Sainsbury's healthy ready meal combos UK: ways to upgrade ready meals with protein, veg and simple sides for busy weeks.",
-    h1: "Sainsbury's Healthy Ready Meal Combos UK: Smarter Convenience Meals",
-    intro: 'Ready meals can be useful if you treat them like a base, not the whole strategy. The upgrade is simple: check the label, add protein if needed, add veg for volume and choose a side that makes the meal satisfying without doubling it.',
-    quickAnswer: "Good Sainsbury's ready meal combos include a tomato pasta meal with chicken and salad, curry with extra veg and yogurt, soup with eggs or cottage cheese toast, chilli with microwave veg, and fish pie with green beans. Check calories, protein and portion size on the specific pack.",
+    shortName: "Sainsbury's healthy ready meals",
+    modified: '2026-09-24',
+    reviewed: '24 September 2026',
+    sourceKeys: ['nhsFoodLabels', 'sainsburysHighProtein', 'sainsburysBeGood'],
+    trustNote: "Product names, pack sizes, prices and nutrition figures were checked on 24 September 2026 against Sainsbury's own announcement and product listings. Supermarkets change ranges, recipes and prices, and availability varies by store, so check the pack in front of you. Label thresholds are from NHS guidance. This is general information, not medical advice.",
+    related: [
+      { slug: 'best-low-calorie-ready-meals-uk', label: 'Best Low Calorie Ready Meals UK', type: 'blog' },
+    ],
+    title: "Sainsbury's Healthy Ready Meals: High-Protein & Low-Cal Picks",
+    description: "Sainsbury's healthy ready meals compared: High Protein and Small but Mighty ranges with protein, calories and prices, plus Be Good To Yourself and what to add.",
+    h1: "Sainsbury's Healthy Ready Meals UK: What to Buy and What to Add",
+    intro: "Sainsbury's has three ready meal lines worth knowing if you want something healthy: High Protein, Small but Mighty and Be Good To Yourself. This guide lists what is in them, with the protein, calories and prices Sainsbury's published, then shows how to turn any of them into a meal that actually lasts you until the next one.",
+    quickAnswer: "Start with Sainsbury's two protein-led ranges: High Protein ready meals (at least 31g protein for under 500 kcal, £3.75 for 400g at launch) and Small but Mighty (under 350 kcal with at least 20g protein, £3.00 for 300g). Be Good To Yourself is the calorie-led line. Check the exact pack, then add veg or a protein side where a meal falls short.",
+    formulaHeading: "What to add to a Sainsbury's ready meal",
     formulaIntro: 'The smartest convenience meal is the one you can improve in two minutes. Add the missing part instead of buying three sides at random.',
+    leadSections: [
+      {
+        h2: "Sainsbury's High Protein and Small but Mighty ready meals",
+        paragraphs: [
+          "Sainsbury's launched two health-led ready meal lines on 30 January 2026. The High Protein meals are built to at least 31g of protein for under 500 calories per serving, and the Small but Mighty meals to fewer than 350 calories with at least 20g of protein and a source of fibre. The figures below are the ones Sainsbury's published at launch.",
+          "Sainsbury's says both ranges are in selected stores and online. Lines, recipes and prices change after launch, so treat the table as what the range was built to do and the pack in your hand as the number to trust.",
+        ],
+        table: {
+          headers: ['Range', 'Meal', 'Protein', 'Calories', 'Pack and launch price'],
+          rows: [
+            ['High Protein', 'Pesto Chicken Tortiglioni', '35g', 'Under 500 kcal', '400g, £3.75'],
+            ['High Protein', 'Beef Bolognese Tagliatelle', '33g', 'Under 500 kcal', '400g, £3.75'],
+            ['Small but Mighty', 'Teriyaki Chicken with Wholewheat Noodles & Edamame', '23g', 'Under 350 kcal', '300g, £3.00'],
+            ['Small but Mighty', 'Spiced Fajita Chicken with Brown Rice & Pearl Barley', '22g', 'Under 350 kcal', '300g, £3.00'],
+            ['Small but Mighty', 'Beef & Bean Chilli with Brown Rice & Quinoa', '20g', 'Under 350 kcal', '300g, £3.00'],
+            ['Small but Mighty', 'Creamy Chicken & Mushroom with Roasted Sweet Potato', '20g', 'Under 350 kcal', '300g, £3.00'],
+          ],
+        },
+      },
+      {
+        h2: 'Be Good To Yourself: the calorie-led range',
+        paragraphs: [
+          "Be Good To Yourself is the range Sainsbury's lists under healthier-choice ready meals. Meals in it on Sainsbury's site when we checked on 24 September 2026 included Chicken Jambalaya (400g), Chicken Tikka Masala & Rice (380g), Chilli Con Carne (400g), Tomato & Basil Chicken (400g) and Mediterranean Vegetable Pasta (380g).",
+          "We have not quoted calories or protein for these because we could not read the figures from Sainsbury's directly, and we only publish numbers we could check. The range is sold on calories, so look at the protein line before assuming one will keep you full. That gap is exactly what the add-ons further down are for.",
+        ],
+      },
+      {
+        h2: "Branded high-protein ready meals at Sainsbury's",
+        paragraphs: [
+          "Sainsbury's also stocks branded high-protein meals next to its own. Products listed on its site include The Gym Kitchen Chicken Shawarma (500g), Meat Feast Pasta (400g) and Thai Green Chicken Curry (400g), and Myprotein Firecracker Chicken with Rice (325g). Compare protein and calories per pack against the own-label ranges above before deciding which is better value.",
+        ],
+      },
+      {
+        h2: 'How to judge any healthy ready meal on the label',
+        paragraphs: [
+          "Sainsbury's own launch criteria make a useful benchmark for any ready meal: a main meal with 30g or more of protein for under 500 kcal, or 20g or more for under 350 kcal if you want something lighter. If a meal has much less than 20g of protein, plan to add a protein side.",
+          'For fat, saturates, sugars and salt, the NHS traffic-light thresholds are per 100g:',
+        ],
+        bullets: [
+          'Fat: high above 17.5g, low at 3g or less.',
+          'Saturated fat: high above 5g, low at 1.5g or less.',
+          'Sugars: high above 22.5g, low at 5g or less.',
+          'Salt: high above 1.5g, low at 0.3g or less.',
+        ],
+      },
+    ],
     formula: [
       'Read calories, protein and serving size before buying.',
       'Add a protein side if the ready meal is low protein.',
@@ -1943,6 +2044,9 @@ const topics = [
       'Skipping veg because the ready meal already contains a small amount.',
     ],
     faq: [
+      { q: "What are the healthiest ready meals at Sainsbury's?", a: "The most clearly specified are the High Protein range (at least 31g protein for under 500 kcal) and the Small but Mighty meals (at least 20g protein for under 350 kcal), going by Sainsbury's launch figures. Be Good To Yourself is the calorie-led line. Check fat, saturates, sugars and salt on the pack against the NHS thresholds above." },
+      { q: "Which Sainsbury's ready meals are high in protein?", a: "At launch, High Protein Pesto Chicken Tortiglioni (35g) and High Protein Beef Bolognese Tagliatelle (33g) led the own-label range. Sainsbury's also stocks branded options from The Gym Kitchen and Myprotein." },
+      { q: "Are Sainsbury's Be Good To Yourself meals low calorie?", a: "It is Sainsbury's calorie-led, healthier-choice ready meal range. Figures vary by meal, so read the calories and the protein on the specific pack." },
       { q: "How do I make a Sainsbury's ready meal healthier?", a: 'Check the label, add vegetables or salad, add protein if needed and avoid automatically adding high-calorie sides.' },
       { q: 'Can ready meals fit meal prep?', a: 'Yes, as backups. They are especially useful when paired with microwave veg, salad or a protein side.' },
       { q: 'What should I look for on a ready meal label?', a: 'Look at calories, protein, salt, serving size and cooking instructions. Compare the exact pack, because ranges vary.' },

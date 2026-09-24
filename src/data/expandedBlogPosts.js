@@ -433,11 +433,12 @@ export const expandedBlogPostsData = {
   }),
 
   'best-low-calorie-ready-meals-uk': post({
-    title: 'Best Low Calorie Ready Meals UK: Supermarket Picks & Swaps',
-    description: 'Best low calorie ready meals UK: how to choose filling calorie-controlled meals from Tesco, Aldi, Asda, Sainsbury\'s and Lidl, plus better swaps.',
-    h1: 'Best Low Calorie Ready Meals UK',
-    intro: 'Low calorie ready meals can be useful when a busy week would otherwise turn into takeaway or random snacking. The trick is choosing meals that are filling enough to count as dinner, not just low enough to look good on the front of the pack. This guide shows what to look for in UK supermarkets and when a simple homemade swap is better.',
-    reviewed: '17 June 2026',
+    title: 'Best Low Calorie Ready Meals UK: Supermarket Ranges Compared',
+    description: 'Low calorie and high-protein ready meals at Tesco, Sainsbury\'s, Asda, Aldi and Lidl compared, with calories, protein and prices, and how to make them filling.',
+    h1: 'Best Low Calorie Ready Meals UK: Supermarket Ranges Compared',
+    intro: 'Low calorie ready meals can be useful when a busy week would otherwise turn into takeaway or random snacking. The trick is choosing meals that are filling enough to count as dinner, not just low enough to look good on the front of the pack. This guide compares the ranges each UK supermarket actually sells, with the protein, calories and prices they publish, and shows when a simple homemade swap is better.',
+    modified: '2026-09-24',
+    reviewed: '24 September 2026',
     sources: [
       {
         label: 'NHS Eatwell Guide',
@@ -447,6 +448,34 @@ export const expandedBlogPostsData = {
         label: 'NHS healthy weight guidance',
         url: 'https://www.nhs.uk/live-well/healthy-weight/',
       },
+      {
+        label: 'NHS: how to read food labels',
+        url: 'https://www.nhs.uk/live-well/eat-well/food-guidelines-and-food-labels/how-to-read-food-labels/',
+      },
+      {
+        label: "Sainsbury's: High Protein range and Small but Mighty meals (30 January 2026)",
+        url: 'https://corporate.sainsburys.co.uk/news/press-releases/sainsbury-s-launches-all-new-high-protein-range-and-small-but-mighty-meals-to-support-customers-nutritional-goal/',
+      },
+      {
+        label: 'Tesco: Calorie Controlled Chicken Roast Dinner 380g',
+        url: 'https://www.tesco.com/groceries/en-GB/products/312108863',
+      },
+      {
+        label: 'Tesco PLC: six new high-protein ready meals',
+        url: 'https://www.tescoplc.com/tesco-launches-six-new-high-protein-ready-meals-as-demand-for-nutritious-convenience-continues-to-rise/',
+      },
+      {
+        label: 'Grocery Gazette: Asda unveils protein power pot meals (8 January 2026)',
+        url: 'https://www.grocerygazette.co.uk/2026/01/08/asda-unveils-protein-power-pot-meals/',
+      },
+      {
+        label: 'ALDI UK: Teriyaki Noodles Protein Pot',
+        url: 'https://www.aldi.co.uk/product/inspired-cuisine-teriyaki-noodles-protein-pot-000000000507447001',
+      },
+      {
+        label: 'Lidl GB: Chef Select High Protein Chicken Tikka Masala',
+        url: 'https://www.lidl.co.uk/p/chef-select-high-protein-chicken-tikka-masala/p10010125',
+      },
     ],
     contextualLinks: [
       {
@@ -455,6 +484,17 @@ export const expandedBlogPostsData = {
           { label: 'printable 1500 calorie meal plan', to: '/meal-plans/1500-calorie' },
           { text: ' and the main ' },
           { label: 'low calorie foods UK guide', to: '/blog/best-low-calorie-foods-uk' },
+          { text: '.' },
+        ],
+      },
+      {
+        parts: [
+          { text: 'For named meals at one supermarket, see the ' },
+          { label: "Sainsbury's healthy ready meals guide", to: '/blog/sainsburys-healthy-ready-meal-combos-uk' },
+          { text: ', the ' },
+          { label: 'Lidl high-protein ready meals', to: '/blog/lidl-high-protein-food-ideas-uk' },
+          { text: ' and ' },
+          { label: "Aldi's protein pots and breads", to: '/blog/aldi-high-protein-shopping-list-uk' },
           { text: '.' },
         ],
       },
@@ -494,10 +534,30 @@ export const expandedBlogPostsData = {
         },
       },
       {
-        h2: 'Supermarket notes: Tesco, Aldi, Asda, Sainsbury\'s and Lidl',
+        h2: 'The ranges worth knowing, supermarket by supermarket',
         paragraphs: [
-          'Tesco and Sainsbury\'s usually give the broadest choice for calorie-controlled, higher-protein and vegetarian ready meals. Aldi and Lidl are often better for value, but ranges can be more limited and change more often. Asda is useful for budget chilled meals, frozen options and larger family-style trays that can be portioned.',
-          'Because listings and ranges change, treat this as a buying framework rather than a fixed product list. Your weekly automation can confirm live availability, while this guide explains what should earn a place in the basket.',
+          'Each of the big UK supermarkets now has at least one ready meal line built around calories or protein. The table shows what each range is built to, using the figures the supermarket published. We checked them on 24 September 2026; ranges, recipes and prices change after launch and vary by store, so the pack in front of you is the number to trust.',
+        ],
+        table: {
+          headers: ['Supermarket', 'Range', 'What it is built to', 'Pack and price'],
+          rows: [
+            ['Tesco', 'Calorie Controlled', 'Lower-calorie chilled meals, e.g. Chicken Roast Dinner (252 kcal) and Chicken in Mushroom Sauce (269 kcal)', '370-380g; price varies'],
+            ["Sainsbury's", 'High Protein', 'At least 31g protein for under 500 kcal', '400g, £3.75 at launch'],
+            ["Sainsbury's", 'Small but Mighty', 'Under 350 kcal, at least 20g protein, a source of fibre', '300g, £3.00 at launch'],
+            ["Sainsbury's", 'Be Good To Yourself', 'The calorie-led healthier-choice line', 'Varies by meal'],
+            ['Asda', 'Protein power pots', 'High in protein, with at least 80g of fruit or veg per pot', '250g, £2.50 at launch'],
+            ['Aldi', 'Inspired Cuisine Protein Pots', 'At least 30g protein per serving; frozen', '350g, £1.75'],
+            ['Lidl', 'Chef Select High Protein', 'Protein-led chilled meals; nutrition is on the pack, not online', '380g; price in store'],
+          ],
+        },
+      },
+      {
+        h2: 'Which one to pick',
+        paragraphs: [
+          'For the most protein per calorie, start with Sainsbury\'s High Protein meals or Aldi\'s protein pots. Worked out from Aldi\'s own per-100g figures, the Teriyaki Noodles pot comes to about 35g of protein for about 340 kcal, and at £1.75 it is also the cheapest pot in the table.',
+          'For the fewest calories, Tesco\'s Calorie Controlled meals are the lowest we could confirm, at around 250-270 kcal for the two above. That is small for a main meal, so check the protein and plan a side: salad, microwave veg, soup or a pot of skyr.',
+          'For vegetables, Asda\'s power pots are the only range here built to a fruit-and-veg minimum - at least 80g per 250g pot, which is one of your five a day.',
+          'Tesco has also announced six new high-protein ready meals. We could not read their details from Tesco directly, so they are not in the table yet. The individual Sainsbury\'s meals, with protein and calories for each, are in the Sainsbury\'s guide linked below.',
         ],
       },
       {
@@ -509,6 +569,7 @@ export const expandedBlogPostsData = {
       },
     ],
     related: [
+      { slug: 'sainsburys-healthy-ready-meal-combos-uk', label: "Sainsbury's Healthy Ready Meals", type: 'blog' },
       { slug: 'best-low-calorie-foods-uk', label: 'Low Calorie Foods UK', type: 'blog' },
       { path: '/meal-plans/1500-calorie', label: '1500 Calorie Meal Plan UK', type: 'guide' },
       { slug: 'healthy-ready-meal-alternatives-uk', label: 'Healthy Ready Meal Alternatives', type: 'blog' },
@@ -517,7 +578,8 @@ export const expandedBlogPostsData = {
     faq: [
       { q: 'Are low calorie ready meals good for weight loss?', a: 'They can help if they fit your calorie target and contain enough protein or vegetables to keep you full. They work best as part of a planned week with fruit, vegetables and higher-protein meals elsewhere.' },
       { q: 'What is a good calorie target for a ready meal?', a: 'For lunch or dinner, 350-550 calories is a useful range for many calorie-controlled plans. Smaller meals may need a side such as salad, soup, fruit, skyr or cottage cheese.' },
-      { q: 'Which supermarket has the best low calorie ready meals?', a: 'Tesco and Sainsbury\'s usually have the widest choice, while Aldi and Lidl can be strong for value. Availability changes, so compare labels and choose meals with enough protein, vegetables and sensible portions.' },
+      { q: 'Which supermarket has the best low calorie ready meals?', a: 'It depends what you want from the meal. Going by the figures each supermarket published, Tesco\'s Calorie Controlled meals are the lowest in calories we could confirm, Sainsbury\'s High Protein range and Aldi\'s protein pots give the most protein per calorie, Aldi\'s pots are the cheapest at £1.75, and Asda\'s power pots are the only range built to a fruit-and-veg minimum. Check the pack, because ranges change.' },
+      { q: 'Which supermarket ready meals are highest in protein?', a: 'Sainsbury\'s High Protein meals are built to at least 31g of protein for under 500 kcal, and Aldi labels its Inspired Cuisine Protein Pots at least 30g per serving. Lidl sells Chef Select High Protein meals, with the figures on the pack rather than online.' },
     ],
   }),
 
@@ -2401,6 +2463,40 @@ export const expandedBlogPostsData = {
           'It is also where the products people search for by name tend to sit - higher-protein pasta, protein breads, protein puddings and drinks - rather than beside their conventional equivalents. Treat anything you find there as a preference rather than a fixture: Aldi rotates ranges and stock varies between stores, so the habit worth building is to check the category each week rather than planning around one product.',
         ],
       },
+      {
+        h2: "What is in Aldi's Higher Protein range: pasta, bread and protein pots",
+        paragraphs: [
+          "This is what Aldi's own product pages showed when we checked on 24 September 2026. Aldi publishes nutrition per 100g, so the per-pack figures below are worked out from those numbers; prices are Aldi's online prices, which can differ in store.",
+          'The protein pasta people search for is mostly ready meals rather than dry pasta. Inspired Cuisine Protein Pots are 350g frozen meals at £1.75 each, which Aldi labels as at least 30g of protein per serving, in eight varieties: Teriyaki Noodles, Beef Ragu, Thai Green Curry, Spanish Paella, Chicken Katsu Curry, Peri Peri Chicken, Beef Burrito and Meatball Pasta. We found no dry high-protein pasta in the range; Aldi lists a Free From Green Pea Penne, but it was marked unavailable.',
+        ],
+        table: {
+          headers: ['Product', 'Pack and price', 'Protein', 'Calories'],
+          rows: [
+            ['Inspired Cuisine Teriyaki Noodles Protein Pot', '350g, £1.75', 'About 35g per pot', 'About 340 kcal per pot'],
+            ['Inspired Cuisine Beef Ragu Protein Pot', '350g, £1.75', 'About 32g per pot', 'About 570 kcal per pot'],
+            ['Protein Meatball Pasta (chilled)', '380g, £2.99', 'About 32g per pack', 'About 440 kcal per pack'],
+            ['Specially Selected Protein Sourdough', '500g, £1.99', '19.3g per 100g', '234 kcal per 100g'],
+            ['Village Bakery High Protein Bagel Thins', '4 pack, £1.19', '16.9g per 100g', '287 kcal per 100g'],
+          ],
+        },
+      },
+      {
+        h2: 'How to use them without paying for protein you could buy cheaper',
+        paragraphs: [
+          'The protein pots are the useful find for meal prep, as a backup rather than a staple. At £1.75 for roughly 32-35g of protein they work out at about 5p per gram of protein - more than eggs, tinned tuna or lentils bought for cooking, but a fair price for a meal you do not have to make. They are frozen, so a few in the freezer cover the nights the batch cook runs out. The figures above also show why the label matters: the Beef Ragu pot has about 230 kcal more than the Teriyaki pot for a similar amount of protein.',
+          'The protein breads make most sense if bread is already on your list, because the extra protein comes with toast you were going to eat anyway. They are not a replacement for the protein at a meal: a couple of slices still carry far less than a chicken breast.',
+        ],
+      },
+    ],
+    modified: '2026-09-24',
+    reviewed: '24 September 2026',
+    sources: [
+      { label: 'ALDI UK: Higher Protein Food & Drink', url: 'https://www.aldi.co.uk/products/higher-protein-food-drink/k/1588161424510127' },
+      { label: 'ALDI UK: Teriyaki Noodles Protein Pot', url: 'https://www.aldi.co.uk/product/inspired-cuisine-teriyaki-noodles-protein-pot-000000000507447001' },
+      { label: 'ALDI UK: Beef Ragu Protein Pot', url: 'https://www.aldi.co.uk/product/inspired-cuisine-beef-ragu-protein-pot-000000000507447002' },
+      { label: 'ALDI UK: Protein Meatball Pasta', url: 'https://www.aldi.co.uk/product/branded-protein-meatball-pasta-000000000600581001' },
+      { label: 'ALDI UK: Specially Selected Protein Sourdough', url: 'https://www.aldi.co.uk/product/specially-selected-protein-sourdough-000000000000695112' },
+      { label: 'ALDI UK: Village Bakery High Protein Bagel Thins', url: 'https://www.aldi.co.uk/product/village-bakery-high-protein-bagel-thins-000000000000557400' },
     ],
     related: [
       { slug: 'best-cheap-high-protein-foods-uk', label: 'Best Cheap High Protein Foods UK', type: 'blog' },
@@ -2412,7 +2508,7 @@ export const expandedBlogPostsData = {
       { q: 'Is Aldi good for high protein dieting?', a: 'Yes. Aldi is strong for basic protein staples and budget-friendly meal prep.' },
       {
         q: 'Does Aldi sell high-protein pasta and bread?',
-        a: 'Aldi runs a Higher Protein Food & Drink category online where products like these are grouped, but the specific lines rotate and vary by store. Check the category before you shop rather than assuming a particular product will be there, and keep an ordinary alternative in mind.',
+        a: "Yes, with a caveat on pasta. When we checked on 24 September 2026, Aldi's protein pasta was ready meals - the Inspired Cuisine Protein Pots (350g, £1.75, at least 30g protein per serving) and a chilled Protein Meatball Pasta - rather than dry pasta. For bread it listed Specially Selected Protein Sourdough (19.3g protein per 100g) and Village Bakery High Protein Bagel Thins. Lines rotate and vary by store, so check the Higher Protein category before you shop.",
       },
       {
         q: 'Where do I find high-protein products in Aldi?',

@@ -85,6 +85,62 @@ export const SEO_EXPERIMENTS = Object.freeze([
       'clear factual, functional or technical defect',
     ]),
   }),
+  Object.freeze({
+    id: 'sainsburys-ready-meals-rewrite-2026-09-24',
+    route: '/blog/sainsburys-healthy-ready-meal-combos-uk',
+    query: "sainsbury's healthy ready meals",
+    startDate: '2026-09-24',
+    cooldownUntil: '2026-10-22',
+    cooldownDays: 28,
+    before: Object.freeze({
+      title: "Sainsbury's Healthy Ready Meal Combos UK: What to Add",
+      description: "Sainsbury's healthy ready meal combos UK: ways to upgrade ready meals with protein, veg and simple sides for busy weeks.",
+    }),
+    after: Object.freeze({
+      title: "Sainsbury's Healthy Ready Meals: High-Protein & Low-Cal Picks",
+      description: "Sainsbury's healthy ready meals compared: High Protein and Small but Mighty ranges with protein, calories and prices, plus Be Good To Yourself and what to add.",
+    }),
+    suppliedHistoricalBaseline: Object.freeze({
+      source: 'Owner-supplied Search Console export, 3 months to 2026-09-21 (query row is site-wide, not page-filtered)',
+      page: Object.freeze({ clicks: 21, impressions: 3381, ctr: 0.0062, avgPosition: 7.75 }),
+      exactQuery: Object.freeze({ clicks: 1, impressions: 199, ctr: 0.005, avgPosition: 7.65 }),
+    }),
+    recrawlCandidate: true,
+    allowedEarlyReviewReasons: Object.freeze([
+      'title rendering failure',
+      'completely inappropriate Google-selected title',
+      'major ranking collapse',
+      'clear factual, functional or technical defect',
+    ]),
+  }),
+  Object.freeze({
+    id: 'low-calorie-ready-meals-rebuild-2026-09-24',
+    route: '/blog/best-low-calorie-ready-meals-uk',
+    query: 'best low calorie ready meals',
+    startDate: '2026-09-24',
+    cooldownUntil: '2026-10-22',
+    cooldownDays: 28,
+    before: Object.freeze({
+      title: 'Best Low Calorie Ready Meals UK: Supermarket Picks & Swaps',
+      description: "Best low calorie ready meals UK: how to choose filling calorie-controlled meals from Tesco, Aldi, Asda, Sainsbury's and Lidl, plus better swaps.",
+    }),
+    after: Object.freeze({
+      title: 'Best Low Calorie Ready Meals UK: Supermarket Ranges Compared',
+      description: "Low calorie and high-protein ready meals at Tesco, Sainsbury's, Asda, Aldi and Lidl compared, with calories, protein and prices, and how to make them filling.",
+    }),
+    suppliedHistoricalBaseline: Object.freeze({
+      source: 'Owner-supplied Search Console export, 3 months to 2026-09-21. Page was outside the top 1,000 pages (effectively no impressions); query row is site-wide.',
+      page: Object.freeze({ clicks: 0, impressions: 0, ctr: null, avgPosition: null }),
+      exactQuery: Object.freeze({ clicks: 0, impressions: 256, ctr: 0, avgPosition: 24.52 }),
+    }),
+    recrawlCandidate: true,
+    allowedEarlyReviewReasons: Object.freeze([
+      'title rendering failure',
+      'completely inappropriate Google-selected title',
+      'major ranking collapse',
+      'clear factual, functional or technical defect',
+    ]),
+  }),
 ]);
 
 export function buildSeoExperimentReviews({

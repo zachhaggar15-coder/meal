@@ -150,6 +150,7 @@ export const BLOG_CATEGORIES = [
       'insulated-food-flasks-for-meal-prep-uk',
       'best-vegetable-choppers-for-meal-prep-uk',
       'freezer-labels-for-meal-prep-uk',
+      'best-blender-for-smoothies-uk',
     ],
   },
   {
