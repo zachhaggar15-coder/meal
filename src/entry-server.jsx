@@ -25,15 +25,18 @@ export function render(url) {
       {
         onAllReady() {
           const body = new PassThrough();
-          let html = '';
+          const chunks = [];
 
           body.on('data', chunk => {
-            html += chunk.toString();
+            chunks.push(Buffer.from(chunk));
           });
           body.on('end', () => {
             if (settled) return;
             settled = true;
             clearTimeout(timeout);
+            // React 18.3's Node stream pads a chunk with NUL bytes when a
+            // multi-byte character does not fit at its end; NUL is never valid HTML text.
+            const html = Buffer.concat(chunks).toString('utf8').replace(/\u0000/g, '');
             resolve({ html, helmet: helmetContext.helmet });
           });
           body.on('error', err => {

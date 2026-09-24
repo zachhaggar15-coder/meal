@@ -98,3 +98,13 @@ test('the detectors still fire on the defects they were built for (control)', ()
   assert.ok(!NEEDS_A.test('Can I use a Tesco plan elsewhere?'));
   assert.ok(!DOUBLE_DETERMINER.test('a plan the reader can follow'));
 });
+
+// React 18.3's Node stream padded chunks with NUL bytes before multi-byte
+// characters (→, —, £, °, emoji), leaving invisible junk in ~56 pages.
+// entry-server.jsx strips them; this keeps it that way.
+test('no rendered page contains NUL characters', { skip }, () => {
+  const offenders = pages()
+    .filter(page => fs.readFileSync(page).includes(0))
+    .map(page => path.relative(DIST, page));
+  assert.deepEqual(offenders, []);
+});
