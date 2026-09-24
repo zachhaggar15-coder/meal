@@ -59,17 +59,17 @@ const BASE_SHOPPING = {
     extras: ['Olive oil', 'Tinned tomatoes (4 cans)', 'Soy sauce low-sodium', 'Tahini (jar)', 'Almond butter (jar)', 'Lemon (4)', 'Garlic bulb', 'Nutritional yeast (100 g)'],
   },
   'aldi-1800-calorie-meal-plan': {
-    protein: ['Aldi Specially Selected Lean Chicken Breast Fillets (1.2 kg)', 'Aldi Tinned Tuna in Spring Water (4 × 145 g)', 'Aldi Free Range Eggs (12)', 'Aldi Milbona Low Fat Greek Style Yogurt (500 g)', 'Aldi Turkey Mince Lean (500 g)'],
+    protein: ['Aldi Specially Selected Lean Chicken Breast Fillets (1.2 kg)', 'Aldi Tinned Tuna in Spring Water (4 × 145 g)', 'Aldi Free Range Eggs (12)', 'Aldi Brooklea Low Fat Greek Style Yogurt (500 g)', 'Aldi Turkey Mince Lean (500 g)'],
     carbs: ['Aldi Harvest Morn Rolled Oats (1 kg)', "Aldi Village Bakery Wholemeal Sliced Bread (800 g)", 'Aldi Worldwide Foods Basmati Rice (500 g)', 'Aldi Sweet Potatoes (1 kg)', 'Aldi Worldwide Foods Wholewheat Pasta (500 g)'],
     vegetables: ['Aldi Broccoli (500 g)', 'Aldi Baby Spinach (200 g bag)', 'Aldi Mixed Peppers (500 g)', 'Aldi Cherry Tomatoes (400 g)', 'Aldi Frozen Mixed Veg (1 kg)'],
-    dairy: ['Aldi Milbona Skimmed Milk (2 L)', 'Aldi Milbona Low Fat Greek Style Yogurt (500 g)'],
+    dairy: ['Aldi Skimmed Milk (2 L)', 'Aldi Brooklea Low Fat Greek Style Yogurt (500 g)'],
     extras: ['Aldi Olive Oil (500 ml)', 'Aldi Reduced Fat Hummus (200 g)', 'Aldi Frozen Mixed Berries (500 g)', 'Aldi Peanut Butter (340 g)', 'Bananas (5–6)'],
   },
   'aldi-high-protein-meal-plan': {
-    protein: ['Aldi Lean Chicken Breast Fillets (1.5 kg)', 'Aldi Tinned Tuna in Spring Water (6 × 145 g)', 'Aldi Free Range Eggs (18)', 'Aldi Milbona 0% Fat Greek Style Yogurt (2 × 500 g)', 'Aldi Low Fat Cottage Cheese (500 g)'],
+    protein: ['Aldi Lean Chicken Breast Fillets (1.5 kg)', 'Aldi Tinned Tuna in Spring Water (6 × 145 g)', 'Aldi Free Range Eggs (18)', 'Aldi Brooklea 0% Fat Greek Style Yogurt (2 × 500 g)', 'Aldi Low Fat Cottage Cheese (500 g)'],
     carbs: ['Aldi Harvest Morn Rolled Oats (1 kg)', "Aldi Village Bakery Wholemeal Sliced Bread (800 g)", 'Aldi Brown Rice (500 g)', 'Aldi Red Lentils (500 g)', 'Aldi Edamame Frozen (300 g)'],
     vegetables: ['Aldi Broccoli (1 kg)', 'Aldi Baby Spinach (400 g)', 'Aldi Green Beans (300 g)', 'Aldi Cherry Tomatoes (400 g)', 'Aldi Cucumber (2)'],
-    dairy: ['Aldi Milbona Skimmed Milk (2 L)', 'Aldi Milbona 0% Fat Greek Style Yogurt (1 kg)'],
+    dairy: ['Aldi Skimmed Milk (2 L)', 'Aldi Brooklea 0% Fat Greek Style Yogurt (1 kg)'],
     extras: ['Aldi Olive Oil Spray (190 ml)', 'Aldi Low Sodium Soy Sauce', 'Aldi Lemons (4)', 'Garlic bulb', 'Mixed herbs'],
   },
   'tesco-1800-calorie-meal-plan': {
@@ -990,12 +990,12 @@ export const mealPlansData = {
     planLabel: 'Aldi 1800 Calorie',
     targetCalories: 1800,
     intro: 'Aldi is consistently one of the cheapest UK supermarkets for lean, high-protein eating — and 1,800 calories a day is one of the most widely recommended targets for sustainable weight loss. This 7-day plan combines both: a moderate calorie deficit with high-protein meals built exclusively around Aldi own-brand products. Estimated weekly cost is £35–45 for one person, making this one of the most affordable structured meal plans available in the UK.',
-    whyThisPlan: 'Shopping at Aldi means consistently low prices without loyalty schemes, weekly vouchers, or app-based discounts — what you see is what you pay. At 1,800 calories and 100–130 g of protein daily, this plan creates enough of a deficit for steady fat loss of 0.2–0.5 kg per week while keeping hunger well under control. The meals are built around Aldi\'s best-value proteins: chicken breast fillets, tinned tuna, free range eggs, and Milbona Greek style yogurt.',
+    whyThisPlan: 'Shopping at Aldi means consistently low prices without loyalty schemes, weekly vouchers, or app-based discounts — what you see is what you pay. At 1,800 calories and 100–130 g of protein daily, this plan creates enough of a deficit for steady fat loss of 0.2–0.5 kg per week while keeping hunger well under control. The meals are built around Aldi\'s best-value proteins: chicken breast fillets, tinned tuna, free range eggs, and Brooklea Greek style yogurt.',
     tips: [
       'Aldi Harvest Morn Rolled Oats (1 kg) cost around 85p — one of the cheapest breakfasts available. Batch-soak a couple of overnight oat jars at a time, then refresh the batch midweek.',
       'Aldi frozen vegetables are excellent quality at very low prices. Frozen broccoli, peas, and mixed veg are nutritionally identical to fresh and far more convenient.',
       'Aldi chicken breast is competitively priced all year round. Buy in 1 kg+ packs and batch-cook at the start of the week to cover lunches instantly.',
-      'The Milbona 0% fat Greek style yogurt is outstanding value — check the label carefully as Aldi stocks both 0% and full-fat versions in similar packaging.',
+      'The Brooklea 0% fat Greek style yogurt is outstanding value — check the label carefully as Aldi stocks both 0% and full-fat versions in similar packaging.',
       'Check the Aldi Specialbuys aisle every few weeks for food storage containers and kitchen tools that make meal prep easier and cheaper long-term.',
     ],
     faq: [
@@ -1024,10 +1024,10 @@ export const mealPlansData = {
     planLabel: 'Aldi High Protein',
     targetCalories: 1550,
     intro: 'Getting enough protein to build muscle or preserve lean mass while losing fat does not have to be expensive. Aldi stocks all the high-protein staples you need — chicken breast, tinned tuna, free range eggs, low-fat cottage cheese, and 0% fat Greek yogurt — at prices that beat most UK supermarkets. This 7-day high-protein Aldi meal plan delivers 140–170 g of protein per day at around 1,500–1,600 calories, with an estimated weekly shop cost of £35–45.',
-    whyThisPlan: 'Protein is the most expensive macronutrient to eat in adequate quantities — so buying it from a discount supermarket like Aldi makes a meaningful difference over weeks and months. Aldi chicken breast costs significantly less per kilogram than premium supermarket equivalents, and the Milbona dairy range offers high-quality protein at very competitive prices. This plan targets 1.8–2.2 g of protein per kg of body weight — the range most commonly recommended for fat loss with muscle preservation.',
+    whyThisPlan: 'Protein is the most expensive macronutrient to eat in adequate quantities — so buying it from a discount supermarket like Aldi makes a meaningful difference over weeks and months. Aldi chicken breast costs significantly less per kilogram than premium supermarket equivalents, and the Brooklea dairy range offers high-quality protein at very competitive prices. This plan targets 1.8–2.2 g of protein per kg of body weight — the range most commonly recommended for fat loss with muscle preservation.',
     tips: [
       'Aldi tinned tuna is one of the cheapest sources of protein available — around 55–65p per can with 25+ g of protein. Keep a stock of 6–8 cans for quick high-protein lunches.',
-      'Aldi Milbona 0% fat Greek yogurt delivers 10 g of protein per 100 g. Use it as a base for breakfast bowls, post-workout snacks, and sauces.',
+      'Aldi Brooklea 0% fat Greek yogurt delivers 10 g of protein per 100 g. Use it as a base for breakfast bowls, post-workout snacks, and sauces.',
       'Batch-cook chicken breast on Sunday and portion into 150–180 g servings for the week. Aldi chicken breast reheats well and works in salads, wraps, and stir-fries.',
       'Aldi cottage cheese is consistently low-priced. Eat it as a snack with cucumber and black pepper for an easy 20+ g protein hit under 200 kcal.',
       'Aldi\'s frozen edamame and green beans are excellent low-calorie, moderate-protein additions to high-protein meals.',
@@ -1314,7 +1314,7 @@ export const mealPlansData = {
     planLabel: 'Lidl 1800 Calorie',
     targetCalories: 1800,
     intro: 'Lidl is one of the most consistently affordable UK supermarkets for healthy eating — its own-brand proteins, grains, and frozen vegetables are priced competitively with Aldi, making it an excellent choice for calorie-controlled eating on a budget. This 7-day plan targets 1,800 calories and 100–130 g of protein per day using Lidl own-brand ingredients. Estimated weekly cost is £35–45 for one person.',
-    whyThisPlan: "Lidl's Milbona dairy range, Harvest Basket oats, and Nixe tinned fish offer quality comparable to major supermarket own-brands at significantly lower prices. Unlike Tesco and Sainsbury's, Lidl does not require a loyalty card for its best prices — what you see is what you pay. This plan creates a gentle 200–400 calorie daily deficit, supporting fat loss of 0.2–0.4 kg per week.",
+    whyThisPlan: "Lidl's Milbona dairy range, Harvest Basket oats, and Nixe tinned fish offer quality comparable to major supermarket own-brands at significantly lower prices. Lidl's shelf prices are low without any card, although the free Lidl Plus app adds coupons and some app-only prices. This plan creates a gentle 200–400 calorie daily deficit, supporting fat loss of 0.2–0.4 kg per week.",
     tips: [
       "Lidl's Harvest Basket Rolled Oats are around 80–90p per kilogram — an exceptional value breakfast that keeps you full for hours.",
       "Lidl Nixe tinned tuna is very affordable and packed with protein. Stock up on 6–8 cans for a week of quick high-protein lunches.",
@@ -1325,7 +1325,7 @@ export const mealPlansData = {
     faq: [
       { q: 'How much does this Lidl 1800 calorie plan cost?', a: 'Approximately £35–45 per week for one person using Lidl own-brand products. No loyalty card is required for these prices.' },
       { q: 'Does Lidl stock all the ingredients I need?', a: "Yes — all ingredients are standard stock at full-size Lidl superstores. Lidl's range is consistent week-to-week for core staples like chicken, eggs, oats, and yogurt." },
-      { q: 'Is Lidl cheaper than Aldi for meal prep?', a: "Lidl and Aldi are very similar in price overall. Aldi tends to be fractionally cheaper on some proteins, while Lidl's Milbona dairy range is often the better deal. Both are significantly cheaper than Tesco or Sainsbury's for equivalent products." },
+      { q: 'Is Lidl cheaper than Aldi for meal prep?', a: "Lidl and Aldi are very similar in price overall, and which one is cheaper changes month to month and item by item. Both are usually cheaper than Tesco or Sainsbury's for a comparable basket, although those stores price-match some Aldi staples." },
     ],
     related: [
       { slug: '1800-calorie-meal-plan', label: '1800 Calorie Meal Plan' },

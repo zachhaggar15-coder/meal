@@ -1860,7 +1860,7 @@ const topics = [
   {
     slug: 'asda-budget-meal-ideas-uk',
     toolRecommendations: {
-      title: "The one appliance that pays for itself on a budget shop",
+      title: "The one appliance worth buying for a budget shop",
       intro: "A slow cooker is what makes the cheap cuts worth buying, and it needs no attention while it works. Labels are pennies and stop the freezer becoming a mystery.",
       productIds: ['crockpot-3-5l-red', 'nuoshen-removable-food-labels'],
     },

@@ -187,7 +187,7 @@ export default function ShopProductPage() {
             </details>
             <details className="shop-faq-item">
               <summary>How much money will I save?</summary>
-              <p>A typical dinner at {product.supermarket || 'Aldi or Lidl'} for two costs £3–5 in ingredients. These recipes are built within that budget. Across the {totalDinners} dinners, you'll spend roughly {costRange} versus {eatOutRange} for the same meals eaten out. The PDF itself pays for itself in under a week.</p>
+              <p>A typical dinner at {product.supermarket || 'Aldi or Lidl'} for two costs £3–5 in ingredients. These recipes are built within that budget. Across the {totalDinners} dinners, you'll spend roughly {costRange} versus {eatOutRange} for the same meals eaten out. If the dinners replace takeaways or meals out, the PDF pays for itself within the first week.</p>
             </details>
             <details className="shop-faq-item">
               <summary>Can I adapt recipes for my family size?</summary>
