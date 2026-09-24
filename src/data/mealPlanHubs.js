@@ -915,7 +915,7 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
     faq: [
       {
         q: 'What is the cheapest protein in a UK supermarket?',
-        a: 'Eggs, milk, dried pulses and own-brand yogurt are consistently among the cheapest per gram. Tinned fish and frozen white fish are close behind and need no preparation.',
+        a: 'Dried pulses, milk, frozen chicken and own-brand yogurt are consistently among the cheapest per gram of protein. Tinned fish is close behind and needs no cooking; eggs are cheap per meal but cost more per gram of protein.',
       },
       {
         q: 'Do I need protein powder?',

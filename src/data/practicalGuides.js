@@ -84,7 +84,7 @@ export const practicalGuidesData = {
       {
         h2: 'Where labels matter for meal prep specifically',
         paragraphs: [
-          'Two places. The first is the raw-versus-cooked question: pack figures for rice, pasta and pulses are almost always given for the dry product, and these roughly triple in weight once cooked. Weighing 100g of cooked rice against a 100g dry label is a difference of several hundred calories, and it is the most common reason a carefully followed plan does not add up.',
+          'Two places. The first is the raw-versus-cooked question: pack figures for rice, pasta and pulses are almost always given for the dry product, and these roughly double to triple in weight once cooked. Weighing 100g of cooked rice against a 100g dry label is a difference of well over 200 calories, and it is the most common reason a carefully followed plan does not add up.',
           'The second is meat, where the label figure is usually raw and cooking removes water. A 500g pack of chicken breast does not produce 500g of cooked chicken, so if a plan gives cooked weights and you weigh raw - or the reverse - the numbers drift. Pick one and stay with it; the plans on this site state which they mean.',
         ],
       },
@@ -149,7 +149,7 @@ export const practicalGuidesData = {
       {
         h2: 'Other things that work without a scale',
         paragraphs: [
-          'Use the packet as a unit. A 500g pack of mince divided into four is 125g portions and needs no measurement at all - just a decision made once. Tins are already portioned. A standard mug holds roughly 75 to 90g of dry rice, which is enough consistency to plan around if you always use the same mug.',
+          'Use the packet as a unit. A 500g pack of mince divided into four is 125g portions and needs no measurement at all - just a decision made once. Tins are already portioned. A standard mug holds roughly 200 to 250g of dry rice, so a third of a mug is about one portion - enough consistency to plan around if you always use the same mug.',
           'Plate geometry is the other reliable trick: half the plate vegetables, a quarter protein, a quarter starch. It is not precise and it does not need to be, because it fixes the proportion that most affects fullness rather than trying to control the calorie total directly.',
         ],
       },
@@ -1105,7 +1105,7 @@ export const practicalGuidesData = {
       {
         h2: 'Use what you use, not what you bought',
         paragraphs: [
-          'The common mistake is charging the whole pack to one meal. A 500g bag of rice does not cost a meal five pounds worth of rice; it costs the meal the 60g it used. Work in fractions: pack price divided by pack size, multiplied by the amount in the recipe.',
+          'The common mistake is charging the whole pack to one meal. A meal that uses 60g from a 1kg bag of rice does not cost the whole bag; it costs the 60g it used. Work in fractions: pack price divided by pack size, multiplied by the amount in the recipe.',
           'That is the calculation that makes bulk buying look sensible, and it is also the one that makes it look less impressive than the shelf label suggests - a larger pack lowers the per-gram price, but only for the portion you eat, not for the portion still in the cupboard.',
           'Then divide by the number of portions the dish actually makes, which is the number you will eat, not the number the recipe claims.',
         ],

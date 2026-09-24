@@ -467,7 +467,7 @@ export const mealPlansData = {
         'Calorie needs vary a lot from person to person. 1,500 calories can be too low for larger or highly active adults, and this plan is general information rather than medical or dietary advice. If you are unsure what is right for you, or you have a health condition, check with your GP or a registered dietitian before starting. If you feel persistently tired, dizzy or unwell, eat more.',
     },
     intro: 'A 1,500 calorie meal plan is one of the most popular choices for weight loss in the UK. For people whose TDEE is meaningfully above 1,500 calories, it can create a steady calorie deficit without the hunger and fatigue that come with more extreme restriction. This guide gives you a complete, ready-to-use 7-day plan built around everyday UK supermarket ingredients.',
-    whyThisPlan: 'A 1,500 calorie target works well for people whose Total Daily Energy Expenditure (TDEE) sits between 1,800 and 2,200 calories — common for women aged 25–55 with moderate activity levels and lighter men. At 1,500 calories you create a deficit of 300–700 calories per day, which over a week amounts to 2,100–4,900 calories — enough to lose 0.3–0.7 kg of body fat. This plan prioritises protein (90–120 g per day) to keep you feeling full, preserve muscle mass, and support an active lifestyle.',
+    whyThisPlan: 'A 1,500 calorie target works well for people whose Total Daily Energy Expenditure (TDEE) sits between 1,800 and 2,200 calories — common for women aged 25–55 with moderate activity levels and lighter men. At 1,500 calories you create a deficit of 300–700 calories per day, which over a week amounts to 2,100–4,900 calories — roughly 0.3–0.6 kg of body fat. This plan prioritises protein (90–120 g per day) to keep you feeling full, preserve muscle mass, and support an active lifestyle.',
     contextualLinks: [
       {
         parts: [
@@ -545,7 +545,7 @@ export const mealPlansData = {
       bestFor: 'Sustainable fat loss, active adults',
       prepDifficulty: 'Easy (15–30 min)',
     },
-    intro: 'An 1,800 calorie meal plan is one of the most widely recommended targets for sustainable weight loss in the UK. It is particularly effective for women who are moderately to very active, and for men who are sedentary or lightly active. Eating 1,800 calories per day typically creates a 300–600 calorie deficit — enough to lose 0.3–0.6 kg of fat per week without the energy crashes associated with more aggressive cuts. This plan is built around familiar UK supermarket ingredients to keep both the cooking and the shopping straightforward.',
+    intro: 'An 1,800 calorie meal plan is one of the most widely recommended targets for sustainable weight loss in the UK. It is particularly effective for women who are moderately to very active, and for men who are sedentary or lightly active. Eating 1,800 calories per day typically creates a 300–600 calorie deficit — enough to lose roughly 0.3–0.5 kg of fat per week without the energy crashes associated with more aggressive cuts. This plan is built around familiar UK supermarket ingredients to keep both the cooking and the shopping straightforward.',
     whyThisPlan: 'At 1,800 calories, you have enough room to eat satisfying, varied meals — three proper meals a day with room for a snack. This makes the plan far more sustainable than 1,200 or 1,500 calorie approaches. The meals in this plan are built around a protein target of 100–130 g per day, with the remaining calories split between complex carbohydrates and healthy fats. High protein keeps hunger at bay, while the carb allowance gives you enough energy for exercise and daily life.',
     contextualLinks: [
       {
@@ -650,7 +650,7 @@ export const mealPlansData = {
     planLabel: 'High Protein Low Calorie',
     targetCalories: 1550,
     intro: 'A high protein low calorie meal plan is a common approach for losing fat while preserving — or even building — lean muscle mass. By keeping calories in a deficit while eating 140–170 g of protein per day, the plan supports muscle retention while fat loss comes from the calorie deficit. This 7-day UK plan delivers 150+ g of protein daily from lean, widely available sources such as chicken breast, tinned tuna, eggs, Greek yogurt, and cottage cheese — all affordable and easy to find in most major UK supermarkets.',
-    whyThisPlan: 'Protein has the highest thermic effect of any macronutrient — your body burns roughly 25–30% of protein calories just by digesting it. It is also the most satiating macronutrient, meaning gram for gram it keeps you fuller than carbohydrate or fat. Research from the British Journal of Nutrition shows that increasing protein to 25–30% of total calories can significantly reduce appetite and late-night snacking in some groups. This plan targets approximately 1.8–2.2 g of protein per kg of body weight — a higher sports-nutrition range for people losing weight while exercising.',
+    whyThisPlan: 'Protein has the highest thermic effect of any macronutrient — your body uses roughly 20–30% of protein calories just digesting it. It is also the most satiating macronutrient, meaning gram for gram it keeps you fuller than carbohydrate or fat. In a 2011 trial published in Obesity, overweight men dieting on 25% of calories from protein reported more fullness and less late-night desire to eat than those on 14%. This plan targets approximately 1.8–2.2 g of protein per kg of body weight — a higher sports-nutrition range for people losing weight while exercising.',
     contextualLinks: [
       {
         parts: [
@@ -925,7 +925,7 @@ export const mealPlansData = {
     ],
     faq: [
       { q: 'How much does this Aldi meal plan cost per week?', a: 'Approximately £35–45 per week for one person, using Aldi own-brand products. Aldi\'s consistently low prices mean no need for loyalty schemes or special offers.' },
-      { q: 'Can I use this plan at other supermarkets?', a: 'Yes. While Aldi has the lowest prices overall, the ingredients are available at Tesco, Sainsbury\'s, Asda, and Morrisons. Use our generator to tailor a plan to your preferred store.' },
+      { q: 'Can I use this plan at other supermarkets?', a: 'Yes. While Aldi is usually among the cheapest overall, the ingredients are available at Tesco, Sainsbury\'s, Asda, and Morrisons. Use our generator to tailor a plan to your preferred store.' },
       { q: 'Does Aldi have everything I need?', a: 'Yes. All ingredients are stocked in standard Aldi stores. Smaller Aldi Smaller Stores may have a reduced range, so a larger superstore or online order is recommended for the full plan.' },
     ],
     related: [
@@ -1034,7 +1034,7 @@ export const mealPlansData = {
     ],
     faq: [
       { q: 'How much protein is in this Aldi high protein plan?', a: '140–170 g of protein per day, spread across four meals or eating occasions. This targets roughly 1.8–2.2 g per kg of body weight — appropriate for fat loss while maintaining or building muscle.' },
-      { q: 'Is Aldi good for high-protein eating on a budget?', a: 'Yes — Aldi is one of the best UK supermarkets for high-protein eating on a budget. Chicken breast, tinned tuna, eggs, and Greek yogurt are all significantly cheaper than at Tesco or Sainsbury\'s.' },
+      { q: 'Is Aldi good for high-protein eating on a budget?', a: 'Yes — Aldi is one of the best UK supermarkets for high-protein eating on a budget. Chicken breast, tinned tuna, eggs, and Greek yogurt are usually at or near the lowest prices around, though Tesco and Sainsbury\'s price-match many Aldi staples.' },
       { q: 'Can I follow this plan if I am vegetarian?', a: 'Not as written — this plan is meat-based. For a high-protein vegetarian option, see our High Protein Vegetarian Meal Plan, which uses eggs, Greek yogurt, cottage cheese, tofu, and legumes.' },
     ],
     related: [
@@ -1061,10 +1061,10 @@ export const mealPlansData = {
     intro: 'Tesco is the UK\'s largest supermarket — and with Clubcard Prices, it is one of the best places to build an affordable 1,800 calorie meal plan. This 7-day guide is built entirely around Tesco own-brand and standard range products, targeting 1,800 calories and 100–130 g of protein per day. Estimated weekly cost is £40–50 for one person, which can fall to £35–45 by using Clubcard Prices on key staples such as chicken breast, eggs, and yogurt.',
     whyThisPlan: 'At 1,800 calories, this plan creates a gentle calorie deficit suitable for most moderately active UK adults seeking fat loss of 0.2–0.5 kg per week. Shopping at Tesco brings additional benefits: the Clubcard scheme regularly discounts chicken, eggs, dairy, and oats; nutritional information for all own-brand products is listed on the Tesco website; and the Tesco app makes it easy to plan your shop and check prices before you leave home.',
     tips: [
-      'Get a free Tesco Clubcard if you do not already have one. Chicken breast, eggs, and yogurt are regularly available at Clubcard Prices — sometimes up to 40% cheaper.',
-      'Tesco Rolled Oats (1 kg) are under £1 and make five to seven breakfasts. Overnight oats take two minutes to prepare and are one of the best-value breakfasts for weight loss.',
+      'Get a free Tesco Clubcard if you do not already have one. Chicken breast, eggs, and yogurt are regularly available at Clubcard Prices — often noticeably cheaper.',
+      'Tesco Rolled Oats (1 kg) are under £1 and make around 16–20 breakfasts. Overnight oats take two minutes to prepare and are one of the best-value breakfasts for weight loss.',
       'Tesco own-brand frozen vegetables are just as nutritious as fresh and significantly cheaper. Frozen broccoli, peas, and mixed veg work perfectly in this plan.',
-      'Tesco Brown Rice (1 kg easy-cook bags) is excellent value and cooks in 25 minutes. Batch-cook a large pot on Sunday to cover three or four dinners.',
+      'Tesco Brown Rice (1 kg easy-cook bags) is excellent value and cooks in 25 minutes. Batch-cook a large pot on Sunday, then cool it quickly and freeze portions for later dinners, since cooked rice should be eaten within about a day.',
       'The Tesco app allows you to build a basket in advance and check your estimated total. Use it the night before shopping to stay on budget and avoid impulse purchases.',
     ],
     faq: [
@@ -1132,7 +1132,7 @@ export const mealPlansData = {
     whyThisPlan: "Asda's Rollback pricing and consistently competitive own-brand range make it easy to eat well on a calorie-controlled diet without planning your shop around special offers. This plan hits 1,800 calories with a strong protein focus using Asda chicken breast, tinned tuna, free range eggs, and low fat Greek yogurt — all core staples that are regularly among the cheapest at any UK major supermarket.",
     tips: [
       "Asda's own-brand chicken breast is competitively priced and available in large packs. Buy 1.5–2 kg at once and freeze what you do not use in the first two days.",
-      'Asda frozen vegetables are outstanding value. The 1 kg frozen mixed vegetable bags cost around 75–95p and are nutritionally equivalent to fresh.',
+      'Asda frozen vegetables are outstanding value. The 1 kg frozen mixed vegetable bags cost around 75–95p and are nutritionally comparable to fresh.',
       "Asda's Rollback deals frequently apply to eggs, chicken, and dairy — check the app or website before shopping to time your purchase well.",
       'Asda Greek yogurt is available in both standard and 0% fat versions. Opt for the 0% fat version to maximise protein and keep calories low.',
       'Asda sells microwave rice pouches (90-second) which are useful for fast weeknight dinners. Use the standard brown rice bag for batch cooking to save money per serving.',
@@ -1201,7 +1201,7 @@ export const mealPlansData = {
     intro: "Sainsbury's combines a wide own-brand range with a strong fresh produce section and Nectar Card pricing, making it a solid choice for structured calorie-controlled eating. This 7-day plan targets 1,800 calories and 100–130 g of protein per day using Sainsbury's own-brand products. Estimated weekly cost is £42–52, which can reduce to £38–48 when Nectar Prices apply to key staples such as chicken, eggs, and yogurt.",
     whyThisPlan: "Sainsbury's own-brand Chicken Breast Fillets, Low Fat Greek Style Yogurt, and Tinned Tuna consistently offer good nutritional value at competitive prices. The Sainsbury's Taste the Difference range is an option for those who want to treat themselves at the weekend without leaving their usual supermarket. This plan makes 1,800 calories feel structured and satisfying rather than restrictive.",
     tips: [
-      "Sign up for a free Sainsbury's Nectar card. Key items like chicken breast, eggs, and Greek yogurt are regularly available at Nectar Prices, saving up to 30% on core protein sources.",
+      "Sign up for a free Sainsbury's Nectar card. Key items like chicken breast, eggs, and Greek yogurt are regularly available at Nectar Prices, which can noticeably cut the cost of core protein sources.",
       "Sainsbury's own-brand frozen vegetables rival any supermarket in quality. Frozen mixed vegetables, broccoli, and spinach (sold in frozen blocks) are all excellent value.",
       "The Sainsbury's SO Organic range is slightly more expensive but uses higher welfare standards. Stick to the own-brand standard range for the best value on this plan.",
       "Sainsbury's Freefrom and Reduced Fat ranges are particularly strong compared to competitors — useful if you need dairy alternatives or lower-fat options.",
@@ -1244,7 +1244,7 @@ export const mealPlansData = {
     tips: [
       "Sign up for a free Sainsbury's Nectar card to unlock Nectar Prices on chicken, eggs, Greek yogurt, and other core ingredients — this can reduce the weekly cost by £5–8.",
       "Sainsbury's frozen vegetables are high quality and very affordable. Frozen spinach, broccoli florets, and mixed vegetables are all excellent substitutes for fresh at a fraction of the price.",
-      "Sainsbury's own-brand Low Fat Cottage Cheese is an underrated protein source at around £1.20 for 300 g — 23 g of protein for under 130 kcal per serving.",
+      "Sainsbury's own-brand Low Fat Cottage Cheese is an underrated protein source at around £1.20 for 300 g — half a pot gives about 18 g of protein for around 120 kcal.",
       "Batch-cook Sainsbury's chicken breast at the weekend. Poach 1 kg in lightly salted water, refrigerate what you will eat within 2 days, and freeze later portions.",
       "Use the Sainsbury's SmartShop app to scan items as you shop — it helps you stay on budget and avoid unplanned purchases that inflate the weekly cost.",
     ],
@@ -1283,7 +1283,7 @@ export const mealPlansData = {
     whyThisPlan: "Morrisons' 1,500 calorie plan suits most women and smaller-framed men who want to lose 0.5–1 kg per week without extreme restriction. At 1,500 calories, you create a meaningful daily deficit compared to a typical adult TDEE of 1,800–2,200 calories. Morrisons' wide range of frozen vegetables, affordable own-brand oats and bread, and accessible protein options make it straightforward to hit this target consistently across seven days.",
     tips: [
       "Use the Morrisons Market Street fish and meat counter to buy exactly 1 kg of chicken breast rather than a pre-packaged 1.2 kg — avoids waste and keeps the cost down.",
-      "Morrisons own-brand 0% Fat Greek Style Yogurt is a flagship value product — 130 kcal and 19 g protein per 200 g serving. It is the same product as supermarket alternatives at a lower price.",
+      "Morrisons own-brand 0% Fat Greek Style Yogurt is a flagship value product — roughly 115–130 kcal and 19–20 g protein per 200 g serving, at a lower price than branded Greek yogurt.",
       "Sign up for the Morrisons More loyalty card for free. Regular Money Off vouchers and point accumulation reduce the weekly shop cost over time.",
       "Morrisons frozen broccoli, mixed vegetables, and green beans are stocked year-round and cook from frozen in under five minutes — ideal for fast weeknight meals.",
       "Morrisons own-brand rolled oats cost around £1/kg — use them as your breakfast staple throughout the week to keep morning calories consistent and filling.",
@@ -1320,7 +1320,7 @@ export const mealPlansData = {
       "Lidl Nixe tinned tuna is very affordable and packed with protein. Stock up on 6–8 cans for a week of quick high-protein lunches.",
       "Lidl Milbona Greek Style Yogurt is a flagship value product — check it is the low-fat version (both regular and 0% fat versions are stocked).",
       "Lidl's frozen vegetable range is excellent. Broccoli, mixed vegetables, and green beans are all good value and cook in minutes from frozen.",
-      "Lidl releases a new 'Lidl Plus' app offer every Thursday. Check the app weekly as protein foods and staples frequently appear at discounted prices.",
+      "Lidl Plus app coupons change every week. Check the app weekly as protein foods and staples frequently appear at discounted prices.",
     ],
     faq: [
       { q: 'How much does this Lidl 1800 calorie plan cost?', a: 'Approximately £35–45 per week for one person using Lidl own-brand products. No loyalty card is required for these prices.' },
@@ -1388,7 +1388,7 @@ export const mealPlansData = {
     tips: [
       'Iceland frozen chicken breast fillets are sold in individually frozen pieces, making it easy to defrost exactly what you need without waste.',
       'Iceland frozen broccoli florets (1 kg) typically cost around £1–1.50 — among the cheapest ways to add volume and nutrients to any meal.',
-      'Iceland frozen mixed berries are excellent for adding to overnight oats, porridge, or Greek yogurt. Frozen berries are nutritionally equivalent to fresh and last for months.',
+      'Iceland frozen mixed berries are excellent for adding to overnight oats, porridge, or Greek yogurt. Frozen berries are nutritionally comparable to fresh and last for months.',
       "Iceland's bonus card scheme provides loyalty points and periodic money-off vouchers. Sign up in-store or online for free.",
       'Plan around Iceland\'s "3 for £X" frozen protein deals, which regularly apply to chicken breast, fish fillets, and turkey products. Stock your freezer when the deal is on.',
     ],
@@ -1425,7 +1425,7 @@ export const mealPlansData = {
       'Time larger carbohydrate portions around your workouts where possible. Oats or banana before training, and rice or sweet potato after, supports performance and recovery.',
       'To build muscle, aim to eat at or just above your TDEE (2,500 calories may represent a slight surplus for many). Track your weight weekly — if it is not creeping up over four to six weeks, increase to 2,700–2,800.',
       'Protein distribution matters more at higher calorie targets — spread 140–160 g across four meals rather than loading it into one or two.',
-      'If the shopping list feels expensive, prioritise chicken breast, oats, eggs, and rice — the highest-value foods per gram of protein on this plan.',
+      'If the shopping list feels expensive, prioritise chicken breast, oats, eggs, and rice — the best-value staples on this plan.',
     ],
     faq: [
       { q: 'Who should eat 2500 calories a day?', a: 'Active men (3–5 days of training per week), very active women, and anyone with a TDEE above 2,200 calories. Use our calorie deficit guide to calculate your TDEE precisely before choosing this target.' },
@@ -1457,8 +1457,8 @@ export const mealPlansData = {
     whyThisPlan: "The biggest dietary challenges for students are cost, time, and limited cooking facilities. This plan addresses all three: it uses cheap cuts of protein (chicken thighs rather than breast, tinned pulses rather than fresh), relies heavily on batch cooking, and prioritises meals that reheat well. At 1,500 calories with 90–110 g of protein per day, it is nutritionally solid without being complicated. Everything on the shopping list is available at Aldi, Lidl, Tesco, or Asda.",
     tips: [
       'Chicken thighs (boneless) cost significantly less than breast and are harder to overcook. Batch-roast six or eight on Sunday for the week.',
-      'Tinned tuna, eggs, and red lentils are the three cheapest protein sources in UK supermarkets. Master a few simple recipes with each and you can eat well all week.',
-      'A bag of rolled oats costs under £1 and provides 10–14 breakfasts. Overnight oats need no cooking — just prep the night before.',
+      'Red lentils, frozen chicken and tinned tuna are among the cheapest protein sources in UK supermarkets, and eggs are cheap per meal. Master a few simple recipes with each and you can eat well all week.',
+      'A 1 kg bag of rolled oats costs under £1 and provides around 20 breakfasts. Overnight oats need no cooking — just prep the night before.',
       'Frozen vegetables cost a fraction of fresh and last for months. Buy one large bag of frozen mixed veg (1.5 kg) and use it across multiple meals.',
       'Cook in bulk whenever possible. A pot of red lentil soup (under £2 to make) provides four or five lunches and reheats in the microwave in two minutes.',
     ],
@@ -1492,7 +1492,7 @@ export const mealPlansData = {
     whyThisPlan: 'Most vegetarian meal plans underdeliver on protein because they focus on vegetables and grains rather than planning around protein anchors. This plan takes the opposite approach: decide the protein source first, then build the rest of the meal around it. Eggs provide 6 g of protein each at around 78 kcal; 0% fat Greek yogurt delivers 10 g per 100 g at 57 kcal; and cottage cheese offers 12 g per 100 g. Combined with tofu and legumes, hitting 100–130 g of vegetarian protein per day at 1,500 calories is entirely achievable.',
     tips: [
       'Hard-boil a smaller batch of eggs at the start of the week, keep them chilled, and use them within 2 days for this plan or cook a second batch midweek.',
-      '0% fat Greek yogurt is the most calorie-efficient protein source on a vegetarian plan. A 200 g serving provides 20 g of protein for around 115 kcal.',
+      '0% fat Greek yogurt is one of the most calorie-efficient protein sources on a vegetarian plan. A 200 g serving provides 20 g of protein for around 115 kcal.',
       'Press tofu before cooking for better texture — wrap it in a clean tea towel, place a weight on top, and leave for 20–30 minutes. Marinate and pan-fry or bake for a satisfying protein anchor.',
       'Nutritional yeast adds a cheesy, umami flavour to vegetarian dishes and is rich in B vitamins. Find it in most major UK supermarkets for around £3–4 per bag.',
       'Edamame (frozen) is one of the highest-protein vegetables available — 11 g per 100 g. Add to salads, stir-fries, or eat as a snack with a little sea salt.',
@@ -1526,11 +1526,11 @@ export const mealPlansData = {
     intro: 'Building muscle on a budget in the UK is entirely achievable — the most effective bodybuilding foods are not expensive supplements or fancy cuts of meat, but cheap everyday staples: oats, eggs, chicken breast, tinned tuna, turkey mince, Greek yogurt, and brown rice. This 7-day plan delivers 2,000 calories and 150–170 g of protein per day using these staples, with an estimated weekly shop of £40–55 at Aldi, Tesco, or Asda.',
     whyThisPlan: 'Bodybuilding nutrition does not need to be complicated. The fundamentals are: eat enough calories to support muscle growth (typically at or just above TDEE), get 1.6–2.2 g of protein per kg of body weight, train consistently, and sleep enough. This plan handles the nutrition side, providing generous portions of lean protein and complex carbohydrates — the foundation of any effective bulking diet — at a price point that works on a normal UK income.',
     tips: [
-      'Chicken breast, oats, and eggs are the three most cost-effective bodybuilding foods in UK supermarkets. Build every meal around at least one of these three.',
+      'Chicken breast, oats, and eggs are among the most cost-effective bodybuilding foods in UK supermarkets. Build every meal around at least one of these three.',
       'A single scoop of whey protein (£20–30 for a 1 kg bag) adds 20–25 g of protein for around 120 kcal. Use it to top up protein on lower-protein days rather than as a meal replacement.',
-      'Brown rice in bulk (1 kg bags) is the most affordable complex carbohydrate for fuelling training. Batch-cook a large pot to cover three or four days of lunches and dinners.',
+      'Brown rice in bulk (1 kg bags) is the most affordable complex carbohydrate for fuelling training. Batch-cook a large pot, then cool it quickly and freeze portions for later in the week, since cooked rice should be eaten within about a day.',
       'Eat most of your carbohydrates around your training sessions — oats or banana before, rice or sweet potato after. This supports performance and recovery without needing to eat more.',
-      'Turkey mince is cheaper than beef mince and lower in fat, making it ideal for bodybuilding meals. Use it in chilli, bolognese, or burger patties for a lean, affordable protein source.',
+      'Turkey mince is usually a little cheaper than beef mince and lower in fat, making it ideal for bodybuilding meals. Use it in chilli, bolognese, or burger patties for a lean, affordable protein source.',
     ],
     faq: [
       { q: 'How much does this budget bodybuilding plan cost?', a: 'Around £40–55 per week depending on which UK supermarket you use. Aldi and Lidl are cheapest; Tesco with Clubcard Prices is competitive for key protein staples.' },
@@ -1565,7 +1565,7 @@ export const mealPlansData = {
       'Eat something with 20–30 g of protein within two hours of your workout. A chicken breast, a Greek yogurt protein bowl, or a protein shake are all good options.',
       'Do not skip breakfast. A protein-rich breakfast (eggs, Greek yogurt, overnight oats with protein powder) sets the right tone for the day and reduces cravings.',
       'Track your food using an app like MyFitnessPal or Cronometer for the first two to three weeks. Most beginners are surprised by how little protein they were eating before and how easy it is to hit targets with the right foods.',
-      'Drink 2–3 litres of water per day. Hydration affects energy, performance, and recovery — and thirst is commonly mistaken for hunger.',
+      'Drink regularly through the day — the NHS suggests 6 to 8 glasses of fluid, and more when you train. Hydration affects energy, performance, and recovery.',
     ],
     faq: [
       { q: 'How many calories does a gym beginner need?', a: '1,800 calories works well for most beginner gym-goers who want to lose fat while building some muscle. If you are aiming purely for muscle gain, calculate your TDEE and eat at or slightly above maintenance.' },
@@ -1603,7 +1603,7 @@ export const mealPlansData = {
     whyThisPlan: 'The foods that work best for fat loss — high in protein, high in fibre, low in calories — happen to be among the cheapest in any UK supermarket. Chicken thighs cost less per kilogram than breast; frozen broccoli costs less than fresh; tinned chickpeas and lentils are under £1 per can and pack extraordinary nutritional value. This plan maximises your nutrition-to-spend ratio for the best fat loss results on the smallest budget.',
     tips: [
       'Chicken thighs are cheaper than breast and harder to overcook — perfect for batch cooking. Remove the skin before cooking to reduce fat content significantly.',
-      'Tinned chickpeas and red lentils are the cheapest sources of protein and fibre in UK supermarkets. Both keep for years in a tin or bag and cost under 80p each.',
+      'Tinned chickpeas and red lentils are among the cheapest sources of protein and fibre in UK supermarkets. Both keep for years in a tin or bag and cost under 80p each.',
       'Use olive oil spray rather than pouring oil from a bottle. A 3-second spray is around 10–15 kcal versus 120 kcal for a tablespoon poured.',
       'Frozen broccoli (1 kg for around 80–95p) is one of the most calorie-efficient foods available. Use it as a filler to add volume to meals for almost no calorie cost.',
       'Cook large batches of lentil soup, chilli, or curry and freeze in portions. This makes the per-meal cost even lower and eliminates the temptation to buy expensive convenience food.',
@@ -1674,7 +1674,7 @@ export const mealPlansData = {
     tips: [
       'Stock up on tinned tuna in spring water — buy 8–10 cans at once to have protein available for any meal without needing to cook.',
       'Hard-boil a smaller batch of eggs at the start of the week, keep them chilled, and use them within 2 days for this plan or cook a second batch midweek.',
-      'Chicken breast bought in 1 kg+ packs is significantly cheaper per serving than smaller packs. Batch-cook the whole kilogram on Sunday.',
+      'Chicken breast bought in 1 kg+ packs is significantly cheaper per serving than smaller packs. Batch-cook the whole kilogram on Sunday, chill two days of portions and freeze the rest.',
       'Low-fat cottage cheese is consistently one of the cheapest protein-dense foods in UK supermarkets at around 80–90p per 300 g pot (36 g of protein).',
       'Red lentils (500 g for around 80p) provide both protein and fibre — far more per pound spent than any meat. Add them to soups, curries, and stews to reduce cost without reducing nutrition.',
     ],

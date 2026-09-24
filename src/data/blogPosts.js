@@ -357,7 +357,7 @@ const rawBlogPostsData = {
       {
         h2: 'Why High Protein Matters for Weight Loss',
         paragraphs: [
-          'Protein has three key advantages over carbohydrates and fat when it comes to weight loss. First, it has the highest thermic effect — your body burns approximately 25–30% of protein calories just digesting it, compared to 6–8% for carbs and 2–3% for fat. Second, protein is significantly more satiating than the other macronutrients, reducing hunger and late-night cravings. Third, it supports lean muscle retention during a calorie deficit, which helps more of the weight you lose come from fat rather than muscle.',
+          'Protein has three key advantages over carbohydrates and fat when it comes to weight loss. First, it has the highest thermic effect — your body uses roughly 20–30% of protein calories just digesting it, compared to about 5–10% for carbs and 0–3% for fat. Second, protein is significantly more satiating than the other macronutrients, reducing hunger and late-night cravings. Third, it supports lean muscle retention during a calorie deficit, which helps more of the weight you lose come from fat rather than muscle.',
           'Research published in the American Journal of Clinical Nutrition found that increasing protein to 30% of total calories reduced overall calorie intake by an average of 441 calories per day without conscious restriction. On a low-calorie diet, aiming for 1.6–2.2 g of protein per kg of body weight covers most adults well.',
         ],
       },
@@ -715,7 +715,7 @@ const rawBlogPostsData = {
       {
         h2: 'Why Protein Matters on a Budget Diet',
         paragraphs: [
-          'Protein is the macronutrient that does the most work when you are eating less. It helps preserve muscle mass during a calorie deficit, keeps you full for longer than carbohydrates or fat, and has the highest thermic effect — meaning your body burns roughly 25–30% of protein calories just digesting it. For weight loss or muscle gain, aiming for roughly 1.6–2.2 g of protein per kilogram of bodyweight is a common sports-nutrition planning range, but individual needs vary.',
+          'Protein is the macronutrient that does the most work when you are eating less. It helps preserve muscle mass during a calorie deficit, keeps you full for longer than carbohydrates or fat, and has the highest thermic effect — meaning your body uses roughly 20–30% of protein calories just digesting it. For weight loss or muscle gain, aiming for roughly 1.6–2.2 g of protein per kilogram of bodyweight is a common sports-nutrition planning range, but individual needs vary.',
           'The challenge is that many high-protein foods — premium steak, smoked salmon, protein bars — are expensive. But UK supermarkets stock a surprising range of genuinely cheap protein sources that rival expensive options on a per-gram basis. The key is knowing which items to look for.',
         ],
       },
