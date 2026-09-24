@@ -13,6 +13,7 @@ import { blogPostsData } from '../src/data/blogPosts.js';
 import { mealPlansData } from '../src/data/mealPlans.js';
 import { COMBO_LANDING_PAGES } from '../src/data/comboLandingPages.js';
 import { CONTAINER_GUIDES } from '../src/data/containerProducts.js';
+import { MEAL_PREP_PDF_SLUGS, getPdfProductBySlug } from '../src/data/mealPrepPdfProducts.js';
 import { MEAL_PLAN_HUBS } from '../src/data/mealPlanHubs.js';
 import { SEO_PRIORITY_ROUTES } from '../src/data/seoPriorityLinks.js';
 import {
@@ -674,6 +675,15 @@ function buildRouteIndex() {
   addRoute('/privacy', { label: 'Privacy', type: 'support', publicEligible: false });
   addRoute('/terms', { label: 'Terms', type: 'support', publicEligible: false });
   addRoute('/meal-plans', { label: 'Meal plan hub', type: 'hub' });
+  // The paid PDF shop was never added here, so every Search Console row for
+  // it was silently dropped as "unverified" — the report had no visibility
+  // into these pages at all, paid product or not.
+  addRoute('/meal-prep-pdfs', { label: '6-Week PDF Plans', description: 'Printable 6-week Aldi and Lidl meal plans, delivered as a PDF.', type: 'shop-index' });
+  for (const slug of MEAL_PREP_PDF_SLUGS) {
+    const product = getPdfProductBySlug(slug);
+    addRoute(`/meal-prep-pdfs/${slug}`, { label: product?.name || labelFromPath(slug), description: product?.tagline, type: 'shop-product' });
+  }
+  addRoute('/meal-prep-pdfs/thank-you', { label: 'PDF order confirmation', type: 'shop-thank-you', publicEligible: false });
 
   for (const item of GOAL_CHOOSER_ITEMS) {
     addRoute(`/choose-plan/${item.value}`, { label: `${item.label} meal plans`, type: 'chooser' });

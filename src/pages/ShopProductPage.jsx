@@ -84,7 +84,17 @@ export default function ShopProductPage() {
             <div className="shop-buy-box">
               <span className="shop-price">{formatPrice(product.priceGBP)}</span>
               {buyUrl ? (
-                <a className="btn-primary" href={buyUrl} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="btn-primary"
+                  href={buyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-event="pdf_checkout_click"
+                  data-offer={product.name}
+                  data-plan-slug={product.slug}
+                  data-source-page={canonical}
+                  data-cta-location="shop-buy-box"
+                >
                   Get instant access — download in 2 minutes
                 </a>
               ) : (
