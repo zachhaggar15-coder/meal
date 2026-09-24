@@ -67,11 +67,11 @@ const STEPS = [
   {
     id: 'calories',
     question: 'What calorie range suits you?',
-    hint: 'Not sure? 1,800 kcal is the most popular starting point.',
+    hint: 'Not sure? 1,800 kcal is a comfortable starting point for many adults.',
     type: 'single',
     options: [
       { value: '1500', label: '~1,500 kcal', desc: 'Lower target - often chosen by lighter adults' },
-      { value: '1800', label: '~1,800 kcal', desc: 'Most popular - filling, sustainable' },
+      { value: '1800', label: '~1,800 kcal', desc: 'Moderate target - filling, sustainable' },
       { value: '2000', label: '~2,000 kcal', desc: 'Middle target - often chosen by active adults' },
       { value: '2500', label: '~2,500 kcal', desc: 'Muscle gain or very active individuals' },
       { value: 'custom', label: 'Custom kcal', desc: 'Enter your own daily target' },

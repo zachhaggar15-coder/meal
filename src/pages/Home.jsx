@@ -393,7 +393,7 @@ export default function Home() {
             <li className="hiw-step">
               <span className="hiw-num" aria-hidden="true">1</span>
               <strong>Tell us what you need</strong>
-              <p>Seven quick questions: your goal, diet, supermarket, calories, budget and how much cooking you want to do.</p>
+              <p>Seven quick questions: your goal, diet, supermarket, calories, budget, how much cooking you want to do and any macro preference.</p>
             </li>
             <li className="hiw-step">
               <span className="hiw-num" aria-hidden="true">2</span>
@@ -422,7 +422,7 @@ export default function Home() {
           <div className="calorie-nav-links">
             <Link to="/meal-plan/1500-calorie-meal-plan" className="calorie-nav-card">
               <strong>1,500 kcal</strong>
-              <span>Lower target — most popular for weight loss</span>
+              <span>Lower target — a common weight-loss starting point</span>
             </Link>
             <Link to="/meal-plan/1800-calorie-meal-plan" className="calorie-nav-card">
               <strong>1,800 kcal</strong>
