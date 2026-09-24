@@ -191,3 +191,56 @@ export function authoredMethodFor(name, ingredients, libraryIngredients) {
 }
 
 export { ingredientKey };
+
+// Older editorial plan meals (src/data/mealPlans.js) have their own names and
+// portion text, so they are not matched against the shared library. Their
+// names are unique to those plans. An entry can be a function of the meal's
+// ingredient text where two versions of a dish list different extras.
+const LEGACY_AUTHORED_METHODS = Object.freeze({
+  'Energy Balls (homemade)': [
+    'Blend the dates, walnuts and cacao in a food processor until the mixture sticks together when pressed. No processor? Chop the walnuts very finely, mash the dates with a fork and knead everything together.',
+    'Roll into small balls, about 10g each.',
+    'Chill for 30 minutes to firm up, then keep in an airtight container in the fridge for up to a week.',
+  ],
+  'Black Bean Tacos': ingredients => {
+    const avocado = /avocado/i.test(ingredients);
+    return [
+      'Warm the black beans in a small pan with a splash of water until hot, lightly crushing some of them.',
+      `Finely shred the cabbage${avocado ? ' and slice the avocado' : ''}.`,
+      'Warm the tortillas in a dry frying pan or the microwave for a few seconds each.',
+      `Fill the tortillas with the beans and cabbage${avocado ? ', top with the avocado' : ''}, fold and serve.`,
+    ];
+  },
+  'Banana Oat Pancakes': [
+    'Mash the banana in a bowl, then stir in the oats and soy milk to make a thick batter. Leave it for 5 minutes so the oats soften.',
+    'Lightly grease a non-stick pan and cook spoonfuls of the batter over medium heat for 2-3 minutes per side, until golden and set.',
+    'Serve warm.',
+  ],
+  'Turkey Burger with Salad': [
+    'Cook the turkey patty in a non-stick pan or under the grill for 6-8 minutes per side, until cooked through with no pink in the middle.',
+    'Warm or toast the wholemeal bun.',
+    'Put the patty in the bun with some of the salad leaves and tomato, and serve the rest of the salad on the side.',
+  ],
+  'Tofu & Lentil Curry': [
+    'Cook the brown rice according to its packet instructions.',
+    'Heat the tomato curry sauce in a pan with the cooked lentils until simmering.',
+    'Cut the silken tofu into cubes and slide it gently into the sauce. Warm through for 3-4 minutes without stirring hard, as silken tofu breaks up easily.',
+    'Serve with the rice.',
+  ],
+  'Edamame Pods': [
+    'Cook the edamame pods in boiling water for 3-4 minutes, then drain.',
+    'Sprinkle with a little salt and pop the edamame out of the pods as you eat, warm or chilled.',
+  ],
+  'Tofu Scramble on Wholemeal Toast': [
+    'Crumble the firm tofu and cook it in a non-stick pan over medium heat for 4-5 minutes, stirring, until hot through.',
+    'Halve the cherry tomatoes and add them with the spinach; cook for 2 minutes until the spinach wilts. Season to taste.',
+    'Make the wholemeal toast and pile the scramble on top.',
+  ],
+});
+
+export function legacyAuthoredMethodFor(name, ingredients) {
+  const entry = LEGACY_AUTHORED_METHODS[String(name || '').trim()];
+  if (!entry) return null;
+  const text = (Array.isArray(ingredients) ? ingredients : [ingredients]).join(' ');
+  return typeof entry === 'function' ? entry(text) : [...entry];
+}

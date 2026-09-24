@@ -1,4 +1,4 @@
-import { authoredMethodFor } from '../data/authoredMethods.js';
+import { authoredMethodFor, legacyAuthoredMethodFor } from '../data/authoredMethods.js';
 import { MEALS } from '../data/mealLibrary.js';
 import { getCookingIngredientModels } from './cookingQuantities.js';
 import { parseIngredientLine } from './ingredientParser.js';
@@ -107,6 +107,10 @@ export function buildPracticalRecipeSteps(meal = {}) {
     ? authoredMethodFor(meal.name, normaliseIngredients(meal.ingredients, meal.portion_size, meal.name), libraryMeal.ingredients)
     : null;
   if (authored) return authored;
+  if (!libraryMeal) {
+    const legacy = legacyAuthoredMethodFor(meal.name, normaliseIngredients(meal.ingredients, meal.portion_size, meal.name));
+    if (legacy) return legacy;
+  }
   return resolveApplianceState(buildComponentSteps(meal));
 }
 
@@ -1049,7 +1053,17 @@ function buildComponentSteps(meal = {}) {
         // belong in the same pot.
         : isPulseProtein && needsCooking(protein, proteinSource, pulseState)
           ? `Meanwhile, simmer ${joinNatural(nonStarch)} together in a pan with enough ${cookingLiquidWord(remainingNames)} to cover, until tender.`
-          : `Meanwhile, prepare ${joinNatural(nonStarch)} and warm everything gently in a pan.`,
+          : (() => {
+            // Sauces and seasonings are stirred in by the final step; naming
+            // them here too put "mixed herbs" in the pan twice. Firm vegetables
+            // are cooked before anything is merely warmed.
+            const warmItems = withoutNames(nonStarch, [...sauces, ...seasonings, ...finishingToppings]);
+            const firm = warmItems.filter(item => /\b(mushrooms?|peppers?|onions?|courgettes?|leeks?|carrots?|broccoli|spinach)\b/i.test(item) && !isAlreadyPreparedIngredient(item));
+            const rest = withoutNames(warmItems, firm);
+            if (!warmItems.length) return 'Meanwhile, heat a large non-stick pan over medium heat.';
+            if (!firm.length) return `Meanwhile, warm ${joinNatural(rest)} gently in a pan.`;
+            return `Meanwhile, cook ${joinNatural(firm)} in a non-stick pan over medium heat for 5-6 minutes, until softened${rest.length ? `, then add ${joinNatural(rest)} and warm through` : ''}.`;
+          })(),
       titleBakes && !titleStartsBaked
         ? buildComposedBakeStep({ starchName, nonStarch, sauces, seasonings })
         : starch === 'potato'
@@ -1354,7 +1368,7 @@ function buildComposedBakeStep({ starchName, sauces = [], seasonings = [] }) {
 // them to slice three things that cannot be sliced in order to reach the one
 // that can — and "slice or portion lean beef jerky" is the same mistake the
 // cooking instruction made, in a quieter voice.
-const NOT_SLICEABLE = /\b(chilli flakes|ricotta|berries|mustard|slices|grated|leaves|basil|dill|garlic clove|mozzarella balls|yogurt|yoghurt|skyr|quark|cottage cheese|cream cheese|honey|syrup|nut butter|peanut butter|almond butter|tahini|oil|dressing|sauce|pesto|hummus|houmous|powder|seeds|granola|oats|milk|kefir|jam|salt|black pepper|white pepper|peppercorns|herbs?|spices?|cinnamon|vanilla|jerky|biltong|nuts|walnuts|peanuts|almonds|cashews|rice cakes?|oatcakes?|crackers?|smoked salmon|juice|zest|vinegar|stock|water|raisins|sultanas|dried \w+|chocolate|chips)\b/i;
+const NOT_SLICEABLE = /\b(nutritional yeast|yeast|chilli flakes|ricotta|berries|mustard|slices|grated|leaves|basil|dill|garlic clove|mozzarella balls|yogurt|yoghurt|skyr|quark|cottage cheese|cream cheese|honey|syrup|nut butter|peanut butter|almond butter|tahini|oil|dressing|sauce|pesto|hummus|houmous|powder|seeds|granola|oats|milk|kefir|jam|salt|black pepper|white pepper|peppercorns|herbs?|spices?|cinnamon|vanilla|jerky|biltong|nuts|walnuts|peanuts|almonds|cashews|rice cakes?|oatcakes?|crackers?|smoked salmon|juice|zest|vinegar|stock|water|raisins|sultanas|dried \w+|chocolate|chips)\b/i;
 
 // Things you put a topping ON rather than stir a topping INTO.
 const CARRIER_PATTERN = /\b(rice cakes?|oatcakes?|crackers?|toast|bread|bagel|pitta|wrap|tortilla|roll)\b/i;
