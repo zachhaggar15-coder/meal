@@ -1,3 +1,5 @@
+import { authoredMethodFor } from '../data/authoredMethods.js';
+import { MEALS } from '../data/mealLibrary.js';
 import { getCookingIngredientModels } from './cookingQuantities.js';
 import { parseIngredientLine } from './ingredientParser.js';
 import {
@@ -58,7 +60,15 @@ const EGG_BEATEN_IN = /\b(milk|turmeric|paprika|cumin|mixed herbs|dried herbs|ch
 const EGG_CHEESE = /\b(feta|cheddar|parmesan|mozzarella|cheese)\b/i;
 
 // Bowl ingredients that are squeezed or sprinkled over rather than arranged.
-const BOWL_FINISHER = /\b(juice|zest|chilli flakes|spice|seasoning|paprika|cumin|turmeric)\b|\bto taste\b/i;
+// Whole cuts that are rested and sliced after cooking.
+const RESTED_CUT = /\b(chicken breast|chicken thighs?|steak|sirloin|beef strips|pork|lamb|turkey breast|halloumi)\b/i;
+
+// Sweet toast and bagel toppings do not get "season to taste".
+const SWEET_FILLING = /\b(honey|jam|berries|banana|maple|syrup|chocolate)\b/i;
+
+const LIBRARY_MEALS_BY_NAME = new Map(MEALS.map(meal => [meal.name, meal]));
+
+const BOWL_FINISHER = /\b(juice|zest|chilli flakes|spice|seasoning|paprika|cumin|turmeric|ginger)\b|\bto taste\b/i;
 
 const PLACEHOLDER_PATTERNS = [
   /\bcook (?:the )?pasta,?\s*rice or noodles\b/i,
@@ -92,6 +102,11 @@ const INGREDIENT_ALIASES = [
  * once they are all on the page.
  */
 export function buildPracticalRecipeSteps(meal = {}) {
+  const libraryMeal = LIBRARY_MEALS_BY_NAME.get(String(meal.name || '').trim());
+  const authored = libraryMeal
+    ? authoredMethodFor(meal.name, normaliseIngredients(meal.ingredients, meal.portion_size, meal.name), libraryMeal.ingredients)
+    : null;
+  if (authored) return authored;
   return resolveApplianceState(buildComponentSteps(meal));
 }
 
@@ -233,7 +248,9 @@ function buildComponentSteps(meal = {}) {
     const toppings = withoutNames(remainingNames, batter);
     const isWaffle = name.includes('waffle');
     return [
-      `Whisk ${joinNatural(batter)} into a smooth batter and leave it to stand for 2 minutes.`,
+      batter.length === 1 && /batter/i.test(batter[0])
+        ? `Whisk the ${batter[0]} briefly so it is smooth.`
+        : `Whisk ${joinNatural(batter)} into a smooth batter and leave it to stand for 2 minutes.`,
       // Most kitchens do not own a waffle iron, and a recipe that assumes one
       // is a recipe most readers cannot cook. The alternative is stated
       // honestly: the same batter makes good pancakes, and they are pancakes —
@@ -432,7 +449,7 @@ function buildComponentSteps(meal = {}) {
         ? `Cook ${joinNatural(cookedItems)} in a non-stick pan until browned and cooked through.`
         : 'Heat a non-stick pan over medium heat.',
       panStep ? `${panStep}.` : '',
-      `Cook the ${eggs} to your liking${toast ? ` and toast the ${toast}` : ''}.`,
+      `Cook the ${eggs} to your liking${toast ? ` and ${toastInstruction([toast]).charAt(0).toLowerCase()}${toastInstruction([toast]).slice(1)}` : ''}.`,
       'Serve everything together while hot.',
     ].filter(Boolean);
   }
@@ -483,6 +500,19 @@ function buildComponentSteps(meal = {}) {
     ];
   }
 
+  // A protein shake is shaken, not "put in a bowl or lidded container".
+  if (/\bshake\b/.test(name)) {
+    const powder = findCookingNames(cookingIngredients, /protein powder|whey/i);
+    const liquid = findCookingNames(cookingIngredients, /\b(milk|water)\b/i);
+    if (powder.length && liquid.length) {
+      const extras = withoutNames(remainingNames, [...powder, ...liquid]);
+      return [
+        `Pour the ${joinNatural(liquid)} into a shaker, add the ${joinNatural(powder)} and shake hard for 20-30 seconds until smooth.`,
+        extras.length ? `Drink straight away, with ${joinNatural(extras)} on the side.` : 'Drink straight away.',
+      ];
+    }
+  }
+
   if (/\beggs?\b/.test(name) || protein === 'eggs' || name.includes('omelette')) {
     const carrier = findCookingNames(cookingIngredients, /(bread|toast|bagel|pitta)/i);
     // A grain in an egg dish (a Buddha bowl's rice) is cooked, not listed as
@@ -494,7 +524,7 @@ function buildComponentSteps(meal = {}) {
     // the thing already cooked in the step above, not something "served
     // with" the dish.
     const allAccompaniments = withoutNames(remainingNames, [
-      ...findCookingNames(cookingIngredients, /^eggs?(\s+whites?)?$/i),
+      ...findCookingNames(cookingIngredients, /^(eggs?(\s+whites?)?|(egg\s+)?yolks?)$/i),
       ...vegetables,
       ...carrier,
       ...eggStarchNames,
@@ -535,8 +565,12 @@ function buildComponentSteps(meal = {}) {
     // an egg mayo sandwich used to be scrambled.
     const ingredientHardBoiled = /\beggs?\b[^;]*\bhard.?boiled\b/i.test(ingredientSearch);
     const ingredientSoftBoiled = /\beggs?\b[^;]*\bsoft.?boiled\b/i.test(ingredientSearch);
+    // An egg salad is made with boiled eggs; "Tuna & Egg White Salad"
+    // scrambled its egg whites in a pan.
+    const coldSaladEggs = isColdAssembly && !isOmeletteStyle && !/scrambl/.test(name);
+    const onlyWhites = /\begg whites?\b/i.test(ingredientSearch) && !/\beggs?\b(?!\s*whites?)/i.test(ingredientSearch.replace(/\begg whites?\b/gi, ''));
     const isBoiledOrPoached = name.includes('boiled') || name.includes('poached') || name.includes('florentine')
-      || ingredientHardBoiled || ingredientSoftBoiled;
+      || ingredientHardBoiled || ingredientSoftBoiled || coldSaladEggs;
     // The fat is for the pan whenever something is cooked in one, and garlic
     // cooks with the vegetables. Milk and spices are beaten into scrambled
     // or omelette eggs, and cheese goes in before serving. They used to land
@@ -589,10 +623,10 @@ function buildComponentSteps(meal = {}) {
     // gets that exact instruction; only a plain, unqualified "boiled" name
     // (none exist in this library today, but a future one might) falls
     // back to presenting both timings as a choice.
-    const isHardBoiled = /hard.?boiled/i.test(name) || ingredientHardBoiled;
+    const isHardBoiled = /hard.?boiled/i.test(name) || ingredientHardBoiled || (coldSaladEggs && !/soft.?boiled/i.test(name) && !ingredientSoftBoiled);
     const isSoftBoiled = /soft.?boiled/i.test(name) || ingredientSoftBoiled;
     const cookStep = isHardBoiled
-      ? 'Lower whole eggs into the water and simmer for 9-12 minutes, until the yolk is fully set, then cool under cold water and peel.'
+      ? `Lower whole eggs into the water and simmer for 9-12 minutes, until the yolk is fully set, then cool under cold water and peel${onlyWhites ? ', keeping just the whites' : ''}.`
       : isSoftBoiled
         ? 'Lower whole eggs into the water and simmer for 5-6 minutes, until the white is set but the yolk stays runny, then cool briefly under cold water and peel.'
         : (name.includes('poached') || name.includes('florentine')) && !name.includes('boiled')
@@ -624,9 +658,9 @@ function buildComponentSteps(meal = {}) {
       : bowlBase.length
         ? `Arrange ${joinNatural(bowlBase)} in a bowl, then top with the eggs${bowlExtras.length ? ` and ${joinNatural(bowlExtras)}` : ''}.`
       : carrier.length && cookedSides.length
-        ? `Toast ${joinNatural(carrier)}, then top with ${cookedSides[0]} and the eggs${accompaniments.length ? `, finishing with ${joinNatural(accompaniments)}` : ''}.`
+        ? `${toastInstruction(carrier)}, then top with ${cookedSides[0]} and the eggs${accompaniments.length ? `, finishing with ${joinNatural(accompaniments)}` : ''}.`
       : carrier.length
-        ? `Toast ${joinNatural(carrier)}, then serve with the eggs${accompaniments.length ? ` and ${joinNatural(accompaniments)}` : ''}.`
+        ? `${toastInstruction(carrier)}, then serve with the eggs${accompaniments.length ? ` and ${joinNatural(accompaniments)}` : ''}.`
         : `Season to taste and serve${accompaniments.length ? ` with ${joinNatural(accompaniments)}` : ''}.`;
     return [
       starchStep,
@@ -649,15 +683,20 @@ function buildComponentSteps(meal = {}) {
       // Only a wrap can be wrapped. This said "serve or wrap tightly for later"
       // on every toast, bagel and open sandwich in the library. And a filling
       // that already carries "black pepper, to taste" does not then need a
-      // separate instruction to season to taste.
-      `Layer ${joinNatural(filling)} evenly${
-        filling.some(item => /,\s*to taste$/i.test(item)) ? '' : ' and season to taste'
-      }.${
-        carriers.some(item => /\b(wrap|tortilla|pitta)\b/i.test(item))
-          ? ' Roll it up tightly if you are taking it with you.'
-          : ''
-      }`,
-    ];
+      // separate instruction to season to taste; nor does a sweet topping.
+      // A pitta is opened and filled rather than layered.
+      (() => {
+        const season = filling.some(item => /,\s*to taste$/i.test(item)) || filling.some(item => SWEET_FILLING.test(item))
+          ? ''
+          : ' and season to taste';
+        if (carriers.some(item => /\bpitta\b/i.test(item)) && !carriers.some(item => /\b(wrap|tortilla)\b/i.test(item))) {
+          return `Open the pitta into a pocket and fill it with ${joinNatural(filling)}${season}.`;
+        }
+        return `Layer ${joinNatural(filling)} evenly${season}.${
+          carriers.some(item => /\b(wrap|tortilla)\b/i.test(item)) ? ' Roll it up tightly if you are taking it with you.' : ''
+        }`;
+      })(),
+    ].filter(Boolean);
   }
 
   // Shepherd's/cottage pie: a filling under a topping, browned in the oven.
@@ -802,7 +841,11 @@ function buildComponentSteps(meal = {}) {
       // cookProteinStep as its own `finish` put that sentence at the very
       // end of the returned string, so the aromatics line (appended after)
       // read as happening once the protein had already finished resting.
-      const restText = isPulseProtein ? '' : ' Rest briefly before slicing if needed.';
+      // Only a whole cut is rested and sliced; mince, prawns, tofu and flaky
+      // fish were being told to rest before slicing.
+      const restText = RESTED_CUT.test(proteinName) && !/\bmince\b/i.test(proteinName)
+        ? ' Rest briefly before slicing if needed.'
+        : '';
       const cooked = cookProteinStep(proteinName, {
         dryPulse: isPulseProtein,
         ovenBaked: titleBakes,
@@ -833,6 +876,16 @@ function buildComponentSteps(meal = {}) {
     if (carriers.length) {
       steps.push(`Toast or warm ${joinNatural(carriers)} just before serving.`);
     }
+    // Frozen peas and edamame went into bowls straight from the freezer.
+    // They need a few minutes in boiling water; the sentence rides on an
+    // existing step so the bowl stays within its five steps.
+    const blanchables = findCookingNames(cookingIngredients, /\b(frozen|peas|edamame)\b/i)
+      .filter(item => !/\b(berries|fruit|mango)\b/i.test(item));
+    if (blanchables.length) {
+      const blanch = `Cook ${joinNatural(blanchables)} in boiling water for 3-4 minutes, then drain.`;
+      if (steps.length) steps[steps.length - 1] = `${steps[steps.length - 1]} ${blanch}`;
+      else steps.push(blanch);
+    }
     const hasDressing = sauces.some(item => /dressing/i.test(item));
     const assemblyCandidates = withoutNames(remainingNames, [
       ...sauces,
@@ -858,7 +911,7 @@ function buildComponentSteps(meal = {}) {
   }
 
   if (name.includes('curry') || name.includes('chilli') || name.includes('stew') || name.includes('soup') || name.includes('tagine')) {
-    const aromatics = findCookingNames(cookingIngredients, /(onion|garlic|ginger|celery|carrot)/i);
+    const aromatics = findCookingNames(cookingIngredients, /(onion|garlic|ginger|celery|carrot|leek)/i);
     // Sweetcorn, frozen veg blends, green beans and similar arrive ready to
     // use — "peel and chop sweetcorn into even pieces" is nonsense. They
     // still belong in the pot, just not in the knife-work step.
@@ -916,7 +969,7 @@ function buildComponentSteps(meal = {}) {
             ? `Heat the oven to 200°C (180°C fan) and roast ${joinNatural(usableFirmVegetables)} for 25-30 minutes, until tender and caramelised at the edges. Meanwhile soften ${aromatics.length ? joinNatural(aromatics) : 'the aromatics'} in a large pan over medium heat.`
             : `Heat a large pan over medium heat and soften ${joinNatural([...aromatics, ...usableFirmVegetables])} for 5-7 minutes.`)
           : 'Heat a large pan over medium heat.',
-      buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames }),
+      buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames, isSoup: /\b(soup|broth)\b/.test(name) }),
       starch && starch !== 'potato'
         ? cookStarchStep(starchName, { prefix: 'Meanwhile, ', serveAlongside: true, potatoPreparation, displayName: starchDisplayName })
         : accompanimentNames.length
@@ -962,6 +1015,13 @@ function buildComponentSteps(meal = {}) {
     // told to stir garam masala into the pot and then, two steps later,
     // stir the same garam masala in again.
     const pulseSimmerNamesEverything = isPulseProtein && Boolean(protein) && needsCooking(protein, proteinSource, pulseState);
+    const proteinOffThePan = Boolean(protein) && !isPulseProtein
+      && needsCooking(protein, proteinSource, pulseState)
+      && (nameBakesProtein || nameGrillsProtein);
+    // With the protein grilled or baked and the vegetables roasted or
+    // steamed, there is no pan to fold the grain through. Serve it instead.
+    const servedNotFolded = proteinOffThePan || (nameRoastsVegetables && panAdditions.length > 0);
+    const servedExtras = uniqueNames([...panAdditions, ...sauces, ...seasonings]);
     return [
       cookStarchStep(starchName, { potatoPreparation, displayName: starchDisplayName }),
       protein && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein
@@ -973,7 +1033,12 @@ function buildComponentSteps(meal = {}) {
           ? `${cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein, grilled: nameGrillsProtein })}${panAdditions.length
             ? (nameRoastsVegetables
               ? ` Meanwhile roast ${joinNatural(panAdditions)} at 200°C (180°C fan) for 25-30 minutes, until tender and lightly browned.`
-              : ` Add ${joinNatural(panAdditions)} and cook until tender.`)
+              // A grilled or baked protein has no pan to add vegetables to:
+              // "bake the salmon... add broccoli and cook until tender" left
+              // the reader guessing whether the broccoli went in the oven.
+              : proteinOffThePan
+                ? ` At the same time, steam or boil ${joinNatural(panAdditions)} for 4-5 minutes, until tender.`
+                : ` Add ${joinNatural(panAdditions)} and cook until tender.`)
             : ''}`
           : cookProteinStep(proteinName, { prefix: 'Meanwhile, ', ovenBaked: nameBakesProtein, grilled: nameGrillsProtein })
         // A dry pulse is not just "warmed" — it needs real simmering time
@@ -994,6 +1059,8 @@ function buildComponentSteps(meal = {}) {
             ...seasonings,
             ...finishingToppings,
           ]))}, then season to taste.`
+          : servedNotFolded
+            ? `Serve the ${proteinName} with the ${joinNatural([starchName, ...servedExtras])}${finishingToppings.length ? `, with ${joinNatural(finishingToppings)} scattered over` : ''}${servedExtras.some(item => /to taste$/i.test(item)) ? '' : ', then season to taste'}.`
           : (sauces.length || seasonings.length) && !pulseSimmerNamesEverything
           ? `Fold the cooked ${starchName} through the pan, stir in ${joinNatural([...sauces, ...seasonings])}, and heat through before serving${finishingToppings.length ? ` with ${joinNatural(finishingToppings)} scattered over` : ''}.`
           : titleBakes
@@ -1020,6 +1087,7 @@ function buildComponentSteps(meal = {}) {
   // below — drop it from both and the ingredient vanishes from the method.
   const choppable = vegetables.filter(item => (
     !isTinnedName(item) && !RAW_ONLY_VEGETABLE.test(item) && !READY_TO_USE_VEGETABLE.test(item)
+    && !isAlreadyPreparedIngredient(item)
   ));
   const alreadyNamed = [...choppable, proteinName, proteinDisplayName].filter(Boolean);
   const leftovers = withoutNames(remainingNames, [...alreadyNamed, ...sauces, ...coldCondiments]);
@@ -1030,7 +1098,15 @@ function buildComponentSteps(meal = {}) {
   const dryPulses = leftovers.filter(isDryPulseName);
   const quickAdditions = withoutNames(leftovers, dryPulses);
   const coldNote = coldCondiments.length ? ` Serve with the ${joinNatural(coldCondiments)} on the side, kept cold.` : '';
-  const finish = (dryPulses.length
+  // Vegetables chopped in step one used to be left raw: "Slice or chop
+  // broccoli and asparagus" was never followed by anything that cooked them.
+  const proteinCooks = Boolean(protein) && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein;
+  const vegCook = choppable.length && proteinCooks
+    ? (titleGrills || titleBakes
+      ? `Steam or boil ${joinNatural(choppable)} for 4-5 minutes, until tender. `
+      : `Add ${joinNatural(choppable)} to the pan and cook for 4-5 minutes, until tender. `)
+    : '';
+  const finish = vegCook + (dryPulses.length
     ? `Add ${joinNatural([...dryPulses, ...quickAdditions])} with enough ${cookingLiquidWord(remainingNames)} to cover, and simmer for 20-25 minutes until the ${joinNatural(dryPulses)} are tender${sauces.length ? `, stirring in ${joinNatural(sauces)} at the end` : ''}. Season to taste and serve.`
     : quickAdditions.length && sauces.length
       ? `Add ${joinNatural(quickAdditions)}, stir in ${joinNatural(sauces)} and heat through, then taste and serve.`
@@ -1220,7 +1296,7 @@ function stripTinnedPrefix(value) {
 //     This never adds a stock ingredient to the ingredient list or
 //     nutrition — water is a free pantry staple, the same way "boil the
 //     potatoes in lightly salted water" doesn't require water to be listed.
-function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames }) {
+function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, remainingNames, isSoup = false }) {
   // A dry pulse needs stated liquid whether or not it's the dish's PRIMARY
   // protein — "Turkey & Lentil Soup" and "Chicken & Vegetable Stew" resolve
   // their protein to the meat, but the dry lentils alongside it still can't
@@ -1229,7 +1305,9 @@ function buildSimmerStep({ flavourings, additions, isPulseProtein, pulseState, r
   const dryPulseInPot = isPulseProtein
     ? pulseState === PULSE_STATE.DRY
     : additions.some(item => isDryPulseName(item));
-  const needsLiquidNote = dryPulseInPot && !hasCookingLiquid(remainingNames);
+  // A soup with no stock listed still needs liquid: "Chicken & Vegetable
+  // Soup" simmered its vegetables in nothing at all.
+  const needsLiquidNote = (dryPulseInPot || isSoup) && !hasCookingLiquid(remainingNames);
   const liquidClause = needsLiquidNote ? ` with enough ${cookingLiquidWord(remainingNames)} to cover` : '';
   // When every ingredient has already been named in an earlier step there
   // is genuinely nothing left to add — saying "add the listed ingredients"
@@ -1276,7 +1354,7 @@ function buildComposedBakeStep({ starchName, sauces = [], seasonings = [] }) {
 // them to slice three things that cannot be sliced in order to reach the one
 // that can — and "slice or portion lean beef jerky" is the same mistake the
 // cooking instruction made, in a quieter voice.
-const NOT_SLICEABLE = /\b(yogurt|yoghurt|skyr|quark|cottage cheese|cream cheese|honey|syrup|nut butter|peanut butter|almond butter|tahini|oil|dressing|sauce|pesto|hummus|houmous|powder|seeds|granola|oats|milk|kefir|jam|salt|black pepper|white pepper|peppercorns|herbs?|spices?|cinnamon|vanilla|jerky|biltong|nuts|walnuts|peanuts|almonds|cashews|rice cakes?|oatcakes?|crackers?|smoked salmon|juice|zest|vinegar|stock|water|raisins|sultanas|dried \w+|chocolate|chips)\b/i;
+const NOT_SLICEABLE = /\b(chilli flakes|ricotta|berries|mustard|slices|grated|leaves|basil|dill|garlic clove|mozzarella balls|yogurt|yoghurt|skyr|quark|cottage cheese|cream cheese|honey|syrup|nut butter|peanut butter|almond butter|tahini|oil|dressing|sauce|pesto|hummus|houmous|powder|seeds|granola|oats|milk|kefir|jam|salt|black pepper|white pepper|peppercorns|herbs?|spices?|cinnamon|vanilla|jerky|biltong|nuts|walnuts|peanuts|almonds|cashews|rice cakes?|oatcakes?|crackers?|smoked salmon|juice|zest|vinegar|stock|water|raisins|sultanas|dried \w+|chocolate|chips)\b/i;
 
 // Things you put a topping ON rather than stir a topping INTO.
 const CARRIER_PATTERN = /\b(rice cakes?|oatcakes?|crackers?|toast|bread|bagel|pitta|wrap|tortilla|roll)\b/i;
@@ -1284,7 +1362,7 @@ const CARRIER_PATTERN = /\b(rice cakes?|oatcakes?|crackers?|toast|bread|bagel|pi
 // Fillings that arrive cooked and are eaten hot. Named specifically rather
 // than by the word "sauce", which would have sent a cold mint yogurt dressing
 // to the pan.
-const HEATABLE_FILLING = /\b(baked beans|refried beans|mushy peas|ratatouille|chilli|curry|bolognese|ragu)\b/i;
+const HEATABLE_FILLING = /\b(baked beans|refried beans|mushy peas|ratatouille|chilli(?! flakes)|curry|bolognese|ragu)\b/i;
 
 // Leaves are washed, not sliced.
 const LEAF_FILLING = /\b(spinach|lettuce|rocket|watercress|leaves|kale|salad)\b/i;
@@ -1307,7 +1385,7 @@ function prepareFillingStep(filling) {
   if (heat.length) clauses.push(`heat ${joinNatural(heat)} through in a pan or the microwave`);
   if (drain.length) clauses.push(`drain ${joinNatural(drain)}`);
   if (slice.length) clauses.push(`slice ${joinNatural(slice)}`);
-  if (!clauses.length) return 'Have the filling ready.';
+  if (!clauses.length) return '';
 
   const sentence = clauses.length === 1
     ? clauses[0]
@@ -1465,6 +1543,15 @@ function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = fal
   const firstLetter = prefix ? instruction : instruction.charAt(0).toUpperCase() + instruction.slice(1);
   const ending = finishText ? `. ${finishText}` : '.';
   return `${prefix}${firstLetter}${ending}`;
+}
+
+// "Toast slice wholemeal toast" and "toast the toast": the carrier's own
+// name already says it is toast, so make it rather than toast it again.
+function toastInstruction(carriers) {
+  const names = carriers.map(item => String(item).replace(/^(?:slices?|small|medium|large)\s+/i, ''));
+  return names.every(item => /\btoast\b/i.test(item))
+    ? `Make the ${joinNatural(names)}`
+    : `Toast ${joinNatural(names)}`;
 }
 
 function capitaliseFirst(value) {
