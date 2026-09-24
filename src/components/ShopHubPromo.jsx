@@ -5,10 +5,37 @@ import { getPdfProductBySlug } from '../data/mealPrepPdfProducts.js';
 // (/meal-plans/aldi, /meal-plans/lidl). Distinct from PdfUpsell, which picks
 // one single-plan PDF matched to a specific free plan's goal — a hub page
 // covers every goal for that supermarket, so this promotes the bundle
-// alongside both singles instead of guessing at one.
-export default function ShopHubPromo({ supermarket }) {
+// alongside both singles instead of guessing at one. Every other supermarket
+// falls back to a generic nudge toward the shop instead of showing nothing,
+// so we can see whether there's demand before building more plans.
+export default function ShopHubPromo({ supermarket, sourcePage }) {
   const key = String(supermarket || '').toLowerCase();
-  if (key !== 'aldi' && key !== 'lidl') return null;
+
+  if (key !== 'aldi' && key !== 'lidl') {
+    return (
+      <section className="pdf-hub-promo" aria-label="6-week PDF meal plans">
+        <div className="mealprep-plus-section-head">
+          <span className="offer-kicker">Want it done for six weeks, not one?</span>
+          <h2>6-Week PDF Plans</h2>
+          <p>
+            Our printable 6-week dinner plans are Aldi and Lidl focused so far — take a look and
+            see if one fits, even if you shop elsewhere.
+          </p>
+        </div>
+        <Link
+          to="/meal-prep-pdfs"
+          className="btn-secondary pdf-hub-promo-link"
+          data-event="nav_link_clicked"
+          data-cta-location="hub-pdf-promo-generic"
+          data-supermarket={supermarket}
+          data-source-page={sourcePage}
+          data-target-route="/meal-prep-pdfs"
+        >
+          See the 6-week PDF plans
+        </Link>
+      </section>
+    );
+  }
 
   const bundle = getPdfProductBySlug(`${key}-bundle`);
   const dinner = getPdfProductBySlug(`${key}-dinner-plan`);
@@ -28,7 +55,16 @@ export default function ShopHubPromo({ supermarket }) {
       </div>
       <div className="mealprep-plus-grid pdf-hub-promo-grid">
         {[dinner, protein, bundle].map(p => (
-          <Link className="mealprep-plus-tile shop-tile-link" to={`/meal-prep-pdfs/${p.slug}`} key={p.slug}>
+          <Link
+            className="mealprep-plus-tile shop-tile-link"
+            to={`/meal-prep-pdfs/${p.slug}`}
+            key={p.slug}
+            data-event="pdf_promo_click"
+            data-offer={p.name}
+            data-plan-slug={p.slug}
+            data-source-page={sourcePage}
+            data-cta-location="hub-pdf-promo"
+          >
             <h3>{p.name}</h3>
             <p>{p.tagline} · £{p.priceGBP.toFixed(2)}</p>
           </Link>

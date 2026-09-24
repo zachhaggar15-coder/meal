@@ -218,7 +218,7 @@ export default function MealPlanHubPage() {
         </section>
 
         {hub.match?.supermarkets?.length === 1 ? (
-          <ShopHubPromo supermarket={hub.match.supermarkets[0]} />
+          <ShopHubPromo supermarket={hub.match.supermarkets[0]} sourcePage={`meal-plan-hub-${hub.slug}`} />
         ) : null}
 
         <QuizNudge

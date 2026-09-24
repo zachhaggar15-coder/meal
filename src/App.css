@@ -12884,6 +12884,11 @@ a.shop-tile-link:hover {
   margin-top: 16px;
 }
 
+.pdf-hub-promo-link {
+  display: inline-flex;
+  margin-top: 4px;
+}
+
 .shop-proof-list {
   display: grid;
   gap: 10px;
