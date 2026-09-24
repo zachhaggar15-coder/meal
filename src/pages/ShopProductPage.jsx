@@ -3,7 +3,7 @@ import SEO from '../components/SEO.jsx';
 import Footer from '../components/Footer.jsx';
 import PageHeroVisual from '../components/PageHeroVisual.jsx';
 import { SITE_VISUALS } from '../data/visualAssets.js';
-import { SITE_URL } from '../constants/site.js';
+import { SITE_URL, SITE_CONTACT_EMAIL } from '../constants/site.js';
 import {
   MEAL_PREP_PDF_SLUGS,
   getPdfProductBySlug,
@@ -107,7 +107,13 @@ export default function ShopProductPage() {
               <p className="shop-available-soon-note">
                 This plan isn&apos;t on sale yet — check back soon, or browse the free plan library while you wait.
               </p>
-            ) : null}
+            ) : (
+              <p className="shop-available-soon-note">
+                Not happy with it? Email{' '}
+                <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a> and we&apos;ll sort out
+                a refund.
+              </p>
+            )}
 
             <div className="mealprep-plus-actions">
               <Link to="/meal-prep-pdfs" className="shop-back-link">See all 6-week PDF plans</Link>

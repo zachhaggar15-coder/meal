@@ -348,6 +348,11 @@ const rawBlogPostsData = {
     description: 'The best high protein low calorie meal ideas for UK weight loss — breakfasts, lunches, dinners, and snacks under 500 kcal with 30g+ protein. Generate a free personalised plan.',
     h1: 'High Protein Low Calorie Meals for UK Weight Loss',
     intro: 'Meals that are high in protein but moderate in calories are a practical way to eat fewer calories without feeling short-changed, because protein is comparatively filling for the calories it costs. The challenge is finding meals that actually taste good, can be prepared quickly, and use affordable UK supermarket ingredients. This guide provides practical meal ideas for breakfast, lunch, dinner, and snacks. Breakfasts, lunches and snacks come in under 500 calories a serving; the dinners run a little higher, at roughly 450-560 kcal, because they are built to finish the day satisfied.',
+    pdfPromo: {
+      title: 'Get six weeks of these dinners, planned out',
+      intro: 'Same idea as this guide, extended into a full 6-week dinner plan with a shopping list organised by aisle — for Aldi or Lidl.',
+      productSlugs: ['aldi-high-protein-plan', 'lidl-high-protein-plan'],
+    },
     sections: [
       {
         h2: 'Why High Protein Matters for Weight Loss',

@@ -11,6 +11,7 @@ import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
 import ProductPicks from '../components/ProductPicks.jsx';
+import BlogPdfPromo from '../components/BlogPdfPromo.jsx';
 import EbayLabelTestPlacement from '../components/EbayLabelTestPlacement.jsx';
 import PopularGuides from '../components/PopularGuides.jsx';
 import TrustBox from '../components/TrustBox.jsx';
@@ -360,6 +361,18 @@ export default function BlogPost() {
                 className="blog-next-step"
               />
             </>
+          )}
+
+          {/* Placed after the main content, not before it — the reader gets
+              the free guide they came for first, same rule the EmailPlanCapture
+              placement below already follows. */}
+          {data.pdfPromo && (
+            <BlogPdfPromo
+              title={data.pdfPromo.title}
+              intro={data.pdfPromo.intro}
+              productSlugs={data.pdfPromo.productSlugs}
+              sourcePage={`blog-${slug}`}
+            />
           )}
 
           {/* Sticker promo — before final CTA */}
