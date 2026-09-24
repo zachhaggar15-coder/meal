@@ -12775,12 +12775,30 @@ textarea {
   margin: 0 0 6px;
 }
 
+.shop-purchase-panel {
+  background: var(--editorial-paper);
+  border: 2px solid var(--editorial-ink);
+  border-radius: var(--radius-md);
+  box-shadow: var(--small-shadow);
+  margin-top: 22px;
+  padding: 20px;
+}
+
+.shop-purchase-panel-kicker {
+  color: var(--editorial-muted);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
 .shop-buy-box {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  margin-top: 22px;
 }
 
 .shop-price {
@@ -12800,10 +12818,8 @@ textarea {
   margin-top: 10px;
 }
 
-.shop-back-link {
-  color: var(--accent-dark);
-  font-weight: 700;
-  text-decoration: underline;
+.shop-explore-links {
+  margin-top: 18px;
 }
 
 a.shop-tile-link {

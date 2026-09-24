@@ -81,43 +81,46 @@ export default function ShopProductPage() {
             <p className="shop-tagline">{product.tagline}</p>
             <p>{product.description}</p>
 
-            <div className="shop-buy-box">
-              <span className="shop-price">{formatPrice(product.priceGBP)}</span>
-              {buyUrl ? (
-                <a
-                  className="btn-primary"
-                  href={buyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-event="pdf_checkout_click"
-                  data-offer={product.name}
-                  data-plan-slug={product.slug}
-                  data-source-page={canonical}
-                  data-cta-location="shop-buy-box"
-                >
-                  Get instant access — download in 2 minutes
-                </a>
+            <div className="shop-purchase-panel">
+              <span className="shop-purchase-panel-kicker">Buy now</span>
+              <div className="shop-buy-box">
+                <span className="shop-price">{formatPrice(product.priceGBP)}</span>
+                {buyUrl ? (
+                  <a
+                    className="btn-primary"
+                    href={buyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-event="pdf_checkout_click"
+                    data-offer={product.name}
+                    data-plan-slug={product.slug}
+                    data-source-page={canonical}
+                    data-cta-location="shop-buy-box"
+                  >
+                    Get instant access — download in 2 minutes
+                  </a>
+                ) : (
+                  <span className="btn-secondary shop-available-soon" aria-disabled="true">
+                    Available soon
+                  </span>
+                )}
+              </div>
+              {!buyUrl ? (
+                <p className="shop-available-soon-note">
+                  This plan isn&apos;t on sale yet — check back soon, or browse the free plan library while you wait.
+                </p>
               ) : (
-                <span className="btn-secondary shop-available-soon" aria-disabled="true">
-                  Available soon
-                </span>
+                <p className="shop-available-soon-note">
+                  Not happy with it? Email{' '}
+                  <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a> and we&apos;ll sort out
+                  a refund.
+                </p>
               )}
             </div>
-            {!buyUrl ? (
-              <p className="shop-available-soon-note">
-                This plan isn&apos;t on sale yet — check back soon, or browse the free plan library while you wait.
-              </p>
-            ) : (
-              <p className="shop-available-soon-note">
-                Not happy with it? Email{' '}
-                <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a> and we&apos;ll sort out
-                a refund.
-              </p>
-            )}
 
-            <div className="mealprep-plus-actions">
-              <Link to="/meal-prep-pdfs" className="shop-back-link">See all 6-week PDF plans</Link>
-              <Link to="/browse" className="shop-back-link">Browse free plans</Link>
+            <div className="mealprep-plus-actions shop-explore-links">
+              <Link to="/meal-prep-pdfs" className="btn-secondary">See all 6-week PDF plans</Link>
+              <Link to="/browse" className="btn-secondary">Browse free plans</Link>
             </div>
           </div>
           <PageHeroVisual visual={SITE_VISUALS.printable} className="mealprep-plus-visual" priority />
