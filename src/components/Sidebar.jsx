@@ -151,6 +151,16 @@ export default function Sidebar({ open, onClose }) {
               Find My Plan
             </Link>
             <Link
+              to="/meal-prep-pdfs"
+              className={`sidebar-browse-cta${location.pathname.startsWith('/meal-prep-pdfs') ? ' sidebar-link--active' : ''}`}
+              onClick={onClose}
+              data-event="nav_link_clicked"
+              data-cta-location="sidebar_priority"
+              data-target-route="/meal-prep-pdfs"
+            >
+              6-Week PDF Plans
+            </Link>
+            <Link
               to="/saved-plans"
               className={`sidebar-browse-cta${location.pathname === '/saved-plans' ? ' sidebar-link--active' : ''}`}
               onClick={onClose}
