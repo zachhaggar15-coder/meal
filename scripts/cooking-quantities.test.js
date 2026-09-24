@@ -283,7 +283,8 @@ test('egg white omelette methods do not re-serve the eggs or cooking spray as ac
 
   assert.doesNotMatch(method, /eggs? whites?,/i, 'egg whites should not be listed as something served alongside the eggs');
   assert.doesNotMatch(method, /spray/i, 'cooking spray is a pan aid, not a serving ingredient');
-  assert.match(method, /serve with mixed herbs/i);
+  // Dried herbs go into the beaten eggs rather than onto the serving line.
+  assert.match(method, /Beat the eggs[^.]*with mixed herbs/i);
 });
 
 test('turkey lettuce cups cook spring onion once, not once as an aromatic and once as a filling', () => {

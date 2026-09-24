@@ -178,7 +178,7 @@ export const MEALS = [
   },
   {
     id: 'high-protein-yogurt-granola',
-    name: 'High-Protein Yogurt with Homemade Granola',
+    name: 'High-Protein Skyr with Granola and Berries',
     type: 'breakfast',
     cal: 328,
     pro: 27,

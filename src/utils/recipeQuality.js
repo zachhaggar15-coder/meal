@@ -24,7 +24,7 @@ import {
 // cauliflower, edamame and the "mixed veg" style names, so those were
 // silently dropped from chopping/roasting steps and ended up in generic
 // "serve with" clauses instead.
-const VEGETABLE_PATTERN = /(\bpepper|\bspinach|\bbroccoli|\btomato|\bonion|\bmushroom|\bcourgette|\bcarrot|\bkale|\bpeas\b|\bcabbage|\baubergine|\bcucumber|\bavocado|\bpotato|\blettuce|\brocket|\bleaves|\bwatercress|\bgreen bean|\bcelery|\bparsnip|\bsweetcorn|\bleek|\basparagus|\bsquash\b|\bcauliflower|\bpak choi|\bbok choy|\bedamame|\bbeansprout|\bveg\b|\bgreens\b|\bbeetroot|\bswede\b|\bturnip|\bradish|\bfennel)/i;
+const VEGETABLE_PATTERN = /((?<!black |white |cayenne )\bpepper(?!corn)|\bspinach|\bbroccoli|\btomato|\bonion|\bmushroom|\bcourgette|\bcarrot|\bkale|\bpeas\b|\bcabbage|\baubergine|\bcucumber|\bavocado|\bpotato|\blettuce|\brocket|\bleaves|\bwatercress|\bgreen bean|\bcelery|\bparsnip|\bsweetcorn|\bleek|\basparagus|\bsquash\b|\bcauliflower|\bpak choi|\bbok choy|\bedamame|\bbeansprout|\bveg\b|\bgreens\b|\bbeetroot|\bswede\b|\bturnip|\bradish|\bfennel)/i;
 
 // The bread-style carrier a toast/wrap/sandwich dish is built on. "toast"
 // belongs here because legacy plans name the ingredient itself that way
@@ -49,6 +49,16 @@ const BREAD_CARRIER_PATTERN = /(bread|toast|bagel|wrap|tortilla|pitta|roll)/i;
 // short: spinach and tomatoes are genuinely cooked elsewhere, so they are not
 // here. Avocado, salad leaves and cucumber never are.
 const RAW_ONLY_VEGETABLE = /\b(avocado|mixed leaves|lettuce|rocket|watercress|cucumber)\b/i;
+
+// Egg dishes: which leftover ingredients belong in the pan, in the beaten
+// eggs, or on the side rather than on the serving line.
+const EGG_SIDE_LEAVES = /\b(mixed leaves|lettuce|rocket|watercress|salad)\b/i;
+const EGG_PAN_FAT = /^(?!.*\b(?:nut|peanut|almond|cashew)\s+butter\b).*\b(oil|butter)\b/i;
+const EGG_BEATEN_IN = /\b(milk|turmeric|paprika|cumin|mixed herbs|dried herbs|chives)\b/i;
+const EGG_CHEESE = /\b(feta|cheddar|parmesan|mozzarella|cheese)\b/i;
+
+// Bowl ingredients that are squeezed or sprinkled over rather than arranged.
+const BOWL_FINISHER = /\b(juice|zest|chilli flakes|spice|seasoning|paprika|cumin|turmeric)\b|\bto taste\b/i;
 
 const PLACEHOLDER_PATTERNS = [
   /\bcook (?:the )?pasta,?\s*rice or noodles\b/i,
@@ -475,13 +485,19 @@ function buildComponentSteps(meal = {}) {
 
   if (/\beggs?\b/.test(name) || protein === 'eggs' || name.includes('omelette')) {
     const carrier = findCookingNames(cookingIngredients, /(bread|toast|bagel|pitta)/i);
+    // A grain in an egg dish (a Buddha bowl's rice) is cooked, not listed as
+    // something to "serve with" in its dry weight.
+    const eggStarchNames = starch && !carrier.length
+      ? findCookingNames(cookingIngredients, starchAliasesFor(starch))
+      : [];
     // Matches both the whole-egg ingredient and egg whites — either way it's
     // the thing already cooked in the step above, not something "served
     // with" the dish.
-    const accompaniments = withoutNames(remainingNames, [
+    const allAccompaniments = withoutNames(remainingNames, [
       ...findCookingNames(cookingIngredients, /^eggs?(\s+whites?)?$/i),
       ...vegetables,
       ...carrier,
+      ...eggStarchNames,
     ]);
     // Not everything in a dish with eggs goes in the pan. This step softened
     // whatever the vegetable pattern matched, so avocado on toast was sliced
@@ -493,9 +509,17 @@ function buildComponentSteps(meal = {}) {
     // its cherry tomatoes alongside the mushrooms. A bowl/salad-named egg
     // dish is a cold assembly regardless of which vegetable matched, so
     // route it the same way "Egg White Omelette" already routes avocado.
-    const isColdAssembly = name.includes('bowl') || name.includes('salad');
-    const panVegetables = isColdAssembly ? [] : vegetables.filter(item => !RAW_ONLY_VEGETABLE.test(item));
-    const rawVegetables = isColdAssembly ? vegetables : vegetables.filter(item => RAW_ONLY_VEGETABLE.test(item));
+    // A frittata "with Green Salad" is still a cooked frittata, though: the
+    // salad in its name is the side, not the dish.
+    const isOmeletteStyle = /omelette|frittata/.test(name);
+    const isColdAssembly = (name.includes('bowl') || name.includes('salad')) && !isOmeletteStyle && !/scrambl/.test(name);
+    const panVegetablesOnly = isColdAssembly ? [] : vegetables.filter(item => !RAW_ONLY_VEGETABLE.test(item));
+    // Salad leaves are served on the side, not sliced: "Slice courgette,
+    // red pepper, onion and mixed leaves" asked the reader to chop a bag of
+    // salad. Leaves join the serving line instead.
+    const rawCandidates = isColdAssembly ? vegetables : vegetables.filter(item => RAW_ONLY_VEGETABLE.test(item));
+    const sideLeaves = rawCandidates.filter(item => EGG_SIDE_LEAVES.test(item));
+    const rawVegetables = rawCandidates.filter(item => !EGG_SIDE_LEAVES.test(item));
     const prepareRaw = rawVegetables.length
       ? ` Slice ${joinNatural(rawVegetables)} and set aside.`
       : '';
@@ -507,7 +531,33 @@ function buildComponentSteps(meal = {}) {
     // "Eggs Florentine" is a named classic — poached eggs on spinach — and
     // never says "poached" in its own title, so it fell through to the
     // scrambled-egg default: beaten and fried instead of poached whole.
-    const isBoiledOrPoached = name.includes('boiled') || name.includes('poached') || name.includes('florentine');
+    // An ingredient line can declare the state too: "Eggs 2 hard-boiled" in
+    // an egg mayo sandwich used to be scrambled.
+    const ingredientHardBoiled = /\beggs?\b[^;]*\bhard.?boiled\b/i.test(ingredientSearch);
+    const ingredientSoftBoiled = /\beggs?\b[^;]*\bsoft.?boiled\b/i.test(ingredientSearch);
+    const isBoiledOrPoached = name.includes('boiled') || name.includes('poached') || name.includes('florentine')
+      || ingredientHardBoiled || ingredientSoftBoiled;
+    // The fat is for the pan whenever something is cooked in one, and garlic
+    // cooks with the vegetables. Milk and spices are beaten into scrambled
+    // or omelette eggs, and cheese goes in before serving. They used to land
+    // in the serving line - "serve with the eggs and butter and semi-skimmed
+    // milk", "serve with reduced-fat feta, olive oil", "serve with the eggs
+    // and garlic, olive oil" - as if they were eaten on the side. Poached and
+    // boiled eggs with nothing pan-cooked keep butter as an accompaniment,
+    // where butter on toast is exactly right.
+    const cookedInPan = !isBoiledOrPoached;
+    const aromatics = panVegetablesOnly.length ? allAccompaniments.filter(item => /\b(garlic|ginger)\b/i.test(item)) : [];
+    const panVegetables = [...panVegetablesOnly, ...aromatics];
+    const panFats = cookedInPan || panVegetables.length ? allAccompaniments.filter(item => EGG_PAN_FAT.test(item)) : [];
+    const beatenIn = cookedInPan ? allAccompaniments.filter(item => EGG_BEATEN_IN.test(item)) : [];
+    const cheeses = cookedInPan ? allAccompaniments.filter(item => EGG_CHEESE.test(item)) : [];
+    const accompaniments = [
+      ...withoutNames(allAccompaniments, [...aromatics, ...panFats, ...beatenIn, ...cheeses]),
+      ...sideLeaves,
+    ];
+    const heatFat = panFats.length ? `Heat ${joinNatural(panFats)} in a non-stick pan, then ` : '';
+    const beatWith = beatenIn.length ? ` with ${joinNatural(beatenIn)}` : '';
+    const cheeseAtEnd = cheeses.length ? `, and stir through ${joinNatural(cheeses)} at the end` : '';
     // Whatever else this step does to the vegetables, a poached/boiled dish
     // still needs water on to simmer before step two can tell the reader to
     // lower eggs into it — that instruction can't just ride on the fallback
@@ -515,10 +565,13 @@ function buildComponentSteps(meal = {}) {
     // Poached Egg") skips it and step two ends up pointing at water that was
     // never put on.
     const vegPrepStep = panVegetables.length
-      ? `Slice or chop ${joinNatural(panVegetables)}, then cook them in a non-stick pan over medium heat until softened.${prepareRaw}`
+      ? `Slice or chop ${joinNatural(panVegetables)}, then cook them in ${panFats.length ? `${joinNatural(panFats)} in ` : ''}a non-stick pan over medium heat until softened.${prepareRaw}`
       : rawVegetables.length
         ? `Slice ${joinNatural(rawVegetables)} and set aside.`
         : '';
+    const starchStep = eggStarchNames.length
+      ? cookStarchStep(starchName, { potatoPreparation, displayName: starchDisplayName })
+      : '';
     // When there is no vegetable prep, the fallback step used to tell the
     // reader to crack the eggs into a bowl and whisk them with a fork, and
     // the cook step below then said "beat the eggs" again — one dish,
@@ -527,7 +580,6 @@ function buildComponentSteps(meal = {}) {
     // that combination only needs the prep step dropped; the plain
     // scrambled-egg step wasn't self-contained the same way, so it gets the
     // cracking folded into it instead of losing that detail outright.
-    const isOmeletteStyle = /omelette|frittata/.test(name);
     const prepStep = isBoiledOrPoached
       ? `${vegPrepStep ? `${vegPrepStep} ` : ''}Bring a small pan of water to a gentle simmer.`.trim()
       : vegPrepStep;
@@ -537,8 +589,8 @@ function buildComponentSteps(meal = {}) {
     // gets that exact instruction; only a plain, unqualified "boiled" name
     // (none exist in this library today, but a future one might) falls
     // back to presenting both timings as a choice.
-    const isHardBoiled = /hard.?boiled/i.test(name);
-    const isSoftBoiled = /soft.?boiled/i.test(name);
+    const isHardBoiled = /hard.?boiled/i.test(name) || ingredientHardBoiled;
+    const isSoftBoiled = /soft.?boiled/i.test(name) || ingredientSoftBoiled;
     const cookStep = isHardBoiled
       ? 'Lower whole eggs into the water and simmer for 9-12 minutes, until the yolk is fully set, then cool under cold water and peel.'
       : isSoftBoiled
@@ -548,16 +600,39 @@ function buildComponentSteps(meal = {}) {
           : isBoiledOrPoached
             ? 'Lower whole eggs into the water and simmer for 5-6 minutes for soft-boiled, or crack an egg directly into the water and poach for 3-4 minutes until the white is set.'
             : isOmeletteStyle
-              ? `Beat the eggs in a bowl and season lightly, then pour over the pan and cook over medium heat until just set${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
-              : vegPrepStep
-                ? 'Beat the eggs in a bowl, then cook in a non-stick pan over medium heat, stirring gently until softly set.'
-                : 'Crack the eggs into a bowl, season lightly and whisk with a fork, then cook in a non-stick pan over medium heat, stirring gently until softly set.';
+              ? `Beat the eggs in a bowl${beatWith} and season lightly, then pour into ${panVegetables.length ? 'the pan' : `${panFats.length ? `${joinNatural(panFats)} heated in ` : ''}a non-stick pan`} and cook over medium heat until just set${cheeses.length ? `, scattering ${joinNatural(cheeses)} over the top` : ''}${/frittata/.test(name) ? ', finishing under a hot grill until the top is firm' : ', folding it over to serve'}.`
+              : panVegetables.length
+                ? `Beat the eggs in a bowl${beatWith}, then add them to the pan and cook over medium heat, stirring gently until softly set${cheeseAtEnd}.`
+                : `Crack the eggs into a bowl${beatenIn.length ? `, add ${joinNatural(beatenIn)}` : ''}, season lightly and whisk with a fork. ${capitaliseFirst(`${heatFat}cook the eggs${heatFat ? '' : ' in a non-stick pan'} over medium heat, stirring gently until softly set${cheeseAtEnd}.`)}`;
+    // Egg mayo is mashed and spread, not served beside the bread.
+    const mashIns = accompaniments.filter(item => /\b(mayo|mayonnaise|mustard|yogurt|yoghurt)\b/i.test(item));
+    const isEggMayo = isHardBoiled && carrier.length && /\bmayo\b/.test(name) && mashIns.length;
+    const toppings = withoutNames(accompaniments, mashIns);
+    // Vegetables cooked separately for poached or boiled eggs have to reach
+    // the plate: "Garlic Mushrooms with Poached Egg" cooked its mushrooms
+    // and then served the eggs with parsley alone.
+    const cookedSides = isBoiledOrPoached && panVegetablesOnly.length ? [`the cooked ${joinNatural(panVegetablesOnly)}`] : [];
+    // A cold bowl is assembled: rice, sliced veg and leaves go in, the eggs
+    // go on top, and the dressing goes over. It used to say "serve with
+    // tahini dressing and mixed leaves", leaving the rice and avocado out.
+    const bowlBase = isColdAssembly && !carrier.length
+      ? [...(eggStarchNames.length ? [`the ${starchName}`] : []), ...rawVegetables, ...sideLeaves]
+      : [];
+    const bowlExtras = withoutNames(accompaniments, sideLeaves);
+    const serveStep = isEggMayo
+      ? `Mash the eggs with ${joinNatural(mashIns)}, then spread onto ${joinNatural(carrier)}${toppings.length ? ` and top with ${joinNatural(toppings)}` : ''}.`
+      : bowlBase.length
+        ? `Arrange ${joinNatural(bowlBase)} in a bowl, then top with the eggs${bowlExtras.length ? ` and ${joinNatural(bowlExtras)}` : ''}.`
+      : carrier.length && cookedSides.length
+        ? `Toast ${joinNatural(carrier)}, then top with ${cookedSides[0]} and the eggs${accompaniments.length ? `, finishing with ${joinNatural(accompaniments)}` : ''}.`
+      : carrier.length
+        ? `Toast ${joinNatural(carrier)}, then serve with the eggs${accompaniments.length ? ` and ${joinNatural(accompaniments)}` : ''}.`
+        : `Season to taste and serve${accompaniments.length ? ` with ${joinNatural(accompaniments)}` : ''}.`;
     return [
+      starchStep,
       prepStep,
       cookStep,
-      carrier.length
-        ? `Toast ${joinNatural(carrier)}, then serve with the eggs${accompaniments.length ? ` and ${joinNatural(accompaniments)}` : ''}.`
-        : `Season to taste and serve${accompaniments.length ? ` with ${joinNatural(accompaniments)}` : ''}.`,
+      serveStep,
     ].filter(Boolean);
   }
 
@@ -716,6 +791,11 @@ function buildComponentSteps(meal = {}) {
     if (eggs.length) {
       steps.push(`Boil the ${joinNatural(eggs)} for 8-9 minutes, then cool under cold water, peel and halve.`);
     }
+    // A spice mix seasons the protein before it cooks; "finish with fajita
+    // spice" had the reader sprinkle raw spice over a finished bowl.
+    const bowlSpices = protein && needsCooking(protein, proteinSource, pulseState) && !isPulseProtein
+      ? findCookingNames(cookingIngredients, /\b(spice|seasoning|paprika|cumin|turmeric)\b/i)
+      : [];
     if (protein && needsCooking(protein, proteinSource, pulseState)) {
       // Aromatics go in for the final minute of cooking, before the protein
       // comes off the heat to rest — not after. Passing "rest" to
@@ -728,9 +808,10 @@ function buildComponentSteps(meal = {}) {
         ovenBaked: titleBakes,
         grilled: titleGrills,
       });
+      const seasoned = bowlSpices.length ? `Toss the ${proteinName} in ${joinNatural(bowlSpices)}. ${cooked}` : cooked;
       steps.push(bowlAromatics.length
-        ? `${cooked} Add ${joinNatural(bowlAromatics)} for the final minute and cook until fragrant.${restText}`
-        : `${cooked}${restText}`);
+        ? `${seasoned} Add ${joinNatural(bowlAromatics)} for the final minute and cook until fragrant.${restText}`
+        : `${seasoned}${restText}`);
     } else if (tinIngredients.length) {
       steps.push(drainTinnedStep(tinIngredients));
     }
@@ -753,13 +834,25 @@ function buildComponentSteps(meal = {}) {
       steps.push(`Toast or warm ${joinNatural(carriers)} just before serving.`);
     }
     const hasDressing = sauces.some(item => /dressing/i.test(item));
-    const assemblyIngredients = withoutNames(remainingNames, [
+    const assemblyCandidates = withoutNames(remainingNames, [
       ...sauces,
+      ...bowlSpices,
       ...(aromaticsCookedWithProtein ? bowlAromatics : []),
       cookingLiquid,
     ].filter(Boolean));
+    // Juice, zest, dried spices and "to taste" seasonings are squeezed or
+    // sprinkled over, not arranged: the assembly line used to read "Arrange
+    // king prawns, brown rice (dry weight), lemon juice, to taste and baby
+    // spinach in a bowl". A grain cooked in step one is the cooked grain by
+    // now, not its dry weight.
+    const bowlFinishers = assemblyCandidates.filter(item => BOWL_FINISHER.test(item));
+    const assemblyIngredients = withoutNames(assemblyCandidates, bowlFinishers)
+      .map(item => (/\((?:dry weight|dry)\)/i.test(item)
+        ? `the cooked ${item.replace(/\s*\((?:dry weight|dry)\)/i, '').trim()}`
+        : item));
+    const finishWith = [...sauces, ...bowlFinishers];
     steps.push(
-      `Arrange ${joinNatural(assemblyIngredients)} in a bowl${sauces.length ? ` and finish with ${joinNatural(sauces)}` : ''}.${hasDressing ? ' Keep the dressing separate if packing ahead.' : ''}`,
+      `Arrange ${joinNatural(assemblyIngredients)} in a bowl${finishWith.length ? ` and finish with ${joinNatural(finishWith)}` : ''}.${hasDressing ? ' Keep the dressing separate if packing ahead.' : ''}`,
     );
     return steps.slice(0, 5);
   }
@@ -1320,9 +1413,12 @@ function cookProteinStep(proteinName, { prefix = '', finish = '', dryPulse = fal
   // branch ignores it, so the reader is given a different dish from the one
   // they chose. When the name says baked, the protein goes in the oven.
   if (ovenBaked && !isAlreadyPreparedIngredient(protein) && !dryPulse) {
-    return `${prefix}heat the oven to 200C/180C fan. Bake the ${protein} for 12-18 minutes, `
-      + `until cooked through and it flakes or slices easily.${finish ? ` ${finish}` : ''}`
-      .replace(/^([a-z])/, (m) => (prefix ? m : m.toUpperCase()));
+    // The capitalisation used to bind to the second string only (a method
+    // call outranks +), which printed "heat the oven..." in lower case and
+    // "..., Until cooked through" with a capital in mid-sentence.
+    const bakeInstruction = `heat the oven to 200C/180C fan. Bake the ${protein} for 12-18 minutes, `
+      + `until cooked through and it flakes or slices easily.${finish ? ` ${finish}` : ''}`;
+    return `${prefix}${prefix ? bakeInstruction : capitaliseFirst(bakeInstruction)}`;
   }
 
   // Same broken promise, for "Grilled Chicken..." and "Grilled Lean Sirloin
