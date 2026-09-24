@@ -37,7 +37,7 @@ const GUIDE_LINKS = {
 // `intro`, `sections` and `faq` are now required per chain. The goal table,
 // the sources, the supporting guides and the page shape stay shared, because
 // repeated layout is fine - it is repeated writing that is the problem.
-function createSupermarketHub({ key, label, intro, sections, faq, stats, relatedSlugs = ['weight-loss', '1500-calorie', 'high-protein', 'meal-plans-with-shopping-list'] }) {
+function createSupermarketHub({ key, label, intro, sections, faq, stats, title, description, relatedSlugs = ['weight-loss', '1500-calorie', 'high-protein', 'meal-plans-with-shopping-list'] }) {
   if (!intro || !sections?.length || !faq?.length) {
     throw new Error(`Supermarket hub "${key}" needs its own intro, sections and FAQ. See the note above createSupermarketHub.`);
   }
@@ -45,8 +45,8 @@ function createSupermarketHub({ key, label, intro, sections, faq, stats, related
   return {
     slug: key,
     path: `/meal-plans/${key}`,
-    title: `${label} Meal Plans UK - Free Weekly Plans + Shopping Lists`,
-    description:
+    title: title || `${label} Meal Plans UK - Free Weekly Plans + Shopping Lists`,
+    description: description ||
       `Browse free ${label} meal plans for UK weight loss, high protein, vegetarian, vegan, muscle gain and budget goals, with PDFs and shopping lists.`,
     h1: `${label} Meal Plans UK`,
     kicker: 'Supermarket plan hub',
@@ -301,6 +301,47 @@ const SUPERMARKET_AUTHORITY_HUBS = {
       },
     ],
     relatedSlugs: ['tesco-weight-loss', 'weight-loss', '1500-calorie', 'high-protein'],
+  }),
+  aldi: createSupermarketHub({
+    key: 'aldi',
+    label: 'Aldi',
+    title: 'Aldi Meal Plans UK: Free 7-Day Plans + Shopping Lists',
+    description:
+      'Free 7-day Aldi meal plans, most £20–40 a week, for weight loss, high protein, muscle gain, vegetarian and budget goals, each with a shopping list and PDF.',
+    stats: ['Aldi-focused plans', 'Most £20–40 a week', 'Shopping list and PDF'],
+    intro:
+      'Every Aldi plan here is a full seven-day week with its own shopping list, and nearly all of them come in at £20–40 a week to shop. They are built around repeatable breakfasts, batch-friendly lunches and realistic dinners, using the core range rather than whatever is in the middle aisle this week.',
+    sections: [
+      {
+        h2: 'Why choose Aldi meal plans?',
+        paragraphs: [
+          'Aldi is a strong fit for structured meal prep because own-brand staples, frozen vegetables, oats, rice, pasta, tins, yogurts and lean proteins can keep the weekly shop predictable.',
+          'Use Aldi plans when budget control matters. If you want the same structure without choosing one store, compare Tesco or Generic UK supermarket plans.',
+        ],
+      },
+      {
+        h2: 'A small range is the feature, not the limitation',
+        paragraphs: [
+          'Aldi carries a fraction of the lines a full-size supermarket does, and that is precisely why meal prep works here. Fewer options means fewer decisions, and a plan built on the core range is one you can repeat next week and the week after without the products moving or the price shifting.',
+          'There is no loyalty scheme to work around either. What is on the shelf is what you pay, which makes weekly budgeting far more predictable than at a chain where the useful price depends on scanning an app.',
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'Do Aldi meal plans include budget options?',
+        a: 'Yes. Aldi has budget fat loss, cheap student, cheap high protein and budget bodybuilding plans alongside standard weight loss and maintenance options.',
+      },
+      {
+        q: 'Can I use an Aldi plan at another supermarket?',
+        a: 'Yes. The ingredients are common UK supermarket foods, but prices and exact product names may differ.',
+      },
+      {
+        q: 'Do Specialbuys and Super 6 affect these plans?',
+        a: 'Deliberately not. Both rotate and sell through, so no plan here depends on them. Treat them as a bonus if something useful appears rather than as part of the week you are counting on.',
+      },
+    ],
+    relatedSlugs: ['aldi-weight-loss', 'aldi-budget-fat-loss', 'aldi-cheap-student', 'high-protein'],
   }),
   lidl: createSupermarketHub({
     key: 'lidl',
@@ -1559,50 +1600,6 @@ export const MEAL_PLAN_HUBS = {
       },
     ],
     relatedSlugs: ['weight-loss', '1500-calorie', 'muscle-gain', 'meal-plans-with-shopping-list'],
-  },
-  aldi: {
-    slug: 'aldi',
-    path: '/meal-plans/aldi',
-    title: 'Aldi Meal Plans UK - Free Weekly Plans + Shopping Lists',
-    description:
-      'Browse free Aldi meal plans for weight loss, muscle gain, high protein, vegetarian, vegan and budget meal prep, with shopping lists and PDFs.',
-    h1: 'Aldi Meal Plans UK',
-    kicker: 'Supermarket plan hub',
-    intro:
-      'Aldi meal plans are ideal when you want simple UK supermarket ingredients and a tighter weekly budget. These plans are built around repeatable breakfasts, batch-friendly lunches and realistic dinners.',
-    match: { supermarkets: ['aldi'] },
-    stats: ['Aldi-focused plans', 'Budget-friendly meals', 'Printable shopping lists'],
-    sections: [
-      {
-        h2: 'Why choose Aldi meal plans?',
-        paragraphs: [
-          'Aldi is a strong fit for structured meal prep because own-brand staples, frozen vegetables, oats, rice, pasta, tins, yogurts and lean proteins can keep the weekly shop predictable.',
-          'Use Aldi plans when budget control matters. If you want the same structure without choosing one store, compare Tesco or Generic UK supermarket plans.',
-        ],
-      },
-      {
-        h2: 'A small range is the feature, not the limitation',
-        paragraphs: [
-          'Aldi carries a fraction of the lines a full-size supermarket does, and that is precisely why meal prep works here. Fewer options means fewer decisions, and a plan built on the core range is one you can repeat next week and the week after without the products moving or the price shifting.',
-          'There is no loyalty scheme to work around either. What is on the shelf is what you pay, which makes weekly budgeting far more predictable than at a chain where the useful price depends on scanning an app.',
-        ],
-      },
-    ],
-    faq: [
-      {
-        q: 'Do Aldi meal plans include budget options?',
-        a: 'Yes. Aldi has budget fat loss, cheap student, cheap high protein and budget bodybuilding plans alongside standard weight loss and maintenance options.',
-      },
-      {
-        q: 'Can I use an Aldi plan at another supermarket?',
-        a: 'Yes. The ingredients are common UK supermarket foods, but prices and exact product names may differ.',
-      },
-      {
-        q: 'Do Specialbuys and Super 6 affect these plans?',
-        a: 'Deliberately not. Both rotate and sell through, so no plan here depends on them. Treat them as a bonus if something useful appears rather than as part of the week you are counting on.',
-      },
-    ],
-    relatedSlugs: ['weight-loss', '1500-calorie', 'high-protein', 'tesco-weight-loss'],
   },
   vegetarian: {
     slug: 'vegetarian',

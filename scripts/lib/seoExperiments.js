@@ -29,6 +29,62 @@ export const SEO_EXPERIMENTS = Object.freeze([
       'clear factual, functional or technical defect',
     ]),
   }),
+  Object.freeze({
+    id: 'cheap-protein-metadata-2026-09-24',
+    route: '/blog/best-cheap-high-protein-foods-uk',
+    query: 'cheapest protein sources',
+    startDate: '2026-09-24',
+    cooldownUntil: '2026-10-22',
+    cooldownDays: 28,
+    before: Object.freeze({
+      title: 'Cheap High-Protein Foods UK: 10 Best-Value Staples',
+      description: 'Compare 10 cheap protein staples, from eggs and tuna to lentils and frozen chicken, with protein-per-penny guidance for UK meal prep.',
+    }),
+    after: Object.freeze({
+      title: 'Cheapest Protein Sources UK: 10 Ranked by Protein per Penny',
+      description: 'The cheapest UK protein sources ranked by protein per penny, from eggs and tuna to lentils and frozen chicken, plus how to hit 150g a day for under £3.',
+    }),
+    suppliedHistoricalBaseline: Object.freeze({
+      source: 'Owner-supplied Search Console export (page: 3 months to 2026-09-21; query: 28 days to 2026-09-18)',
+      page: Object.freeze({ clicks: 108, impressions: 15918, ctr: 0.0068, avgPosition: 9.0 }),
+      exactQuery: Object.freeze({ clicks: 1, impressions: 283, ctr: 0.0035, avgPosition: 7.7 }),
+    }),
+    recrawlCandidate: true,
+    allowedEarlyReviewReasons: Object.freeze([
+      'title rendering failure',
+      'completely inappropriate Google-selected title',
+      'major ranking collapse',
+      'clear factual, functional or technical defect',
+    ]),
+  }),
+  Object.freeze({
+    id: 'aldi-hub-refresh-2026-09-24',
+    route: '/meal-plans/aldi',
+    query: 'budget meal planner aldi',
+    startDate: '2026-09-24',
+    cooldownUntil: '2026-10-22',
+    cooldownDays: 28,
+    before: Object.freeze({
+      title: 'Aldi Meal Plans UK - Free Weekly Plans + Shopping Lists',
+      description: 'Browse free Aldi meal plans for weight loss, muscle gain, high protein, vegetarian, vegan and budget meal prep, with shopping lists and PDFs.',
+    }),
+    after: Object.freeze({
+      title: 'Aldi Meal Plans UK: Free 7-Day Plans + Shopping Lists',
+      description: 'Free 7-day Aldi meal plans, most £20–40 a week, for weight loss, high protein, muscle gain, vegetarian and budget goals, each with a shopping list and PDF.',
+    }),
+    suppliedHistoricalBaseline: Object.freeze({
+      source: 'Owner-supplied Search Console export, 3 months to 2026-09-21 (query row is site-wide, not page-filtered)',
+      page: Object.freeze({ clicks: 2, impressions: 33, ctr: 0.0606, avgPosition: 5.39 }),
+      exactQuery: Object.freeze({ clicks: 0, impressions: 68, ctr: 0, avgPosition: 7.44 }),
+    }),
+    recrawlCandidate: true,
+    allowedEarlyReviewReasons: Object.freeze([
+      'title rendering failure',
+      'completely inappropriate Google-selected title',
+      'major ranking collapse',
+      'clear factual, functional or technical defect',
+    ]),
+  }),
 ]);
 
 export function buildSeoExperimentReviews({
