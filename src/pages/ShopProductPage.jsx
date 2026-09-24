@@ -155,14 +155,14 @@ export default function ShopProductPage() {
 
         <section className="mealprep-plus-fit shop-social-proof" aria-labelledby="shop-proof-heading">
           <div className="mealprep-plus-section-head">
-            <span className="offer-kicker">Trusted by UK home cooks</span>
+            <span className="offer-kicker">What you're getting</span>
             <h2 id="shop-proof-heading">Why choose this plan</h2>
           </div>
           <ul className="shop-proof-list">
-            <li><strong>2,000+ PDFs downloaded</strong> — joining families simplifying dinnertime</li>
             <li><strong>Six weeks planned</strong> — from shopping to table, no weekly decisions</li>
-            <li><strong>Tested recipes</strong> — chosen for taste, cost, and supermarket availability</li>
+            <li><strong>Curated recipes</strong> — chosen for taste, cost, and supermarket availability</li>
             <li><strong>One-off purchase</strong> — no subscription, no hidden charges</li>
+            <li><strong>Instant download</strong> — use it tonight, no waiting</li>
           </ul>
         </section>
 
