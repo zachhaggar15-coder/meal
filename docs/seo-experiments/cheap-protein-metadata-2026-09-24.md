@@ -54,3 +54,10 @@ CTR at a comparable position is the primary signal. Compare the page's CTR for
 `cheapest protein sources` and for the page overall against the rows above. One
 week of movement is not a result. A position change of more than about two
 places confounds the CTR read and should be reported separately.
+
+## Known overlap
+
+An eBay label demand-test placement was added to this page on 8 September
+2026, which put it on the weekly "Do Not Edit" list. The title change went
+ahead anyway; the owner confirmed on 24 September that the eBay test is not
+important, so its read is not protected.
