@@ -61,3 +61,14 @@ An eBay label demand-test placement was added to this page on 8 September
 2026, which put it on the weekly "Do Not Edit" list. The title change went
 ahead anyway; the owner confirmed on 24 September that the eBay test is not
 important, so its read is not protected.
+
+## Content correction on the same day
+
+Also on 24 September 2026, the page's "ranked by protein per penny" list was
+corrected: every "g per penny" figure was wrong (eggs showed 2.7 g per penny
+against a true 0.27 at the page's own prices), the list was not in value
+order, and chicken and turkey used cooked protein figures against raw frozen
+weights. The list is now recomputed from the page's own prices and sorted, and
+the "150 g for under £3" day was rebuilt so its arithmetic holds. This lands
+on day one of the experiment, so treat the whole change - title plus a
+corrected core table - as the thing being measured.

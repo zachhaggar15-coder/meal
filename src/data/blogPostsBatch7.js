@@ -1480,7 +1480,7 @@ const topics = [
     description: 'Five ingredient meal prep ideas UK: simple high-protein lunches and dinners using five main supermarket ingredients.',
     h1: 'Five Ingredient Meal Prep Ideas UK: Simple Meals With Normal Food',
     intro: 'Five-ingredient meal prep is for the weeks when a 19-step recipe would be comedy. Use a protein, a carb, a veg, a sauce and one flavour booster, and you can still get a proper meal without turning the kitchen into a project.',
-    quickAnswer: 'Easy five ingredient meal prep ideas include chicken rice salsa bowls, tuna pasta salad, turkey chilli potatoes, tofu noodle stir-fry, egg potato hash, salmon couscous boxes and Greek yogurt chicken wraps. Count pantry basics like salt, pepper and spices separately if needed.',
+    quickAnswer: 'Easy five ingredient meal prep ideas include chicken rice salsa bowls, tuna pasta salad, turkey chilli potatoes, tofu noodle stir-fry, egg potato hash, salmon couscous boxes and Greek yogurt chicken wraps. Count cupboard basics like salt, pepper and spices separately if needed.',
     formulaIntro: 'Five ingredients is a constraint, not a punishment. Spend each ingredient carefully and let sauces do real work.',
     formula: [
       'Pick one protein, one carb, one veg, one sauce and one flavour or texture extra.',
@@ -1520,7 +1520,7 @@ const topics = [
       'Write the five ingredients on the container label if it helps repeat the meal.',
       'Cook one protein and one carb in bulk, then vary sauce and veg.',
       'Use microwave rice or couscous for the lowest-effort carb.',
-      'Keep pantry basics stocked so five ingredients still taste like food.',
+      'Keep cupboard basics stocked so five ingredients still taste like food.',
     ],
     mistakes: [
       'Choosing five bland ingredients and blaming the format.',
@@ -1529,7 +1529,7 @@ const topics = [
       'Building meals without enough protein or fibre.',
     ],
     faq: [
-      { q: 'What counts as a five ingredient meal?', a: 'Usually five main ingredients, with pantry basics such as salt, pepper, dried herbs and spices counted separately.' },
+      { q: 'What counts as a five ingredient meal?', a: 'Usually five main ingredients, with cupboard basics such as salt, pepper, dried herbs and spices counted separately.' },
       { q: 'Can five ingredient meals be high protein?', a: 'Yes. Use a strong protein anchor such as chicken, tuna, turkey mince, eggs, tofu or Greek yogurt.' },
       { q: 'What is the easiest five ingredient lunch?', a: 'Tuna pasta sweetcorn salad or a chicken rice salsa bowl are two of the easiest supermarket options.' },
     ],
@@ -1654,7 +1654,7 @@ const topics = [
       'Build snacks from everyday ranges first, then add protein-branded products only if they suit your budget.',
       'Keep one cupboard protein at work.',
       'Check serving sizes; multi-packs can make one snack look smaller on paper.',
-      'Use use-by dates to decide which snacks to eat first.',
+      'Check use-by dates to decide which snacks to eat first.',
     ],
     mistakes: [
       'Assuming protein branding always means the best value.',

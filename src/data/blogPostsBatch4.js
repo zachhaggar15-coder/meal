@@ -89,7 +89,7 @@ export const blogPostsBatch4Data = {
         h2: 'How to check a container properly',
         paragraphs: [
           'If a container has no clear labelling, check the base for a recycling code. PP5 (polypropylene) is generally considered microwave safe for reheating. PET (code 1) and other thin plastics, common in disposable food packaging, are not designed for repeated microwave use even if they survive a single reheat.',
-          'If in doubt, do a simple test: microwave the empty container for 30 seconds. If it feels warm rather than hot, and has not warped, it is a reasonable sign the material handles heat well, though this is not a substitute for proper labelling.',
+          'If in doubt, do a simple test: put the empty container in the microwave next to a mug of water (never run a microwave with nothing in it to absorb the energy) and heat for one minute. If the water is hot but the container is only slightly warm and has not warped, it is a reasonable sign the material handles heat well, though this is not a substitute for proper labelling.',
         ],
       },
       {
@@ -203,7 +203,7 @@ export const blogPostsBatch4Data = {
     title: 'Best Meal Prep Containers for Salads UK (And How to Stop Them Going Soggy)',
     description: 'Best meal prep containers for salads UK, plus the layering method that stops salads going soggy: which container shape to use and how long they keep.',
     h1: 'Best Meal Prep Containers for Salads UK',
-    intro: 'A soggy meal prep salad by Thursday is almost never a container problem on its own — it is usually a layering and moisture problem that the wrong container makes worse. This guide covers both: which container shape actually helps, and the layering method that keeps salad crisp for most of the week.',
+    intro: 'A soggy meal prep salad by Thursday is almost never a container problem on its own — it is usually a layering and moisture problem that the wrong container makes worse. This guide covers both: which container shape actually helps, and the layering method that keeps salad crisp for longer.',
     productRecommendations: {
       title: 'Wide, shallow boxes rather than deep tubs',
       intro: 'Shape matters more than material here: a wide base lets the layering method above actually work.',
@@ -400,7 +400,7 @@ export const blogPostsBatch4Data = {
     title: 'Air Fryer Meal Prep UK: How to Batch Cook a Week of Meals',
     description: 'Air fryer meal prep UK: which foods batch cook best, how to run a dual-drawer session, and how to reheat meal prep in an air fryer without drying it out.',
     h1: 'Air Fryer Meal Prep UK',
-    intro: 'Air fryers are now in the majority of UK kitchens, and using one for meal prep genuinely changes how quickly a week of food comes together, particularly with a dual-drawer model that lets you cook two different things at once. This guide covers what to actually batch cook in an air fryer, how to run an efficient session, and how to reheat meal prep without it drying out.',
+    intro: 'Air fryers are now in millions of UK kitchens, and using one for meal prep genuinely changes how quickly a week of food comes together, particularly with a dual-drawer model that lets you cook two different things at once. This guide covers what to actually batch cook in an air fryer, how to run an efficient session, and how to reheat meal prep without it drying out.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
     toolRecommendations: {
       title: 'Accessories that earn their place in a batch session',
@@ -464,7 +464,6 @@ export const blogPostsBatch4Data = {
     related: [
       { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'meal-prep-for-beginners-uk', label: 'Meal Prep for Beginners UK', type: 'blog' },
-      { slug: 'batch-cooking-for-beginners-uk', label: 'Batch Cooking for Beginners UK', type: 'blog' },
       { slug: 'how-to-store-meal-prep-safely-uk', label: 'How to Store Meal Prep Safely UK', type: 'blog' },
     ],
     faq: [
@@ -529,7 +528,7 @@ export const blogPostsBatch4Data = {
       {
         h2: 'Approximate calories and protein',
         paragraphs: [
-          'A typical portion of 150g cooked chicken breast with 150g cooked rice provides roughly 350-420 kcal and 35-40g of protein, before sauces or added fats. Adding a tablespoon of oil, cheese, or a creamy sauce can add 100-200 kcal on top, so factor that in if you are tracking a specific calorie target. These are estimates rather than precise figures, since exact values depend on the cut of chicken and rice used.',
+          'A typical portion of 150g cooked chicken breast with 150g cooked rice provides roughly 420-450 kcal and 45-50g of protein, before sauces or added fats. Adding a tablespoon of oil, cheese, or a creamy sauce can add 100-200 kcal on top, so factor that in if you are tracking a specific calorie target. These are estimates rather than precise figures, since exact values depend on the cut of chicken and rice used.',
         ],
       },
     ],

@@ -134,7 +134,7 @@ export const SUPERMARKET_PROFILES = {
       findings: [
         'Just Essentials by Asda spans fresh meat, fish and poultry, bakery, frozen and cupboard staples — the value tier is not limited to ambient goods, which matters when protein is the expensive part of a plan.',
         'Asda launched a high-protein ready-meal range in 2026 formulated to be high in protein and to carry at least 80g of fruit or vegetables per 250g meal.',
-        'Asda Rewards pays into a cashback wallet rather than discounting at the till, so it does not reduce the price of this week&rsquo;s shop.',
+        'Asda Rewards pays into a cashback wallet rather than discounting at the till, so it does not reduce the price of this week’s shop.',
       ],
     },
     minBudgetTier: 'very-cheap',
@@ -159,11 +159,11 @@ export const SUPERMARKET_PROFILES = {
       checked: '2026-08-16',
       source: 'about.sainsburys.co.uk and sainsburys.co.uk',
       sourceUrl: 'https://www.about.sainsburys.co.uk/news/latest-news/2023/12-07-2023-sainsburys-nectr-prices-offers-savings-on-meat-fish-poultry',
-      angle: 'At Sainsbury&rsquo;s the loyalty card is not a rounding error. Nectar Prices reach meat, fish and poultry, which is where a high-protein plan spends most of its money.',
+      angle: 'At Sainsbury’s the loyalty card is not a rounding error. Nectar Prices reach meat, fish and poultry, which is where a high-protein plan spends most of its money.',
       findings: [
         'Nectar Prices apply to meat, fish and poultry, not only to cupboard and treat lines, so the protein element of a plan is where the member price matters most.',
         'Taste the Difference is the premium own-label tier; Stamford Street Co is the consolidated value tier.',
-        'Nectar Prices are excluded at Sainsbury&rsquo;s Local, so a top-up shop will not carry the same prices as a main shop.',
+        'Nectar Prices are excluded at Sainsbury’s Local, so a top-up shop will not carry the same prices as a main shop.',
       ],
     },
     minBudgetTier: 'very-cheap',

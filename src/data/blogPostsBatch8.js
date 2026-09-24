@@ -120,7 +120,7 @@ export const blogPostsBatch8Data = {
         h2: 'Why fridge-cold rice hardens faster than frozen rice',
         paragraphs: [
           'Starch recrystallises fastest at fridge temperatures, which is why fridge-cold rice hardens faster than rice frozen on day one and reheated a week later. It is also why the freezer is the right home for rice you are not eating quickly - cooked rice should be cooled within an hour and used within a day, so the fridge was never the long option. Freezing moves the rice through that temperature range quickly and then effectively pauses the process.',
-          'If you routinely prep rice more than two days ahead, freezing the later portions rather than refrigerating them is the single change that makes the most difference to texture.',
+          'If you routinely prep rice more than a day ahead, freezing the later portions rather than refrigerating them is the single change that makes the most difference to texture.',
         ],
       },
       {
@@ -209,7 +209,7 @@ export const blogPostsBatch8Data = {
       {
         h2: 'Choose a more forgiving cut',
         paragraphs: [
-          'Chicken thigh has more fat and connective tissue than breast, which means it tolerates both a longer cook and a reheat with much less change in texture. For food that will be eaten three or four days after cooking, thigh is the more practical choice even though breast is leaner.',
+          'Chicken thigh has more fat and connective tissue than breast, which means it tolerates both a longer cook and a reheat with much less change in texture. For portions eaten later in the week, which will have been frozen and reheated, thigh is the more practical choice even though breast is leaner.',
           'If you specifically want the lower fat content of breast, prep it for the first two days of the week and use thigh, or a sauced dish, for the later portions.',
         ],
       },

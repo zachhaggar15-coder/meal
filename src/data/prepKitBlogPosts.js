@@ -373,10 +373,6 @@ export const prepKitBlogPostsData = {
         a: 'A 450ml to 500ml jar is the most useful size for oats, milk, yogurt, fruit and toppings.',
       },
       {
-        q: 'Are glass jars better for overnight oats?',
-        a: 'Glass is better for eating feel and odour resistance. Plastic is lighter for commuting.',
-      },
-      {
         q: 'How many overnight oats jars do I need?',
         a: 'Three is a practical minimum. Five works if you prep breakfast for the full working week.',
       },
@@ -471,10 +467,6 @@ export const prepKitBlogPostsData = {
       ...prepKitRelated,
     ],
     faq: [
-      {
-        q: 'Do I need a food thermometer for meal prep?',
-        a: 'It is not mandatory, but it is useful if you cook meat, poultry, mince or reheated portions in batches.',
-      },
       {
         q: 'What temperature should cooked chicken reach?',
         a: 'Food Standards Scotland advises that the thickest part should read 75C or above when checking food is cooked thoroughly.',

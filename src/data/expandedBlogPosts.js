@@ -253,8 +253,8 @@ export const expandedBlogPostsData = {
         totalTime: 'PT20M',
         totalLabel: '20 min',
         bestServed: 'Cold',
-        calories: '410 kcal',
-        protein: '31 g protein',
+        calories: '400 kcal',
+        protein: '24 g protein',
         ingredients: [
           '200g cooked king prawns',
           '120g dry rice noodles',
@@ -687,7 +687,7 @@ export const expandedBlogPostsData = {
     description: 'A practical 1200 calorie meal plan UK guide with filling meal ideas, safety notes, supermarket staples and better options for most adults.',
     h1: '1200 Calorie Meal Plan UK',
     intro:
-      '1,200 kcal is the most searched calorie target in the UK and one of the least appropriate for most adults. It sits at or below the level often used as a clinical threshold, it makes hitting protein, fibre and micronutrients genuinely difficult, and it is the target people abandon fastest. This page explains what a 1,200 kcal day actually looks like, who it might suit, and why the plans on this site start at 1,400.',
+      '1,200 kcal is one of the most searched calorie targets in the UK and one of the least appropriate for most adults. It is well below what most adults need, it makes hitting protein, fibre and micronutrients genuinely difficult, and it is hard to stick to for long. This page explains what a 1,200 kcal day actually looks like, who it might suit, and why the plans on this site start at 1,400.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
     contextualLinks: [portionSizeLink, ...planFinderLinks],
     toolRecommendations: {
@@ -741,7 +741,7 @@ export const expandedBlogPostsData = {
       },
       {
         q: 'Is 1,200 calories a day safe?',
-        a: 'It is a very low intake for most adults and is not something to adopt casually or for long. Under-eating at this level is associated with poor adherence and nutrient shortfalls, and it is a level normally used with clinical supervision. If you think you need to be this low, that is a conversation with a GP or dietitian rather than a website.',
+        a: 'It is a very low intake for most adults and is not something to adopt casually or for long. Eating this little makes nutrient shortfalls and giving up more likely. If you think you need to be this low, that is a conversation with a GP or dietitian rather than a website.',
       },
       {
         q: 'What should I do instead?',
@@ -1080,7 +1080,6 @@ export const expandedBlogPostsData = {
       ...weightRelated,
     ],
     faq: [
-      { q: 'Can I average calories across the week?', a: 'Yes. Fat loss responds to the overall energy balance over time, so weekly averages can be useful if they help you stay consistent.' },
       { q: 'Should I meal prep every meal?', a: 'Usually no. Prep the meals that cause the most trouble, such as work lunches and rushed breakfasts, then leave some flexibility.' },
       {
         q: 'Can I average my calories across the week?',
@@ -1142,7 +1141,6 @@ export const expandedBlogPostsData = {
       ...mealPrepRelated,
     ],
     faq: [
-      { q: 'Why am I not losing weight with meal prep?', a: 'Common reasons include portions being larger than estimated, oils and sauces not being counted, weekends offsetting weekdays, or meals being so small that they trigger evening overeating.' },
       { q: 'Do I need to eat the same thing every day?', a: 'No. Repeating breakfast can help, but lunches and dinners can be varied by changing sauces, carbohydrates, vegetables, and serving styles.' },
       {
         q: 'Why is my meal prep not helping me lose weight?',
@@ -1392,7 +1390,7 @@ export const expandedBlogPostsData = {
           headers: ['Food', 'Best use', 'Prep note'],
           rows: [
             ['Eggs', 'Breakfasts, salads, wraps', 'Boil six at once for snacks'],
-            ['Tinned tuna', 'Jacket potatoes, pasta salad', 'Choose spring water for lower calories'],
+            ['Tinned chickpeas', 'Curries, salads, roasted snacks', 'Already cooked; drain and rinse'],
             ['Red lentils', 'Soups, dhal, bolognese', 'No soaking needed'],
             ['Greek yogurt', 'Breakfasts, sauces, snacks', 'Buy large tubs for better value'],
             ['Tofu', 'Stir-fries, curries, noodle boxes', 'Pat dry before cooking'],
@@ -1598,7 +1596,7 @@ export const expandedBlogPostsData = {
         h2: 'How much fibre, and where most people actually sit',
         paragraphs: [
           'UK government advice is 30g of fibre a day for adults. Average intake is well short of that - most surveys put it around 20g - so the realistic goal for most people is closing a ten gram gap rather than overhauling the diet.',
-          'Ten grams is smaller than it sounds. A tin of baked beans is around 10g on its own; a large jacket potato eaten with the skin is roughly 5g; two Weetabix about 4g; 80g of peas around 4g. Add one deliberate source to each meal and the total arrives without anyone eating a bowl of bran.',
+          'Ten grams is smaller than it sounds. Half a standard tin of baked beans is around 7g on its own; a large jacket potato eaten with the skin is roughly 5g; two Weetabix about 4g; 80g of peas around 4g. Add one deliberate source to each meal and the total arrives without anyone eating a bowl of bran.',
         ],
       },
       {
@@ -1619,7 +1617,7 @@ export const expandedBlogPostsData = {
       { q: 'Can fibre help weight loss?', a: 'It can help appetite and meal satisfaction, which makes a calorie deficit easier to maintain. Calories still matter.' },
       {
         q: 'How much fibre should I eat a day?',
-        a: 'UK advice is 30g a day for adults, and average intake is around 20g. Closing that gap is roughly one deliberate source per meal - a tin of beans alone is about 10g.',
+        a: 'UK advice is 30g a day for adults, and average intake is around 20g. Closing that gap is roughly one deliberate source per meal - half a tin of baked beans alone is about 7g.',
       },
       {
         q: 'Are fibre supplements worth taking?',
@@ -1739,13 +1737,13 @@ export const expandedBlogPostsData = {
         h2: 'The Thursday problem',
         paragraphs: [
           'Five identical lunches cooked on Sunday are eaten enthusiastically on Monday, tolerated on Wednesday and abandoned on Thursday. This is the single most common way a work-lunch plan fails, and it is not a discipline problem - it is a menu that ignores how repetition actually feels.',
-          'Two fixes work. Cook one protein and two bases so the same chicken becomes a rice bowl, a wrap and a salad across the week. Or cook three days and freeze the other two on Sunday, so Thursday and Friday are eating something you have not seen for a fortnight rather than something four days old.',
+          'Two fixes work. Cook one protein and two bases so the same chicken becomes a rice bowl, a wrap and a salad across the week. Or cook two different dishes on Sunday: one for Monday and Tuesday from the fridge, and one frozen straight away for the rest of the week, so Thursday and Friday are eating something different rather than the same thing again.',
         ],
       },
       {
         h2: 'The office fridge is not your fridge',
         paragraphs: [
-          'Anything left in a shared fridge is subject to other people, and a communal fridge is often warmer than a home one because it is opened constantly. That matters most for the food you are relying on being safe on Thursday, which by then is at the edge of its two days anyway.',
+          'Anything left in a shared fridge is subject to other people, and a communal fridge is often warmer than a home one because it is opened constantly. That matters most for later-week portions that were defrosted in the fridge overnight, which need to stay properly cold until lunch.',
           'The practical answer is to carry lunch in an insulated bag with an ice pack and treat the office fridge as a bonus rather than the plan. It also removes the other failure mode, which is arriving to find someone has eaten it.',
         ],
       },
@@ -2048,7 +2046,6 @@ export const expandedBlogPostsData = {
       ...mealPrepRelated,
     ],
     faq: [
-      { q: 'How long does meal prep last in the fridge?', a: 'It depends on the food and storage. If you are unsure about later-week portions, freeze them and reheat when needed.' },
       { q: 'Should hot food go straight in the fridge?', a: 'Cool cooked food quickly in shallow portions, then refrigerate once it is no longer hot. Do not leave it sitting out for hours.' },
       {
         q: 'How long does meal prep last in the fridge?',
@@ -2216,7 +2213,7 @@ export const expandedBlogPostsData = {
       {
         h2: 'How a freezer-first week actually runs',
         paragraphs: [
-          'The practical difference is that you stop cooking a week in one session. Take out three portions of chicken on Sunday for the first half of the week, cook those, and leave the rest in the bag. On Wednesday take out the next three. Nothing has been sitting in the fridge since Sunday, which is also the safer way to do it — chilled cooked food should be eaten within two days.',
+          'The practical difference is that you stop cooking a week in one session. Take out two portions of chicken on Sunday for Monday and Tuesday, cook those, and leave the rest in the bag. On Tuesday evening take out the next two, and so on. Nothing has been sitting in the fridge since Sunday, which is also the safer way to do it — chilled cooked food should be eaten within two days.',
           'That suits the plans on this site that lean on repeated components: fish with potatoes and peas, chicken and frozen veg stir-fries, prawn rice bowls, chilli built on frozen peppers. Each of those is assembled from bags rather than from a single big cook.',
         ],
       },
@@ -2762,7 +2759,6 @@ export const expandedBlogPostsData = {
     ],
     faq: [
       { q: 'What should I eat on night shift?', a: 'Plan a pre-shift meal, a main packed meal, and protein-rich snacks. Choose foods that travel well and do not rely on perfect kitchen facilities.' },
-      { q: 'Should I eat after a night shift?', a: 'Some people prefer a light snack before sleep, others do not need it. Avoid forcing a heavy meal if it disrupts sleep.' },
       {
         q: 'When should I eat on a night shift?',
         a: 'Treat the shift start as breakfast, eat something lighter in the small hours, and keep the pre-sleep meal small. Mapping three daytime meals onto a night is what usually leaves people either overfull or raiding a vending machine at three.',
@@ -2937,8 +2933,8 @@ export const expandedBlogPostsData = {
       {
         h2: 'What 500 calories looks like on a plate',
         paragraphs: [
-          'Abstractly it sounds like a lot. Concretely it is around 100g of oats with 300ml of whole milk, or two tablespoons of olive oil over the day, or a large handful of nuts and a banana. It is one addition to a day rather than a redesign of it, which is why moving between the two targets is less dramatic than the numbers suggest.',
-          'That also explains why the step up is easy to make by accident. If you are not weighing the dense additions - oil, nut butter, cheese, granola - the difference between a 3,000 and a 3,500 kcal day can be a couple of unmeasured spoonfuls.',
+          'Abstractly it sounds like a lot. Concretely it is around 100g of oats with 300ml of whole milk, or about four tablespoons of olive oil spread over the day, or a large handful of nuts and a banana. It is one addition to a day rather than a redesign of it, which is why moving between the two targets is less dramatic than the numbers suggest.',
+          'That also explains why the step up is easy to make by accident. If you are not weighing the dense additions - oil, nut butter, cheese, granola - the difference between a 3,000 and a 3,500 kcal day can be a few unmeasured spoonfuls spread across the day.',
         ],
       },
       {
@@ -2959,7 +2955,7 @@ export const expandedBlogPostsData = {
       { q: 'Can I print a 3000 or 3500 calorie plan?', a: 'Yes. Open a matching plan and use the export or print PDF section to save the full week and shopping list.' },
       {
         q: 'What does the extra 500 calories actually look like?',
-        a: 'Roughly 100g of oats with 300ml of whole milk, two tablespoons of olive oil across the day, or a large handful of nuts with a banana. One addition rather than a redesigned day.',
+        a: 'Roughly 100g of oats with 300ml of whole milk, about four tablespoons of olive oil across the day, or a large handful of nuts with a banana. One addition rather than a redesigned day.',
       },
       {
         q: 'How do I know if 3,000 is really not enough?',

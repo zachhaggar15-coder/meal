@@ -43,7 +43,7 @@ export const DINNER_TEMPLATES = [
     sourceLabel: 'vegetarian meal plan hub',
     keywords: ['egg', 'eggs', 'potato', 'cheese', 'spinach', 'mushroom', 'pepper', 'onion'],
     staples: ['Eggs 3', 'Milk 30ml', 'Cheddar 20g'],
-    desc: 'A cheap skillet dinner for eggs, leftover potato and veg that needs using up.',
+    desc: 'A cheap one-pan dinner for eggs, leftover potato and veg that needs using up.',
     recipe: [
       'Fry the veg and cooked potato until browned at the edges.',
       'Whisk eggs with milk, salt and pepper, then pour into the pan.',

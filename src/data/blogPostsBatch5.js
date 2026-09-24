@@ -122,7 +122,7 @@ export const blogPostsBatch5Data = {
     h1: 'Rice Cooker Meal Prep UK',
     intro: 'A dedicated rice cooker removes the guesswork of cooking rice on the hob, produces a consistent result every time, and frees up a hob ring while you cook everything else. This guide covers how much to batch, which rice types behave differently, and the food safety side that matters more with rice than almost any other meal prep staple.',
     quickAnswer: {
-      answer: 'A rice cooker with a 1-1.5kg capacity is more than enough for one or two days of rice for one to two people. Cook only what you will use soon, spread it out to cool quickly rather than leaving it in the cooker, then refrigerate within an hour and use within 24 hours for the safest results.',
+      answer: 'A rice cooker with a 1-1.5 litre capacity is more than enough for one or two days of rice for one to two people. Cook only what you will use soon, spread it out to cool quickly rather than leaving it in the cooker, then refrigerate within an hour and use within 24 hours for the safest results.',
       links: [
         { label: 'Read chicken and rice meal prep in full', to: '/blog/chicken-and-rice-meal-prep-uk' },
         { label: 'See the batch cooking basics guide', to: '/blog/batch-cooking-for-beginners-uk' },
@@ -159,7 +159,7 @@ export const blogPostsBatch5Data = {
       {
         h2: 'Cooling and storing rice safely',
         paragraphs: [
-          'Rice needs particular care in meal prep because cooked rice left at room temperature can allow bacterial spores to survive cooking and multiply, producing toxins that further reheating does not destroy. This is genuinely important, not just a general food safety caveat.',
+          'Rice needs particular care in meal prep because bacterial spores can survive cooking and, if cooked rice is left at room temperature, multiply and produce toxins that further reheating does not destroy. This is genuinely important, not just a general food safety caveat.',
           'Spread cooked rice out on a tray rather than leaving it in a deep pot to cool, since a thinner layer cools much faster. Refrigerate within about an hour of cooking, and aim to use rice within 24 hours. Only reheat a portion once, until it is steaming hot throughout.',
         ],
       },
@@ -216,7 +216,7 @@ export const blogPostsBatch5Data = {
         h2: 'Kitchen scales, and the cooked-versus-raw trap',
         paragraphs: [
           'A basic digital scale with a 3-5kg capacity and a tare button covers everything meal prep needs. The expensive ones weigh the same food. What matters is that it is on the worktop rather than in a drawer, because a scale you have to fetch is a scale you stop using.',
-          'The mistake almost everyone makes is weighing at the wrong point. Weigh raw, before cooking, unless a plan explicitly gives a cooked weight - rice and pasta roughly triple in weight as they absorb water, and meat loses a quarter or more of its weight as it cooks. Weighing 100g of cooked rice when the plan meant 100g dry is a difference of several hundred calories, and it is the single most common reason a carefully followed plan does not work.',
+          'The mistake almost everyone makes is weighing at the wrong point. Weigh raw, before cooking, unless a plan explicitly gives a cooked weight - rice and pasta roughly double to triple in weight as they absorb water, and meat loses a quarter or more of its weight as it cooks. Weighing 100g of cooked rice when the plan meant 100g dry is a difference of well over 200 calories, and it is the single most common reason a carefully followed plan does not work.',
           'You also do not need to weigh everything. The calorie-dense items - oil, nuts, cheese, cereal, pasta, rice - carry most of the error. Vegetables barely move the total and are not worth the effort.',
         ],
       },
@@ -240,7 +240,7 @@ export const blogPostsBatch5Data = {
         paragraphs: [
           'Air fryer accessories are worth it only once you own the air fryer and know what it does badly. Size is the whole decision - a kit that does not fit your basket is scrap - so measure the basket before buying anything, including liners.',
           'Silicone liners are the one most people should buy first, because they solve washing up rather than cooking. They do reduce crisping slightly, which is the trade: use them for anything saucy and cook straight on the basket for anything that needs to crisp.',
-          'A shaker is a 5 pound purchase that only matters if you take powder to a gym. If you do, buy two, because the smell problem is not about the bottle - it is about a protein shaker left in a bag overnight, and the fix is having a spare so one can be washed properly rather than rinsed.',
+          'A shaker is an inexpensive purchase that only matters if you take powder to a gym. If you do, buy two, because the smell problem is not about the bottle - it is about a protein shaker left in a bag overnight, and the fix is having a spare so one can be washed properly rather than rinsed.',
         ],
       },
       {
@@ -282,7 +282,7 @@ export const blogPostsBatch5Data = {
       },
       {
         q: 'Should I weigh food raw or cooked?',
-        a: 'Raw, before cooking, unless the plan states a cooked weight. Rice and pasta roughly triple in weight as they absorb water and meat loses around a quarter, so the two are not interchangeable - this is the most common reason a followed plan does not add up.',
+        a: 'Raw, before cooking, unless the plan states a cooked weight. Rice and pasta roughly double to triple in weight as they absorb water and meat loses around a quarter, so the two are not interchangeable - this is the most common reason a followed plan does not add up.',
       },
       {
         q: 'Is a vacuum sealer worth it for meal prep?',
@@ -490,7 +490,7 @@ export const blogPostsBatch5Data = {
           rows: [
             ['Legume pasta + chicken + tomato sauce', '45-55g', 'High protein from both pasta and chicken'],
             ['Regular pasta + tuna + cherry tomatoes', '30-35g', 'Cheap, quick, good cold or reheated'],
-            ['Legume pasta + ricotta + spinach', '35-40g', 'Vegetarian, creamy sauce'],
+            ['Legume pasta + ricotta + spinach', '25-35g', 'Vegetarian, creamy sauce'],
             ['Regular pasta + lentils + mince ragu', '35-40g', 'Budget-friendly protein boost from lentils'],
           ],
         },
@@ -498,7 +498,7 @@ export const blogPostsBatch5Data = {
       {
         h2: 'Ordinary pasta already has more protein than people think',
         paragraphs: [
-          'Dried pasta is roughly 12g of protein per 100g, which is not trivial - a 100g dry portion contributes about as much as a large egg and a half before anything is added to it. That is worth knowing before paying a premium for a high-protein version.',
+          'Dried pasta is roughly 12g of protein per 100g, which is not trivial - a 100g dry portion contributes about as much as two eggs before anything is added to it. That is worth knowing before paying a premium for a high-protein version.',
           'It is incomplete protein, low in lysine, which is why pasta with beans, lentils, dairy or meat does more than pasta alone. But the useful comparison for a specialist product is not against zero, it is against the ordinary pasta plus whatever you were going to put on it - and by that measure the gap is usually smaller than the price difference.',
         ],
       },

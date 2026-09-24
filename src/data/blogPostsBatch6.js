@@ -324,7 +324,7 @@ export const blogPostsBatch6Data = {
     h1: 'Is Meal Prep Cheaper Than Meal Deals and Takeaways?',
     intro: 'Meal deals feel cheap in the moment because each one is a single small purchase, but the weekly total adds up faster than home-cooked meal prep in almost every realistic comparison.',
     quickAnswer: {
-      answer: 'Yes. A typical UK meal deal costs £3.50-5 and a takeaway meal commonly costs £8-15, compared with roughly £1.50-3 per meal for home-cooked meal prep. Across five lunches a week, meal prep is usually £10-20 cheaper than meal deals, and considerably cheaper again than regular takeaways, while also giving more control over protein, calories and ingredients.',
+      answer: 'Yes. A typical UK meal deal costs £3.50-5 and a takeaway meal commonly costs £8-15, compared with roughly £1.50-3 per meal for home-cooked meal prep. Across five lunches a week, meal prep is usually around £5-15 cheaper than meal deals, and considerably cheaper again than regular takeaways, while also giving more control over protein, calories and ingredients.',
       links: [
         { label: 'See how much meal prep should cost', to: '/blog/how-much-should-meal-prep-cost-uk' },
         { label: 'Read batch cooking for beginners', to: '/blog/batch-cooking-for-beginners-uk' },
@@ -376,7 +376,7 @@ export const blogPostsBatch6Data = {
       { slug: 'cheap-meal-prep-shopping-list-uk', label: 'Cheap Meal Prep Shopping List UK', type: 'blog' },
     ],
     faq: [
-      { q: 'How much cheaper is meal prep than a meal deal?', a: 'Typically £10-20 cheaper per week across five lunches, based on representative costs of £1.50-3 per meal-prepped meal versus £3.50-5 per meal deal.' },
+      { q: 'How much cheaper is meal prep than a meal deal?', a: 'Typically around £5-15 cheaper per week across five lunches, based on representative costs of £1.50-3 per meal-prepped meal versus £3.50-5 per meal deal.' },
       { q: 'Is it worth meal prepping just to save money?', a: 'If you currently rely on meal deals or takeaways most days, the weekly saving is usually substantial and adds up significantly over a year. If you already cook most meals from scratch, the savings are smaller.' },
       { q: 'Does meal prep save time as well as money?', a: 'It shifts time rather than necessarily saving it overall — one longer batch-cooking session replaces several shorter daily decisions and cooking sessions, which many people find more convenient even if total active time is similar.' },
     ],

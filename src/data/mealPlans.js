@@ -780,7 +780,7 @@ export const mealPlansData = {
         { item: 'Tesco Reduced Fat Houmous', quantity: '200 g', price: '\u00a31.30', meals: '4 snack portions' },
         { item: 'Fresh salad and veg top-up', quantity: 'Spinach, tomatoes, cucumber, carrots', price: '~\u00a35.50', meals: '7+ salads/snacks' },
       ],
-      note: 'Total from the table is roughly \u00a340-45 depending on exact bread, salad and offer choices. Pantry items such as spices, stock, vinegar and small amounts of oil are excluded because most users already own them.',
+      note: 'Total from the table is roughly \u00a340-45 depending on exact bread, salad and offer choices. Store-cupboard items such as spices, stock, vinegar and small amounts of oil are excluded because most users already own them.',
     },
     tescoSubstitutions: {
       intro: 'Use these swaps when a Tesco item is expensive, out of stock, or does not fit your diet. The aim is to keep calories similar while protecting protein and cost.',
@@ -822,7 +822,7 @@ export const mealPlansData = {
       points: [
         'Calories and protein were estimated from the portion sizes in the 7-day plan and typical Tesco product nutrition labels. Figures are rounded, so weigh ingredients and check the pack if you need precision.',
         'Cost estimates were checked against Tesco Groceries on 8 June 2026 using own-brand, Aldi Price Match or commonly stocked products where possible.',
-        'The weekly basket assumes one adult, 7 days, 3 main meals plus snacks. Pantry basics such as spices, stock, vinegar and small amounts of oil are excluded.',
+        'The weekly basket assumes one adult, 7 days, 3 main meals plus snacks. Store-cupboard basics such as spices, stock, vinegar and small amounts of oil are excluded.',
         'Clubcard Prices, Aldi Price Match labels, seasonal produce prices and local availability change frequently. Re-check the Tesco app before checkout, especially for chicken, fish, yogurt, fresh fruit and ready meals.',
       ],
     },
