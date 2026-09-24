@@ -110,7 +110,7 @@ export default function ContainerQuickComparison({
               <span className="container-search-chip">Best for: {searchedFor}</span>
               <CardHeadingTag>{sizeLabel}</CardHeadingTag>
               <strong className="container-size-focus">{sizeFocus}</strong>
-              <p>{fit}</p>
+              {fit !== searchedFor && <p>{fit}</p>}
               {!compact && <p className="container-direct-summary">{product.summary}</p>}
               <dl className="container-direct-facts">
                 <div>

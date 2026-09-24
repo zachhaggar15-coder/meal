@@ -42,10 +42,9 @@ export default function AffiliateProductGrid({
           intro={`Compare ${Math.min(products.length, 3)} options first, then scroll for the longer buying notes.`}
           picks={products.slice(0, 3).map(product => ({
             product,
-            searchedFor: title,
+            searchedFor: product.bestFor,
             sizeLabel: product.badge,
             sizeFocus: `${product.setSize} - ${product.layout}`,
-            fit: product.bestFor,
           }))}
           headingLevel="h3"
           sourcePage={`${sourcePage}-quick-comparison`}
