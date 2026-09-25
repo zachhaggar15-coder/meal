@@ -155,17 +155,6 @@ export const QUEUE_WARNING_DAYS = 14;
 // hold; the release queue decides when each one reaches Pinterest.
 export const PINTEREST_BOARDS = Object.freeze([
   {
-    // The 6-week PDF meal plans (src/pinterest/products.js). Paid products get
-    // a board of their own so the free-plan boards stay free of adverts.
-    key: 'meal-prep-pdfs',
-    feed: 'meal-prep-pdfs.xml',
-    board: '6-Week Meal Prep Plans',
-    title: 'MealPrep.org.uk - 6-week meal prep PDF plans',
-    description: 'Six-week Aldi and Lidl dinner and high-protein meal plans for two, as PDFs: planner, shopping list by aisle and 24 recipes.',
-    limit: 12,
-    match: entry => entry.kind === 'product',
-  },
-  {
     key: 'aldi',
     feed: 'aldi.xml',
     board: 'Aldi Meal Plans UK',

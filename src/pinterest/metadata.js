@@ -172,16 +172,17 @@ export function pinGuid(entry, { origin = SITE_URL, variant = 1 } = {}) {
  */
 export function pinImageFilename(entry, { variant = 1 } = {}) {
   const base = entry.id.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
-  const extension = pinImageType(entry) === 'image/jpeg' ? 'jpg' : 'png';
+  const extension = pinImageType(entry, { variant }) === 'image/jpeg' ? 'jpg' : 'png';
   return variant > 1 ? `${base}-v${variant}.${extension}` : `${base}.${extension}`;
 }
 
 /**
- * Photo Pins are JPEG: as PNG each one is around 1.5 MB. Flat-colour text Pins
- * stay PNG, which keeps their lettering sharp and their files small.
+ * Photo Pins (a page's first Pin, and every product Pin) are JPEG: as PNG each
+ * one is around 1.5 MB. The text-led second Pin stays PNG, which keeps its
+ * lettering sharp and its file small.
  */
-export function pinImageType(entry) {
-  return entry.pins?.length ? 'image/jpeg' : 'image/png';
+export function pinImageType(entry, { variant = 1 } = {}) {
+  return entry.pins?.length || variant === 1 ? 'image/jpeg' : 'image/png';
 }
 
 export function pinImageUrl(entry, { origin = SITE_URL, variant = 1 } = {}) {
@@ -219,7 +220,7 @@ export function buildPinRecord(entry, options = {}) {
       url: pinImageUrl(entry, options),
       width: PIN_IMAGE_WIDTH,
       height: PIN_IMAGE_HEIGHT,
-      type: pinImageType(entry),
+      type: pinImageType(entry, options),
     },
     published: entry.published || '',
     modified: entry.modified || '',

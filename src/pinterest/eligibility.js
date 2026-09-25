@@ -381,7 +381,8 @@ function selectForBoard(candidates, board, titlesTaken = new Set()) {
     }
 
     titlesTaken.add(titleKey);
-    perSignature.set(signature, signatureCount + 1);
+    // A product never takes a page's place as "the" Pin for its idea.
+    if (candidate.kind !== 'product') perSignature.set(signature, signatureCount + 1);
     if (store) perSupermarket.set(store, storeCount + 1);
     kept.push(candidate);
   }

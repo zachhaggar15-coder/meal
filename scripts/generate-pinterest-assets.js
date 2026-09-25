@@ -59,7 +59,7 @@ function fail(messages) {
 
 // Photo Pins (.jpg) are encoded as JPEG from the rendered pixels; everything
 // else stays PNG. See pinImageType in src/pinterest/metadata.js.
-const JPEG_QUALITY = 84;
+const JPEG_QUALITY = 72;
 
 function renderImage(image) {
   if (!image.filename.endsWith('.jpg')) return renderPng(image.svg);

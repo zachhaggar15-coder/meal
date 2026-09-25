@@ -38,7 +38,7 @@ import {
   pinImageUrl,
   pinTitle,
 } from '../src/pinterest/metadata.js';
-import { buildPinSvg, templateFor, TEMPLATES } from '../src/pinterest/creative.js';
+import { buildPinSvg, photoFor, PHOTOS, templateFor, TEMPLATES } from '../src/pinterest/creative.js';
 import { buildRssFeed, escapeXml, renderFeedAt, rfc822 } from '../src/pinterest/feed.js';
 import { buildPinterestPlan, renderPinterestFeeds, withImageBytes } from '../src/pinterest/index.js';
 import { assignReleaseDates, queueStatus, releasedRecords } from '../src/pinterest/schedule.js';
@@ -261,11 +261,10 @@ test('image URLs are stable and unique per Pin', () => {
 });
 
 test('templates are chosen from the page’s own data, and a second Pin looks different', () => {
-  assert.deepEqual(TEMPLATES, ['supermarket', 'target', 'guide', 'checklist', 'product']);
-  assert.equal(templateFor({ supermarketLabel: 'Aldi', calorieTarget: 1500 }), 'supermarket');
-  assert.equal(templateFor({ supermarketLabel: '', calorieTarget: 1500 }), 'target');
-  assert.equal(templateFor({ supermarketLabel: '', calorieTarget: null }), 'guide');
+  assert.deepEqual(TEMPLATES, ['photo', 'checklist', 'product']);
+  assert.equal(templateFor({ supermarketLabel: 'Aldi', calorieTarget: 1500 }), 'photo');
   assert.equal(templateFor({ supermarketLabel: 'Aldi', calorieTarget: 1500 }, { variant: 2 }), 'checklist');
+  assert.equal(templateFor({ pins: [{}] }, { variant: 2 }), 'product');
 
   const used = new Set(plan.images.map(image => image.template));
   assert.ok(used.size >= 3, 'the library exercises several templates');
@@ -275,7 +274,36 @@ test('templates are chosen from the page’s own data, and a second Pin looks di
       assert.equal(image.template, 'product', `${image.id} is a product without the photo design`);
       continue;
     }
-    assert.equal(image.template === 'checklist', image.variant > 1, `${image.id} uses the wrong design for its Pin`);
+    assert.equal(image.template, image.variant > 1 ? 'checklist' : 'photo', `${image.id} uses the wrong design for its Pin`);
+  }
+});
+
+test('first Pins are photo-led, with a photo that fits the page', () => {
+  assert.equal(photoFor({ id: 'a', path: '/blog/vegan-meal-prep-uk' }), 'plant-based');
+  assert.equal(photoFor({ id: 'a', path: '/blog/cold-lunch-ideas-for-work-uk' }), 'work-lunch');
+  assert.ok(['muscle-gain', 'high-protein'].includes(photoFor({ id: 'a', path: '/meal-plans/high-protein' })));
+  assert.ok(['low-calorie', 'weekly-prep'].includes(photoFor({ id: 'a', path: '/meal-plans/1500-calorie' })));
+  assert.ok(['budget-shop', 'batch-cooking'].includes(photoFor({ id: 'a', path: '/meal-plans/cheap-student' })));
+
+  for (const photo of PHOTOS) assert.ok(fs.existsSync(`${PINTEREST_PHOTO_DIR}${photo}.jpg`), `${photo}.jpg is checked in`);
+  for (const image of plan.images.filter(item => item.template !== 'checklist')) {
+    const href = /<image href="([^"]+)"/.exec(image.svg)?.[1] || '';
+    assert.ok(PHOTOS.some(photo => href.endsWith(`/${photo}.jpg`)), `${image.id} uses ${href}`);
+  }
+  // Different pages on the same topic do not all look identical.
+  const looks = new Set(plan.images.filter(item => item.template === 'photo').map(item => (
+    `${/<image href="([^"]+)"/.exec(item.svg)[1]} ${/preserveAspectRatio="(\w+) slice"/.exec(item.svg)[1]} ${/<rect width="1000" height="1500" fill="([^"]+)"/.exec(item.svg)[1]}`
+  )));
+  assert.ok(looks.size >= 30, `only ${looks.size} distinct photo looks`);
+});
+
+test('every Pin has a short call to action and keeps the brand clear of the corner Pinterest covers', () => {
+  for (const image of plan.images) {
+    assert.match(image.svg, />(See the plans|Read the guide|Get the plan)</, `${image.id} has no call to action`);
+    // The brand sits at the top, not in the bottom-right corner where the
+    // save and share buttons are drawn.
+    const brand = /<text x="(\d+)" y="(\d+)"[^>]*>MealPrep\.org\.uk</.exec(image.svg);
+    assert.ok(brand && Number(brand[2]) < 300, `${image.id} puts the brand at y=${brand?.[2]}`);
   }
 });
 
@@ -328,7 +356,7 @@ test('a calorie target is stated once, not again as a stat label', () => {
   };
   for (const variant of [1, 2]) {
     const { svg } = buildPinSvg(entry, { variant });
-    assert.equal((svg.match(/1,500 kcal/g) || []).length, 1, `pin ${variant} repeats the target`);
+    assert.equal((svg.match(/1,500/g) || []).length, 1, `pin ${variant} repeats the target`);
   }
   assert.equal((pinDescription(entry).match(/1,500 kcal/g) || []).length, 1);
 });
@@ -749,18 +777,24 @@ test('the board feed URLs are routed to the endpoint, not frozen as static files
 const productEntries = plan.entries.filter(entry => entry.kind === 'product');
 const productRecords = plan.records.filter(record => record.kind === 'product');
 
-test('every 6-week PDF and the shop page are advertised on their own board', () => {
+test('every 6-week PDF and the shop page are advertised on the Aldi and Lidl boards', () => {
   const paths = productEntries.map(entry => entry.path).sort();
   const expected = [PDF_SHOP_PATH, ...Object.keys(MEAL_PREP_PDF_PRODUCTS).map(slug => `${PDF_SHOP_PATH}/${slug}`)].sort();
   assert.deepEqual(paths, expected);
 
-  for (const entry of productEntries) assert.equal(entry.board.key, 'meal-prep-pdfs', `${entry.path} is on ${entry.board.key}`);
-  for (const entry of plan.entries.filter(item => item.kind !== 'product')) {
-    assert.notEqual(entry.board.key, 'meal-prep-pdfs', `${entry.path} is a free page on the PDF board`);
+  // No new board: the plans go on the existing Aldi and Lidl boards.
+  for (const entry of productEntries) {
+    assert.ok(['aldi', 'lidl'].includes(entry.board.key), `${entry.path} is on ${entry.board.key}`);
+    const store = /lidl/.test(entry.path) ? 'lidl' : /aldi/.test(entry.path) ? 'aldi' : null;
+    if (store) assert.equal(entry.board.key, store, `${entry.path} is on the wrong chain's board`);
+  }
+  assert.ok(!PINTEREST_BOARDS.some(board => board.key === 'meal-prep-pdfs'), 'no board that would need creating');
+  for (const key of ['aldi', 'lidl']) {
+    assert.ok(productEntries.filter(entry => entry.board.key === key).length >= 3, `the ${key} board advertises the plans`);
   }
   for (const record of productRecords) {
     const link = new URL(record.link);
-    assert.equal(link.searchParams.get('utm_campaign'), 'meal-prep-pdfs');
+    assert.equal(link.searchParams.get('utm_campaign'), record.boardKey);
     assert.ok(link.pathname.startsWith(PDF_SHOP_PATH), `${record.link} does not go to the shop`);
   }
 });
@@ -795,6 +829,23 @@ test('product Pins state the real price and never call a paid plan free', () => 
       const separate = (product.bundleOf || []).reduce((sum, item) => sum + MEAL_PREP_PDF_PRODUCTS[item].priceGBP, 0);
       if (separate) known.add(formatPrice(separate));
       for (const shown of prices) assert.ok(known.has(shown), `${slug} pin ${variant} shows ${shown}, which no product costs`);
+    }
+  }
+});
+
+test('product Pins are mixed in with the free pages, never back to back on a board', () => {
+  for (const key of ['aldi', 'lidl']) {
+    const queued = plan.records
+      .filter(record => record.boardKey === key && Date.parse(record.releaseAt) >= Date.parse(`${PINTEREST_DRIP_START}T00:00:00Z`))
+      .sort((a, b) => a.releaseAt.localeCompare(b.releaseAt));
+    const pages = queued.filter(record => record.kind !== 'product').length;
+    // While free pages remain, two products never go out one after the other.
+    let pagesLeft = pages;
+    for (let index = 1; index < queued.length && pagesLeft > 0; index += 1) {
+      if (queued[index - 1].kind !== 'product') pagesLeft -= 1;
+      if (pagesLeft > 0) {
+        assert.ok(!(queued[index].kind === 'product' && queued[index - 1].kind === 'product'), `${key} posts two products in a row at ${queued[index].releaseAt}`);
+      }
     }
   }
 });

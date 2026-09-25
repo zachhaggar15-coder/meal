@@ -12,7 +12,7 @@ site content (hubs, combo pages, articles, the 6-week PDF plans)
         ├─ eligibility   src/pinterest/eligibility.js   which pages qualify, ranked
         ├─ products      src/pinterest/products.js      Pins for the 6-week PDF plans
         ├─ metadata      src/pinterest/metadata.js      Pin title, description, link
-        ├─ creative      src/pinterest/creative.js      1000x1500 SVG, five templates
+        ├─ creative      src/pinterest/creative.js      1000x1500 SVG, three templates
         ├─ schedule      src/pinterest/schedule.js      when each Pin is released
         └─ distribution  src/pinterest/feed.js          RSS 2.0 (the first adapter)
                 │
@@ -44,6 +44,9 @@ So every Pin now has a release date:
   (`checklist`) and copy led by the page's intro. Pinterest counts a new image
   as a fresh Pin even for the same page. `PIN_VARIANTS_PER_PAGE` sets this.
 - Each 6-week PDF product gets four Pins, each with its own food photo and hook.
+- No site-wide day ever carries more than one PDF Pin, and on a board the PDF
+  Pins are mixed in between free pages (`PAGES_BETWEEN_PRODUCTS` in
+  `schedule.js`), never posted back to back.
 
 The build writes every Pin and its date to `dist/pinterest/schedule.json`.
 `api/pinterest-feed.js` (reached through a `vercel.json` rewrite of
@@ -66,7 +69,6 @@ connecting all of them cannot produce duplicate Pins.
 
 | Feed | Board |
 | --- | --- |
-| `https://www.mealprep.org.uk/pinterest/meal-prep-pdfs.xml` | 6-Week Meal Prep Plans (**new — create and connect**) |
 | `https://www.mealprep.org.uk/pinterest/aldi.xml` | Aldi Meal Plans UK |
 | `https://www.mealprep.org.uk/pinterest/lidl.xml` | Lidl Meal Plans UK |
 | `https://www.mealprep.org.uk/pinterest/supermarket.xml` | UK Supermarket Meal Plans |
@@ -90,20 +92,20 @@ reason not to fetch the image.
 
 `src/pinterest/products.js` turns every product in
 `src/data/mealPrepPdfProducts.js`, plus the `/meal-prep-pdfs` shop page, into
-Pins on the **6-Week Meal Prep Plans** board. Paid products have their own
-board so the free-plan boards are not filled with adverts.
+Pins on the existing boards, so there is nothing to set up in Pinterest: the
+Aldi plans and bundle and the complete collection go on **Aldi Meal Plans
+UK**, the Lidl plans and bundle and the shop page on **Lidl Meal Plans UK**.
 
 - Four Pins per product, each with a different food photo, panel colour and
   hook: the product name, its own opening line, the dinner count, the
   shopping list. The shop page has two.
-- The design (`product` template) is photo-led: a food photo across the top,
-  a "6-week PDF plan" badge and the price tag over it, then the hook and what
-  is included.
+- The design (`product` template) is the photo layout below with a
+  "6-week PDF plan" badge, the price as its tag and "Get the plan".
 - All copy and prices come from the product record, so a price change
   reaches the Pins on the next build. A paid Pin never says "free".
 - The photos are JPEG copies of `public/images/meal-plans/*.webp`, checked in
   at `assets/pinterest/photos/` because the renderer cannot read WebP. Photo
-  Pins are written as JPEG (`jpeg-js`); text Pins stay PNG.
+  Pins are written as JPEG (`jpeg-js`); the text-led second Pins stay PNG.
 - **A product that is not on sale is never advertised.** If a product page
   shows "Available soon" (its Lemon Squeezy buy link env var is not set in
   that build), the build drops its Pins with a warning. Set the
@@ -151,19 +153,44 @@ represent every one of those intents editorially.
 
 ## Images
 
-Five templates. A page's first Pin uses one of the first three, picked from
-the page's own data; its second Pin uses `checklist`; product Pins use
-`product` (see above).
+### What does well on Pinterest, and how the designs follow it
 
-- **supermarket** — the page names a chain. Deep-green band, store eyebrow,
-  headline, three facts.
-- **target** — no chain but an explicit calorie target. The figure is the hero.
-- **guide** — editorial. Cream card, accent rule, footer band.
-- **checklist** — second Pins. Green band with the page's search title, the
-  first sentence of its intro, then its facts ticked off.
-- **product** — the PDF plans. Food photo, badge, price tag, hook.
+Researched September 2026 from Pinterest's own creative guidance and
+Pinterest-marketing sources:
 
-All are 1000×1500 (2:3), drawn as SVG by `creative.js` and rasterised to PNG by
+- **Real food photography beats text-only graphics**, and food should look
+  like an ordinary weeknight meal, not a competition plate. → A page's first
+  Pin is photo-led, using the site's own meal-prep photos matched to its
+  topic (vegan → plant-based, high protein → protein bowls, calories →
+  low-calorie, budget → the shop, lunches → lunch boxes, and so on).
+- **Vertical 2:3**, key message at the top of the visual hierarchy, details
+  below. → 1000×1500; badge and tag over the photo, headline and facts
+  beneath.
+- **Short, bold, high-contrast text; no script fonts**, keywords in the first
+  ~40 characters of the title. → DM Sans Bold on a solid panel; titles are
+  the page's own keyword-led heading.
+- **Numbers and concrete value** scan well. → A calorie page shows its target
+  as a large tag ("1,500 kcal a day"); product Pins show the price and "24
+  dinner recipes".
+- **A two-word call to action, ideally with an arrow.** → "See the plans →",
+  "Read the guide →", "Get the plan →", placed bottom-left.
+- **Brand visible but small, and clear of the bottom-right corner**, where
+  Pinterest draws its own buttons. → "MealPrep.org.uk" sits at the top-left.
+- **Fresh Pins, published consistently.** → The release queue above, plus a
+  second design per page.
+
+### Templates
+
+- **photo** — a page's first Pin. Food photo (crop and panel colour vary by
+  page so a board does not repeat itself), topic badge, calorie tag when the
+  page has a target, headline, up to three facts, call to action.
+- **checklist** — a page's second Pin. Text-led for contrast in a feed of
+  photos: the page's search title, the first sentence of its intro, ticked
+  facts, call to action.
+- **product** — the PDF plans. The photo layout with a "6-week PDF plan"
+  badge and the price.
+
+All are 1000×1500 (2:3), drawn as SVG by `creative.js` and rasterised by
 `@resvg/resvg-js` at build time. DM Sans Regular and Bold are checked in at
 `assets/fonts/` and system fonts are switched off, so CI renders exactly what a
 local build renders. No Canva, no design tool, no runtime image service.
@@ -178,7 +205,7 @@ no benefit to state, the creative shows fewer facts rather than an invented one.
 ?utm_source=pinterest&utm_medium=organic&utm_campaign=<board key>
 ```
 
-Campaign is the board key (`meal-prep-pdfs`, `aldi`, `lidl`, `supermarket`,
+Campaign is the board key (`aldi`, `lidl`, `supermarket`,
 `calorie-plans`, `high-protein`, `budget`, `weight-loss`, `guides`), so GA4
 splits Pinterest traffic by the board that produced it with no extra
 configuration. A page's second and later Pins add `utm_content=pin-2` (and so

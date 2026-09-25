@@ -40,6 +40,24 @@ function queueOrder(a, b) {
     || a.path.localeCompare(b.path);
 }
 
+// How many free-page Pins go out on a board between two product Pins. The
+// PDF plans share the Aldi and Lidl boards with the free plans, so they are
+// mixed in rather than posted back to back.
+export const PAGES_BETWEEN_PRODUCTS = 2;
+
+// A board's queue with its product Pins spaced out: one product, then
+// PAGES_BETWEEN_PRODUCTS pages, and so on, until one kind runs out.
+function interleaveProducts(queue) {
+  const products = queue.filter(record => record.kind === 'product');
+  const pages = queue.filter(record => record.kind !== 'product');
+  const mixed = [];
+  while (products.length || pages.length) {
+    if (products.length) mixed.push(products.shift());
+    mixed.push(...pages.splice(0, PAGES_BETWEEN_PRODUCTS));
+  }
+  return mixed;
+}
+
 /**
  * Give every record a `releaseAt` (ISO string).
  *
@@ -47,7 +65,7 @@ function queueOrder(a, b) {
  * already made Pins from them. Everything else joins a queue per board, and
  * the queue releases up to `perDay` Pins a day from `dripStart`, spread across
  * the day, taking the boards in turn, skipping any board that has run out and
- * never giving one board two Pins on the same day.
+ * never giving one board two Pins, or the site two product Pins, on one day.
  *
  * @param {Array} records - pin records from metadata.buildPinRecord
  * @param {Array} boards  - PINTEREST_BOARDS, in rotation order
@@ -73,7 +91,8 @@ export function assignReleaseDates(records, boards, {
       }
       return true;
     })
-    .sort(queueOrder));
+    .sort(queueOrder))
+    .map(interleaveProducts);
 
   // Never more than one new Pin per board per day, so no board ever gets a
   // burst: once only a few boards have Pins left, a day releases fewer than
@@ -83,12 +102,19 @@ export function assignReleaseDates(records, boards, {
   let day = 0;
   let slot = 0;
   let usedToday = new Set();
+  let productToday = false;
+
+  // A product Pin also waits for the next day if one already went out today,
+  // so the PDF adverts stay spread out across both boards.
+  const canRelease = index => queues[index].length
+    && !usedToday.has(index)
+    && !(productToday && queues[index][0].kind === 'product');
 
   while (queues.some(queue => queue.length)) {
     let chosen = -1;
     for (let step = 0; step < queues.length; step += 1) {
       const index = (pointer + step) % queues.length;
-      if (queues[index].length && !usedToday.has(index)) {
+      if (canRelease(index)) {
         chosen = index;
         break;
       }
@@ -97,12 +123,14 @@ export function assignReleaseDates(records, boards, {
       day += 1;
       slot = 0;
       usedToday = new Set();
+      productToday = false;
       continue;
     }
 
     const record = queues[chosen].shift();
     pointer = (chosen + 1) % queues.length;
     usedToday.add(chosen);
+    if (record.kind === 'product') productToday = true;
 
     const hour = FIRST_RELEASE_HOUR_UTC + Math.floor((slot * RELEASE_WINDOW_HOURS) / perDay);
     releaseAt.set(record.id, new Date(start + day * DAY_MS + hour * HOUR_MS).toISOString());

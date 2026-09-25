@@ -3,7 +3,10 @@
 // Every product page, and the /meal-prep-pdfs shop page, becomes a Pinterest
 // entry with several Pins of its own: a different food photo and a different
 // hook on each, so Pinterest sees fresh Pins rather than one advert repeated.
-// The release queue spreads them out over the weeks like every other Pin.
+// They go on the existing Aldi and Lidl boards - the Aldi plans on Aldi, the
+// Lidl plans on Lidl, the complete collection on Aldi and the shop page on
+// Lidl - and the release queue mixes them in between the free pages (see
+// schedule.js) rather than posting them back to back.
 //
 // Everything written here comes from the product record - its name, tagline,
 // description, page count, price and what it includes - so a Pin can never
@@ -197,7 +200,9 @@ export function pdfProductEntries(catalogue = MEAL_PREP_PDF_PRODUCTS) {
   const products = Object.values(catalogue);
   const entries = products.map(product => {
     const pins = product.kind === 'bundle' ? bundlePins(product) : singlePins(product);
-    const supermarket = String(product.supermarket || '').toLowerCase();
+    // The complete collection covers both chains; it goes on the Aldi board,
+    // and the shop page (below) on the Lidl one, so each board carries four.
+    const supermarket = String(product.supermarket || 'aldi').toLowerCase();
     return {
       path: `${PDF_SHOP_PATH}/${product.slug}`,
       title: pins[0].title,
@@ -217,7 +222,7 @@ export function pdfProductEntries(catalogue = MEAL_PREP_PDF_PRODUCTS) {
       title: pins[0].title,
       description: pins[0].description,
       kicker: '6-week PDF plans',
-      supermarket: null,
+      supermarket: 'lidl',
       benefits: pins[0].facts,
       priceGBP: null,
       pins,
