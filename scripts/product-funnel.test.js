@@ -31,6 +31,7 @@ import {
 import {
   buildAccessoryFunnelMeasurement,
   buildAffiliateMeasurement,
+  buildGuideCalloutReferrals,
 } from '../api/admin-stats.js';
 import {
   ACCESSORY_PROBLEMS,
@@ -492,4 +493,24 @@ test('affiliate link attributes expose one canonical conversion event', () => {
   assert.equal(attributes['data-recommendation-source'], 'container_buying_guide');
   assert.equal(Object.values(attributes).includes('affiliate_link_clicked'), false);
   assert.equal(Object.values(attributes).includes('affiliate_click'), false);
+});
+
+test('guide callout referrals count clicks into one route by source page', () => {
+  const target = '/blog/best-meal-prep-containers-uk';
+  const click = (source, route = target) => ({
+    event_name: 'guide_callout_clicked',
+    metadata: { source_page: source, target_route: route },
+  });
+  const rows = buildGuideCalloutReferrals([
+    click('/blog/meal-prep-container-size-guide'),
+    click('/blog/meal-prep-container-size-guide'),
+    click('/blog/overnight-oats-jars-for-meal-prep-uk'),
+    click('/blog/meal-prep-container-size-guide', '/meal-prep-containers'),
+    { event_name: 'page_view', metadata: { source_page: '/blog/x', target_route: target } },
+  ], target);
+
+  assert.deepEqual(rows, [
+    { name: '/blog/meal-prep-container-size-guide', value: 2 },
+    { name: '/blog/overnight-oats-jars-for-meal-prep-uk', value: 1 },
+  ]);
 });

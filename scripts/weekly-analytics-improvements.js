@@ -7,6 +7,7 @@ import { google } from 'googleapis';
 import {
   buildAccessoryFunnelMeasurement,
   buildAffiliateMeasurement,
+  buildGuideCalloutReferrals,
 } from '../api/admin-stats.js';
 import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 import { blogPostsData } from '../src/data/blogPosts.js';
@@ -98,6 +99,9 @@ async function main() {
   let gaEventCounts = [];
   let fieldVitalRows = [];
   let commercialEventRows = [];
+  // Null once the event rows were actually fetched; otherwise the reason they
+  // were not, so the report prints "unavailable" instead of a misleading 0.
+  let commercialDataUnavailableReason = 'Supabase analytics was not queried';
   let seoExperimentSnapshots = [];
   let semanticQa;
 
@@ -106,6 +110,7 @@ async function main() {
     gaEventCounts = sampleGa4EventCounts();
     fieldVitalRows = sampleFieldVitalRows();
     commercialEventRows = sampleCommercialEventRows();
+    commercialDataUnavailableReason = null;
   } else {
     if (!options.siteUrl && !options.ga4PropertyId) {
       throw new Error(
@@ -188,6 +193,7 @@ async function main() {
       && isPlausibleSingleLineSecret(supabaseServiceKey);
 
     if (hasSupabaseCredentials && !supabaseCredentialsLookValid) {
+      commercialDataUnavailableReason = 'the Supabase credentials are malformed';
       warnings.push('Supabase credentials are malformed (not a single-line value) — check the SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables; one may have been set to the wrong value.');
     }
 
@@ -208,10 +214,13 @@ async function main() {
           serviceKey: supabaseServiceKey,
           rowLimit: 20000,
         });
+        commercialDataUnavailableReason = null;
       } catch (error) {
+        commercialDataUnavailableReason = 'the commercial funnel fetch failed';
         warnings.push(`Commercial funnel fetch failed independently: ${redactSecretLikeText(error.message || error)}`);
       }
     } else if (!hasSupabaseCredentials) {
+      commercialDataUnavailableReason = 'the Supabase analytics credentials are missing';
       warnings.push('Supabase analytics credentials are missing, so field Core Web Vitals remain available only in the private dashboard.');
     }
   }
@@ -260,6 +269,7 @@ async function main() {
     recentActivity,
     fieldVitalRows,
     commercialEventRows,
+    commercialDataUnavailableReason,
     seoExperimentSnapshots,
     semanticQa,
     warnings,
@@ -529,7 +539,7 @@ async function fetchCommercialEventRows({ supabaseUrl, serviceKey, rowLimit }) {
   const baseUrl = String(supabaseUrl || '').replace(/\/$/, '');
   const url = new URL(`${baseUrl}/rest/v1/analytics_events`);
   url.searchParams.set('select', 'occurred_at,event_name,path,metadata');
-  url.searchParams.set('event_name', 'in.(page_view,affiliate_product_impression,affiliate_product_click,accessory_problem_selected,accessory_guide_clicked)');
+  url.searchParams.set('event_name', 'in.(page_view,affiliate_product_impression,affiliate_product_click,accessory_problem_selected,accessory_guide_clicked,guide_callout_clicked)');
   url.searchParams.set('occurred_at', 'gte.2026-08-13T18:54:50.777Z');
   url.searchParams.set('order', 'occurred_at.desc.nullslast');
   url.searchParams.set('limit', String(rowLimit));
@@ -762,7 +772,7 @@ function isPublicPagePath(value) {
   return true;
 }
 
-function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, commercialEventRows, seoExperimentSnapshots, semanticQa, warnings }) {
+function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, gaEventCounts, range, routeIndex, recentActivity, fieldVitalRows, commercialEventRows, commercialDataUnavailableReason = null, seoExperimentSnapshots, semanticQa, warnings }) {
   const unverifiedRoutes = collectUnverifiedRoutes(currentSearchRows, gaLandingPages, routeIndex);
   if (unverifiedRoutes.length) {
     warnings.push(`Skipped ${unverifiedRoutes.length} analytics rows because their routes were not in the verified route inventory.`);
@@ -849,10 +859,17 @@ function buildAnalysis({ currentSearchRows, previousSearchRows, gaLandingPages, 
   const trackerHistory = readTrackerHistory();
   const shippedChangeEventHistory = readShippedChangeEventHistory();
   const shippedChangeReview = buildShippedChangeReview(trackerHistory, shippedChangeEventHistory);
-  const containerGuideCommercial = buildAffiliateMeasurement((commercialEventRows || []).filter(row => (
-    row.path === '/blog/best-meal-prep-containers-uk'
-  )));
-  const accessoriesFunnel = buildAccessoryFunnelMeasurement(commercialEventRows || []);
+  const containerGuideCommercial = {
+    ...buildAffiliateMeasurement((commercialEventRows || []).filter(row => (
+      row.path === '/blog/best-meal-prep-containers-uk'
+    ))),
+    calloutReferrals: buildGuideCalloutReferrals(commercialEventRows || [], '/blog/best-meal-prep-containers-uk'),
+    unavailableReason: commercialDataUnavailableReason,
+  };
+  const accessoriesFunnel = {
+    ...buildAccessoryFunnelMeasurement(commercialEventRows || []),
+    unavailableReason: commercialDataUnavailableReason,
+  };
 
   const generatedPublicData = {
     generatedAt: range.generatedAt,
@@ -1529,35 +1546,51 @@ function renderWeeklyReport(analysis) {
   lines.push('## Container Buying Guide Commercial Funnel', '');
   const commercial = analysis.containerGuideCommercial;
   lines.push(`- Canonical measurement starts: ${commercial.baselineTimestamp}`);
-  lines.push(`- Buying-guide views: ${commercial.pageViews}`);
-  lines.push(`- Product impressions: ${commercial.impressions}`);
-  lines.push(`- Canonical affiliate clicks: ${commercial.clicks}`);
-  lines.push(`- Affiliate CTR: ${commercial.impressions ? `${commercial.clicks} clicks / ${commercial.impressions} impressions (${commercial.affiliateCtr}%)` : `unavailable (${commercial.clicks} clicks / 0 measured impressions)`}`);
-  lines.push(`- Affiliate clicks per 1,000 page views: ${commercial.clicksPerThousandPageViews ?? 'unavailable'}`);
-  lines.push('- Measurement stops at the outbound Amazon click; no Amazon conversion or revenue is inferred.');
-  lines.push('');
-  writeAffiliateBreakdown(lines, 'Placement', commercial.byPlacement);
-  writeAffiliateBreakdown(lines, 'Product ID', commercial.byProductId);
-  writeAffiliateBreakdown(lines, 'Product category', commercial.byProductCategory);
-  writeAffiliateBreakdown(lines, 'List position', commercial.byListPosition);
-  writeAffiliateBreakdown(lines, 'Recommendation source', commercial.byRecommendationSource);
-  writeAffiliateBreakdown(lines, 'Device', commercial.byViewport);
+  if (commercial.unavailableReason) {
+    lines.push(`- Not measured this week because ${commercial.unavailableReason}. Page views, product impressions and affiliate clicks are unknown, not zero.`, '');
+  } else {
+    lines.push(`- Buying-guide views: ${commercial.pageViews}`);
+    lines.push(`- Product impressions: ${commercial.impressions}`);
+    lines.push(`- Canonical affiliate clicks: ${commercial.clicks}`);
+    lines.push(`- Affiliate CTR: ${commercial.impressions ? `${commercial.clicks} clicks / ${commercial.impressions} impressions (${commercial.affiliateCtr}%)` : `unavailable (${commercial.clicks} clicks / 0 measured impressions)`}`);
+    lines.push(`- Affiliate clicks per 1,000 page views: ${commercial.clicksPerThousandPageViews ?? 'unavailable'}`);
+    lines.push('- Measurement stops at the outbound Amazon click; no Amazon conversion or revenue is inferred.');
+    lines.push('');
+    writeAffiliateBreakdown(lines, 'Placement', commercial.byPlacement);
+    writeAffiliateBreakdown(lines, 'Product ID', commercial.byProductId);
+    writeAffiliateBreakdown(lines, 'Product category', commercial.byProductCategory);
+    writeAffiliateBreakdown(lines, 'List position', commercial.byListPosition);
+    writeAffiliateBreakdown(lines, 'Recommendation source', commercial.byRecommendationSource);
+    writeAffiliateBreakdown(lines, 'Device', commercial.byViewport);
+    lines.push('### Article callouts sending readers here', '');
+    if (!commercial.calloutReferrals.length) {
+      lines.push('- No callout clicks recorded yet.', '');
+    } else {
+      lines.push('| Source page | Callout clicks |', '| --- | ---: |');
+      for (const row of commercial.calloutReferrals) lines.push(`| ${mdCell(row.name)} | ${row.value} |`);
+      lines.push('');
+    }
+  }
 
   lines.push('## Accessories Problem-led Funnel', '');
   const accessories = analysis.accessoriesFunnel;
   lines.push(`- Redesign measurement starts: ${accessories.baselineTimestamp}${accessories.baselineStatus === 'pending_production_deployment' ? ' (temporary canonical-event fallback; replace with the actual redesign deployment timestamp)' : ''}`);
-  lines.push(`- Accessory page views: ${accessories.pageViews}`);
-  lines.push(`- Problem selections: ${accessories.problemSelections}`);
-  lines.push(`- Problem selection rate: ${accessories.pageViews ? `${accessories.problemSelections} selections / ${accessories.pageViews} page views (${accessories.problemSelectionRate}%)` : `unavailable (${accessories.problemSelections} selections / 0 page views)`}`);
-  lines.push(`- Product impressions: ${accessories.impressions}`);
-  lines.push(`- Canonical affiliate clicks: ${accessories.clicks}`);
-  lines.push(`- Affiliate CTR: ${accessories.impressions ? `${accessories.clicks} clicks / ${accessories.impressions} impressions (${accessories.affiliateCtr}%)` : `unavailable (${accessories.clicks} clicks / 0 measured impressions)`}`);
-  lines.push(`- Affiliate clicks per 1,000 accessory-hub views: ${accessories.clicksPerThousandPageViews ?? 'unavailable'}`);
-  lines.push(`- Guide clicks: ${accessories.guideClicks}`);
-  lines.push(`- Sample status: ${accessories.sampleStatus}`);
-  lines.push(`- ${accessories.sampleNote}`);
-  lines.push('- This report is observational. It does not reorder products, rewrite descriptions, or add/remove products.', '');
-  writeAccessoryProblemBreakdown(lines, accessories.byProblem);
+  if (accessories.unavailableReason) {
+    lines.push(`- Not measured this week because ${accessories.unavailableReason}. Page views, selections and affiliate clicks are unknown, not zero.`, '');
+  } else {
+    lines.push(`- Accessory page views: ${accessories.pageViews}`);
+    lines.push(`- Problem selections: ${accessories.problemSelections}`);
+    lines.push(`- Problem selection rate: ${accessories.pageViews ? `${accessories.problemSelections} selections / ${accessories.pageViews} page views (${accessories.problemSelectionRate}%)` : `unavailable (${accessories.problemSelections} selections / 0 page views)`}`);
+    lines.push(`- Product impressions: ${accessories.impressions}`);
+    lines.push(`- Canonical affiliate clicks: ${accessories.clicks}`);
+    lines.push(`- Affiliate CTR: ${accessories.impressions ? `${accessories.clicks} clicks / ${accessories.impressions} impressions (${accessories.affiliateCtr}%)` : `unavailable (${accessories.clicks} clicks / 0 measured impressions)`}`);
+    lines.push(`- Affiliate clicks per 1,000 accessory-hub views: ${accessories.clicksPerThousandPageViews ?? 'unavailable'}`);
+    lines.push(`- Guide clicks: ${accessories.guideClicks}`);
+    lines.push(`- Sample status: ${accessories.sampleStatus}`);
+    lines.push(`- ${accessories.sampleNote}`);
+    lines.push('- This report is observational. It does not reorder products, rewrite descriptions, or add/remove products.', '');
+    writeAccessoryProblemBreakdown(lines, accessories.byProblem);
+  }
   writeAffiliateBreakdown(lines, 'Accessory placement', accessories.byPlacement);
   writeAffiliateBreakdown(lines, 'Accessory device', accessories.byViewport);
 

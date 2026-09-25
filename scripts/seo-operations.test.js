@@ -80,7 +80,8 @@ test('container metadata experiment records supplied baselines and enforces its 
   assert.equal(complete.active, false);
   assert.match(source, /title: 'Best Meal Prep Containers UK: 3 Practical Picks'/);
   assert.match(source, /description: 'Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance\.'/);
-  assert.match(source, /h1: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options'/);
+  // The H1 was aligned with the title on 25 Sep 2026, after the cooldown ended.
+  assert.match(source, /h1: 'Best Meal Prep Containers UK: 3 Practical Picks'/);
 });
 
 test('public popularity links use measured engagement order and curated descriptions only', () => {

@@ -1224,10 +1224,13 @@ export const CONTAINER_GUIDES = {
   'mid-range': {
     slug: 'mid-range',
     path: '/meal-prep-containers/mid-range',
-    title: 'Best Meal Prep Containers UK - Glass, Plastic & Leakproof Picks',
+    // Retitled 25 Sep 2026: the old "Best Meal Prep Containers UK" title was
+    // almost word-for-word the buying guide's, so the two pages competed for
+    // the same query. This page's job is the mid-range tier, not the head term.
+    title: 'Mid-Range Meal Prep Containers UK - Glass Sets That Replace Plastic',
     description:
-      'Compare the best meal prep containers UK for everyday use, including glass boxes, leakproof lunch tubs, work containers and Amazon UK picks.',
-    h1: 'Best Mid Range Meal Prep Containers UK',
+      'Mid-range meal prep containers for UK buyers stepping up from plastic: five-piece glass sets, better-sealing lids and divided glass boxes for reheated work lunches.',
+    h1: 'Mid-Range Meal Prep Containers UK',
     kicker: 'Best balance',
     priceBand: '\u00a315-\u00a330 target',
     heroProductId: 'harbour-housewares-glass-5-pack',

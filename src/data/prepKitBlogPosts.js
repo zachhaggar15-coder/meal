@@ -345,6 +345,12 @@ export const prepKitBlogPostsData = {
         paragraphs: [
           'Choose glass if breakfast is eaten at home or at a desk. Choose plastic if the jar travels daily. Either way, buy enough for at least three mornings so the habit actually sticks.',
         ],
+        guideCallout: {
+          eyebrow: 'Prepping lunches too?',
+          text: 'The buying guide compares three lunch and dinner container sets, from a budget plastic multipack to a ten-piece glass set.',
+          label: 'See the best meal prep containers',
+          to: '/blog/best-meal-prep-containers-uk',
+        },
       },
       {
         h2: 'Shape matters more than material',

@@ -87,6 +87,19 @@ const BEST_CONTAINER_BUYING_GUIDE_SECTIONS = [
     ],
   },
   {
+    h2: 'Buying cheap meal prep containers at the supermarket',
+    paragraphs: [
+      'You do not have to order online to start. Asda, Tesco and Sainsbury\u2019s sell food storage tubs in their homeware ranges, while Aldi and Lidl usually sell containers as limited-time middle-aisle offers rather than permanent stock. Supermarket tubs can be perfectly good for meal prep, as long as they pass the same checks as anything you would buy online.',
+      'Ranges change through the year and vary by store size, so check in store or on the retailer\u2019s own website rather than trusting an old list. The label tells you more than the brand does.',
+    ],
+    bullets: [
+      'Size: find the millilitre figure on the pack. A full lunch needs roughly 900ml to 1 litre; smaller tubs are for snacks, sauces and sides.',
+      'Microwave and freezer marks: check for both, and check whether the microwave claim covers the lid or only the base.',
+      'Lid: a clip-lock or gasket lid is the one to carry in a bag. A push-on lid is fine for the fridge.',
+      'Shape: buy one rectangular size in a batch. Matching tubs stack and share lids; a mixed bundle of shapes turns into lid clutter.',
+    ],
+  },
+  {
     h2: 'Check heat, lid and care claims before buying',
     paragraphs: [
       'Treat \u201cleakproof\u201d, microwave-safe, freezer-safe and dishwasher-safe as listing claims to verify for the exact product and variant. The base and lid can have different care instructions, and lids often need venting or removing before reheating.',
@@ -105,10 +118,11 @@ const BEST_CONTAINER_BUYING_GUIDE_SECTIONS = [
 export const containerBlogPostsData = {
   'best-meal-prep-containers-uk': {
     published: '2026-06-16',
-    modified: '2026-08-13',
+    modified: '2026-09-25',
     title: 'Best Meal Prep Containers UK: 3 Practical Picks',
     description: 'Compare 3 practical meal prep container picks for work lunches, reheating and weekly batch cooking, with clear glass vs plastic and size guidance.',
-    h1: 'Best Meal Prep Containers UK: Leakproof, Cheap and Freezer-Safe Options',
+    // Matches the title so the heading and the search snippet make the same promise.
+    h1: 'Best Meal Prep Containers UK: 3 Practical Picks',
     intro:
       'For most people, the best starting point is five rectangular glass containers for reheated weekday lunches. Choose a budget plastic multipack if cost and quantity matter more, or a larger glass set if you prep lunches and dinners for the full week.',
     affiliateDisclosure: AFFILIATE_DISCLOSURE,
@@ -252,6 +266,12 @@ export const containerBlogPostsData = {
           'For a work lunch, 900 ml to 1 litre is the safest choice. It fits chicken and rice, pasta, curry and rice, chilli, burrito bowls, stir fry, and salads without crushing everything together.',
           'If you eat smaller lunches, 750 ml can work. If you train hard or eat higher-calorie meals, choose 1 litre rather than trying to force food into a compact box.',
         ],
+        guideCallout: {
+          eyebrow: 'Know your size? Pick a set',
+          text: 'The buying guide narrows the choice to three sets: a budget plastic multipack, a five-lunch glass set and a larger glass set for full-week prep.',
+          label: 'Compare the three picks',
+          to: '/blog/best-meal-prep-containers-uk',
+        },
       },
       {
         h2: 'Best size for freezer meal prep',

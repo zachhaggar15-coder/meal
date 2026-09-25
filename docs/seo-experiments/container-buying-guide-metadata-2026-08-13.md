@@ -88,3 +88,36 @@ report position, views and affiliate clicks separately as "post-linking" figures
 against the pre-29-August baseline rather than against the 13 August baseline.
 If a clean position read matters more than the traffic, the linking change is
 reversible.
+
+## Outcome, recorded 25 September 2026: inconclusive
+
+Read from page- and query-filtered Search Console exports for
+`best meal prep containers` (last 3 months, and last 28 days against the
+previous 28), supplied by the site owner.
+
+**The page lost the query before the test began.** Daily impressions for the
+exact query were 350–670 a day from 26 July to 1 August, then fell to 0–60 a day
+from 4 August. The metadata was rewritten on 3 August and again on 13 August, so
+the loss was not caused by either rewrite and neither can be judged against it.
+
+**Other URLs took the query over.** In the last 28 days the buying guide had 83
+impressions for it (previous 28 days: 1,741). The retired
+`/blog/freezer-safe-meal-prep-containers` had 1,685 at position 6.6 and the
+retired `/blog/meal-prep-boxes-for-work-lunches` had 912. Both 301 since 29
+August; Google was still showing the old URLs.
+
+**Most of the impressions do not look like people.** Over three months the query
+had 9,415 desktop impressions for 1 click and 410 mobile impressions for 9
+clicks (2.2% CTR). Impressions arrive in on/off bursts (4–9 September:
+2,280 impressions, 0 clicks, then near zero), which is the usual signature of
+rank-tracking tools rather than shoppers. The "0.11% CTR" baseline was mostly
+this traffic, and the later "1.22% CTR" is the same small human sample on a much
+smaller denominator.
+
+What follows from this:
+
+- Do not report a CTR result for this experiment.
+- Do not rewrite this page's title again to chase the head-term figure.
+- Judge container pages on mobile figures and on clicks, not desktop
+  impressions.
+- The H1 was aligned with the tested title on 25 September, after the cooldown.
