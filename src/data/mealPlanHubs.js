@@ -850,7 +850,7 @@ const GOAL_AUTHORITY_HUBS = {
       },
       {
         q: 'Are supplements worth it on a budget?',
-        a: 'Whey is a cheap source of protein per gram, so it can help. It is not necessary - every plan here reaches its protein target from food alone.',
+        a: 'Whey is a cheap source of protein per gram, so it can help, but it is not essential. Some plans here use a shake or whey stirred into oats for convenience; swap it for Greek yogurt, skyr, eggs or an extra portion of lean protein and you reach a similar total from food.',
       },
     ],
     relatedSlugs: ['muscle-gain', '2500-calorie', '3000-calorie', 'high-protein'],
@@ -919,7 +919,7 @@ const SHOPPING_LIST_AUTHORITY_HUBS = {
       },
       {
         q: 'Do I need protein powder?',
-        a: 'No. It is a convenient and reasonably cheap source, but every plan behind these lists reaches its target from ordinary food.',
+        a: 'No. Some plans use a shake or whey in oats because it is convenient and reasonably cheap, but you can swap it for Greek yogurt, skyr, eggs or extra lean protein and still reach a similar total.',
       },
     ],
     relatedSlugs: ['high-protein', 'muscle-gain', '2500-calorie', 'meal-plans-with-shopping-list'],
