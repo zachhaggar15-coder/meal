@@ -10,7 +10,7 @@ export const SITE_AUTHOR_NAME = 'MealPrep.org.uk editorial team';
 // This is a real automated-validation date, not an editorial review date, and
 // it is kept in step with docs/semantic-qa/deployment-log.json by
 // scripts/check-validation-date.js — which fails the build if they diverge.
-export const LIBRARY_VALIDATED_ON = '2026-08-16';
+export const LIBRARY_VALIDATED_ON = '2026-09-25';
 export const SITE_AUTHOR_URL = `${SITE_URL}/about`;
 
 export const SITE_LOGO_PATH = '/mealprep-logo.webp';

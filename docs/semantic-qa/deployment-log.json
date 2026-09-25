@@ -36,6 +36,12 @@
       "deployedAt": "2026-08-16T00:00:00.000Z",
       "summary": "Routing hotfix: supermarket goal cards opened a different plan than they advertised (\"Lidl Weight Loss Plan\" -> \"Lidl Very Cheap Batch Cook Weight Loss Plan\"). Root cause was an inverted effort tie-break in a duplicated additive scorer (batch +6 vs standard +5, 94 beats 93), plus cards synthesising their own heading instead of showing the destination's title. Replaced both chooser resolvers with one lexicographic canonical resolver (src/utils/planRecommendation.js); cards now display the destination plan's own title; unmatched combinations are named rather than silently dropped. 348 combinations audited, 0 mismatches after. Production verified: 231 cards across 32 routes, 133 destinations, 0 title mismatches.",
       "gate": "npm run check - exit 0 (156 tests, 1406 routes, 11 audits)"
+    },
+    {
+      "commit": "4e0766ca906315c64478424097409a437869306e",
+      "deployedAt": "2026-09-25T04:40:48.000Z",
+      "summary": "Recipe-method and site-copy sweep. Corrected tinned-tuna drained-weight nutrition across the shared library, nutrition table, plan data, protein-value data and one blog post. Read and hand-verified every generated cooking method (169 shared + 112 legacy meal occurrences) against its own ingredient list: fixed generator bugs in the egg, starch, bowl/salad and toast/wrap branches plus an oven-bake capitalisation bug and a 'toast the toast' duplication, and added src/data/authoredMethods.js overriding 34 dishes the step generator cannot structurally describe (e.g. fish stews, energy balls without a food processor fallback). Found and fixed 12 meal-plan hub pages whose hand-written plan-count/kcal-range copy had drifted from what the hub's own match filter actually serves (6 overstated their low-calorie range, 3 undersold their upper range, 3 had stale plan counts), and added a permanent regression test comparing every hub's stated numbers against live seed data. Corrected two FAQ answers that claimed every plan hits its protein target from food alone (671/1205 plans actually use a protein-powder swap) and two 'most popular' framing claims on the Home page and Quiz that were unsupported and mutually inconsistent. Verified live at mealprep.org.uk.",
+      "gate": "npm run check — exit 0 (492 tests, 1580 routes prerendered, check:plans, 12 audits: nutrition/recipes/dietary/plans/seo/schema/links/metadata/accessibility/performance/assets/promises)"
     }
   ]
 }
