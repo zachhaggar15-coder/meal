@@ -271,7 +271,7 @@ const SUPERMARKET_AUTHORITY_HUBS = {
   tesco: createSupermarketHub({
     key: 'tesco',
     label: 'Tesco',
-    stats: ['163 Tesco plans', 'Clubcard-aware costs', 'Shopping list and PDF'],
+    stats: ['165 Tesco plans', 'Clubcard-aware costs', 'Shopping list and PDF'],
     intro:
       'Tesco is the tier-shopping supermarket. The same meal can be built at three different price points without ever leaving own-label, which is what makes it forgiving when your budget moves partway through the month.',
     sections: [
@@ -516,7 +516,7 @@ const SUPERMARKET_AUTHORITY_HUBS = {
   waitrose: createSupermarketHub({
     key: 'waitrose',
     label: 'Waitrose',
-    stats: ['30 Waitrose plans', 'Essential-range costs', 'Shopping list and PDF'],
+    stats: ['42 Waitrose plans', 'Essential-range costs', 'Shopping list and PDF'],
     intro:
       'Waitrose has a reputation for being unaffordable for a weekly shop, and the Essential range is the reason that is not quite true. It covers most of what a prep plan actually needs, and a plan built inside it costs far less than the name suggests.',
     sections: [
@@ -550,7 +550,7 @@ const SUPERMARKET_AUTHORITY_HUBS = {
   ocado: createSupermarketHub({
     key: 'ocado',
     label: 'Ocado',
-    stats: ['26 Ocado plans', 'Widest UK catalogue', 'Shopping list and PDF'],
+    stats: ['38 Ocado plans', 'Widest UK catalogue', 'Shopping list and PDF'],
     intro:
       'Ocado is online-only, and that changes what it is good for. The catalogue is the widest of any UK grocer, so a speciality ingredient is rarely the thing that blocks a plan - but there is no popping in on the way home if something runs out.',
     sections: [
@@ -584,7 +584,7 @@ const SUPERMARKET_AUTHORITY_HUBS = {
   'marks-spencer': createSupermarketHub({
     key: 'marks-spencer',
     label: 'M&S',
-    stats: ['29 M&S plans', 'Remarksable Value staples', 'Shopping list and PDF'],
+    stats: ['41 M&S plans', 'Remarksable Value staples', 'Shopping list and PDF'],
     intro:
       'M&S is the priciest option here, and the Remarksable Value range is what makes a prep plan feasible at all. Where it genuinely earns its place is time: the prepared and part-prepared ingredients cut real minutes off a week you have no capacity to cook in.',
     sections: [
@@ -1440,15 +1440,15 @@ export const MEAL_PLAN_HUBS = {
   'muscle-gain': {
     slug: 'muscle-gain',
     path: '/meal-plans/muscle-gain',
-    title: 'Muscle Gain Meal Plans UK - 2500, 3000 and 3500 Calorie Plans',
+    title: 'Muscle Gain Meal Plans UK - 2000 to 3500 Calorie Plans',
     description:
-      'Browse free UK muscle gain meal plans with 2500, 3000 and 3500 calorie options, supermarket filters, macros, PDF export and shopping lists.',
+      'Browse free UK muscle gain meal plans from 2000 to 3500 calories, supermarket filters, macros, PDF export and shopping lists.',
     h1: 'Muscle Gain Meal Plans UK',
     kicker: 'Higher calorie plan hub',
     intro:
-      'Muscle gain meal prep works best when calories are high enough, protein is spread through the day, and meals are still realistic to cook. These plans include bigger training-day options without asking you to build the week from scratch.',
+      'Muscle gain meal prep works best when calories are high enough, protein is spread through the day, and meals are still realistic to cook. These plans include bigger training-day options without asking you to build the week from scratch, plus lighter 2000-2200 kcal options for gym beginners and body recomposition.',
     match: { goals: ['muscle-gain', 'budget-bodybuilding', 'gym-beginner', 'body-recomp'], calories: [2500, 3000, 3500, 2200, 2000] },
-    stats: ['2500-3500 kcal options', 'High-protein meals', 'Supermarket shopping lists'],
+    stats: ['2000-3500 kcal options', 'High-protein meals', 'Supermarket shopping lists'],
     sections: [
       {
         h2: 'How to choose a muscle gain plan',
@@ -1474,7 +1474,7 @@ export const MEAL_PLAN_HUBS = {
     faq: [
       {
         q: 'Do the muscle gain plans include 3000 and 3500 calorie options?',
-        a: 'Yes. The plan library includes 3000 and 3500 calorie muscle gain, budget bodybuilding and endurance-style options.',
+        a: 'Yes, alongside lighter 2000 and 2200 calorie plans for gym beginners and body recomposition, so the hub covers a first surplus as well as a large one.',
       },
       {
         q: 'Can I print a muscle gain meal plan?',
@@ -1837,12 +1837,12 @@ export const MEAL_PLAN_HUBS = {
     slug: 'asda-weight-loss',
     path: '/meal-plans/asda-weight-loss',
     title: 'Asda Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
-    description: 'Free Asda weight loss meal plans from 1,400 to 1,800 kcal, built around Just Essentials and larger pack sizes, with shopping lists and printable PDFs.',
+    description: 'Free Asda weight loss meal plans from 1,500 to 1,800 kcal, built around Just Essentials and larger pack sizes, with shopping lists and printable PDFs.',
     h1: 'Asda Weight Loss Meal Plans UK',
     kicker: 'Asda fat loss hub',
     intro: 'Asda sells in bigger units than most of its rivals, and on a deficit that is the thing to plan around. The price per kilo is excellent and the quantity in the house is high, which are the same fact pointing in two directions.',
     match: { supermarkets: ['asda'], goals: ['weight-loss'] },
-    stats: ['17 Asda plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    stats: ['17 Asda plans', '1,500-1,800 kcal', 'Shopping list and PDF'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
@@ -1878,12 +1878,12 @@ export const MEAL_PLAN_HUBS = {
     slug: 'sainsburys-weight-loss',
     path: '/meal-plans/sainsburys-weight-loss',
     title: 'Sainsbury\'s Weight Loss Meal Plans UK - Free Plans + Lists',
-    description: 'Free Sainsbury\'s weight loss meal plans from 1,400 to 1,800 kcal, with Nectar-aware shopping notes, grouped lists, macros and printable PDFs.',
+    description: 'Free Sainsbury\'s weight loss meal plans from 1,500 to 1,800 kcal, with Nectar-aware shopping notes, grouped lists, macros and printable PDFs.',
     h1: 'Sainsbury\'s Weight Loss Meal Plans UK',
     kicker: 'Sainsbury\'s fat loss hub',
     intro: 'Sainsbury\'s is a good shop for a deficit and an awkward one for a fixed plan, and both come from the same source: the prices move. Nectar pricing rotates week to week, so what was cheapest on Monday may not be next Monday.',
     match: { supermarkets: ['sainsburys'], goals: ['weight-loss'] },
-    stats: ['17 Sainsbury\'s plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    stats: ['17 Sainsbury\'s plans', '1,500-1,800 kcal', 'Shopping list and PDF'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
@@ -1919,12 +1919,12 @@ export const MEAL_PLAN_HUBS = {
     slug: 'lidl-weight-loss',
     path: '/meal-plans/lidl-weight-loss',
     title: 'Lidl Weight Loss Meal Plans UK - Free Plans + Shopping Lists',
-    description: 'Free Lidl weight loss meal plans from 1,400 to 1,800 kcal, built around own-brand high-protein dairy, with grouped shopping lists and printable PDFs.',
+    description: 'Free Lidl weight loss meal plans from 1,500 to 1,800 kcal, built around own-brand high-protein dairy, with grouped shopping lists and printable PDFs.',
     h1: 'Lidl Weight Loss Meal Plans UK',
     kicker: 'Lidl fat loss hub',
     intro: 'Lidl is cheap, well stocked for a deficit, and laid out in a way that works against you. The food you need is around the edges; the route to the tills is not.',
     match: { supermarkets: ['lidl'], goals: ['weight-loss'] },
-    stats: ['17 Lidl plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    stats: ['17 Lidl plans', '1,500-1,800 kcal', 'Shopping list and PDF'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
@@ -1960,12 +1960,12 @@ export const MEAL_PLAN_HUBS = {
     slug: 'morrisons-weight-loss',
     path: '/meal-plans/morrisons-weight-loss',
     title: 'Morrisons Weight Loss Meal Plans UK - Free Plans + Lists',
-    description: 'Free Morrisons weight loss meal plans from 1,400 to 1,800 kcal, using loose produce and counter portions, with shopping lists and printable PDFs.',
+    description: 'Free Morrisons weight loss meal plans from 1,500 to 1,800 kcal, using loose produce and counter portions, with shopping lists and printable PDFs.',
     h1: 'Morrisons Weight Loss Meal Plans UK',
     kicker: 'Morrisons fat loss hub',
     intro: 'Most supermarkets sell you a pack and leave the portioning to you. Morrisons is the one where you can still buy the amount you actually want, and on a deficit that is worth more than a few pence per kilo.',
     match: { supermarkets: ['morrisons'], goals: ['weight-loss'] },
-    stats: ['16 Morrisons plans', '1,400-1,800 kcal', 'Shopping list and PDF'],
+    stats: ['16 Morrisons plans', '1,500-1,800 kcal', 'Shopping list and PDF'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
@@ -2001,12 +2001,12 @@ export const MEAL_PLAN_HUBS = {
     slug: 'tesco-muscle-gain',
     path: '/meal-plans/tesco-muscle-gain',
     title: 'Tesco Muscle Gain Meal Plans UK - Free Plans + Shopping Lists',
-    description: 'Free Tesco muscle gain meal plans from 2,500 to 3,500 kcal, built for variety across a long surplus, with grouped shopping lists and printable PDFs.',
+    description: 'Free Tesco muscle gain meal plans from 2,000 to 3,500 kcal, built for variety across a long surplus, with grouped shopping lists and printable PDFs.',
     h1: 'Tesco Muscle Gain Meal Plans UK',
     kicker: 'Tesco muscle gain hub',
     intro: 'The thing that ends most bulks is not the cooking or the cost. It is eating the same six meals until the sight of them is unwelcome, and that is the specific problem a big Tesco solves better than a discounter can.',
     match: { supermarkets: ['tesco'], goals: ['muscle-gain'] },
-    stats: ['18 Tesco plans', '2,500-3,500 kcal', 'Shopping list and PDF'],
+    stats: ['18 Tesco plans', '2,000-3,500 kcal', 'Shopping list and PDF'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
@@ -2042,7 +2042,7 @@ export const MEAL_PLAN_HUBS = {
     slug: 'aldi-budget-fat-loss',
     path: '/meal-plans/aldi-budget-fat-loss',
     title: 'Aldi Budget Fat Loss Meal Plans UK - Free Cheap Plans',
-    description: 'Free Aldi budget fat loss meal plans from 1,400 to 1,800 kcal at the lowest weekly cost, with grouped shopping lists, macros and printable PDFs.',
+    description: 'Free Aldi budget fat loss meal plans from 1,500 to 1,800 kcal at the lowest weekly cost, with grouped shopping lists, macros and printable PDFs.',
     h1: 'Aldi Budget Fat Loss Meal Plans UK',
     kicker: 'Aldi budget fat loss hub',
     intro: 'Fat loss is a twelve-week job, not a one-week one, and that changes which kind of cheap actually matters. A single bargain is worth very little across three months. A shop that costs roughly the same every week is worth a great deal.',
@@ -2124,12 +2124,12 @@ export const MEAL_PLAN_HUBS = {
     slug: 'lidl-budget-bodybuilding',
     path: '/meal-plans/lidl-budget-bodybuilding',
     title: 'Lidl Budget Bodybuilding Meal Plans UK - Cheap High Protein',
-    description: 'Free cheap Lidl bodybuilding meal plans from 2,500 to 3,500 kcal, built on own-brand protein at discounter prices, with shopping lists and PDFs.',
+    description: 'Free cheap Lidl bodybuilding meal plans from 2,000 to 3,500 kcal, built on own-brand protein at discounter prices, with shopping lists and PDFs.',
     h1: 'Lidl Budget Bodybuilding Meal Plans UK',
     kicker: 'Lidl budget bulk hub',
     intro: 'A surplus is where the price of protein really bites. You are not buying a bit more of everything - you are buying substantially more of the most expensive thing in the trolley, every week, for months.',
     match: { supermarkets: ['lidl'], goals: ['budget-bodybuilding'] },
-    stats: ['14 Lidl plans', '2,500-3,500 kcal', 'Shopping list and PDF'],
+    stats: ['14 Lidl plans', '2,000-3,500 kcal', 'Shopping list and PDF'],
     reviewed: REVIEWED_DATE,
     sources: COMMON_NUTRITION_SOURCES,
     sections: [
@@ -2165,7 +2165,7 @@ export const MEAL_PLAN_HUBS = {
     slug: 'iceland-budget-fat-loss',
     path: '/meal-plans/iceland-budget-fat-loss',
     title: 'Iceland Budget Fat Loss Meal Plans UK - Cheap Frozen Plans',
-    description: 'Free cheap Iceland fat loss meal plans from 1,400 to 1,800 kcal built on frozen portions, with grouped shopping lists, macros and printable PDFs.',
+    description: 'Free cheap Iceland fat loss meal plans from 1,500 to 1,800 kcal built on frozen portions, with grouped shopping lists, macros and printable PDFs.',
     h1: 'Iceland Budget Fat Loss Meal Plans UK',
     kicker: 'Iceland budget fat loss hub',
     intro: 'Frozen food gets recommended for fat loss on the grounds that it is cheap, which is true and is not the interesting part. The useful part is that it is already divided up.',

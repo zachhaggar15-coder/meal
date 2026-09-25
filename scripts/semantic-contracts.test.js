@@ -33,6 +33,7 @@ import {
   sharedPrimaryProteins,
 } from '../src/utils/ingredientRoles.js';
 import { MEAL_PLAN_HUBS } from '../src/data/mealPlanHubs.js';
+import { INDEXABLE_PLAN_SEEDS } from '../src/data/planSeeds.js';
 
 /** Every distinct recipe across the shared library and legacy editorial plans. */
 const MEAL_RECORDS = new Map(MEALS.map(meal => [meal.name, meal]));
@@ -213,6 +214,47 @@ test('no generated hub copy mismatches its indefinite article', () => {
     ].filter(Boolean).join(' ');
     const match = WRONG.exec(copy);
     if (match) offenders.push(`${hub.slug}: "${match[0]}"`);
+  }
+  assert.deepEqual(offenders, []);
+});
+
+// A hub's `match` filter is what actually decides which plans it serves — its
+// `description` and `stats` are separate, hand-written text that has to keep
+// describing the same thing. They drifted apart 12 ways as the plan catalogue
+// grew: four hubs stated a stale plan count, five stated a 1,400 kcal minimum
+// on a supermarket/goal combination whose lowest real plan was 1,500, and
+// three (including the general muscle-gain hub) stated a 2,500 kcal minimum
+// while their own filter already served 2,000 and 2,200 kcal plans.
+test('a hub\'s stated plan count and kcal range match what its own filter serves', () => {
+  const offenders = [];
+  for (const hub of Object.values(MEAL_PLAN_HUBS)) {
+    if (!hub.match) continue;
+    const { supermarkets, goals, calories: calorieFilter, budgets } = hub.match;
+    let matched = INDEXABLE_PLAN_SEEDS;
+    if (supermarkets) matched = matched.filter(seed => supermarkets.includes(seed.supermarket));
+    if (goals) matched = matched.filter(seed => goals.includes(seed.goal));
+    if (budgets) matched = matched.filter(seed => budgets.includes(seed.budget));
+    if (calorieFilter) matched = matched.filter(seed => calorieFilter.includes(seed.calories));
+
+    const calories = [...new Set(matched.map(seed => seed.calories))].sort((a, b) => a - b);
+    const statsText = (hub.stats || []).join(' ');
+    const rangeMatch = (hub.description || '').match(/([\d,]+) to ([\d,]+) ?kcal/)
+      || statsText.match(/([\d,]+)-([\d,]+) ?kcal/);
+    const countMatch = statsText.match(/(\d+) [A-Za-z&\s']*plans?/);
+
+    if (rangeMatch) {
+      const statedMin = Number(rangeMatch[1].replace(/,/g, ''));
+      const statedMax = Number(rangeMatch[2].replace(/,/g, ''));
+      if (statedMin !== calories[0]) {
+        offenders.push(`${hub.slug}: states ${statedMin} kcal minimum, filter serves ${calories[0]}`);
+      }
+      if (statedMax !== calories[calories.length - 1]) {
+        offenders.push(`${hub.slug}: states ${statedMax} kcal maximum, filter serves ${calories[calories.length - 1]}`);
+      }
+    }
+    if (countMatch && Number(countMatch[1]) !== matched.length) {
+      offenders.push(`${hub.slug}: states ${countMatch[1]} plans, filter serves ${matched.length}`);
+    }
   }
   assert.deepEqual(offenders, []);
 });
