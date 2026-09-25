@@ -1292,7 +1292,7 @@ function MealPortionBreakdown({ portions = [] }) {
     <div className="plan-meal-portions" aria-label="Per-person portions">
       {portions.map(portion => (
         <span key={portion.id}>
-          <strong>{portion.label}</strong>
+          <strong>{portion.label}</strong>{' '}
           {portion.portionPercent}% · {portion.kcal} kcal · {formatCoreMacros(portion)}
         </span>
       ))}

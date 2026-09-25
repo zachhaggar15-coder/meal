@@ -221,7 +221,7 @@ export default function ShopProductPage() {
             <div className="shop-value-item">
               <p className="shop-value-label">Recipes</p>
               <p className="shop-value-stat">{totalDinners} dinners</p>
-              <p className="shop-value-detail">Mix-and-match across six weeks to keep meals interesting</p>
+              <p className="shop-value-detail">Mix and match to keep meals interesting</p>
             </div>
             <div className="shop-value-item">
               <p className="shop-value-label">Instant access</p>

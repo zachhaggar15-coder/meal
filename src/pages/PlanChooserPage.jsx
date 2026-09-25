@@ -16,8 +16,10 @@ import { planCardTitle } from '../utils/planCardMeta.js';
 import { formatWeeklyPriceEstimate } from '../utils/priceDisplay.js';
 import { toTitleCase } from '../utils/textFormatting.js';
 import { indefiniteArticleFor } from '../utils/indefiniteArticle.js';
+import { MEAL_PLAN_HUBS } from '../data/mealPlanHubs.js';
 
 const ALL_PLANS = getAllPlanMeta();
+const HUB_PATHS = new Set(Object.values(MEAL_PLAN_HUBS).map(hub => hub.path));
 
 export default function PlanChooserPage() {
   const { goal } = useParams();
@@ -36,10 +38,9 @@ export default function PlanChooserPage() {
     }))
     .filter(option => option.plan);
 
-  const canonical = goalChoice.value === 'weight-loss'
-    ? '/meal-plans/weight-loss'
-    : `/choose-plan/${goalChoice.value}`;
   const pageUrl = `/choose-plan/${goalChoice.value}`;
+  const hubPath = `/meal-plans/${goalChoice.value}`;
+  const canonical = HUB_PATHS.has(hubPath) ? hubPath : pageUrl;
   const title = toTitleCase(`${goalChoice.label} Meal Plans by Supermarket`);
   const marketList = options.map(option => option.market.label).join(', ');
   const description = `Choose ${indefiniteArticleFor(goalChoice.label)} ${goalChoice.label.toLowerCase()} meal plan for ${marketList}, with printable PDFs and shopping lists.`;

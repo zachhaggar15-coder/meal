@@ -376,7 +376,7 @@ export default function BlogPost() {
           )}
 
           {/* Sticker promo — before final CTA */}
-          {data.faq?.length && (
+          {Boolean(data.faq?.length) && (
             <>
               <h2>Frequently Asked Questions</h2>
               <div className="faq">

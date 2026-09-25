@@ -57,11 +57,11 @@ export default function Blog() {
           UK supermarket ingredients and realistic budgets.
         </p>
 
-        {/* Every category is a native <details>. The 153 article links stay in the
+        {/* Every category is a native <details>. The article links stay in the
             served HTML whether a section is open or closed, so nothing here
             depends on JavaScript and nothing is hidden from a crawler - the
             page already earns impressions and must not lose its links. What it
-            loses is height: 16 collapsed rows instead of 153 stacked cards.
+            loses is height: collapsed rows instead of stacked cards for every guide.
 
             The first category is open so the page still shows real guides on
             arrival rather than a wall of headings. Any article is then two

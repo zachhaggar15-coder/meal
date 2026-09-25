@@ -136,7 +136,7 @@ export default function Methodology() {
           <h2>Where the nutrition data comes from</h2>
           <p>
             The site uses a local reference set of{' '}
-            <strong>230 canonical food records</strong> with reviewed aliases. Every record has
+            <strong>236 canonical food records</strong> with reviewed aliases. Every record has
             explicit values for each stored macro — no macro is inferred from calories or from
             another macro, and no value is produced by fuzzy-matching an unfamiliar food to a
             vaguely similar one.
@@ -260,7 +260,7 @@ export default function Methodology() {
                 <tr><th scope="row">Very cheap</th><td>£20–£30</td></tr>
                 <tr><th scope="row">Budget</th><td>£30–£40</td></tr>
                 <tr><th scope="row">Moderate</th><td>£40–£55</td></tr>
-                <tr><th scope="row">Higher budget</th><td>£50–£70</td></tr>
+                <tr><th scope="row">Higher budget</th><td>£55+</td></tr>
               </tbody>
             </table>
           </div>

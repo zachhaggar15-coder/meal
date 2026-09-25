@@ -210,7 +210,7 @@ export default function QuizResults() {
             )}
           </div>
 
-          <MacroSummary macros={best.macrosGrams || best.macros} />
+          <MacroSummary macros={best.macrosGrams} />
 
           <Link
             to={`/plans/${best.slug}?source=quiz`}

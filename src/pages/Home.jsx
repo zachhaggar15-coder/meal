@@ -125,7 +125,7 @@ const FEATURED_CATEGORIES = [
         key: goal,
         label: planGoalShort(goal),
         to: buildPlanChooserPath(goal),
-        facts: categoryFacts(seeds, `${markets} supermarkets`),
+        facts: categoryFacts(seeds, `${markets} ${markets === 1 ? 'supermarket' : 'supermarkets'}`),
       };
     }),
   },
@@ -156,7 +156,7 @@ const FEATURED_CATEGORIES = [
         key: choice.value,
         label: choice.label,
         to: buildDietChooserPath(choice.value),
-        facts: categoryFacts(seeds, `${markets} supermarkets`),
+        facts: categoryFacts(seeds, `${markets} ${markets === 1 ? 'supermarket' : 'supermarkets'}`),
       };
     }),
   },

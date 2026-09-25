@@ -506,8 +506,9 @@ export default function Quiz() {
             checked for its macros, its shopping list and its recipes.
           </p>
           <p>
-            The questions are not equally weighted. Diet and calorie target are hard filters - a
-            vegetarian plan will never be suggested to someone who has not asked for one. Supermarket,
+            The questions are not equally weighted. Diet and calorie target are hard filters - if you
+            ask for a vegan or vegetarian plan, you will never be shown one that contains meat or fish.
+            Supermarket,
             budget and effort are preferences, so if nothing matches perfectly you will be shown the
             closest fits rather than an empty page.
           </p>
