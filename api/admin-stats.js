@@ -447,6 +447,20 @@ export function buildAffiliateMeasurement(events) {
   };
 }
 
+// Clicks on in-article guide callouts that land on one route, counted by the
+// page the reader came from. The buying guide gets little search traffic of
+// its own, so this is how the report shows which articles actually feed it.
+export function buildGuideCalloutReferrals(events, targetRoute) {
+  const counts = countByMetadata(
+    events.filter(event => (
+      event.event_name === 'guide_callout_clicked'
+      && event.metadata?.target_route === targetRoute
+    )),
+    'source_page',
+  );
+  return toNameValue(counts);
+}
+
 export function buildAccessoryFunnelMeasurement(events, options = {}) {
   const baselineTimestamp = options.baselineTimestamp
     || ACCESSORIES_FUNNEL_BASELINE_TIMESTAMP

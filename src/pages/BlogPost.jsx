@@ -7,6 +7,7 @@ import StickerPromo from '../components/StickerPromo.jsx';
 import SiteLogo from '../components/SiteLogo.jsx';
 import ContextualLinks from '../components/ContextualLinks.jsx';
 import ContextualNextStep from '../components/ContextualNextStep.jsx';
+import GuideCallout from '../components/GuideCallout.jsx';
 import AffiliateProductGrid from '../components/AffiliateProductGrid.jsx';
 import EmailPlanCapture from '../components/EmailPlanCapture.jsx';
 import ContainerQuickComparison from '../components/ContainerQuickComparison.jsx';
@@ -304,6 +305,11 @@ export default function BlogPost() {
                   <ResponsiveBlogTable table={section.table} />
                 )}
               </section>
+              <GuideCallout
+                callout={section.guideCallout}
+                sourcePage={`/blog/${slug}`}
+                placement={`after-section-${i}`}
+              />
               {hasDeferredProducts && deferProductsAfter === i && (
                 <>
                   {data.productRecommendations && (
