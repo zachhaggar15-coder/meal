@@ -1,9 +1,12 @@
-// Writes the Pinterest feeds and creatives into dist/ after the prerender.
+// Writes the Pinterest release schedule and creatives into dist/ after the
+// prerender.
 //
-// Everything is static: Pinterest's poller and image crawler hit CDN files, so
-// the system adds no runtime code, no client JavaScript and no serverless
-// invocation. Run as part of `npm run build`, immediately after prerender.js
-// so the destination pages it validates against actually exist.
+// The creatives and dist/pinterest/schedule.json are static files on the CDN.
+// The feeds themselves are served by api/pinterest-feed.js, which reads the
+// schedule and shows only the Pins whose release date has passed - that is
+// what lets new Pins reach Pinterest every day without a redeploy. Run as part
+// of `npm run build`, immediately after prerender.js so the destination pages
+// it validates against actually exist.
 //
 //   node scripts/generate-pinterest-assets.js            write into dist/
 //   node scripts/generate-pinterest-assets.js --dry-run  validate, write nothing
@@ -14,14 +17,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Resvg } from '@resvg/resvg-js';
+import jpeg from 'jpeg-js';
 import { SITE_URL } from '../src/constants/site.js';
 import {
+  FEED_ITEM_LIMIT,
   PINTEREST_BASE_PATH,
+  PINTEREST_BOARDS,
   PINTEREST_ENABLED,
+  PINTEREST_MASTER_FEED,
   PIN_IMAGE_HEIGHT,
   PIN_IMAGE_WIDTH,
+  QUEUE_WARNING_DAYS,
 } from '../src/pinterest/config.js';
-import { buildPinterestPlan, renderPinterestFeeds } from '../src/pinterest/index.js';
+import { buildPinterestPlan, renderPinterestFeeds, withImageBytes } from '../src/pinterest/index.js';
+import { PINTEREST_SCHEDULE_FILENAME, PINTEREST_SCHEDULE_VERSION, scheduleDocument } from '../src/pinterest/scheduleFile.js';
+import { queueStatus } from '../src/pinterest/schedule.js';
+import { PDF_SHOP_PATH, isRealCheckoutUrl } from '../src/pinterest/products.js';
 import { parseXml, childrenNamed, childText } from './lib/xmlLite.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -46,7 +57,21 @@ function fail(messages) {
   process.exit(1);
 }
 
+// Photo Pins (.jpg) are encoded as JPEG from the rendered pixels; everything
+// else stays PNG. See pinImageType in src/pinterest/metadata.js.
+const JPEG_QUALITY = 84;
+
+function renderImage(image) {
+  if (!image.filename.endsWith('.jpg')) return renderPng(image.svg);
+  const rendered = renderRaster(image.svg);
+  return jpeg.encode({ data: rendered.pixels, width: rendered.width, height: rendered.height }, JPEG_QUALITY).data;
+}
+
 function renderPng(svg) {
+  return renderRaster(svg).asPng();
+}
+
+function renderRaster(svg) {
   const resvg = new Resvg(svg, {
     fitTo: { mode: 'width', value: PIN_IMAGE_WIDTH },
     font: { loadSystemFonts: false, fontFiles: FONT_FILES, defaultFontFamily: 'DM Sans' },
@@ -55,7 +80,7 @@ function renderPng(svg) {
   if (rendered.width !== PIN_IMAGE_WIDTH || rendered.height !== PIN_IMAGE_HEIGHT) {
     throw new Error(`creative rendered at ${rendered.width}x${rendered.height}, expected ${PIN_IMAGE_WIDTH}x${PIN_IMAGE_HEIGHT}`);
   }
-  return rendered.asPng();
+  return rendered;
 }
 
 // ── Validation ───────────────────────────────────────────────────────────────
@@ -84,7 +109,23 @@ function unresolvableReason(record) {
   if (/noindex/i.test(robots)) return `${url.pathname} is now noindex`;
 
   const canonical = /<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["']/i.exec(html)?.[1] || '';
-  if (canonical && canonical !== record.guid) return `${url.pathname} now canonicalises to ${canonical}`;
+  if (canonical && canonical !== record.canonical) return `${url.pathname} now canonicalises to ${canonical}`;
+
+  // Never advertise something nobody can buy. A product page without a live
+  // checkout link shows an "Available soon" button (ShopProductPage.jsx), and
+  // the shop page shows "Available soon" instead of a price on every tile.
+  if (record.kind === 'product') {
+    if (/class="[^"]*\bshop-available-soon"/.test(html)) return `${url.pathname} is not on sale yet (its page says "Available soon")`;
+    if (url.pathname === PDF_SHOP_PATH) {
+      if (!/shop-tile-status">£/.test(html)) return `${url.pathname} has nothing on sale yet`;
+    } else {
+      // The buy button must be a real Lemon Squeezy checkout, not a
+      // placeholder or a mistyped env var.
+      const button = /<a\b[^>]*data-event="pdf_checkout_click"[^>]*>/.exec(html)?.[0] || '';
+      const href = /\bhref="([^"]*)"/.exec(button)?.[1] || '';
+      if (!isRealCheckoutUrl(href)) return `${url.pathname} has no real Lemon Squeezy checkout link (found "${href || 'none'}")`;
+    }
+  }
 
   return '';
 }
@@ -95,12 +136,14 @@ function unresolvableReason(record) {
  */
 function dropUnresolvableEntries(plan) {
   const dropped = [];
-  const keptIds = new Set();
+  const keptPages = new Set();
 
-  for (const record of plan.records) {
+  // Every Pin for a page shares its destination, so each page is checked once,
+  // through its first Pin.
+  for (const record of plan.records.filter(item => item.variant === 1)) {
     const reason = unresolvableReason(record);
-    if (reason) dropped.push(`dropped ${record.id}: ${reason}`);
-    else keptIds.add(record.id);
+    if (reason) dropped.push(`dropped ${record.pageId}: ${reason}`);
+    else keptPages.add(record.pageId);
   }
 
   if (!dropped.length) return { plan, dropped };
@@ -108,9 +151,9 @@ function dropUnresolvableEntries(plan) {
   return {
     plan: {
       ...plan,
-      entries: plan.entries.filter(entry => keptIds.has(entry.id)),
-      records: plan.records.filter(record => keptIds.has(record.id)),
-      images: plan.images.filter(image => keptIds.has(image.id)),
+      entries: plan.entries.filter(entry => keptPages.has(entry.id)),
+      records: plan.records.filter(record => keptPages.has(record.pageId)),
+      images: plan.images.filter(image => keptPages.has(image.pageId)),
     },
     dropped,
   };
@@ -175,7 +218,12 @@ function validateFeeds(documents, { requirePages, warnings = [] }) {
         if (url.searchParams.get('utm_source') !== 'pinterest') errors.push(`${where}: link is missing utm_source=pinterest`);
         if (url.searchParams.get('utm_medium') !== 'organic') errors.push(`${where}: link is missing utm_medium=organic`);
         if (!url.searchParams.get('utm_campaign')) errors.push(`${where}: link is missing utm_campaign`);
-        if (guid !== `${url.origin}${url.pathname}`) errors.push(`${where}: guid is not the clean canonical URL`);
+        // A first Pin's GUID is the clean canonical URL. A later Pin for the
+        // same page adds #pin-N, and its link says pin-N in utm_content.
+        const [base, fragment] = String(guid).split('#');
+        if (base !== `${url.origin}${url.pathname}`) errors.push(`${where}: guid is not the clean canonical URL`);
+        if (fragment && !/^pin-\d+$/.test(fragment)) errors.push(`${where}: guid fragment is not #pin-N`);
+        if ((url.searchParams.get('utm_content') || '') !== (fragment || '')) errors.push(`${where}: utm_content does not match the guid`);
       }
 
       const [media] = childrenNamed(item, 'media:content');
@@ -232,44 +280,85 @@ const imageBytes = new Map();
 const renderErrors = [];
 for (const image of plan.images) {
   try {
-    const png = renderPng(image.svg);
-    imageBytes.set(image.filename, png.length);
-    image.png = png;
+    const file = renderImage(image);
+    imageBytes.set(image.filename, file.length);
+    image.file = file;
   } catch (error) {
     renderErrors.push(`${image.filename}: ${error.message}`);
   }
 }
 if (renderErrors.length) fail(renderErrors);
 
-const documents = renderPinterestFeeds(plan, { imageBytes });
+// Validate every Pin the schedule will ever release, not just today's: render
+// each feed as it will look once the whole queue has gone out.
+const endOfQueue = new Date(8.64e15);
+const allDocuments = renderPinterestFeeds(plan, { imageBytes, now: endOfQueue, limit: Infinity });
+const now = new Date();
+const documents = renderPinterestFeeds(plan, { imageBytes, now });
+
+const schedule = scheduleDocument({
+  records: withImageBytes(plan.records, imageBytes),
+  feeds: [...PINTEREST_BOARDS, PINTEREST_MASTER_FEED],
+  generatedAt: now,
+});
 
 if (!dryRun) {
   const feedDir = path.join(dist, PINTEREST_BASE_PATH.replace(/^\//, ''));
   const imageDir = path.join(feedDir, 'img');
   fs.mkdirSync(imageDir, { recursive: true });
-  for (const image of plan.images) fs.writeFileSync(path.join(imageDir, image.filename), image.png);
-  for (const document of documents) fs.writeFileSync(path.join(feedDir, document.filename), document.xml);
+  for (const image of plan.images) fs.writeFileSync(path.join(imageDir, image.filename), image.file);
+  // No .xml is written: a static file at /pinterest/<board>.xml would shadow
+  // the rewrite to api/pinterest-feed.js and freeze the feed at build time,
+  // which is exactly the failure this schedule exists to fix.
+  fs.writeFileSync(path.join(feedDir, PINTEREST_SCHEDULE_FILENAME), `${JSON.stringify(schedule)}\n`);
 }
 
-const errors = validateFeeds(documents, { requirePages, warnings });
+const errors = validateFeeds(allDocuments, { requirePages, warnings });
+for (const document of documents) {
+  try {
+    parseXml(document.xml);
+  } catch (error) {
+    errors.push(`${document.filename} as served today: ${error.message}`);
+  }
+}
 if (errors.length) fail(errors);
+
+const status = queueStatus(plan.records, now);
+if (status.daysLeft < QUEUE_WARNING_DAYS) {
+  warnings.push(
+    status.pending
+      ? `only ${status.daysLeft} day(s) of new Pins left in the queue (last on ${status.lastReleaseAt.slice(0, 10)}) - add pages or raise the limits in src/pinterest/config.js`
+      : 'the release queue is empty, so Pinterest is getting no new Pins - add pages or raise the limits in src/pinterest/config.js',
+  );
+}
 
 for (const warning of warnings) console.warn(`  ! Pinterest: ${warning}`);
 
 const totalBytes = [...imageBytes.values()].reduce((sum, bytes) => sum + bytes, 0);
 console.log(
-  `\nPinterest: ${plan.entries.length} page(s) across ${documents.length - 1} board feed(s) + the master feed.`,
+  `\nPinterest: ${plan.entries.length} page(s), ${plan.records.length} Pin(s) across ${documents.length - 1} board feed(s) + the master feed.`,
 );
+console.log(`  ${status.released} released, ${status.pending} queued; the queue runs until ${status.lastReleaseAt.slice(0, 10)} (${status.daysLeft} day(s))`);
+console.log(`  Feeds as served now (newest ${FEED_ITEM_LIMIT} per board, by api/pinterest-feed.js):`);
 for (const document of documents) {
   console.log(`  ${PINTEREST_BASE_PATH}/${document.filename.padEnd(20)} ${String(document.records.length).padStart(3)} item(s)${document.board.board ? ` -> "${document.board.board}"` : ' (diagnostic)'}`);
 }
 console.log(`  ${plan.images.length} creative(s) at ${PIN_IMAGE_WIDTH}x${PIN_IMAGE_HEIGHT}, ${(totalBytes / 1024 / 1024).toFixed(2)} MB total`);
+console.log(`  schedule: ${PINTEREST_BASE_PATH}/${PINTEREST_SCHEDULE_FILENAME} (v${PINTEREST_SCHEDULE_VERSION})`);
 console.log(`  ${plan.rejected.length} page(s) ineligible, ${plan.suppressed.length} held back by the duplicate and size caps\n`);
 
 if (report) {
   console.log('Published:');
   for (const entry of plan.entries) {
     console.log(`  ${String(entry.score).padStart(3)}  ${entry.board.key.padEnd(14)} ${entry.path}`);
+  }
+  console.log('\nNext 14 days of the queue:');
+  const horizon = now.getTime() + 14 * 86_400_000;
+  const upcoming = plan.records
+    .filter(record => Date.parse(record.releaseAt) > now.getTime() && Date.parse(record.releaseAt) <= horizon)
+    .sort((a, b) => a.releaseAt.localeCompare(b.releaseAt));
+  for (const record of upcoming) {
+    console.log(`  ${record.releaseAt.slice(0, 16).replace('T', ' ')}  ${record.boardKey.padEnd(14)} pin ${record.variant}  ${record.path}`);
   }
   console.log('\nHeld back:');
   for (const item of plan.suppressed) console.log(`  ${item.path} - ${item.reasons.join('; ')}`);

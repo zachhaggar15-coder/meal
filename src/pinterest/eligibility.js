@@ -30,6 +30,7 @@ import {
   PINTEREST_PRODUCT_ENTRIES,
   TOTAL_ENTRY_LIMIT,
 } from './config.js';
+import { pdfProductEntries } from './products.js';
 import {
   clustersFromMatch,
   clustersFromText,
@@ -192,7 +193,7 @@ function guideCandidates() {
 }
 
 function productCandidates() {
-  return PINTEREST_PRODUCT_ENTRIES.map((product, index) => ({
+  return [...PINTEREST_PRODUCT_ENTRIES, ...pdfProductEntries()].map((product, index) => ({
     id: `product:${product.path || index}`,
     kind: 'product',
     path: product.path,
@@ -207,6 +208,9 @@ function productCandidates() {
     clusters: product.clusters || [],
     benefits: (product.benefits || []).slice(0, 3),
     depth: 6,
+    priceGBP: product.priceGBP ?? null,
+    // Hand-written Pins (a title, photo and hook each), when the product has them.
+    ...(product.pins?.length ? { pins: product.pins } : {}),
   }));
 }
 
@@ -333,7 +337,7 @@ export function duplicateSignature(candidate) {
  * Pick a board's entries: best first, one page per idea, no single chain
  * dominating a mixed board, and never more than the board's own limit.
  */
-function selectForBoard(candidates, board) {
+function selectForBoard(candidates, board, titlesTaken = new Set()) {
   const perSignature = new Map();
   const perSupermarket = new Map();
   const kept = [];
@@ -345,9 +349,24 @@ function selectForBoard(candidates, board) {
       continue;
     }
 
+    // Two pages with the same heading would be two identical Pins, wherever
+    // they sit on the site. The better-scoring one wins.
+    const titleKey = String(candidate.title || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    if (titlesTaken.has(titleKey)) {
+      suppressed.push({ ...candidate, dropReason: 'same title as a higher-scoring page' });
+      continue;
+    }
+
+    // Templated pages (hubs, combos, plans) that share a signature differ only
+    // by a store name or a number, so one of each is enough. Articles are
+    // different: "why meal prep rice goes hard" and "air fryer meal prep" share
+    // the batch-cooking signature but are separate pieces of writing with
+    // their own titles and answers, and the release queue already spaces them
+    // out, so they are not collapsed.
     const signature = duplicateSignature(candidate);
     const signatureCount = perSignature.get(signature) || 0;
-    if (signatureCount >= MAX_ENTRIES_PER_SIGNATURE) {
+    // Products have their own board and are never near-duplicates of a page.
+    if (candidate.kind !== 'guide' && candidate.kind !== 'product' && signatureCount >= MAX_ENTRIES_PER_SIGNATURE) {
       suppressed.push({ ...candidate, dropReason: `near-duplicate of ${signature}` });
       continue;
     }
@@ -361,6 +380,7 @@ function selectForBoard(candidates, board) {
       continue;
     }
 
+    titlesTaken.add(titleKey);
     perSignature.set(signature, signatureCount + 1);
     if (store) perSupermarket.set(store, storeCount + 1);
     kept.push(candidate);
@@ -415,6 +435,7 @@ export function buildPinterestEntries() {
 
   const suppressed = [];
   const published = [];
+  const titlesTaken = new Set();
 
   for (const board of PINTEREST_BOARDS) {
     const forBoard = scored.filter(candidate => (
@@ -422,7 +443,7 @@ export function buildPinterestEntries() {
       && !suppressed.some(entry => entry.id === candidate.id)
       && assignBoard(candidate)?.key === board.key
     ));
-    const selection = selectForBoard(forBoard, board);
+    const selection = selectForBoard(forBoard, board, titlesTaken);
     published.push(...selection.kept.map(candidate => ({ ...candidate, board })));
     suppressed.push(...selection.suppressed.map(item => ({
       id: item.id,

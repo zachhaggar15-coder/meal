@@ -10,6 +10,8 @@
 // ordinary feed reader too.
 
 import { SITE_NAME, SITE_URL } from '../constants/site.js';
+import { FEED_ITEM_LIMIT, PINTEREST_BASE_PATH } from './config.js';
+import { releasedRecords } from './schedule.js';
 
 const RSS_NAMESPACES = [
   'xmlns:content="http://purl.org/rss/1.0/modules/content/"',
@@ -67,7 +69,9 @@ function itemXml(record) {
     `      <guid isPermaLink="false">${escapeXml(record.guid)}</guid>`,
   ];
 
-  const pubDate = rfc822(record.published || record.modified || record.buildDate);
+  // The release date is when the Pin enters the feed, which is what "new" means
+  // to Pinterest. The page's own dates are only a fallback.
+  const pubDate = rfc822(record.releaseAt || record.published || record.modified || record.buildDate);
   if (pubDate) parts.push(`      <pubDate>${pubDate}</pubDate>`);
 
   if (record.image?.url) {
@@ -118,4 +122,26 @@ ${items}
   </channel>
 </rss>
 `;
+}
+
+/**
+ * One feed as it stands at `now`: the board's released Pins, newest first.
+ * This is what api/pinterest-feed.js serves, and it needs nothing but the
+ * records, so it runs the same at build time, in tests and at request time.
+ *
+ * @param {object} feed    - a PINTEREST_BOARDS entry, or PINTEREST_MASTER_FEED
+ * @param {Array}  records - every record, with releaseAt (and image bytes)
+ */
+export function renderFeedAt(feed, records, { now = new Date(), origin, limit = FEED_ITEM_LIMIT } = {}) {
+  const forFeed = feed.board ? records.filter(record => record.boardKey === feed.key) : records;
+  const released = releasedRecords(forFeed, now, feed.board ? limit : Infinity);
+  // lastBuildDate is the newest release rather than the clock, so a feed that
+  // has not changed does not claim that it has.
+  const buildDate = released[0]?.releaseAt ? new Date(released[0].releaseAt) : new Date(now);
+  const xml = buildRssFeed(feed, released, {
+    basePath: PINTEREST_BASE_PATH,
+    buildDate,
+    ...(origin ? { origin } : {}),
+  });
+  return { board: feed, filename: feed.feed, records: released, xml };
 }

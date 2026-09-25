@@ -116,6 +116,12 @@
       ]
     }
   ],
+  "rewrites": [
+    {
+      "source": "/pinterest/:feed([a-z-]+\\.xml)",
+      "destination": "/api/pinterest-feed?feed=:feed"
+    }
+  ],
   "crons": [
     {
       "path": "/api/indexnow-sync",

@@ -21,7 +21,7 @@
     "check:recipe-quality": "node scripts/check-recipe-quality.js",
     "check:nutrition": "node scripts/check-nutrition.js",
     "check:amazon-links": "node --env-file-if-exists=.env scripts/check-amazon-links.js",
-  "check:checkout": "node --env-file-if-exists=.env scripts/check-checkout.js",
+    "check:checkout": "node --env-file-if-exists=.env scripts/check-checkout.js",
     "lint": "eslint . --max-warnings 0",
     "audit:nutrition": "node scripts/audit-nutrition.js",
     "audit:recipes": "node scripts/check-recipe-quality.js",
@@ -72,6 +72,7 @@
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.8.0",
     "googleapis": "^173.0.0",
+    "jpeg-js": "^0.4.4",
     "vite": "^8.1.5"
   },
   "overrides": {

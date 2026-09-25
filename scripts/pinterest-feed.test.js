@@ -9,9 +9,16 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { SITE_URL } from '../src/constants/site.js';
+import fs from 'node:fs';
+
 import {
+  FEED_ITEM_LIMIT,
   MIN_ELIGIBILITY_SCORE,
+  PIN_VARIANTS_PER_PAGE,
+  PINS_PER_DAY,
   PINTEREST_BOARDS,
+  PINTEREST_DRIP_START,
+  PINTEREST_LAUNCH_BATCH,
   PINTEREST_MASTER_FEED,
   PINTEREST_PRODUCT_ENTRIES,
   PIN_IMAGE_HEIGHT,
@@ -32,12 +39,21 @@ import {
   pinTitle,
 } from '../src/pinterest/metadata.js';
 import { buildPinSvg, templateFor, TEMPLATES } from '../src/pinterest/creative.js';
-import { buildRssFeed, escapeXml, rfc822 } from '../src/pinterest/feed.js';
-import { buildPinterestPlan, renderPinterestFeeds } from '../src/pinterest/index.js';
+import { buildRssFeed, escapeXml, renderFeedAt, rfc822 } from '../src/pinterest/feed.js';
+import { buildPinterestPlan, renderPinterestFeeds, withImageBytes } from '../src/pinterest/index.js';
+import { assignReleaseDates, queueStatus, releasedRecords } from '../src/pinterest/schedule.js';
+import { feedForFilename, scheduleDocument, scheduleProblems } from '../src/pinterest/scheduleFile.js';
+import { MEAL_PREP_PDF_PRODUCTS } from '../src/data/mealPrepPdfProducts.js';
+import { PDF_SHOP_PATH, formatPrice, isRealCheckoutUrl } from '../src/pinterest/products.js';
+import { PINTEREST_PHOTO_DIR } from '../src/pinterest/index.js';
+import pinterestFeedHandler, { clearScheduleCache, scheduleUrl } from '../api/pinterest-feed.js';
 import { parseXml, childrenNamed, childText, XmlError } from './lib/xmlLite.js';
 
 const plan = buildPinterestPlan();
-const documents = renderPinterestFeeds(plan, { buildDate: new Date('2026-09-15T09:00:00Z') });
+// Every feed as it will look once the whole queue has gone out, so the tests
+// below see every Pin the schedule will ever publish.
+const END_OF_QUEUE = new Date(8.64e15);
+const documents = renderPinterestFeeds(plan, { now: END_OF_QUEUE, limit: Infinity });
 const boardDocuments = documents.filter(document => document.board.board);
 const { published, rejected } = buildPinterestEntries();
 
@@ -201,9 +217,20 @@ test('the GUID is the clean canonical URL, so attribution changes cannot re-Pin 
     for (const item of childrenNamed(channelOf(document.xml), 'item')) {
       const guid = childText(item, 'guid');
       const link = new URL(childText(item, 'link'));
-      assert.equal(guid, `${link.origin}${link.pathname}`);
+      const [base, fragment] = guid.split('#');
+      assert.equal(base, `${link.origin}${link.pathname}`);
       assert.ok(!guid.includes('utm_'), 'the GUID carries no tracking parameters');
+      // A later Pin for the same page is #pin-N, and says so in utm_content.
+      assert.equal(link.searchParams.get('utm_content') || undefined, fragment);
+      if (fragment) assert.match(fragment, /^pin-\d+$/);
     }
+  }
+});
+
+test('a page’s first Pin keeps exactly the GUID and link it launched with', () => {
+  for (const record of plan.records.filter(item => item.variant === 1)) {
+    assert.equal(record.guid, record.canonical);
+    assert.ok(!new URL(record.link).searchParams.has('utm_content'), `${record.id} gained a utm_content`);
   }
 });
 
@@ -216,33 +243,44 @@ test('every item advertises a 2:3 Pinterest image on the production domain', () 
       assert.ok(media, 'item carries media:content');
       assert.equal(Number(media.attributes.width), PIN_IMAGE_WIDTH);
       assert.equal(Number(media.attributes.height), PIN_IMAGE_HEIGHT);
-      assert.equal(media.attributes.type, 'image/png');
+      // Photo Pins are JPEG, text Pins PNG; Pinterest cannot use SVG.
+      const expected = media.attributes.url.endsWith('.jpg') ? 'image/jpeg' : 'image/png';
+      assert.equal(media.attributes.type, expected);
       assert.ok(media.attributes.url.startsWith(`${SITE_URL}/pinterest/img/`), 'image is served from the public asset path');
-      assert.ok(media.attributes.url.endsWith('.png'), 'Pinterest cannot use SVG');
+      assert.match(media.attributes.url, /\.(png|jpg)$/);
     }
   }
 });
 
-test('image URLs are stable and unique per page', () => {
-  const urls = plan.entries.map(entry => pinImageUrl(entry));
-  assert.equal(new Set(urls).size, urls.length, 'no two pages share a creative');
+test('image URLs are stable and unique per Pin', () => {
+  const urls = plan.records.map(record => record.image.url);
+  assert.equal(new Set(urls).size, urls.length, 'no two Pins share a creative');
+  assert.equal(plan.images.length, plan.records.length, 'every Pin has its own creative');
   const entry = plan.entries[0];
   assert.equal(pinImageUrl(entry), pinImageUrl({ ...entry, score: 0, board: null }), 'the URL does not depend on ranking');
 });
 
-test('three templates cover the library, chosen from the page’s own data', () => {
-  assert.deepEqual(TEMPLATES, ['supermarket', 'target', 'guide']);
+test('templates are chosen from the page’s own data, and a second Pin looks different', () => {
+  assert.deepEqual(TEMPLATES, ['supermarket', 'target', 'guide', 'checklist', 'product']);
   assert.equal(templateFor({ supermarketLabel: 'Aldi', calorieTarget: 1500 }), 'supermarket');
   assert.equal(templateFor({ supermarketLabel: '', calorieTarget: 1500 }), 'target');
   assert.equal(templateFor({ supermarketLabel: '', calorieTarget: null }), 'guide');
+  assert.equal(templateFor({ supermarketLabel: 'Aldi', calorieTarget: 1500 }, { variant: 2 }), 'checklist');
 
   const used = new Set(plan.images.map(image => image.template));
-  assert.ok(used.size >= 2, 'the library exercises more than one template');
+  assert.ok(used.size >= 3, 'the library exercises several templates');
+  const productPages = new Set(plan.entries.filter(entry => entry.kind === 'product').map(entry => entry.id));
+  for (const image of plan.images) {
+    if (productPages.has(image.pageId)) {
+      assert.equal(image.template, 'product', `${image.id} is a product without the photo design`);
+      continue;
+    }
+    assert.equal(image.template === 'checklist', image.variant > 1, `${image.id} uses the wrong design for its Pin`);
+  }
 });
 
 test('creatives are valid, correctly sized SVG with escaped copy', () => {
-  for (const entry of plan.entries) {
-    const { svg } = buildPinSvg(entry);
+  for (const { svg } of plan.images) {
     const root = parseXml(svg);
     assert.equal(root.name, 'svg');
     assert.equal(Number(root.attributes.width), PIN_IMAGE_WIDTH);
@@ -250,24 +288,49 @@ test('creatives are valid, correctly sized SVG with escaped copy', () => {
     assert.equal(root.attributes.viewBox, `0 0 ${PIN_IMAGE_WIDTH} ${PIN_IMAGE_HEIGHT}`);
   }
 
-  const { svg } = buildPinSvg({
+  const hostile = {
     title: `Sainsbury's & <b>Tesco</b>`,
+    metaTitle: `Sainsbury's & <i>Tesco</i> plans`,
+    proposition: 'Cheap & <script>quick</script> meals.',
     kicker: 'Test',
     supermarketLabel: "Sainsbury's",
     benefits: ['A & B'],
     clusters: [],
     kind: 'hub',
-  });
-  assert.doesNotThrow(() => parseXml(svg));
-  assert.ok(!svg.includes('<b>'), 'markup in a title is escaped, not rendered');
+  };
+  for (const variant of [1, 2]) {
+    const { svg } = buildPinSvg(hostile, { variant });
+    assert.doesNotThrow(() => parseXml(svg));
+    assert.ok(!/<(b|i|script)>/.test(svg), 'markup in page copy is escaped, not rendered');
+  }
 });
 
 test('a creative never prints more than three facts', () => {
-  for (const entry of plan.entries) {
-    const { svg } = buildPinSvg(entry);
-    const bullets = (svg.match(/rx="3"/g) || []).length;
-    assert.ok(bullets <= 4, `${entry.path} draws ${bullets} rules`);
+  for (const image of plan.images) {
+    const bullets = (image.svg.match(/rx="3"/g) || []).length;
+    const ticks = (image.svg.match(/<circle /g) || []).length;
+    assert.ok(bullets <= 4, `${image.id} draws ${bullets} rules`);
+    assert.ok(ticks <= 3, `${image.id} ticks ${ticks} facts`);
   }
+});
+
+test('a calorie target is stated once, not again as a stat label', () => {
+  const entry = {
+    title: 'Aldi 1500 Calorie Meal Plans UK',
+    description: 'Free Aldi meal plans built to a daily target, with a shopping list for the week.',
+    proposition: 'Start with an Aldi plan if you want a tight week.',
+    kicker: 'Test',
+    supermarketLabel: 'Aldi',
+    calorieTarget: 1500,
+    benefits: ['Aldi', '1,500 kcal focus', 'Multiple goals'],
+    clusters: [],
+    kind: 'combo',
+  };
+  for (const variant of [1, 2]) {
+    const { svg } = buildPinSvg(entry, { variant });
+    assert.equal((svg.match(/1,500 kcal/g) || []).length, 1, `pin ${variant} repeats the target`);
+  }
+  assert.equal((pinDescription(entry).match(/1,500 kcal/g) || []).length, 1);
 });
 
 // ── 8 & 9. Duplication and size limits ───────────────────────────────────────
@@ -293,16 +356,21 @@ test('near-identical propositions are collapsed to one Pin per board', () => {
     'the same store, topic and target is the same idea',
   );
 
+  // Templated pages collapse to one per idea. Articles do not: each is its own
+  // piece of writing with its own title.
   for (const document of boardDocuments) {
-    const entries = plan.entries.filter(entry => entry.board.key === document.board.key);
+    const entries = plan.entries.filter(entry => (
+      entry.board.key === document.board.key && entry.kind !== 'guide' && entry.kind !== 'product'
+    ));
     const signatures = entries.map(duplicateSignature);
-    assert.equal(new Set(signatures).size, signatures.length, `${document.filename} has one Pin per proposition`);
+    assert.equal(new Set(signatures).size, signatures.length, `${document.filename} has one templated page per proposition`);
   }
 });
 
 test('titles are distinct, human-length and free of the brand tail', () => {
+  const firstPinTitles = plan.records.filter(record => record.variant === 1).map(record => record.title);
+  assert.equal(new Set(firstPinTitles).size, firstPinTitles.length, 'no two pages share a title');
   const titles = plan.records.map(record => record.title);
-  assert.equal(new Set(titles).size, titles.length, 'no two Pins share a title');
   for (const title of titles) {
     assert.ok(title.length >= 12 && title.length <= 64, `"${title}" is ${title.length} characters`);
     assert.ok(!/MealPrep\.org\.uk/i.test(title), `"${title}" repeats the brand Pinterest already shows`);
@@ -311,9 +379,18 @@ test('titles are distinct, human-length and free of the brand tail', () => {
 });
 
 test('every feed respects its own size limit', () => {
-  for (const document of boardDocuments) {
-    const board = PINTEREST_BOARDS.find(item => item.key === document.board.key);
-    assert.ok(document.records.length <= board.limit, `${document.filename} holds ${document.records.length} of ${board.limit}`);
+  for (const board of PINTEREST_BOARDS) {
+    const pages = plan.entries.filter(entry => entry.board.key === board.key).length;
+    assert.ok(pages <= board.limit, `${board.feed} holds ${pages} pages of ${board.limit}`);
+  }
+  for (const entry of plan.entries) {
+    const pins = plan.records.filter(record => record.pageId === entry.id).length;
+    assert.equal(pins, entry.pins?.length || PIN_VARIANTS_PER_PAGE, `${entry.path} has ${pins} Pins`);
+  }
+
+  // What is actually served is capped too, however far the queue has run.
+  for (const document of renderPinterestFeeds(plan, { now: END_OF_QUEUE })) {
+    if (document.board.board) assert.ok(document.records.length <= FEED_ITEM_LIMIT, `${document.filename} serves ${document.records.length}`);
   }
   assert.equal(
     documents.find(document => document.board.key === PINTEREST_MASTER_FEED.key).records.length,
@@ -344,7 +421,10 @@ test('descriptions explain what the reader gets without reading as filler', () =
   for (const record of plan.records) {
     assert.ok(record.description.length >= 80, `${record.guid} description is ${record.description.length} characters`);
     assert.ok(record.description.length <= 460, `${record.guid} description is too long for Pinterest`);
-    assert.ok(record.description.endsWith('Free on MealPrep.org.uk.'), `${record.guid} ends with the site attribution`);
+    // A paid product must never be described as free.
+    const tail = record.kind === 'product' ? 'From MealPrep.org.uk.' : 'Free on MealPrep.org.uk.';
+    assert.ok(record.description.endsWith(tail), `${record.guid} ends with the site attribution`);
+    if (record.kind === 'product') assert.ok(!/\bfree\b/i.test(record.description), `${record.guid} calls a paid product free`);
     assert.ok(!record.description.includes('[object Object]'), `${record.guid} leaked a raw object`);
     assert.ok(!record.description.includes('undefined'), `${record.guid} leaked an undefined value`);
     assert.ok(!/(\b\w+\b)(?:\s+\1\b){2,}/i.test(record.description), `${record.guid} repeats a word`);
@@ -426,27 +506,308 @@ test('a retired, renamed or noindexed destination is a warning, not a build fail
   // 1,500-page site must never block an unrelated release. The guarantee lives
   // in scripts/generate-pinterest-assets.js; this asserts the contract it
   // depends on, which is that dropping entries leaves a coherent plan.
-  const [first, ...rest] = plan.records;
-  const keptIds = new Set(rest.map(record => record.id));
+  // Every Pin for the dropped page goes, not just the first.
+  const droppedPage = plan.entries.find(entry => !entry.pins).id;
   const trimmed = {
     ...plan,
-    entries: plan.entries.filter(entry => keptIds.has(entry.id)),
-    records: rest,
-    images: plan.images.filter(image => keptIds.has(image.id)),
+    entries: plan.entries.filter(entry => entry.id !== droppedPage),
+    records: plan.records.filter(record => record.pageId !== droppedPage),
+    images: plan.images.filter(image => image.pageId !== droppedPage),
   };
 
   assert.equal(trimmed.entries.length, plan.entries.length - 1);
-  assert.equal(trimmed.images.length, plan.images.length - 1);
-  assert.ok(!trimmed.records.some(record => record.id === first.id));
+  assert.equal(trimmed.images.length, plan.images.length - PIN_VARIANTS_PER_PAGE);
+  assert.equal(trimmed.records.length, plan.records.length - PIN_VARIANTS_PER_PAGE);
 
-  const rebuilt = renderPinterestFeeds(trimmed, { buildDate: new Date('2026-09-15T09:00:00Z') });
+  const droppedGuids = plan.records.filter(record => record.pageId === droppedPage).map(record => record.guid);
+  const rebuilt = renderPinterestFeeds(trimmed, { now: END_OF_QUEUE, limit: Infinity });
   for (const document of rebuilt) {
     assert.doesNotThrow(() => parseXml(document.xml), `${document.filename} still parses`);
     const guids = childrenNamed(channelOf(document.xml), 'item').map(item => childText(item, 'guid'));
-    assert.ok(!guids.includes(first.guid), `${document.filename} no longer carries the dropped page`);
+    assert.ok(!guids.some(guid => droppedGuids.includes(guid)), `${document.filename} no longer carries the dropped page`);
     assert.equal(new Set(guids).size, guids.length, `${document.filename} still has unique GUIDs`);
   }
 
   const master = rebuilt.find(document => !document.board.board);
-  assert.equal(master.records.length, plan.records.length - 1, 'the master feed shrinks with the boards');
+  assert.equal(master.records.length, trimmed.records.length, 'the master feed shrinks with the boards');
+});
+
+// ── 15. Release queue ────────────────────────────────────────────────────────
+
+const DAY_MS = 86_400_000;
+
+test('the launch batch keeps its launch date and nothing else is released before the drip starts', () => {
+  const beforeDrip = new Date(`${PINTEREST_DRIP_START}T00:00:00Z`).getTime() - 1;
+  const released = plan.records.filter(record => Date.parse(record.releaseAt) <= beforeDrip);
+  const launched = new Set(PINTEREST_LAUNCH_BATCH);
+
+  assert.equal(PINTEREST_LAUNCH_BATCH.length, 49);
+  for (const record of released) {
+    assert.equal(record.variant, 1, `${record.id} was released before the drip`);
+    assert.ok(launched.has(record.path), `${record.path} was not in the launch batch`);
+  }
+  const stillPublished = PINTEREST_LAUNCH_BATCH.filter(path => plan.entries.some(entry => entry.path === path));
+  assert.equal(released.length, stillPublished.length);
+});
+
+test('the queue releases a steady number of new Pins every day', () => {
+  const start = Date.parse(`${PINTEREST_DRIP_START}T00:00:00Z`);
+  const queued = plan.records.filter(record => Date.parse(record.releaseAt) >= start);
+  assert.ok(queued.length > PINS_PER_DAY * 14, 'there are weeks of Pins queued, not days');
+
+  const perDay = new Map();
+  for (const record of queued) {
+    const day = Math.floor((Date.parse(record.releaseAt) - start) / DAY_MS);
+    perDay.set(day, (perDay.get(day) || 0) + 1);
+  }
+  const lastDay = Math.max(...perDay.keys());
+  for (let day = 0; day <= lastDay; day += 1) {
+    const count = perDay.get(day) || 0;
+    assert.ok(count >= 1 && count <= PINS_PER_DAY, `day ${day} releases ${count}`);
+  }
+  // Full days while there are enough boards with Pins left.
+  for (let day = 0; day < 14; day += 1) assert.equal(perDay.get(day), PINS_PER_DAY, `day ${day} is not full`);
+
+  // Every feed, served on any day, changes from the day before until its board runs out.
+  const onDay = day => renderPinterestFeeds(plan, { now: new Date(start + day * DAY_MS + DAY_MS - 1) });
+  const today = onDay(3);
+  const yesterday = onDay(2);
+  const changed = today.filter((document, index) => document.xml !== yesterday[index].xml);
+  assert.ok(changed.length >= PINS_PER_DAY, `only ${changed.length} feeds changed between two days`);
+});
+
+test('a page’s first Pin always goes out before its second, and the best pages go first', () => {
+  const byId = new Map(plan.records.map(record => [record.id, record]));
+  for (const record of plan.records.filter(item => item.variant > 1)) {
+    const first = byId.get(record.pageId);
+    assert.ok(Date.parse(first.releaseAt) < Date.parse(record.releaseAt), `${record.id} goes out before its first Pin`);
+  }
+
+  const records = [
+    { id: 'a', path: '/a', boardKey: 'x', variant: 1, score: 50 },
+    { id: 'b', path: '/b', boardKey: 'x', variant: 1, score: 90 },
+    { id: 'b~v2', path: '/b', boardKey: 'x', variant: 2, score: 90 },
+    { id: 'c', path: '/c', boardKey: 'y', variant: 1, score: 10 },
+  ];
+  const scheduled = assignReleaseDates(records, [{ key: 'x' }, { key: 'y' }], {
+    launchDate: '2026-01-01', dripStart: '2026-02-01', perDay: 2, launchBatch: [],
+  });
+  const order = [...scheduled].sort((a, b) => a.releaseAt.localeCompare(b.releaseAt)).map(record => record.id);
+  // Boards take turns, a board that runs out is skipped, and a board never
+  // gets two Pins on one day even when it is the only one left.
+  assert.deepEqual(order, ['b', 'c', 'a', 'b~v2']);
+  const day = id => scheduled.find(record => record.id === id).releaseAt.slice(0, 10);
+  assert.deepEqual(['b', 'c', 'a', 'b~v2'].map(day), ['2026-02-01', '2026-02-01', '2026-02-02', '2026-02-03']);
+});
+
+test('no board ever gets more than one new Pin a day, and Pins are spread through the day', () => {
+  const start = Date.parse(`${PINTEREST_DRIP_START}T00:00:00Z`);
+  const perBoardDay = new Map();
+  const perDayHours = new Map();
+  for (const record of plan.records.filter(item => Date.parse(item.releaseAt) >= start)) {
+    const day = record.releaseAt.slice(0, 10);
+    const key = `${record.boardKey} ${day}`;
+    perBoardDay.set(key, (perBoardDay.get(key) || 0) + 1);
+    perDayHours.set(day, [...(perDayHours.get(day) || []), record.releaseAt.slice(11, 13)]);
+  }
+  for (const [key, count] of perBoardDay) assert.equal(count, 1, `${key} releases ${count} Pins`);
+  for (const [day, hours] of perDayHours) {
+    assert.equal(new Set(hours).size, hours.length, `${day} releases two Pins in the same hour`);
+  }
+});
+
+test('only a real Lemon Squeezy checkout counts as on sale', () => {
+  assert.ok(isRealCheckoutUrl('https://mealprepuk.lemonsqueezy.com/checkout/buy/a1a031c4-f59d-4506-83a8-c5b3367eb69e?redirect_url=https%3A%2F%2Fwww.mealprep.org.uk'));
+  assert.ok(isRealCheckoutUrl('https://mealprepuk.lemonsqueezy.com/buy/a1a031c4-f59d-4506-83a8-c5b3367eb69e'));
+  assert.ok(isRealCheckoutUrl('https://mealprepuk.lemonsqueezy.com/checkout/buy/a1a031c4-f59d-4506-83a8-c5b3367eb69e?a=1&amp;b=2'));
+  for (const fake of [
+    '',
+    'https://example.lemonsqueezy.com/buy/test',
+    'http://mealprepuk.lemonsqueezy.com/checkout/buy/a1a031c4-f59d-4506-83a8-c5b3367eb69e',
+    'https://lemonsqueezy.com.evil.example/checkout/buy/a1a031c4-f59d-4506-83a8-c5b3367eb69e',
+    'https://mealprepuk.lemonsqueezy.com/checkout/a1a031c4-f59d-4506-83a8-c5b3367eb69e',
+    'VITE_LS_BUY_URL_ALDI_DINNER',
+  ]) {
+    assert.ok(!isRealCheckoutUrl(fake), `${fake} was accepted`);
+  }
+});
+
+test('the queue is deterministic and does not depend on input order', () => {
+  const reversed = assignReleaseDates([...plan.records].reverse(), PINTEREST_BOARDS);
+  const byId = new Map(reversed.map(record => [record.id, record.releaseAt]));
+  for (const record of plan.records) assert.equal(byId.get(record.id), record.releaseAt, record.id);
+});
+
+test('a feed shows only released Pins, newest first, dated by release', () => {
+  const now = new Date(`${PINTEREST_DRIP_START}T12:00:00Z`);
+  const released = releasedRecords(plan.records, now, Infinity);
+  assert.ok(released.every(record => Date.parse(record.releaseAt) <= now.getTime()));
+  for (let index = 1; index < released.length; index += 1) {
+    assert.ok(released[index - 1].releaseAt >= released[index].releaseAt, 'newest first');
+  }
+
+  const aldi = PINTEREST_BOARDS.find(board => board.key === 'aldi');
+  const { xml, records } = renderFeedAt(aldi, plan.records, { now });
+  const items = childrenNamed(channelOf(xml), 'item');
+  assert.equal(items.length, records.length);
+  items.forEach((item, index) => {
+    assert.equal(childText(item, 'pubDate'), rfc822(records[index].releaseAt), 'pubDate is the release date');
+  });
+
+  const status = queueStatus(plan.records, now);
+  assert.equal(status.released + status.pending, plan.records.length);
+  assert.ok(status.daysLeft > 14, 'the queue has more than two weeks left in it');
+});
+
+// ── 16. Serving the feeds ────────────────────────────────────────────────────
+
+function fakeResponse() {
+  return {
+    statusCode: 0,
+    headers: {},
+    body: '',
+    setHeader(name, value) { this.headers[name.toLowerCase()] = value; },
+    status(code) { this.statusCode = code; return this; },
+    send(body) { this.body = body; return this; },
+    end() { return this; },
+  };
+}
+
+async function serve(feed, { schedule, ok = true, method = 'GET' } = {}) {
+  const realFetch = globalThis.fetch;
+  clearScheduleCache();
+  globalThis.fetch = async () => ({ ok, status: ok ? 200 : 500, json: async () => schedule });
+  try {
+    const res = fakeResponse();
+    await pinterestFeedHandler({ method, query: { feed } }, res);
+    return res;
+  } finally {
+    globalThis.fetch = realFetch;
+    clearScheduleCache();
+  }
+}
+
+const liveSchedule = scheduleDocument({
+  records: withImageBytes(plan.records, new Map()),
+  feeds: [...PINTEREST_BOARDS, PINTEREST_MASTER_FEED],
+});
+
+test('the schedule file round-trips through JSON and validates', () => {
+  const parsed = JSON.parse(JSON.stringify(liveSchedule));
+  assert.deepEqual(scheduleProblems(parsed), []);
+  assert.ok(feedForFilename(parsed, 'aldi.xml'));
+  assert.equal(feedForFilename(parsed, 'nope.xml'), null);
+  assert.ok(scheduleProblems({ ...parsed, version: 99 }).length, 'an unknown version is refused');
+  assert.ok(scheduleProblems(null).length);
+});
+
+test('the feed endpoint serves today’s released Pins as XML', async () => {
+  const res = await serve('aldi.xml', { schedule: JSON.parse(JSON.stringify(liveSchedule)) });
+  assert.equal(res.statusCode, 200);
+  assert.match(res.headers['content-type'], /^application\/xml/);
+  assert.equal(res.headers['x-robots-tag'], 'noindex');
+  const items = childrenNamed(channelOf(res.body), 'item');
+  assert.ok(items.length > 0, 'the served feed has items');
+  for (const item of items) {
+    assert.ok(Date.parse(childText(item, 'pubDate')) <= Date.now(), 'nothing unreleased is served');
+    assert.equal(new URL(childText(item, 'link')).searchParams.get('utm_campaign'), 'aldi');
+  }
+});
+
+test('the feed endpoint refuses unknown feeds and survives a missing schedule', async () => {
+  const schedule = JSON.parse(JSON.stringify(liveSchedule));
+  assert.equal((await serve('../secret.xml', { schedule })).statusCode, 404);
+  assert.equal((await serve('unknown.xml', { schedule })).statusCode, 404);
+  assert.equal((await serve('aldi.xml', { schedule, method: 'POST' })).statusCode, 405);
+
+  const down = await serve('aldi.xml', { schedule, ok: false });
+  assert.equal(down.statusCode, 503);
+  assert.equal(down.headers['cache-control'], 'no-store', 'an outage is never cached as the feed');
+
+  const broken = await serve('aldi.xml', { schedule: { version: 99 } });
+  assert.equal(broken.statusCode, 503);
+});
+
+test('production reads the production schedule; a preview reads its own', () => {
+  assert.equal(scheduleUrl({ VERCEL_ENV: 'production', VERCEL_URL: 'x.vercel.app' }), `${SITE_URL}/pinterest/schedule.json`);
+  assert.equal(scheduleUrl({ VERCEL_ENV: 'preview', VERCEL_URL: 'x.vercel.app' }), 'https://x.vercel.app/pinterest/schedule.json');
+  assert.equal(scheduleUrl({}), `${SITE_URL}/pinterest/schedule.json`);
+});
+
+test('the board feed URLs are routed to the endpoint, not frozen as static files', () => {
+  const vercel = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+  const rewrite = (vercel.rewrites || []).find(rule => rule.destination.startsWith('/api/pinterest-feed'));
+  assert.ok(rewrite, 'vercel.json rewrites /pinterest/*.xml to the feed endpoint');
+  assert.match(rewrite.source, /^\/pinterest\//);
+
+  const generator = fs.readFileSync(new URL('./generate-pinterest-assets.js', import.meta.url), 'utf8');
+  assert.ok(!/writeFileSync\([^)]*document\.filename/.test(generator), 'the build must not write static board feeds');
+});
+
+// ── 17. The 6-week PDF plans ─────────────────────────────────────────────────
+
+const productEntries = plan.entries.filter(entry => entry.kind === 'product');
+const productRecords = plan.records.filter(record => record.kind === 'product');
+
+test('every 6-week PDF and the shop page are advertised on their own board', () => {
+  const paths = productEntries.map(entry => entry.path).sort();
+  const expected = [PDF_SHOP_PATH, ...Object.keys(MEAL_PREP_PDF_PRODUCTS).map(slug => `${PDF_SHOP_PATH}/${slug}`)].sort();
+  assert.deepEqual(paths, expected);
+
+  for (const entry of productEntries) assert.equal(entry.board.key, 'meal-prep-pdfs', `${entry.path} is on ${entry.board.key}`);
+  for (const entry of plan.entries.filter(item => item.kind !== 'product')) {
+    assert.notEqual(entry.board.key, 'meal-prep-pdfs', `${entry.path} is a free page on the PDF board`);
+  }
+  for (const record of productRecords) {
+    const link = new URL(record.link);
+    assert.equal(link.searchParams.get('utm_campaign'), 'meal-prep-pdfs');
+    assert.ok(link.pathname.startsWith(PDF_SHOP_PATH), `${record.link} does not go to the shop`);
+  }
+});
+
+test('each product gets several different Pins, each with its own photo and title', () => {
+  const titles = productRecords.map(record => record.title);
+  assert.equal(new Set(titles).size, titles.length, 'no two product Pins share a title');
+  for (const title of titles) assert.ok(title.length <= 64 && !title.endsWith('…'), `"${title}" is cut off`);
+
+  for (const entry of productEntries) {
+    assert.ok(entry.pins.length >= 2, `${entry.path} has only ${entry.pins.length} Pin`);
+    const photos = entry.pins.map(pin => pin.photo);
+    assert.equal(new Set(photos).size, photos.length, `${entry.path} repeats a photo`);
+    for (const photo of photos) {
+      assert.ok(fs.existsSync(`${PINTEREST_PHOTO_DIR}${photo}.jpg`), `photo ${photo}.jpg is checked in`);
+    }
+  }
+});
+
+test('product Pins state the real price and never call a paid plan free', () => {
+  for (const [slug, product] of Object.entries(MEAL_PREP_PDF_PRODUCTS)) {
+    const entry = productEntries.find(item => item.path === `${PDF_SHOP_PATH}/${slug}`);
+    const price = formatPrice(product.priceGBP);
+    for (const variant of entry.pins.map((_, index) => index + 1)) {
+      const { svg, template } = buildPinSvg(entry, { variant, photoBase: PINTEREST_PHOTO_DIR });
+      assert.equal(template, 'product');
+      assert.ok(svg.includes(`>${price}<`), `${slug} pin ${variant} shows its price tag`);
+      assert.ok(!/\bfree\b/i.test(svg), `${slug} pin ${variant} calls a paid plan free`);
+      assert.doesNotThrow(() => parseXml(svg));
+      const prices = [...svg.matchAll(/£\d+\.\d{2}/g)].map(match => match[0]);
+      const known = new Set(Object.values(MEAL_PREP_PDF_PRODUCTS).map(item => formatPrice(item.priceGBP)));
+      const separate = (product.bundleOf || []).reduce((sum, item) => sum + MEAL_PREP_PDF_PRODUCTS[item].priceGBP, 0);
+      if (separate) known.add(formatPrice(separate));
+      for (const shown of prices) assert.ok(known.has(shown), `${slug} pin ${variant} shows ${shown}, which no product costs`);
+    }
+  }
+});
+
+test('product Pins start going out as soon as the queue starts, and keep going', () => {
+  const start = Date.parse(`${PINTEREST_DRIP_START}T00:00:00Z`);
+  const times = productRecords.map(record => Date.parse(record.releaseAt)).sort((a, b) => a - b);
+  assert.ok(times[0] < start + DAY_MS, 'the first product Pin goes out on the first day');
+  assert.ok(times.at(-1) - times[0] > 14 * DAY_MS, 'product Pins are spread over weeks, not dumped at once');
+  const sameDay = new Map();
+  for (const time of times) {
+    const day = Math.floor(time / DAY_MS);
+    sameDay.set(day, (sameDay.get(day) || 0) + 1);
+  }
+  assert.equal(Math.max(...sameDay.values()), 1, 'at most one product Pin a day');
 });
