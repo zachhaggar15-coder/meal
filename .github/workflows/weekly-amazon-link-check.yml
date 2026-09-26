@@ -36,13 +36,18 @@ jobs:
     steps:
       - name: Gate to 15:00 Europe/London
         id: gate
+        # Decide from which cron fired, not from the clock. GitHub often starts
+        # scheduled runs hours late; the old "is it 15:00 now?" test then
+        # skipped both triggers and every Monday run exited in seconds without
+        # checking a single link.
         run: |
-          hour="$(TZ=Europe/London date +%H)"
-          if [ "${{ github.event_name }}" != "schedule" ] || [ "$hour" = "15" ]; then
-            echo "London time is ${hour}:00 - running."
+          offset="$(TZ=Europe/London date +%z)"
+          if [ "$offset" = "+0100" ]; then wanted='0 14 * * 1'; else wanted='0 15 * * 1'; fi
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "${{ github.event.schedule }}" = "$wanted" ]; then
+            echo "Trigger '${{ github.event.schedule }}' is 15:00 in London this week - running."
             echo "run=true" >> "$GITHUB_OUTPUT"
           else
-            echo "London time is ${hour}:00, not 15:00 - skipping this trigger."
+            echo "Trigger '${{ github.event.schedule }}' is not 15:00 in London this week - skipping."
             echo "run=false" >> "$GITHUB_OUTPUT"
           fi
 

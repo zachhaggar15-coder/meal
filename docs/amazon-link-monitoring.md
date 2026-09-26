@@ -115,5 +115,7 @@ the copy describes the specific product.
 
 GitHub cron is UTC and does not follow British Summer Time. The workflow
 therefore registers two triggers, `14:00 UTC` and `15:00 UTC`, and the first
-step drops whichever one is not 15:00 in London that week. The result is exactly
-one run every Monday at 3pm local time, year-round.
+step drops whichever one is not 15:00 in London that week. The gate reads which
+cron fired (`github.event.schedule`), not the clock: GitHub often starts
+scheduled runs hours late, and a clock check skipped both triggers every week
+until 26 September 2026, so no scheduled check actually ran before then.
