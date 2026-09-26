@@ -52,12 +52,13 @@ export default function ShopProductPage() {
       itemCondition: 'https://schema.org/NewCondition',
       // Google's merchant listings ask every offer for returns and shipping.
       // Both describe what this page already promises: a PDF emailed straight
-      // after purchase at no delivery cost, and a refund on request with no
-      // time limit ("Not happy with it? Email us and we'll sort out a refund").
+      // after purchase at no delivery cost, and a full refund on request within
+      // 14 days of purchase, as the buy box states.
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         applicableCountry: 'GB',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnUnlimitedWindow',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays: 14,
         returnFees: 'https://schema.org/FreeReturn',
         refundType: 'https://schema.org/FullRefund',
       },
@@ -133,8 +134,8 @@ export default function ShopProductPage() {
               ) : (
                 <p className="shop-available-soon-note">
                   Not happy with it? Email{' '}
-                  <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a> and we&apos;ll sort out
-                  a refund.
+                  <a href={`mailto:${SITE_CONTACT_EMAIL}`}>{SITE_CONTACT_EMAIL}</a> within 14 days of
+                  purchase and we&apos;ll give you a full refund.
                 </p>
               )}
             </div>

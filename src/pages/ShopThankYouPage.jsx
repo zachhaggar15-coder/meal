@@ -34,7 +34,7 @@ export default function ShopThankYouPage() {
             <h2 id="shop-support-heading">Need help or a refund?</h2>
             <p>
               If you run into any issues with your download, have questions about the plan, or need
-              a refund, we&apos;re here to help. Get in touch at{' '}
+              a refund (available within 14 days of purchase), we&apos;re here to help. Get in touch at{' '}
               <a href="mailto:mealprep.org.uk@proton.me">mealprep.org.uk@proton.me</a> and we&apos;ll
               get back to you within 5 working days.
             </p>
