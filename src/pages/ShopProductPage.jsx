@@ -50,6 +50,27 @@ export default function ShopProductPage() {
       price: product.priceGBP.toFixed(2),
       availability: buyUrl ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
       itemCondition: 'https://schema.org/NewCondition',
+      // Google's merchant listings ask every offer for returns and shipping.
+      // Both describe what this page already promises: a PDF emailed straight
+      // after purchase at no delivery cost, and a refund on request with no
+      // time limit ("Not happy with it? Email us and we'll sort out a refund").
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        applicableCountry: 'GB',
+        returnPolicyCategory: 'https://schema.org/MerchantReturnUnlimitedWindow',
+        returnFees: 'https://schema.org/FreeReturn',
+        refundType: 'https://schema.org/FullRefund',
+      },
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: 'GBP' },
+        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'GB' },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+          transitTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+        },
+      },
     },
   };
 

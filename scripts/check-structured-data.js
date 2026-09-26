@@ -229,7 +229,14 @@ function recipeEligibility(recipe) {
 }
 
 function productRichResultEligibility(product) {
-  if (product.offers) return { ok: true };
+  if (product.offers) {
+    // Search Console reports merchant-listing offers without a returns policy
+    // or shipping details, so every Offer we publish must carry both.
+    const missing = toArray(product.offers)
+      .flatMap(offer => ['hasMerchantReturnPolicy', 'shippingDetails'].filter(field => !offer?.[field]));
+    if (missing.length) return { ok: false, reason: `offer missing ${[...new Set(missing)].join(' and ')}` };
+    return { ok: true };
+  }
   if (product.aggregateRating) return { ok: true };
 
   const reviews = toArray(product.review).filter(Boolean);
